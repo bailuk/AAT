@@ -24,6 +24,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private final Timer timer;
 
+    private final SolidDem3EnableDownload sdownload;
 
     public Dem3TileLoader(AppContext appContext, Timer timer, Dem3Tiles t) {
         this.timer = timer;
@@ -31,8 +32,8 @@ public final class Dem3TileLoader implements Closeable {
         this.appContext = appContext;
         this.appContext.getBroadcaster().register(onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
+         sdownload = new SolidDem3EnableDownload(appContext.getStorage());
     }
-
 
     private final Runnable timout = () -> {
         if (havePending()) {
@@ -40,8 +41,6 @@ public final class Dem3TileLoader implements Closeable {
             stopTimer();
         }
     };
-
-
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
@@ -55,7 +54,6 @@ public final class Dem3TileLoader implements Closeable {
         }
     };
 
-
     private void loadOrDownloadPending() {
         final Dem3Coordinates toLoad = pending;
         pending = null;
@@ -63,7 +61,7 @@ public final class Dem3TileLoader implements Closeable {
         if (toLoad != null) {
             loadNow(toLoad);
 
-            if (new SolidDem3EnableDownload(appContext.getStorage()).getValue()) {
+            if (sdownload.getValue()) {
                 downloadNow(toLoad);
             }
         }
@@ -76,7 +74,7 @@ public final class Dem3TileLoader implements Closeable {
     }
 
     private Dem3Tile loadIntoOldestSlot(Dem3Coordinates c) {
-        if (tiles.have(c) == false) {
+        if (!tiles.have(c)) {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
             if (slot != null && !slot.isLocked()) {
@@ -106,7 +104,6 @@ public final class Dem3TileLoader implements Closeable {
         return pending != null;
     }
 
-
     private void startTimer() {
         timer.cancel();
         timer.kick(timout, MILLIS);
@@ -116,8 +113,6 @@ public final class Dem3TileLoader implements Closeable {
         timer.cancel();
     }
 
-
-
     private void downloadNow(Dem3Coordinates c) {
         Foc file = appContext.getDem3Directory().toFile(c);
         if (!file.exists()) {
@@ -125,7 +120,6 @@ public final class Dem3TileLoader implements Closeable {
             appContext.getServices().getBackgroundService().process(handle);
         }
     }
-
 
     @Override
     public void close() {

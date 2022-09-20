@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 
 public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
-
-
     private final Map<Integer, TargetList> targets = new HashMap<>(10);
     private final ArrayList<ContentSource> sources = new ArrayList<>(5);
-
 
     private OnContentUpdatedInterface updater = OFF;
 
@@ -20,7 +19,6 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     public void addTarget(OnContentUpdatedInterface t, int... iid) {
         for (int i: iid) addSingleTarget(t, i);
     }
-
 
     private void addSingleTarget(OnContentUpdatedInterface t, int iid) {
         TargetList target = targets.get(iid);
@@ -39,7 +37,6 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         s.setTarget(this);
     }
 
-
     public void onPause() {
         updater = OFF;
 
@@ -57,28 +54,23 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         requestUpdate();
     }
 
-
     public void requestUpdate() {
         for (ContentSource source: sources)
             source.requestUpdate();
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         updater.onContentUpdated(iid, info);
     }
 
 
     private static class TargetList implements OnContentUpdatedInterface{
-        public final static TargetList NULL_LIST = new TargetList();
-
         private final ArrayList<OnContentUpdatedInterface> targets =
                 new ArrayList<>(10);
 
-
         @Override
-        public void onContentUpdated(int iid, GpxInformation info) {
+        public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
             for (OnContentUpdatedInterface target: targets) {
                 target.onContentUpdated(iid, info);
             }
@@ -89,18 +81,14 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         }
     }
 
-    private static final OnContentUpdatedInterface
-            OFF = (iid, info) -> {};
+    private static final OnContentUpdatedInterface  OFF = (iid, info) -> {};
 
-
-    private final OnContentUpdatedInterface
-            ON = new  OnContentUpdatedInterface () {
+    private final OnContentUpdatedInterface ON = new  OnContentUpdatedInterface () {
         @Override
-        public void onContentUpdated(int infoID, GpxInformation info) {
+        public void onContentUpdated(int infoID, @Nonnull GpxInformation info) {
             update(infoID,     infoID, info);
             update(InfoID.ALL, infoID, info);
         }
-
 
         public void update(int listID, int infoID, GpxInformation info) {
             TargetList l = targets.get(listID);

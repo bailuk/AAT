@@ -83,19 +83,15 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
 
         addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
-
     }
 
 
     @Override
     public void onResumeWithService() {
-
         iteratorSimple = new IteratorSimple(getAppContext());
         listView.setIterator(this, iteratorSimple);
         fileControlBar.setIterator(iteratorSimple);
         listView.setSelection(sdirectory.getPosition().getValue());
-
-        getServiceContext().getDirectoryService().rescan();
 
         sdirectory.register(this);
         setListBackgroundColor();
@@ -119,17 +115,13 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     @Override
     public void onDestroy() {
         busyControl.close();
-
         super.onDestroy();
     }
-
-
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
         displayFileOnPosition(position);
     }
-
 
     private void displayFileOnPosition(int position) {
         sdirectory.getPosition().setValue(position);
@@ -183,7 +175,6 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.addAllContent(acontext, getSummaryData(), theme, InfoID.LIST_SUMMARY);
 
             TitleView title = new TitleView(acontext, filter_label, filterTheme);
-            //AppTheme.alt.background(title);
 
             summary.add(title);
             summary.addAllFilterViews(map.getMContext(), filterTheme);
@@ -221,7 +212,6 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             multiView.add(summary, summary_label + "/" + filter_label);
             bar.addAll(multiView);
             contentView.addMvIndicator(multiView);
-
 
             return multiView;
         }

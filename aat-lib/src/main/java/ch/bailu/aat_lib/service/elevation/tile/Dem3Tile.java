@@ -71,17 +71,12 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
         return coordinates.coordinates.hashCode();
     }
 
-
-
     public void reload(ServicesInterface sc, SolidDem3Directory solidDem3Directory) {
         load(sc, coordinates.coordinates, solidDem3Directory);
     }
 
-
     public  synchronized void load(ServicesInterface sc, Dem3Coordinates c, SolidDem3Directory solidDem3Directory) {
-
         if (!lock.isLocked()) {
-
             loader.stopProcessing();
 
             synchronized (array) {
@@ -91,18 +86,14 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
                 Foc file = solidDem3Directory.toFile(c);
                 loader = new Dem3LoaderTask(file, array, status);
 
-
                 sc.getBackgroundService().process(loader);
             }
         }
     }
 
-
-
     public Dem3Coordinates getCoordinates() {
         return coordinates.coordinates;
     }
-
 
     public synchronized boolean isLocked() {
         return lock.isLocked();
@@ -112,11 +103,9 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
         lock.lock(o);
     }
 
-
     public synchronized void free(Object o) {
         lock.free(o);
     }
-
 
     public int getStatus() {
         return status.getStatus();
@@ -125,8 +114,6 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
 
     @Override
     public short getElevation(int index) {
-
-
         return array.getElevation(index);
     }
 

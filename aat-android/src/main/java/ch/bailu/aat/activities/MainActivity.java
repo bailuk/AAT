@@ -30,31 +30,23 @@ import ch.bailu.aat_lib.util.fs.AppDirectory;
 
 
 public class MainActivity extends ActivityContext {
-
-
     private final UiTheme theme = AppTheme.intro;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         createViews();
         createDispatcher();
     }
 
-
-
     @Override
     public void onResumeWithService() {
         super.onResumeWithService();
-
         OldAppBroadcaster.broadcast(this, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS);
     }
 
-
     private void createViews() {
-
         ContentView contentView = new ContentView(this, theme);
 
         contentView.add(createButtonBar());
@@ -64,10 +56,7 @@ public class MainActivity extends ActivityContext {
         setContentView(contentView);
     }
 
-
-
     private View createActionList() {
-
         final VerticalScrollView list = new VerticalScrollView(this);
         list.add(new SolidIndexListView(this,new SolidPreset(getStorage()), theme));
 
@@ -76,20 +65,14 @@ public class MainActivity extends ActivityContext {
             list.add(labelFactory(new ActivitySwitcher(this).get(i)));
         }
 
-
-
-
         return list;
     }
-
 
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
     }
-
-
 
     private LinearLayout createButtonBar() {
         final MainControlBar bar = new MainControlBar(this);
@@ -108,9 +91,7 @@ public class MainActivity extends ActivityContext {
         bar.addTrackerState(this);
 
         return bar;
-
     }
-
 
     private ActivityLabel labelFactory(ActivitySwitcher.Entry s) {
         if (s.activityClass == TrackListActivity.class) {
@@ -122,7 +103,6 @@ public class MainActivity extends ActivityContext {
         }
 
         return new ActivityLabel(s);
-
     }
 
     private class ActivityLabel extends LabelTextView {
@@ -184,8 +164,6 @@ public class MainActivity extends ActivityContext {
             }
         }
     }
-
-
 
     private class PresetDirectoryLabel extends ActivityLabel implements OnPreferencesChanged {
 

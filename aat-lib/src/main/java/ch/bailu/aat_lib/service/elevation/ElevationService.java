@@ -13,12 +13,10 @@ public final class ElevationService extends VirtualService implements ElevationP
     private final ElevationUpdater updater;
     private final Dem3Loader loader;
 
-
     public ElevationService(AppContext appContext) {
         Dem3Tiles tiles = new Dem3Tiles();
         loader = new Dem3Loader(appContext, appContext.createTimer(), tiles);
         updater = new ElevationUpdater(appContext, loader, tiles);
-
     }
 
     @Override
@@ -35,13 +33,10 @@ public final class ElevationService extends VirtualService implements ElevationP
         updater.cancelElevationUpdates(e);
     }
 
-
-
     @Override
     public short getElevation(int laE6, int loE6) {
         return loader.getElevation(laE6, loE6);
     }
-
 
     public void close() {
         updater.close();
