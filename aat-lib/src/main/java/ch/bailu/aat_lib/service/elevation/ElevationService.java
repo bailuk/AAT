@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdater;
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
 
-public final class ElevationService extends VirtualService implements ElevationProvider, ElevetionServiceInterface {
+public final class ElevationService extends VirtualService implements ElevationProvider, ElevationServiceInterface {
 
     private final ElevationUpdater updater;
     private final Dem3Loader loader;

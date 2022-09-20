@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat.preferences.location.AndroidSolidAltitudeUtil;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.description.AltitudeConfigurationDescription;
 import ch.bailu.aat_lib.description.CadenceDescription;
@@ -65,7 +65,7 @@ public class CockpitView extends ViewGroup {
 
     public void addAltitude(DispatcherInterface di) {
         NumberView v = add(di, new AltitudeConfigurationDescription(storage), InfoID.LOCATION);
-        SolidProvideAltitude.requestOnClick(v);
+        AndroidSolidAltitudeUtil.requestOnClick(v);
     }
 
     public void addHeartRate(DispatcherInterface di) {

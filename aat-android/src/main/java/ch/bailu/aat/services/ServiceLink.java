@@ -9,13 +9,13 @@ import android.os.IBinder;
 
 import java.io.Closeable;
 
-import ch.bailu.aat_lib.service.elevation.ElevationService;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface;
+import ch.bailu.aat_lib.service.elevation.ElevationServiceInterface;
 import ch.bailu.aat_lib.service.location.LocationServiceInterface;
 import ch.bailu.aat_lib.service.render.RenderServiceInterface;
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
@@ -26,8 +26,6 @@ public abstract class ServiceLink implements
         ServiceConnection,
         Closeable {
 
-
-
     public static class ServiceNotUpError extends Error {
         private static final long serialVersionUID = 5632759660184034845L;
 
@@ -35,7 +33,6 @@ public abstract class ServiceLink implements
             super("Service '" + service.getSimpleName() + "' is not running.*");
         }
     }
-
 
     private int lock = 0;
 
@@ -61,27 +58,21 @@ public abstract class ServiceLink implements
         bindService();
     }
 
-
-
     @Override
     public void onServiceConnected(ComponentName className, IBinder binder) {
         grabService(binder);
         onServiceUp();
     }
 
-
     @Override
     public void onServiceDisconnected(ComponentName name) {
         service = null;
     }
 
-
-
     public void down() {
         releaseService();
         unbindService();
     }
-
 
     private void grabService(IBinder binder) {
         service = (ServiceContext)((AbsService.CommonBinder)binder).getService();
@@ -95,7 +86,6 @@ public abstract class ServiceLink implements
                 if (lock == 0) {
                     service.free(ServiceLink.class.getSimpleName());
                     service = null;
-
                 } else {
                     wait();
                 }
@@ -105,9 +95,8 @@ public abstract class ServiceLink implements
         }
     }
 
-
     private void bindService() {
-        if (bound == false) {
+        if (!bound) {
             bound = true;
 
             try {
@@ -118,7 +107,6 @@ public abstract class ServiceLink implements
             }
         }
     }
-
 
     private void unbindService() {
         if (bound) {
@@ -132,15 +120,11 @@ public abstract class ServiceLink implements
         }
     }
 
-
-
     private boolean isUp() {
         return service != null;
     }
 
     public abstract void onServiceUp();
-
-
 
     private ServiceContext getService()  {
         if (isUp())
@@ -148,7 +132,6 @@ public abstract class ServiceLink implements
         else
             throw new ServiceNotUpError(OneService.class);
     }
-
 
     @Override
     public synchronized boolean lock() {
@@ -160,7 +143,6 @@ public abstract class ServiceLink implements
         return false;
     }
 
-
     @Override
     public synchronized void free() {
         if (isUp()) {
@@ -170,25 +152,20 @@ public abstract class ServiceLink implements
         }
     }
 
-
     @Override
     public synchronized void lock(String s) {
         if (isUp()) getService().lock(s);
     }
-
 
     @Override
     public synchronized void free(String s) {
         if (isUp()) getService().free(s);
     }
 
-
-
     @Override
     public void close() {
         down();
     }
-
 
     @Override
     public TrackerServiceInterface getTrackerService() {
@@ -209,7 +186,7 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public ElevationService getElevationService() {
+    public ElevationServiceInterface getElevationService() {
         return getService().getElevationService();
     }
 
@@ -252,5 +229,4 @@ public abstract class ServiceLink implements
     public void appendStatusText(StringBuilder content) {
         getService().appendStatusText(content);
     }
-
 }

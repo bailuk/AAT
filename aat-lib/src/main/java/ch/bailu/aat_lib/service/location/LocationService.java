@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.service.location;
 import java.io.Closeable;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
@@ -12,6 +14,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.SolidLocationProvider;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 import ch.bailu.aat_lib.service.VirtualService;
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
 import ch.bailu.aat_lib.util.WithStatusText;
 
 /**
@@ -35,16 +38,15 @@ public final class LocationService extends VirtualService
     private MissingTrigger missing;
     private AutopauseTrigger autopause;
 
-
     private int presetIndex;
 
-    public LocationService(SolidLocationProvider sprovider, Broadcaster broadcastInterface) {
+    public LocationService(SolidLocationProvider sprovider, Broadcaster broadcastInterface, SensorServiceInterface sensorService) {
         super();
 
         this.sprovider = sprovider;
         sprovider.register(this);
 
-        createLocationStack(broadcastInterface);
+        createLocationStack(broadcastInterface, sensorService);
         createLocationProvider();
 
         setPresetIndex(new SolidPreset(sprovider.getStorage()).getIndex());
@@ -57,7 +59,7 @@ public final class LocationService extends VirtualService
     }
 
 
-    private void createLocationStack(Broadcaster broadcastInterface) {
+    private void createLocationStack(Broadcaster broadcastInterface, SensorServiceInterface sensorService) {
         clean = new CleanLocation();
         itemList.add(clean);
 
@@ -76,10 +78,8 @@ public final class LocationService extends VirtualService
         dirty = new DirtyLocation(lastItem(), sprovider.getStorage(), broadcastInterface);
         itemList.add(dirty);
 
-
-       // itemList.add(new NewAltitudeFromBarometer(lastItem(), getSContext()));
-       // itemList.add(new AdjustGpsAltitude(lastItem(), getContext()));
-
+       itemList.add(new AltitudeFromBarometer(lastItem(), sensorService));
+       itemList.add(new AdjustGpsAltitude(lastItem(), sprovider.getStorage()));
     }
 
     private LocationStackItem lastItem() {
@@ -94,7 +94,6 @@ public final class LocationService extends VirtualService
         itemList.add(provider);
     }
 
-
     @Override
     public synchronized void close() {
         for (int i=0; i<itemList.size(); i++)
@@ -102,7 +101,6 @@ public final class LocationService extends VirtualService
 
         sprovider.unregister(this);
     }
-
 
     @Override
     public synchronized void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
@@ -136,14 +134,12 @@ public final class LocationService extends VirtualService
         return missing.isMissingUpdates();
     }
 
-
     @Override
-    public synchronized void onPreferencesChanged(StorageInterface storage, String key) {
+    public synchronized void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
         if (sprovider.hasKey(key)) createLocationProvider();
 
         onPreferencesChanged(storage, key, presetIndex);
     }
-
 
     public synchronized void appendStatusText(StringBuilder builder) {
         for (int i=0; i<itemList.size(); i++)

@@ -6,9 +6,11 @@ import android.hardware.SensorEvent;
 
 import androidx.annotation.RequiresApi;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat_lib.preferences.location.SolidPressureAtSeaLevel;
+import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.services.location.Hypsometric;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.OldAppBroadcaster;
@@ -42,7 +44,7 @@ public final class BarometerSensor extends InternalSensorSDK23
         super(c, item, sensor, InfoID.BAROMETER_SENSOR);
 
         context = c;
-        spressure  = new SolidPressureAtSeaLevel(c);
+        spressure  = new SolidPressureAtSeaLevel(new Storage(c));
         saltitude  = new SolidProvideAltitude(new Storage(c), SolidUnit.SI);
 
         if (isLocked()) {
@@ -68,8 +70,6 @@ public final class BarometerSensor extends InternalSensorSDK23
 
     }
 
-
-
     public static float getPressure(SensorEvent event) {
         if (event.values.length > 0) {
             return event.values[0];
@@ -77,10 +77,8 @@ public final class BarometerSensor extends InternalSensorSDK23
         return 0f;
     }
 
-
-
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
 
         if (saltitude.hasKey(key)) {
             hypsometric.setAltitude(saltitude.getValue());
@@ -90,7 +88,6 @@ public final class BarometerSensor extends InternalSensorSDK23
 
         } else if (spressure.hasKey(key)) {
             hypsometric.setPressureAtSeaLevel(spressure.getPressure());
-
         }
     }
 
@@ -101,7 +98,6 @@ public final class BarometerSensor extends InternalSensorSDK23
         return null;
     }
 
-
     @Override
     public void close() {
         if (isLocked()) {
@@ -110,7 +106,6 @@ public final class BarometerSensor extends InternalSensorSDK23
 
         super.close();
     }
-
 
     public static class Information extends GpxInformation {
 
@@ -123,18 +118,15 @@ public final class BarometerSensor extends InternalSensorSDK23
             altitude = a;
         }
 
-
         @Override
         public GpxAttributes getAttributes() {
             return attributes;
         }
 
-
         @Override
         public double getAltitude() {
             return  altitude;
         }
-
 
         @Override
         public long getTimeStamp() {
@@ -142,15 +134,11 @@ public final class BarometerSensor extends InternalSensorSDK23
         }
     }
 
-
     public static class Attributes extends GpxAttributes {
 
         final float pressure;
 
         public static final int KEY_INDEX_PRESSURE= Keys.toIndex("Pressure");
-
-
-
 
         public Attributes(float p) {
             pressure = p;

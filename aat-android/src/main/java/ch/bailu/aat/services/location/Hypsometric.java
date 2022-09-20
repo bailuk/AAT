@@ -24,27 +24,22 @@ public final class Hypsometric {
         pressure = d;
     }
 
-
     public void setAltitude(double a) {
         if (isPressureValid()) {
             pressureAtSeaLevel = getPressureAtSeaLevel(pressure, a);
         }
     }
 
-
     public double getAltitude() {
         if (isValid()) {
             return  (getAltitude(pressure, pressureAtSeaLevel));
         }
-
         return 0;
     }
-
 
     public double getPressureAtSeaLevel() {
         return pressureAtSeaLevel;
     }
-
 
     public boolean isPressureValid() {
         return pressure > MIN_PRESSURE;
@@ -54,13 +49,9 @@ public final class Hypsometric {
         return pressureAtSeaLevel > MIN_PRESSURE;
     }
 
-
     public boolean isValid() {
         return isPressureValid() && isPressureAtSeaLevelValid();
     }
-
-
-
 
     public static double getAltitude(double pressure, double pressureAtSeaLevel) {
 
@@ -69,11 +60,8 @@ public final class Hypsometric {
         return ((Math.pow(Px, Rx) -1d) * TEMPERATURE_KELVIN)/Ax;
     }
 
-
     public static double getPressureAtSeaLevel(double pressure, double altitude) {
-
         final double Hx = altitude * Ax;
-
         return pressure * Math.pow( (Hx / TEMPERATURE_KELVIN) + 1d, Ex);
     }
 

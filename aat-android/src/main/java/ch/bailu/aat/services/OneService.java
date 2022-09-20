@@ -112,11 +112,10 @@ public final class OneService extends AbsService  implements ServiceContext {
         super.onLowMemory();
     }
 
-
     @Override
     public  synchronized LocationServiceInterface getLocationService() {
         if (location == null) {
-            location = new LocationService(new AndroidSolidLocationProvider(this), getAppContext().getBroadcaster());
+            location = new LocationService(new AndroidSolidLocationProvider(this), getAppContext().getBroadcaster(), getSensorService());
         }
         return location;
     }
@@ -199,7 +198,6 @@ public final class OneService extends AbsService  implements ServiceContext {
             tileRemover = new TileRemoverService(this);
         return tileRemover;
     }
-
 
     @Override
     public synchronized  void appendStatusText(StringBuilder builder) {

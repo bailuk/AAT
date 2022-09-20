@@ -1,13 +1,10 @@
-package ch.bailu.aat.services.location;
+package ch.bailu.aat_lib.service.location;
 
-import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.service.location.LocationInformation;
-import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
-import ch.bailu.aat_lib.service.location.LocationStackItem;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
+import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude;
 
 public final class AdjustGpsAltitude extends LocationStackChainedItem {
 
@@ -19,9 +16,7 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
     private int adjust;
     private boolean enabled;
 
-
     private final AltitudeCache altitude = new AltitudeCache();
-
 
     public AdjustGpsAltitude(LocationStackItem n, StorageInterface s) {
         super(n);
@@ -35,8 +30,6 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
         enabled   = senabled.isEnabled();
     }
 
-
-
     @Override
     public void passLocation(LocationInformation l) {
         if (altitude.set(l) && enabled) {
@@ -44,7 +37,6 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
         }
         super.passLocation(l);
     }
-
 
     @Override
     public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
@@ -58,7 +50,6 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
             altitude.setGPSAdjustValue(sadjust, saltitude.getValue());
         }
     }
-
 
     private static class AltitudeCache {
         private final static long MAX_AGE = 10 * 1000;
@@ -74,7 +65,6 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
             }
             return false;
         }
-
 
         public void setGPSAdjustValue(SolidAdjustGpsAltitudeValue sadjust, int currentAltitude) {
             long age = System.currentTimeMillis() - time;

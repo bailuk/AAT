@@ -9,7 +9,6 @@ public final class CleanLocation extends LocationStackItem {
     private GpxInformation loggableLocation = GpxInformation.NULL;
     private long creationTime = 0;
 
-
     public boolean hasLoggableLocation(GpxInformation lastLocation) {
         return (loggableLocation != lastLocation &&
                 (System.currentTimeMillis() - creationTime) < LOCATION_LIFETIME_MILLIS);
@@ -19,10 +18,8 @@ public final class CleanLocation extends LocationStackItem {
         return loggableLocation;
     }
 
-
     @Override
     public void passState(int state) {}
-
 
     @Override
     public void passLocation(LocationInformation location) {
@@ -32,9 +29,7 @@ public final class CleanLocation extends LocationStackItem {
         }
     }
 
-
     @Override
     public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {}
 
 }
-

@@ -14,7 +14,7 @@ import ch.bailu.aat_lib.service.cache.CacheServiceInterface
 import ch.bailu.aat_lib.service.directory.DirectoryService
 import ch.bailu.aat_lib.service.directory.DirectoryServiceInterface
 import ch.bailu.aat_lib.service.elevation.ElevationService
-import ch.bailu.aat_lib.service.elevation.ElevetionServiceInterface
+import ch.bailu.aat_lib.service.elevation.ElevationServiceInterface
 import ch.bailu.aat_lib.service.icons.IconMapService
 import ch.bailu.aat_lib.service.location.LocationService
 import ch.bailu.aat_lib.service.location.LocationServiceInterface
@@ -27,7 +27,8 @@ import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
 class GtkServices (appContext: AppContext) : ServicesInterface {
     private val locationService by lazy { LocationService(
         GtkSolidLocationProvider(appContext.storage),
-        appContext.broadcaster
+        appContext.broadcaster,
+        sensorService
     ) }
 
     private val trackerService by lazy { TrackerService(
@@ -56,7 +57,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     }
 
     override fun free() {}
-    override fun getElevationService(): ElevetionServiceInterface {
+    override fun getElevationService(): ElevationServiceInterface {
         return elevationService
     }
 

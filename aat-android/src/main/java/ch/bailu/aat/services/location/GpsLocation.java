@@ -14,23 +14,17 @@ public final class GpsLocation extends RealLocation {
 
     private boolean fixTime;
 
-
     public GpsLocation(LocationStackItem i, Context c, int interval) {
         super(i, c, LocationManager.GPS_PROVIDER, interval);
-
         fixTime = new SolidGpsTimeFix(new Storage(c)).getValue();
     }
 
-
     @Override
     protected LocationInformation factoryLocationInformation(Location location, int state) {
-
         LocationInformation l = new GpsLocationInformation(location, state);
-
         fixGpsTime(location, l.getCreationTime());
 
         return l;
-
     }
 
     @Override
@@ -42,7 +36,6 @@ public final class GpsLocation extends RealLocation {
         long time = SolidGpsTimeFix.fix(l.getTime(), systemTime);
 
         if (fixTime) {
-
             l.setTime(time);
         }
     }

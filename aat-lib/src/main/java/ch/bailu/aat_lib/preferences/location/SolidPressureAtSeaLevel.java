@@ -1,16 +1,14 @@
-package ch.bailu.aat.preferences.location;
+package ch.bailu.aat_lib.preferences.location;
 
-import android.content.Context;
-
-import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.SolidInteger;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidPressureAtSeaLevel extends SolidInteger {
     private final static String KEY = "PressureAtSeaLevel";
-    public SolidPressureAtSeaLevel(Context c) {
-        super(new Storage(c), KEY);
+    public SolidPressureAtSeaLevel(StorageInterface storage) {
+        super(storage, KEY);
     }
 
     @Override

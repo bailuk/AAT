@@ -10,8 +10,8 @@ import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
-import ch.bailu.aat.preferences.location.SolidPressureAtSeaLevel;
-import ch.bailu.aat.preferences.location.SolidProvideAltitude;
+import ch.bailu.aat_lib.preferences.location.SolidPressureAtSeaLevel;
+import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
@@ -48,7 +48,7 @@ public class GeneralPreferencesView extends VerticalScrollView {
                 SolidTextInputDialog.INTEGER_SIGNED,
                 theme));
 
-        add(new SolidTextInputView(acontext,new SolidPressureAtSeaLevel(acontext),
+        add(new SolidTextInputView(acontext,new SolidPressureAtSeaLevel(storage),
                 SolidTextInputDialog.FLOAT,
                 theme));
 
@@ -78,12 +78,10 @@ public class GeneralPreferencesView extends VerticalScrollView {
             acontext.addTarget(sensors, InfoID.SENSORS);
         }
 
-
         add(new TitleView(acontext, R.string.files, theme));
         add(new SolidDirectoryViewSAF(acontext, new AndroidSolidDataDirectory(acontext), theme));
         add(new SolidDirectoryViewSAF(acontext, new SolidExternalDirectory(acontext), theme));
 
         add(new SolidIndexListView(acontext, new SolidCacheSize(storage), theme));
     }
-
 }
