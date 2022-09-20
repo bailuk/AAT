@@ -22,7 +22,7 @@ public class Res {
             return new Strings_fr();
         }
         if (is(lang, "cs")) {
-            return new Strings_de();
+            return new Strings_cs();
         }
         if (is(lang, "nl")) {
             return new Strings_nl();
