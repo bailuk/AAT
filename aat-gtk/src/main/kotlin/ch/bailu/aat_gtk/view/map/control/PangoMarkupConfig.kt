@@ -20,6 +20,6 @@ object PangoMarkupConfig : MarkupConfig {
     }
 
     override fun getBigClose(): String {
-        return "</b></big>"
+        return "</b></big>\n"
     }
 }

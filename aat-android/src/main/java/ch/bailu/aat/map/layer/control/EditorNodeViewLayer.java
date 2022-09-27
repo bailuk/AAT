@@ -61,14 +61,14 @@ public final class EditorNodeViewLayer extends NodeViewLayer {
 
 
     private void setLoadEditorText(Foc file) {
-        markupBuilder.appendHeaderNl(file.getName());
+        markupBuilder.appendHeader(file.getName());
         markupBuilder.append(Res.str().edit_load());
         setHtmlText(markupBuilder);
     }
 
 
     private void setNoNodeSelectedText(Foc file) {
-        markupBuilder.appendHeaderNl(file.getName());
+        markupBuilder.appendHeader(file.getName());
         setHtmlText(markupBuilder);
     }
 

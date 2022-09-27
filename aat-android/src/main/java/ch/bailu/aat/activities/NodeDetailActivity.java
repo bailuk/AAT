@@ -11,7 +11,6 @@ import android.widget.SeekBar;
 import ch.bailu.aat.R;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -31,6 +30,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat_lib.map.MapViewInterface;
 
 public class NodeDetailActivity extends ActivityContext
@@ -74,8 +74,6 @@ public class NodeDetailActivity extends ActivityContext
         setContentView(contentView);
     }
 
-
-
     private ControlBar createButtonBar() {
         ControlBar bar = new MainControlBar(this);
 
@@ -89,7 +87,6 @@ public class NodeDetailActivity extends ActivityContext
         bar.setOnClickListener1(this);
         return bar;
     }
-
 
     private View createVerticalView() {
 

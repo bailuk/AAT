@@ -17,11 +17,10 @@ public class MarkupBuilder {
         b.setLength(0);
     }
 
-    public void appendHeaderNl(String s) {
+    public void appendHeader(String s) {
         append(config.getBigOpen());
         append(s);
         append(config.getBigClose());
-        append(config.getNewLine());
     }
 
     public void append(String s) {
