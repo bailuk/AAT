@@ -14,16 +14,16 @@ import ch.bailu.foc.Foc;
 
 public abstract class OverpassApi extends DownloadApi {
 
-    public final String NAME;
+    private final static String UTF8 = "UTF-8";
+
     public final static String EXT=".osm";
-    public final static String URL="http://overpass-api.de/api/interpreter?data=("; // data=node
+    public final static String URL="https://overpass-api.de/api/interpreter?data=("; // data=node
     public final static String POST=">;);out;";
+    public final String NAME;
 
 
     private final String bounding;
     private final Foc directory;
-
-
 
     public OverpassApi(Context context, BoundingBoxE6 b) {
         NAME=getName(context);
@@ -42,8 +42,6 @@ public abstract class OverpassApi extends DownloadApi {
         return NAME;
     }
 
-
-
     private static String toString(BoundingBoxE6 bounding) {
         final double lo1 = bounding.getLonWestE6()/1E6;
         final double la1 = bounding.getLatSouthE6()/1E6;
@@ -60,7 +58,8 @@ public abstract class OverpassApi extends DownloadApi {
 
     /**
      * See: http://overpass-api.de/command_line.html
-     * @throws UnsupportedEncodingException
+     * Create an encoded URL for Overpass query
+     * @throws UnsupportedEncodingException if UTF-8 is not supported by the URLEncoder
      */
     public String getUrl(String query) throws UnsupportedEncodingException {
         final String[] queries = query.split(";");
@@ -75,25 +74,24 @@ public abstract class OverpassApi extends DownloadApi {
             if (q.length() > 0) {
                 if (q.charAt(0) == '[') {
                     url.append("node");
-                    url.append(URLEncoder.encode(q, "UTF-8"));
-                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                    url.append(URLEncoder.encode(q, UTF8));
+                    url.append(URLEncoder.encode(bounding, UTF8));
 
                     url.append("rel");
-                    url.append(URLEncoder.encode(q, "UTF-8"));
-                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                    url.append(URLEncoder.encode(q, UTF8));
+                    url.append(URLEncoder.encode(bounding, UTF8));
 
                     url.append("way");
-                    url.append(URLEncoder.encode(q, "UTF-8"));
-                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                    url.append(URLEncoder.encode(q, UTF8));
+                    url.append(URLEncoder.encode(bounding, UTF8));
                 } else {
-                    url.append(URLEncoder.encode(q, "UTF-8"));
-                    url.append(URLEncoder.encode(bounding, "UTF-8"));
+                    url.append(URLEncoder.encode(q, UTF8));
+                    url.append(URLEncoder.encode(bounding, UTF8));
                 }
             }
-
         }
 
-        url.append(URLEncoder.encode(POST,"UTF-8"));
+        url.append(URLEncoder.encode(POST,UTF8));
 
         return url.toString();
     }
@@ -147,13 +145,6 @@ public abstract class OverpassApi extends DownloadApi {
         return URL+"...";
     }
 
-/*
-    @Override
-    public String getUrlEnd() {
-        return POST;
-    }
-*/
-
     @Override
     public Foc getBaseDirectory() {
         return directory;
@@ -163,5 +154,4 @@ public abstract class OverpassApi extends DownloadApi {
     public String getFileExtension() {
         return EXT;
     }
-
 }
