@@ -1,0 +1,7 @@
+v1.23 (36)
+
+- Fix: Missing Czech language support
+- Fix: Adjust altitude from barometer
+- Fix: Directory scan bug
+- Lock to position as default
+- Add timeout for error messages

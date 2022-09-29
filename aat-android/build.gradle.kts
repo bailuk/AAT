@@ -17,7 +17,7 @@ android {
     defaultConfig {
         minSdk = 14
         targetSdk = 29
-        versionCode = 35
+        versionCode = 36
         versionName = appVersionName
         applicationId = "ch.bailu.aat"
     }
