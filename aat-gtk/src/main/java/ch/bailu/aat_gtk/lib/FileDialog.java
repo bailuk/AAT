@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.lib;
 
-import ch.bailu.gtk.Refs;
 import ch.bailu.gtk.gio.File;
 import ch.bailu.gtk.gtk.Dialog;
 import ch.bailu.gtk.gtk.FileChooser;
@@ -132,6 +131,5 @@ public class FileDialog {
         cancel.destroy();
         ok.destroy();
         initialPath.destroy();
-        Refs.remove(onResponse);
     }
 }

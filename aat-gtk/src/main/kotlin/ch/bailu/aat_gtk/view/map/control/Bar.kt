@@ -6,7 +6,6 @@ import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
 import ch.bailu.aat_lib.map.edge.Position
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
 open class Bar(private val pos: Position): EdgeViewInterface {
@@ -38,7 +37,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
     }
 
     val box = createBox(pos).apply {
-        visible = GTK.FALSE
+        visible = false
         addCssClass(Strings.mapControl)
     }
 
@@ -55,7 +54,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
     }
 
     override fun hide() {
-        box.visible = GTK.FALSE
+        box.visible = false
     }
 
     override fun pos(): Position {
@@ -63,6 +62,6 @@ open class Bar(private val pos: Position): EdgeViewInterface {
     }
 
     override fun show() {
-        box.visible = GTK.TRUE
+        box.visible = true
     }
 }

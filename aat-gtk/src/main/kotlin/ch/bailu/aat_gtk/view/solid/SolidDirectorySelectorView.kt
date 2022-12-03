@@ -1,12 +1,10 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.view.menu.provider.SolidFileSelectorMenu
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -25,7 +23,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
         label.setText(solid.label)
         label.xalign = 0f
 
-        entry.hexpand = GTK.TRUE
+        entry.hexpand = true
 
         layout.append(label)
         layout.append(hbox)
@@ -44,7 +42,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
             }
         })
 
-        entry.overwriteMode = 0
+        entry.overwriteMode = false
         Editable(entry.cast()).apply {
             text = Str(solid.valueAsString)
 

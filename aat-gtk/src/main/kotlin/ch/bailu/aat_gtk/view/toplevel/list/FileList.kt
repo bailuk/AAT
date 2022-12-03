@@ -10,14 +10,12 @@ import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.foc.FocFactory
-import ch.bailu.gtk.GTK
-import ch.bailu.gtk.bridge.ListIndex
 import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.lib.bridge.ListIndex
 
 class FileList(
     application: Application,
@@ -87,8 +85,8 @@ class FileList(
 
             val scrolled = ScrolledWindow()
             scrolled.child = list
-            scrolled.hexpand = GTK.TRUE
-            scrolled.vexpand = GTK.TRUE
+            scrolled.hexpand = true
+            scrolled.vexpand = true
 
             vbox.append(SolidDirectoryQueryComboView(storage, focFactory).combo)
             vbox.append(scrolled)

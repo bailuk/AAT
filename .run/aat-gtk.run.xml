@@ -1,5 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="aat-gtk" type="JetRunConfigurationType">
+    <option name="ALTERNATIVE_JRE_PATH" value="/usr/lib/jvm/java-11-openjdk-amd64" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="ch.bailu.aat_gtk.app.AppKt" />
     <module name="AAT.aat-gtk.main" />
     <shortenClasspath name="NONE" />

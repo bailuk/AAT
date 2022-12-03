@@ -4,7 +4,6 @@ package ch.bailu.aat_gtk.lib;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bailu.gtk.Refs;
 import ch.bailu.gtk.type.Array;
 import ch.bailu.gtk.type.Str;
 
@@ -26,7 +25,6 @@ public class Resources {
                 ((ch.bailu.gtk.gobject.Object) o).unref();
             }
 
-            Refs.remove(o);
         });
         refs.clear();
     }

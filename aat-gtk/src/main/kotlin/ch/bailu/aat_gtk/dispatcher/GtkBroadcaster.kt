@@ -3,14 +3,13 @@ package ch.bailu.aat_gtk.dispatcher
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.glib.Glib
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class GtkBroadcaster : Broadcaster {
     private val signals: MutableMap<String, ArrayList<BroadcastReceiver>> = HashMap()
     private val broadcastQueue = ConcurrentLinkedQueue<BroadcastEntry>()
-    private val onSourceFunc = Glib.OnSourceFunc {
+    private val onSourceFunc = Glib.OnSourceFunc { _, _ ->
         do {
             val entry = broadcastQueue.poll()
             if (entry is BroadcastEntry) {
@@ -18,7 +17,7 @@ class GtkBroadcaster : Broadcaster {
             }
         } while(entry != null)
 
-        GTK.FALSE
+        false
     }
 
     @Synchronized

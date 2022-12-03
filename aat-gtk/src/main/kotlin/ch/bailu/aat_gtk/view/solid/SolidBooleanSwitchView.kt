@@ -1,10 +1,8 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
@@ -26,20 +24,20 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
         layout.append(label)
         layout.append(toggleBox)
         toggleBox.append(toggle)
-        toggle.hexpand = GTK.FALSE
-        toggle.active = GTK.IS(solid.value)
+        toggle.hexpand = false
+        toggle.active = solid.value
 
         solid.storage.register(this)
 
         toggle.onStateSet {
-            solid.value = GTK.IS(it)
-            GTK.TRUE
+            solid.value = it
+            true
         }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            toggle.state = GTK.IS(solid.value)
+            toggle.state = solid.value
         }
     }
 }

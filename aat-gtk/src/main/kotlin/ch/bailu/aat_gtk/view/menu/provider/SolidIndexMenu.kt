@@ -2,7 +2,6 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_lib.preferences.SolidIndexList
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.type.Str
@@ -30,9 +29,9 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
                                 group = this
                             }
 
-                            active = GTK.IS(solid.index == index)
+                            active = solid.index == index
                             onToggled {
-                                if (GTK.IS(active)) {
+                                if (active) {
                                     solid.index = index
                                 }
                             }

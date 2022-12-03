@@ -1,11 +1,8 @@
 package ch.bailu.aat_gtk.view.description
 
-import ch.bailu.aat_gtk.lib.extensions.setLabel
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
@@ -23,7 +20,7 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
 
     init {
         addView(label, margin, 0)
-        addView(number, 0, 0).useMarkup = GTK.TRUE
+        addView(number, 0, 0).useMarkup = true
         addView(unit, 0, margin)
 
         updateAllText()

@@ -1,13 +1,10 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setLabel
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.view.toplevel.list.menu.FileContextMenu
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -26,13 +23,13 @@ class FileListItem(listItem: ListItem, private val fileContextMenu: FileContextM
 
         menu.margin(10)
 
-        vbox.hexpand = GTK.TRUE
+        vbox.hexpand = true
         hbox.append(vbox)
         hbox.append(menu)
         vbox.margin(5)
 
         val title = createLabel()
-        title.useMarkup = GTK.TRUE
+        title.useMarkup = true
         vbox.append(title)
         vbox.append(createLabel())
         vbox.append(createLabel())
@@ -42,7 +39,7 @@ class FileListItem(listItem: ListItem, private val fileContextMenu: FileContextM
 
     private fun createLabel(): Label {
         val result = Label(Str.NULL)
-        result.wrap = GTK.TRUE
+        result.wrap = true
         result.xalign = 0f
         result.widthChars = 7
         result.marginEnd = 10

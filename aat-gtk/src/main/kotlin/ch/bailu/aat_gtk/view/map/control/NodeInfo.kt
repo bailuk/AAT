@@ -4,11 +4,9 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setMarkup
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -30,26 +28,26 @@ class NodeInfo {
         append(scrolled)
         valign = Align.START
         halign = Align.CENTER
-        visible = GTK.FALSE
+        visible = false
     }
 
     fun showCenter() {
         box.halign = Align.CENTER
-        box.visible = GTK.TRUE
+        box.visible = true
     }
 
     fun showLeft() {
         box.halign = Align.START
-        box.visible = GTK.TRUE
+        box.visible = true
     }
 
     fun showRight() {
         box.halign = Align.END
-        box.visible = GTK.TRUE
+        box.visible = true
     }
 
     fun hide() {
-        box.visible = GTK.FALSE
+        box.visible = false
     }
 
     fun displayNode(info: GpxInformation, node: GpxPointNode, index: Int) {

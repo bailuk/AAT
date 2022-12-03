@@ -9,7 +9,6 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -17,8 +16,8 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
 
     private val stack = LazyStackView(Stack().apply {
         margin(Layout.margin)
-        hexpand = GTK.TRUE
-        vexpand = GTK.TRUE
+        hexpand = true
+        vexpand = true
         transitionType = StackTransitionType.CROSSFADE
 
     },"preferences-stack", storage).apply {

@@ -6,14 +6,13 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.css.CSS
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
 
 class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
@@ -50,7 +49,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.ALL)
 
-        CSS.addProviderForDisplay(window.display, Strings.appCss)
+        CSS.addProvider(window, Strings.appCss)
         window.onDestroy {
             mainView.onDestroy()
             App.exit(0)
@@ -61,7 +60,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
     private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, stack: MainStackView): HeaderBar {
         val header = HeaderBar()
 
-        header.showTitleButtons = GTK.TRUE
+        header.showTitleButtons = true
 
         contextRevealButton.child = IconMap.getImage("zoom-original", 24)
         contextRevealButton.onToggled {

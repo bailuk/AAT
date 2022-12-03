@@ -2,9 +2,7 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.appendText
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setLabel
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -14,7 +12,6 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
 class ContextBar(contextCallback: UiController, private val storage: StorageInterface) : OnContentUpdatedInterface {
@@ -67,7 +64,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         }
 
         revealer.child = layout
-        revealer.revealChild = GTK.FALSE
+        revealer.revealChild = false
 
         storage.register { _, key ->
             if (key == MainStackView.KEY) {
@@ -138,7 +135,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
 
         AppLog.d(this, "update toggle $index")
         buttons.forEachIndexed { i, it ->
-            it.active = GTK.IS(index == i)
+            it.active = index == i
         }
     }
 }

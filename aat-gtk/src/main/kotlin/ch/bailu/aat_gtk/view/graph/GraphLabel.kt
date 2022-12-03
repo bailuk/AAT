@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.graph
 
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box

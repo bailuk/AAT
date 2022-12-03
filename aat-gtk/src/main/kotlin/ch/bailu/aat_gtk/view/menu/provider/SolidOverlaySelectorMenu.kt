@@ -1,12 +1,10 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -36,9 +34,9 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
                         label.xalign = 0f
                         labels.add(label)
 
-                        check.active = GTK.IS(it)
+                        check.active = it
                         check.onToggled {
-                            solid.setEnabled(index, GTK.IS(check.active))
+                            solid.setEnabled(index, check.active)
                         }
                         layout.append(check)
                         layout.append(label)

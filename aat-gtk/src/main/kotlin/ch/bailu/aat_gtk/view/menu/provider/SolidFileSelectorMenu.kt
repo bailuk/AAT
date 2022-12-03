@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.lib.FileDialog
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.ToDo

@@ -15,7 +15,6 @@ import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import org.mapsforge.core.model.BoundingBox
 
@@ -48,7 +47,7 @@ class MainStackView (
     val widget
         get() = stack.widget
 
-    private var revealerRestore = GTK.FALSE
+    private var revealerRestore = false
 
 
     private val preferences: LazyStackView.LazyPage
@@ -117,13 +116,13 @@ class MainStackView (
 
     fun showPreferences() {
         revealerRestore = revealer.active
-        revealer.active = GTK.FALSE
+        revealer.active = false
         preferences.show()
     }
 
     override fun showPoi() {
         revealerRestore = revealer.active
-        revealer.active = GTK.FALSE
+        revealer.active = false
         poi.show()
     }
 
@@ -160,7 +159,7 @@ class MainStackView (
     }
 
     override fun showContextBar() {
-        revealer.active = GTK.TRUE
+        revealer.active = true
     }
 
     override fun getMapBounding(): BoundingBoxE6 {

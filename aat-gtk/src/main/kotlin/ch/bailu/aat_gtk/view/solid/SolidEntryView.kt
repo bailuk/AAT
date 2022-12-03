@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_lib.preferences.AbsSolidType
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface

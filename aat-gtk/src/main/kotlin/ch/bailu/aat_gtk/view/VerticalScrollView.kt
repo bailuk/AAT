@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setMarkup
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
