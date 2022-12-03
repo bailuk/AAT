@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.app
 
+import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.logger.SL4JLogger
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
@@ -18,6 +19,7 @@ import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
 fun main() {
+    Thread(RuntimeInfo()).start()
     App.run()
 }
 
