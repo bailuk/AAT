@@ -6,7 +6,7 @@
     <module name="AAT.aat-gtk.main" />
     <shortenClasspath name="NONE" />
     <method v="2">
-      <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="false" tasks="build" externalProjectPath="$PROJECT_DIR$/aat-gtk" vmOptions="" scriptParameters="" />
     </method>
   </configuration>
 </component>

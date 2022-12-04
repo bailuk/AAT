@@ -19,7 +19,6 @@ import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
 fun main() {
-    Thread(RuntimeInfo()).start()
     App.run()
 }
 
@@ -28,6 +27,7 @@ object App {
     private val dispatcher = Dispatcher()
 
     init {
+        RuntimeInfo.startLogging()
         AppLog.set(SL4JLogger())
         AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
         AppConfig.setInstance(GtkAppConfig)

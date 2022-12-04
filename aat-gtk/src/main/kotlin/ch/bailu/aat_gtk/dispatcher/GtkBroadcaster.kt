@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 class GtkBroadcaster : Broadcaster {
     private val signals: MutableMap<String, ArrayList<BroadcastReceiver>> = HashMap()
     private val broadcastQueue = ConcurrentLinkedQueue<BroadcastEntry>()
-    private val onSourceFunc = Glib.OnSourceFunc { _, _ ->
+    private val onSourceFunc = Glib.OnSourceFunc { self, _ ->
         do {
             val entry = broadcastQueue.poll()
             if (entry is BroadcastEntry) {
@@ -17,6 +17,7 @@ class GtkBroadcaster : Broadcaster {
             }
         } while(entry != null)
 
+        self.unregister()
         false
     }
 
@@ -25,7 +26,7 @@ class GtkBroadcaster : Broadcaster {
         val observers = signals[signal]?.toTypedArray()
 
         if (observers != null) {
-            AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
+            // TODO AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
             if (broadcastQueue.offer(BroadcastEntry(observers, arrayOf(*args)))) {
                 Glib.idleAdd(onSourceFunc, null)
             } else {
