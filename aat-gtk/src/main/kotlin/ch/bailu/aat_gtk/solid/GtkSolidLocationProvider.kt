@@ -20,7 +20,7 @@ class GtkSolidLocationProvider (storage: StorageInterface) :
     ): LocationStackItem {
 
         return if (index == 0) {
-            GeoClue2LocationProvider(locationService, last)
+            GeoClue2LocationProvider(last)
         } else if (index == 1) {
             GPSdLocationProvider(last)
         } else {

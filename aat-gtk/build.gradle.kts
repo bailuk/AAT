@@ -39,17 +39,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.h2database/h2
     implementation("com.h2database:h2:2.0.204")
 
-
-    /**
-     *    https://mvnrepository.com/artifact/com.github.hypfvieh/dbus-java
-     *    https://github.com/hypfvieh/dbus-java
-     */
-    implementation("com.github.hypfvieh:dbus-java-core:4.1.0")
-    implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:4.1.0")
-    implementation("org.slf4j:slf4j-api:1.7.36")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("ch.qos.logback:logback-core:1.2.3")
-
     /**
      *    https://github.com/taimos/GPSd4Java
      *    https://wiki.mobian-project.org/doku.php?id=location
@@ -74,7 +63,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
