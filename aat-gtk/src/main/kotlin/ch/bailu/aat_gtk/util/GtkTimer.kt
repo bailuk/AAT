@@ -6,11 +6,12 @@ import ch.bailu.gtk.glib.Glib
 class GtkTimer : Timer {
     private var run: Runnable? = null
 
-    private val timeout = Glib.OnSourceFunc { _, _ ->
+    private val timeout = Glib.OnSourceFunc { self, _ ->
         val r = run
         if (r is Runnable) {
             r.run()
         }
+        self.unregister()
         false
     }
 

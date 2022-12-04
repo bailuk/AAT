@@ -17,9 +17,7 @@ import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.lib.bridge.ListIndex
 
-class FileList(
-    application: Application,
-    storage: StorageInterface,
+class FileList(storage: StorageInterface,
     focFactory: FocFactory,
     uiController: UiController
 ) {
@@ -56,7 +54,7 @@ class FileList(
 
             val factory = SignalListItemFactory()
             factory.onSetup { item: ListItem ->
-                items[item] = FileListItem(item, FileContextMenu(overlayMenu, iteratorSimple, uiController, application), descriptions)
+                items[item] = FileListItem(item, FileContextMenu(overlayMenu, iteratorSimple, uiController), descriptions)
                 log()
             }
 

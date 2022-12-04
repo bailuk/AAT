@@ -1,32 +1,58 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.gtk.gio.Menu
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.lib.handler.action.ActionHandler
 
-class EditorMenu(private val editor: EditorSourceInterface): MenuProvider {
-    override fun createMenu(): MenuModelBuilder {
-        return MenuModelBuilder()
-            .label(Res.str().edit_save()) {editor.editor.save()}
-            .label(Res.str().edit_save_copy(), this::saveCopy)
-            .label(Res.str().edit_save_copy_to(), this::saveCopyTo)
-            .label(Res.str().edit_inverse()) { editor.editor.inverse() }
-            .submenu(Res.str().edit_change_type(), MenuModelBuilder()
-                .label("Track") { editor.editor.setType(GpxType.TRACK) }
-                .label("Route") { editor.editor.setType(GpxType.ROUTE) }
-                .label("Way") { editor.editor.setType(GpxType.WAY) }
+class EditorMenu(private val editor: EditorSourceInterface, private val app: Application): MenuProvider {
+    override fun createMenu(): Menu {
+        return Menu().apply {
+            append(Res.str().edit_save(), "app.editSave")
+            append(Res.str().edit_save_copy(), "app.editCopy")
+            append(Res.str().edit_save_copy_to(), "app.editCopyTo")
+            append(Res.str().edit_inverse(), "app.editInverse")
+            appendSection(Res.str().edit_change_type(), Menu().apply {
+                append("Track", "app.editTypeTrack")
+                append("Route", "app.editTypeRoute")
+                append("Way", "app.editTypeWay")
+
+            })
+            append(Res.str().edit_simplify(), "app.editSimplify")
+            append(Res.str().edit_attach(), "app.editAttach")
+            append(Res.str().edit_fix(), "app.editFix")
+            append(Res.str().edit_clear(), "app.editClear")
+            append(
+                Res.str().edit_cut_remaining(),
+                "app.editRemaining"
             )
-            .label(Res.str().edit_simplify()) { editor.editor.simplify() }
-            .label(Res.str().edit_attach(), this::attach)
-            .label(Res.str().edit_fix()) { editor.editor.fix() }
-            .label(Res.str().edit_clear()) { editor.editor.clear() }
-            .label(Res.str().edit_cut_remaining()) {editor.editor.cutRemaining() }
-            .label(Res.str().edit_cut_preceding()) {editor.editor.cutPreceding() }
+            append(
+                Res.str().edit_cut_preceding(),
+                "app.editPreceding"
+            )
+        }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         return arrayOf()
+    }
+
+    override fun createActions(app: Application) {
+        setAction(app, "editSave") {editor.editor.save()}
+        setAction(app, "editCopy", this::saveCopy)
+        setAction(app, "editCopyTo", this::saveCopyTo)
+        setAction(app, "editInverse")  { editor.editor.inverse() }
+        setAction(app, "editTypeTrack")  { editor.editor.setType(GpxType.TRACK) }
+        setAction(app, "editTypeRoute") { editor.editor.setType(GpxType.ROUTE) }
+        setAction(app, "editTypeWay")  { editor.editor.setType(GpxType.WAY) }
+        setAction(app, "editSimplify") { editor.editor.simplify() }
+        setAction(app, "editAttach", this::attach)
+        setAction(app, "editFix") { editor.editor.fix() }
+        setAction(app, "editClear") { editor.editor.clear() }
+        setAction(app, "editRemaining") {editor.editor.cutRemaining() }
+        setAction(app, "editPreceding") {editor.editor.cutPreceding() }
     }
 
 
@@ -42,4 +68,10 @@ class EditorMenu(private val editor: EditorSourceInterface): MenuProvider {
     private fun attach() {
     }
 
+    private fun setAction(app: Application, action: String, onActivate: ()->Unit) {
+        ActionHandler.get(app, action).apply {
+            disconnectSignals()
+            onActivate(onActivate)
+        }
+    }
 }

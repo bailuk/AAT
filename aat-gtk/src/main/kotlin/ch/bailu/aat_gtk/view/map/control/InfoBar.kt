@@ -30,11 +30,11 @@ class InfoBar(app: Application,
     private val mapDirectories = GtkMapDirectories(storage, focFactory)
 
     init {
-        add(PopupButton(app, MapMenu(uiController, mcontext, mapDirectories, focFactory, window)).apply { setIcon("menu") }.overlay)
+        add(PopupButton(app, MapMenu(uiController, mcontext, mapDirectories, focFactory, window,app)).apply { setIcon("menu") }.overlay)
         add(SolidMenuButton(app, SolidMapGrid(storage, mcontext.solidKey)).overlay)
         add(SolidMenuButton(app, SolidLegend(storage, mcontext.solidKey)).overlay)
         add(PopupButton(app, MapQueryMenu(uiController)).apply { setIcon("preferences-system-search-symbolic") }.overlay)
-        add(PopupButton(app, LocationMenu()).apply { setIcon("location") }.overlay)
+        add(PopupButton(app, LocationMenu(app)).apply { setIcon("location") }.overlay)
     }
 
     override fun show() {

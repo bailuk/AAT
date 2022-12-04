@@ -1,22 +1,23 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
-import ch.bailu.aat_gtk.view.menu.provider.CustomWidget
-import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.gtk.gio.Menu
+import ch.bailu.gtk.gtk.Application
 
-class LocationMenu : MenuProvider {
-    override fun createMenu(): MenuModelBuilder {
-        return MenuModelBuilder()
-            .label(Res.str().location_send()) { println(Res.str().location_send()) }
-            .label(Res.str().location_view()) { println(Res.str().location_view()) }
-            .label(Res.str().clipboard_copy()) { println(Res.str().clipboard_copy()) }
-            .label(Res.str().clipboard_paste()) { println(Res.str().clipboard_paste()) }
-            .label(Res.str().p_goto_location()) { println(Res.str().p_goto_location()) }
-
+class LocationMenu(private val app: Application) : MenuProvider {
+    override fun createMenu(): Menu {
+        return Menu().apply {
+            append(Res.str().location_send(), "app.locationSend")
+            append(Res.str().location_view(), "app.locationView")
+            append(Res.str().clipboard_copy(), "app.locationCopy")
+            append(Res.str().clipboard_paste(), "app.locationPaste")
+            append(Res.str().p_goto_location(), "app.locationGoto")
+        }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         return arrayOf()
     }
+
+    override fun createActions(app: Application) {}
 }

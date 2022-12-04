@@ -1,21 +1,26 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
-import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
+import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
+import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
 class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuProvider {
-    override fun createMenu(): MenuModelBuilder {
-        return MenuModelBuilder().custom(solid.key)
+    override fun createMenu(): Menu {
+        return Menu().apply {
+            MenuHelper.createCustomItem(solid.key)
+        }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         return createCustomWidgets(FocName(solid.key))
     }
+
+    override fun createActions(app: Application) {}
 
     fun createCustomWidgets(file: Foc): Array<CustomWidget> {
         var removedFromList = file

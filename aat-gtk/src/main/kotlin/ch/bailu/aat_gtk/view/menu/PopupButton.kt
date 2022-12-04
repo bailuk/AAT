@@ -11,7 +11,7 @@ import ch.bailu.gtk.type.Str
 
 open class PopupButton(app: Application, menuProvider: MenuProvider) {
     private val button = Button()
-    private val popover = PopoverMenu.newFromModelFullPopoverMenu(menuProvider.createMenu().create(app), 0)
+    private val popover = PopoverMenu.newFromModelFullPopoverMenu(menuProvider.createMenu(), 0)
 
     val overlay = Overlay()
 
@@ -19,6 +19,7 @@ open class PopupButton(app: Application, menuProvider: MenuProvider) {
         overlay.child = button
         overlay.addOverlay(popover)
 
+        menuProvider.createActions(app) // Todo: is this the right place?
         PopoverMenu(popover.cast()).apply {
             onShow {
                 menuProvider.createCustomWidgets().forEach {

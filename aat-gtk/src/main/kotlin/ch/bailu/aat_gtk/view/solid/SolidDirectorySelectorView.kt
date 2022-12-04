@@ -30,8 +30,10 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
         hbox.append(entry)
 
+        fileSelectorMenu.createActions(app) // Todo: is this the right place
         hbox.append(MenuButton().apply {
-            menuModel = fileSelectorMenu.createMenu().create(app)
+            menuModel = fileSelectorMenu.createMenu()
+
 
             PopoverMenu(popover.cast()).apply {
                 onShow {

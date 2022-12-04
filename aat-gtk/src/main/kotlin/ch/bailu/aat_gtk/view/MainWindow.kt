@@ -29,6 +29,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
     init {
         TimeStation.log("init")
 
+
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
@@ -69,7 +70,8 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
 
         header.packStart(MenuButton().apply {
             val appMenu = AppMenu(window, GtkAppContext.services, dispatcher, stack)
-            menuModel = appMenu.createMenu().create(app)
+            menuModel = appMenu.createMenu()
+            appMenu.createActions(app) // TODO is this the right place?
             PopoverMenu(popover.cast()).apply {
                 appMenu.createCustomWidgets().forEach {
                     addChild(it.widget, Str(it.id))

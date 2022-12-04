@@ -1,15 +1,19 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
+import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.gtk.gio.Menu
+import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.type.Str
 
 class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
 
-    override fun createMenu(): MenuModelBuilder {
-        return MenuModelBuilder().custom(solid.key)
+    override fun createMenu(): Menu {
+        return Menu().apply {
+            MenuHelper.createCustomItem(solid.key)
+        }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
@@ -41,4 +45,6 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
             )
         )
     }
+
+    override fun createActions(app: Application) {}
 }
