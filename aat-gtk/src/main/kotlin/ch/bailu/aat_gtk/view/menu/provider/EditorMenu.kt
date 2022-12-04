@@ -14,7 +14,7 @@ class EditorMenu(private val editor: EditorSourceInterface, private val app: App
             append(Res.str().edit_save_copy(), "app.editCopy")
             append(Res.str().edit_save_copy_to(), "app.editCopyTo")
             append(Res.str().edit_inverse(), "app.editInverse")
-            appendSection(Res.str().edit_change_type(), Menu().apply {
+            appendSubmenu(Res.str().edit_change_type(), Menu().apply {
                 append("Track", "app.editTypeTrack")
                 append("Route", "app.editTypeRoute")
                 append("Way", "app.editTypeWay")

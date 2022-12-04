@@ -44,16 +44,13 @@ class SearchBar(private val app: Application, centerMap: (LatLong)-> Unit): Bar(
 
     private fun createMenuModel(searchModel: SearchModel): Menu {
         val menu = Menu()
-        var index = 0
-         searchModel.forEach { name, latLong ->
+         searchModel.forEachIndexed { index, name, latLong ->
              menu.append(name.ellipsize(), "app.slot$index")
-             index++
-
              ActionHandler.get(app,"slot$index").apply {
                  disconnectSignals()
                  onActivate { _ -> searchController.centerMap(latLong) }
              }
-        }
+         }
         return menu
     }
 }

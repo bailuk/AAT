@@ -84,7 +84,7 @@ class MainStackView (
                 add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
                 add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
                 add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
-            }.flow
+            }.scrolledWindow
             dispatcher.requestUpdate()
             result
         }
