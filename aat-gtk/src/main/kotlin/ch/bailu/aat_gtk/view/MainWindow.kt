@@ -33,7 +33,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
-        window.iconName = Strings.appId
+        window.setIconName(Strings.appId)
         window.child = box
         window.title = Str(GtkAppConfig.title)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
@@ -50,7 +50,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.ALL)
 
-        CSS.addProvider(window, Strings.appCss)
+        CSS.addProviderForDisplay(window.display, Strings.appCss)
         window.onDestroy {
             mainView.onDestroy()
             App.exit(0)

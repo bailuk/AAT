@@ -9,10 +9,10 @@ object About {
     fun show(window: Window) {
         AboutDialog().apply {
             logo = IconMap.getPaintable("app-icon", 120)
-            programName = Strings.appName
-            version = Strings.version
-            website = Strings.website
-            copyright = Strings.copyright
+            setProgramName(Strings.appName)
+            setVersion(Strings.version)
+            setWebsite(Strings.website)
+            setCopyright(Strings.copyright)
             licenseType = License.GPL_3_0
             titlebar = createHeaderBar(this)
             transientFor = window
