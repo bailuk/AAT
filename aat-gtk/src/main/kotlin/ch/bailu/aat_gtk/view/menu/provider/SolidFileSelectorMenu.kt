@@ -19,7 +19,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.key))
-            append(ToDo.translate("File dialog..."), "app.showSelectFileDialog")
+            append(ToDo.translate("File dialog..."), "app.showSelectFileDialog${solid.key}")
         }
     }
 
@@ -44,7 +44,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "showSelectFileDialog") {
+        MenuHelper.setAction(app, "showSelectFileDialog${solid.key}") {
                 FileDialog()
                     .label(solid.label)
                     .selectFolder()

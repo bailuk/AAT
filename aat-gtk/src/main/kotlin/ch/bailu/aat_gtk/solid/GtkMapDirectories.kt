@@ -9,7 +9,7 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import java.util.ArrayList
 
-class GtkMapDirectories(private val storageInterface: StorageInterface, private val focFactory:FocFactory): MapDirectories {
+class GtkMapDirectories(private val storageInterface: StorageInterface, private val focFactory: FocFactory): MapDirectories {
 
     override fun getWellKnownMapDirs(): ArrayList<Foc> {
         val result = ArrayList<Foc>()

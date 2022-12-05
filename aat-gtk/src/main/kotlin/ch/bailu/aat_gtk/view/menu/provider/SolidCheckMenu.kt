@@ -6,9 +6,8 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
-import ch.bailu.gtk.type.Str
 
-class SolidCheckMenu(private val solid: SolidCheckList, private val app: Application): MenuProvider {
+class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.key))
@@ -24,7 +23,7 @@ class SolidCheckMenu(private val solid: SolidCheckList, private val app: Applica
 
                     solid.stringArray.forEachIndexed { index, it ->
                         append(CheckButton().apply {
-                            label = Str(it)
+                            setLabel(it)
                             active = enabledArray[index]
                             onToggled {
                                 solid.setEnabled(index, active)

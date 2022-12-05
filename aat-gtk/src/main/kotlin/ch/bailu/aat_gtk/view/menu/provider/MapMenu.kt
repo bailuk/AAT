@@ -17,8 +17,7 @@ class MapMenu(
     private val mapContext: MapContext,
     mapDirectories: GtkMapDirectories,
     focFactory: FocFactory,
-    window: Window,
-    app: Application
+    window: Window
 
 ) : MenuProvider {
 
@@ -26,13 +25,13 @@ class MapMenu(
     private val renderMenu = SolidFileSelectorMenu(srender, window)
 
     private val soverlay = SolidOverlayFileList(srender.storage, focFactory)
-    private val overlayMenu = SolidCheckMenu(soverlay, app)
+    private val overlayMenu = SolidCheckMenu(soverlay)
 
     private val soffline = mapDirectories.createSolidFile()
     private val offlineMenu = SolidFileSelectorMenu(soffline, window)
 
     private val stiles = SolidMapTileStack(srender)
-    private val tilesMenu = SolidCheckMenu(stiles, app)
+    private val tilesMenu = SolidCheckMenu(stiles)
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -55,6 +54,7 @@ class MapMenu(
     override fun createActions(app: Application) {
         setAction(app, "showMapSettings") { uiController.showPreferencesMap() }
         setAction(app, "reloadMapTiles") { mapContext.mapView.reDownloadTiles() }
+        renderMenu.createActions(app)
     }
 
     private fun setAction(app: Application, action: String, onActivate: ()->Unit) {

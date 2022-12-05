@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.menu
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
@@ -20,11 +21,10 @@ open class PopupButton(app: Application, menuProvider: MenuProvider) {
         overlay.addOverlay(popover)
 
         menuProvider.createActions(app) // Todo: is this the right place?
+
         PopoverMenu(popover.cast()).apply {
-            onShow {
-                menuProvider.createCustomWidgets().forEach {
-                    addChild(it.widget, Str(it.id))
-                }
+            menuProvider.createCustomWidgets().forEach {
+                addChild(it.widget, it.id)
             }
         }
 

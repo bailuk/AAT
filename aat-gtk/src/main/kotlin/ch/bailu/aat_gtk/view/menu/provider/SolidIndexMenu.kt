@@ -6,13 +6,12 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
-import ch.bailu.gtk.type.Str
 
 class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
-            MenuHelper.createCustomItem(solid.key)
+            appendItem(MenuHelper.createCustomItem(solid.key))
         }
     }
 
@@ -25,8 +24,7 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
                     selectionMode = 0
                     solid.stringArray.forEachIndexed { index, it ->
                         append(CheckButton().apply {
-                            label = Str(it)
-
+                            setLabel(it)
                             if (group is CheckButton) {
                                 setGroup(group)
                             } else {
