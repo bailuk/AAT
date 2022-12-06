@@ -1,43 +1,44 @@
 package ch.bailu.aat_gtk.lib;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ch.bailu.gtk.gio.File;
-import ch.bailu.gtk.gtk.Dialog;
 import ch.bailu.gtk.gtk.FileChooser;
 import ch.bailu.gtk.gtk.FileChooserAction;
+import ch.bailu.gtk.gtk.FileChooserDialog;
+import ch.bailu.gtk.gtk.FileFilter;
 import ch.bailu.gtk.gtk.ResponseType;
 import ch.bailu.gtk.gtk.Window;
 import ch.bailu.gtk.type.Str;
 
 public class FileDialog {
 
-    private Str label = Str.NULL;
-    private Str cancel = new Str("Cancel");
-    private Str ok = new Str("OK");
-    private Str initialPath = Str.NULL;
+    private String title = "";
+    private String cancel = "Cancel";
+    private String ok = "OK";
+    private String initialPath = "";
+    private OnResponse onResponseCallback = path -> {};
+    private Map<String, FileFilter> filterMap = new HashMap<>();
 
     private int action = FileChooserAction.OPEN;
 
-    public interface Response {
+    public interface OnResponse {
         void onResponse(String path);
     }
 
-    private Response response = path -> {};
-
-    public FileDialog label(String label) {
-        this.label.destroy();
-        this.label = new Str(label);
+    public FileDialog title(String label) {
+        this.title = label;
         return this;
     }
 
     public FileDialog ok(String label) {
-        this.ok.destroy();
-        this.ok = new Str(label);
+        this.ok = label;
         return this;
     }
 
     public FileDialog cancel(String label) {
-        this.cancel.destroy();
-        this.cancel = new Str(label);
+        this.cancel = label;
         return this;
     }
 
@@ -51,8 +52,28 @@ public class FileDialog {
         return this;
     }
 
-    public FileDialog response(Response response) {
-        this.response = response;
+    public FileDialog mimeType(String name, String mimeType) {
+        if (!filterMap.containsKey(name)) {
+            var filter = new FileFilter();
+            filter.setName(name);
+            filterMap.put(name, filter);
+        }
+        filterMap.get(name).addMimeType(mimeType);
+        return this;
+    }
+
+    public FileDialog pattern(String name, String pattern) {
+        if (!filterMap.containsKey(name)) {
+            var filter = new FileFilter();
+            filter.setName(name);
+            filterMap.put(name, filter);
+        }
+        filterMap.get(name).addPattern(pattern);
+        return this;
+    }
+
+    public FileDialog onResponse(OnResponse response) {
+        this.onResponseCallback = response;
         return this;
     }
 
@@ -62,50 +83,37 @@ public class FileDialog {
     }
 
     public FileDialog path(String path) {
-        this.initialPath.destroy();
-        this.initialPath = new Str(path);
+        this.initialPath = path;
         return this;
     }
 
-    private Dialog.OnResponse onResponse = i -> {
-        String path = "";
-        if (i == ResponseType.OK) {
-            path = getPath();
-        }
-
-        destroy();
-        response.onResponse(path);
-    };
-
-    private String getPath() {
-        String result = "";
-        if (dialog != null) {
-            var chooser = new FileChooser(dialog.cast());
-            var file = chooser.getFile();
-            var path = file.getPath();
-
-            result = path.toString();
-            unref(file);
-            path.destroy();
-        }
-        return result;
-    }
-
-
-    private ch.bailu.gtk.gtk.FileChooserDialog dialog;
-
     public void show(Window window) {
-        dialog = new ch.bailu.gtk.gtk.FileChooserDialog(label, window, action, null);
+        var dialog = new FileChooserDialog(title, window, action, null);
 
-        setInitialPath();
+        var initialPath = new Str(this.initialPath);
+
+        setInitialPath(dialog, initialPath);
+        var chooser = new FileChooser(dialog.cast());
+        filterMap.keySet().forEach((key) -> chooser.addFilter(filterMap.get(key)));
+
         dialog.addButton(cancel, ResponseType.CANCEL);
         dialog.addButton(ok, ResponseType.OK);
-        dialog.onResponse(onResponse);
+                dialog.onDestroy(() -> {
+            dialog.disconnectSignals();
+            initialPath.destroy();
+        });
+        dialog.onResponse((response) -> {
+            if (response == ResponseType.OK) {
+                var path = getPath(dialog);
+                onResponseCallback.onResponse(path);
+            }
+            dialog.close();
+        });
         dialog.show();
     }
 
-    private void setInitialPath() {
-        if (dialog != null && initialPath.getSize() > 0) {
+    private static void setInitialPath(FileChooserDialog dialog, Str initialPath) {
+        if (initialPath.getSize() > 1) {
             try {
                 var path = File.newForPath(initialPath);
                 new FileChooser(dialog.cast()).setFile(path);
@@ -117,19 +125,19 @@ public class FileDialog {
         }
     }
 
-    private void unref(File file) {
-        new ch.bailu.gtk.gobject.Object(file.cast()).unref();
+    private static String getPath(FileChooserDialog dialog) {
+        var chooser = new FileChooser(dialog.cast());
+        var file = chooser.getFile();
+        var path = file.getPath();
+        var result = path.toString();
+
+        unref(file);
+        path.destroy();
+
+        return result;
     }
 
-    private void destroy() {
-        if (dialog != null) {
-            dialog.close();
-            dialog = null;
-        }
-
-        label.destroy();
-        cancel.destroy();
-        ok.destroy();
-        initialPath.destroy();
+    private static void unref(File file) {
+        new ch.bailu.gtk.gobject.Object(file.cast()).unref();
     }
 }

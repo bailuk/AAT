@@ -10,9 +10,6 @@ import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
-import ch.bailu.gtk.gtk.MenuButton
-import ch.bailu.gtk.gtk.PopoverMenu
-import ch.bailu.gtk.type.Str
 
 class FileContextMenu(
     private val solidOverlaySelectorMenu: SolidOverlaySelectorMenu,
@@ -21,17 +18,6 @@ class FileContextMenu(
 ) : MenuProvider {
 
     var index = -1
-
-    fun addToButton(menuButton: MenuButton) {
-        menuButton.menuModel = createMenu()
-        PopoverMenu(menuButton.popover.cast()).apply {
-            onShow {
-                createCustomWidgets().forEach {
-                    addChild(it.widget, Str(it.id))
-                }
-            }
-        }
-    }
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -42,7 +28,7 @@ class FileContextMenu(
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         iteratorSimple.moveToPosition(index)
-        return solidOverlaySelectorMenu.createCustomWidgets(iteratorSimple.info.file)
+        return solidOverlaySelectorMenu.createCustomWidgets()
     }
 
     override fun createActions(app: Application) {
@@ -50,5 +36,6 @@ class FileContextMenu(
             iteratorSimple.moveToPosition(index)
             uiController.load(iteratorSimple.info)
         }
+        solidOverlaySelectorMenu.createActions(app)
     }
 }

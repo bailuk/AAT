@@ -8,16 +8,18 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.gtk.*
 
-class ContextBar(contextCallback: UiController, private val storage: StorageInterface) : OnContentUpdatedInterface {
+class ContextBar(contextCallback: UiController, private val storage: StorageInterface
+                 ) : OnContentUpdatedInterface {
     val revealer = Revealer()
 
-    private val combo = ComboBoxText()
+    private val combo = ComboBoxText().apply {
+        hexpand = true
+    }
     private val cache = IndexedMap<Int, GpxInformation>()
     private var trackerState = StateID.NOSERVICE
     private var selectInfoID = InfoID.TRACKER
@@ -27,7 +29,6 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         append(combo)
         margin(3)
         addCssClass(Strings.linked)
-
     }
     private val row2 = Box(Orientation.HORIZONTAL, 0).apply {
         addCssClass(Strings.linked)
@@ -58,12 +59,10 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     }
 
     init {
-        val layout = Box(Orientation.VERTICAL,0).apply {
+        revealer.child = Box(Orientation.VERTICAL,0).apply {
             append(row1)
             append(row2)
         }
-
-        revealer.child = layout
         revealer.revealChild = false
 
         storage.register { _, key ->
@@ -87,6 +86,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         return ToggleButton().apply {
             setLabel(label)
             onClicked(onClicked)
+            hexpand = true
         }
     }
 
@@ -133,7 +133,6 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     private fun updateToggle() {
         val index = storage.readInteger(MainStackView.KEY)
 
-        AppLog.d(this, "update toggle $index")
         buttons.forEachIndexed { i, it ->
             it.active = index == i
         }

@@ -67,7 +67,7 @@ class MainStackView (
         }
 
         stack.add("Files") {
-            FileList(GtkAppContext.storage, GtkAppContext, this).vbox
+            FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox
         }
 
         stack.add("Detail") {

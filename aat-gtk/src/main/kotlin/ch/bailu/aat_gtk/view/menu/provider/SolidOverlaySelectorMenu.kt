@@ -12,20 +12,23 @@ import ch.bailu.gtk.type.Str
 class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
-            MenuHelper.createCustomItem(solid.key)
+            appendItem(MenuHelper.createCustomItem(solid.key))
         }
     }
 
-    override fun createCustomWidgets(): Array<CustomWidget> {
-        return createCustomWidgets(FocName(solid.key))
+    private var file: Foc = FocName(solid.key)
+    private var removedFromList = file
+    private val labels: ArrayList<Label> = ArrayList()
+
+    fun setFile(file: Foc) {
+        this.file = file
+        removedFromList = file
+        updateLabels()
     }
 
     override fun createActions(app: Application) {}
 
-    fun createCustomWidgets(file: Foc): Array<CustomWidget> {
-        var removedFromList = file
-        val labels: ArrayList<Label> = ArrayList()
-
+    override fun createCustomWidgets(): Array<CustomWidget> {
         return arrayOf(
             CustomWidget(
                 ListBox().apply {
@@ -48,7 +51,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
                         append(layout)
                     }
 
-                    updateLabels(labels)
+                    updateLabels()
                     onRowActivated {
                         val foundAt = indexOf(file)
 
@@ -64,7 +67,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
                             solid[it.index].setValueFromFile(removedFromList)
                         }
 
-                        updateLabels(labels)
+                        updateLabels()
                     }
                 }, solid.key
             )
@@ -80,7 +83,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
         return -1
     }
 
-    private fun updateLabels(labels: ArrayList<Label>) {
+    private fun updateLabels() {
         labels.forEachIndexed { index, it ->
             it.setText(solid[index].valueAsString.ellipsizeStart(30))
         }

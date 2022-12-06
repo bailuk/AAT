@@ -45,16 +45,13 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
 
     override fun createActions(app: Application) {
         MenuHelper.setAction(app, "showSelectFileDialog${solid.key}") {
-                FileDialog()
-                    .label(solid.label)
-                    .selectFolder()
-                    .path(solid.valueAsString)
-                    .response {
-                        if (it.isNotEmpty()) {
-                            solid.setValueFromString(it)
-                        }
+            FileDialog()
+                .title(solid.label)
+                .onResponse {
+                    if (it.isNotEmpty()) {
+                        solid.setValueFromString(it)
                     }
-                    .show(window)
+                }.show(window)
             }
     }
 }

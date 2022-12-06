@@ -18,18 +18,21 @@ public class RuntimeInfo implements Runnable {
 
         var runtime = Runtime.getRuntime();
 
-        while (on) {
-            try {
-                Thread.sleep(TIMEOUT);
+        try {
+            Thread.sleep(TIMEOUT);
+            processors.log(runtime.availableProcessors());
+            free.log(runtime.freeMemory() / MB);
+
+            while (on) {
                 max.log(runtime.maxMemory() / MB);
                 total.log(runtime.totalMemory() / MB);
-                free.log(runtime.freeMemory() / MB);
                 used.log((runtime.totalMemory() - runtime.freeMemory()) / MB);
-                processors.log(runtime.availableProcessors() / MB);
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-                on = false;
+                Thread.sleep(TIMEOUT);
             }
+
+        } catch (InterruptedException e) {
+            on = false;
+            System.err.println(e.getMessage());
         }
     }
 
@@ -42,5 +45,9 @@ public class RuntimeInfo implements Runnable {
             on = true;
             new Thread(new RuntimeInfo()).start();
         }
+    }
+
+    public static synchronized void stopLogging() {
+        on = false;
     }
 }

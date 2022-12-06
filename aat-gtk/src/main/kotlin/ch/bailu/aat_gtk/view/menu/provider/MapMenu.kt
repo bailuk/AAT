@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
@@ -10,7 +11,6 @@ import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Window
-import ch.bailu.gtk.lib.handler.action.ActionHandler
 
 class MapMenu(
     private val uiController: UiController,
@@ -39,8 +39,8 @@ class MapMenu(
             appendSubmenu(soverlay.label, overlayMenu.createMenu())
             appendSubmenu(soffline.label, offlineMenu.createMenu())
             appendSubmenu(srender.label, renderMenu.createMenu())
-            append(Res.str().intro_settings(),"app.showMapSettings")
-            append(Res.str().tt_info_reload(),"app.reloadMapTiles")
+            append(Res.str().intro_settings(), "app.showMapSettings")
+            append(Res.str().tt_info_reload(), "app.reloadMapTiles")
         }
     }
 
@@ -52,15 +52,11 @@ class MapMenu(
     }
 
     override fun createActions(app: Application) {
-        setAction(app, "showMapSettings") { uiController.showPreferencesMap() }
-        setAction(app, "reloadMapTiles") { mapContext.mapView.reDownloadTiles() }
+        MenuHelper.setAction(app, "showMapSettings") { uiController.showPreferencesMap() }
+        MenuHelper.setAction(app, "reloadMapTiles") { mapContext.mapView.reDownloadTiles() }
         renderMenu.createActions(app)
-    }
-
-    private fun setAction(app: Application, action: String, onActivate: ()->Unit) {
-        ActionHandler.get(app, action).apply {
-            disconnectSignals()
-            onActivate(onActivate)
-        }
+        tilesMenu.createActions(app)
+        overlayMenu.createActions(app)
+        offlineMenu.createActions(app)
     }
 }
