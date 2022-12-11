@@ -8,7 +8,10 @@ import ch.bailu.gtk.gtk.ScrolledWindow
 
 class CockpitView {
 
-    private val flow = FlowBox()
+    private val flow = FlowBox().apply {
+        vexpand = true
+        hexpand = true
+    }
     val scrolledWindow = ScrolledWindow().apply {
         child = flow
     }
