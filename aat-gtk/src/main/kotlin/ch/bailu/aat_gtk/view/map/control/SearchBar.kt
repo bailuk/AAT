@@ -20,7 +20,7 @@ class SearchBar(private val app: Application, centerMap: (LatLong)-> Unit): Bar(
         add(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
 
-            val entry = SearchEntry()
+            val entry = Entry()
             append(entry.apply {
                 onActivate {
                     searchController.search(Editable(cast()).text.toString())

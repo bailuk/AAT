@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
@@ -9,7 +10,6 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.gtk.*
 
@@ -24,44 +24,42 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     private var trackerState = StateID.NOSERVICE
     private var selectInfoID = InfoID.TRACKER
 
-    private val row1 = Box(Orientation.HORIZONTAL, 0).apply {
-        append(createImageButton("zoom-fit-best-symbolic") { contextCallback.showInMap(selectedGpx()) } )
+    private val row = Box(Orientation.HORIZONTAL, 0).apply {
+        addCssClass(Strings.linked)
         append(combo)
-        margin(3)
-        addCssClass(Strings.linked)
-    }
-    private val row2 = Box(Orientation.HORIZONTAL, 0).apply {
-        addCssClass(Strings.linked)
         margin(3)
     }
 
     private val buttons = ArrayList<ToggleButton>().apply {
-        add(createButton(ToDo.translate("Map")) {
-            contextCallback.showMap()
+        add(createButton("inc_map") {
+            if (storage.readInteger(MainStackView.KEY) == MainStackView.INDEX_MAP) {
+                contextCallback.showInMap(selectedGpx())
+            } else {
+                contextCallback.showMap()
+            }
             updateToggle()
         })
-        add(createButton(ToDo.translate("List")) {
+        add(createButton("view-list-symbolic") {
             contextCallback.showInList()
             updateToggle()
         })
-        add(createButton(ToDo.translate("Detail")) {
+        add(createButton("help-about-symbolic") {
             contextCallback.showDetail()
             updateToggle()
         })
-        add(createButton(ToDo.translate("Cockpit")) {
+        add(createButton("inc_cockpit") {
             contextCallback.showCockpit()
             updateToggle()
         })
 
         forEach {
-            row2.append(it)
+            row.append(it)
         }
     }
 
     init {
-        revealer.child = Box(Orientation.VERTICAL,0).apply {
-            append(row1)
-            append(row2)
+        revealer.child = Box(Orientation.HORIZONTAL,0).apply {
+            append(row)
         }
         revealer.revealChild = false
 
@@ -76,24 +74,16 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     private fun updateCombo(index: Int = 0) {
         combo.removeAll()
         cache.forEach { _, value ->
-            combo.appendText(value.file.name)
+            combo.appendText(value.file.name.ellipsize(15))
         }
         combo.active = index
     }
 
 
-    private fun createButton(label: String, onClicked: Button.OnClicked) : ToggleButton {
+    private fun createButton(icon: String, onClicked: Button.OnClicked) : ToggleButton {
         return ToggleButton().apply {
-            setLabel(label)
+            child = IconMap.getImage(icon, Layout.ICON_SIZE)
             onClicked(onClicked)
-            hexpand = true
-        }
-    }
-
-    private fun createImageButton(resource: String, onClicked: Button.OnClicked) : Button {
-        return Button().apply {
-            onClicked(onClicked)
-            child = IconMap.getImage(resource, Layout.iconSize)
         }
     }
 

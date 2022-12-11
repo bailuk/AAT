@@ -2,15 +2,14 @@ package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.stack.StackViewSelector
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.type.Str
 
 class PreferencesStackView(controller: UiController, storage: StorageInterface, app: Application, window: Window) {
 
@@ -42,9 +41,10 @@ class PreferencesStackView(controller: UiController, storage: StorageInterface, 
     private val selector = StackViewSelector(stack)
 
     init {
-        val back = Button.newWithLabelButton(Str(ToDo.translate("Back")))
+        val back = Button()
         back.margin(Layout.margin)
         back.onClicked { controller.back() }
+        back.child = IconMap.getImage("go-previous-symbolic", Layout.ICON_SIZE)
         box.append(back)
 
         box.append(selector.combo)

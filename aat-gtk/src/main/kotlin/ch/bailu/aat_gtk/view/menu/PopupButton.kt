@@ -28,7 +28,7 @@ open class PopupButton(app: Application, menuProvider: MenuProvider) {
         button.onClicked { popover.popup() }
     }
 
-    fun setIcon(resource: String, size: Int = Layout.iconSize) {
+    fun setIcon(resource: String, size: Int = Layout.ICON_SIZE) {
         button.setIcon(resource, size)
     }
 }

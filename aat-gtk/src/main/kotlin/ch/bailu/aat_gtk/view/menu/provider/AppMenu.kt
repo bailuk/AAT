@@ -27,14 +27,15 @@ class AppMenu(private val window: ApplicationWindow,
         return Menu().apply {
 
             append(Res.str().intro_map(), "app.showMap")
+            append(Res.str().intro_list(), "app.showTracks")
+            append(ToDo.translate("Detail"), "app.trackInfo")
             append(ToDo.translate("Cockpit"), "app.showCockpit")
-            append(ToDo.translate("Tracks & Overlays"), "app.showTracks")
-            append(Res.str().intro_settings(), "app.showSettings")
-            appendItem(MenuHelper.createCustomItem("tracker-button"))
-            appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("About…"), "app.showAbout")
+            appendSection(Res.str().tracker(), Menu().apply {
+                appendItem(MenuHelper.createCustomItem("tracker-button"))
             })
             appendSection(Str.NULL, Menu().apply {
+                append(Res.str().intro_settings(), "app.showSettings")
+                append("${Res.str().intro_about()}…", "app.showAbout")
                 append(ToDo.translate("Dump resources"), "app.dumpResources")
             })
         }
@@ -48,6 +49,7 @@ class AppMenu(private val window: ApplicationWindow,
     }
 
     override fun createActions(app: Application) {
+        MenuHelper.setAction(app, "trackInfo") { stack.showDetail() }
         MenuHelper.setAction(app, "showMap") { stack.showMap() }
         MenuHelper.setAction(app, "showCockpit") { stack.showCockpit() }
         MenuHelper.setAction(app, "showTracks") { stack.showFiles() }

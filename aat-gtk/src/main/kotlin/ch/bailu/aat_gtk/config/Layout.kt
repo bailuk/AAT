@@ -5,7 +5,7 @@ object Layout {
     const val margin = 5
     const val marginBig = 10
 
-    const val iconSize = 20
+    const val ICON_SIZE = 20
     const val barSize = 50
 
     const val windowWidth = 720 / 2
