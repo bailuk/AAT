@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.gtk.*
 
@@ -61,7 +62,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         revealer.child = Box(Orientation.HORIZONTAL,0).apply {
             append(row)
         }
-        revealer.revealChild = false
+        revealer.revealChild = true
 
         storage.register { _, key ->
             if (key == MainStackView.KEY) {
@@ -96,15 +97,17 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val isInCache = cache.indexOfKey(iid) > -1
+        if (iid == InfoID.TRACKER || iid == InfoID.FILEVIEW || (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidOverlayFileList.MAX_OVERLAYS)) {
+            val isInCache = cache.indexOfKey(iid) > -1
 
-        if (isInCache && iid == InfoID.TRACKER) {
-            if (info.state != trackerState) {
-                trackerState = info.state
+            if (isInCache && iid == InfoID.TRACKER) {
+                if (info.state != trackerState) {
+                    trackerState = info.state
+                    updateCacheAndCombo(iid, info, isInCache)
+                }
+            } else {
                 updateCacheAndCombo(iid, info, isInCache)
             }
-        } else {
-            updateCacheAndCombo(iid, info, isInCache)
         }
     }
 

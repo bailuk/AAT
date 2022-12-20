@@ -41,9 +41,6 @@ public final class ObjTileCached extends ObjTile {
         save = new SaveTileTask(sourceID, cachedImageFile);
     }
 
-
-
-
     @Override
     public void onInsert(AppContext sc) {
         if (isLoadable()) {
@@ -58,9 +55,6 @@ public final class ObjTileCached extends ObjTile {
         return cachedImageFile.exists();
     }
 
-
-
-
     @Override
     public void onChanged(String id, AppContext sc) {
         if (id.equals(tile.toString())) {
@@ -68,12 +62,9 @@ public final class ObjTileCached extends ObjTile {
                     AppBroadcaster.FILE_CHANGED_INCACHE,
                     toString());
 
-
-
-            if (
-                    mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
-                            id.equals(sourceID) &&
-                            tile.isLoaded()) {
+            if (mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
+                    id.equals(sourceID) &&
+                    tile.isLoaded()) {
 
                 sc.getServices().getBackgroundService().process(save);
             }
@@ -90,10 +81,6 @@ public final class ObjTileCached extends ObjTile {
     public void onRemove(AppContext cs) {
         tile.free();
     }
-
-
-
-
 
     @Override
     public TileBitmap getTileBitmap() {
@@ -118,7 +105,6 @@ public final class ObjTileCached extends ObjTile {
         return tile.isLoaded();
     }
 
-
     @Override
     public long getSize() {
         return MIN_SIZE;
@@ -127,12 +113,10 @@ public final class ObjTileCached extends ObjTile {
     @Override
     public void onDownloaded(String id, String url, AppContext sc) {}
 
-
     @Override
     public Foc getFile() {
         return cachedImageFile;
     }
-
 
     public static class Factory extends Obj.Factory {
         private final Source source;

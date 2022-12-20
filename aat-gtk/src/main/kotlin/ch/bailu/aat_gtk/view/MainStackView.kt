@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.dispatcher.LogOnContentUpdate
 import ch.bailu.aat_gtk.view.search.PoiStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
@@ -56,6 +57,8 @@ class MainStackView (
     private var backTo = INDEX_MAP
 
     init {
+        LogOnContentUpdate(dispatcher)
+
         dispatcher.addSource(customFileSource)
 
         stack.add("Map") {

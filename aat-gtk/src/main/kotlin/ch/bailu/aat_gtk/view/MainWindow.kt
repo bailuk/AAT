@@ -64,6 +64,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         header.showTitleButtons = true
 
         contextRevealButton.child = IconMap.getImage("zoom-original", 24)
+        contextRevealButton.active = true
         contextRevealButton.onToggled {
             contextBar.revealer.revealChild = contextRevealButton.active
         }

@@ -2,17 +2,25 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.menu.MenuHelper
+import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuProvider {
+class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
-            appendItem(MenuHelper.createCustomItem(solid.key))
+            appendSection(Res.str().file_overlay(), Menu().apply {
+                appendItem(MenuHelper.createCustomItem(solid.key))
+            })
+
+            appendSection(Str.NULL, Menu().apply {
+                append(Res.str().file_mock(), "app.file_mock")
+            })
         }
     }
 
@@ -26,7 +34,11 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
         updateLabels()
     }
 
-    override fun createActions(app: Application) {}
+    override fun createActions(app: Application) {
+        MenuHelper.setAction(app, "file_mock") {
+            solidMock.setValue(file.path)
+        }
+    }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         return arrayOf(

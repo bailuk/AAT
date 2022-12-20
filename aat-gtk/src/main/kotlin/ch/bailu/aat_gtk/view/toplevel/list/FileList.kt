@@ -12,10 +12,13 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
+import ch.bailu.aat_lib.service.location.MockLocationInformation
 import ch.bailu.foc.FocFactory
+import ch.bailu.foc.FocFile
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
@@ -68,7 +71,9 @@ class FileList(app: Application,
     private var indexOfSelected = -1
 
     private val items = HashMap<ListItem, FileListItem>()
-    private val overlayMenu = SolidOverlaySelectorMenu(SolidOverlayFileList(storage,focFactory))
+    private val overlayMenu = SolidOverlaySelectorMenu(SolidOverlayFileList(storage,focFactory), SolidMockLocationFile(storage)).apply {
+        createActions(app)
+    }
     private val logItems = SizeLog("FileListItem")
 
 
