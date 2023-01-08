@@ -18,7 +18,6 @@ public class ContentDescriptions extends ContentDescription {
         String del = "";
 
         for (ContentDescription d: descriptions) {
-
             value.append(del).append(d.getValue());
             final String unit = d.getUnit();
             if (unit.length() > 0) value.append(" ").append(unit);

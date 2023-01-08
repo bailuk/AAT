@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-abstract class VerticalScrollView() {
+abstract class VerticalScrollView {
     companion object {
         const val MARGIN = 10
     }
@@ -26,7 +26,7 @@ abstract class VerticalScrollView() {
 
     fun add(text: String) {
         val label = Label(Str.NULL)
-        label.setMarkup("<b>${text}</b>")
+        label.setMarkup("<b>$text</b>")
         add(label)
     }
 
