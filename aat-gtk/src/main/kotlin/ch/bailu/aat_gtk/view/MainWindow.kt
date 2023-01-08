@@ -11,6 +11,7 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
@@ -28,7 +29,6 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
 
     init {
         TimeStation.log("init")
-
 
         box.append(contextBar.revealer)
         box.append(mainView.widget)
@@ -48,7 +48,9 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         dispatcher.addSource(OverlaySource(GtkAppContext))
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
-        dispatcher.addTarget(contextBar, InfoID.ALL)
+        dispatcher.addTarget(contextBar, InfoID.TRACKER, InfoID.FILEVIEW, *MutableList(SolidOverlayFileList.MAX_OVERLAYS) {
+            it + InfoID.OVERLAY
+        }.toIntArray())
 
         CSS.addProviderForDisplay(window.display, Strings.appCss)
         window.onDestroy {
@@ -56,7 +58,6 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
             App.exit(0)
         }
     }
-
 
     private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, stack: MainStackView): HeaderBar {
         val header = HeaderBar()
