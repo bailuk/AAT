@@ -5,7 +5,6 @@ import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.type.Str
 
 class GraphLabel : LabelInterface {
 
@@ -21,8 +20,8 @@ class GraphLabel : LabelInterface {
 
     override fun setText(color: Int, text: String) {
         if (!labels.containsKey(color)) {
-            println(text)
-            val label = Label(Str(text))
+            val label = Label(text)
+            label.addCssClass("graph-label")
             label.xalign = 1f
             layout.append(label)
             labels[color] = label

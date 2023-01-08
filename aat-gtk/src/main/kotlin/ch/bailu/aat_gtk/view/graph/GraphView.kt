@@ -8,7 +8,8 @@ import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig
 import ch.bailu.gtk.cairo.Context
 import ch.bailu.gtk.glib.Glib
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.DrawingArea
+import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.type.Pointer
 
 class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
@@ -63,8 +64,6 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
             _width = w
             _height = h
             plotter.plot(GtkCanvas(cr), plotterConfig)
-            println("$w $h")
-
         }, null, {_, _ ->})
 
 
@@ -97,5 +96,6 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         gpxCache = info.gpxList
+        repaint()
     }
 }

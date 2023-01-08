@@ -21,4 +21,6 @@ public interface DispatcherInterface {
      * @param source that transmits messages
      */
     void addSource(@Nonnull ContentSource source);
+
+    void requestUpdate();
 }

@@ -54,6 +54,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
         requestUpdate();
     }
 
+    @Override
     public void requestUpdate() {
         for (ContentSource source: sources)
             source.requestUpdate();
@@ -62,22 +63,6 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     @Override
     public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         updater.onContentUpdated(iid, info);
-    }
-
-    private static class TargetList implements OnContentUpdatedInterface{
-        private final ArrayList<OnContentUpdatedInterface> targets =
-                new ArrayList<>(10);
-
-        @Override
-        public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-            for (OnContentUpdatedInterface target: targets) {
-                target.onContentUpdated(iid, info);
-            }
-        }
-
-        public void add(@Nonnull OnContentUpdatedInterface t) {
-            targets.add(t);
-        }
     }
 
     private static final OnContentUpdatedInterface  OFF = (iid, info) -> {};

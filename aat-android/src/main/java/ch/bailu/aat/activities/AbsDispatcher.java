@@ -47,6 +47,11 @@ public abstract class AbsDispatcher extends AbsServiceLink
     }
 
     @Override
+    public void requestUpdate() {
+        dispatcher.requestUpdate();
+    }
+
+    @Override
     public void onResumeWithService() {
         lifeCycle.onResumeWithService();
         dispatcher.onResume();
@@ -65,6 +70,5 @@ public abstract class AbsDispatcher extends AbsServiceLink
         lifeCycle = null;
         dispatcher = null;
         super.onDestroy();
-
     }
 }

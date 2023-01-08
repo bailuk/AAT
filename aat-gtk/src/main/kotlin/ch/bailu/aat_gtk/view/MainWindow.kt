@@ -9,6 +9,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
@@ -18,11 +19,13 @@ import ch.bailu.gtk.type.Str
 
 class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
 {
+    private val selectedSource = SelectedSource()
+
     private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
 
     private val contextRevealButton = ToggleButton()
-    private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
-    private val contextBar = ContextBar(mainView,GtkAppContext.storage)
+    private val mainView = MainStackView(app, dispatcher, selectedSource, window, GtkAppContext.storage, contextRevealButton)
+    private val contextBar = ContextBar(mainView,GtkAppContext.storage, selectedSource)
 
     private val box = Box(Orientation.VERTICAL, 0)
 

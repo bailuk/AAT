@@ -6,5 +6,9 @@
     padding: 10px;
     border-style: none;
     border-radius: 5px;
-    background: #ddd4ba;
+    background: black;
+}
+
+.graph-label {
+    color: white;
 }

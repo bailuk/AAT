@@ -5,25 +5,30 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.lib.icons.IconMap
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
-import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.gtk.gtk.*
 
-class ContextBar(contextCallback: UiController, private val storage: StorageInterface
-                 ) : OnContentUpdatedInterface {
+class ContextBar(contextCallback: UiController,
+                 private val storage: StorageInterface,
+                 private val selectedSource: SelectedSource
+)
+    : OnContentUpdatedInterface {
+
     val revealer = Revealer()
 
     private val combo = ComboBoxText().apply {
         hexpand = true
+        onChanged {
+            selectedSource.selectIndexAndUpdate(active)
+        }
     }
-    private val cache = IndexedMap<Int, GpxInformation>()
+
     private var trackerState = StateID.NOSERVICE
-    private var selectInfoID = InfoID.TRACKER
 
     private val row = Box(Orientation.HORIZONTAL, 0).apply {
         addCssClass(Strings.linked)
@@ -34,7 +39,7 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
     private val buttons = ArrayList<ToggleButton>().apply {
         add(createButton("inc_map") {
             if (storage.readInteger(MainStackView.KEY) == MainStackView.INDEX_MAP) {
-                contextCallback.showInMap(selectedGpx())
+                contextCallback.showInMap(selectedSource.cache.getValueAt(combo.active))
             } else {
                 contextCallback.showMap()
             }
@@ -72,15 +77,6 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         updateToggle()
     }
 
-    private fun updateCombo(index: Int = 0) {
-        combo.removeAll()
-        cache.forEach { _, value ->
-            combo.appendText(value.file.name.ellipsize(15))
-        }
-        combo.active = index
-    }
-
-
     private fun createButton(icon: String, onClicked: Button.OnClicked) : ToggleButton {
         return ToggleButton().apply {
             child = IconMap.getImage(icon, Layout.ICON_SIZE)
@@ -88,39 +84,30 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         }
     }
 
-    private fun selectedGpx(): GpxInformation {
-        val info = cache.getValueAt(combo.active)
-        if (info is GpxInformation) {
-            return info
-        }
-        return GpxInformation.NULL
-    }
-
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (iid == InfoID.TRACKER || iid == InfoID.FILEVIEW || (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidOverlayFileList.MAX_OVERLAYS)) {
-            val isInCache = cache.indexOfKey(iid) > -1
+        selectedSource.cache.onContentUpdated(iid, info)
 
-            if (isInCache && iid == InfoID.TRACKER) {
-                if (info.state != trackerState) {
-                    trackerState = info.state
-                    updateCacheAndCombo(iid, info, isInCache)
-                }
-            } else {
-                updateCacheAndCombo(iid, info, isInCache)
+        if (selectedSource.cache.isInCache(iid) && iid == InfoID.TRACKER) {
+            if (info.state != trackerState) {
+                trackerState = info.state
+                updateCombo(selectedSource.cache.indexOf(iid))
+                selectedSource.selectedIID = iid
             }
+        } else {
+            updateCombo(selectedSource.cache.indexOf(iid))
+            selectedSource.selectedIID = iid
         }
+
+        selectedSource.requestUpdate(iid)
     }
 
-    private fun updateCacheAndCombo(iid: Int, info: GpxInformation, isInCache: Boolean) {
-        if (info.isLoaded && info.gpxList.pointList.size() > 0) {
-            cache.put(iid, info)
-            selectInfoID = iid
-            updateCombo(cache.indexOfKey(selectInfoID))
 
-        } else if (isInCache) {
-            cache.remove(iid)
-            updateCombo(cache.indexOfKey(selectInfoID))
+    private fun updateCombo(index: Int = 0) {
+        combo.removeAll()
+        selectedSource.cache.forEach { info ->
+            combo.appendText(info.file.name.ellipsize(15))
         }
+        combo.active = index
     }
 
     private fun updateToggle() {

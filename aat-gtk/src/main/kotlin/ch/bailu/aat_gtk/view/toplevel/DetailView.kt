@@ -20,7 +20,7 @@ class DetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalS
 
         graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(di, getSummaryData(storage), InfoID.FILEVIEW)
+        addAllContent(di, getSummaryData(storage), InfoID.ALL)
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {
