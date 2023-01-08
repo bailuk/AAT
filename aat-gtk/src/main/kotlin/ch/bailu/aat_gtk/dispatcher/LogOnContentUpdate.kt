@@ -6,9 +6,10 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import java.text.SimpleDateFormat
+import java.util.*
 
 class LogOnContentUpdate(dispatcher: Dispatcher): OnContentUpdatedInterface {
-    private val dateFormat = SimpleDateFormat("HH:mm:ss")
+    private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.ROOT)
 
     private var countTimer = 0
 
@@ -32,13 +33,17 @@ class LogOnContentUpdate(dispatcher: Dispatcher): OnContentUpdatedInterface {
     }
 
     private fun toInfoIdName(iid: Int): String {
-        if (iid == 4) {
-            return "TRACKER_TIMER"
-        } else if (iid == 3) {
-            return "TRACKER"
-        } else if (iid == 1) {
-            return "LOCATION"
+        return when (iid) {
+            4 -> {
+                "TRACKER_TIMER"
+            }
+            3 -> {
+                "TRACKER"
+            }
+            1 -> {
+                "LOCATION"
+            }
+            else -> iid.toString()
         }
-        return iid.toString()
     }
 }
