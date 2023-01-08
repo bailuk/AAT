@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidWeight;
@@ -29,21 +31,17 @@ public class CaloriesDescription extends LongDescription {
         return String.valueOf(getCache());
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         setCache((long)calculateCalories(info));
     }
 
-
     private float calculateCalories(GpxInformation track) {
-        int preset = new SolidPreset(storage).getIndex();
-
-        float hours = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
-        float met = new SolidMET(storage, preset).getMETValue();
-        // TODO : add userfeedback about wrong calculation here ?
-        float weight = new SolidWeight(storage).getValue();
-        float kcal = hours*met*weight;
+        final int   preset = new SolidPreset(storage).getIndex();
+        final float hours  = ((float)track.getTimeDelta()) / (1000f * 60f * 60f);
+        final float met    = new SolidMET(storage, preset).getMETValue();
+        final float weight = new SolidWeight(storage).getValue();
+        final float kcal   = hours * met * weight;
 
         return kcal;
     }

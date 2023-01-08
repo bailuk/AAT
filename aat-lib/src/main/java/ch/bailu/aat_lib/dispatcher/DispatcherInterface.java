@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.dispatcher;
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import javax.annotation.Nonnull;
 
 /**
  * Connect sources with targets
@@ -13,14 +13,12 @@ public interface DispatcherInterface {
      * @param target: receiver of a message
      * @param iid list of info ids: only transmits messages having one of these ids
      */
-    void addTarget(OnContentUpdatedInterface target, int... iid);
+    void addTarget(@Nonnull OnContentUpdatedInterface target, int... iid);
 
     /**
      * Add a source to this dispatcher. This dispatcher will dispatch all messages that pass
      * the an info id filter from this source to its connected targets.
      * @param source that transmits messages
      */
-    void addSource(ContentSource source);
-
-
+    void addSource(@Nonnull ContentSource source);
 }

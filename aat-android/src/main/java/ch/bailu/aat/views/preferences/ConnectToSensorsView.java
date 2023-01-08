@@ -2,6 +2,8 @@ package ch.bailu.aat.views.preferences;
 
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
@@ -26,11 +28,9 @@ public class ConnectToSensorsView extends LabelTextView implements View.OnClickL
         theme.button(this);
     }
 
-
     private void setText() {
         setText(SensorState.getOverviewString() + " " + busy);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -43,7 +43,7 @@ public class ConnectToSensorsView extends LabelTextView implements View.OnClickL
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         if (iid == InfoID.SENSORS) {
             if (info.getState() == StateID.WAIT)
                 busy = getContext().getString(R.string.gps_wait);

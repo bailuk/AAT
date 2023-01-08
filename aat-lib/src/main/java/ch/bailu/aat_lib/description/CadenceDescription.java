@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
@@ -13,11 +15,9 @@ public class CadenceDescription  extends ContentDescription {
     private String value = VALUE_DISABLED;
     private String label;
 
-
-
     public CadenceDescription() {
         LABEL = Res.str().sensor_cadence();
-        LABEL_WAIT = LABEL + "...";
+        LABEL_WAIT = LABEL + "…";
         label = LABEL;
     }
 
@@ -36,11 +36,8 @@ public class CadenceDescription  extends ContentDescription {
         return UNIT;
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-
-
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         final boolean haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR);
 
         if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
@@ -51,13 +48,10 @@ public class CadenceDescription  extends ContentDescription {
             } else {
                 label = LABEL_WAIT;
             }
-
             value = info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM);
-
         } else {
             label = LABEL;
             value = VALUE_DISABLED;
-
         }
     }
 }

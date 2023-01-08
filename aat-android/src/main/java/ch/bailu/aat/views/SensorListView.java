@@ -4,6 +4,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorService;
@@ -15,9 +17,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 
 public class SensorListView  extends LinearLayout implements OnContentUpdatedInterface {
 
-
     private final ServiceContext scontext;
-
 
     private final ArrayList<SensorListItemView> children = new ArrayList<>(10);
 
@@ -30,11 +30,10 @@ public class SensorListView  extends LinearLayout implements OnContentUpdatedInt
 
         this.theme = theme;
         updateViews();
-
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         if (iid == InfoID.SENSORS) {
             updateViews();
         }
@@ -54,8 +53,6 @@ public class SensorListView  extends LinearLayout implements OnContentUpdatedInt
                     } else {
                         children.get(i).setItem(sensorList.get(i));
                     }
-
-
                 }
 
                 for (int i = children.size() -1; i >= sensorList.size(); i--) {
@@ -66,4 +63,3 @@ public class SensorListView  extends LinearLayout implements OnContentUpdatedInt
         };
     }
 }
-

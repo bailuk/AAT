@@ -1,5 +1,7 @@
 package ch.bailu.aat.dispatcher;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
@@ -37,14 +39,12 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         }
     }
 
-
     @Override
-    public void setTarget(OnContentUpdatedInterface t) {
-        super.setTarget(t);
-        editorSource.setTarget(t);
-        backupSource.setTarget(t);
+    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
+        super.setTarget(target);
+        editorSource.setTarget(target);
+        backupSource.setTarget(target);
     }
-
 
     public void releaseEditorDiscard() {
         if (isEditing) {
@@ -92,18 +92,14 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         return backupSource.getInfo();
     }
 
-
     @Override
     public void requestUpdate() {
         if (isEditing) {
             requestBackupNullUpdate();
             editorSource.requestUpdate();
-
-
         }  else {
             requestEditorNullUpdate();
             backupSource.requestUpdate();
-
         }
     }
 
@@ -118,11 +114,9 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         if (isEditing) {
             requestBackupNullUpdate();
             editorSource.onResume();
-
         } else {
             requestEditorNullUpdate();
             backupSource.onResume();
-
         }
     }
 

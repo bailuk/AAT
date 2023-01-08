@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.map.layer.gpx;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.map.SolidLegend;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
@@ -56,7 +58,7 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
     private GpxType type = GpxType.NONE;
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         infoCache.set(iid, info);
 
 
@@ -72,10 +74,8 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
         mcontext.getMapView().requestRedraw();
     }
 
-
-
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
 
         if (slegend.hasKey(key)) {
             createLegendOverlay();
@@ -91,18 +91,15 @@ public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInt
         return GpxType.NONE;
     }
 
-
     private void createGpxOverlay() {
         GpxType type = toType(infoCache.info);
         gpxOverlay = Factory.get(type).layer(mcontext, services,0);
     }
 
-
     private void createLegendOverlay() {
         GpxType type = toType(infoCache.info);
         legendOverlay = Factory.get(type).legend(slegend.getStorage(), slegend, 0);
     }
-
 
     @Override
     public void onLayout(boolean changed, int l, int t, int r, int b) {}

@@ -2,6 +2,8 @@ package ch.bailu.aat.views.description;
 
 import android.content.Context;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.description.ContentDescription;
@@ -19,7 +21,7 @@ public class DescriptionLabelTextView extends LabelTextView implements OnContent
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         description.onContentUpdated(iid, info);
         setText();
     }

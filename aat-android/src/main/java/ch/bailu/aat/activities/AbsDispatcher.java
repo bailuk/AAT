@@ -2,12 +2,14 @@ package ch.bailu.aat.activities;
 
 import android.os.Bundle;
 
+import javax.annotation.Nonnull;
+
+import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
+import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
-import ch.bailu.aat.util.AbsServiceLink;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.InfoID;
 
@@ -26,7 +28,6 @@ public abstract class AbsDispatcher extends AbsServiceLink
         lifeCycle = new LifeCycleDispatcher();
     }
 
-
     public void addLC(LifeCycleInterface t) {
         lifeCycle.add(t);
     }
@@ -36,26 +37,20 @@ public abstract class AbsDispatcher extends AbsServiceLink
     }
 
     @Override
-    public void addTarget(OnContentUpdatedInterface target, int... iid) {
+    public void addTarget(@Nonnull OnContentUpdatedInterface target, int... iid) {
         dispatcher.addTarget(target, iid);
     }
 
-
     @Override
-    public void addSource(ContentSource s) {
-        dispatcher.addSource(s);
+    public void addSource(@Nonnull ContentSource source) {
+        dispatcher.addSource(source);
     }
-
 
     @Override
     public void onResumeWithService() {
-
         lifeCycle.onResumeWithService();
         dispatcher.onResume();
-
-
         super.onResumeWithService();
-
     }
 
     @Override
@@ -72,5 +67,4 @@ public abstract class AbsDispatcher extends AbsServiceLink
         super.onDestroy();
 
     }
-
 }
