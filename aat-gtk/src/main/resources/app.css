@@ -1,3 +1,10 @@
 .map-control {
     background: #cccccc80;
 }
+
+.graph-view {
+    padding: 10px;
+    border-style: none;
+    border-radius: 5px;
+    background: #ddd4ba;
+}
