@@ -8,7 +8,7 @@ public interface Timer {
      * Call the provided lambda after a specific interval.
      * The lambda gets called from the UI Thread
      * @param run  function to call
-     * @param interval delay beovore calling function
+     * @param interval delay before calling function
      */
     void kick(Runnable run, long interval);
     void cancel();
