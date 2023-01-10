@@ -36,7 +36,6 @@ public class OverlaySource extends ContentSource {
         for (OverlayInformation o : overlays) o.close();
     }
 
-
     @Override
     public void onResume() {
         for (int i=0; i<overlays.length; i++)
@@ -53,13 +52,10 @@ public class OverlaySource extends ContentSource {
         return GpxInformation.NULL;
     }
 
-
     @Override
     public void requestUpdate() {
         for (OverlayInformation o: overlays) o.initAndUpdateOverlay();
     }
-
-
 
     private class OverlayInformation extends GpxInformation implements Closeable {
         private final int infoID;
@@ -69,7 +65,6 @@ public class OverlaySource extends ContentSource {
         private ObjGpx handle = ObjGpxStatic.NULL;
         private BoundingBoxE6 bounding = BoundingBoxE6.NULL_BOX;
 
-
         public OverlayInformation(int index) {
             infoID = InfoID.OVERLAY+index;
 
@@ -77,7 +72,6 @@ public class OverlaySource extends ContentSource {
             soverlay.register(onPreferencesChanged);
             appContext.getBroadcaster().register(onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
         }
-
 
         private final BroadcastReceiver onFileProcessed = args -> {
             if (BroadcastData.has(args, handle.toString())) {
@@ -94,18 +88,13 @@ public class OverlaySource extends ContentSource {
             }
         };
 
-
         private void disableOverlay() {
             handle.free();
             handle = ObjGpxStatic.NULL;
             bounding = BoundingBoxE6.NULL_BOX;
         }
 
-
-
-
         public void initAndUpdateOverlay() {
-
             if (soverlay.isEnabled()) {
                 Foc file = soverlay.getValueAsFile();
                 enableOverlay(file.getPath());
@@ -116,15 +105,14 @@ public class OverlaySource extends ContentSource {
             sendUpdate(infoID, this);
         }
 
-
         private void enableOverlay(String fileId) {
             final Obj oldHandle = handle;
 
             handle = getObjectSave(fileId);
             oldHandle.free();
             setBounding();
+            setVisibleTrackSegment(handle.getGpxList().getDelta());
         }
-
 
         private ObjGpx getObjectSave(String id) {
             Obj handler = appContext.getServices().getCacheService().getObject(id, new ObjGpxStatic.Factory());
@@ -139,7 +127,6 @@ public class OverlaySource extends ContentSource {
             bounding = list.getDelta().getBoundingBox();
         }
 
-
         @Override
         public GpxType getType() {
             if (isLoaded() && getGpxList() != null && getGpxList().getDelta() != null) {
@@ -153,7 +140,6 @@ public class OverlaySource extends ContentSource {
             return appContext.toFoc(handle.toString());
         }
 
-
         @Override
         public GpxList getGpxList() {
             return handle.getGpxList();
@@ -166,7 +152,7 @@ public class OverlaySource extends ContentSource {
 
         @Override
         public boolean isLoaded() {
-            return handle.isReadyAndLoaded();// && handle.getGpxList().getPointList().size()>0;
+            return handle.isReadyAndLoaded();
         }
 
         @Override

@@ -24,10 +24,7 @@ public class TimeDescription extends LongDescription {
         setCache(info.getTimeDelta());
     }
 
-
-
     private static final StringBuilder builder = new StringBuilder(10);
-
 
     public static String format(long time) {
         synchronized (builder) {
@@ -35,7 +32,6 @@ public class TimeDescription extends LongDescription {
             return format(builder, time).toString();
         }
     }
-
 
     public static StringBuilder format(StringBuilder out, long time) {
         int seconds, hours, minutes;
@@ -49,16 +45,13 @@ public class TimeDescription extends LongDescription {
         seconds -= minutes * 60;
         minutes -= hours * 60;
 
-        appendValueAndDelimer(out, hours);
-        appendValueAndDelimer(out, minutes);
+        appendValueAndDelimiter(out, hours);
+        appendValueAndDelimiter(out, minutes);
         appendValue(out, seconds);
         return out;
-
     }
 
-
-
-    private static void appendValueAndDelimer(StringBuilder builder, int value) {
+    private static void appendValueAndDelimiter(StringBuilder builder, int value) {
         appendValue(builder,value);
         builder.append(":");
     }
