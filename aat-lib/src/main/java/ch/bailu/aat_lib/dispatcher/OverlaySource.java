@@ -39,7 +39,7 @@ public class OverlaySource extends ContentSource {
     @Override
     public void onResume() {
         for (int i=0; i<overlays.length; i++)
-            overlays[i]= new OverlayInformation(i);
+            overlays[i] = new OverlayInformation(i);
     }
 
     @Override

@@ -64,7 +64,7 @@ if [ "$xdg_data_home" = "" ]; then
   xdg_data_home="$home/.local/share"
 fi
 icon_path="${xdg_data_home}/icons/hicolor/scalable/apps"
-desktop_path="${xdg_data_home}/.local/share/applications/"
+desktop_path="${xdg_data_home}/applications/"
 
 desktop="${desktop_path}/${app_id}.desktop"
 icon="${icon_path}/${app_id}.svg"
