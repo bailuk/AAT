@@ -23,7 +23,6 @@ public abstract class IteratorAbstract extends Iterator implements OnPreferences
 
     private final AppContext appContext;
 
-
     public IteratorAbstract (AppContext appContext) {
         this.appContext = appContext;
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
