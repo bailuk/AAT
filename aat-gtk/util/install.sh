@@ -12,7 +12,7 @@ app="aat-gtk"
 app_id="ch.bailu.${app}"
 app_comment="AAT activity tracker and map viewer"
 app_name="AAT"
-jar="${app}-all.jar"
+jar="${app}-all-pro.jar"
 build="build/libs/"
 
 # arguments
@@ -73,6 +73,7 @@ data="${home}/.config/${app}"
 # build
 if [ "$option_build" = "--build" ]; then
     echo ">> build"
+    touch $source_jar
     ./gradlew build || exit 1
 fi
 

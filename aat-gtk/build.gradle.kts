@@ -20,9 +20,26 @@ tasks.test {
     useJUnitPlatform()
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.guardsquare:proguard-gradle:7.3.1") {
+            exclude("com.android.tools.build")
+        }
+    }
+}
+
+tasks.register<proguard.gradle.ProGuardTask>("proguard") {
+    libraryjars("${System.getProperty("java.home")}/jmods/java.base.jmod")
+    configuration("proguard.pro")
+
+}
+
+tasks.build.get().finalizedBy(tasks.getByName("proguard"))
 
 dependencies {
-
     implementation(project(":aat-lib"))
 
     /**

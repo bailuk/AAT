@@ -16,9 +16,7 @@ import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
-import ch.bailu.aat_lib.service.location.MockLocationInformation
 import ch.bailu.foc.FocFactory
-import ch.bailu.foc.FocFile
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
@@ -118,7 +116,6 @@ class FileList(app: Application,
                 append(indexLabel)
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(loadButton)
-
                     append(menuButton)
                     addCssClass(Strings.linked)
                 })
@@ -138,7 +135,6 @@ class FileList(app: Application,
 
     private fun selectAndLoad(index: Int) {
         select(index)
-
         if (isIndexValid(indexOfSelected)) {
             uiController.load(iteratorSimple.info)
         }
