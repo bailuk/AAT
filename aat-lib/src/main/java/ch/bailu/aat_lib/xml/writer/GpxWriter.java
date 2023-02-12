@@ -15,7 +15,6 @@ import ch.bailu.foc.Foc;
 
 public abstract class GpxWriter {
 
-
     private final BufferedWriter output;
 
     protected final FF_GPX f = FF_GPX.f();
@@ -25,6 +24,7 @@ public abstract class GpxWriter {
         output = new BufferedWriter(new OutputStreamWriter(file.openW()),8*1024);
 
     }
+
     public static GpxWriter factory(Foc file, GpxType type) throws IOException, SecurityException{
         if (type == GpxType.TRACK) {
             return new TrackWriter(file);
@@ -42,7 +42,6 @@ public abstract class GpxWriter {
     public void close() throws IOException {
         output.close();
     }
-
 
     public void writeHeader(long timestamp) throws IOException {
         writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" +
@@ -74,8 +73,6 @@ public abstract class GpxWriter {
                         "</" + GpxConstants.QNAME_TIME + ">");
     }
 
-
-
     protected void writeEndElement(String e) throws IOException {
         writeString("</"); writeString(e); writeString(">");
     }
@@ -92,8 +89,6 @@ public abstract class GpxWriter {
         writeString(">");
     }
 
-
-
     protected void writeBeginElement(String e) throws IOException {
         writeBeginElementStart(e); writeBeginElementEnd();
     }
@@ -105,8 +100,6 @@ public abstract class GpxWriter {
         writeString(StringEscapeUtils.escapeXml10(pvalue));
         writeString("\"");
     }
-
-
 
     protected void writeAttributesGpxStyle(GpxPointInterface tp) throws IOException {
         if (tp.getAttributes().size() > 0) {
@@ -126,7 +119,6 @@ public abstract class GpxWriter {
     private String toTag(String key) {
         return key.replace(':', '_');
     }
-
 
     protected void writeAttributeGpxStyle(String key, String val) throws IOException {
         writeBeginElement(key);

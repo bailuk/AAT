@@ -30,3 +30,6 @@
 # JNA: to prevent link error
 -keep class com.sun.jna.** { *; }
 -keep class * implements com.sun.jna.** { *; }
+
+# GpxWriter -> StringEscapeUtils.escapeXml10 -> Enum NumericEntityUnescaper.OPTION
+-keep class org.apache.commons.text.translate.** { *; }
