@@ -21,7 +21,6 @@ public final class IteratorSummary extends IteratorAbstract {
         return info;
     }
 
-
     @Override
     public int getInfoID() {
             return InfoID.LIST_SUMMARY;
@@ -31,5 +30,4 @@ public final class IteratorSummary extends IteratorAbstract {
     public void onCursorChanged(DbResultSet cursor, Foc directory, String fid) {
             info = new GpxInformationDbSummary(directory, cursor);
     }
-
 }

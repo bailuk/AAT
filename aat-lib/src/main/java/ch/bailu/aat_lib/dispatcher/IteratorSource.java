@@ -23,34 +23,25 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
     private Iterator iterator = Iterator.NULL;
 
 
-
     @Override
     public void onCursorChanged() {
         requestUpdate();
     }
-
 
     public IteratorSource(AppContext appContext) {
         this.appContext = appContext;
         sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
     }
 
-
-
     @Override
     public void requestUpdate() {
         sendUpdate(iterator.getInfoID(), getInfo());
     }
 
-
-
-
-
     @Override
     public int getIID() {
         return iterator.getInfoID();
     }
-
 
     @Override
     public void onPause() {
@@ -58,14 +49,12 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         iterator = Iterator.NULL;
     }
 
-
     @Override
     public void onResume() {
         iterator = factoryIterator(appContext);
         iterator.moveToPosition(sdirectory.getPosition().getValue());
         iterator.setOnCursorChangedListener(this);
     }
-
 
     public abstract Iterator factoryIterator(AppContext appContext);
 
@@ -163,7 +152,6 @@ public abstract class IteratorSource extends ContentSource implements OnCursorCh
         }
 
     }
-
 
     public static class Summary extends IteratorSource {
         public Summary(AppContext appContext) {

@@ -30,23 +30,19 @@ public final class GpxInformationDbSummary extends GpxInformation {
 
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
-            if (isEntryValid(entry)) {
-                addEntryToList(entry);
+            addEntryToList(entry);
+            if (hasTimeDelta(entry)) {
                 summary.updateWithPause(entry);
             }
         }
         setVisibleTrackSegment(summary);
-
-
     }
 
-
-    private boolean isEntryValid(GpxInformation entry) {
+    private boolean hasTimeDelta(GpxInformation entry) {
         return     entry.getTimeDelta() > 0
                 && entry.getStartTime() > 0
                 && entry.getEndTime() > entry.getStartTime();
     }
-
 
     private void addEntryToList(GpxInformation entry) {
         final GpxPoint point = new GpxPoint(
@@ -57,8 +53,6 @@ public final class GpxInformationDbSummary extends GpxInformation {
         maxSpeed.add(entry.getSpeed());
     }
 
-
-
     @Override
     public Foc getFile() {
         return directory;
@@ -68,7 +62,6 @@ public final class GpxInformationDbSummary extends GpxInformation {
     public GpxList getGpxList() {
         return list;
     }
-
 
     @Override
     public boolean isLoaded() {
@@ -83,5 +76,4 @@ public final class GpxInformationDbSummary extends GpxInformation {
     public GpxAttributes getAttributes() {
         return maxSpeed;
     }
-
 }

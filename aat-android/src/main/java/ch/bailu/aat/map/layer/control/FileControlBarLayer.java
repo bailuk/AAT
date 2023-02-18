@@ -91,15 +91,10 @@ public final class FileControlBarLayer extends ControlBarLayer {
 
 
     @Override
-    public void onAttached() {
-
-    }
+    public void onAttached() {}
 
     @Override
-    public void onDetached() {
-
-    }
-
+    public void onDetached() {}
 
     @Override
     public void drawForeground(MapContext mc) {
@@ -108,14 +103,12 @@ public final class FileControlBarLayer extends ControlBarLayer {
         }
     }
 
-
     @Override
     public void drawInside(MapContext mc) {
         if (isBarVisible()) {
             selector.drawInside(mc);
         }
     }
-
 
     @Override
     public void onLayout(boolean c, int l, int t, int r, int b) {
@@ -145,13 +138,10 @@ public final class FileControlBarLayer extends ControlBarLayer {
         }
     }
 
-
-
     @Override
     public void onHideBar() {
         selector.hide();
     }
-
 
     private class FileViewLayer extends AbsNodeViewLayer {
         public FileViewLayer(AppContext appContext, Context context, MapContext mc) {
@@ -171,15 +161,13 @@ public final class FileControlBarLayer extends ControlBarLayer {
         };
 
         @Override
-        public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
-            super.setSelectedNode(IID, info, node, i);
+        public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int index) {
+            super.setSelectedNode(IID, info, node, index);
 
-            new SolidDirectoryQuery(new Storage(acontext), new FocAndroidFactory(acontext)).getPosition().setValue(i);
+            new SolidDirectoryQuery(new Storage(acontext), new FocAndroidFactory(acontext)).getPosition().setValue(index);
 
-            iterator.moveToPosition(i);
-
+            iterator.moveToPosition(index);
             selectedFile = iterator.getInfo().getFile();
-
             preview.setFilePath(selectedFile);
 
             markupBuilder.appendHeader(iterator.getInfo().getFile().getName());
@@ -189,14 +177,12 @@ public final class FileControlBarLayer extends ControlBarLayer {
             }
 
             setHtmlText(markupBuilder);
-
         }
 
         @Override
         public void onClick(View v) {
             acontext.displayFile();
         }
-
 
         @Override
         public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {

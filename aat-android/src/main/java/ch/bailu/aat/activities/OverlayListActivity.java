@@ -26,18 +26,15 @@ public class OverlayListActivity extends AbsGpxListActivity {
     @Override
     public ContentDescription[] getSummaryData() {
         return new ContentDescription[] {
-
-                new TrackSizeDescription(),
+                new TrackSizeDescription()
         };
     }
-
 
     @Override
     public void displayFile() {
         Intent intent=new Intent(this,GpxEditorActivity.class);
         startActivity(intent);
     }
-
 
     @Override
     public Foc getDirectory() {
@@ -48,5 +45,4 @@ public class OverlayListActivity extends AbsGpxListActivity {
     public String getLabel() {
         return getString(R.string.intro_overlay_list);
     }
-
 }
