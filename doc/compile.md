@@ -55,7 +55,7 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
 
-# Build, run and install GTK variant
+# GTK variant
 
 ```bash
 # build
@@ -68,7 +68,3 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 cd aat-gtk/util
 ./install.sh
 ```
-
-# Build with local MapsForge
-
-Set path to local MapsForge repository in [settings.gradle.kts](../settings.gradle.kts)
