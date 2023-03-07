@@ -5,7 +5,8 @@
 # AAT Another Activity Tracker
 
 AAT is a GPS-tracking application for tracking sportive activities, with emphasis on cycling.
-There is a Android and GTK variant. (The GTK variant is alpha software)
+
+There is an Android and GTK variant. (The GTK variant is alpha software)
 
 
 ## Features
