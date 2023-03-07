@@ -1,0 +1,6 @@
+v1.24 (37)
+
+- Update mapsforge to 0.18.0
+- Update documentation
+- Fix wrong GPX files on map-summary
+- Fix DEM3 Not downloading after enabling option
