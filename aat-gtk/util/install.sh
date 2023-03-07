@@ -73,7 +73,6 @@ data="${home}/.config/${app}"
 # build
 if [ "$option_build" = "--build" ]; then
     echo ">> build"
-    touch $source_jar
     ./gradlew build || exit 1
 fi
 

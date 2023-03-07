@@ -32,9 +32,9 @@ buildscript {
 }
 
 tasks.register<proguard.gradle.ProGuardTask>("proguard") {
+    outputs.upToDateWhen { false }
     libraryjars("${System.getProperty("java.home")}/jmods/java.base.jmod")
     configuration("proguard.pro")
-
 }
 
 tasks.build.get().finalizedBy(tasks.getByName("proguard"))
