@@ -15,9 +15,10 @@ There is a Android and GTK variant. (The GTK variant is alpha software)
 * Display [offline](https://github.com/mapsforge/mapsforge/blob/master/docs/Mapsforge-Maps.md) as well as [tile based](https://www.openstreetmap.org) maps.
 * Tile based overlays for displaying cycle and hiking routes [(Waymarked Trails)](http://www.waymarkedtrails.org/).
 * Integration of [Overpass](http://wiki.openstreetmap.org/wiki/Overpass_API) and [Nominatim](http://nominatim.openstreetmap.org).
-* Display Offline POIs from Mapsforge compatible Databases. Databases are available from [OpenAndroMaps](https://www.openandromaps.org/en) and other places.  
+* Display Offline POIs from Mapsforge compatible Databases, available from [OpenAndroMaps](https://www.openandromaps.org/en) and other places.  
 * Simple GPX editor for quick route planning.
-* GPS independent altitude information and hill shading from [DEM3 tiles](https://bailu.ch/dem3/) 
+* GPS independent altitude information and hill shading from [DEM3 tiles](https://bailu.ch/dem3/)
+* Support for Bluetooth and internal sensors
 
 
 ## Screenshot
@@ -29,14 +30,14 @@ There is a Android and GTK variant. (The GTK variant is alpha software)
 
 ## Installation and Distribution
 
-- AAT Android is on [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
-- GTK Builds are available on the projects [release page](https://github.com/bailuk/AAT/releases)
+- AAT for Android is available on [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
+- GTK builds are available on this projects [release page](https://github.com/bailuk/AAT/releases)
 
 
 ## Configuration and use
 
 - Information about configuring and using this app: [doc/manual.md](doc/manual.md)
-- GTK Variant specific information: [doc/aat-gtk.md](doc/aat-gtk.md) 
+- GTK variant specific information: [doc/aat-gtk.md](doc/aat-gtk.md) 
 
 
 ## Compile
@@ -46,7 +47,6 @@ There is a Android and GTK variant. (The GTK variant is alpha software)
 
 ## License
 
-2011-2023 [Lukas Bai](mailto:bailu@bailu.ch) and contributors
 [GNU GPLv3 or later](http://www.gnu.org/licenses/gpl.html)
 
 
