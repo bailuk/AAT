@@ -1,13 +1,13 @@
 package ch.bailu.aat_gtk.search
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.rest.RestClient
+import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import java.io.File
 
 class RestNominatim {
-    val restClient = RestClient(getJsonFile("search"), Strings.appIdName,"{\"result\":","}")
+    val restClient = RestClient(getJsonFile("search"), AppConfig.getInstance().userAgent,"{\"result\":","}")
 
     fun search(search: String, observer: (RestClient)->Unit) {
         val url = "https://nominatim.openstreetmap.org/search"

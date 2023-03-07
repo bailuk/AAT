@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.dialog
 
-import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.icons.IconMap
+import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.gtk.*
 
@@ -9,10 +9,11 @@ object About {
     fun show(window: Window) {
         AboutDialog().apply {
             logo = IconMap.getPaintable("app-icon", 120)
-            setProgramName(Strings.appName)
-            setVersion(Strings.version)
-            setWebsite(Strings.website)
-            setCopyright(Strings.copyright)
+            val config = AppConfig.getInstance()
+            setProgramName(config.longName)
+            setVersion(config.versionName)
+            setWebsite(config.website)
+            setCopyright(config.copyright)
             licenseType = License.GPL_3_0
             titlebar = createHeaderBar(this)
             transientFor = window

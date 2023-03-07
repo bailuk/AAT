@@ -24,7 +24,7 @@ There is an Android and GTK variant. (The GTK variant is alpha software)
 
 ## Screenshot
 
-<img alt="AAT Android screenshot" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screen4.jpg" width="50%">
+<img alt="AAT Android screenshot" src="metadata/en-US/images/phoneScreenshots/screen4.jpg" width="50%">
 
 [More screenshots](doc/screenshots.md)
 

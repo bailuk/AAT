@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.service.location
 
-import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
@@ -32,7 +32,8 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
 
     init {
         try {
-            Simple.newWithThresholds(Str(Strings.appId), AccuracyLevel.EXACT, 0, 0, null,
+            val appId = AppConfig.getInstance().applicationId
+            Simple.newWithThresholds(Str(appId), AccuracyLevel.EXACT, 0, 0, null,
                 { self, _ , res: AsyncResult, _ ->
                     try {
                         val simple = Simple.newWithThresholdsFinishSimple(res)

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat.R;
 import ch.bailu.aat.app.AndroidAppConfig;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -12,7 +11,8 @@ import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
-import ch.bailu.aat.views.html.LinkHandler;
+import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.aat_lib.util.fs.FocUtil;
 import ch.bailu.foc_android.FocAsset;
@@ -45,36 +45,21 @@ public class AboutActivity extends ActivityContext {
 
     private LinearLayout createButtonBar(MultiView mv) {
         final MainControlBar bar = new MainControlBar(this);
-
         bar.addAll(mv);
-
         return bar;
     }
 
     private MultiView createMultiView() {
         final MultiView mv = new MultiView(this, SOLID_KEY);
-        final LinkHandler linkHandler = new LinkHandler() {
-            @Override
-            public boolean openLink(String url) {
-                if (url.contains("README.end")) {
-                    mv.setActive(1);
-                    return true;
-                }
-                return false;
-            }
-        };
 
         final HtmlScrollTextView about = new HtmlScrollTextView(this,
-                        toStr("documentation/README.about.html"),
-                        linkHandler);
+                        getInfoText());
 
         final HtmlScrollTextView readme = new HtmlScrollTextView(this,
-                toStr("documentation/README.enduser.html"));
+                assetToStr("documentation/manual.html"));
 
-
-
-        mv.add(about, getString(R.string.intro_about));
-        mv.add(readme, getString(R.string.intro_readme));
+        mv.add(readme, Res.str().intro_readme());
+        mv.add(about, Res.str().intro_about());
 
         status = new HtmlScrollTextView(this);
         mv.add(status, ToDo.translate("Status"));
@@ -86,7 +71,20 @@ public class AboutActivity extends ActivityContext {
         return mv;
     }
 
-    private String toStr(String asset) {
+    private String getInfoText() {
+        var config = AppConfig.getInstance();
+        return "<h1>" +
+                config.getLongName() +
+                "</h1><p>" +
+                config.getVersionName() +
+                "</p><p><a href=\"" +
+                config.getWebsite() +
+                "\">Website</a></p><p>" +
+                config.getCopyright() +
+                "</p>";
+    }
+
+    private String assetToStr(String asset) {
         return FocUtil.toStr(new FocAsset(getAssets(),asset));
     }
 

@@ -10,6 +10,7 @@ import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_gtk.dispatcher.SelectedSource
+import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
@@ -36,9 +37,9 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
-        window.setIconName(Strings.appId)
+        window.setIconName(AppConfig.getInstance().applicationId)
         window.child = box
-        window.title = Str(GtkAppConfig.title)
+        window.title = Str(GtkAppConfig.shortName)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
 
         window.setDefaultSize(Layout.windowWidth, Layout.windowHeight)
