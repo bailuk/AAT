@@ -4,9 +4,17 @@ import ch.bailu.aat_gtk.view.description.NumberView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.gtk.gtk.FlowBox
+import ch.bailu.gtk.gtk.ScrolledWindow
 
 class CockpitView {
-    val flow = FlowBox()
+
+    private val flow = FlowBox().apply {
+        vexpand = true
+        hexpand = true
+    }
+    val scrolledWindow = ScrolledWindow().apply {
+        child = flow
+    }
 
     private val descriptions = ArrayList<ContentDescription>()
     private val views = ArrayList<NumberView>()

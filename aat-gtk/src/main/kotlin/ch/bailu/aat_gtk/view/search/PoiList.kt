@@ -6,12 +6,11 @@ import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
-import ch.bailu.gtk.GTK
-import ch.bailu.gtk.bridge.ListIndex
 import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
+import ch.bailu.gtk.lib.bridge.ListIndex
 import org.mapsforge.poi.storage.PoiCategory
 
 class PoiList(
@@ -57,8 +56,8 @@ class PoiList(
 
     val scrolled = ScrolledWindow().apply {
         child = list
-        hexpand = GTK.TRUE
-        vexpand = GTK.TRUE
+        hexpand = true
+        vexpand = true
     }
 
     init {

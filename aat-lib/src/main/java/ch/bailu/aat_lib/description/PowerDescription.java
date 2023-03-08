@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes;
@@ -35,7 +37,7 @@ public class PowerDescription  extends ContentDescription {
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         final boolean haveSensor = SensorState.isConnected(InfoID.POWER_SENSOR);
 
         if (iid == InfoID.POWER_SENSOR && haveSensor) {

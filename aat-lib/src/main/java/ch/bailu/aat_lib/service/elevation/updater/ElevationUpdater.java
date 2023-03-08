@@ -75,13 +75,8 @@ public final class ElevationUpdater implements Closeable {
 
 
     private void loadTiles() {
-        Iterator<Dem3Coordinates> c = pendingUpdates.coordinates();
-
-        while(c.hasNext()) {
-            Dem3Tile tile = loader.requestDem3Tile(c.next());
-
-            if (tile == null) return;
-        }
+        Iterator<Dem3Coordinates> coordinates = pendingUpdates.coordinates();
+        while(coordinates.hasNext() && loader.requestDem3Tile(coordinates.next()));
     }
 
 

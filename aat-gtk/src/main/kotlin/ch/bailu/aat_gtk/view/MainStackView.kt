@@ -1,27 +1,30 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.dispatcher.LogOnContentUpdate
 import ch.bailu.aat_gtk.view.search.PoiStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import org.mapsforge.core.model.BoundingBox
 
 class MainStackView (
     app: Application,
-    dispatcher: Dispatcher,
+    dispatcher: DispatcherInterface,
+    selectedSource: SelectedSource,
     window: Window,
     storage: StorageInterface,
     private val revealer: ToggleButton
@@ -48,7 +51,7 @@ class MainStackView (
     val widget
         get() = stack.widget
 
-    private var revealerRestore = GTK.FALSE
+    private var revealerRestore = false
 
 
     private val preferences: LazyStackView.LazyPage
@@ -57,6 +60,8 @@ class MainStackView (
     private var backTo = INDEX_MAP
 
     init {
+        LogOnContentUpdate(dispatcher)
+
         dispatcher.addSource(customFileSource)
 
         stack.add("Map") {
@@ -72,7 +77,7 @@ class MainStackView (
         }
 
         stack.add("Detail") {
-            val result = DetailView(dispatcher, GtkAppContext.storage).scrolled
+            val result = DetailView(Dispatcher().apply { addSource(selectedSource); onResume() }, GtkAppContext.storage).scrolled
             dispatcher.requestUpdate()
             result
         }
@@ -85,7 +90,7 @@ class MainStackView (
                 add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
                 add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
                 add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
-            }.flow
+            }.scrolledWindow
             dispatcher.requestUpdate()
             result
         }
@@ -117,13 +122,13 @@ class MainStackView (
 
     fun showPreferences() {
         revealerRestore = revealer.active
-        revealer.active = GTK.FALSE
+        revealer.active = false
         preferences.show()
     }
 
     override fun showPoi() {
         revealerRestore = revealer.active
-        revealer.active = GTK.FALSE
+        revealer.active = false
         poi.show()
     }
 
@@ -160,7 +165,7 @@ class MainStackView (
     }
 
     override fun showContextBar() {
-        revealer.active = GTK.TRUE
+        revealer.active = true
     }
 
     override fun getMapBounding(): BoundingBoxE6 {

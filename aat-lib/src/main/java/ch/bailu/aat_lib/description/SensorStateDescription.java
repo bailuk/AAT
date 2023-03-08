@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.SensorStateAttributes;
@@ -13,15 +15,13 @@ public class SensorStateDescription extends StateDescription {
         return Res.str().sensors();
     }
 
-
     @Override
     public String getUnit() {
         return unit;
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         super.onContentUpdated(iid, info);
 
         GpxAttributes attributes = info.getAttributes();
@@ -30,5 +30,4 @@ public class SensorStateDescription extends StateDescription {
             unit = info.getAttributes().get(SensorStateAttributes.KEY_SENSOR_OVERVIEW);
         }
     }
-
 }

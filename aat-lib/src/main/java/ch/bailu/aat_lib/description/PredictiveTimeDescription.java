@@ -1,6 +1,8 @@
 package ch.bailu.aat_lib.description;
 
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
 
@@ -12,8 +14,9 @@ public class PredictiveTimeDescription extends TimeDescription {
 
     @Override
     public String getUnit() {
-        if (time - super.getCache() > SHOW_LABEL_LIMIT_MS)
-             return super.getValue();
+        if (time - super.getCache() > SHOW_LABEL_LIMIT_MS) {
+            return super.getValue();
+        }
 
         return super.getUnit();
     }
@@ -22,9 +25,8 @@ public class PredictiveTimeDescription extends TimeDescription {
         return format(time);
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         super.onContentUpdated(iid, info);
 
         final long endTime = info.getEndTime();

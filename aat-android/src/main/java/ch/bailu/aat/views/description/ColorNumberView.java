@@ -2,6 +2,8 @@ package ch.bailu.aat.views.description;
 
 import android.content.Context;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -14,9 +16,8 @@ public class ColorNumberView extends NumberView {
         super(context, c, theme);
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         super.onContentUpdated(iid, info);
 
         if (state != info.getState()) {
@@ -29,7 +30,4 @@ public class ColorNumberView extends NumberView {
             }
         }
     }
-
-
-
 }

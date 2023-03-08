@@ -48,7 +48,7 @@ The structure of the data directory is as follows:
 - `aat_data/log`           - activity that gets tracked at the moment
 - `aat_data/query`         - search results from OSM-Nominatim, OSM-Overpass and offline POI 
 - `aat_data/overlay`       - GPX-files that can be used as overlays: Routes, way-points, search results...
-- `aat_data/dem3`          - cached [Digital elevation data files ](http://bailu.ch/dem3/)
+- `aat_data/dem3`          - cached [Digital elevation data files ](https://bailu.ch/dem3/)
 
 
 # Calculating calories
@@ -67,11 +67,11 @@ For questions, feedback and bug reports [report an issue](https://github.com/bai
 You can open a pull request or send me your translation as e-mail or publish them as an issue report.
 
 ### File tree structure
-Resources (like text and icons) are located in [app/src/main/res](https://github.com/bailuk/AAT/tree/master/app/src/main/res). 
+Resources (like text and icons) are located in [app/src/main/res](https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res). 
 
-English text strings are in this file: [/app/src/main/res/values/strings.xml](https://github.com/bailuk/AAT/blob/master/app/src/main/res/values/strings.xml)
+English text strings are in this file: [/app/src/main/res/values/strings.xml](https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values/strings.xml)
 
-German translations are in this file: [/app/src/main/res/values-de/strings.xml](https://github.com/bailuk/AAT/blob/master/app/src/main/res/values-de/strings.xml)
+German translations are in this file: [/app/src/main/res/values-de/strings.xml](https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values-de/strings.xml)
 
 ### Modify
 - To add a new language just add a `value-<language code>` directory containing a `strings.xml` file.
@@ -80,4 +80,4 @@ German translations are in this file: [/app/src/main/res/values-de/strings.xml](
 - You don't have to translate everything. Just remove an entry and English is used as a fall back.
 - You can modify existing strings.
 - You can add new suggestions for strings.
-- If a ° gets displayed somewhere inside the app it means the string is not yet in the resource file (only in java code). See [app/src/main/java/ch/bailu/aat/util/ToDo.java](https://github.com/bailuk/AAT/blob/master/app/src/main/java/ch/bailu/aat/util/ToDo.java)
+- If a ° gets displayed somewhere inside the app it means the string is not yet in the resource file (only in java code). See [app/src/main/java/ch/bailu/aat/util/ToDo.java](https://github.com/bailuk/AAT/blob/stage/aat-lib/src/main/java/ch/bailu/aat_lib/resources/ToDo.java)

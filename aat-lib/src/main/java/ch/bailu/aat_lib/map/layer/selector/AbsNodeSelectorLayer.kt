@@ -23,15 +23,13 @@ abstract class AbsNodeSelectorLayer(
     private val pos: Position
 ) : MapLayerInterface, OnContentUpdatedInterface, EdgeViewInterface {
 
-    private val square_size = mc.metrics.density.toPixel_i(SQUARE_SIZE.toFloat())
-    private val square_hsize = mc.metrics.density.toPixel_i(SQUARE_HSIZE.toFloat())
+    private val squareSize = mc.metrics.density.toPixel_i(SQUARE_SIZE.toFloat())
+    private val squareHSize = mc.metrics.density.toPixel_i(SQUARE_HSIZE.toFloat())
 
     private var visible = true
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
     private val centerRect = Rect()
-    private var foundID = 0
-    private var foundIndex = 0
 
     private var selectedNode: GpxPointNode? = null
 
@@ -47,9 +45,9 @@ abstract class AbsNodeSelectorLayer(
 
     init {
         centerRect.left = 0
-        centerRect.right = square_size
+        centerRect.right = squareSize
         centerRect.top = 0
-        centerRect.bottom = square_size
+        centerRect.bottom = squareSize
     }
 
     open fun getSelectedNode(): GpxPointNode? {
@@ -59,8 +57,8 @@ abstract class AbsNodeSelectorLayer(
     override fun drawForeground(mcontext: MapContext) {
         if (visible) {
             centerRect.offsetTo(
-                mcontext.metrics.width / 2 - square_hsize,
-                mcontext.metrics.height / 2 - square_hsize
+                mcontext.metrics.width / 2 - squareHSize,
+                mcontext.metrics.height / 2 - squareHSize
             )
             val centerBounding = BoundingBoxE6()
             val lt = mcontext.metrics.fromPixel(centerRect.left, centerRect.top)
@@ -85,33 +83,26 @@ abstract class AbsNodeSelectorLayer(
 
     private fun findNodeAndNotify(centerBounding: BoundingBoxE6) {
         if (selectedNode == null || !centerBounding.contains(selectedNode)) {
-            if (findNode(centerBounding)) {
-                val info = infoCache.getValue(foundID)
-                val node = selectedNode
-
-                if (info is GpxInformation && node is GpxPointNode) {
-                    setSelectedNode(foundID, info, node, foundIndex)
-                }
-            }
+            findNode(centerBounding)
         }
     }
 
-    private fun findNode(centerBounding: BoundingBoxE6): Boolean {
-        var found = false
-        var i = 0
-        while (i < infoCache.size() && !found) {
-            val list = infoCache.getValueAt(i)!!.gpxList
-            val finder = GpxNodeFinder(centerBounding)
-            finder.walkTrack(list)
-            if (finder.haveNode()) {
-                found = true
-                foundID = infoCache.getKeyAt(i)!!
-                foundIndex = finder.nodeIndex
-                selectedNode = finder.node
+    private fun findNode(centerBounding: BoundingBoxE6) {
+        for (index in 0 until infoCache.size()) {
+            val info = infoCache.getValueAt(index)
+            val infoID = infoCache.getKeyAt(index)
+
+            if (info is GpxInformation && infoID is Int) {
+                val finder = GpxNodeFinder(centerBounding)
+                finder.walkTrack(info.gpxList)
+
+                if (finder.haveNode()) {
+                    selectedNode = finder.node
+                    setSelectedNode(infoID, info, finder.node, finder.nodeIndex)
+                    break
+                }
             }
-            i++
         }
-        return found
     }
 
     abstract fun setSelectedNode(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int)
@@ -147,5 +138,4 @@ abstract class AbsNodeSelectorLayer(
     override fun show() { visible = true }
     override fun hide() { visible = false }
     override fun pos() : Position { return pos }
-
 }

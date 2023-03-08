@@ -62,7 +62,7 @@ public class SolidOverlayFile  implements SolidTypeInterface {
 
     @Override
     public String getKey() {
-        return "";
+        return path.getKey();
     }
 
 

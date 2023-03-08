@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.view.search
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setText
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase

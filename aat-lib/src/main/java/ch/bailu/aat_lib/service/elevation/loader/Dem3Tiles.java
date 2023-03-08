@@ -33,8 +33,6 @@ public final class Dem3Tiles {
         return t;
     }
 
-
-
     public Dem3Tile get(int index) {
         if (index < tiles.length) return tiles[index];
         return null;
@@ -65,4 +63,17 @@ public final class Dem3Tiles {
     public boolean have(Dem3Coordinates c) {
         return get(c) != null;
     }
+
+    /**
+     * Replace tiles that have status EMPTY (not loaded and not loading)
+     * with a default tile
+     */
+    public void removeEmpty() {
+        for (int i=0; i < NUM_TILES; i++) {
+            if (tiles[i].getStatus() == Dem3Status.EMPTY) {
+                tiles[i] = new Dem3Tile();
+            }
+        }
+    }
+
 }

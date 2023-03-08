@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.util
 
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.glib.Glib
 
 
@@ -27,9 +26,9 @@ object UiThread {
     }
 
     fun idleAdd(function: () -> Unit) {
-        Glib.idleAdd({
+        Glib.idleAdd({ _, _ ->
             function()
-            GTK.FALSE
+            false
         }, null)
     }
 }

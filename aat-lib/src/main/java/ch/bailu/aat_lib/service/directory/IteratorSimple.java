@@ -8,18 +8,15 @@ import ch.bailu.foc.Foc;
 public final class IteratorSimple extends IteratorAbstract {
     private GpxInformation info = GpxInformation.NULL;
 
-
     public IteratorSimple(AppContext appContext) {
         super(appContext);
         query();
     }
 
-
     @Override
     public GpxInformation getInfo() {
         return info;
     }
-
 
     @Override
     public void onCursorChanged(DbResultSet cursor, Foc directory, String fid) {

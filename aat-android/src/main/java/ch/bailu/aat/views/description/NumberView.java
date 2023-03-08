@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.description;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -9,6 +10,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.util.OldAppBroadcaster;
@@ -61,11 +64,9 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         theme.backgroundAlt(unit);
     }
 
-
     public void setHighlightUnitLabelColor() {
         setHighlightUnitLabelColor(theme.getHighlightColor());
     }
-
 
     public void setHighlightUnitLabelColor(int color) {
         unit.setBackgroundColor(color);
@@ -76,7 +77,6 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         return description;
     }
 
-
     private TextView createLabel() {
         TextView view = new TextView(getContext());
 
@@ -84,18 +84,15 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         view.setIncludeFontPadding(false);
         addView(view);
         return view;
-
     }
 
-
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         if (changed) {
             new Layouter(l,t,r,b).layout();
         }
     }
-
-
 
     private class Layouter {
         final int width,height;
@@ -138,8 +135,7 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         final static float X = 5f;
 
         private float toTextSize(int height) {
-            float h = height;
-            return (X*h) / (X+1) ;
+            return (X* (float) height) / (X+1) ;
         }
 
         private int toHeight(float textSize) {
@@ -172,13 +168,11 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
         }
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         description.onContentUpdated(iid, info);
         updateAllText();
     }
-
 
     public void updateAllText() {
         number.setText(description.getValue());
@@ -188,14 +182,11 @@ public class NumberView extends ViewGroup implements OnContentUpdatedInterface {
 
     @Override
     public void setOnClickListener(OnClickListener listener) {
-
         super.setOnClickListener(listener);
 
         theme.button(this);
         setPadding(0,0,0,0);
     }
-
-
 
     public View requestOnClickSensorReconnect() {
         ToolTip.set(this, R.string.sensor_connect);

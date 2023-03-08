@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_gtk.lib.extensions.setLabel
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface

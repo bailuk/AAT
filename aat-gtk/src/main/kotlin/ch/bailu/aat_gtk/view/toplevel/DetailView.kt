@@ -12,13 +12,15 @@ import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
 
 class DetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalScrollView() {
+
     init {
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
         graphView.height = 100
-        di.addTarget(graphView, InfoID.FILEVIEW)
+        di.addTarget(graphView, InfoID.ALL)
 
+        graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(di, getSummaryData(storage), InfoID.FILEVIEW)
+        addAllContent(di, getSummaryData(storage), InfoID.ALL)
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {

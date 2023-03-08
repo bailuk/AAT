@@ -7,18 +7,26 @@ import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
-import java.util.ArrayList
+import ch.bailu.foc.FocFile
 
-class GtkMapDirectories(private val storageInterface: StorageInterface, private val focFactory:FocFactory): MapDirectories {
+class GtkMapDirectories(private val storageInterface: StorageInterface, private val focFactory: FocFactory): MapDirectories {
+
+    companion object {
+        const val mapChild = "maps"
+    }
 
     override fun getWellKnownMapDirs(): ArrayList<Foc> {
+        val solidGtkDefaultDirectory = SolidGtkDefaultDirectory(storageInterface, focFactory)
         val result = ArrayList<Foc>()
-        result.add(default)
+
+        solidGtkDefaultDirectory.buildSubDirectorySelection(ArrayList(), mapChild).forEach {
+            result.add(FocFile(it))
+        }
         return result
     }
 
     override fun getDefault(): Foc {
-        return SolidGtkDefaultDirectory(storageInterface, focFactory).valueAsFile.child("maps")
+        return SolidGtkDefaultDirectory(storageInterface, focFactory).valueAsFile.child(mapChild)
     }
 
     override fun createSolidDirectory(): SolidMapsForgeDirectory {

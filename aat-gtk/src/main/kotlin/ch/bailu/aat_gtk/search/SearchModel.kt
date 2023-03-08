@@ -46,9 +46,9 @@ class SearchModel {
         }
     }
 
-    fun forEach(cb: (String, LatLong) -> Unit) {
-        result.forEach {
-            cb(it.name, it.latLong)
+    fun forEachIndexed(cb: (Int, String, LatLong) -> Unit) {
+        result.forEachIndexed { index, item ->
+            cb(index, item.name, item.latLong)
         }
     }
 }

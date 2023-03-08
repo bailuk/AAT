@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
@@ -16,14 +18,12 @@ public class CurrentPaceDescription extends PaceDescription {
         return Res.str().pace();
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        if (setPaceFromLastPoint(info) == false) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
+        if (!setPaceFromLastPoint(info)) {
             setCache(info.getSpeed());
         }
     }
-
 
     private boolean setPaceFromLastPoint(GpxInformation info) {
         final GpxList track = info.getGpxList();
@@ -36,7 +36,6 @@ public class CurrentPaceDescription extends PaceDescription {
                     return true;
                 }
             }
-
         }
         return false;
     }

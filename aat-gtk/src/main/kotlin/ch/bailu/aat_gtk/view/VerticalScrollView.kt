@@ -1,14 +1,13 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setMarkup
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-abstract class VerticalScrollView() {
+abstract class VerticalScrollView {
     companion object {
         const val MARGIN = 10
     }
@@ -27,7 +26,7 @@ abstract class VerticalScrollView() {
 
     fun add(text: String) {
         val label = Label(Str.NULL)
-        label.setMarkup("<b>${text}</b>")
+        label.setMarkup("<b>$text</b>")
         add(label)
     }
 

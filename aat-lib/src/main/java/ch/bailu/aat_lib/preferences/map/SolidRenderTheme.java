@@ -67,23 +67,17 @@ public class SolidRenderTheme extends SolidFile {
     }
 
     public static XmlRenderTheme toRenderTheme(String name) {
-
-        XmlRenderTheme theme;
-
         if (name.equals(InternalRenderTheme.DEFAULT.toString())) {
-            theme = InternalRenderTheme.DEFAULT;
+            return InternalRenderTheme.DEFAULT;
         } else if (name.equals(InternalRenderTheme.OSMARENDER.toString())) {
-            theme = InternalRenderTheme.OSMARENDER;
+            return InternalRenderTheme.OSMARENDER;
         } else {
             try {
-                theme = new ExternalRenderTheme(new File(name));
+                return new ExternalRenderTheme(new File(name));
             } catch (FileNotFoundException e1) {
-                theme = InternalRenderTheme.DEFAULT;
+                return InternalRenderTheme.DEFAULT;
             }
         }
-
-        return theme;
-
     }
 
 

@@ -56,7 +56,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
         return summary.getTimeDelta();
     }
 
-
     @Override
     public long getPause()  {
         return summary.getPause();
@@ -87,7 +86,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
         return summary.getAcceleration();
     }
 
-
     @Override
     public BoundingBoxE6 getBoundingBox() {
         return summary.getBoundingBox();
@@ -97,8 +95,6 @@ public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterf
     public long getEndTime() {
         return summary.getEndTime();
     }
-
-
 
     @Override
     public GpxType getType() {

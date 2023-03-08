@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
@@ -34,9 +36,8 @@ public class HeartRateDescription extends ContentDescription {
         return UNIT;
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         final boolean haveSensor = SensorState.isConnected(InfoID.HEART_RATE_SENSOR);
 
         if (iid == InfoID.HEART_RATE_SENSOR && haveSensor) {

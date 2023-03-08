@@ -2,10 +2,7 @@ package ch.bailu.aat_gtk.view.search
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setLabel
-import ch.bailu.aat_gtk.lib.extensions.setMarkup
 import ch.bailu.aat_lib.search.poi.PoiListItem
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
@@ -23,18 +20,18 @@ class PoiListItemView(listItem: ListItem) {
 
     fun set(entry: PoiListItem) {
         if (entry.isSummary) {
-            checkBox.visible = GTK.FALSE
+            checkBox.visible = false
             label.setMarkup("<b>${entry.title}</b>")
-            label.visible = GTK.TRUE
+            label.visible = true
         } else {
-            label.visible = GTK.FALSE
-            checkBox.active = GTK.IS(entry.isSelected)
+            label.visible = false
+            checkBox.active = entry.isSelected
             checkBox.setLabel(entry.title)
-            checkBox.visible = GTK.TRUE
+            checkBox.visible = true
 
             // TODO unlink reference to lambda here
             checkBox.onToggled {
-                entry.isSelected = GTK.IS(checkBox.active)
+                entry.isSelected = checkBox.active
                 // TODO update filter list here to remove unselected from list?
             }
         }

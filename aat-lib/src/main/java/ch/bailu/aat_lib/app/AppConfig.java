@@ -1,24 +1,40 @@
 package ch.bailu.aat_lib.app;
 
+import ch.bailu.aat_lib.Configuration;
 import ch.bailu.aat_lib.util.WithStatusText;
 
 public abstract class AppConfig implements WithStatusText {
     public String getLongName() {
-        return "AAT Activity Tracker";
+        return Configuration.appLongName;
     }
     public String getShortName() {
-        return "AAT";
+        return Configuration.appName;
     }
     public String getContact() {
-        return "aat@bailu.ch";
+        return Configuration.appContact;
     }
 
-    public abstract String getApplicationId();
-    public abstract String getVersionName();
-    public abstract int getVersionCode();
+    public String getApplicationId() {
+        return Configuration.appId;
+    }
+
+    public String getVersionName() {
+        return Configuration.appVersionName;
+    }
+
+    public int getVersionCode() {
+        return Integer.parseInt(Configuration.appVersionCode);
+    }
+
+    public String getWebsite() {
+        return Configuration.appWebsite;
+    }
+
+    public String getCopyright() {
+        return Configuration.appCopyright;
+    }
 
     public abstract boolean isRelease();
-
 
     private static AppConfig instance = null;
 
@@ -45,14 +61,11 @@ public abstract class AppConfig implements WithStatusText {
         }
     }
 
-
     public String getUserAgent() {
         return getShortName() + "/" +
                 getLongName() + "/" +
                 getVersionName() + " (" + getContact() + ")";
-
     }
-
 
     @Override
     public void appendStatusText(StringBuilder builder) {

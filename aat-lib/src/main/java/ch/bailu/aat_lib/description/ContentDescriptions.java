@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public class ContentDescriptions extends ContentDescription {
@@ -12,33 +14,31 @@ public class ContentDescriptions extends ContentDescription {
 
     @Override
     public String getValue() {
-        StringBuilder v= new StringBuilder();
-        String u="";
-        String s="";
-        for (ContentDescription d: descriptions) {
+        final StringBuilder value = new StringBuilder();
+        String del = "";
 
-            v.append(s).append(d.getValue());
-            u = d.getUnit();
-            if (u.length() > 0) v.append(" ").append(u);
-            s= ", ";
+        for (ContentDescription d: descriptions) {
+            value.append(del).append(d.getValue());
+            final String unit = d.getUnit();
+            if (unit.length() > 0) value.append(" ").append(unit);
+            del = ", ";
         }
-        return v.toString();
+        return value.toString();
     }
 
     @Override
     public String getLabel() {
-        StringBuilder l= new StringBuilder();
-        String s="";
+        final StringBuilder label = new StringBuilder();
+        String del = "";
         for (ContentDescription d: descriptions) {
-            l.append(s).append(d.getLabel());
-            s= ", ";
+            label.append(del).append(d.getLabel());
+            del = ", ";
         }
-        return l.toString();
+        return label.toString();
     }
 
-
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         for (ContentDescription d: descriptions) {
             d.onContentUpdated(iid, info);
         }

@@ -1,28 +1,46 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
-import ch.bailu.aat_gtk.lib.extensions.setText
-import ch.bailu.aat_gtk.lib.menu.MenuModelBuilder
+import ch.bailu.aat_gtk.view.menu.MenuHelper
+import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
-import ch.bailu.gtk.GTK
+import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuProvider {
-    override fun createMenu(): MenuModelBuilder {
-        return MenuModelBuilder().custom(solid.key)
+class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
+    override fun createMenu(): Menu {
+        return Menu().apply {
+            appendSection(Res.str().file_overlay(), Menu().apply {
+                appendItem(MenuHelper.createCustomItem(solid.key))
+            })
+
+            appendSection(Str.NULL, Menu().apply {
+                append(Res.str().file_mock(), "app.file_mock")
+            })
+        }
+    }
+
+    private var file: Foc = FocName(solid.key)
+    private var removedFromList = file
+    private val labels: ArrayList<Label> = ArrayList()
+
+    fun setFile(file: Foc) {
+        this.file = file
+        removedFromList = file
+        updateLabels()
+    }
+
+    override fun createActions(app: Application) {
+        MenuHelper.setAction(app, "file_mock") {
+            solidMock.setValue(file.path)
+        }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
-        return createCustomWidgets(FocName(solid.key))
-    }
-
-    fun createCustomWidgets(file: Foc): Array<CustomWidget> {
-        var removedFromList = file
-        val labels: ArrayList<Label> = ArrayList()
-
         return arrayOf(
             CustomWidget(
                 ListBox().apply {
@@ -36,16 +54,16 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
                         label.xalign = 0f
                         labels.add(label)
 
-                        check.active = GTK.IS(it)
+                        check.active = it
                         check.onToggled {
-                            solid.setEnabled(index, GTK.IS(check.active))
+                            solid.setEnabled(index, check.active)
                         }
                         layout.append(check)
                         layout.append(label)
                         append(layout)
                     }
 
-                    updateLabels(labels)
+                    updateLabels()
                     onRowActivated {
                         val foundAt = indexOf(file)
 
@@ -61,7 +79,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
                             solid[it.index].setValueFromFile(removedFromList)
                         }
 
-                        updateLabels(labels)
+                        updateLabels()
                     }
                 }, solid.key
             )
@@ -77,7 +95,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList): MenuPro
         return -1
     }
 
-    private fun updateLabels(labels: ArrayList<Label>) {
+    private fun updateLabels() {
         labels.forEachIndexed { index, it ->
             it.setText(solid[index].valueAsString.ellipsizeStart(30))
         }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16px"
+   viewBox="0 0 16 16"
+   width="16px"
+   version="1.1"
+   id="svg890"
+   xmlns="http://www.w3.org/2000/svg">
+  <defs
+     id="defs894" />
+  <path
+     style="fill:none;stroke:#2e3436;stroke-width:1.98425;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 1.4137247,14.895713 14.571582,14.932445 13.049858,9.6478752 2.8992561,9.6787462 Z"
+     id="path1655"/>
+  <g
+     fill="#2e3436"
+     id="g888"
+     transform="matrix(0.7012692,0,0,0.67510187,2.3318359,1.6164301)">
+    <path
+       d="M 8,0 C 4.410156,0 1.5,2.910156 1.5,6.5 1.5,10.089844 4.410156,12.996094 8,12.996094 11.589844,13 14.5,10.089844 14.5,
+       6.5 14.5,2.910156 11.589844,0 8,0 Z M 8,4 C 9.378906,4 10.5,5.117188 10.5,
+       6.5 10.5,7.878906 9.378906,9 8,8.996094 6.621094,8.996094 5.5,7.878906 5.5,6.5 5.5,5.121094 6.617188,4 8,4 Z m 0,0"
+       id="path884"
+       style="stroke-width:0.99972803;stroke-miterlimit:4;stroke-dasharray:none" />
+    <path
+       d="M 14.097656,8.746094 8.4375,9.976562 1.902344,8.746094 C 2.589844,10.898438 6,13.996094 8,15.996094 V 16 15.9961 c 2,-2 5.410156,-5.101563 6.097656,-7.25 z m 0,0"
+       id="path886" />
+  </g>
+</svg>

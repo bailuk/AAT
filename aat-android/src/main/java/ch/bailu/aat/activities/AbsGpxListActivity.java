@@ -179,18 +179,13 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
             summary.add(title);
             summary.addAllFilterViews(map.getMContext(), filterTheme);
 
-
             MainControlBar bar = new MainControlBar(acontext);
             View layout = createLayout(map, summary, bar);
-
-
 
             contentView.add(bar);
             contentView.add(getErrorView());
             contentView.add(layout);
-
         }
-
 
         private View createLayout(MapViewInterface map,
                                   VerticalScrollView summary,

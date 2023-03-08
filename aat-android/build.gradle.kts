@@ -13,13 +13,15 @@ android {
 
     val appVersionName : String by project
     val appName : String by project
+    val appVersionCode : String by project
+    val appId : String by project
 
     defaultConfig {
         minSdk = 14
         targetSdk = 29
-        versionCode = 36
+        versionCode = appVersionCode.toInt()
         versionName = appVersionName
-        applicationId = "ch.bailu.aat"
+        applicationId = appId
     }
 
     lint {

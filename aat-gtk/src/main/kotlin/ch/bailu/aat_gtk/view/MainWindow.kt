@@ -6,23 +6,27 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.css.CSS
 import ch.bailu.aat_gtk.lib.icons.IconMap
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
+import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.dispatcher.*
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.gtk.GTK
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
 
 class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispatcher)
 {
+    private val selectedSource = SelectedSource()
+
     private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
 
     private val contextRevealButton = ToggleButton()
-    private val mainView = MainStackView(app, dispatcher,window, GtkAppContext.storage, contextRevealButton)
-    private val contextBar = ContextBar(mainView,GtkAppContext.storage)
+    private val mainView = MainStackView(app, dispatcher, selectedSource, window, GtkAppContext.storage, contextRevealButton)
+    private val contextBar = ContextBar(mainView,GtkAppContext.storage, selectedSource)
 
     private val box = Box(Orientation.VERTICAL, 0)
 
@@ -33,9 +37,9 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
-        window.iconName = Strings.appId
+        window.setIconName(AppConfig.getInstance().applicationId)
         window.child = box
-        window.title = Str(GtkAppConfig.title)
+        window.title = Str(GtkAppConfig.shortName)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
 
         window.setDefaultSize(Layout.windowWidth, Layout.windowHeight)
@@ -48,7 +52,9 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         dispatcher.addSource(OverlaySource(GtkAppContext))
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
-        dispatcher.addTarget(contextBar, InfoID.ALL)
+        dispatcher.addTarget(contextBar, InfoID.TRACKER, InfoID.FILEVIEW, *MutableList(SolidOverlayFileList.MAX_OVERLAYS) {
+            it + InfoID.OVERLAY
+        }.toIntArray())
 
         CSS.addProviderForDisplay(window.display, Strings.appCss)
         window.onDestroy {
@@ -57,20 +63,21 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         }
     }
 
-
     private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, stack: MainStackView): HeaderBar {
         val header = HeaderBar()
 
-        header.showTitleButtons = GTK.TRUE
+        header.showTitleButtons = true
 
         contextRevealButton.child = IconMap.getImage("zoom-original", 24)
+        contextRevealButton.active = true
         contextRevealButton.onToggled {
             contextBar.revealer.revealChild = contextRevealButton.active
         }
 
         header.packStart(MenuButton().apply {
             val appMenu = AppMenu(window, GtkAppContext.services, dispatcher, stack)
-            menuModel = appMenu.createMenu().create(app)
+            menuModel = appMenu.createMenu()
+            appMenu.createActions(app) // TODO is this the right place?
             PopoverMenu(popover.cast()).apply {
                 appMenu.createCustomWidgets().forEach {
                     addChild(it.widget, Str(it.id))

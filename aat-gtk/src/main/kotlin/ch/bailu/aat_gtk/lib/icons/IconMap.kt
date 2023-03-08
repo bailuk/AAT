@@ -24,7 +24,7 @@ object IconMap {
 
         return if (result == null) {
             val input = IconMap.javaClass.getResourceAsStream("/svg/${name}.svg")
-            result = ch.bailu.gtk.bridge.Image.load(input, size, size)
+            result = ch.bailu.gtk.lib.bridge.Image.load(input, size, size)
             pixbufs[IconId(name, size)] = result
             result.ref()
             result

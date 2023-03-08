@@ -2,72 +2,72 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.appendText
+import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setLabel
 import ch.bailu.aat_gtk.lib.icons.IconMap
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.resources.ToDo
-import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.gtk.*
 
-class ContextBar(contextCallback: UiController, private val storage: StorageInterface) : OnContentUpdatedInterface {
+class ContextBar(contextCallback: UiController,
+                 private val storage: StorageInterface,
+                 private val selectedSource: SelectedSource
+)
+    : OnContentUpdatedInterface {
+
     val revealer = Revealer()
 
-    private val combo = ComboBoxText()
-    private val cache = IndexedMap<Int, GpxInformation>()
-    private var trackerState = StateID.NOSERVICE
-    private var selectInfoID = InfoID.TRACKER
-
-    private val row1 = Box(Orientation.HORIZONTAL, 0).apply {
-        append(createImageButton("zoom-fit-best-symbolic") { contextCallback.showInMap(selectedGpx()) } )
-        append(combo)
-        margin(3)
-        addCssClass(Strings.linked)
-
+    private val combo = ComboBoxText().apply {
+        hexpand = true
+        onChanged {
+            selectedSource.selectIndexAndUpdate(active)
+        }
     }
-    private val row2 = Box(Orientation.HORIZONTAL, 0).apply {
+
+    private var trackerState = StateID.NOSERVICE
+
+    private val row = Box(Orientation.HORIZONTAL, 0).apply {
         addCssClass(Strings.linked)
+        append(combo)
         margin(3)
     }
 
     private val buttons = ArrayList<ToggleButton>().apply {
-        add(createButton(ToDo.translate("Map")) {
-            contextCallback.showMap()
+        add(createButton("inc_map") {
+            if (storage.readInteger(MainStackView.KEY) == MainStackView.INDEX_MAP) {
+                contextCallback.showInMap(selectedSource.cache.getValueAt(combo.active))
+            } else {
+                contextCallback.showMap()
+            }
             updateToggle()
         })
-        add(createButton(ToDo.translate("List")) {
+        add(createButton("view-list-symbolic") {
             contextCallback.showInList()
             updateToggle()
         })
-        add(createButton(ToDo.translate("Detail")) {
+        add(createButton("help-about-symbolic") {
             contextCallback.showDetail()
             updateToggle()
         })
-        add(createButton(ToDo.translate("Cockpit")) {
+        add(createButton("inc_cockpit") {
             contextCallback.showCockpit()
             updateToggle()
         })
 
         forEach {
-            row2.append(it)
+            row.append(it)
         }
     }
 
     init {
-        val layout = Box(Orientation.VERTICAL,0).apply {
-            append(row1)
-            append(row2)
+        revealer.child = Box(Orientation.HORIZONTAL,0).apply {
+            append(row)
         }
-
-        revealer.child = layout
-        revealer.revealChild = GTK.FALSE
+        revealer.revealChild = true
 
         storage.register { _, key ->
             if (key == MainStackView.KEY) {
@@ -77,68 +77,44 @@ class ContextBar(contextCallback: UiController, private val storage: StorageInte
         updateToggle()
     }
 
-    private fun updateCombo(index: Int = 0) {
-        combo.removeAll()
-        cache.forEach { _, value ->
-            combo.appendText(value.file.name)
-        }
-        combo.active = index
-    }
-
-
-    private fun createButton(label: String, onClicked: Button.OnClicked) : ToggleButton {
+    private fun createButton(icon: String, onClicked: Button.OnClicked) : ToggleButton {
         return ToggleButton().apply {
-            setLabel(label)
+            child = IconMap.getImage(icon, Layout.ICON_SIZE)
             onClicked(onClicked)
         }
-    }
-
-    private fun createImageButton(resource: String, onClicked: Button.OnClicked) : Button {
-        return Button().apply {
-            onClicked(onClicked)
-            child = IconMap.getImage(resource, Layout.iconSize)
-        }
-    }
-
-    private fun selectedGpx(): GpxInformation {
-        val info = cache.getValueAt(combo.active)
-        if (info is GpxInformation) {
-            return info
-        }
-        return GpxInformation.NULL
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val isInCache = cache.indexOfKey(iid) > -1
+        selectedSource.cache.onContentUpdated(iid, info)
 
-        if (isInCache && iid == InfoID.TRACKER) {
+        if (selectedSource.cache.isInCache(iid) && iid == InfoID.TRACKER) {
             if (info.state != trackerState) {
                 trackerState = info.state
-                updateCacheAndCombo(iid, info, isInCache)
+                updateCombo(selectedSource.cache.indexOf(iid))
+                selectedSource.selectedIID = iid
             }
         } else {
-            updateCacheAndCombo(iid, info, isInCache)
+            updateCombo(selectedSource.cache.indexOf(iid))
+            selectedSource.selectedIID = iid
         }
+
+        selectedSource.requestUpdate(iid)
     }
 
-    private fun updateCacheAndCombo(iid: Int, info: GpxInformation, isInCache: Boolean) {
-        if (info.isLoaded && info.gpxList.pointList.size() > 0) {
-            cache.put(iid, info)
-            selectInfoID = iid
-            updateCombo(cache.indexOfKey(selectInfoID))
 
-        } else if (isInCache) {
-            cache.remove(iid)
-            updateCombo(cache.indexOfKey(selectInfoID))
+    private fun updateCombo(index: Int = 0) {
+        combo.removeAll()
+        selectedSource.cache.forEach { info ->
+            combo.appendText(info.file.name.ellipsize(15))
         }
+        combo.active = index
     }
 
     private fun updateToggle() {
         val index = storage.readInteger(MainStackView.KEY)
 
-        AppLog.d(this, "update toggle $index")
         buttons.forEachIndexed { i, it ->
-            it.active = GTK.IS(index == i)
+            it.active = index == i
         }
     }
 }

@@ -6,10 +6,10 @@ import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.cairo.Context
 import ch.bailu.gtk.glib.Glib
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.DrawingArea
+import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.type.Pointer
 
 class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
@@ -57,16 +57,14 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
     }
 
     init {
-        drawingArea.vexpand = GTK.TRUE
-        drawingArea.hexpand = GTK.TRUE
+        drawingArea.vexpand = true
+        drawingArea.hexpand = true
 
-        drawingArea.setDrawFunc({ _: DrawingArea, cr: Context, w: Int, h: Int, _: Pointer? ->
+        drawingArea.setDrawFunc({ _, _: DrawingArea, cr: Context, w: Int, h: Int, _: Pointer? ->
             _width = w
             _height = h
             plotter.plot(GtkCanvas(cr), plotterConfig)
-            println("$w $h")
-
-        }, null, {})
+        }, null, {_, _ ->})
 
 
         overlay.child = drawingArea
@@ -87,16 +85,17 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
          * This callback will then call queueDraw() from within the main (UI) thread.
          */
         redrawNeeded = true
-        Glib.idleAdd({
+        Glib.idleAdd({_, _ ->
             if (redrawNeeded) {
                 redrawNeeded = false
                 drawingArea.queueDraw()
             }
-            GTK.FALSE
+            false
         }, null)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         gpxCache = info.gpxList
+        repaint()
     }
 }

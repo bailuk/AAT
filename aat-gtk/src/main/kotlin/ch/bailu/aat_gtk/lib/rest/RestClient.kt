@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.lib.rest
 
 import ch.bailu.aat_gtk.lib.json.Json
-import ch.bailu.gtk.GTK
 import ch.bailu.gtk.glib.Glib
 import okhttp3.*
 import java.io.File
@@ -54,9 +53,9 @@ class RestClient(val file: File,
     }
 
     private fun callBack(observer: (RestClient)->Unit) {
-        Glib.idleAdd({
+        Glib.idleAdd({ _, _ ->
             observer(this@RestClient)
-            GTK.FALSE
+            false
         }, null)
 
     }

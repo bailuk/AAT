@@ -64,8 +64,6 @@ class H2DbConnection : DbConnection {
 
     override fun execSQL(sqlStatement: String, vararg params: Any?) {
         try {
-            // println(sqlStatement)
-
             val stmt = getPreparedStatement(sqlStatement, params)
             stmt.execute()
             stmt.close()
@@ -74,27 +72,21 @@ class H2DbConnection : DbConnection {
         }
     }
 
-
     override fun query(sqlStatement: String, vararg params: Any?): DbResultSet {
         try {
-            //println(sqlStatement)
-
             val stmt = getPreparedStatement(sqlStatement, params)
             val res = stmt.executeQuery()
 
-            //stmt.close()
             return ScrollInsensitiveResultSet(res)
         } catch (e: Exception) {
             throw DbException(e)
         }
     }
 
-
     override fun close() {
         connection?.close()
         connection = null
     }
-
 
      private fun getPreparedStatement(sqlStatement: String, params: Array<out Any?>) : PreparedStatement {
         val connection = connection

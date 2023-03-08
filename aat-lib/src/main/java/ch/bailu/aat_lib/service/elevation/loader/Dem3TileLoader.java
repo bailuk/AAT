@@ -3,11 +3,15 @@ package ch.bailu.aat_lib.service.elevation.loader;
 
 import java.io.Closeable;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
+import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
 import ch.bailu.aat_lib.service.background.DownloadTask;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
@@ -15,7 +19,7 @@ import ch.bailu.aat_lib.util.Timer;
 import ch.bailu.foc.Foc;
 
 public final class Dem3TileLoader implements Closeable {
-    private static final long MILLIS=2000;
+    private static final long MILLIS = 2000;
 
     private final AppContext appContext;
     private final Dem3Tiles tiles;
@@ -26,16 +30,17 @@ public final class Dem3TileLoader implements Closeable {
 
     private final SolidDem3EnableDownload sdownload;
 
-    public Dem3TileLoader(AppContext appContext, Timer timer, Dem3Tiles t) {
+    public Dem3TileLoader(AppContext appContext, Timer timer, Dem3Tiles tiles) {
         this.timer = timer;
-        tiles = t;
+        this.tiles = tiles;
         this.appContext = appContext;
         this.appContext.getBroadcaster().register(onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
 
-         sdownload = new SolidDem3EnableDownload(appContext.getStorage());
+        this.sdownload = new SolidDem3EnableDownload(appContext.getStorage());
+        this.sdownload.register(onPreferencesChanged);
     }
 
-    private final Runnable timout = () -> {
+    private final Runnable timeout = () -> {
         if (havePending()) {
             loadOrDownloadPending();
             stopTimer();
@@ -54,6 +59,15 @@ public final class Dem3TileLoader implements Closeable {
         }
     };
 
+    private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
+        @Override
+        public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
+            if (sdownload.hasKey(key) && sdownload.getValue()) {
+                tiles.removeEmpty(); // Reset for re-download
+            }
+        }
+    };
+
     private void loadOrDownloadPending() {
         final Dem3Coordinates toLoad = pending;
         pending = null;
@@ -67,33 +81,29 @@ public final class Dem3TileLoader implements Closeable {
         }
     }
 
-
-    public Dem3Tile loadNow(Dem3Coordinates c) {
+    public Dem3Tile loadNow(Dem3Coordinates coordinates) {
         if (havePending()) cancelPending();
-        return loadIntoOldestSlot(c);
+        return loadIntoOldestSlot(coordinates);
     }
 
-    private Dem3Tile loadIntoOldestSlot(Dem3Coordinates c) {
-        if (!tiles.have(c)) {
+    private Dem3Tile loadIntoOldestSlot(Dem3Coordinates coordinates) {
+        if (!tiles.have(coordinates)) {
             final Dem3Tile slot = tiles.getOldestProcessed();
 
             if (slot != null && !slot.isLocked()) {
-                slot.load(appContext.getServices(), c,  appContext.getDem3Directory());
+                slot.load(appContext.getServices(), coordinates,  appContext.getDem3Directory());
             }
         }
 
-        return tiles.get(c);
+        return tiles.get(coordinates);
     }
 
-
-
-    public void loadOrDownloadLater(Dem3Coordinates c) {
+    public void loadOrDownloadLater(Dem3Coordinates coordinates) {
         if (pending == null) { // first BitmapRequest
             startTimer();
         }
-        pending = c;
+        pending = coordinates;
     }
-
 
     public void cancelPending() {
         pending = null;
@@ -106,7 +116,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private void startTimer() {
         timer.cancel();
-        timer.kick(timout, MILLIS);
+        timer.kick(timeout, MILLIS);
     }
 
     private void stopTimer() {
@@ -124,5 +134,6 @@ public final class Dem3TileLoader implements Closeable {
     @Override
     public void close() {
         appContext.getBroadcaster().unregister(onFileDownloaded);
+        sdownload.unregister(onPreferencesChanged);
     }
 }

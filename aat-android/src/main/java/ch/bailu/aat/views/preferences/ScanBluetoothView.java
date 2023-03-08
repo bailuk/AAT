@@ -2,6 +2,8 @@ package ch.bailu.aat.views.preferences;
 
 import android.view.View;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
@@ -21,7 +23,6 @@ public class ScanBluetoothView extends LabelTextView implements View.OnClickList
         theme.button(this);
     }
 
-
     private void setText() {
         new InsideContext(scontext) {
             @Override
@@ -30,7 +31,6 @@ public class ScanBluetoothView extends LabelTextView implements View.OnClickList
             }
         };
     }
-
 
     @Override
     public void onClick(View v) {
@@ -43,11 +43,10 @@ public class ScanBluetoothView extends LabelTextView implements View.OnClickList
     }
 
     @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
+    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
         if (iid == InfoID.SENSORS) {
             setText();
         }
 
     }
 }
-

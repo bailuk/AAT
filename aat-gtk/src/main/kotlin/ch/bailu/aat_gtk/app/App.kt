@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.app
 
-import ch.bailu.aat_gtk.logger.SL4JLogger
+import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.view.MainWindow
@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLogger
+import ch.bailu.aat_lib.logger.PrintLnLogger
 import ch.bailu.gtk.gio.ApplicationFlags
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
@@ -26,7 +27,8 @@ object App {
     private val dispatcher = Dispatcher()
 
     init {
-        AppLog.set(SL4JLogger())
+        RuntimeInfo.startLogging()
+        AppLog.set(PrintLnLogger())
         AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
         AppConfig.setInstance(GtkAppConfig)
 
@@ -34,14 +36,14 @@ object App {
             BroadcastLogger(
                 GtkAppContext.broadcaster,
                 AppBroadcaster.LOG_ERROR,
-                SL4JLogger()
+                PrintLnLogger()
             )
         )
         AppLog.setInfo(
             BroadcastLogger(
                 GtkAppContext.broadcaster,
                 AppBroadcaster.LOG_INFO,
-                SL4JLogger()
+                PrintLnLogger()
             )
         )
 

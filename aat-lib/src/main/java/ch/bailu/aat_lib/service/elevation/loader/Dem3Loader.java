@@ -13,40 +13,59 @@ public final class Dem3Loader implements Closeable, ElevationProvider {
     private final Dem3TileLoader loader;
     private final Dem3Tiles tiles;
 
-    public Dem3Loader(AppContext appContext, Timer timer, Dem3Tiles t) {
-        tiles = t;
-        loader = new Dem3TileLoader(appContext, timer, tiles);
+    /**
+     * Facade for dem3 tiles
+     * Delegates loading of dem3 tiles and returns elevation for a specific coordinate
+     * @param appContext Platform context
+     * @param timer Platform timer to lazy load dem3 tiles
+     * @param tiles Tiles can be shared with elevation updater
+     */
+    public Dem3Loader(AppContext appContext, Timer timer, Dem3Tiles tiles) {
+        this.tiles = tiles;
+        this.loader = new Dem3TileLoader(appContext, timer, this.tiles);
     }
 
+    /**
+     * Loads and/or downloads dem3 tile that contains a specific coordinate
+     * Return elevation for specific coordinate if dem3 tile is loaded
+     * @param laE6 latitude E6 format
+     * @param loE6 longitude E6 format
+     * @return 0 if dem3 tile is not loaded, else altitude for coordinate
+     */
     @Override
     public short getElevation(int laE6, int loE6) {
-        short r=0;
-        Dem3Coordinates c = new Dem3Coordinates(laE6, loE6);
-        Dem3Tile t = tiles.get(c);
+        short result = 0;
+        Dem3Coordinates coordinates = new Dem3Coordinates(laE6, loE6);
+        Dem3Tile tile = tiles.get(coordinates);
 
-        if (t == null) {
-            loader.loadOrDownloadLater(c);
+        if (tile == null) {
+            loader.loadOrDownloadLater(coordinates);
         } else {
             loader.cancelPending();
-            if (t.getStatus() == Dem3Status.VALID) {
-                r=t.getElevation(laE6, loE6);
+            if (tile.getStatus() == Dem3Status.VALID) {
+                result = tile.getElevation(laE6, loE6);
             }
         }
-        return r;
+        return result;
     }
 
+    /**
+     * Load the dem3 tile containing altitude for specific coordinates
+     * @param coordinates
+     * @return true if is loaded, false if is pending
+     */
+    public boolean requestDem3Tile(Dem3Coordinates coordinates) {
+        Dem3Tile tile = tiles.get(coordinates);
 
-
-    public  Dem3Tile requestDem3Tile(Dem3Coordinates c) {
-        Dem3Tile t=tiles.get(c);
-
-        if (t == null) {
-            t = loader.loadNow(c);
+        if (tile == null) {
+            tile = loader.loadNow(coordinates);
         }
-
-        return t;
+        return tile != null;
     }
 
+    /**
+     * Close the dem3 loader
+     */
     @Override
     public void close() {
         loader.close();
