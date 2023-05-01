@@ -141,7 +141,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
             for (PoiCategory category : categories)
                 categoryFilter.addCategory(category);
 
-            return persistenceManager.findInRect(box, categoryFilter, null, LIMIT);
+            return persistenceManager.findInRect(box, categoryFilter, null, box.getCenterPoint(), LIMIT);
         }
 
         private void writeGpxFile(Collection<PointOfInterest> pois) throws IOException {
