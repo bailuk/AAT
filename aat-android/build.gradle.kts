@@ -13,13 +13,12 @@ android {
 
     val appVersionName : String by project
     val appName : String by project
-    val appVersionCode : String by project
     val appId : String by project
 
     defaultConfig {
         minSdk = 14
         targetSdk = 29
-        versionCode = appVersionCode.toInt()
+        versionCode = 37
         versionName = appVersionName
         applicationId = appId
     }
