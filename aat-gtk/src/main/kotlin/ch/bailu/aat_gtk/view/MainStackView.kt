@@ -120,7 +120,7 @@ class MainStackView (
         backTo = INDEX_MAP
     }
 
-    fun showPreferences() {
+    override fun showPreferences() {
         revealerRestore = revealer.active
         revealer.active = false
         preferences.show()
@@ -132,7 +132,7 @@ class MainStackView (
         poi.show()
     }
 
-    fun showFiles() {
+    override fun showFiles() {
         stack.show(INDEX_FILES)
         backTo = INDEX_FILES
     }

@@ -7,7 +7,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.lib.icons.IconMap
-import ch.bailu.aat_gtk.view.menu.provider.AppMenu
+import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
@@ -15,9 +15,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.ApplicationWindow
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.HeaderBar
-import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
@@ -42,7 +40,7 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         window.setIconName(GtkAppConfig.applicationId)
         window.child = box
         window.title = Str(GtkAppConfig.shortName)
-        window.titlebar = createHeader(window, app,dispatcher, mainView)
+        window.titlebar = createHeader(window, app,dispatcher)
 
         window.setDefaultSize(Layout.windowWidth, Layout.windowHeight)
         window.show()
@@ -59,10 +57,10 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
         }
     }
 
-    private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher, stack: MainStackView): HeaderBar {
-        val header = HeaderBar()
+    private fun createHeader(window: ApplicationWindow, app: Application, dispatcher: Dispatcher): HeaderBar {
+        val headerBar = HeaderBar()
 
-        header.showTitleButtons = true
+        headerBar.showTitleButtons = true
 
         contextRevealButton.child = IconMap.getImage("zoom-original", 24)
         contextRevealButton.active = true
@@ -70,20 +68,10 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
             contextBar.revealer.revealChild = contextRevealButton.active
         }
 
-        header.packStart(MenuButton().apply {
-            val appMenu = AppMenu(window, GtkAppContext.services, dispatcher, stack)
-            menuModel = appMenu.createMenu()
-            appMenu.createActions(app) // TODO is this the right place?
-            PopoverMenu(popover.cast()).apply {
-                appMenu.createCustomWidgets().forEach {
-                    addChild(it.widget, Str(it.id))
-                }
-            }
-        })
+        headerBar.packStart(MainMenuButton(app, window, dispatcher, mainView).menuButton)
+        headerBar.packStart(trackerButton.button)
+        headerBar.packEnd(contextRevealButton)
 
-        header.packStart(trackerButton.button)
-        header.packEnd(contextRevealButton)
-
-        return header
+        return headerBar
     }
 }

@@ -6,6 +6,10 @@ import ch.bailu.gtk.gio.ApplicationFlags
 
 
 fun main() {
+    adwMain()
+}
+
+fun adwMain() {
     App.setup()
 
     val app = Application(GtkAppConfig.applicationId, ApplicationFlags.FLAGS_NONE)

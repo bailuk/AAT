@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.view.MainStackView
 import ch.bailu.aat_gtk.view.TrackerButtonStartStop
+import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.dialog.About
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -20,7 +20,7 @@ import ch.bailu.gtk.type.Str
 class AppMenu(private val window: ApplicationWindow,
               private val services: ServicesInterface,
               private val dispatcher: Dispatcher,
-              private val stack: MainStackView) :
+              private val uiController: UiController) :
     MenuProvider {
 
     override fun createMenu(): Menu {
@@ -49,11 +49,11 @@ class AppMenu(private val window: ApplicationWindow,
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "trackInfo") { stack.showDetail() }
-        MenuHelper.setAction(app, "showMap") { stack.showMap() }
-        MenuHelper.setAction(app, "showCockpit") { stack.showCockpit() }
-        MenuHelper.setAction(app, "showTracks") { stack.showFiles() }
-        MenuHelper.setAction(app, "showSettings") { stack.showPreferences() }
+        MenuHelper.setAction(app, "trackInfo") { uiController.showDetail() }
+        MenuHelper.setAction(app, "showMap") { uiController.showMap() }
+        MenuHelper.setAction(app, "showCockpit") { uiController.showCockpit() }
+        MenuHelper.setAction(app, "showTracks") { uiController.showFiles() }
+        MenuHelper.setAction(app, "showSettings") { uiController.showPreferences() }
         MenuHelper.setAction(app, "showAbout") { About.show(window) }
         MenuHelper.setAction(app, "dumpResources") {
             CallbackHandler.dump(System.out)

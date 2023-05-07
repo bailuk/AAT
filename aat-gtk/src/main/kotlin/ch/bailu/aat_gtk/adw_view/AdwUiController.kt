@@ -48,4 +48,12 @@ class AdwUiController : UiController {
     override fun getMapBounding(): BoundingBoxE6 {
         TODO("Not yet implemented")
     }
+
+    override fun showFiles() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showPreferences() {
+        TODO("Not yet implemented")
+    }
 }
