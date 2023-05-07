@@ -3,18 +3,22 @@ package ch.bailu.aat_gtk.view
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.app.TimeStation
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.icons.IconMap
-import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_gtk.dispatcher.SelectedSource
-import ch.bailu.aat_lib.app.AppConfig
-import ch.bailu.aat_lib.dispatcher.*
+import ch.bailu.aat_gtk.lib.icons.IconMap
+import ch.bailu.aat_gtk.view.menu.provider.AppMenu
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.ApplicationWindow
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.HeaderBar
+import ch.bailu.gtk.gtk.MenuButton
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.PopoverMenu
+import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
 
@@ -32,24 +36,16 @@ class MainWindow(window: ApplicationWindow, app: Application, dispatcher: Dispat
 
 
     init {
-        TimeStation.log("init")
-
         box.append(contextBar.revealer)
         box.append(mainView.widget)
 
-        window.setIconName(AppConfig.getInstance().applicationId)
+        window.setIconName(GtkAppConfig.applicationId)
         window.child = box
         window.title = Str(GtkAppConfig.shortName)
         window.titlebar = createHeader(window, app,dispatcher, mainView)
 
         window.setDefaultSize(Layout.windowWidth, Layout.windowHeight)
-        TimeStation.log("-> window.show")
         window.show()
-
-        dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
-        dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.addSource(OverlaySource(GtkAppContext))
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
         dispatcher.addTarget(contextBar, InfoID.TRACKER, InfoID.FILEVIEW, *MutableList(SolidOverlayFileList.MAX_OVERLAYS) {
