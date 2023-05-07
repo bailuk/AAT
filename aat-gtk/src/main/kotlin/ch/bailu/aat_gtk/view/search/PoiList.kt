@@ -25,14 +25,17 @@ class PoiList(
 
     private val list = ListView(listIndex.inSelectionModel(), SignalListItemFactory().apply {
         onSetup {
-            items[it] = PoiListItemView(it)
+            val item = ListItem(it.cast())
+            items[item] = PoiListItemView(item)
         }
 
         onBind {
+            val item = ListItem(it.cast())
+
             val view = items[it]
 
             if (view is PoiListItemView) {
-                val model = filterList.getFromVisible(it.position)
+                val model = filterList.getFromVisible(item.position)
                 if (model is PoiListItem) {
                     view.set(model)
                 }

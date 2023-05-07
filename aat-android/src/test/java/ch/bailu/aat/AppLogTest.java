@@ -1,14 +1,14 @@
 package ch.bailu.aat;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeClass;
 
 import ch.bailu.aat.app.AndroidAppConfig;
 import ch.bailu.aat.util.AndroidLogger;
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.logger.AppLog;
-
-import static org.junit.Assert.assertEquals;
 
 public class AppLogTest {
 

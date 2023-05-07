@@ -2,7 +2,7 @@ plugins {
     application
 
     // https://imperceptiblethoughts.com/shadow/getting-started
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 
     // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
     kotlin("jvm")
@@ -71,8 +71,8 @@ dependencies {
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
     // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     /**
      *

@@ -10,7 +10,7 @@ object IconMap {
 
     private val pixbufs = HashMap<IconId, Pixbuf>()
 
-    fun getPixbuf(name: String, size: Int): Pixbuf {
+    private fun getPixbuf(name: String, size: Int): Pixbuf {
         return try {
             _getPixbuf(name, size)
         } catch (e: Exception) {

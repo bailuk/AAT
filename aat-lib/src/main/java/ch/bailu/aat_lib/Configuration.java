@@ -4,7 +4,7 @@ package ch.bailu.aat_lib;
 public class Configuration{
     public final static String appWebsite = "https://github.com/bailuk/AAT";
     public final static String appLongName = "AAT Activity Tracker";
-    public final static String mapsForgeGtkVersion = "0.2.0";
+    public final static String mapsForgeGtkVersion = "0.3.0-pre.1";
     public final static String appName = "AAT";
     public final static String appContact = "aat@bailu.ch";
     public final static String mapsForgeVersion = "0.18.0";

@@ -42,7 +42,7 @@ public final class StatusIcon implements StatusIconInterface {
     private PendingIntent createShowActivityIntent() {
         Intent intent = new Intent(scontext.getContext(), ActivitySwitcher.getDefaultCockpit());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(scontext.getContext(), 0, intent, 0);
+        return PendingIntent.getActivity(scontext.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
     }
 
     private Notification createNotification(PendingIntent intent, int status_id) {
