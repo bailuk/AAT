@@ -5,23 +5,23 @@ import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
+import ch.bailu.aat_gtk.view.toplevel.CockpitView
+import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
+import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.adw.Leaflet
-import ch.bailu.gtk.adw.StatusPage
 import ch.bailu.gtk.adw.ToastOverlay
 import ch.bailu.gtk.adw.ViewStack
 import ch.bailu.gtk.adw.ViewSwitcherBar
 import ch.bailu.gtk.adw.WindowTitle
 import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Image
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ToggleButton
-import ch.bailu.gtk.type.Str
 
 class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
 
@@ -33,7 +33,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
         vexpand = true
     }
 
-    val viewStackSwitcher = ViewSwitcherBar().apply {
+    private val viewStackSwitcher = ViewSwitcherBar().apply {
         stack = viewStack
         reveal = true
     }
@@ -54,8 +54,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
         canNavigateForward = true
         hexpand = true
         vexpand = true
-
-        append(stackPage) // Cockpit / List / Preferences / ...
+        append(stackPage)
     }
 
     private val toast = ToastOverlay()
@@ -86,9 +85,19 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        addTestStatus("Cockpit", "preferences-desktop")
-        addTestStatus("Detail", "applications-science")
-        addTestStatus("Tracks", "applications-internet")
+        viewStack.addTitledWithIcon(CockpitView().apply {
+            addDefaults((dispatcher))
+        }.scrolledWindow,"preferences-desktop","Cockpit", "preferences-desktop")
+
+
+        viewStack.addTitledWithIcon(
+            FileList(app, GtkAppContext.storage, GtkAppContext, AdwUiController()).vbox,
+         "applications-internet","Tracks", "applications-internet")
+
+        viewStack.addTitledWithIcon(
+            DetailView(Dispatcher(), GtkAppContext.storage).scrolled,
+            "applications-science", "Detail", "applications-science"
+        )
 
         leaflet.visibleChild = stackPage
 
@@ -102,17 +111,5 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
 
         headerBar.packEnd(mapVisibleButton)
         headerBar.packEnd(MainMenuButton(app, window, dispatcher, AdwUiController()).menuButton)
-    }
-
-    private fun addTestStatus(titleName: String, iconName: String) {
-        viewStack.addTitledWithIcon(StatusPage().apply {
-            title = Str(titleName)
-            child = Box(Orientation.VERTICAL, 1).apply {
-                append(Image().apply {
-                    setFromIconName(iconName)
-                    pixelSize = 128
-                })
-            }
-        }, iconName, titleName, iconName)
     }
 }

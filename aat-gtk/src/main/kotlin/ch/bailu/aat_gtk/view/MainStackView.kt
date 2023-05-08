@@ -2,23 +2,25 @@ package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.dispatcher.LogOnContentUpdate
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.view.search.PoiStackView
 import ch.bailu.aat_gtk.view.solid.PreferencesStackView
 import ch.bailu.aat_gtk.view.stack.LazyStackView
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
-import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.dispatcher.CustomFileSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Stack
+import ch.bailu.gtk.gtk.StackTransitionType
+import ch.bailu.gtk.gtk.ToggleButton
+import ch.bailu.gtk.gtk.Window
 import org.mapsforge.core.model.BoundingBox
 
 class MainStackView (
@@ -84,12 +86,7 @@ class MainStackView (
 
         stack.add("Cockpit") {
             val result = CockpitView().apply {
-                add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
-                add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
-
-                add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
-                add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
-                add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
+                addDefaults((dispatcher))
             }.scrolledWindow
             dispatcher.requestUpdate()
             result
