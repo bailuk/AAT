@@ -34,7 +34,7 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
     @Override
     public void close() {
-        SolidMapPosition.savePosition(storage, SOLID_KEY, locationInformation);
+        SolidMapPosition.writePosition(storage, SOLID_KEY, locationInformation);
     }
 
 
@@ -76,7 +76,7 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
 
         private void readPosition(StorageInterface storage) {
-            LatLongInterface latLongE6 = SolidMapPosition.loadPosition(storage, SOLID_KEY);
+            LatLongInterface latLongE6 = SolidMapPosition.readPosition(storage, SOLID_KEY);
 
             longitude=latLongE6.getLongitudeE6();
             latitude= latLongE6.getLatitudeE6();

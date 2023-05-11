@@ -45,7 +45,7 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
     }
 
     private void loadState() {
-        gpsLocation = SolidMapPosition.loadPosition(storage, mcontext.getSolidKey()).toLatLong();
+        gpsLocation = SolidMapPosition.readPosition(storage, mcontext.getSolidKey()).toLatLong();
         mcontext.getMapView().setZoomLevel((byte) 15);
         mcontext.getMapView().setCenter(gpsLocation);
     }
@@ -58,7 +58,7 @@ public final class MapPositionLayer implements MapLayerInterface, OnContentUpdat
 
     private void saveState() {
         LatLong center = mcontext.getMapView().getMapViewPosition().getCenter();
-        SolidMapPosition.savePosition(storage, mcontext.getSolidKey(), center);
+        SolidMapPosition.writePosition(storage, mcontext.getSolidKey(), center);
     }
 
     @Override

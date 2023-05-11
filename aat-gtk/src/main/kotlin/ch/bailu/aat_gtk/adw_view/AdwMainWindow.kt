@@ -3,8 +3,9 @@ package ch.bailu.aat_gtk.adw_view
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
-import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.toplevel.CockpitView
 import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
@@ -42,9 +43,14 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
     private val toast = ToastOverlay()
 
     val window = ApplicationWindow(app).apply {
-        setDefaultSize(800, 576)
+        setDefaultSize(SolidWindowSize.readWidth(GtkAppContext.storage), SolidWindowSize.readHeight(GtkAppContext.storage))
         setIconName(GtkAppConfig.applicationId)
         content = toast
+
+        onCloseRequest {
+            SolidWindowSize.writeSize(GtkAppContext.storage, width, height)
+            false
+        }
 
         onDestroy {
             App.exit(0)
@@ -59,7 +65,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
         }
 
         val mapView = MapMainView(app, dispatcher, AdwUiController() , GtkAppContext, window).apply {
-            overlay.setSizeRequest(300,100)
+            overlay.setSizeRequest(Layout.mapMinWidth,Layout.windowMinSize)
             onAttached()
         }
 
@@ -68,9 +74,9 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
 
         dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        stackPage.addView(CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow, "preferences-desktop","Cockpit")
-        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, AdwUiController()).vbox,"applications-internet","Tracks")
-        stackPage.addView(DetailView(Dispatcher(), GtkAppContext.storage).scrolled,"applications-science", "Detail")
+        stackPage.addView(CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow, "view-grid-symbolic","Cockpit")
+        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, AdwUiController()).vbox,"view-list-symbolic","Tracks")
+        stackPage.addView(DetailView(Dispatcher(), GtkAppContext.storage).scrolled,"view-continuous-symbolic", "Detail")
 
         leaflet.visibleChild = stackPage.stackPage
 
@@ -81,9 +87,5 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) {
                 leaflet.visibleChild = stackPage.stackPage
             }
         }
-
-        headerBar.packStart(trackerButton.button)
-        headerBar.packEnd(mapVisibleButton)
-        headerBar.packEnd(MainMenuButton(app, window, dispatcher, AdwUiController()).menuButton)
     }
 }
