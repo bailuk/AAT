@@ -39,7 +39,7 @@ class ContextBar(contextCallback: UiController,
     private val buttons = ArrayList<ToggleButton>().apply {
         add(createButton("inc_map") {
             if (storage.readInteger(MainStackView.KEY) == MainStackView.INDEX_MAP) {
-                contextCallback.showInMap(selectedSource.cache.getValueAt(combo.active))
+                contextCallback.frameInMap(selectedSource.cache.getValueAt(combo.active))
             } else {
                 contextCallback.showMap()
             }

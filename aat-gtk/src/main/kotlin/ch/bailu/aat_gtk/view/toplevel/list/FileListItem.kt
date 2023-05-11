@@ -44,20 +44,19 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
     fun bind(info: GpxInformation, index: Int) {
         this.index = index
         var title = ""
-        var infos = "[${index}]"
-        val del = " - "
+        var infoText = ""
 
         descriptions.forEachIndexed { i, d ->
             d.onContentUpdated(InfoID.ALL, info)
             if (i == 0) {
                 title = "<b>${d.valueAsString}</b>"
             } else {
-                infos = "${infos}${del}${d.valueAsString}"
+                infoText = d.valueAsString
             }
         }
 
         labels[0].setLabel(title)
-        labels[1].setText(infos)
+        labels[1].setText(infoText)
         labels[2].setText(info.file.name)
     }
 }

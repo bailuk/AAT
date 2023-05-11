@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
@@ -17,7 +18,18 @@ import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.foc.FocFactory
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.Label
+import ch.bailu.gtk.gtk.ListItem
+import ch.bailu.gtk.gtk.ListView
+import ch.bailu.gtk.gtk.MenuButton
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.PopoverMenu
+import ch.bailu.gtk.gtk.ScrolledWindow
+import ch.bailu.gtk.gtk.Separator
+import ch.bailu.gtk.gtk.SignalListItemFactory
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.type.Str
@@ -34,14 +46,19 @@ class FileList(app: Application,
         TimeDescription())
 
 
-    val vbox = Box(Orientation.VERTICAL, 0).apply {
-        margin(3)
+    val vbox = Box(Orientation.VERTICAL, Layout.margin).apply {
+        margin(Layout.margin)
     }
 
-    private val indexLabel = Label(Str.NULL).apply {
-        hexpand = true
-        halign = Align.END
-        marginEnd = 3
+    private val fileNameLabel = Label(Str.NULL)
+    private val trackFrameButton = Button().apply{
+        iconName = Str("zoom-fit-best-symbolic")
+        onClicked {selectAndFrame(indexOfSelected)}
+    }
+
+    private val trackCenterButton = Button().apply{
+        iconName = Str("find-location-symbolic")
+        onClicked {selectAndCenter(indexOfSelected)}
     }
 
     private val loadButton = Button().apply {
@@ -116,12 +133,16 @@ class FileList(app: Application,
                 }
             }
 
-            vbox.append(Box(Orientation.HORIZONTAL, 0).apply {
+            vbox.append(fileNameLabel)
+            vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
                 append(SolidDirectoryQueryComboView(storage, focFactory).combo)
 
-                append(indexLabel)
+                append(Separator(Orientation.VERTICAL))
+
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(loadButton)
+                    append(trackFrameButton)
+                    append(trackCenterButton)
                     append(menuButton)
                     addCssClass(Strings.linked)
                 })
@@ -129,13 +150,32 @@ class FileList(app: Application,
 
             vbox.append(ScrolledWindow().apply {
                 child = ListView(listIndex.inSelectionModel(), factory).apply {
-                    onActivate { selectAndLoad(it) }
+                    onActivate { selectAndCenter(it) }
                 }
                 hexpand = true
                 vexpand = true
             })
         } catch (e: Exception) {
             AppLog.e(this, e)
+        }
+    }
+
+
+    private fun selectAndFrame(index: Int) {
+        select(index)
+        if (isIndexValid(indexOfSelected)) {
+            uiController.load(iteratorSimple.info)
+            uiController.showMap()
+            uiController.frameInMap(iteratorSimple.info)
+        }
+    }
+
+    private fun selectAndCenter(index: Int) {
+        select(index)
+        if (isIndexValid(indexOfSelected)) {
+            uiController.load(iteratorSimple.info)
+            uiController.showMap()
+            uiController.centerInMap(iteratorSimple.info)
         }
     }
 
@@ -150,13 +190,13 @@ class FileList(app: Application,
         indexOfSelected = index
 
         if (isIndexValid(indexOfSelected)) {
-            indexLabel.setLabel("[$indexOfSelected]")
             iteratorSimple.moveToPosition(indexOfSelected)
             overlayMenu.setFile(iteratorSimple.info.file)
+            fileNameLabel.setLabel(iteratorSimple.info.file.name)
             loadButton.sensitive = true
             menuButton.sensitive = true
         } else {
-            indexLabel.setLabel("")
+            fileNameLabel.label = Str.NULL
             loadButton.sensitive = false
             menuButton.sensitive = false
         }

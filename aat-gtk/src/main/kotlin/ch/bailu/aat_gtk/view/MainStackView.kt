@@ -134,12 +134,15 @@ class MainStackView (
         backTo = INDEX_FILES
     }
 
-    override fun showInMap(info: GpxInformation) {
+    override fun frameInMap(info: GpxInformation) {
         if (info.boundingBox.hasBounding()) {
             showMap()
             mapView?.map?.frameBounding(info.boundingBox)
         }
+    }
 
+    override fun centerInMap(info: GpxInformation) {
+        TODO("Not yet implemented")
     }
 
     override fun showDetail() {
