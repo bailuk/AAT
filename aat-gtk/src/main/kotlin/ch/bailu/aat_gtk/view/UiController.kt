@@ -16,6 +16,7 @@ interface UiController {
     fun back()
     fun showContextBar()
     fun getMapBounding(): BoundingBoxE6
-    fun showFiles()
+    fun showFileList()
     fun showPreferences()
+    fun showInDetail(infoID: Int)
 }

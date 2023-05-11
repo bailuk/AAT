@@ -11,6 +11,7 @@ import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -51,14 +52,19 @@ class FileList(app: Application,
     }
 
     private val fileNameLabel = Label(Str.NULL)
-    private val trackFrameButton = Button().apply{
+    private val trackFrameButton = Button().apply {
         iconName = Str("zoom-fit-best-symbolic")
-        onClicked {selectAndFrame(indexOfSelected)}
+        onClicked { selectAndFrame(indexOfSelected) }
     }
 
-    private val trackCenterButton = Button().apply{
+    private val trackCenterButton = Button().apply {
         iconName = Str("find-location-symbolic")
-        onClicked {selectAndCenter(indexOfSelected)}
+        onClicked { selectAndCenter(indexOfSelected) }
+    }
+
+    private val trackDetailButton = Button().apply {
+        iconName = Str("view-continuous-symbolic")
+        onClicked { selectAndDetail(indexOfSelected) }
     }
 
     private val loadButton = Button().apply {
@@ -143,6 +149,7 @@ class FileList(app: Application,
                     append(loadButton)
                     append(trackFrameButton)
                     append(trackCenterButton)
+                    append(trackDetailButton)
                     append(menuButton)
                     addCssClass(Strings.linked)
                 })
@@ -183,6 +190,15 @@ class FileList(app: Application,
         select(index)
         if (isIndexValid(indexOfSelected)) {
             uiController.load(iteratorSimple.info)
+        }
+    }
+
+    private fun selectAndDetail(index: Int) {
+        select(index)
+        if (isIndexValid(indexOfSelected)) {
+            uiController.load(iteratorSimple.info)
+            uiController.showDetail()
+            uiController.showInDetail(InfoID.FILEVIEW)
         }
     }
 

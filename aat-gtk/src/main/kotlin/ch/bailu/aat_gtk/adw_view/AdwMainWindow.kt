@@ -4,6 +4,8 @@ import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
@@ -26,9 +28,17 @@ import ch.bailu.gtk.adw.WindowTitle
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ToggleButton
+import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
 
 class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
+
+    companion object {
+        const val pageIdCockpit = "view-grid-symbolic"
+        const val pageIdFileList = "view-list-symbolic"
+        const val pageIdDetail = "view-continuous-symbolic"
+    }
+
 
     private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
     private val mapVisibleButton = ToggleButton()
@@ -36,6 +46,9 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     private val customFileSource = CustomFileSource(GtkAppContext)
 
     private val stackPage = AdwStackPage()
+
+    private val selectedSource = SelectedSource()
+
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.shortName, GtkAppConfig.longName)
@@ -64,6 +77,8 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
         onDestroy {
             App.exit(0)
         }
+
+        CSS.addProviderForDisplay(display, Strings.appCss)
     }
 
     private val mapView = MapMainView(app, dispatcher, this , GtkAppContext, window).apply {
@@ -78,18 +93,17 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
 
         }
 
-
-
         leaflet.append(stackPage.stackPage)
         leaflet.append(mapView.overlay)
 
         dispatcher.addSource(customFileSource)
         dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        stackPage.addView(CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow, "view-grid-symbolic","Cockpit")
-        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox,"view-list-symbolic","Tracks")
-        stackPage.addView(DetailView(Dispatcher(), GtkAppContext.storage).scrolled,"view-continuous-symbolic", "Detail")
+        stackPage.addView(CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow, pageIdCockpit,"Cockpit")
+        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList,"Tracks")
+        stackPage.addView(DetailView(selectedSource.getIntermediateDispatcher(dispatcher, InfoID.FILEVIEW, InfoID.TRACKER), GtkAppContext.storage).scrolled, pageIdDetail, "Detail")
 
+        selectedSource.select(InfoID.TRACKER)
         leaflet.visibleChild = stackPage.stackPage
 
         mapVisibleButton.iconName = Str("zoom-fit-best-symbolic")
@@ -133,11 +147,13 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun showCockpit() {
-        TODO("Not yet implemented")
+        mapVisibleButton.active = false
+        stackPage.showPage(pageIdCockpit)
     }
 
     override fun showDetail() {
-        TODO("Not yet implemented")
+        mapVisibleButton.active = false
+        stackPage.showPage(pageIdDetail)
     }
 
     override fun showInList() {
@@ -160,11 +176,16 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
         TODO("Not yet implemented")
     }
 
-    override fun showFiles() {
-        TODO("Not yet implemented")
+    override fun showFileList() {
+        mapVisibleButton.active = false
+        stackPage.showPage(pageIdFileList)
     }
 
     override fun showPreferences() {
         TODO("Not yet implemented")
+    }
+
+    override fun showInDetail(infoID: Int) {
+        selectedSource.select(infoID)
     }
 }

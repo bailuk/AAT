@@ -34,21 +34,23 @@ class AdwStackPage {
         }
     }
 
-    fun addView(widget: Widget, iconName: String, label: String) {
+    fun addView(widget: Widget, pageId: String, label: String) {
         widget.hexpand = false
-        viewStack.addTitledWithIcon(widget, iconName, label, iconName)
+        viewStack.addTitledWithIcon(widget, pageId, label, pageId)
     }
 
     fun restore(storageInterface: StorageInterface) {
-        val str = Str(SolidString(storageInterface, solidKey).valueAsString)
-        viewStack.visibleChildName = str
-        str.destroy()
+        showPage(SolidString(storageInterface, solidKey).valueAsString)
     }
 
     fun save(storageInterface: StorageInterface) {
-        val str = viewStack.visibleChildName
-        SolidString(storageInterface, solidKey).setValue(str.toString())
-        str.destroy()
+        SolidString(storageInterface, solidKey).setValue(viewStack.visibleChildName.toString())
+    }
+
+    fun showPage(pageId: String) {
+        val str = Str(pageId)
+        viewStack.visibleChildName = str
+        //TODO str.destroy()
     }
 
 

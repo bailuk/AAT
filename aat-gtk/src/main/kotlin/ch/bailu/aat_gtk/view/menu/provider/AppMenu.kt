@@ -52,7 +52,7 @@ class AppMenu(private val window: ApplicationWindow,
         MenuHelper.setAction(app, "trackInfo") { uiController.showDetail() }
         MenuHelper.setAction(app, "showMap") { uiController.showMap() }
         MenuHelper.setAction(app, "showCockpit") { uiController.showCockpit() }
-        MenuHelper.setAction(app, "showTracks") { uiController.showFiles() }
+        MenuHelper.setAction(app, "showTracks") { uiController.showFileList() }
         MenuHelper.setAction(app, "showSettings") { uiController.showPreferences() }
         MenuHelper.setAction(app, "showAbout") { About.show(window) }
         MenuHelper.setAction(app, "dumpResources") {

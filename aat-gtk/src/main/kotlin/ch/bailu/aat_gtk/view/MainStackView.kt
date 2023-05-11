@@ -123,13 +123,17 @@ class MainStackView (
         preferences.show()
     }
 
+    override fun showInDetail(infoID: Int) {
+        TODO("Not yet implemented")
+    }
+
     override fun showPoi() {
         revealerRestore = revealer.active
         revealer.active = false
         poi.show()
     }
 
-    override fun showFiles() {
+    override fun showFileList() {
         stack.show(INDEX_FILES)
         backTo = INDEX_FILES
     }
@@ -151,7 +155,7 @@ class MainStackView (
     }
 
     override fun showInList() {
-        showFiles()
+        showFileList()
     }
 
     override fun showPreferencesMap() {
