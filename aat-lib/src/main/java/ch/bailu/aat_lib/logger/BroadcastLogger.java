@@ -15,26 +15,8 @@ public class BroadcastLogger implements Logger {
     }
 
     @Override
-    public void w(String tag, String msg) {
-        console.w(tag, msg);
-        broadcaster.broadcast(id, tag, msg);
-    }
-
-    @Override
-    public void i(String tag, String msg) {
-        console.i(tag, msg);
-        broadcaster.broadcast(id, tag, msg);
-    }
-
-    @Override
-    public void d(String tag, String msg) {
-        console.d(tag, msg);
-        broadcaster.broadcast(id, tag, msg);
-    }
-
-    @Override
-    public void e(String tag, String msg) {
-        console.e(tag, msg);
+    public void log(String tag, String msg) {
+        console.log(tag, msg);
         broadcaster.broadcast(id, tag, msg);
     }
 }

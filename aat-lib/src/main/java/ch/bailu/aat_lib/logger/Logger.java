@@ -1,8 +1,6 @@
 package ch.bailu.aat_lib.logger;
 
+@FunctionalInterface
 public interface Logger {
-    void w(String tag, String msg);
-    void i(String tag, String msg);
-    void d(String tag, String msg);
-    void e(String tag, String msg);
+    void log(String tag, String msg);
 }

@@ -12,12 +12,11 @@ import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.BuildConfig;
 import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.util.AndroidLogger;
+import ch.bailu.aat.util.AndroidLoggerFactory;
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.app.AppGraphicFactory;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.logger.BroadcastLogger;
+import ch.bailu.aat_lib.logger.BroadcastLoggerFactory;
 
 
 public class App extends Application {
@@ -37,22 +36,15 @@ public class App extends Application {
 
     @Override
     public void onTerminate() {
-        AppLog.set(new AndroidLogger());
+        AppLog.set(new AndroidLoggerFactory());
         super.onTerminate();
     }
 
 
     private void initLogger() {
-        AppLog.set(new AndroidLogger());
-        AppLog.setError(new BroadcastLogger(
+        AppLog.set(new BroadcastLoggerFactory(
                 new AndroidBroadcaster(getApplicationContext()),
-                AppBroadcaster.LOG_ERROR,
-                new AndroidLogger()));
-
-        AppLog.setInfo(new BroadcastLogger(
-                new AndroidBroadcaster(getApplicationContext()),
-                AppBroadcaster.LOG_INFO,
-                new AndroidLogger()));
+                new AndroidLoggerFactory()));
     }
 
 

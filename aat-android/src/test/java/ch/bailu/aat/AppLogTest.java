@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 
 import ch.bailu.aat.app.AndroidAppConfig;
-import ch.bailu.aat.util.AndroidLogger;
+import ch.bailu.aat.util.AndroidLoggerFactory;
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.logger.AppLog;
 
@@ -19,7 +19,7 @@ public class AppLogTest {
     public static void init() {
         if (!initialized) {
             AppConfig.setInstance(new AndroidAppConfig());
-            AppLog.set(new AndroidLogger());
+            AppLog.set(new AndroidLoggerFactory());
             initialized = true;
         }
     }

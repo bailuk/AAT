@@ -8,10 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.CustomFileSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.ContentMenu;
@@ -24,12 +20,15 @@ import ch.bailu.aat.views.BusyViewControlIID;
 import ch.bailu.aat.views.ContentView;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.bar.ControlBar;
 import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.CustomFileSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
@@ -41,7 +40,6 @@ public class GpxViewActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface {
 
     private static final String SOLID_KEY=GpxViewActivity.class.getSimpleName();
-
 
 
     private ImageButtonViewGroup fileOperation, copyTo;
@@ -66,20 +64,13 @@ public class GpxViewActivity extends ActivityContext
             }
         }
 
-
-
-
         if (uri != null) {
-
             try {
                 content = FocAndroid.factory(this, uri.toString());
                 fileID = content.getPath();
 
-
                 final ContentView contentView = new ContentView(this, theme);
-
-                MainControlBar bar = new MainControlBar(this);
-
+                final MainControlBar bar = new MainControlBar(this);
                 contentView.add(bar);
                 contentView.add(getErrorView());
 
@@ -100,11 +91,8 @@ public class GpxViewActivity extends ActivityContext
 
     }
 
-
-
     private View createLayout(MainControlBar bar, ContentView contentView) {
         map = MapFactory.DEF(this, SOLID_KEY).externalContent();
-
 
         VerticalScrollView summary = new VerticalScrollView(this);
         summary.addAllContent(this,
@@ -117,7 +105,6 @@ public class GpxViewActivity extends ActivityContext
         } else {
             return createMultiView(bar, summary, graph, contentView);
         }
-
     }
 
     protected View createMultiView(MainControlBar bar,
@@ -135,7 +122,6 @@ public class GpxViewActivity extends ActivityContext
         return mv;
     }
 
-
     private View createPercentageLayout(
             View summary, View graph) {
 
@@ -151,9 +137,7 @@ public class GpxViewActivity extends ActivityContext
         return b;
     }
 
-    private ControlBar initButtonBar(MainControlBar bar) {
-
-
+    private void initButtonBar(MainControlBar bar) {
         copyTo = bar.addImageButton(R.drawable.document_save_as_inverse);
 
         fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse);
@@ -161,13 +145,9 @@ public class GpxViewActivity extends ActivityContext
         ToolTip.set(copyTo, R.string.file_copy);
         ToolTip.set(fileOperation, R.string.tt_menu_file);
 
-
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setOnClickListener1(this);
-        return bar;
     }
-
-
 
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
@@ -183,14 +163,10 @@ public class GpxViewActivity extends ActivityContext
                 InfoID.OVERLAY+3);
     }
 
-
-
-
     @Override
     public void onContentUpdated(int iid, GpxInformation info) {
         map.frameBounding(info.getBoundingBox());
     }
-
 
     @Override
     public void onClick(View v) {

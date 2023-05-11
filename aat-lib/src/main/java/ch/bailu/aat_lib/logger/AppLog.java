@@ -13,31 +13,30 @@ public class AppLog  {
 
     private final static String DEFAULT_TAG=AppLog.class.getSimpleName();
 
-    private static Logger warn = new JavaLogger();
-    private static Logger info = new JavaLogger();
-    private static Logger debug = new JavaLogger();
-    private static Logger error = new JavaLogger();
+    private static Logger warn = new PrintLnLoggerFactory().warn();
+    private static Logger info = new PrintLnLoggerFactory().info();
+    private static Logger debug = new PrintLnLoggerFactory().debug();
+    private static Logger error = new PrintLnLoggerFactory().error();
 
 
-    public static void set(Logger l) {
-        warn = info = debug = error = l;
+    public static void set(LoggerFactory loggerFactory) {
+        warn = loggerFactory.warn();
+        info = loggerFactory.info();
+        debug = loggerFactory.debug();
+        error = loggerFactory.error();
     }
-    public static void setError(Logger l) {error = l;}
-    public static void setInfo(Logger l) {info = l;}
+
 
     /**
      * Log a message with log level info
      * @param message the message that will be logged. Can be null
      */
     public static void i(String message) {
-        info.i(DEFAULT_TAG, toSaveString(message));
-    }
-
-    private static void broadcast(String logInfo, String toSaveClassName) {
+        info.log(DEFAULT_TAG, toSaveString(message));
     }
 
     public static void i(Object tag, String message) {
-        info.i(toSaveClassName(tag), toSaveString(message));
+        info.log(toSaveClassName(tag), toSaveString(message));
     }
 
 
@@ -79,7 +78,7 @@ public class AppLog  {
      * @param msg The message that gets logged. This parameter is null save.
      */
     public static void w(Object object, String msg) {
-        warn.w(toSaveClassName(object), toSaveString(msg));
+        warn.log(toSaveClassName(object), toSaveString(msg));
     }
 
 
@@ -94,7 +93,7 @@ public class AppLog  {
      * @param msg the message that gets logged. Can be null
      */
     public static void e(Object tag, String msg) {
-        error.e(toSaveClassName(tag), toSaveString(msg));
+        error.log(toSaveClassName(tag), toSaveString(msg));
     }
 
 
@@ -139,7 +138,7 @@ public class AppLog  {
      */
     public static void d(String tag, String msg) {
         if (!AppConfig.getInstance().isRelease()) {
-            debug.d(toSaveTag(tag), toSaveString(msg));
+            debug.log(toSaveTag(tag), toSaveString(msg));
         }
     }
 

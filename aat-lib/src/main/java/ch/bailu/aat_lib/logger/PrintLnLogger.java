@@ -1,27 +1,24 @@
 package ch.bailu.aat_lib.logger;
 
+import java.io.PrintStream;
+
 public class PrintLnLogger implements Logger {
-    @Override
-    public void w(String tag, String msg) {
-        p("WARN", tag, msg);
+
+    private final String prefix;
+    private final PrintStream target;
+
+    public PrintLnLogger(String prefix) {
+        this(prefix, System.out);
+    }
+
+
+    public PrintLnLogger(String prefix, PrintStream target) {
+        this.prefix = prefix;
+        this.target = target;
     }
 
     @Override
-    public void i(String tag, String msg) {
-        p("INFO", tag,msg);
-    }
-
-    @Override
-    public void d(String tag, String msg) {
-        p("DEBUG", tag,msg);
-    }
-
-    @Override
-    public void e(String tag, String msg) {
-        p("ERROR", tag, msg);
-    }
-
-    private void p(String type, String tag, String msg) {
-        System.out.println("[" + type + "] " + tag + ": " + msg);
+    public void log(String tag, String msg) {
+        target.println("[" + prefix + "] " + tag + ": " + msg);
     }
 }
