@@ -57,6 +57,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
 
         onCloseRequest {
             SolidWindowSize.writeSize(GtkAppContext.storage, width, height)
+            stackPage.save(GtkAppContext.storage)
             false
         }
 
@@ -103,6 +104,8 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
         headerBar.packStart(trackerButton.button)
         headerBar.packEnd(mapVisibleButton)
         headerBar.packEnd(MainMenuButton(app, window, dispatcher, this).menuButton)
+
+        stackPage.restore(GtkAppContext.storage)
     }
 
     override fun showMap() {

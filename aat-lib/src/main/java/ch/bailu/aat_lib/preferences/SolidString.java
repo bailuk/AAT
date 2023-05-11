@@ -9,9 +9,9 @@ public class SolidString extends AbsSolidType {
     private final StorageInterface storage;
 
 
-    public SolidString(StorageInterface s, String k) {
-        storage=s;
-        key=k;
+    public SolidString(StorageInterface storage, String key) {
+        this.storage = storage;
+        this.key = key;
     }
 
     @Override
