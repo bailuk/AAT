@@ -4,22 +4,23 @@ package ch.bailu.aat.menus;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.activities.ActivityContext;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
+import ch.bailu.aat_lib.util.fs.FileAction;
 import ch.bailu.foc.Foc;
 
 public final class ResultFileMenu extends FileMenu {
 
     private final String targetPrefix, targetExtendsion;
 
+    private final ActivityContext context;
 
     private MenuItem saveCopy;
 
-    public ResultFileMenu(AbsServiceLink a, Foc f, String prefix, String extension) {
-        super(a, f);
+    public ResultFileMenu(ActivityContext context, Foc file, String prefix, String extension) {
+        super(context, file);
+        this.context = context;
         targetExtendsion = extension;
         targetPrefix = prefix;
     }
@@ -27,8 +28,7 @@ public final class ResultFileMenu extends FileMenu {
 
     @Override
     protected void inflateCopyTo(Menu menu) {
-        saveCopy = menu.add(
-                scontext.getContext().getString(R.string.query_save_copy));
+        saveCopy = menu.add(Res.str().edit_save_copy());
     }
 
 
@@ -39,8 +39,8 @@ public final class ResultFileMenu extends FileMenu {
     @Override
     public boolean onItemClick(MenuItem item) {
         if (item == saveCopy) {
-            FileAction.copyToDir(scontext.getContext(), file,
-                    AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(scontext.getContext()), AppDirectory.DIR_OVERLAY),
+            FileAction.copyToDir(context.getAppContext(), file,
+                    AppDirectory.getDataDirectory(context.getAppContext().getDataDirectory(), AppDirectory.DIR_OVERLAY),
                     targetPrefix, targetExtendsion);
             return true;
         }

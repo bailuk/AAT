@@ -9,7 +9,7 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.fs.AndroidFileAction;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
 import ch.bailu.aat.views.PreviewView;
@@ -33,6 +33,7 @@ import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
 import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.SummaryConfig;
 import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.fs.FileAction;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroidFactory;
 
@@ -128,11 +129,11 @@ public final class FileControlBarLayer extends ControlBarLayer {
                 if        (v == preview) {
                     new FileMenu(acontext, file).showAsPopup(acontext, v);
                 } else if (v == overlay) {
-                    FileAction.useAsOverlay(acontext, file);
+                    AndroidFileAction.useAsOverlay(acontext, file);
                 } else if (v == reloadPreview) {
-                    FileAction.reloadPreview(acontext.getServiceContext(), file);
+                    FileAction.reloadPreview(acontext.getAppContext(), file);
                 } else if (v == delete) {
-                    FileAction.delete(acontext.getServiceContext(), acontext, file);
+                    AndroidFileAction.delete(acontext.getAppContext(), acontext, file);
                 }
             }
         }

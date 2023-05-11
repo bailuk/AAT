@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
-import ch.bailu.aat_gtk.view.menu.provider.SolidOverlaySelectorMenu
+import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
@@ -92,7 +92,7 @@ class FileList(app: Application,
     private var indexOfSelected = -1
 
     private val items = HashMap<ListItem, FileListItem>()
-    private val overlayMenu = SolidOverlaySelectorMenu(SolidOverlayFileList(storage,focFactory), SolidMockLocationFile(storage)).apply {
+    private val overlayMenu = FileContextMenu(SolidOverlayFileList(storage,focFactory), SolidMockLocationFile(storage)).apply {
         createActions(app)
     }
     private val logItems = SizeLog("FileListItem")

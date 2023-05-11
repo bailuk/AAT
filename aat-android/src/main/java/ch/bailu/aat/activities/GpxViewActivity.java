@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.menus.ContentMenu;
-import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.util.fs.AndroidFileAction;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.ToolTip;
@@ -195,11 +195,11 @@ public class GpxViewActivity extends ActivityContext
     @Override
     public void onClick(View v) {
         if (v == copyTo && content != null) {
-            FileAction.copyToDir(this, content);
+            AndroidFileAction.copyToDir(this, getAppContext(), content);
 
         } else if (v == fileOperation && content != null) {
 
-            new ContentMenu(getServiceContext(), content).showAsPopup(this, fileOperation);
+            new ContentMenu(this, content).showAsPopup(this, fileOperation);
         }
     }
 }

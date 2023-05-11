@@ -1,17 +1,23 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.fs.AFile
+import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
+import ch.bailu.gtk.adw.MessageDialog
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
 
-class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
+class FileContextMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
+
     override fun createMenu(): Menu {
         return Menu().apply {
             appendSection(Res.str().file_overlay(), Menu().apply {
@@ -20,6 +26,7 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList, private 
 
             appendSection(Str.NULL, Menu().apply {
                 append(Res.str().file_mock(), "app.file_mock")
+                append(Res.str().file_rename(), "app.file_rename")
             })
         }
     }
@@ -35,12 +42,40 @@ class SolidOverlaySelectorMenu(private val solid: SolidOverlayFileList, private 
     }
 
     override fun createActions(app: Application) {
+
         MenuHelper.setAction(app, "file_mock") {
             solidMock.setValue(file.path)
         }
+        MenuHelper.setAction(app, "file_rename") {
+            rename(app)
+        }
     }
 
-    override fun createCustomWidgets(): Array<CustomWidget> {
+    private fun rename(app: Application) {
+        val idCancel = "cancel"
+        val idRename = "rename"
+
+        if (file.canWrite() && file.hasParent()) {
+            val directory = file.parent()
+            val dialog = MessageDialog(app.activeWindow, Res.str().file_rename(), file.name)
+            val entry = Entry()
+            dialog.extraChild = entry
+            dialog.addResponse(idCancel, Res.str().cancel())
+            dialog.addResponse(idRename, Res.str().ok())
+            dialog.onResponse {
+                val res = it.toString()
+                if (idRename == res) {
+                    val source = directory.child(file.name)
+                    val target = directory.child(entry.asEditable().text.toString())
+
+                    FileAction.rename(GtkAppContext, source, target)
+                }
+            }
+            dialog.present()
+        }
+    }
+
+     override fun createCustomWidgets(): Array<CustomWidget> {
         return arrayOf(
             CustomWidget(
                 ListBox().apply {

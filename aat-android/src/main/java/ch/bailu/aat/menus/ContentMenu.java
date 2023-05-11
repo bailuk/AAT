@@ -5,25 +5,25 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.fs.FileAction;
+import ch.bailu.aat.activities.ActivityContext;
+import ch.bailu.aat.util.fs.AndroidFileAction;
 import ch.bailu.foc.Foc;
 
 public final class ContentMenu extends AbsMenu {
     private final Foc uri;
-    private final ServiceContext scontext;
+    private final ActivityContext context;
 
-    public ContentMenu(ServiceContext sc, Foc u) {
-        uri = u;
-        scontext = sc;
+    public ContentMenu(ActivityContext context, Foc uri) {
+        this.uri = uri;
+        this.context = context;
     }
 
     @Override
     public void inflate(Menu menu) {
-        add(menu, R.string.file_send, ()->FileAction.sendTo(scontext.getContext(), uri));
-        add(menu, R.string.file_view, ()->FileAction.view(scontext.getContext(), uri));
-        add(menu, R.string.file_copy, ()->FileAction.copyToDir(scontext.getContext(), uri));
-        add(menu, R.string.clipboard_copy, ()->FileAction.copyToClipboard(scontext.getContext(), uri));
+        add(menu, R.string.file_send, ()-> AndroidFileAction.sendTo(context, uri));
+        add(menu, R.string.file_view, ()-> AndroidFileAction.view(context, uri));
+        add(menu, R.string.file_copy, ()-> AndroidFileAction.copyToDir(context, context.getAppContext(), uri));
+        add(menu, R.string.clipboard_copy, ()-> AndroidFileAction.copyToClipboard(context, uri));
     }
 
     @Override
