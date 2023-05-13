@@ -127,6 +127,10 @@ class MainStackView (
         TODO("Not yet implemented")
     }
 
+    override fun loadIntoEditor(info: GpxInformation) {
+        TODO("Not yet implemented")
+    }
+
     override fun showPoi() {
         revealerRestore = revealer.active
         revealer.active = false

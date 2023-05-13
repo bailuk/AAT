@@ -5,6 +5,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
 import ch.bailu.aat_lib.description.AverageSpeedDescription
@@ -157,11 +158,17 @@ class FileList(app: Application,
 
             vbox.append(ScrolledWindow().apply {
                 child = ListView(listIndex.inSelectionModel(), factory).apply {
-                    onActivate { selectAndCenter(it) }
+                    onActivate { selectAndFrame(it) }
                 }
                 hexpand = true
                 vexpand = true
             })
+
+
+            MenuHelper.setAction(app, "file_edit") {
+                selectAndEdit(indexOfSelected)
+            }
+
         } catch (e: Exception) {
             AppLog.e(this, e)
         }
@@ -174,6 +181,16 @@ class FileList(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.frameInMap(iteratorSimple.info)
+        }
+    }
+
+    private fun selectAndEdit(index: Int) {
+        select(index)
+        if (isIndexValid(indexOfSelected)) {
+            uiController.load(iteratorSimple.info)
+            uiController.showMap()
+            uiController.frameInMap(iteratorSimple.info)
+            uiController.loadIntoEditor(iteratorSimple.info)
         }
     }
 

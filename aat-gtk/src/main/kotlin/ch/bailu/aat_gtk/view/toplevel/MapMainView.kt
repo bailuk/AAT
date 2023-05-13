@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.*
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
@@ -78,5 +79,10 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     override fun onDetached() {
         map.onDetached()
+    }
+
+    fun loadIntoEditor(info: GpxInformation) {
+        edgeControl.show(Position.LEFT)
+        editorSource.edit(info.file)
     }
 }

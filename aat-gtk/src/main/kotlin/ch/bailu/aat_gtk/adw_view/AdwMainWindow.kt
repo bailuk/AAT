@@ -69,17 +69,6 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
         setDefaultSize(SolidWindowSize.readWidth(GtkAppContext.storage), SolidWindowSize.readHeight(GtkAppContext.storage))
         setIconName(GtkAppConfig.applicationId)
         content = toastOverlay
-
-        onCloseRequest {
-            SolidWindowSize.writeSize(GtkAppContext.storage, width, height)
-            stackPage.save(GtkAppContext.storage)
-            false
-        }
-
-        onDestroy {
-            App.exit(0)
-        }
-
         CSS.addProviderForDisplay(display, Strings.appCss)
     }
 
@@ -131,6 +120,18 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
         headerBar.packEnd(MainMenuButton(app, window, dispatcher, this).menuButton)
 
         stackPage.restore(GtkAppContext.storage)
+
+        window.onCloseRequest {
+            SolidWindowSize.writeSize(GtkAppContext.storage, window.width, window.height)
+            stackPage.save(GtkAppContext.storage)
+            mapView.onDetached()
+            false
+        }
+
+        window.onDestroy {
+            App.exit(0)
+        }
+
     }
 
     override fun showMap() {
@@ -198,5 +199,9 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
 
     override fun showInDetail(infoID: Int) {
         selectedSource.select(infoID)
+    }
+
+    override fun loadIntoEditor(info: GpxInformation) {
+        mapView.loadIntoEditor(info)
     }
 }

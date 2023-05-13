@@ -19,4 +19,5 @@ interface UiController {
     fun showFileList()
     fun showPreferences()
     fun showInDetail(infoID: Int)
+    fun loadIntoEditor(info: GpxInformation)
 }

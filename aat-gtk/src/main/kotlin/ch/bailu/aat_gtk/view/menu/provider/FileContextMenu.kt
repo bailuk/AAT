@@ -6,14 +6,19 @@ import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.aat_lib.util.fs.AFile
+import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
 import ch.bailu.gtk.adw.MessageDialog
 import ch.bailu.gtk.gio.Menu
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.CheckButton
+import ch.bailu.gtk.gtk.Entry
+import ch.bailu.gtk.gtk.Label
+import ch.bailu.gtk.gtk.ListBox
+import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
 class FileContextMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
@@ -25,6 +30,7 @@ class FileContextMenu(private val solid: SolidOverlayFileList, private val solid
             })
 
             appendSection(Str.NULL, Menu().apply {
+                append(ToDo.translate("Load into editor"), "app.file_edit")
                 append(Res.str().file_mock(), "app.file_mock")
                 append(Res.str().file_rename(), "app.file_rename")
             })

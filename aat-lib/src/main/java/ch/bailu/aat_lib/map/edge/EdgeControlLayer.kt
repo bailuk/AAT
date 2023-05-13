@@ -58,7 +58,7 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
         controlBars.forEach { it.hide() }
     }
 
-    private fun show(pos: Position) {
+    fun show(pos: Position) {
         controlBars.forEach {
             if (it.pos() != pos) {
                 it.hide()
