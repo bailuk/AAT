@@ -45,6 +45,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.TRACKER))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_DRAFT))
+        map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_OVERLAY))
         map.add(GpxOverlayListLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher))
         map.add(edgeControl)
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.LEFT).apply {

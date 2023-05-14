@@ -33,7 +33,7 @@ public class EditorSource extends ContentSource implements EditorSourceInterface
 
     @Override
     public void requestUpdate() {
-        sendUpdate(edit.getInfoID(), edit.getInformation());
+        sendUpdate(edit.getInfoID(), edit.getInfo());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class EditorSource extends ContentSource implements EditorSourceInterface
 
     @Override
     public GpxInformation getInfo() {
-        return edit.getInformation();
+        return edit.getInfo();
     }
 
     @Override

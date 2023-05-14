@@ -204,5 +204,6 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
 
     override fun loadIntoEditor(info: GpxInformation) {
         mapView.loadIntoEditor(info)
+        customFileSource.disable()
     }
 }
