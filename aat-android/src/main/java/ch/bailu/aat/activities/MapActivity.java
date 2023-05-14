@@ -10,7 +10,7 @@ import org.mapsforge.core.model.LatLong;
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.description.EditorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
@@ -78,7 +78,7 @@ public class MapActivity extends AbsKeepScreenOnActivity {
         addSource(edit);
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getAppContext()));
+        addSource(new OverlaysSource(getAppContext()));
     }
 
 

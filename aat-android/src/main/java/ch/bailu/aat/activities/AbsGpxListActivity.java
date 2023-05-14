@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
@@ -79,7 +79,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
     private void createDispatcher() {
         addSource(new IteratorSource.Summary(getAppContext()));
-        addSource(new OverlaySource(getAppContext()));
+        addSource(new OverlaysSource(getAppContext()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
 
         addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);

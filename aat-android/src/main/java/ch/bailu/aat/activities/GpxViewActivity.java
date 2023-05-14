@@ -27,7 +27,7 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.dispatcher.FileViewSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
@@ -152,7 +152,7 @@ public class GpxViewActivity extends ActivityContext
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getAppContext()));
+        addSource(new OverlaysSource(getAppContext()));
         addSource(new FileViewSource(getAppContext(), fileID));
 
         addTarget(this, InfoID.FILEVIEW);

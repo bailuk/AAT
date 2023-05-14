@@ -13,4 +13,10 @@ public class FileViewSource extends FileSource {
         super(appContext, InfoID.FILEVIEW);
         setFileID(fileID);
     }
+
+    @Override
+    public void setFileID(String fileID) {
+        super.setFileID(fileID);
+        enable();
+    }
 }

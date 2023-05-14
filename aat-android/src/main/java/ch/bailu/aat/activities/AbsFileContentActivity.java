@@ -22,7 +22,7 @@ import ch.bailu.aat.views.html.AttributesView;
 import ch.bailu.aat.views.msg.ErrorMsgView;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.logger.AppLog;
@@ -104,7 +104,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     private void createDispatcher() {
         addSource(new TrackerSource(getServiceContext(), getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(), getBroadcaster()));
-        addSource(new OverlaySource(getAppContext()));
+        addSource(new OverlaysSource(getAppContext()));
 
         addSource(editorSource);
 

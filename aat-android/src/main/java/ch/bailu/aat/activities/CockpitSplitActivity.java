@@ -7,7 +7,7 @@ import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat_lib.description.EditorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaySource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
@@ -158,7 +158,7 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new OverlaySource(getAppContext()));
+        addSource(new OverlaysSource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
