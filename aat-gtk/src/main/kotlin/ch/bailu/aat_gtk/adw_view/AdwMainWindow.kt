@@ -16,7 +16,7 @@ import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.CustomFileSource
+import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -45,7 +45,8 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
     private val mapVisibleButton = ToggleButton()
 
-    private val customFileSource = CustomFileSource(GtkAppContext)
+    private val customFileSource =
+        FileViewSource(GtkAppContext)
 
     private val stackPage = AdwStackPage()
 

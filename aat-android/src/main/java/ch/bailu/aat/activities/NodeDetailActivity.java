@@ -24,7 +24,7 @@ import ch.bailu.aat.views.graph.GraphView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.html.HtmlScrollTextView;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.CustomFileSource;
+import ch.bailu.aat_lib.dispatcher.FileViewSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -123,7 +123,7 @@ public class NodeDetailActivity extends ActivityContext
     private void createDispatcher() {
         addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new CustomFileSource(getAppContext(), fileID));
+        addSource(new FileViewSource(getAppContext(), fileID));
     }
 
     @Override

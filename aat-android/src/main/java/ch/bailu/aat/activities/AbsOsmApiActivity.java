@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.CustomFileSource;
+import ch.bailu.aat_lib.dispatcher.FileViewSource;
 import ch.bailu.aat.menus.ResultFileMenu;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
@@ -66,7 +66,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         setContentView(createContentView());
 
-        addSource(new CustomFileSource(getAppContext(), configuration.getResultFile().getPath()));
+        addSource(new FileViewSource(getAppContext(), configuration.getResultFile().getPath()));
         addTarget(list, InfoID.FILEVIEW);
 
         OldAppBroadcaster.register(this, onFileTaskChanged,

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.EditorOrBackupSource;
+import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppDialog;
 import ch.bailu.aat.util.ui.AppTheme;

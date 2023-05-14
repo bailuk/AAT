@@ -25,7 +25,7 @@ import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.graph.GraphViewFactory;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.CustomFileSource;
+import ch.bailu.aat_lib.dispatcher.FileViewSource;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.dispatcher.OverlaySource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
@@ -153,7 +153,7 @@ public class GpxViewActivity extends ActivityContext
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaySource(getAppContext()));
-        addSource(new CustomFileSource(getAppContext(), fileID));
+        addSource(new FileViewSource(getAppContext(), fileID));
 
         addTarget(this, InfoID.FILEVIEW);
         addTarget(busyControl, InfoID.FILEVIEW,

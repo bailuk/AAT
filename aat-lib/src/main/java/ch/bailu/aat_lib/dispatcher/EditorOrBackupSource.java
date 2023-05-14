@@ -1,12 +1,9 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat_lib.dispatcher;
 
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.description.EditorSource;
-import ch.bailu.aat_lib.dispatcher.ContentSource;
-import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
@@ -25,7 +22,6 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     public EditorOrBackupSource(AppContext appContext, ContentSource source) {
         editorSource = new EditorSource(appContext);
         backupSource = source;
-
     }
 
     public boolean isModified() {

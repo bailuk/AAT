@@ -11,7 +11,7 @@ import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.CustomFileSource
+import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -41,7 +41,8 @@ class MainStackView (
         const val INDEX_COCKPIT = 3
     }
 
-    private val customFileSource = CustomFileSource(GtkAppContext)
+    private val customFileSource =
+        FileViewSource(GtkAppContext)
 
     private var preferencesStackView: PreferencesStackView?  = null
     private var mapView: MapMainView? = null

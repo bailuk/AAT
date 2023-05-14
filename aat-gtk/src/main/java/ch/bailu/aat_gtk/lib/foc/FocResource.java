@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 
 public class FocResource extends Foc {
@@ -24,11 +23,10 @@ public class FocResource extends Foc {
 
     public FocResource(String resourcePath) {
         this.resource = resourcePath;
-        AppLog.d(this, "FocResource: " + resource);
     }
 
     @Override
-    public boolean remove() throws IOException, SecurityException {
+    public boolean remove() throws SecurityException {
         return false;
     }
 
