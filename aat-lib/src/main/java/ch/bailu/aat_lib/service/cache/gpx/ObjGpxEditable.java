@@ -1,5 +1,6 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache.gpx;
 
+import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.aat_lib.service.editor.GpxEditor;
 import ch.bailu.aat_lib.app.AppContext;

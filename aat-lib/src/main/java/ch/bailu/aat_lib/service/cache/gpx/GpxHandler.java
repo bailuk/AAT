@@ -1,13 +1,11 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.service.cache.gpx;
 
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxInformationProvider;
+import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
 
 public class GpxHandler implements GpxInformationProvider {
     private ObjGpx handle = ObjGpxStatic.NULL;

@@ -17,8 +17,8 @@ import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic;
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase;
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.Objects;
@@ -65,7 +65,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private abstract class State {
+    private abstract static class State {
         public State() {}
         public abstract void start();
         public abstract void ping();

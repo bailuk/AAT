@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.dispatcher;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.service.InsideContext;
+import ch.bailu.aat_lib.service.cache.gpx.GpxHandler;
 
 public class FileSource extends ContentSource implements FileSourceInterface {
     private final AppContext context;

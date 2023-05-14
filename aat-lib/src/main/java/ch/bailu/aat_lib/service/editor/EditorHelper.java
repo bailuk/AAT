@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable;
 import ch.bailu.aat_lib.service.cache.ObjNull;
 import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.foc.Foc;

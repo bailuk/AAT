@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.cache.ObjGpxEditable;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable;
 import ch.bailu.foc.Foc;
 
 public final class EditorNodeViewLayer extends NodeViewLayer {

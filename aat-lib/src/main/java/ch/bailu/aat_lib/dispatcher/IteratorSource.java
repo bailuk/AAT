@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.dispatcher;
 
 
-import ch.bailu.aat_lib.service.cache.ObjGpx;
-import ch.bailu.aat_lib.service.cache.ObjGpxStatic;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic;
 import ch.bailu.aat_lib.service.directory.Iterator;
 import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener;
 import ch.bailu.aat_lib.service.directory.IteratorFollowFile;

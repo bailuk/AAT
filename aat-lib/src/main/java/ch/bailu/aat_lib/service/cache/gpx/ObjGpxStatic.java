@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache.gpx;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
@@ -16,6 +16,8 @@ import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.background.FileTask;
+import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.service.cache.OnObject;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
 import ch.bailu.aat_lib.service.elevation.ElevationProvider;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
@@ -28,11 +30,8 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
 
     private GpxList gpxList = GpxList.NULL_TRACK;
-
     private boolean readyAndLoaded = false;
-
     private final Foc file;
-
 
     public ObjGpxStatic(String id, AppContext appContext) {
         super(id);
@@ -41,12 +40,10 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         file = appContext.toFoc(id);
     }
 
-
     @Override
     public void onInsert(AppContext appContext) {
         reload(appContext);
     }
-
 
     @Override
     public void onRemove(final AppContext appContext) {
@@ -58,7 +55,6 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         };
     }
 
-
     @Override
     public Foc getFile() {
         return file;
@@ -68,11 +64,9 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         appContext.getServices().getBackgroundService().process(new FileLoader(file));
     }
 
-
     public boolean isReadyAndLoaded() {
         return readyAndLoaded;
     }
-
 
     @Override
     public long getSize() {
@@ -82,18 +76,14 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
                         Node.SIZE_IN_BYTES);
     }
 
-
-
     private void setGpxList(GpxList list) {
         readyAndLoaded = true;
         gpxList = list;
     }
 
-
     public GpxList getGpxList() {
         return gpxList;
     }
-
 
     public static class Factory extends Obj.Factory {
 
@@ -102,8 +92,6 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
             return new ObjGpxStatic(id, appContext);
         }
     }
-
-
 
     @Override
     public void onDownloaded(String id, String url,  AppContext appContext) {
@@ -138,10 +126,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
     }
 
-
-
-
-    private class ListUpdater extends GpxListWalker {
+    private static class ListUpdater extends GpxListWalker {
         private final Dem3Tile tile;
 
         public ListUpdater(Dem3Tile s) {
@@ -174,7 +159,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         }
     }
 
-    private class SrtmTileCollector extends GpxListWalker {
+    private static class SrtmTileCollector extends GpxListWalker {
 
         public final IndexedMap<String, Dem3Coordinates> coordinates = new IndexedMap<>();
 
@@ -202,9 +187,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
         }
     }
 
-
     private static class FileLoader extends FileTask {
-
         public FileLoader(Foc f) {
             super(f);
 
@@ -228,10 +211,8 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
                 }
             };
-
             return size[0];
         }
-
 
         private long load(AppContext appContext, ObjGpxStatic handle) {
             long size = 0;
@@ -251,7 +232,6 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
             return size;
         }
-
 
         private AutoPause getAutoPause(AppContext appContext, int preset) {
             SolidAutopause spause = new SolidPostprocessedAutopause(appContext.getStorage(), preset);

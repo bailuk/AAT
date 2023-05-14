@@ -1,7 +1,8 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache.gpx;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.service.cache.Obj;
 
 
 public abstract class ObjGpx extends Obj {
