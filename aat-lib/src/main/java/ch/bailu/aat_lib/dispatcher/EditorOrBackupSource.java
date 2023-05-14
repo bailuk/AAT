@@ -7,19 +7,16 @@ import ch.bailu.aat_lib.description.EditorSource;
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.foc.Foc;
 
-public class EditorOrBackupSource extends ContentSource implements EditorSourceInterface {
+public class EditorOrBackupSource implements EditorSourceInterface, ContentSourceInterface {
 
     private final EditorSource editorSource;
-    private final ContentSource backupSource;
-
+    private final ContentSourceInterface backupSource;
     private boolean isEditing = false;
 
-
-    public EditorOrBackupSource(AppContext appContext, ContentSource source) {
+    public EditorOrBackupSource(AppContext appContext, ContentSourceInterface source) {
         editorSource = new EditorSource(appContext);
         backupSource = source;
     }
@@ -35,23 +32,20 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         }
     }
 
-    @Override
-    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
-        super.setTarget(target);
-        editorSource.setTarget(target);
-        backupSource.setTarget(target);
-    }
-
     public void releaseEditorDiscard() {
         if (isEditing) {
             isEditing = false;
 
             editorSource.onPause();
             backupSource.onResume();
-
             requestUpdate();
         }
+    }
 
+    @Override
+    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
+        editorSource.setTarget(target);
+        backupSource.setTarget(target);
     }
 
     public void edit() {
@@ -66,7 +60,6 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
             requestUpdate();
         }
     }
-
 
     public boolean isEditing() {
         return isEditing;
@@ -91,10 +84,10 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     @Override
     public void requestUpdate() {
         if (isEditing) {
-            requestBackupNullUpdate();
+            requestNullUpdate(backupSource);
             editorSource.requestUpdate();
         }  else {
-            requestEditorNullUpdate();
+            requestNullUpdate(editorSource);
             backupSource.requestUpdate();
         }
     }
@@ -108,10 +101,10 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
     @Override
     public void onResume() {
         if (isEditing) {
-            requestBackupNullUpdate();
+            requestNullUpdate(backupSource);
             editorSource.onResume();
         } else {
-            requestEditorNullUpdate();
+            requestNullUpdate(editorSource);
             backupSource.onResume();
         }
     }
@@ -122,11 +115,7 @@ public class EditorOrBackupSource extends ContentSource implements EditorSourceI
         return backupSource.getInfo().getFile();
     }
 
-    private void requestEditorNullUpdate() {
-        sendUpdate(InfoID.EDITOR_OVERLAY, new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
-    }
-
-    private void requestBackupNullUpdate() {
-        sendUpdate(backupSource.getIID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
+    private void requestNullUpdate(ContentSourceInterface source) {
+        editorSource.sendUpdate(source.getIID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
     }
 }

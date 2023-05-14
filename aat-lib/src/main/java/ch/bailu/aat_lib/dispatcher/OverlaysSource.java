@@ -50,9 +50,6 @@ public class OverlaysSource implements ContentSourceInterface {
     }
 
     @Override
-    public void sendUpdate(int iid, @Nonnull GpxInformation info) {}
-
-    @Override
     public void requestUpdate() {
         for (OverlaySource overlaySource : overlays) {
             overlaySource.requestUpdate();

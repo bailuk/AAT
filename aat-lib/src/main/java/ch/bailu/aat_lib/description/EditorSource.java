@@ -26,25 +26,21 @@ public class EditorSource extends ContentSource implements EditorSourceInterface
         }
     };
 
-
     public EditorSource (AppContext appContext) {
         this.appContext = appContext;
         edit = new EditorHelper(appContext);
     }
-
 
     @Override
     public void requestUpdate() {
         sendUpdate(edit.getInfoID(), edit.getInformation());
     }
 
-
     @Override
     public void onPause() {
         appContext.getBroadcaster().unregister(onFileEdited);
         edit.onPause();
     }
-
 
     @Override
     public void onResume() {

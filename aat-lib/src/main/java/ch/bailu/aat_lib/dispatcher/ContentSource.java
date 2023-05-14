@@ -12,7 +12,6 @@ public abstract class ContentSource implements ContentSourceInterface {
         this.target = target;
     }
 
-    @Override
     public void sendUpdate(int iid, @Nonnull GpxInformation info) {
         target.onContentUpdated(iid, info);
     }

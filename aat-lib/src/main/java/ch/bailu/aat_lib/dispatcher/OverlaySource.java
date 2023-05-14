@@ -65,7 +65,6 @@ public class OverlaySource extends FileSource{
         soverlay.unregister(onPreferencesChanged);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
