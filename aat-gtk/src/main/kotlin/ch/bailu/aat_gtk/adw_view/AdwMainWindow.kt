@@ -33,7 +33,7 @@ import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
 import ch.bailu.gtk.type.Str
 
-class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
+class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
 
     companion object {
         const val pageIdCockpit = "view-grid-symbolic"
@@ -140,7 +140,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun showPoi() {
-        TODO("Not yet implemented")
+        AdwPoiDialog.show(this, app)
     }
 
     override fun frameInMap(info: GpxInformation) {
@@ -156,7 +156,10 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun load(info: GpxInformation) {
+        // TODO saveFile()
+        mapView.editDraft()
         customFileSource.setFileID(info.file.toString())
+        customFileSource.enable()
     }
 
     override fun showCockpit() {
@@ -186,7 +189,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun getMapBounding(): BoundingBoxE6 {
-        TODO("Not yet implemented")
+        return BoundingBoxE6(mapView.map.boundingBox)
     }
 
     override fun showFileList() {
@@ -195,7 +198,7 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun showPreferences() {
-        TODO("Not yet implemented")
+        AdwPreferencesDialog.show(this, app)
     }
 
     override fun showInDetail(infoID: Int) {
@@ -203,7 +206,8 @@ class AdwMainWindow(app: Application, dispatcher: Dispatcher) : UiController {
     }
 
     override fun loadIntoEditor(info: GpxInformation) {
-        mapView.loadIntoEditor(info)
+        // TODO saveFile()
+        mapView.edit(info)
         customFileSource.disable()
     }
 }

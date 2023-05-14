@@ -30,7 +30,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     private val editorSource = EditorSource(GtkAppContext)
 
     private val nodeInfo = NodeInfo()
-    private val searchBar = SearchBar(app) {map.setCenter(it)}
+    private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
     private val editorBar = EditorBar(app, nodeInfo, map.mContext, GtkAppContext.services, editorSource)
@@ -82,7 +82,11 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.onDetached()
     }
 
-    fun loadIntoEditor(info: GpxInformation) {
+    fun editDraft() {
+        editorSource.editDraft()
+    }
+
+    fun edit(info: GpxInformation) {
         edgeControl.show(Position.LEFT)
         editorSource.edit(info.file)
     }

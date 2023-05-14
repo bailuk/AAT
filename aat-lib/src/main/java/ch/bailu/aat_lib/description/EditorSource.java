@@ -6,7 +6,9 @@ import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.ContentSource;
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
+import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.service.editor.EditorHelper;
 import ch.bailu.aat_lib.service.editor.EditorInterface;
 import ch.bailu.foc.Foc;
@@ -77,6 +79,14 @@ public class EditorSource extends ContentSource implements EditorSourceInterface
     public void edit() {}
 
     public void edit(Foc file) {
+        sendUpdate(edit.getInfoID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
         edit.edit(file);
+        requestUpdate();
+    }
+
+    public void editDraft() {
+        sendUpdate(edit.getInfoID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
+        edit.editDraft();
+        requestUpdate();
     }
 }
