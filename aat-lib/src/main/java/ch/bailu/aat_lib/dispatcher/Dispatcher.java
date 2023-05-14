@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.gpx.InfoID;
 
 public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterface {
     private final Map<Integer, TargetList> targets = new HashMap<>(10);
-    private final ArrayList<ContentSource> sources = new ArrayList<>(5);
+    private final ArrayList<ContentSourceInterface> sources = new ArrayList<>(5);
 
     private OnContentUpdatedInterface updater = OFF;
 
@@ -32,7 +32,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     }
 
     @Override
-    public void addSource(@Nonnull ContentSource source) {
+    public void addSource(@Nonnull ContentSourceInterface source) {
         sources.add(source);
         source.setTarget(this);
     }
@@ -40,7 +40,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     public void onPause() {
         updater = OFF;
 
-        for (ContentSource source: sources) {
+        for (ContentSourceInterface source: sources) {
             source.onPause();
         }
     }
@@ -48,7 +48,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
     public void onResume() {
         updater = ON;
 
-        for (ContentSource source : sources) {
+        for (ContentSourceInterface source : sources) {
             source.onResume();
         }
         requestUpdate();
@@ -56,7 +56,7 @@ public class Dispatcher implements DispatcherInterface, OnContentUpdatedInterfac
 
     @Override
     public void requestUpdate() {
-        for (ContentSource source: sources)
+        for (ContentSourceInterface source: sources)
             source.requestUpdate();
     }
 

@@ -20,7 +20,7 @@ public interface DispatcherInterface {
      * the an info id filter from this source to its connected targets.
      * @param source that transmits messages
      */
-    void addSource(@Nonnull ContentSource source);
+    void addSource(@Nonnull ContentSourceInterface source);
 
     void requestUpdate();
 }

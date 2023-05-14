@@ -24,8 +24,6 @@ public class OverlaySource extends FileSource{
     public OverlaySource(AppContext context, int iidOrIndex) {
         super(context, toIID(iidOrIndex));
         soverlay = new SolidOverlayFile(context.getStorage(), context, toIndex(iidOrIndex));
-        soverlay.register(onPreferencesChanged);
-
         initAndUpdateOverlay();
     }
 
@@ -59,6 +57,20 @@ public class OverlaySource extends FileSource{
         if (soverlay.isEnabled()) {
             super.enable();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        soverlay.unregister(onPreferencesChanged);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        soverlay.register(onPreferencesChanged);
+        initAndUpdateOverlay();
     }
 
     @Override

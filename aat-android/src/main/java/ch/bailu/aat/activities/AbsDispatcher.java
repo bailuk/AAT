@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
 import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat_lib.dispatcher.ContentSource;
+import ch.bailu.aat_lib.dispatcher.ContentSourceInterface;
 import ch.bailu.aat_lib.dispatcher.Dispatcher;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
@@ -42,7 +42,7 @@ public abstract class AbsDispatcher extends AbsServiceLink
     }
 
     @Override
-    public void addSource(@Nonnull ContentSource source) {
+    public void addSource(@Nonnull ContentSourceInterface source) {
         dispatcher.addSource(source);
     }
 
