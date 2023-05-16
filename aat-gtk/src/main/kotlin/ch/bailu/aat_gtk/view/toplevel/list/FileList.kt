@@ -54,17 +54,17 @@ class FileList(app: Application,
 
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
-        iconName = Str("zoom-fit-best-symbolic")
+        iconName = Strings.iconFrame
         onClicked { selectAndFrame(indexOfSelected) }
     }
 
     private val trackCenterButton = Button().apply {
-        iconName = Str("find-location-symbolic")
+        iconName = Strings.iconCenter
         onClicked { selectAndCenter(indexOfSelected) }
     }
 
     private val trackDetailButton = Button().apply {
-        iconName = Str("view-continuous-symbolic")
+        iconName = Strings.iconDetail
         onClicked { selectAndDetail(indexOfSelected) }
     }
 
@@ -142,7 +142,7 @@ class FileList(app: Application,
                             focFactory
                         ).combo.apply { addCssClass(Strings.linked) })
                     append(Button().apply {
-                        setIconName("folder-symbolic")
+                        iconName = Strings.iconFolder
                         onClicked {
                             val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
                             try {
@@ -177,7 +177,7 @@ class FileList(app: Application,
             })
 
 
-            MenuHelper.setAction(app, "file_edit") {
+            MenuHelper.setAction(app, Strings.actionFileEdit) {
                 selectAndEdit(indexOfSelected)
             }
 

@@ -19,7 +19,7 @@ public class TrackerSource extends ContentSource {
     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(String... args) {
-            sendUpdate(InfoID.TRACKER, services.getTrackerService().getLoggerInformation());
+            sendUpdate(InfoID.TRACKER, services.getTrackerService().getInfo());
         }
     };
 
@@ -27,7 +27,7 @@ public class TrackerSource extends ContentSource {
 
     @Override
     public void requestUpdate() {
-        sendUpdate(InfoID.TRACKER, services.getTrackerService().getLoggerInformation());
+        sendUpdate(InfoID.TRACKER, services.getTrackerService().getInfo());
     }
 
 
@@ -49,6 +49,6 @@ public class TrackerSource extends ContentSource {
 
     @Override
     public GpxInformation getInfo() {
-        return services.getTrackerService().getLoggerInformation();
+        return services.getTrackerService().getInfo();
     }
 }

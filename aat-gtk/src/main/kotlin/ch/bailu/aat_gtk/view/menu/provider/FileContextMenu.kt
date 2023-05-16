@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -31,10 +32,10 @@ class FileContextMenu(private val solid: SolidOverlayFileList, private val solid
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("Load into editor"), "app.file_edit")
-                append(Res.str().file_mock(), "app.file_mock")
-                append(Res.str().file_rename(), "app.file_rename")
-                append(Res.str().file_delete(), "app.file_delete")
+                append(ToDo.translate("Load into editor"), Strings.actionFileEdit)
+                append(Res.str().file_mock(), Strings.actionFileMock)
+                append(Res.str().file_rename(), Strings.actionFileRename)
+                append(Res.str().file_delete(), Strings.actionFileDelete)
             })
         }
     }
@@ -51,31 +52,29 @@ class FileContextMenu(private val solid: SolidOverlayFileList, private val solid
 
     override fun createActions(app: Application) {
 
-        MenuHelper.setAction(app, "file_mock") {
+        MenuHelper.setAction(app, Strings.actionFileMock) {
             solidMock.setValue(file.path)
         }
-        MenuHelper.setAction(app, "file_rename") {
+        MenuHelper.setAction(app, Strings.actionFileRename) {
             rename(app)
         }
 
-        MenuHelper.setAction(app, "file_delete") {
+        MenuHelper.setAction(app, Strings.actionFileDelete) {
             delete(app)
         }
     }
 
     private fun delete(app: Application) {
-        val idCancel = "cancel"
-        val idOk = "ok"
 
         if (file.canWrite()) {
             val dialog = MessageDialog(app.activeWindow, Res.str().file_delete_ask(), file.pathName)
 
-            dialog.addResponse(idCancel, Res.str().cancel())
-            dialog.addResponse(idOk, Res.str().ok())
+            dialog.addResponse(Strings.idCancel, Res.str().cancel())
+            dialog.addResponse(Strings.idOk, Res.str().ok())
 
             dialog.onResponse {
                 val res = it.toString()
-                if (idOk == res) {
+                if (Strings.idOk == res) {
                     file.rm()
                     FileAction.rescanDirectory(GtkAppContext, file)
                 }
@@ -88,19 +87,16 @@ class FileContextMenu(private val solid: SolidOverlayFileList, private val solid
 
 
     private fun rename(app: Application) {
-        val idCancel = "cancel"
-        val idOk = "ok"
-
         if (file.canWrite() && file.hasParent()) {
             val directory = file.parent()
             val dialog = MessageDialog(app.activeWindow, Res.str().file_rename(), file.name)
             val entry = Entry()
             dialog.extraChild = entry
-            dialog.addResponse(idCancel, Res.str().cancel())
-            dialog.addResponse(idOk, Res.str().ok())
+            dialog.addResponse(Strings.idCancel, Res.str().cancel())
+            dialog.addResponse(Strings.idOk, Res.str().ok())
             dialog.onResponse {
                 val res = it.toString()
-                if (idOk == res) {
+                if (Strings.idOk == res) {
                     val source = directory.child(file.name)
                     val target = directory.child(entry.asEditable().text.toString())
 

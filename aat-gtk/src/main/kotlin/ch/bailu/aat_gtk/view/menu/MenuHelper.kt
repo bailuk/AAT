@@ -12,10 +12,15 @@ import ch.bailu.gtk.type.Str
 
 object MenuHelper {
     fun setAction(app: Application, action: String, onActivate: ()->Unit) {
-        ActionHandler.get(app, action).apply {
+        ActionHandler.get(app, toActionName(action)).apply {
             disconnectSignals()
             onActivate(onActivate)
         }
+    }
+
+    private fun toActionName(action: String): String {
+        val parts = action.split(".")
+        return parts[parts.lastIndex]
     }
 
     fun createCustomItem(customId: String): MenuItem {

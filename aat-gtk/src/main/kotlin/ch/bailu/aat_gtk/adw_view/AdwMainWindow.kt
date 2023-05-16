@@ -5,14 +5,13 @@ import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.dispatcher.SelectedSource
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
-import ch.bailu.aat_gtk.view.toplevel.CockpitView
-import ch.bailu.aat_gtk.view.toplevel.DetailView
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
+import ch.bailu.aat_gtk.view.toplevel.CockpitPage
+import ch.bailu.aat_gtk.view.toplevel.DetailViewPage
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
@@ -31,7 +30,6 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
-import ch.bailu.gtk.type.Str
 
 class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
 
@@ -48,10 +46,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     private val customFileSource =
         FileViewSource(GtkAppContext)
 
-    private val stackPage = AdwStackPage()
-
-    private val selectedSource = SelectedSource()
-
+    private val stackPage = AdwStackView()
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.shortName, GtkAppConfig.longName)
@@ -78,6 +73,8 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         onAttached()
     }
 
+    private val detailViewPage = DetailViewPage(this, dispatcher)
+
     private val receiver = { args: Array<String> ->
         if (args.size > 1) {
             val toast = Toast(args[1])
@@ -100,14 +97,14 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         dispatcher.addSource(customFileSource)
         dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        stackPage.addView(CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow, pageIdCockpit,"Cockpit")
+        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit,"Cockpit")
         stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList,"Tracks")
-        stackPage.addView(DetailView(selectedSource.getIntermediateDispatcher(dispatcher, InfoID.FILEVIEW, InfoID.TRACKER), GtkAppContext.storage).scrolled, pageIdDetail, "Detail")
+        stackPage.addView(detailViewPage.box, pageIdDetail, "Detail")
 
-        selectedSource.select(InfoID.TRACKER)
+
         leaflet.visibleChild = stackPage.stackPage
 
-        mapVisibleButton.iconName = Str("zoom-fit-best-symbolic")
+        mapVisibleButton.iconName = Strings.iconFrame
         mapVisibleButton.onToggled {
             if (mapVisibleButton.active) {
                 leaflet.visibleChild = mapView.overlay
@@ -202,7 +199,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showInDetail(infoID: Int) {
-        selectedSource.select(infoID)
+        detailViewPage.select(infoID)
     }
 
     override fun loadIntoEditor(info: GpxInformation) {

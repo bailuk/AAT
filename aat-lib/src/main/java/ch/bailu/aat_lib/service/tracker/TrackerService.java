@@ -23,7 +23,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
 
 
     @Override
-    public synchronized GpxInformation getLoggerInformation() {
+    public synchronized GpxInformation getInfo() {
         return internal.logger;
     }
 

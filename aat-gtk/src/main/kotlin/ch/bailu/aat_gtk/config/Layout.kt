@@ -1,6 +1,8 @@
 package ch.bailu.aat_gtk.config
 
 object Layout {
+    const val stackWidth = 400
+
     const val margin = 5
 
     const val ICON_SIZE = 20

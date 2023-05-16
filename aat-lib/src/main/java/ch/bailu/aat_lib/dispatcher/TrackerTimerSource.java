@@ -20,7 +20,7 @@ public class TrackerTimerSource extends ContentSource {
     @Override
     public void requestUpdate() {
         sendUpdate(InfoID.TRACKER_TIMER,
-                scontext.getTrackerService().getLoggerInformation());
+                scontext.getTrackerService().getInfo());
         timer.kick(this::requestUpdate, INTERVAL);
     }
 
@@ -41,6 +41,6 @@ public class TrackerTimerSource extends ContentSource {
 
     @Override
     public GpxInformation getInfo() {
-        return scontext.getTrackerService().getLoggerInformation();
+        return scontext.getTrackerService().getInfo();
     }
 }
