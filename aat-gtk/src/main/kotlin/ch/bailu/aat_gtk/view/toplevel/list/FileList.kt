@@ -14,10 +14,10 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.Application
@@ -66,14 +66,6 @@ class FileList(app: Application,
     private val trackDetailButton = Button().apply {
         iconName = Str("view-continuous-symbolic")
         onClicked { selectAndDetail(indexOfSelected) }
-    }
-
-    private val loadButton = Button().apply {
-        addCssClass(Strings.linked)
-        setLabel(ToDo.translate("Load"))
-        onClicked {
-            selectAndLoad(indexOfSelected)
-        }
     }
 
     private val listIndex = ListIndex()
@@ -142,12 +134,32 @@ class FileList(app: Application,
 
             vbox.append(fileNameLabel)
             vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
-                append(SolidDirectoryQueryComboView(storage, focFactory).combo)
+                append(Box(Orientation.HORIZONTAL, 0).apply {
+                    addCssClass(Strings.linked)
+                    append(
+                        SolidDirectoryQueryComboView(
+                            storage,
+                            focFactory
+                        ).combo.apply { addCssClass(Strings.linked) })
+                    append(Button().apply {
+                        setIconName("folder-symbolic")
+                        onClicked {
+                            val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
+                            try {
+
+                                val runtime = Runtime.getRuntime()
+                                runtime.exec("xdg-open $path")
+
+                            } catch (e: Exception) {
+                                AppLog.i(this, "Failed to open $path")
+                            }
+                        }
+                    })
+                })
 
                 append(Separator(Orientation.VERTICAL))
 
                 append(Box(Orientation.HORIZONTAL, 0).apply {
-                    append(loadButton)
                     append(trackFrameButton)
                     append(trackCenterButton)
                     append(trackDetailButton)
@@ -203,13 +215,6 @@ class FileList(app: Application,
         }
     }
 
-    private fun selectAndLoad(index: Int) {
-        select(index)
-        if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
-        }
-    }
-
     private fun selectAndDetail(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
@@ -226,11 +231,9 @@ class FileList(app: Application,
             iteratorSimple.moveToPosition(indexOfSelected)
             overlayMenu.setFile(iteratorSimple.info.file)
             fileNameLabel.setLabel(iteratorSimple.info.file.name)
-            loadButton.sensitive = true
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
-            loadButton.sensitive = false
             menuButton.sensitive = false
         }
     }
