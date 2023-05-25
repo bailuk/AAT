@@ -1,44 +1,31 @@
 package ch.bailu.aat_gtk.adw_view
 
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.view.UiController
-import ch.bailu.gtk.adw.ActionRow
-import ch.bailu.gtk.adw.PreferencesGroup
-import ch.bailu.gtk.adw.PreferencesPage
+import ch.bailu.aat_gtk.view.solid.ActivityPreferencesPage
+import ch.bailu.aat_gtk.view.solid.GeneralPreferencesPage
+import ch.bailu.aat_gtk.view.solid.MapPreferencesPage
+import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
-import ch.bailu.gtk.type.Str
 
 object AdwPreferencesDialog {
     private var window: PreferencesWindow? = null
 
-    fun show(uiController: UiController, app: Application) {
+    fun show(app: Application) {
         if (window == null) {
             window = PreferencesWindow().apply {
 
                 canNavigateBack = true
 
-                add(PreferencesPage().apply {
-                    vexpand = true
-                    setTitle("Test")
-                    setName("test")
+                add(GeneralPreferencesPage(GtkAppContext.storage, app, this).page)
+                add(MapPreferencesPage(GtkAppContext.storage, app, this).page)
 
-                })
+                val presetCount = SolidPresetCount(GtkAppContext.storage)
 
-                add(PreferencesPage().apply {
-                    vexpand = true
-                    setTitle("Test2")
-                    setName("test2")
-                    add(PreferencesGroup().apply {
-                        description = Str("Description")
-                        title = Str("Title")
-                        add(ActionRow().apply {
-                            title = Str("Hallo")
-                            useUnderline = true
-                        })
-                    })
-
-                })
+                for(i in 0 until  presetCount.value) {
+                    add(ActivityPreferencesPage(GtkAppContext.storage, i).page)
+                }
 
                 setDefaultSize(Layout.windowWidth, Layout.windowHeight)
 
@@ -50,5 +37,14 @@ object AdwPreferencesDialog {
             }
         }
         window?.show()
+    }
+
+    fun showMap(app: Application) {
+        show(app)
+        val window = this.window
+        if (window is PreferencesWindow) {
+            window.setVisiblePageName("map")
+        }
+
     }
 }

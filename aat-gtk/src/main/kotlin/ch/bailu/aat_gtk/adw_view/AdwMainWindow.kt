@@ -9,14 +9,14 @@ import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
-import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.CockpitPage
 import ch.bailu.aat_gtk.view.toplevel.DetailViewPage
+import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.adw.Application
@@ -174,7 +174,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showPreferencesMap() {
-        TODO("Not yet implemented")
+        AdwPreferencesDialog.showMap(app)
     }
 
     override fun back() {
@@ -195,7 +195,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showPreferences() {
-        AdwPreferencesDialog.show(this, app)
+        AdwPreferencesDialog.show(app)
     }
 
     override fun showInDetail(infoID: Int) {
