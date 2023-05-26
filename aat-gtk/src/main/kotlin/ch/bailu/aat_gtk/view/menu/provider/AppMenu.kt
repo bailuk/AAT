@@ -11,13 +11,13 @@ import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
-import ch.bailu.gtk.gtk.ApplicationWindow
+import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.lib.handler.CallbackHandler
 import ch.bailu.gtk.lib.handler.SignalHandler
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 import ch.bailu.gtk.type.Str
 
-class AppMenu(private val window: ApplicationWindow,
+class AppMenu(private val window: Window,
               private val services: ServicesInterface,
               private val dispatcher: Dispatcher,
               private val uiController: UiController) :

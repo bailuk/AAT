@@ -4,6 +4,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_lib.preferences.SolidString
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.adw.Clamp
+import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.adw.ViewStack
 import ch.bailu.gtk.adw.ViewSwitcherBar
 import ch.bailu.gtk.gtk.Box
@@ -11,7 +12,7 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.type.Str
 
-class AdwStackView {
+class AdwStackView(headerBar: HeaderBar) {
     companion object {
         private const val maximumWidth = Layout.stackWidth
         private const val solidKey = "StackPage"
@@ -26,13 +27,13 @@ class AdwStackView {
         reveal = true
     }
 
-    val stackPage = Clamp().apply {
-        maximumSize = maximumWidth
-
-        child = Box(Orientation.VERTICAL, 0).apply {
-            append(viewStack)
+    val stackPage = Box(Orientation.VERTICAL, 0).apply {
+            append(headerBar)
             append(viewStackSwitcher)
-        }
+            append(Clamp().apply {
+                maximumSize = maximumWidth
+                child = viewStack
+            })
     }
 
     fun addView(widget: Widget, pageId: String, label: String) {

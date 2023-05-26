@@ -26,9 +26,9 @@ import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.adw.Leaflet
 import ch.bailu.gtk.adw.WindowTitle
 import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
-import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
 
 class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
@@ -39,18 +39,17 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         const val pageIdDetail = "view-continuous-symbolic"
     }
 
-
-    private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services)
-    private val mapVisibleButton = ToggleButton()
+    private val showMapButton = Button()
 
     private val customFileSource =
         FileViewSource(GtkAppContext)
 
-    private val stackPage = AdwStackView()
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.shortName, GtkAppConfig.longName)
     }
+
+    private val stackPage = AdwStackView(headerBar)
 
     private val leaflet = Leaflet().apply {
         canNavigateBack = true
@@ -73,6 +72,8 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         CSS.addProviderForDisplay(display, Strings.appCss)
     }
 
+    private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services, window, dispatcher, this)
+
     private val mapView = MapMainView(app, dispatcher, this , GtkAppContext, window).apply {
         overlay.setSizeRequest(Layout.mapMinWidth,Layout.windowMinSize)
         onAttached()
@@ -82,7 +83,6 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
 
     init {
         overlay.child = Box(Orientation.VERTICAL,0).apply {
-            append(headerBar)
             append(leaflet)
 
         }
@@ -93,25 +93,20 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         dispatcher.addSource(customFileSource)
         dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit,"Cockpit")
+        stackPage.addView(CockpitPage(this, dispatcher, window).box, pageIdCockpit,"Cockpit")
         stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList,"Tracks")
         stackPage.addView(detailViewPage.box, pageIdDetail, "Detail")
 
 
         leaflet.visibleChild = stackPage.stackPage
 
-        mapVisibleButton.iconName = Strings.iconFrame
-        mapVisibleButton.onToggled {
-            if (mapVisibleButton.active) {
-                leaflet.visibleChild = mapView.overlay
-            } else {
-                leaflet.visibleChild = stackPage.stackPage
-            }
+        showMapButton.iconName = Strings.iconFrame
+        showMapButton.onClicked {
+           leaflet.visibleChild = mapView.overlay
         }
 
-        headerBar.packStart(trackerButton.button)
-        headerBar.packEnd(mapVisibleButton)
-        headerBar.packEnd(MainMenuButton(app, window, dispatcher, this).menuButton)
+        headerBar.packEnd(showMapButton)
+        headerBar.packStart(MainMenuButton(app, window, dispatcher, this).menuButton)
 
         stackPage.restore(GtkAppContext.storage)
 
@@ -129,7 +124,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showMap() {
-        mapVisibleButton.active = true
+        leaflet.visibleChild = mapView.overlay
     }
 
     override fun showPoi() {
@@ -157,12 +152,12 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
 
     override fun showCockpit() {
         AppLog.e("Error cockpit")
-        mapVisibleButton.active = false
+        leaflet.visibleChild = stackPage.stackPage
         stackPage.showPage(pageIdCockpit)
     }
 
     override fun showDetail() {
-        mapVisibleButton.active = false
+        leaflet.visibleChild = stackPage.stackPage
         stackPage.showPage(pageIdDetail)
     }
 
@@ -174,20 +169,12 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         AdwPreferencesDialog.showMap(app)
     }
 
-    override fun back() {
-        TODO("Not yet implemented")
-    }
-
-    override fun showContextBar() {
-        TODO("Not yet implemented")
-    }
-
     override fun getMapBounding(): BoundingBoxE6 {
         return BoundingBoxE6(mapView.map.boundingBox)
     }
 
     override fun showFileList() {
-        mapVisibleButton.active = false
+        hideMap()
         stackPage.showPage(pageIdFileList)
     }
 
@@ -203,5 +190,9 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         // TODO saveFile()
         mapView.edit(info)
         customFileSource.disable()
+    }
+
+    override fun hideMap() {
+        leaflet.visibleChild = stackPage.stackPage
     }
 }

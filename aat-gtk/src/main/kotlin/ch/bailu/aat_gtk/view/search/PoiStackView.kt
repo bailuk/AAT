@@ -33,11 +33,7 @@ class PoiStackView(private val controller: UiController, app: Application, windo
 
         margin(Layout.margin)
         val buttonBox = Box(Orientation.HORIZONTAL, Layout.margin)
-        buttonBox.append(
-            Button.newWithLabelButton(Str(ToDo.translate("Back"))).apply {
-                onClicked { controller.back() }
-            }
-        )
+
         buttonBox.append(Button.newWithLabelButton(Str(ToDo.translate("Load"))).apply {
             onClicked { loadList() }
         })
@@ -72,6 +68,5 @@ class PoiStackView(private val controller: UiController, app: Application, windo
         val overlay = SolidOverlayFileList(GtkAppContext.storage, GtkAppContext).get(SolidOverlayFileList.MAX_OVERLAYS-1)
         overlay.setValueFromFile(poiApi.resultFile)
         overlay.isEnabled = true
-        controller.back()
     }
 }

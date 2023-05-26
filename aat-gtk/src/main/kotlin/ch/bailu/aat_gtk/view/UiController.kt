@@ -13,11 +13,10 @@ interface UiController {
     fun showDetail()
     fun showInList()
     fun showPreferencesMap()
-    fun back()
-    fun showContextBar()
     fun getMapBounding(): BoundingBoxE6
     fun showFileList()
     fun showPreferences()
     fun showInDetail(infoID: Int)
     fun loadIntoEditor(info: GpxInformation)
+    fun hideMap()
 }

@@ -15,11 +15,12 @@ class MessageBar(messageType: String, cssClass: String) {
 
     init {
         GtkAppContext.broadcaster.register({
-            label.setText(it.joinToString())
-            label.show()
-
-            timer.cancel()
-            timer.kick(5000) {label.hide()}
+            if (it.size > 1) {
+                label.setText(it[1])
+                label.show()
+                timer.cancel()
+                timer.kick(5000) { label.hide() }
+            }
         }, messageType)
     }
 }
