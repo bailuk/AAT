@@ -18,7 +18,7 @@ public class AndroidTimer implements Timer {
 
 
     @Override
-    public void kick(Runnable run, long interval) {
+    public void kick(long interval, Runnable run) {
         cancel();
         handler.postDelayed(run, interval);
         this.run = run;

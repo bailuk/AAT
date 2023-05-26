@@ -28,7 +28,7 @@ public abstract class AbsMsgView extends TextView {
         if (getVisibility() == GONE)
             AppLayout.fadeIn(this);
 
-        fadeOutTimer.kick(this::set, displayForMillis);
+        fadeOutTimer.kick(displayForMillis, this::set);
     }
 
     public void set() {

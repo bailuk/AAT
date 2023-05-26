@@ -21,7 +21,7 @@ public class TrackerTimerSource extends ContentSource {
     public void requestUpdate() {
         sendUpdate(InfoID.TRACKER_TIMER,
                 scontext.getTrackerService().getInfo());
-        timer.kick(this::requestUpdate, INTERVAL);
+        timer.kick(INTERVAL, this::requestUpdate);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TrackerTimerSource extends ContentSource {
 
     @Override
     public void onResume() {
-        timer.kick(this::requestUpdate, INTERVAL);
+        timer.kick(INTERVAL, this::requestUpdate);
     }
 
     @Override

@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Window
 import ch.bailu.gtk.gtk.Application
 
-class GeneralPreferencesPage(storage: StorageInterface, app: Application, window: Window): AbsPreferencesPage(Res.str().p_general(), "general") {
+class GeneralPreferencesPage(storage: StorageInterface, app: Application, window: Window): PreferencesPageParent(Res.str().p_general(), "general") {
 
     init {
         add(Res.str().p_general())

@@ -68,9 +68,9 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
             } else {
                 execute.next(gatt);
-                scanningTimeout.kick(() -> {
+                scanningTimeout.kick(BleSensorsSDK18.SCAN_DURATION, () -> {
                     if (item.isScanning())  close();
-                }, BleSensorsSDK18.SCAN_DURATION);
+                });
                 item.setState(SensorItemState.CONNECTING);
                 item.setState(SensorItemState.SCANNING);
             }
@@ -107,11 +107,6 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
             close();
         }
     }
-
-    private void log(int status, int state) {
-        AppLog.d(this, "status: " + Integer.toHexString(status) + " state: " + Integer.toHexString(state));
-    }
-
 
     private static boolean isConnected(int status, int state) {
         return (status == BluetoothGatt.GATT_SUCCESS && state == BluetoothProfile.STATE_CONNECTED);

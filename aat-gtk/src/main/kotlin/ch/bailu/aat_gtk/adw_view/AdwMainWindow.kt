@@ -9,25 +9,25 @@ import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
+import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.toplevel.CockpitPage
 import ch.bailu.aat_gtk.view.toplevel.DetailViewPage
 import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.adw.Leaflet
-import ch.bailu.gtk.adw.Toast
-import ch.bailu.gtk.adw.ToastOverlay
 import ch.bailu.gtk.adw.WindowTitle
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.ToggleButton
 import ch.bailu.gtk.lib.bridge.CSS
 
@@ -59,12 +59,17 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         vexpand = true
     }
 
-    private val toastOverlay = ToastOverlay()
+    private val overlay = Overlay()
+    private val messageOverlay = MessageOverlay()
+
 
     val window = ApplicationWindow(app).apply {
         setDefaultSize(SolidWindowSize.readWidth(GtkAppContext.storage), SolidWindowSize.readHeight(GtkAppContext.storage))
         setIconName(GtkAppConfig.applicationId)
-        content = toastOverlay
+        content = overlay
+
+        overlay.addOverlay(messageOverlay.box)
+
         CSS.addProviderForDisplay(display, Strings.appCss)
     }
 
@@ -75,17 +80,8 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
 
     private val detailViewPage = DetailViewPage(this, dispatcher)
 
-    private val receiver = { args: Array<String> ->
-        if (args.size > 1) {
-            val toast = Toast(args[1])
-            toast.timeout = 1
-            toastOverlay.addToast(toast)
-        }
-    }
-
     init {
-        GtkAppContext.broadcaster.register(receiver, AppBroadcaster.LOG_INFO)
-        toastOverlay.child = Box(Orientation.VERTICAL,0).apply {
+        overlay.child = Box(Orientation.VERTICAL,0).apply {
             append(headerBar)
             append(leaflet)
 
@@ -160,6 +156,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showCockpit() {
+        AppLog.e("Error cockpit")
         mapVisibleButton.active = false
         stackPage.showPage(pageIdCockpit)
     }

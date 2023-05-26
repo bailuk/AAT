@@ -135,7 +135,7 @@ public final class BleSensorsSDK18 extends Sensors {
 
     private void startScanner() throws SecurityException {
         scannerBonded.start();
-        timer.kick(this::stopScanner, SCAN_DURATION);
+        timer.kick(SCAN_DURATION, this::stopScanner);
         scannerBle.start();
 
         scanning = isEnabled();

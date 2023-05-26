@@ -12,3 +12,20 @@
 .graph-label {
     color: white;
 }
+
+.message-info {
+    padding: 10px;
+    background: #6b6b6b80;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+    border-radius: 5px;
+}
+
+.message-error {
+    padding: 10px;
+    background: #fc058080;
+    border-style: none;
+    font-weight: bold;
+    border-radius: 5px;
+}

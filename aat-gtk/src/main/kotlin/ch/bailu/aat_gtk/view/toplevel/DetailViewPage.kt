@@ -25,6 +25,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
             append(Button().apply {
                 iconName = Strings.iconFrame
                 onClicked {
+                    uiController.showMap()
                     uiController.frameInMap(selectedSource.info)
                 }
             })
@@ -32,6 +33,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
             append(Button().apply {
                 iconName = Strings.iconCenter
                 onClicked {
+                    uiController.showMap()
                     uiController.centerInMap(selectedSource.info)
                 }
             })

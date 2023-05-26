@@ -116,7 +116,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private void startTimer() {
         timer.cancel();
-        timer.kick(timeout, MILLIS);
+        timer.kick(MILLIS, timeout);
     }
 
     private void stopTimer() {

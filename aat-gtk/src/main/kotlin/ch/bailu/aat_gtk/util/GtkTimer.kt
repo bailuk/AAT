@@ -6,7 +6,7 @@ import ch.bailu.gtk.glib.Glib
 class GtkTimer : Timer {
     private var state = TimerState()
 
-    override fun kick(run: Runnable, interval: Long) {
+    override fun kick(interval: Long, run: Runnable) {
         val state = TimerState()
         this.state.enabled = false
         this.state = state

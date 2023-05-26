@@ -48,7 +48,7 @@ public abstract class AbsService  extends Service {
             lock--;
 
             if (lock == 0) {
-                lazyOff.kick(this::stopService, 15*1000);
+                lazyOff.kick(15*1000, this::stopService);
 
             } else if (lock < 0) {
                 AppLog.w(this, "lock < 0 !!!");

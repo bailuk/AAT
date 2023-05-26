@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
 
-class MapPreferencesPage(storage: StorageInterface, app: Application, window: PreferencesWindow) : AbsPreferencesPage(Res.str().p_map(), "map") {
+class MapPreferencesPage(storage: StorageInterface, app: Application, window: PreferencesWindow) : PreferencesPageParent(Res.str().p_map(), "map") {
 
     init {
         add(Res.str().p_map())

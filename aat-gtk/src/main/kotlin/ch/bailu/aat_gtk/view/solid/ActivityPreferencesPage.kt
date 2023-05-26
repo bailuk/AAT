@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger
 import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause
 import ch.bailu.aat_lib.resources.Res
 
-class ActivityPreferencesPage(storage: StorageInterface, index: Int): AbsPreferencesPage("${index+1}", "$index") {
+class ActivityPreferencesPage(storage: StorageInterface, index: Int): PreferencesPageParent("${index+1}", "$index") {
     init {
         add("${Res.str().p_preset()} ${index+1}")
         add(SolidEntryView(SolidMET(storage, index)).layout)

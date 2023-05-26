@@ -5,8 +5,10 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.gtk.adw.Clamp
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
@@ -27,13 +29,15 @@ class CockpitPage(uiController: UiController, dispatcher: Dispatcher) {
         append(Button().apply {
             iconName = Strings.iconDetail
             onClicked {
+                uiController.showDetail()
                 uiController.showInDetail(InfoID.TRACKER)
             }
         })
         append(Button().apply {
             iconName = Strings.iconCenter
             onClicked {
-                uiController.centerInMap(GtkAppContext.services.trackerService.info)
+                uiController.showMap()
+                SolidPositionLock(GtkAppContext.storage, GtkCustomMapView.KEY).value = true
             }
         })
     }

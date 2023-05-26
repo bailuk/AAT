@@ -3,7 +3,6 @@ package ch.bailu.aat.services.location;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
@@ -11,17 +10,16 @@ import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.gpx.attributes.AutoPause;
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
 import ch.bailu.aat_lib.service.location.LocationStackItem;
 import ch.bailu.aat_lib.service.location.MockLocationInformation;
 import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
 import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocName;
 import ch.bailu.foc_android.FocAndroid;
 
 public final class MockLocation extends LocationStackChainedItem implements Runnable{
 
-    private final static Foc NULL_FILE = new FocName(MockLocation.class.getSimpleName());
     private static final long INTERVAL=1000L;
 
     private GpxList list;
@@ -42,7 +40,7 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
         file = FocAndroid.factory(c,(new SolidMockLocationFile(new Storage(c)).getValueAsString()));
         list = new GpxListReader(file, AutoPause.NULL).getGpxList();
 
-        timer.kick(this, INTERVAL);
+        timer.kick(INTERVAL, this);
         passState(StateID.WAIT);
 
     }
@@ -84,10 +82,10 @@ public final class MockLocation extends LocationStackChainedItem implements Runn
 
     private void kickTimer() {
         if (interval <= 0 || interval > 10*INTERVAL) {
-            timer.kick(this,INTERVAL);
+            timer.kick(INTERVAL,this);
 
         } else {
-            timer.kick(this, interval);
+            timer.kick(interval, this);
 
         }
     }
