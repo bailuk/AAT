@@ -80,7 +80,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
@@ -99,8 +99,18 @@ tasks {
     }
 }
 
+
+task<Exec>("generateGResource") {
+    setCommandLine("gresource/generate.sh")
+}
+
+
 tasks {
     build {
         dependsOn(shadowJar)
+    }
+
+    processResources {
+        dependsOn(named("generateGResource"))
     }
 }
