@@ -46,7 +46,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     init {
         overlay.addOverlay(Button().apply {
-            setIconName("window-close-symbolic")
+            setIconName("go-previous-symbolic")
             onClicked {
                 uiController.hideMap()
             }

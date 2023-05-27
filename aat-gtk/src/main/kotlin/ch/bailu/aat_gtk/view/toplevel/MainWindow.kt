@@ -1,5 +1,7 @@
-package ch.bailu.aat_gtk.adw_view
+package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.view.dialog.PoiDialog
+import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
@@ -10,9 +12,6 @@ import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
-import ch.bailu.aat_gtk.view.toplevel.CockpitPage
-import ch.bailu.aat_gtk.view.toplevel.DetailViewPage
-import ch.bailu.aat_gtk.view.toplevel.MapMainView
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -20,6 +19,7 @@ import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
@@ -31,7 +31,7 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 
-class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
+class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
 
     companion object {
         const val pageIdCockpit = "view-grid-symbolic"
@@ -39,7 +39,12 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         const val pageIdDetail = "view-continuous-symbolic"
     }
 
-    private val showMapButton = Button()
+    private val showMapButton = Button().apply {
+        setLabel(Res.str().p_map())
+        onClicked {
+            leaflet.visibleChild = mapView.overlay
+        }
+    }
 
     private val customFileSource =
         FileViewSource(GtkAppContext)
@@ -49,7 +54,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
         titleWidget = WindowTitle(GtkAppConfig.shortName, GtkAppConfig.longName)
     }
 
-    private val stackPage = AdwStackView(headerBar)
+    private val stackPage = StackView(headerBar)
 
     private val leaflet = Leaflet().apply {
         canNavigateBack = true
@@ -63,26 +68,30 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
 
 
     val window = ApplicationWindow(app).apply {
-        setDefaultSize(SolidWindowSize.readWidth(GtkAppContext.storage), SolidWindowSize.readHeight(GtkAppContext.storage))
+        CSS.addProviderForDisplay(display, Strings.appCss)
+
+        setDefaultSize(
+            SolidWindowSize.readWidth(GtkAppContext.storage),
+            SolidWindowSize.readHeight(GtkAppContext.storage)
+        )
         setIconName(GtkAppConfig.applicationId)
         content = overlay
 
         overlay.addOverlay(messageOverlay.box)
-
-        CSS.addProviderForDisplay(display, Strings.appCss)
     }
 
-    private val trackerButton = TrackerButtonStartPauseResume(GtkAppContext.services, window, dispatcher, this)
+    private val trackerButton =
+        TrackerButtonStartPauseResume(GtkAppContext.services, window, dispatcher, this)
 
-    private val mapView = MapMainView(app, dispatcher, this , GtkAppContext, window).apply {
-        overlay.setSizeRequest(Layout.mapMinWidth,Layout.windowMinSize)
+    private val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window).apply {
+        overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
 
     private val detailViewPage = DetailViewPage(this, dispatcher)
 
     init {
-        overlay.child = Box(Orientation.VERTICAL,0).apply {
+        overlay.child = Box(Orientation.VERTICAL, 0).apply {
             append(leaflet)
 
         }
@@ -99,11 +108,6 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
 
 
         leaflet.visibleChild = stackPage.stackPage
-
-        showMapButton.iconName = Strings.iconFrame
-        showMapButton.onClicked {
-           leaflet.visibleChild = mapView.overlay
-        }
 
         headerBar.packEnd(showMapButton)
         headerBar.packStart(MainMenuButton(app, window, dispatcher, this).menuButton)
@@ -128,7 +132,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showPoi() {
-        AdwPoiDialog.show(this, app)
+        PoiDialog.show(this, app)
     }
 
     override fun frameInMap(info: GpxInformation) {
@@ -166,7 +170,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showPreferencesMap() {
-        AdwPreferencesDialog.showMap(app)
+        PreferencesDialog.showMap(app)
     }
 
     override fun getMapBounding(): BoundingBoxE6 {
@@ -179,7 +183,7 @@ class AdwMainWindow(private val app: Application, dispatcher: Dispatcher) : UiCo
     }
 
     override fun showPreferences() {
-        AdwPreferencesDialog.show(app)
+        PreferencesDialog.show(app)
     }
 
     override fun showInDetail(infoID: Int) {

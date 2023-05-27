@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.adw_view
+package ch.bailu.aat_gtk.view.dialog
 
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.config.Layout
@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 
-object AdwPoiDialog {
+object PoiDialog {
     private var window: Window? = null
 
     fun show(uiController: UiController, app: Application) {

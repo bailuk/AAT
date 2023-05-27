@@ -1,9 +1,12 @@
 package ch.bailu.aat_gtk.app
 
+import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.util.GtkTimer
+import ch.bailu.aat_gtk.view.toplevel.MainWindow
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
@@ -14,17 +17,31 @@ import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
 import ch.bailu.aat_lib.logger.PrintLnLoggerFactory
+import ch.bailu.gtk.adw.Application
+import ch.bailu.gtk.gio.ApplicationFlags
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
 fun main() {
-    adwMain()
+    App.setup()
+
+    val app = Application(GtkAppConfig.applicationId, ApplicationFlags.FLAGS_NONE)
+
+    app.onActivate {
+        MainWindow(app, App.dispatcher).window.show()
+        App.setupDispatcher()
+        App.dispatcher.onResume()
+    }
+
+    app.run(0, null)
 }
 
 object App {
     val dispatcher = Dispatcher()
 
     fun setup() {
+        GResource.loadAndRegister(Strings.appGResource)
+
         AppConfig.setInstance(GtkAppConfig)
         RuntimeInfo.startLogging()
         AppLog.set(BroadcastLoggerFactory(GtkAppContext.broadcaster, PrintLnLoggerFactory()))

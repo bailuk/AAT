@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.adw_view
+package ch.bailu.aat_gtk.view.dialog
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
 
-object AdwPreferencesDialog {
+object PreferencesDialog {
     private var window: PreferencesWindow? = null
 
     fun show(app: Application) {

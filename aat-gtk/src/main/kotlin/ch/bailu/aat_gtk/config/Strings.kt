@@ -13,6 +13,7 @@ object Strings {
 
     // Files
     const val appCss = "/app.css"
+    const val appGResource = "/app.gresource"
 
     // Icon names
     val iconFrame = Str("zoom-fit-best-symbolic")

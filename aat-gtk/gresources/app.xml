@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/ch/bailu/aat">
+        <file preprocess="xml-stripblanks">icons/scalable/apps/ch.bailu.aat.svg</file>
+    </gresource>
+</gresources>
