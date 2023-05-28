@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -11,10 +12,10 @@ public class SolidOverlayFileList extends SolidCheckList {
     private final SolidOverlayFile[] list = new SolidOverlayFile[MAX_OVERLAYS];
 
     public SolidOverlayFileList(StorageInterface storage, FocFactory focFactory) {
-        for (int i=0; i<list.length; i++)
-            list[i] = new SolidOverlayFile(storage,focFactory, i);
+        for (int i = 0; i<list.length; i++) {
+            list[i] = new SolidOverlayFile(storage, focFactory, InfoID.OVERLAY + i);
+        }
     }
-
 
     public SolidOverlayFile get(int i) {
         i=Math.min(MAX_OVERLAYS - 1, i);
@@ -32,7 +33,6 @@ public class SolidOverlayFileList extends SolidCheckList {
         return array;
     }
 
-
     @Override
     public boolean[] getEnabledArray() {
         boolean[] array = new boolean[MAX_OVERLAYS];
@@ -41,32 +41,26 @@ public class SolidOverlayFileList extends SolidCheckList {
         return array;
     }
 
-
     @Override
     public void setEnabled(int i, boolean isChecked) {
         get(i).setEnabled(isChecked);
     }
-
 
     @Override
     public String getKey() {
         return list[0].getKey();
     }
 
-
-
     @Override
     public StorageInterface getStorage() {
         return list[0].getStorage();
     }
-
 
     @Override
     public boolean hasKey(String s) {
         for (SolidOverlayFile aList : list) if (aList.hasKey(s)) return true;
         return false;
     }
-
 
     @Override
     public String getLabel() {
@@ -75,5 +69,4 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     @Override
     public String getIconResource() {return "view_paged_inverse";}
-
 }

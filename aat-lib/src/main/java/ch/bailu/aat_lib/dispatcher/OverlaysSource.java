@@ -13,8 +13,8 @@ public class OverlaysSource implements ContentSourceInterface {
     private final OverlaySource[] overlays = new OverlaySource[SolidOverlayFileList.MAX_OVERLAYS];
 
     public OverlaysSource(AppContext context) {
-        for (int i = 0; i<SolidOverlayFileList.MAX_OVERLAYS; i++) {
-            overlays[i] = new OverlaySource(context, i);
+        for (int i = 0; i < SolidOverlayFileList.MAX_OVERLAYS; i++) {
+            overlays[i] = new OverlaySource(context, InfoID.OVERLAY + i);
         }
     }
 

@@ -3,12 +3,11 @@ package ch.bailu.aat_lib.dispatcher;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
 
-public class OverlaySource extends FileSource{
+public class OverlaySource extends FileSource {
     private final SolidOverlayFile soverlay;
     private boolean enabled = true;
 
@@ -21,9 +20,9 @@ public class OverlaySource extends FileSource{
         }
     };
 
-    public OverlaySource(AppContext context, int iidOrIndex) {
-        super(context, toIID(iidOrIndex));
-        soverlay = new SolidOverlayFile(context.getStorage(), context, toIndex(iidOrIndex));
+    public OverlaySource(AppContext context, int iid) {
+        super(context, iid);
+        soverlay = new SolidOverlayFile(context.getStorage(), context, iid);
         initAndUpdateOverlay();
     }
 
@@ -35,20 +34,6 @@ public class OverlaySource extends FileSource{
         } else {
             super.disable();
         }
-    }
-
-    private static int toIndex(int idOrIndex) {
-        if (idOrIndex < InfoID.OVERLAY) {
-            return idOrIndex;
-        }
-        return idOrIndex - InfoID.OVERLAY;
-    }
-
-    private static int toIID(int idOrIndex) {
-        if (idOrIndex >= InfoID.OVERLAY) {
-            return idOrIndex;
-        }
-        return InfoID.OVERLAY + idOrIndex;
     }
 
     @Override
