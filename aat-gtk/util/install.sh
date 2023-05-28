@@ -9,7 +9,7 @@ Options:
 
 # general
 app="aat-gtk"
-app_id="ch.bailu.${app}"
+app_id="ch.bailu.aat"
 app_comment="AAT activity tracker and map viewer"
 app_name="AAT"
 jar="${app}-all-pro.jar"
@@ -34,10 +34,10 @@ done
 # source
 if [ -f $jar ]; then
   source_jar=$jar
-  source_icon=app-icon.svg
+  source_icon="${app_id}.svg"
 else
   source_jar="aat-gtk/$build/$jar"
-  source_icon="aat-gtk/src/main/resources/svg/app-icon.svg"
+  source_icon="aat-gtk/src/main/resources/svg/${app_id}.svg"
   test -d gradle || cd ..
   test -d gradle || cd ..
 fi
