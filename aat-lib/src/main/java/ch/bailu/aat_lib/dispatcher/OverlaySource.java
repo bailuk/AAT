@@ -3,12 +3,15 @@ package ch.bailu.aat_lib.dispatcher;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFile;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay;
+import ch.bailu.aat_lib.preferences.map.SolidOverlayInterface;
+import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay;
 
 public class OverlaySource extends FileSource {
-    private final SolidOverlayFile soverlay;
+    private final SolidOverlayInterface soverlay;
     private boolean enabled = true;
 
     private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
@@ -20,29 +23,31 @@ public class OverlaySource extends FileSource {
         }
     };
 
-    public OverlaySource(AppContext context, int iid) {
-        super(context, iid);
-        soverlay = new SolidOverlayFile(context.getStorage(), context, iid);
+    public static OverlaySource factoryPoiOverlaySource(AppContext context) {
+        return new OverlaySource(context, new SolidPoiOverlay(context.getDataDirectory()));
+    }
+
+    public static OverlaySource factoryCustomOverlaySource(AppContext context, int index) {
+        return new OverlaySource(context, new SolidCustomOverlay(context.getStorage(), context, InfoID.OVERLAY + index));
+    }
+
+    private OverlaySource(AppContext context, SolidOverlayInterface soverlay) {
+        super(context, soverlay.getIID());
+        this.soverlay = soverlay;
         initAndUpdateOverlay();
     }
 
     public void initAndUpdateOverlay() {
         setFileID(soverlay.getValueAsString());
-
-        if (enabled && soverlay.isEnabled()) {
-            super.enable();
-        } else {
-            super.disable();
-        }
+        super.setEnabled(enabled && soverlay.isEnabled());
     }
 
     @Override
-    public void enable() {
-        enabled = true;
-        if (soverlay.isEnabled()) {
-            super.enable();
-        }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        super.setEnabled(enabled && soverlay.isEnabled());
     }
+
 
     @Override
     public void onPause() {
@@ -58,8 +63,7 @@ public class OverlaySource extends FileSource {
     }
 
     @Override
-    public void disable() {
-        enabled = false;
-        super.disable();
+    public boolean isEnabled() {
+        return enabled;
     }
 }

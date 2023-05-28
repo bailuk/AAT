@@ -18,7 +18,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.foc.FocFactory;
 import ch.bailu.foc_android.FocAndroidFactory;
@@ -80,7 +80,7 @@ public final class MapMenu extends AbsMenu {
                 mcontext.getMapView().reDownloadTiles();
 
             } else if (item == overlays) {
-            new SolidCheckListDialog(c, new SolidOverlayFileList(storage, foc));
+            new SolidCheckListDialog(c, new SolidCustomOverlayList(storage, foc));
         } else if (item == theme) {
             new SolidStringDialog(c, stheme);
         } else if (item == map) {

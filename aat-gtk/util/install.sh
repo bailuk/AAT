@@ -37,7 +37,7 @@ if [ -f $jar ]; then
   source_icon="${app_id}.svg"
 else
   source_jar="aat-gtk/$build/$jar"
-  source_icon="aat-gtk/src/main/resources/svg/${app_id}.svg"
+  source_icon="aat-gtk/gresource/icons/scalable/apps/${app_id}.svg"
   test -d gradle || cd ..
   test -d gradle || cd ..
 fi

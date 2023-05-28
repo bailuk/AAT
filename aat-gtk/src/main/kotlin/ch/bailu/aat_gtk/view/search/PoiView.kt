@@ -6,7 +6,6 @@ import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
 import ch.bailu.aat_lib.search.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.Application
@@ -64,8 +63,7 @@ class PoiView(private val controller: UiController, app: Application, window: Wi
         }
 
         poiApi.startTask(GtkAppContext)
-        val overlay = SolidOverlayFileList(GtkAppContext.storage, GtkAppContext).get(SolidOverlayFileList.MAX_OVERLAYS-1)
-        overlay.setValueFromFile(poiApi.resultFile)
-        overlay.isEnabled = true
+
+        poiList.writeSelected()
     }
 }

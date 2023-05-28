@@ -29,10 +29,19 @@ class InfoBar(app: Application,
     private val mapDirectories = GtkMapDirectories(storage, focFactory)
 
     init {
-        add(PopupButton(app, MapMenu(uiController, mcontext, mapDirectories, focFactory, window)).apply { setIcon("menu") }.overlay)
-        add(SolidMenuButton(app, SolidMapGrid(storage, mcontext.solidKey)).overlay)
-        add(SolidMenuButton(app, SolidLegend(storage, mcontext.solidKey)).overlay)
-        add(PopupButton(app, LocationMenu(app)).apply { setIcon("location") }.overlay)
+        add(PopupButton(MapMenu(uiController, mcontext, mapDirectories, focFactory, window)).apply {
+            createActions(app)
+            setIcon("menu")
+        }.overlay)
+        add(SolidMenuButton(SolidMapGrid(storage, mcontext.solidKey)).apply {
+            createActions(app)
+        }.overlay)
+        add(SolidMenuButton(SolidLegend(storage, mcontext.solidKey)).apply {
+            createActions(app)
+        }.overlay)
+        add(PopupButton(LocationMenu(app)).apply {
+            createActions(app)
+            setIcon("location") }.overlay)
     }
 
     override fun show() {

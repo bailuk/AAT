@@ -5,17 +5,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroidFactory;
 
 public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener{
 
-    private final SolidOverlayFileList slist;
+    private final SolidCustomOverlayList slist;
     private final Foc file;
 
 
-    public AddOverlayDialog (Context context, SolidOverlayFileList l, Foc f) {
+    public AddOverlayDialog (Context context, SolidCustomOverlayList l, Foc f) {
         slist=l;
         file=f;
 
@@ -27,7 +27,7 @@ public class AddOverlayDialog extends AbsSolidDialog implements  DialogInterface
 
 
     public AddOverlayDialog(Context context, Foc f) {
-        this(context, new SolidOverlayFileList(new Storage(context), new FocAndroidFactory(context)), f);
+        this(context, new SolidCustomOverlayList(new Storage(context), new FocAndroidFactory(context)), f);
     }
 
     @Override

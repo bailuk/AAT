@@ -8,7 +8,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.PopoverMenu
 
-open class PopupButton(app: Application, menuProvider: MenuProvider) {
+open class PopupButton(private val menuProvider: MenuProvider) {
     private val button = Button()
     private val popover = PopoverMenu.newFromModelFullPopoverMenu(menuProvider.createMenu(), 0)
 
@@ -18,7 +18,6 @@ open class PopupButton(app: Application, menuProvider: MenuProvider) {
         overlay.child = button
         overlay.addOverlay(popover)
 
-        menuProvider.createActions(app)
         PopoverMenu(popover.cast()).apply {
             menuProvider.createCustomWidgets().forEach {
                 addChild(it.widget, it.id)
@@ -30,5 +29,9 @@ open class PopupButton(app: Application, menuProvider: MenuProvider) {
 
     fun setIcon(resource: String, size: Int = Layout.ICON_SIZE) {
         button.setIcon(resource, size)
+    }
+
+    fun createActions(app: Application) {
+        menuProvider.createActions(app)
     }
 }

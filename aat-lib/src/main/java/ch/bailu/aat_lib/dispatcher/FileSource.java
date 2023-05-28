@@ -57,18 +57,22 @@ public class FileSource extends ContentSource implements FileSourceInterface {
     }
 
     @Override
-    public void enable() {
-        enabled = true;
-        gpxHandler.enable(context.getServices().getCacheService());
-        requestUpdate();
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override
-    public void disable() {
-        enabled = false;
-        gpxHandler.disable();
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+
+        if (enabled) {
+            gpxHandler.enable(context.getServices().getCacheService());
+        } else {
+            gpxHandler.disable();
+        }
         requestUpdate();
     }
+
 
     @Override
     public void requestUpdate() {

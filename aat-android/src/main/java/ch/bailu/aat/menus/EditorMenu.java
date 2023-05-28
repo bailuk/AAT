@@ -10,7 +10,7 @@ import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
@@ -87,7 +87,7 @@ public final class EditorMenu extends AbsMenu {
     private void attach() {
         new AbsSelectOverlayDialog(context) {
             @Override
-            protected void onFileSelected(SolidOverlayFileList slist, int index, Foc file) {
+            protected void onFileSelected(SolidCustomOverlayList slist, int index, Foc file) {
                 new InsideContext(scontext) {
                     @Override
                     public void run() {

@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.fs.AFile
@@ -23,7 +23,7 @@ import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
-class FileContextMenu(private val solid: SolidOverlayFileList, private val solidMock: SolidMockLocationFile): MenuProvider {
+class FileContextMenu(private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -154,7 +154,7 @@ class FileContextMenu(private val solid: SolidOverlayFileList, private val solid
     }
 
     private fun indexOf(file: Foc): Int {
-        for (i in 0 until SolidOverlayFileList.MAX_OVERLAYS) {
+        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
             if (solid[i].valueAsFile == file) {
                 return i
             }

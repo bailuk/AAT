@@ -15,10 +15,10 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase;
+import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
 import ch.bailu.aat_lib.xml.writer.WayWriter;
 import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags;
 import ch.bailu.foc.Foc;
@@ -30,7 +30,8 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     private final static int LIMIT = 10000;
 
-    private final Foc directory;
+    private final SolidPoiOverlay poiOverlay;
+
     private final BoundingBoxE6 bounding;
 
     private BackgroundTask task = BackgroundTask.NULL;
@@ -38,12 +39,12 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     public PoiApi(AppContext context, BoundingBoxE6 box) {
         bounding = box;
-        directory = AppDirectory.getDataDirectory(context.getDataDirectory(), AppDirectory.DIR_POI);
+        poiOverlay = new SolidPoiOverlay(context.getDataDirectory());
     }
 
     @Override
     public String getApiName() {
-        return ch.bailu.aat_lib.resources.Res.str().p_mapsforge_poi();
+        return poiOverlay.getLabel();
     }
 
     @Override
@@ -58,7 +59,7 @@ public abstract class PoiApi extends OsmApiConfiguration {
 
     @Override
     public Foc getBaseDirectory() {
-        return directory;
+        return poiOverlay.getDirectory();
     }
 
     @Override
@@ -88,6 +89,8 @@ public abstract class PoiApi extends OsmApiConfiguration {
                 appContext.getServices().getBackgroundService().process(task);
             }
         };
+
+        poiOverlay.setEnabled(true);
     }
 
     protected abstract ArrayList<PoiCategory> getSelectedCategories();
@@ -160,6 +163,11 @@ public abstract class PoiApi extends OsmApiConfiguration {
     @Override
     public Exception getException() {
         return task.getException();
+    }
+
+    @Override
+    public Foc getResultFile() {
+        return poiOverlay.getValueAsFile();
     }
 
 }

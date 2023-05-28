@@ -6,18 +6,18 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.FocFactory;
 
-public class SolidOverlayFileList extends SolidCheckList {
+public class SolidCustomOverlayList extends SolidCheckList {
     public static final int MAX_OVERLAYS=4;
 
-    private final SolidOverlayFile[] list = new SolidOverlayFile[MAX_OVERLAYS];
+    private final SolidCustomOverlay[] list = new SolidCustomOverlay[MAX_OVERLAYS];
 
-    public SolidOverlayFileList(StorageInterface storage, FocFactory focFactory) {
+    public SolidCustomOverlayList(StorageInterface storage, FocFactory focFactory) {
         for (int i = 0; i<list.length; i++) {
-            list[i] = new SolidOverlayFile(storage, focFactory, InfoID.OVERLAY + i);
+            list[i] = new SolidCustomOverlay(storage, focFactory, InfoID.OVERLAY + i);
         }
     }
 
-    public SolidOverlayFile get(int i) {
+    public SolidCustomOverlay get(int i) {
         i=Math.min(MAX_OVERLAYS - 1, i);
         i=Math.max(0, i);
 
@@ -58,7 +58,7 @@ public class SolidOverlayFileList extends SolidCheckList {
 
     @Override
     public boolean hasKey(String s) {
-        for (SolidOverlayFile aList : list) if (aList.hasKey(s)) return true;
+        for (SolidOverlayInterface aList : list) if (aList.hasKey(s)) return true;
         return false;
     }
 

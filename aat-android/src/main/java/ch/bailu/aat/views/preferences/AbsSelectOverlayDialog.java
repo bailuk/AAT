@@ -5,20 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc_android.FocAndroidFactory;
 
 
 public abstract class AbsSelectOverlayDialog extends AbsSolidDialog implements  DialogInterface.OnClickListener {
 
-    private final SolidOverlayFileList slist;
+    private final SolidCustomOverlayList slist;
 
     public AbsSelectOverlayDialog(Context context) {
-        this(context, new SolidOverlayFileList(new Storage(context), new FocAndroidFactory(context)));
+        this(context, new SolidCustomOverlayList(new Storage(context), new FocAndroidFactory(context)));
     }
 
-    public AbsSelectOverlayDialog (Context context, SolidOverlayFileList l) {
+    public AbsSelectOverlayDialog (Context context, SolidCustomOverlayList l) {
         slist=l;
 
         final AlertDialog.Builder dialog = createDefaultDialog(context, l);
@@ -38,5 +38,5 @@ public abstract class AbsSelectOverlayDialog extends AbsSolidDialog implements  
     }
 
 
-    protected abstract void onFileSelected(SolidOverlayFileList slist, int index, Foc file);
+    protected abstract void onFileSelected(SolidCustomOverlayList slist, int index, Foc file);
 }

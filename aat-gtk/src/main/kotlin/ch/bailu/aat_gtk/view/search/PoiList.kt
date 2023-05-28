@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.search
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
@@ -86,5 +87,13 @@ class PoiList(
             }
         }
         return export
+    }
+
+    fun writeSelected() {
+        try {
+            FilterListUtil.writeSelected(filterList, selected)
+        } catch (e: Exception) {
+            AppLog.e(this, e)
+        }
     }
 }

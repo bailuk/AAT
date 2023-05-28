@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gio.Menu
@@ -24,7 +24,11 @@ class MapMenu(
     private val srender = mapDirectories.createSolidRenderTheme()
     private val renderMenu = SolidFileSelectorMenu(srender, window)
 
-    private val soverlay = SolidOverlayFileList(srender.storage, focFactory)
+    private val soverlay =
+        SolidCustomOverlayList(
+            srender.storage,
+            focFactory
+        )
     private val overlayMenu = SolidCheckMenu(soverlay)
 
     private val soffline = mapDirectories.createSolidFile()

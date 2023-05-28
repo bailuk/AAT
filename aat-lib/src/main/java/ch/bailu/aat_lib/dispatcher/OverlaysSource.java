@@ -5,16 +5,16 @@ import javax.annotation.Nonnull;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 
 
 public class OverlaysSource implements ContentSourceInterface {
 
-    private final OverlaySource[] overlays = new OverlaySource[SolidOverlayFileList.MAX_OVERLAYS];
+    private final OverlaySource[] overlays = new OverlaySource[SolidCustomOverlayList.MAX_OVERLAYS];
 
     public OverlaysSource(AppContext context) {
-        for (int i = 0; i < SolidOverlayFileList.MAX_OVERLAYS; i++) {
-            overlays[i] = new OverlaySource(context, InfoID.OVERLAY + i);
+        for (int i = 0; i < SolidCustomOverlayList.MAX_OVERLAYS; i++) {
+            overlays[i] = OverlaySource.factoryCustomOverlaySource(context, i);
         }
     }
 

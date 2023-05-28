@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
-public abstract class SolidFile extends SolidString {
+public abstract class SolidFile extends SolidString implements SolidFileInterface {
 
     private final FocFactory focFactory;
 
@@ -17,6 +17,7 @@ public abstract class SolidFile extends SolidString {
         this.focFactory = focFactory;
     }
 
+    @Override
     public Foc getValueAsFile() {
         return focFactory.toFoc(getValueAsString());
     }
@@ -39,7 +40,7 @@ public abstract class SolidFile extends SolidString {
 
     private static String getPermissionText(Foc f) {
 
-        if (f.exists() == false) {
+        if (!f.exists()) {
             if (f.hasParent()) {
                 return getPermissionText(f.parent());
             } else {
@@ -60,7 +61,6 @@ public abstract class SolidFile extends SolidString {
         }
     }
 
-
     public static ArrayList<String> add_extInSubdirectories(final ArrayList<String> list,
                                                             Foc directory, String ext) {
         directory.foreachDir(child -> add_ext(list, child, ext));
@@ -73,5 +73,4 @@ public abstract class SolidFile extends SolidString {
         });
         return list;
     }
-
 }

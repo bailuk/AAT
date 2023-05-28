@@ -13,6 +13,7 @@ import ch.bailu.aat_gtk.view.map.control.NodeInfo
 import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OverlaySource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
@@ -23,6 +24,7 @@ import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
@@ -36,10 +38,21 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
     val overlay = Overlay()
 
     private val editorSource = EditorSource(GtkAppContext)
+    private val overlayList = ArrayList<OverlaySource>().apply {
+        val poiOverlaySource = OverlaySource.factoryPoiOverlaySource(GtkAppContext)
+        add(poiOverlaySource)
+        dispatcher.addSource(poiOverlaySource)
+
+        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+            val overlaySource = OverlaySource.factoryCustomOverlaySource(GtkAppContext, i)
+            add(overlaySource)
+            dispatcher.addSource(overlaySource)
+        }
+    }
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
-    private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage)
+    private val navigationBar = NavigationBar(map.mContext, GtkAppContext.storage, overlayList, uiController)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.mContext, GtkAppContext.storage, focFactory, window)
     private val editorBar = EditorBar(app, nodeInfo, map.mContext, GtkAppContext.services, editorSource)
     private val edgeControl = EdgeControlLayer(map.mContext, Layout.barSize)
@@ -64,6 +77,8 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.FILEVIEW))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_DRAFT))
         map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.EDITOR_OVERLAY))
+        map.add(GpxDynLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher, InfoID.POI))
+
         map.add(GpxOverlayListLayer(GtkAppContext.storage, map.mContext, GtkAppContext.services, dispatcher))
         map.add(edgeControl)
         map.add(NodeSelectorLayer(GtkAppContext.services, GtkAppContext.storage, map.mContext, Position.LEFT).apply {

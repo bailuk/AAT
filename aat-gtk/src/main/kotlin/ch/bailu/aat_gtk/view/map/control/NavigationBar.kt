@@ -1,6 +1,10 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
+import ch.bailu.aat_lib.dispatcher.FileSourceInterface
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
@@ -10,7 +14,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
 
-class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Position.BOTTOM),
+class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<FileSourceInterface>, uiController: UiController) : Bar(Position.BOTTOM),
     OnContentUpdatedInterface{
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
@@ -35,6 +39,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Posit
                 }
             }
         }
+        add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon("view-paged-symbolic") }.overlay)
     }
 
     private fun nextInBoundingCycle(): Boolean {

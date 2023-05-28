@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.util.Point;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList;
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public final class GpxOverlayListLayer implements MapLayerInterface {
@@ -17,7 +17,7 @@ public final class GpxOverlayListLayer implements MapLayerInterface {
 
     public GpxOverlayListLayer(StorageInterface s, MapContext mc, ServicesInterface services, DispatcherInterface d) {
 
-        overlays = new GpxDynLayer[SolidOverlayFileList.MAX_OVERLAYS];
+        overlays = new GpxDynLayer[SolidCustomOverlayList.MAX_OVERLAYS];
 
         for (int i = 0; i< overlays.length; i++) {
             overlays[i] = new GpxDynLayer(s, mc,services, d, InfoID.OVERLAY + i);
