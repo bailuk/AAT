@@ -15,8 +15,8 @@ object PreferencesDialog {
     fun show(app: Application) {
         if (window == null) {
             window = PreferencesWindow().apply {
-
                 canNavigateBack = true
+                modal = false
 
                 add(GeneralPreferencesPage(GtkAppContext.storage, app, this).page)
                 add(MapPreferencesPage(GtkAppContext.storage, app, this).page)
@@ -30,7 +30,6 @@ object PreferencesDialog {
                 setDefaultSize(Layout.windowWidth, Layout.windowHeight)
 
                 onDestroy {
-                    System.err.println("TODO: Clean up here")
                     window?.disconnectSignals()
                     window = null
                 }
@@ -45,6 +44,5 @@ object PreferencesDialog {
         if (window is PreferencesWindow) {
             window.setVisiblePageName("map")
         }
-
     }
 }
