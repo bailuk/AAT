@@ -91,7 +91,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     }
 
     @Override
-    public synchronized int getStartStopIconID() {
-        return internal.getState().getStartStopIconID();
+    public synchronized String getStartStopIcon() {
+        return internal.getState().getStartStopIcon();
     }
 }

@@ -5,7 +5,6 @@ import ch.bailu.aat_lib.resources.Res;
 
 public final class AutoPauseState extends State {
 
-
     public AutoPauseState(TrackerInternals ti) {
         super(ti);
 
@@ -69,8 +68,7 @@ public final class AutoPauseState extends State {
     }
 
     @Override
-    public int getStartStopIconID() {
-        return Res.getIconResource("R.drawable.media_playback_stop_inverse");
+    public String getStartStopIcon() {
+        return "playback_stop_inverse";
     }
 }
-

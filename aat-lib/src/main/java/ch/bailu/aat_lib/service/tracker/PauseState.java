@@ -4,20 +4,14 @@ import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.resources.Res;
 
 public final class PauseState extends State {
-
-
-
     public PauseState(TrackerInternals ti) {
         super(ti);
-
-
         try {
             internal.logger.logPause();
             internal.statusIcon.showPause();
         } catch (Exception e) {
             internal.emergencyOff(e);
         }
-
     }
 
     @Override
@@ -28,23 +22,19 @@ public final class PauseState extends State {
         return StateID.PAUSE;
     }
 
-
     @Override
     public void onStartPauseResume() {
         onPauseResume();
-
     }
 
     @Override
     public void onStartStop() {
         internal.setState(new OffState(internal));
-
     }
 
     @Override
     public void onPauseResume() {
         internal.setState(new OnState(internal));
-
     }
 
     @Override
@@ -58,9 +48,7 @@ public final class PauseState extends State {
     }
 
     @Override
-    public int getStartStopIconID() {
-        return Res.getIconResource("R.drawable.media_playback_stop_inverse");
+    public String getStartStopIcon() {
+        return "media_playback_stop_inverse";
     }
-
-
 }

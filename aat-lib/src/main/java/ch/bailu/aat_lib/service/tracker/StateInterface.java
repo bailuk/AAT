@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.service.tracker;
 
 public interface StateInterface {
-
     void updateTrack();
 
     void onStartPauseResume();
@@ -13,5 +12,5 @@ public interface StateInterface {
     String getStartStopText();
     String getPauseResumeText();
 
-    int getStartStopIconID();
+    String getStartStopIcon();
 }

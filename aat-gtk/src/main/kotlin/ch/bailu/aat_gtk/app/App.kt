@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.toplevel.MainWindow
+import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
@@ -19,6 +20,7 @@ import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
 import ch.bailu.aat_lib.logger.PrintLnLoggerFactory
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.gio.ApplicationFlags
+import ch.bailu.gtk.type.Strs
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
@@ -33,7 +35,7 @@ fun main() {
         App.dispatcher.onResume()
     }
 
-    app.run(0, null)
+    app.run(1, Strs(arrayOf(Configuration.appName)))
 }
 
 object App {

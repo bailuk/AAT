@@ -16,7 +16,6 @@ public class SolidPreset extends SolidIndexList {
         super(s, KEY);
     }
 
-
     public static int getPresetFromFile(Foc file) {
         int preset = 0;
         file = file.parent();
@@ -36,10 +35,8 @@ public class SolidPreset extends SolidIndexList {
                 }
             }
         }
-
         return preset;
     }
-
 
     @Override
     public int length() {
@@ -71,13 +68,10 @@ public class SolidPreset extends SolidIndexList {
         return super.hasKey(key) || smet().hasKey(key);
     }
 
-
-
     @Override
     public String getLabel() {
         return Res.str().p_preset();
     }
-
 
     public Foc getDirectory(SolidDataDirectory sdirectory) {
         return AppDirectory.getTrackListDirectory(sdirectory,getIndex());

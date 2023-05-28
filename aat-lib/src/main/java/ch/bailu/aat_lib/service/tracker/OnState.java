@@ -58,24 +58,19 @@ public final class OnState extends State {
         }
     }
 
-
-
     @Override
     public void onStartPauseResume() {
         onPauseResume();
-
     }
 
     @Override
     public void onStartStop() {
         internal.setState(new OffState(internal));
-
     }
 
     @Override
     public void onPauseResume() {
         internal.setState(new PauseState(internal));
-
     }
 
     @Override
@@ -88,8 +83,7 @@ public final class OnState extends State {
         return Res.str().tracker_pause();  }
 
     @Override
-    public int getStartStopIconID() {
-        return Res.getIconResource("R.drawable.media_playback_stop_inverse");
+    public String getStartStopIcon() {
+        return "media_playback_stop_inverse";
     }
-
 }

@@ -33,9 +33,7 @@ public final class OffState extends State {
     public void onStartStop() {
         try {
             internal.logger = internal.createLogger();
-
             internal.lockService();
-
             internal.setState(new OnState(internal));
 
         } catch (Exception e) {
@@ -48,7 +46,6 @@ public final class OffState extends State {
     public void onPauseResume() {
     }
 
-
     @Override
     public String getStartStopText() {
         return Res.str().tracker_start();
@@ -60,10 +57,9 @@ public final class OffState extends State {
     }
 
     @Override
-    public int getStartStopIconID() {
-        return Res.getIconResource("R.drawable.media_playback_start_inverse");
+    public String getStartStopIcon() {
+        return "playback_start_inverse";
     }
-
 
     @Override
     public void preferencesChanged() {
