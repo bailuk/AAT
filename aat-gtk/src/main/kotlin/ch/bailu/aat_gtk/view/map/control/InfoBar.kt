@@ -29,7 +29,7 @@ class InfoBar(app: Application,
     private val mapDirectories = GtkMapDirectories(storage, focFactory)
 
     init {
-        add(PopupButton(MapMenu(uiController, mcontext, mapDirectories, focFactory, window)).apply {
+        add(PopupButton(MapMenu(uiController, mcontext, mapDirectories, window)).apply {
             createActions(app)
             setIcon("menu")
         }.overlay)

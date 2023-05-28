@@ -145,7 +145,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         // TODO saveFile()
         mapView.editDraft()
         customFileSource.setFileID(info.file.toString())
-        customFileSource.enable()
+        customFileSource.isEnabled = true
     }
 
     override fun showCockpit() {
@@ -187,7 +187,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     override fun loadIntoEditor(info: GpxInformation) {
         // TODO saveFile()
         mapView.edit(info)
-        customFileSource.disable()
+        customFileSource.isEnabled = false
     }
 
     override fun hideMap() {
