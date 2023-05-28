@@ -1,27 +1,28 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.view.menu.provider.AppMenu
+import ch.bailu.aat_gtk.view.menu.provider.TrackerMenu
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.adw.SplitButton
 import ch.bailu.gtk.gtk.PopoverMenu
-import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.type.Str
 
-class TrackerButtonStartPauseResume(private val services: ServicesInterface, window: Window, dispatcher: Dispatcher, uiController: UiController) : OnContentUpdatedInterface{
+class TrackerSplitButton(private val services: ServicesInterface, dispatcher: Dispatcher) : OnContentUpdatedInterface{
     val button = SplitButton()
     private var text = services.trackerService.pauseResumeText
 
     init {
-        val appMenu = AppMenu(window, GtkAppContext.services, dispatcher, uiController)
+        val menu = TrackerMenu(GtkAppContext.services, dispatcher)
 
-        button.menuModel = appMenu.createMenu()
+        dispatcher.addTarget(this, InfoID.TRACKER)
+        button.menuModel = menu.createMenu()
 
         PopoverMenu(button.popover.cast()).apply {
-            appMenu.createCustomWidgets().forEach {
+            menu.createCustomWidgets().forEach {
                 addChild(it.widget, Str(it.id))
             }
         }

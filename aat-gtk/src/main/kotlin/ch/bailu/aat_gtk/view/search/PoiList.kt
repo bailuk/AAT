@@ -72,11 +72,6 @@ class PoiList(
         listIndex.size = filterList.sizeVisible()
     }
 
-    fun updateList() {
-        filterList.filterAll()
-        listIndex.size = filterList.sizeVisible()
-    }
-
     fun updateList(text: String) {
         filterList.filter(text)
         listIndex.size = filterList.sizeVisible()

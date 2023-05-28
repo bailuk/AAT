@@ -1,15 +1,14 @@
 package ch.bailu.aat_gtk.view.toplevel
 
-import ch.bailu.aat_gtk.view.dialog.PoiDialog
-import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.solid.SolidWindowSize
-import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
 import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.dialog.PoiDialog
+import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.toplevel.list.FileList
@@ -17,7 +16,6 @@ import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Application
@@ -80,9 +78,6 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         overlay.addOverlay(messageOverlay.box)
     }
 
-    private val trackerButton =
-        TrackerButtonStartPauseResume(GtkAppContext.services, window, dispatcher, this)
-
     private val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
@@ -100,9 +95,8 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         leaflet.append(mapView.overlay)
 
         dispatcher.addSource(customFileSource)
-        dispatcher.addTarget(trackerButton, InfoID.ALL)
 
-        stackPage.addView(CockpitPage(this, dispatcher, window).box, pageIdCockpit,"Cockpit")
+        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit,"Cockpit")
         stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList,"Tracks")
         stackPage.addView(detailViewPage.box, pageIdDetail, "Detail")
 

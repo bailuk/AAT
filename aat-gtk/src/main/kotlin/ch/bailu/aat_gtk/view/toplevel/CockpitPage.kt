@@ -4,20 +4,19 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.view.TrackerButtonStartPauseResume
+import ch.bailu.aat_gtk.view.TrackerSplitButton
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.gtk.adw.Clamp
-import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
 
-class CockpitPage(uiController: UiController, dispatcher: Dispatcher, window: Window) {
+class CockpitPage(uiController: UiController, dispatcher: Dispatcher) {
     private val cockpitView = CockpitView().apply {addDefaults((dispatcher))}.scrolledWindow
 
     private val clamp = Clamp().apply {
@@ -45,7 +44,7 @@ class CockpitPage(uiController: UiController, dispatcher: Dispatcher, window: Wi
                 }
             })
         })
-        append(TrackerButtonStartPauseResume(GtkAppContext.services, window, dispatcher, uiController).button)
+        append(TrackerSplitButton(GtkAppContext.services, dispatcher).button)
     }
 
     val box = Box(Orientation.VERTICAL, Layout.margin).apply {

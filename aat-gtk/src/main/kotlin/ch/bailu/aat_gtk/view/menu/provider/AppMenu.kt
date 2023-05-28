@@ -1,11 +1,10 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.view.TrackerButtonStartStop
+import ch.bailu.aat_gtk.view.TrackerSplitButton
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.dialog.About
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -42,9 +41,7 @@ class AppMenu(private val window: Window,
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
-        val trackerButton = TrackerButtonStartStop(services)
-        dispatcher.addTarget(trackerButton, InfoID.TRACKER)
-
+        val trackerButton = TrackerSplitButton(services, dispatcher)
         return arrayOf(CustomWidget(trackerButton.button, "tracker-button"))
     }
 

@@ -7,15 +7,20 @@ import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileList
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.search.poi.PoiApi
-import ch.bailu.foc.FocFile
-import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.type.Str
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Editable
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.SearchEntry
+import ch.bailu.gtk.gtk.Separator
+import ch.bailu.gtk.gtk.Window
 import org.mapsforge.poi.storage.PoiCategory
 
-class PoiStackView(private val controller: UiController, app: Application, window: Window) {
+class PoiView(private val controller: UiController, app: Application, window: Window) {
     private val sdatabase = SolidPoiDatabase(GtkAppContext.mapDirectory, GtkAppContext)
+    private val selected = AppDirectory.getDataDirectory(GtkAppContext.dataDirectory, AppDirectory.DIR_POI).child(PoiApi.SELECTED)
 
     private val searchEntry = SearchEntry().apply {
         onSearchChanged {
@@ -23,29 +28,23 @@ class PoiStackView(private val controller: UiController, app: Application, windo
         }
     }
 
-    private val poiList = PoiList(sdatabase, FocFile("test")) {
+    private val poiList = PoiList(sdatabase, selected) {
         if (it.isSummary) {
-            Editable(searchEntry.cast()).setText(it.summaryKey)
+            searchEntry.asEditable().setText(it.summaryKey)
         }
     }
 
     val layout = Box(Orientation.VERTICAL, Layout.margin).apply {
 
         margin(Layout.margin)
-        val buttonBox = Box(Orientation.HORIZONTAL, Layout.margin)
 
-        buttonBox.append(Button.newWithLabelButton(Str(ToDo.translate("Load"))).apply {
-            onClicked { loadList() }
-        })
-
-        append(buttonBox)
         append(SolidDirectorySelectorView(sdatabase, app, window).layout)
+        append(Separator(Orientation.HORIZONTAL).apply {
+            marginBottom = Layout.margin*2
+            marginTop = Layout.margin*2
+        })
         append(searchEntry)
         append(poiList.scrolled)
-    }
-
-    private fun updateList() {
-        poiList.updateList()
     }
 
     private fun updateList(text: String) {
@@ -57,7 +56,7 @@ class PoiStackView(private val controller: UiController, app: Application, windo
     }
 
 
-    private fun loadList() {
+    fun loadList() {
         val poiApi = object: PoiApi(GtkAppContext, controller.getMapBounding()) {
             override fun getSelectedCategories(): ArrayList<PoiCategory> {
                 return getSelectedCategoriesFromList()
