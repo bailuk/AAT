@@ -14,8 +14,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 
-tasks.register("property2config", JavaExec::class) {
-    dependsOn("build")
+task<JavaExec>("property2config") {
+    dependsOn(tasks.named("build"))
     description = "Generate configuration class from gradle property"
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("property2config.MainKt")
@@ -26,4 +26,16 @@ tasks.register("property2config", JavaExec::class) {
             "${project.rootDir}/aat-lib/src/main/java/ch/bailu/aat_lib/Configuration.java"
         )
     )
+}
+
+task<Exec>("generateStrings") {
+    workingDir("util")
+    commandLine("./generate-strings.sh")
+}
+
+
+task<Exec>("generateImageMapping") {
+    dependsOn(":aat-android:processReleaseResources")
+    workingDir("util")
+    commandLine("./generate_image_mapping.py")
 }

@@ -101,7 +101,8 @@ tasks {
 
 
 task<Exec>("generateGResource") {
-    setCommandLine("gresource/generate.sh")
+    setWorkingDir("gresource")
+    setCommandLine("./generate.sh")
 }
 
 

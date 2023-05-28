@@ -117,3 +117,10 @@ dependencies {
     // testImplementation ("org.mockito:mockito-core:1.10.19")
 
 }
+
+
+tasks {
+    withType(AbstractCompile::class) {
+        dependsOn(":ci:generateImageMapping")
+    }
+}
