@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.aat_lib.util.sql.SaveDbResultSet
 import ch.bailu.aat_lib.util.sql.Sql
 import java.sql.Connection
 import java.sql.DriverManager
@@ -77,7 +78,7 @@ class H2DbConnection : DbConnection {
             val stmt = getPreparedStatement(sqlStatement, params)
             val res = stmt.executeQuery()
 
-            return ScrollInsensitiveResultSet(res)
+            return SaveDbResultSet(ScrollInsensitiveResultSet(res))
         } catch (e: Exception) {
             throw DbException(e)
         }

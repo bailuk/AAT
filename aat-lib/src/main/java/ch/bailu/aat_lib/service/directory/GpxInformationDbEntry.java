@@ -16,7 +16,6 @@ public final class GpxInformationDbEntry extends GpxInformation {
         cursor = c;
     }
 
-
     @Override
     public boolean isLoaded() {
         return false;//isSupported();
@@ -29,7 +28,6 @@ public final class GpxInformationDbEntry extends GpxInformation {
         return parent.child(name);
     }
 
-
     @Override
     public float getSpeed() {
         return getFloat(GpxDbConfiguration.KEY_AVG_SPEED);
@@ -40,12 +38,10 @@ public final class GpxInformationDbEntry extends GpxInformation {
         return getFloat(GpxDbConfiguration.KEY_DISTANCE);
     }
 
-
     @Override
     public long getPause() {
         return getLong(GpxDbConfiguration.KEY_PAUSE);
     }
-
 
     public boolean isValid() {
         return (!cursor.isClosed() &&
@@ -59,7 +55,6 @@ public final class GpxInformationDbEntry extends GpxInformation {
         }
         return "";
     }
-
 
     private long getLong(String key) {
         if (isValid()) {
@@ -76,10 +71,8 @@ public final class GpxInformationDbEntry extends GpxInformation {
         return 0f;
     }
 
-
     @Override
     public long getTimeStamp() { return getStartTime();}
-
 
     @Override
     public long getStartTime() {
@@ -91,12 +84,10 @@ public final class GpxInformationDbEntry extends GpxInformation {
         return getLong(GpxDbConfiguration.KEY_TOTAL_TIME);
     }
 
-
     @Override
     public long getEndTime() {
         return getLong(GpxDbConfiguration.KEY_END_TIME);
     }
-
 
     @Override
     public BoundingBoxE6 getBoundingBox() {
@@ -107,12 +98,9 @@ public final class GpxInformationDbEntry extends GpxInformation {
                 (int)getLong(GpxDbConfiguration.KEY_WEST_BOUNDING));
     }
 
-
-
     @Override
     public GpxType getType() {
         int id = (int) getLong(GpxDbConfiguration.KEY_TYPE_ID);
         return GpxType.fromInteger(id);
     }
-
 }

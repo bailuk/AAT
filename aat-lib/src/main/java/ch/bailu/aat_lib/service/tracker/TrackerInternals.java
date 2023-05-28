@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.service.tracker;
 import java.io.Closeable;
 import java.io.IOException;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
@@ -76,16 +78,9 @@ public final class TrackerInternals
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface storage, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
         state.preferencesChanged();
     }
-
-
-
-
-
-
-
 
     public void lockService() {
         services.lock(this.getClass().getSimpleName());
@@ -94,10 +89,6 @@ public final class TrackerInternals
     public void unlockService() {
         services.free(this.getClass().getSimpleName());
     }
-
-
-
-
 
     public  TrackLogger createLogger() throws IOException, SecurityException {
         return new TrackLogger(sdirectory, new SolidPreset(sdirectory.getStorage()).getIndex());
@@ -128,6 +119,4 @@ public final class TrackerInternals
 
         sdirectory.getStorage().unregister(this);
     }
-
-
 }

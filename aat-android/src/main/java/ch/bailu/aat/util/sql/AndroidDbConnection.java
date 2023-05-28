@@ -11,6 +11,7 @@ import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.sql.DbConnection;
 import ch.bailu.aat_lib.util.sql.DbException;
 import ch.bailu.aat_lib.util.sql.DbResultSet;
+import ch.bailu.aat_lib.util.sql.SaveDbResultSet;
 import ch.bailu.aat_lib.util.sql.Sql;
 
 public class AndroidDbConnection implements DbConnection {
@@ -62,7 +63,7 @@ public class AndroidDbConnection implements DbConnection {
         try {
             if (isOpen()) {
                 Cursor cursor = database.rawQuery(sql, toStringArgs(bindArgs));
-                return new AndroidDbResultSet(cursor);
+                return new SaveDbResultSet(new AndroidDbResultSet(cursor));
             }
             return null;
         } catch (Exception e) {

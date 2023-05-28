@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
 import ch.bailu.aat_lib.dispatcher.TrackerSource;
@@ -58,7 +60,7 @@ public class MainActivity extends ActivityContext {
 
     private View createActionList() {
         final VerticalScrollView list = new VerticalScrollView(this);
-        list.add(new SolidIndexListView(this,new SolidPreset(getStorage()), theme));
+        list.add(new SolidIndexListView(this, new SolidPreset(getStorage()), theme));
 
         final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
@@ -158,7 +160,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onPreferencesChanged(StorageInterface s, String key) {
+        public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
             if (sdirectory.hasKey(key)) {
                 setText();
             }
@@ -199,7 +201,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onPreferencesChanged(StorageInterface s, String key) {
+        public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
             if (spreset.hasKey(key) || sdirectory.hasKey(key)) {
                 setText();
             }
@@ -238,7 +240,7 @@ public class MainActivity extends ActivityContext {
         }
 
         @Override
-        public void onPreferencesChanged(StorageInterface s, String key) {
+        public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
             if (sdirectory.hasKey(key)) {
                 setText();
             }
