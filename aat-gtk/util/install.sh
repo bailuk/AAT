@@ -85,15 +85,8 @@ if [ "$option_install" = "" ]; then
   $copy $source_icon "${tor}${icon}" || exit 1
 
   echo "create '${desktop}'"
-  $cmd "cat > ${desktop}" << EOF
-[Desktop Entry]
-Type=Application
-Terminal=false
-Exec=java -jar ${data}/${app}.jar
-Name=${app_name}
-Comment=${app_comment}
-Icon=${icon}
-EOF
+  $copy aat-gtk/flatpak/ch.bailu.aat.desktop "${tor}${desktop}"
+  $cmd sed -i "'s+Exec.*+Exec=java -jar ${data}/${app}.jar+'" ${desktop}
 
   $cmd "chmod 700 ${desktop}" || exit 1
 fi

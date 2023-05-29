@@ -2,6 +2,11 @@
 Type=Application
 Terminal=false
 Exec=/app/bin/aat.sh
-Name=AAT Activity Tracker (Flatpak)
+Name=AAT
 Comment=Activity tracker and map viewer
 Icon=ch.bailu.aat
+StartupNotify=true
+Categories=GTK;Utility
+Keywords=Map;Navigation;Tracker;Sport;Cycling;OSM;
+X-Geoclue-Reason=Display location on map and track sportive activities
+X-Purism-FormFactor=Workstation;Mobile;
