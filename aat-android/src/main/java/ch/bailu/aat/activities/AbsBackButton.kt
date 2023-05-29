@@ -1,57 +1,41 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.View
+import android.view.ViewGroup
 
-public abstract class AbsBackButton extends AbsActivity {
-
-    @Override
-    public void onBackPressed() {
-        View view = getWindow().getDecorView();
-
-        if (onBackPressed(view) == false)
-            super.onBackPressed();
-
+abstract class AbsBackButton : AbsActivity() {
+    override fun onBackPressed() {
+        if (!onBackPressed(window.decorView)) super.onBackPressed()
     }
 
-    public void onBackPressedMenuBar() {
-        super.onBackPressed();
+    fun onBackPressedMenuBar() {
+        super.onBackPressed()
     }
 
-    public interface OnBackPressed {
-        boolean onBackPressed();
-    }
-
-    public abstract static class OnBackPressedListener extends View implements OnBackPressed {
-        public OnBackPressedListener(Context context) {
-            super(context);
-            setVisibility(INVISIBLE);
+    abstract class OnBackPressedListener(context: Context) : View(context){
+        init {
+            visibility = INVISIBLE
         }
 
-        @Override
-        public abstract boolean onBackPressed();
+        abstract fun onBackPressed(): Boolean
     }
 
-    private boolean onBackPressed(View view) {
-        if (view instanceof OnBackPressed) {
-            if (((OnBackPressed) view).onBackPressed())
-                return true;
+    private fun onBackPressed(view: View): Boolean {
+        if (view is OnBackPressedListener) {
+            if (view.onBackPressed()) return true
         }
-
-        if (view instanceof ViewGroup) {
-            return onBackPressedChildren((ViewGroup) view);
-        }
-        return false;
+        return if (view is ViewGroup) {
+            onBackPressedChildren(view)
+        } else false
     }
 
-    private boolean onBackPressedChildren(ViewGroup parent) {
-        int count = parent.getChildCount();
-
-        for (int i=0; i < count; i++) {
-            View view = parent.getChildAt(i);
-            if (onBackPressed(view)) return true;
+    private fun onBackPressedChildren(parent: ViewGroup): Boolean {
+        val count = parent.childCount
+        for (i in 0 until count) {
+            val view = parent.getChildAt(i)
+            if (onBackPressed(view)) return true
         }
-        return false;
+        return false
     }
 }

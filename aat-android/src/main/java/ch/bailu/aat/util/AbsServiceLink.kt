@@ -1,84 +1,58 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat.util
+
+import android.os.Bundle
+import ch.bailu.aat.activities.AbsHardwareButtons
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.ServiceLink
+
+abstract class AbsServiceLink : AbsHardwareButtons() {
+    private var serviceLink: ServiceLink? = null
+
+    val serviceContext: ServiceContext?
+        get() = serviceLink
 
 
-import android.os.Bundle;
-
-import ch.bailu.aat.activities.AbsHardwareButtons;
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.ServiceLink;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-
-public abstract class AbsServiceLink extends AbsHardwareButtons {
-
-
-    private ServiceLink serviceLink=null;
-    private Broadcaster broadcaster;
-
-    private enum State {
-        destroyed,
-        created,
-        resumed,
-        serviceUp
+    private enum class State {
+        Destroyed, Created, Resumed, ServiceUp
     }
 
-    private State state=State.destroyed;
+    private var state = State.Destroyed
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        broadcaster = new AndroidBroadcaster(this);
-        state = State.created;
-
-        serviceLink = new ServiceLink(this) {
-
-            @Override
-            public void onServiceUp() {
-                if (state == State.resumed) {
-                    onResumeWithService();
-                    state = State.serviceUp;
+        state = State.Created
+        serviceLink = object : ServiceLink(this) {
+            override fun onServiceUp() {
+                if (state == State.Resumed) {
+                    onResumeWithService()
+                    state = State.ServiceUp
                 }
             }
-
-        };
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        state = State.resumed;
-        serviceLink.up();
-    }
-
-
-    @Override
-    public void onPause() {
-        if (state == State.serviceUp) {
-            onPauseWithService();
         }
-        serviceLink.down();
-
-        state = State.created;
-        super.onPause();
     }
 
-
-    public void onResumeWithService() {}
-    public void onPauseWithService() {}
-
-
-    @Override
-    public void onDestroy() {
-        serviceLink.close();
-        serviceLink=null;
-        state = State.destroyed;
-        super.onDestroy();
+    override fun onResume() {
+        super.onResume()
+        state = State.Resumed
+        serviceLink?.up()
     }
 
-
-    public ServiceContext getServiceContext() {
-        return serviceLink;
+    override fun onPause() {
+        if (state == State.ServiceUp) {
+            onPauseWithService()
+        }
+        serviceLink?.down()
+        state = State.Created
+        super.onPause()
     }
-    public Broadcaster getBroadcaster() {return broadcaster;}
+
+    open fun onResumeWithService() {}
+    open fun onPauseWithService() {}
+    override fun onDestroy() {
+        serviceLink?.close()
+        serviceLink = null
+        state = State.Destroyed
+        super.onDestroy()
+    }
 }

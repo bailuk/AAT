@@ -21,8 +21,8 @@ public class TrackListActivity extends AbsGpxListActivity {
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
                 new DateDescription(),
-                new DistanceDescription(getStorage()),
-                new AverageSpeedDescription(getStorage()),
+                new DistanceDescription(getAppContext().getStorage()),
+                new AverageSpeedDescription(getAppContext().getStorage()),
                 new TimeDescription(),
                 new NameDescription()
         };
@@ -33,9 +33,9 @@ public class TrackListActivity extends AbsGpxListActivity {
         return new ContentDescription[] {
 
                 new TrackSizeDescription(),
-                new MaximumSpeedDescription(getStorage()),
-                new DistanceDescription(getStorage()),
-                new AverageSpeedDescription(getStorage()),
+                new MaximumSpeedDescription(getAppContext().getStorage()),
+                new DistanceDescription(getAppContext().getStorage()),
+                new AverageSpeedDescription(getAppContext().getStorage()),
                 new TimeDescription()
         };
     }
@@ -49,7 +49,7 @@ public class TrackListActivity extends AbsGpxListActivity {
 
     @Override
     public Foc getDirectory() {
-        return new SolidPreset(getStorage()).getDirectory(new AndroidSolidDataDirectory(this));
+        return new SolidPreset(getAppContext().getStorage()).getDirectory(new AndroidSolidDataDirectory(this));
     }
 
     @Override

@@ -43,7 +43,7 @@ public class GpxEditorActivity extends AbsFileContentActivity {
         ContentDescription[] summaryData = {
                 new NameDescription(),
                 new PathDescription(),
-                new DistanceDescription(getStorage()),
+                new DistanceDescription(getAppContext().getStorage()),
                 new TrackSizeDescription(),
         };
 

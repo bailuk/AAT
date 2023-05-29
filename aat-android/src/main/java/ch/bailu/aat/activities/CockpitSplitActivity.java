@@ -74,17 +74,17 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
         PercentageLayout percentageD = new PercentageLayout(this);
         percentageD.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
 
-        cockpitA.add(this, new CurrentSpeedDescription(getStorage()),
+        cockpitA.add(this, new CurrentSpeedDescription(getAppContext().getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
-        cockpitA.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
-        cockpitA.addC(this, new AveragePaceDescription(getStorage()), InfoID.TRACKER);
-        cockpitA.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
+        cockpitA.addC(this, new AverageSpeedDescriptionAP(getAppContext().getStorage()), InfoID.TRACKER);
+        cockpitA.addC(this, new AveragePaceDescription(getAppContext().getStorage()), InfoID.TRACKER);
+        cockpitA.addC(this, new DistanceDescription(getAppContext().getStorage()), InfoID.TRACKER);
         cockpitA.add(this, new PredictiveTimeDescription(),
                 InfoID.TRACKER_TIMER);
 
-        cockpitB.addC(this, new AveragePaceDescription(getStorage()), InfoID.TRACKER);
-        cockpitB.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
-        cockpitB.addC(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
+        cockpitB.addC(this, new AveragePaceDescription(getAppContext().getStorage()), InfoID.TRACKER);
+        cockpitB.addC(this, new AverageSpeedDescriptionAP(getAppContext().getStorage()), InfoID.TRACKER);
+        cockpitB.addC(this, new MaximumSpeedDescription(getAppContext().getStorage()), InfoID.TRACKER);
 
         percentageB.add(cockpitB, 50);
         percentageB.add(GraphViewFactory.createSpeedGraph(getAppContext(), this, THEME)
@@ -155,9 +155,9 @@ public class CockpitSplitActivity extends AbsKeepScreenOnActivity {
 
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.POWER_SENSOR));

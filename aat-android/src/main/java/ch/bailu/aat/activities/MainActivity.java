@@ -59,7 +59,7 @@ public class MainActivity extends ActivityContext {
 
     private View createActionList() {
         final VerticalScrollView list = new VerticalScrollView(this);
-        list.add(new SolidIndexListView(this, new SolidPreset(getStorage()), theme));
+        list.add(new SolidIndexListView(this, new SolidPreset(getAppContext().getStorage()), theme));
 
         final int accessibleCount = new ActivitySwitcher(this).size();
         for (int i = 0; i < accessibleCount; i++) {
@@ -70,8 +70,8 @@ public class MainActivity extends ActivityContext {
     }
 
     private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new SensorSource(getServiceContext(), InfoID.SENSORS));
     }
 
@@ -171,13 +171,13 @@ public class MainActivity extends ActivityContext {
         public PresetDirectoryLabel(ActivitySwitcher.Entry s) {
             super(s);
             sdirectory = new AndroidSolidDataDirectory(getContext());
-            spreset = new SolidPreset(getStorage());
+            spreset = new SolidPreset(getAppContext().getStorage());
 
             setText();
         }
 
         public void setText() {
-            setText(new SolidPreset(getStorage()).getDirectory(sdirectory).getPathName());
+            setText(new SolidPreset(getAppContext().getStorage()).getDirectory(sdirectory).getPathName());
         }
 
         @Override

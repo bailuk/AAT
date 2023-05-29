@@ -84,15 +84,15 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
         Storage storage = new Storage(this);
         CockpitView c = new CockpitView(this, theme);
 
-        c.add(this, new CurrentSpeedDescription(getStorage()),
+        c.add(this, new CurrentSpeedDescription(getAppContext().getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
         c.addC(this, new AverageSpeedDescription(storage), InfoID.TRACKER);
         c.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
         c.add(this, new PredictiveTimeDescription(), InfoID.TRACKER_TIMER);
-        c.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
+        c.addC(this, new DistanceDescription(getAppContext().getStorage()), InfoID.TRACKER);
         c.add(this, new AltitudeDescription(new Storage(this)), InfoID.LOCATION);
 
-        c.add(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
+        c.add(this, new MaximumSpeedDescription(getAppContext().getStorage()), InfoID.TRACKER);
         c.add(this, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
 
         return c;
@@ -116,9 +116,9 @@ public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
 
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
         addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));

@@ -83,7 +83,7 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     }
 
      protected View createAttributesView() {
-        final AttributesView v = new AttributesView(this, this.getStorage());
+        final AttributesView v = new AttributesView(this, getAppContext().getStorage());
         addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
         return v;
     }
@@ -102,8 +102,8 @@ public abstract class AbsFileContentActivity extends ActivityContext implements 
     protected abstract ViewGroup createLayout(MainControlBar bar, ContentView contentView);
 
     private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext(), getBroadcaster()));
-        addSource(new CurrentLocationSource(getServiceContext(), getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
 
         addSource(editorSource);

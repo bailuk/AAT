@@ -70,16 +70,16 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
         CockpitView c1 = new CockpitView(this, theme);
 
 
-        c1.add(this, new CurrentSpeedDescription(getStorage()),
+        c1.add(this, new CurrentSpeedDescription(getAppContext().getStorage()),
                 InfoID.SPEED_SENSOR, InfoID.LOCATION);
 
         c1.addAltitude(this);
         c1.add(this, new PredictiveTimeDescription(), InfoID.TRACKER_TIMER);
-        c1.addC(this, new DistanceDescription(getStorage()), InfoID.TRACKER);
-        c1.addC(this, new AverageSpeedDescriptionAP(getStorage()), InfoID.TRACKER);
+        c1.addC(this, new DistanceDescription(getAppContext().getStorage()), InfoID.TRACKER);
+        c1.addC(this, new AverageSpeedDescriptionAP(getAppContext().getStorage()), InfoID.TRACKER);
 
         CockpitView c2 = new CockpitView(this, theme);
-        c2.add(this, new MaximumSpeedDescription(getStorage()), InfoID.TRACKER);
+        c2.add(this, new MaximumSpeedDescription(getAppContext().getStorage()), InfoID.TRACKER);
         c2.addHeartRate(this);        // With click to update sensors
         c2.addPower(this);            // With click to update sensors
         c2.addCadence(this);          // With click to update sensors
@@ -108,9 +108,9 @@ public class CockpitActivity extends AbsKeepScreenOnActivity {
 
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
 
         addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));

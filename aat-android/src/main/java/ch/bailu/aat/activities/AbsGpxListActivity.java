@@ -80,7 +80,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
     private void createDispatcher() {
         addSource(new IteratorSource.Summary(getAppContext()));
         addSource(new OverlaysSource(getAppContext()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getAppContext().getServices(), getAppContext().getBroadcaster()));
 
         addTarget(busyControl, InfoID.OVERLAY, InfoID.OVERLAY+1,InfoID.OVERLAY+2,InfoID.OVERLAY+3);
     }

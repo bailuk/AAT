@@ -34,11 +34,11 @@ public class NodeEntryView extends LinearLayout {
 
         int previewSize = AppLayout.getBigButtonSize(activityContext);
 
-        markupBuilder = new MarkupBuilderGpx(activityContext.getStorage());
+        markupBuilder = new MarkupBuilderGpx(activityContext.getAppContext().getStorage());
         map =  new MapsForgeViewStatic(activityContext, activityContext.getAppContext());
         activityContext.addLC(map);
 
-        gpxOverlay = new GpxDynLayer(activityContext.getStorage(), map.getMContext(), activityContext.getServiceContext());
+        gpxOverlay = new GpxDynLayer(activityContext.getAppContext().getStorage(), map.getMContext(), activityContext.getServiceContext());
         map.add(gpxOverlay);
 
         text=new TextView(activityContext);

@@ -17,7 +17,7 @@ public class ExternalListActivity extends AbsGpxListActivity {
     public ContentDescription[] getGpxListItemData() {
         return new ContentDescription[] {
                 new DateDescription(),
-                new DistanceDescription(getStorage()),
+                new DistanceDescription(getAppContext().getStorage()),
                 new NameDescription()
         };
     }

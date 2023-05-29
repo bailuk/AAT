@@ -1,89 +1,72 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.app.Activity
+import android.os.Bundle
+import ch.bailu.aat.preferences.PreferenceLoadDefaults
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.AppPermission
+import ch.bailu.aat.views.msg.ErrorMsgView
+import ch.bailu.aat_lib.preferences.system.SolidStartCount
 
-import androidx.annotation.NonNull;
+abstract class AbsActivity : Activity() {
+    protected var errorView: ErrorMsgView? = null
+        private set
 
-import ch.bailu.aat.preferences.PreferenceLoadDefaults;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.AppPermission;
-import ch.bailu.aat.views.msg.ErrorMsgView;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.system.SolidStartCount;
-
-public abstract class AbsActivity extends Activity {
-
-    private static int instantiated=0;
-    private static int created=0;
-
-
-    public AbsActivity() {
-        instantiated++;
+    init {
+        instantiated++
     }
 
-    private ErrorMsgView errorMsgView;
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        errorView = ErrorMsgView(this)
+        errorView?.registerReceiver()
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        errorMsgView = new ErrorMsgView(this);
-        errorMsgView.registerReceiver();
-
-        new PreferenceLoadDefaults(this);
-        created++;
+        PreferenceLoadDefaults(this)
+        created++
     }
 
-    protected ErrorMsgView getErrorView() {
-        return errorMsgView;
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        AppPermission.onRequestPermissionsResult(this, requestCode)
     }
 
-    @Override
-    public void onRequestPermissionsResult (int requestCode,
-                                            @NonNull String[] permissions,
-                                            @NonNull int[] grantResults) {
-        AppPermission.onRequestPermissionsResult(this, requestCode);
+    public override fun onDestroy() {
+        errorView?.unregisterReceiver()
+        created--
+        super.onDestroy()
     }
 
-
-    @Override
-    public void onDestroy() {
-        errorMsgView.unregisterReceiver();
-        created--;
-        super.onDestroy();
+    public override fun onPause() {
+        super.onPause()
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
+    public override fun onResume() {
+        super.onResume()
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    @Throws(Throwable::class)
+    protected fun finalize() {
+        instantiated--
     }
 
-    @Override
-    protected void finalize () throws Throwable {
-        instantiated--;
-        super.finalize();
+    fun appendStatusText(builder: StringBuilder) {
+        builder.append("<h1>")
+        builder.append(javaClass.simpleName)
+        builder.append("</h1>")
+        builder.append("<p>Instantiated activities: ")
+        builder.append(instantiated)
+        builder.append("<br>Created activities: ")
+        builder.append(created)
+        builder.append("<br>Count of application starts: ")
+        builder.append(SolidStartCount(Storage(this)).value)
+        builder.append("</p>")
     }
 
-    public void appendStatusText(StringBuilder builder) {
-        builder.append("<h1>");
-        builder.append(getClass().getSimpleName());
-        builder.append("</h1>");
-        builder.append("<p>Instantiated activities: ");
-        builder.append(instantiated);
-        builder.append("<br>Created activities: ");
-        builder.append(created);
-        builder.append("<br>Count of application starts: ");
-        builder.append(new SolidStartCount(getStorage()).getValue());
-        builder.append("</p>");
-    }
-
-    public StorageInterface getStorage() {
-        return new Storage(this);
+    companion object {
+        private var instantiated = 0
+        private var created = 0
     }
 }

@@ -76,8 +76,8 @@ public class MapActivity extends AbsKeepScreenOnActivity {
 
     private void createDispatcher(EditorSource edit) {
         addSource(edit);
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
     }
 

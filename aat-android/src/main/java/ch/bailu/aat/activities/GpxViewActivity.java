@@ -148,8 +148,8 @@ public class GpxViewActivity extends ActivityContext
     }
 
     private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
         addSource(new FileViewSource(getAppContext(), file));
 

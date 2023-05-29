@@ -61,7 +61,7 @@ public class NodeDetailActivity extends ActivityContext
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        markupBuilder = new MarkupBuilderGpx(getStorage());
+        markupBuilder = new MarkupBuilderGpx(getAppContext().getStorage());
         file = getAppContext().toFoc(getIntent().getStringExtra("ID"));
 
         final ContentView contentView = new ContentView(this, theme);
@@ -123,7 +123,7 @@ public class NodeDetailActivity extends ActivityContext
 
     private void createDispatcher() {
         addTarget(this, InfoID.FILEVIEW);
-        addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
+        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
         addSource(new FileViewSource(getAppContext(), file));
     }
 
