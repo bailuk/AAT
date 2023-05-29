@@ -27,6 +27,9 @@
         "gradle-sources.json"
       ],
       "build-commands": [
+        "sed -i /android/d settings.gradle.kts",
+        "sed -i /android/d build.gradle.kts",
+        "sed -i /android/d aat-lib/build.gradle.kts",
         "source /usr/lib/sdk/openjdk17/enable.sh && gradle aat-gtk:build",
         "install -Dm644 aat-gtk/build/libs/aat-gtk-all.jar /app/lib/aat.jar",
         "install -Dm644 aat-gtk/flatpak/ch.bailu.aat.desktop /app/share/applications/ch.bailu.aat.desktop",
