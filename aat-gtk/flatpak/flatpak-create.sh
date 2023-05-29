@@ -6,6 +6,13 @@ mkdir -p build || exit 1
 
 export LANG=C # So we can google error messages
 
+proxy_host="192.168.178.80"
+
+if [ ! -z $proxy_host ]; then
+  export http_proxy=http://${proxy_host}:8080
+  export https_proxy=http://${proxy_host}:8080
+fi
+
 echo "_"
 echo "Install dependencies"
 flatpak install flathub org.gnome.Platform//44 org.gnome.Sdk//44 org.freedesktop.Sdk.Extension.openjdk17/x86_64/22.08 || exit 1
