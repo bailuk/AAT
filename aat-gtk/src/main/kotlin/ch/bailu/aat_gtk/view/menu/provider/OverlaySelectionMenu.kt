@@ -27,25 +27,30 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                     overlays.forEach {
                         append(Box(Orientation.HORIZONTAL, 0).apply {
                             addCssClass(Strings.linked)
+
+                            val checkButton = CheckButton().apply {
+                                setLabel(it.info.file.name)
+                                active = it.isEnabled
+                                onToggled {
+                                    it.isEnabled = active
+                                }
+                            }
+
                             append(Button().apply {
                                 setIconName("find-location-symbolic")
                                 onClicked {
+                                    checkButton.active = true
                                     uiController.centerInMap(it.info)
                                 }
                             })
                             append(Button().apply {
                                 setIconName("zoom-fit-best-symbolic")
                                 onClicked {
+                                    checkButton.active = true
                                     uiController.frameInMap(it.info)
                                 }
                             })
-                            append(CheckButton().apply {
-                                setLabel(it.info.file.name)
-                                active = it.isEnabled
-                                onToggled {
-                                    it.isEnabled = active
-                                }
-                            })
+                            append(checkButton)
                         })
                     }
                 }
