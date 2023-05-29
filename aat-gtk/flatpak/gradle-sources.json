@@ -1,20 +1,6 @@
 [
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/androidx/databinding/databinding-common/8.0.2/databinding-common-8.0.2.pom",
-		"sha256": "5fc919ead256e660d805dbd49a32b1e881ddce164bdc35ccf0641d836d55a2cc",
-		"dest": "maven-local/androidx/databinding/databinding-common/8.0.2",
-		"dest-filename": "databinding-common-8.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/androidx/databinding/databinding-common/8.0.2/databinding-common-8.0.2.jar",
-		"sha256": "9fa21e2030273ee3cb8c4701c341af8cf9359791a3b45b2bc0be07870c03b1c8",
-		"dest": "maven-local/androidx/databinding/databinding-common/8.0.2",
-		"dest-filename": "databinding-common-8.0.2.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://dl.google.com/android/maven2/androidx/databinding/databinding-compiler-common/8.0.2/databinding-compiler-common-8.0.2.pom",
 		"sha256": "7ae7924f9ddaf6b42e3882c2ce255424b87eb623b3f57eedbfe1372b4930de33",
 		"dest": "maven-local/androidx/databinding/databinding-compiler-common/8.0.2",
@@ -26,6 +12,20 @@
 		"sha256": "7b5cf583171d30a3fff4a0230b620a601e4b0a9d2de05d66bebf678229740caf",
 		"dest": "maven-local/androidx/databinding/databinding-compiler-common/8.0.2",
 		"dest-filename": "databinding-compiler-common-8.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/androidx/databinding/databinding-common/8.0.2/databinding-common-8.0.2.pom",
+		"sha256": "5fc919ead256e660d805dbd49a32b1e881ddce164bdc35ccf0641d836d55a2cc",
+		"dest": "maven-local/androidx/databinding/databinding-common/8.0.2",
+		"dest-filename": "databinding-common-8.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/androidx/databinding/databinding-common/8.0.2/databinding-common-8.0.2.jar",
+		"sha256": "9fa21e2030273ee3cb8c4701c341af8cf9359791a3b45b2bc0be07870c03b1c8",
+		"dest": "maven-local/androidx/databinding/databinding-common/8.0.2",
+		"dest-filename": "databinding-common-8.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -134,6 +134,20 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.pom",
+		"sha256": "d49d179f707d3f3a00b2a7d36136b54aa8d44fa22770703cd82fe52fb39e22eb",
+		"dest": "maven-local/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api",
+		"dest-filename": "transform-api-2.0.0-deprecated-use-gradle-api.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.jar",
+		"sha256": "e8b4151ae1679f1abe7a14ee371ac9b3c651ae7b63290d1f586bdd0f78face9a",
+		"dest": "maven-local/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api",
+		"dest-filename": "transform-api-2.0.0-deprecated-use-gradle-api.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://dl.google.com/android/maven2/com/android/tools/build/bundletool/1.13.2/bundletool-1.13.2.pom",
 		"sha256": "a076c5de1fc2f07e926d6d603765338521a3bfd658570a88a1c03d2fa0f7bd89",
 		"dest": "maven-local/com/android/tools/build/bundletool/1.13.2",
@@ -145,6 +159,27 @@
 		"sha256": "e56e54b7657f67e77c7550bec64f70d0de2780a4795024b99fcf6a701bd1718d",
 		"dest": "maven-local/com/android/tools/build/bundletool/1.13.2",
 		"dest-filename": "bundletool-1.13.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.pom",
+		"sha256": "d24a4542125fdaf3f7be9c9fa13108db10a606d2c499130e4ba9fe85b80da0ac",
+		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
+		"dest-filename": "gradle-api-8.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.module",
+		"sha256": "c6aa577911ca61680a34e5e0612011f1cb823e5193e72cff92ce3b9aa8597668",
+		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
+		"dest-filename": "gradle-api-8.0.2.module"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.jar",
+		"sha256": "e3a14c889d8e6b3e1c026015950db54a4d1bd09ade82e05307adba603f46f036",
+		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
+		"dest-filename": "gradle-api-8.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -190,41 +225,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.pom",
-		"sha256": "d24a4542125fdaf3f7be9c9fa13108db10a606d2c499130e4ba9fe85b80da0ac",
-		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
-		"dest-filename": "gradle-api-8.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.module",
-		"sha256": "c6aa577911ca61680a34e5e0612011f1cb823e5193e72cff92ce3b9aa8597668",
-		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
-		"dest-filename": "gradle-api-8.0.2.module"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/build/gradle-api/8.0.2/gradle-api-8.0.2.jar",
-		"sha256": "e3a14c889d8e6b3e1c026015950db54a4d1bd09ade82e05307adba603f46f036",
-		"dest": "maven-local/com/android/tools/build/gradle-api/8.0.2",
-		"dest-filename": "gradle-api-8.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/build/apksig/8.0.2/apksig-8.0.2.pom",
-		"sha256": "374bb501b01ba1f5a9c4d30f57bc97997956e84197a88d14729982b69dc009ae",
-		"dest": "maven-local/com/android/tools/build/apksig/8.0.2",
-		"dest-filename": "apksig-8.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/build/apksig/8.0.2/apksig-8.0.2.jar",
-		"sha256": "1556367f117415b3fbb66b3222254197b0f4aafdbc9f467497304409f0d30386",
-		"dest": "maven-local/com/android/tools/build/apksig/8.0.2",
-		"dest-filename": "apksig-8.0.2.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://dl.google.com/android/maven2/com/android/tools/build/apkzlib/8.0.2/apkzlib-8.0.2.pom",
 		"sha256": "78ede78a36dca570993fcd10859a69e2ef4d5b03a5f5794d7512f10c754fbfc1",
 		"dest": "maven-local/com/android/tools/build/apkzlib/8.0.2",
@@ -257,6 +257,20 @@
 		"sha256": "8a354d36df3e22d0df567645bc6430d95579919bf36055e945702f1c3c0c8ae2",
 		"dest": "maven-local/com/android/tools/build/manifest-merger/31.0.2",
 		"dest-filename": "manifest-merger-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/build/apksig/8.0.2/apksig-8.0.2.pom",
+		"sha256": "374bb501b01ba1f5a9c4d30f57bc97997956e84197a88d14729982b69dc009ae",
+		"dest": "maven-local/com/android/tools/build/apksig/8.0.2",
+		"dest-filename": "apksig-8.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/build/apksig/8.0.2/apksig-8.0.2.jar",
+		"sha256": "1556367f117415b3fbb66b3222254197b0f4aafdbc9f467497304409f0d30386",
+		"dest": "maven-local/com/android/tools/build/apksig/8.0.2",
+		"dest-filename": "apksig-8.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -316,31 +330,17 @@
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-model/31.0.2/lint-model-31.0.2.pom",
-		"sha256": "f4045ca809c79b395dec9f021ea5af4aa8e5e2b106ee2a3bb4595c0d92759272",
-		"dest": "maven-local/com/android/tools/lint/lint-model/31.0.2",
-		"dest-filename": "lint-model-31.0.2.pom"
+		"url": "https://dl.google.com/android/maven2/com/android/tools/sdklib/31.0.2/sdklib-31.0.2.pom",
+		"sha256": "42de15d10f4d6e3056cd841ef95acb7d8f230030a98d038b36fb2b7f0c51094a",
+		"dest": "maven-local/com/android/tools/sdklib/31.0.2",
+		"dest-filename": "sdklib-31.0.2.pom"
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-model/31.0.2/lint-model-31.0.2.jar",
-		"sha256": "162eb85f27efc7b11821f80bb9861a02bb979127beba9b265155c19c80f809ac",
-		"dest": "maven-local/com/android/tools/lint/lint-model/31.0.2",
-		"dest-filename": "lint-model-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-typedef-remover/31.0.2/lint-typedef-remover-31.0.2.pom",
-		"sha256": "958d48522ef1093ee67b0e410eb8e341eb1234c093ac94160c76299458177c63",
-		"dest": "maven-local/com/android/tools/lint/lint-typedef-remover/31.0.2",
-		"dest-filename": "lint-typedef-remover-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-typedef-remover/31.0.2/lint-typedef-remover-31.0.2.jar",
-		"sha256": "26c9384cd0cc727c0985097baf4fbcd90d556e06bb0f586c175ca9912fbc66ff",
-		"dest": "maven-local/com/android/tools/lint/lint-typedef-remover/31.0.2",
-		"dest-filename": "lint-typedef-remover-31.0.2.jar"
+		"url": "https://dl.google.com/android/maven2/com/android/tools/sdklib/31.0.2/sdklib-31.0.2.jar",
+		"sha256": "9770b9aaedcb5543497b9abb79ac0e1ee5ba3a8197969b52aa51a06f6bc10964",
+		"dest": "maven-local/com/android/tools/sdklib/31.0.2",
+		"dest-filename": "sdklib-31.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -355,20 +355,6 @@
 		"sha256": "c11d10822af862cee3412ddc7245f6054d4b00a9e61fd1d2357390280879ea36",
 		"dest": "maven-local/com/android/tools/repository/31.0.2",
 		"dest-filename": "repository-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/sdklib/31.0.2/sdklib-31.0.2.pom",
-		"sha256": "42de15d10f4d6e3056cd841ef95acb7d8f230030a98d038b36fb2b7f0c51094a",
-		"dest": "maven-local/com/android/tools/sdklib/31.0.2",
-		"dest-filename": "sdklib-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/sdklib/31.0.2/sdklib-31.0.2.jar",
-		"sha256": "9770b9aaedcb5543497b9abb79ac0e1ee5ba3a8197969b52aa51a06f6bc10964",
-		"dest": "maven-local/com/android/tools/sdklib/31.0.2",
-		"dest-filename": "sdklib-31.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -428,118 +414,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/layoutlib/layoutlib-api/31.0.2/layoutlib-api-31.0.2.pom",
-		"sha256": "aa19976bc553f0997df764b41de5bee281d2b7abc140ab6a03ac28429402201c",
-		"dest": "maven-local/com/android/tools/layoutlib/layoutlib-api/31.0.2",
-		"dest-filename": "layoutlib-api-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/layoutlib/layoutlib-api/31.0.2/layoutlib-api-31.0.2.jar",
-		"sha256": "3df9c0423d26dffae97d9d622492c817dd57ac2d46b15e077b2af5fd9bf8ac05",
-		"dest": "maven-local/com/android/tools/layoutlib/layoutlib-api/31.0.2",
-		"dest-filename": "layoutlib-api-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2/android-device-provider-ddmlib-proto-31.0.2.pom",
-		"sha256": "95833ccc426dfab62fb1eedca8b4beb86aedbc95743b8af59fa0793c1acd24e5",
-		"dest": "maven-local/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2",
-		"dest-filename": "android-device-provider-ddmlib-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2/android-device-provider-ddmlib-proto-31.0.2.jar",
-		"sha256": "332794db1e7702c9689c8075532f235cccbf57d70aba29cbd7d378e781bad37f",
-		"dest": "maven-local/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2",
-		"dest-filename": "android-device-provider-ddmlib-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2/android-device-provider-gradle-proto-31.0.2.pom",
-		"sha256": "313bc5f9895a1a18052c94ad2e000660514417f2860bfdab7a1a33a75f8ef2db",
-		"dest": "maven-local/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2",
-		"dest-filename": "android-device-provider-gradle-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2/android-device-provider-gradle-proto-31.0.2.jar",
-		"sha256": "48f8b288d3b3195199ded91cbaa67a28be2fb9d317da187b88a7d4ffb505a578",
-		"dest": "maven-local/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2",
-		"dest-filename": "android-device-provider-gradle-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2/android-test-plugin-host-additional-test-output-proto-31.0.2.pom",
-		"sha256": "9761246a51bd0eb2cddaa2aeb5dd68c4877e03ac768531a88c2afb4f30f5b7a5",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-additional-test-output-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2/android-test-plugin-host-additional-test-output-proto-31.0.2.jar",
-		"sha256": "6c4d0907badf886cbea14e56e8d08ce232ee775403ad811c27a280520d7efa1a",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-additional-test-output-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2/android-test-plugin-host-logcat-proto-31.0.2.pom",
-		"sha256": "30582f3d9e654785786e9842e7d400052d701be118b59c334e918f1fe7637fba",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-logcat-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2/android-test-plugin-host-logcat-proto-31.0.2.jar",
-		"sha256": "62234086f76d3dc1d1acbf9def72fcd7741ce2a10de587b4608ab45da62e9bc1",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-logcat-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2/android-test-plugin-host-coverage-proto-31.0.2.pom",
-		"sha256": "2c2aff5d6007101aeb3156a55f3255a9fd5494fbd7b73cf845d94a11b13606da",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-coverage-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2/android-test-plugin-host-coverage-proto-31.0.2.jar",
-		"sha256": "22686a7d1775171e76534ab8f40f9c9677cabc77321088e3268cb9cb74d0e5c6",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-coverage-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2/android-test-plugin-host-retention-proto-31.0.2.pom",
-		"sha256": "055c33b308ae5bd9c3ab760ffe50f92c1a20bcdffe30f925c8234b48337fbda1",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-retention-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2/android-test-plugin-host-retention-proto-31.0.2.jar",
-		"sha256": "031c4c933c5e53ddb863b960074ba36ec040a2464f208d4f5d390d2b227f6505",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2",
-		"dest-filename": "android-test-plugin-host-retention-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2/android-test-plugin-result-listener-gradle-proto-31.0.2.pom",
-		"sha256": "0a180d1f1abad7b409ebce6f3552475fa53bed37c2cdab9761522f23c656f4c5",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2",
-		"dest-filename": "android-test-plugin-result-listener-gradle-proto-31.0.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2/android-test-plugin-result-listener-gradle-proto-31.0.2.jar",
-		"sha256": "38c664b016fc380676ab80fb9da0c42f13b049cfd98d16467a2049fe85072e70",
-		"dest": "maven-local/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2",
-		"dest-filename": "android-test-plugin-result-listener-gradle-proto-31.0.2.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://dl.google.com/android/maven2/com/android/tools/analytics-library/crash/31.0.2/crash-31.0.2.pom",
 		"sha256": "71586bec46ffd2451740aecfab05a384a718ba8f99b0bac49095f83b044ff5fc",
 		"dest": "maven-local/com/android/tools/analytics-library/crash/31.0.2",
@@ -596,6 +470,146 @@
 	},
 	{
 		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-model/31.0.2/lint-model-31.0.2.pom",
+		"sha256": "f4045ca809c79b395dec9f021ea5af4aa8e5e2b106ee2a3bb4595c0d92759272",
+		"dest": "maven-local/com/android/tools/lint/lint-model/31.0.2",
+		"dest-filename": "lint-model-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-model/31.0.2/lint-model-31.0.2.jar",
+		"sha256": "162eb85f27efc7b11821f80bb9861a02bb979127beba9b265155c19c80f809ac",
+		"dest": "maven-local/com/android/tools/lint/lint-model/31.0.2",
+		"dest-filename": "lint-model-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-typedef-remover/31.0.2/lint-typedef-remover-31.0.2.pom",
+		"sha256": "958d48522ef1093ee67b0e410eb8e341eb1234c093ac94160c76299458177c63",
+		"dest": "maven-local/com/android/tools/lint/lint-typedef-remover/31.0.2",
+		"dest-filename": "lint-typedef-remover-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/lint/lint-typedef-remover/31.0.2/lint-typedef-remover-31.0.2.jar",
+		"sha256": "26c9384cd0cc727c0985097baf4fbcd90d556e06bb0f586c175ca9912fbc66ff",
+		"dest": "maven-local/com/android/tools/lint/lint-typedef-remover/31.0.2",
+		"dest-filename": "lint-typedef-remover-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/layoutlib/layoutlib-api/31.0.2/layoutlib-api-31.0.2.pom",
+		"sha256": "aa19976bc553f0997df764b41de5bee281d2b7abc140ab6a03ac28429402201c",
+		"dest": "maven-local/com/android/tools/layoutlib/layoutlib-api/31.0.2",
+		"dest-filename": "layoutlib-api-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/layoutlib/layoutlib-api/31.0.2/layoutlib-api-31.0.2.jar",
+		"sha256": "3df9c0423d26dffae97d9d622492c817dd57ac2d46b15e077b2af5fd9bf8ac05",
+		"dest": "maven-local/com/android/tools/layoutlib/layoutlib-api/31.0.2",
+		"dest-filename": "layoutlib-api-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2/android-device-provider-gradle-proto-31.0.2.pom",
+		"sha256": "313bc5f9895a1a18052c94ad2e000660514417f2860bfdab7a1a33a75f8ef2db",
+		"dest": "maven-local/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2",
+		"dest-filename": "android-device-provider-gradle-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2/android-device-provider-gradle-proto-31.0.2.jar",
+		"sha256": "48f8b288d3b3195199ded91cbaa67a28be2fb9d317da187b88a7d4ffb505a578",
+		"dest": "maven-local/com/android/tools/utp/android-device-provider-gradle-proto/31.0.2",
+		"dest-filename": "android-device-provider-gradle-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2/android-device-provider-ddmlib-proto-31.0.2.pom",
+		"sha256": "95833ccc426dfab62fb1eedca8b4beb86aedbc95743b8af59fa0793c1acd24e5",
+		"dest": "maven-local/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2",
+		"dest-filename": "android-device-provider-ddmlib-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2/android-device-provider-ddmlib-proto-31.0.2.jar",
+		"sha256": "332794db1e7702c9689c8075532f235cccbf57d70aba29cbd7d378e781bad37f",
+		"dest": "maven-local/com/android/tools/utp/android-device-provider-ddmlib-proto/31.0.2",
+		"dest-filename": "android-device-provider-ddmlib-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2/android-test-plugin-host-coverage-proto-31.0.2.pom",
+		"sha256": "2c2aff5d6007101aeb3156a55f3255a9fd5494fbd7b73cf845d94a11b13606da",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-coverage-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2/android-test-plugin-host-coverage-proto-31.0.2.jar",
+		"sha256": "22686a7d1775171e76534ab8f40f9c9677cabc77321088e3268cb9cb74d0e5c6",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-coverage-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-coverage-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2/android-test-plugin-host-additional-test-output-proto-31.0.2.pom",
+		"sha256": "9761246a51bd0eb2cddaa2aeb5dd68c4877e03ac768531a88c2afb4f30f5b7a5",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-additional-test-output-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2/android-test-plugin-host-additional-test-output-proto-31.0.2.jar",
+		"sha256": "6c4d0907badf886cbea14e56e8d08ce232ee775403ad811c27a280520d7efa1a",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-additional-test-output-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-additional-test-output-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2/android-test-plugin-host-retention-proto-31.0.2.pom",
+		"sha256": "055c33b308ae5bd9c3ab760ffe50f92c1a20bcdffe30f925c8234b48337fbda1",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-retention-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2/android-test-plugin-host-retention-proto-31.0.2.jar",
+		"sha256": "031c4c933c5e53ddb863b960074ba36ec040a2464f208d4f5d390d2b227f6505",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-retention-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-retention-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2/android-test-plugin-host-logcat-proto-31.0.2.pom",
+		"sha256": "30582f3d9e654785786e9842e7d400052d701be118b59c334e918f1fe7637fba",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-logcat-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2/android-test-plugin-host-logcat-proto-31.0.2.jar",
+		"sha256": "62234086f76d3dc1d1acbf9def72fcd7741ce2a10de587b4608ab45da62e9bc1",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-host-logcat-proto/31.0.2",
+		"dest-filename": "android-test-plugin-host-logcat-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2/android-test-plugin-result-listener-gradle-proto-31.0.2.pom",
+		"sha256": "0a180d1f1abad7b409ebce6f3552475fa53bed37c2cdab9761522f23c656f4c5",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2",
+		"dest-filename": "android-test-plugin-result-listener-gradle-proto-31.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2/android-test-plugin-result-listener-gradle-proto-31.0.2.jar",
+		"sha256": "38c664b016fc380676ab80fb9da0c42f13b049cfd98d16467a2049fe85072e70",
+		"dest": "maven-local/com/android/tools/utp/android-test-plugin-result-listener-gradle-proto/31.0.2",
+		"dest-filename": "android-test-plugin-result-listener-gradle-proto-31.0.2.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://dl.google.com/android/maven2/com/android/databinding/baseLibrary/8.0.2/baseLibrary-8.0.2.pom",
 		"sha256": "109e5619816b78f2830b356f58c004abe741cfc791f418da7628287ae659b735",
 		"dest": "maven-local/com/android/databinding/baseLibrary/8.0.2",
@@ -607,6 +621,20 @@
 		"sha256": "530b2113317ff4d0f69ffdfb49387ba4b86aac169e1c77dff943405b79adcf8b",
 		"dest": "maven-local/com/android/databinding/baseLibrary/8.0.2",
 		"dest-filename": "baseLibrary-8.0.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/signflinger/8.0.2/signflinger-8.0.2.pom",
+		"sha256": "52235fa6135412c6bea143b352e80bcee680573ae0a084f4757e6d11cc56f2c6",
+		"dest": "maven-local/com/android/signflinger/8.0.2",
+		"dest-filename": "signflinger-8.0.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://dl.google.com/android/maven2/com/android/signflinger/8.0.2/signflinger-8.0.2.jar",
+		"sha256": "1f25f3f9c5d706fd7bc133a45bf35511093197d540635a613d1aae11260e314a",
+		"dest": "maven-local/com/android/signflinger/8.0.2",
+		"dest-filename": "signflinger-8.0.2.jar"
 	},
 	{
 		"type": "file",
@@ -624,17 +652,185 @@
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/signflinger/8.0.2/signflinger-8.0.2.pom",
-		"sha256": "52235fa6135412c6bea143b352e80bcee680573ae0a084f4757e6d11cc56f2c6",
-		"dest": "maven-local/com/android/signflinger/8.0.2",
-		"dest-filename": "signflinger-8.0.2.pom"
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-runtime-parent/2.3.2/jaxb-runtime-parent-2.3.2.pom",
+		"sha256": "b24f8d51f184a68bc1b86d48c0e3cfefeb21a44ede1c5f7303c58ae0488533ec",
+		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-runtime-parent/2.3.2",
+		"dest-filename": "jaxb-runtime-parent-2.3.2.pom"
 	},
 	{
 		"type": "file",
-		"url": "https://dl.google.com/android/maven2/com/android/signflinger/8.0.2/signflinger-8.0.2.jar",
-		"sha256": "1f25f3f9c5d706fd7bc133a45bf35511093197d540635a613d1aae11260e314a",
-		"dest": "maven-local/com/android/signflinger/8.0.2",
-		"dest-filename": "signflinger-8.0.2.jar"
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-parent/2.3.2/jaxb-parent-2.3.2.pom",
+		"sha256": "20dd6dc34ab7549ac40da1d82e92222ec4347ad0ec0cb118ef6c5703bed53a18",
+		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-parent/2.3.2",
+		"dest-filename": "jaxb-parent-2.3.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-txw-parent/2.3.2/jaxb-txw-parent-2.3.2.pom",
+		"sha256": "b55d3efa9b158f483a30e92c78ccb600f93314733d089eba9b74436f01b314a4",
+		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-txw-parent/2.3.2",
+		"dest-filename": "jaxb-txw-parent-2.3.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/jaxb-bom-ext/2.3.2/jaxb-bom-ext-2.3.2.pom",
+		"sha256": "1a7dec2b27e7e055744cdb8cf1b90def4fd473acd1b804eff098139358959bd7",
+		"dest": "maven-local/com/sun/xml/bind/jaxb-bom-ext/2.3.2",
+		"dest-filename": "jaxb-bom-ext-2.3.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/FastInfoset/1.2.16/FastInfoset-1.2.16.pom",
+		"sha256": "e147d258ab6e6691f70599a952400e6e6c7558f8c9c028dbe1be23178308e830",
+		"dest": "maven-local/com/sun/xml/fastinfoset/FastInfoset/1.2.16",
+		"dest-filename": "FastInfoset-1.2.16.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/FastInfoset/1.2.16/FastInfoset-1.2.16.jar",
+		"sha256": "056f3a1e144409f21ed16afc26805f58e9a21f3fce1543c42d400719d250c511",
+		"dest": "maven-local/com/sun/xml/fastinfoset/FastInfoset/1.2.16",
+		"dest-filename": "FastInfoset-1.2.16.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/fastinfoset-project/1.2.16/fastinfoset-project-1.2.16.pom",
+		"sha256": "90582425adc1f40b41362dafb95173931225acaa5e79620d5e6bd52f646292ba",
+		"dest": "maven-local/com/sun/xml/fastinfoset/fastinfoset-project/1.2.16",
+		"dest-filename": "fastinfoset-project-1.2.16.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.pom",
+		"sha256": "f879b6e945854c6900b0dbee1c8384d7ab3de7e157fd7ac84937405c416d2a5e",
+		"dest": "maven-local/com/sun/activation/javax.activation/1.2.0",
+		"dest-filename": "javax.activation-1.2.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.jar",
+		"sha256": "993302b16cd7056f21e779cc577d175a810bb4900ef73cd8fbf2b50f928ba9ce",
+		"dest": "maven-local/com/sun/activation/javax.activation/1.2.0",
+		"dest-filename": "javax.activation-1.2.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/activation/all/1.2.0/all-1.2.0.pom",
+		"sha256": "1d8518e3ac7532a104e4f7be77def37c982e530723c6bdb3d67708cce2b0c2c4",
+		"dest": "maven-local/com/sun/activation/all/1.2.0",
+		"dest-filename": "all-1.2.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/activation/all/1.2.1/all-1.2.1.pom",
+		"sha256": "360883bf64486ecef161b8f282f6503536dd1a670d53a0a871c8fb20170e6795",
+		"dest": "maven-local/com/sun/activation/all/1.2.1",
+		"dest-filename": "all-1.2.1.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons-runtime/3.0.8/istack-commons-runtime-3.0.8.pom",
+		"sha256": "c2e014d34cb84ed287d064986c45c305a4124228a7337eccf6c421d14d708f1c",
+		"dest": "maven-local/com/sun/istack/istack-commons-runtime/3.0.8",
+		"dest-filename": "istack-commons-runtime-3.0.8.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons-runtime/3.0.8/istack-commons-runtime-3.0.8.jar",
+		"sha256": "4ffabb06be454a05e4398e20c77fa2b6308d4b88dfbef7ca30a76b5b7d5505ef",
+		"dest": "maven-local/com/sun/istack/istack-commons-runtime/3.0.8",
+		"dest-filename": "istack-commons-runtime-3.0.8.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons/3.0.8/istack-commons-3.0.8.pom",
+		"sha256": "a0f0517e8512f0fbcc7b8295c12f6566a3d0c2d86d655639dc662ef8c0c7ebe5",
+		"dest": "maven-local/com/sun/istack/istack-commons/3.0.8",
+		"dest-filename": "istack-commons-3.0.8.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/javapoet/1.10.0/javapoet-1.10.0.pom",
+		"sha256": "1690340a222279f2cbadf373e88826fa20f7f3cc3ec0252f36818fed32701ab1",
+		"dest": "maven-local/com/squareup/javapoet/1.10.0",
+		"dest-filename": "javapoet-1.10.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/javapoet/1.10.0/javapoet-1.10.0.jar",
+		"sha256": "20ef4b82e43ff7c652281a21313cf3b941092467add3fa73509c26f6969efdab",
+		"dest": "maven-local/com/squareup/javapoet/1.10.0",
+		"dest-filename": "javapoet-1.10.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom",
+		"sha256": "e1abd7f1116cf5e0c59947693e2189208ec94296b2a3394c959e3511d399a7b0",
+		"dest": "maven-local/com/squareup/javawriter/2.5.0",
+		"dest-filename": "javawriter-2.5.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.jar",
+		"sha256": "fcfb09fb0ea0aa97d3cfe7ea792398081348e468f126b3603cb3803f240197f0",
+		"dest": "maven-local/com/squareup/javawriter/2.5.0",
+		"dest-filename": "javawriter-2.5.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.pom",
+		"sha256": "7a2d427b38b17e076da64ee8d2102e64888dcb238aee5e2dba4a7752c94a3fde",
+		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
+		"dest-filename": "okhttp-4.11.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.module",
+		"sha256": "567c25b51d77796174439184d752412ba97ed9fdb65fc71840dbc5563beb8fa8",
+		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
+		"dest-filename": "okhttp-4.11.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.jar",
+		"sha256": "ee8f6bd6cd1257013d748330f4ca147638a9fbcb52fb388d5ac93cf53408745d",
+		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
+		"dest-filename": "okhttp-4.11.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/3.2.0/okio-3.2.0.pom",
+		"sha256": "8b46f58d9b9aeb1178361d58a6865f4dad665930c5ff7b55e0baa61ef3a972a1",
+		"dest": "maven-local/com/squareup/okio/okio/3.2.0",
+		"dest-filename": "okio-3.2.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/3.2.0/okio-3.2.0.module",
+		"sha256": "681f5cec170de45b95493e9ee705868eb35adf898ee06f96e22d197250c1b104",
+		"dest": "maven-local/com/squareup/okio/okio/3.2.0",
+		"dest-filename": "okio-3.2.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.pom",
+		"sha256": "5c451f94a76bea861b6ef2bf84e8f57200545968c86555abdfed13c7ca2d489d",
+		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
+		"dest-filename": "okio-jvm-3.2.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.module",
+		"sha256": "a778f39085ed6abfcd687112986c6385aa57ac2d8840b21d946b3c2095f30ea4",
+		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
+		"dest-filename": "okio-jvm-3.2.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.jar",
+		"sha256": "b642baef4c570055de4cb3d1667b2b16dced901ff8066345a063691aa06025a4",
+		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
+		"dest-filename": "okio-jvm-3.2.0.jar"
 	},
 	{
 		"type": "file",
@@ -869,6 +1065,48 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.pom",
+		"sha256": "1c76cd462fc96e7aa96dc70ce82f0d54063d6df16db35c9c7d9cc0d1a99d3fff",
+		"dest": "maven-local/com/google/auto/value/auto-value-annotations/1.6.2",
+		"dest-filename": "auto-value-annotations-1.6.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.jar",
+		"sha256": "b48b04ddba40e8ac33bf036f06fc43995fc5084bd94bdaace807ce27d3bea3fb",
+		"dest": "maven-local/com/google/auto/value/auto-value-annotations/1.6.2",
+		"dest-filename": "auto-value-annotations-1.6.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom",
+		"sha256": "27b640c82179f5cff62009c0b72033d9bc60f60e9902a66802274b7fe37fc81c",
+		"dest": "maven-local/com/google/auto/value/auto-value-parent/1.6.2",
+		"dest-filename": "auto-value-parent-1.6.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/auto/auto-parent/6/auto-parent-6.pom",
+		"sha256": "05f740c6648165db00cf618dd56c200c4725e358e6d54f5853e0bec15734ea0a",
+		"dest": "maven-local/com/google/auto/auto-parent/6",
+		"dest-filename": "auto-parent-6.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.pom",
+		"sha256": "265ba959a8e13c3a06133f04b539169c1018daffd4d33f53c453ab4cb386f570",
+		"dest": "maven-local/com/google/dagger/dagger/2.28.3",
+		"dest-filename": "dagger-2.28.3.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.jar",
+		"sha256": "f1dd23f8ae34a8e91366723991ead0d6499d1a3e9163ce550c200b02d76a872b",
+		"dest": "maven-local/com/google/dagger/dagger/2.28.3",
+		"dest-filename": "dagger-2.28.3.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.3.1/error_prone_annotations-2.3.1.pom",
 		"sha256": "3edce6b711ba368efe16b9b7aacb0214fbd648414cb9b965953a2e7ed89a819a",
 		"dest": "maven-local/com/google/errorprone/error_prone_annotations/2.3.1",
@@ -915,48 +1153,6 @@
 		"sha256": "07891a87c490f900c12097bee95ec1cb6e071c8a7df810666387e0c772f089fa",
 		"dest": "maven-local/com/google/errorprone/error_prone_parent/2.10.0",
 		"dest-filename": "error_prone_parent-2.10.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.pom",
-		"sha256": "1c76cd462fc96e7aa96dc70ce82f0d54063d6df16db35c9c7d9cc0d1a99d3fff",
-		"dest": "maven-local/com/google/auto/value/auto-value-annotations/1.6.2",
-		"dest-filename": "auto-value-annotations-1.6.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-annotations/1.6.2/auto-value-annotations-1.6.2.jar",
-		"sha256": "b48b04ddba40e8ac33bf036f06fc43995fc5084bd94bdaace807ce27d3bea3fb",
-		"dest": "maven-local/com/google/auto/value/auto-value-annotations/1.6.2",
-		"dest-filename": "auto-value-annotations-1.6.2.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/auto/value/auto-value-parent/1.6.2/auto-value-parent-1.6.2.pom",
-		"sha256": "27b640c82179f5cff62009c0b72033d9bc60f60e9902a66802274b7fe37fc81c",
-		"dest": "maven-local/com/google/auto/value/auto-value-parent/1.6.2",
-		"dest-filename": "auto-value-parent-1.6.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/auto/auto-parent/6/auto-parent-6.pom",
-		"sha256": "05f740c6648165db00cf618dd56c200c4725e358e6d54f5853e0bec15734ea0a",
-		"dest": "maven-local/com/google/auto/auto-parent/6",
-		"dest-filename": "auto-parent-6.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.pom",
-		"sha256": "265ba959a8e13c3a06133f04b539169c1018daffd4d33f53c453ab4cb386f570",
-		"dest": "maven-local/com/google/dagger/dagger/2.28.3",
-		"dest-filename": "dagger-2.28.3.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/google/dagger/dagger/2.28.3/dagger-2.28.3.jar",
-		"sha256": "f1dd23f8ae34a8e91366723991ead0d6499d1a3e9163ce550c200b02d76a872b",
-		"dest": "maven-local/com/google/dagger/dagger/2.28.3",
-		"dest-filename": "dagger-2.28.3.jar"
 	},
 	{
 		"type": "file",
@@ -1016,188 +1212,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-runtime-parent/2.3.2/jaxb-runtime-parent-2.3.2.pom",
-		"sha256": "b24f8d51f184a68bc1b86d48c0e3cfefeb21a44ede1c5f7303c58ae0488533ec",
-		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-runtime-parent/2.3.2",
-		"dest-filename": "jaxb-runtime-parent-2.3.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-parent/2.3.2/jaxb-parent-2.3.2.pom",
-		"sha256": "20dd6dc34ab7549ac40da1d82e92222ec4347ad0ec0cb118ef6c5703bed53a18",
-		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-parent/2.3.2",
-		"dest-filename": "jaxb-parent-2.3.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/mvn/jaxb-txw-parent/2.3.2/jaxb-txw-parent-2.3.2.pom",
-		"sha256": "b55d3efa9b158f483a30e92c78ccb600f93314733d089eba9b74436f01b314a4",
-		"dest": "maven-local/com/sun/xml/bind/mvn/jaxb-txw-parent/2.3.2",
-		"dest-filename": "jaxb-txw-parent-2.3.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/bind/jaxb-bom-ext/2.3.2/jaxb-bom-ext-2.3.2.pom",
-		"sha256": "1a7dec2b27e7e055744cdb8cf1b90def4fd473acd1b804eff098139358959bd7",
-		"dest": "maven-local/com/sun/xml/bind/jaxb-bom-ext/2.3.2",
-		"dest-filename": "jaxb-bom-ext-2.3.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/FastInfoset/1.2.16/FastInfoset-1.2.16.pom",
-		"sha256": "e147d258ab6e6691f70599a952400e6e6c7558f8c9c028dbe1be23178308e830",
-		"dest": "maven-local/com/sun/xml/fastinfoset/FastInfoset/1.2.16",
-		"dest-filename": "FastInfoset-1.2.16.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/FastInfoset/1.2.16/FastInfoset-1.2.16.jar",
-		"sha256": "056f3a1e144409f21ed16afc26805f58e9a21f3fce1543c42d400719d250c511",
-		"dest": "maven-local/com/sun/xml/fastinfoset/FastInfoset/1.2.16",
-		"dest-filename": "FastInfoset-1.2.16.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/xml/fastinfoset/fastinfoset-project/1.2.16/fastinfoset-project-1.2.16.pom",
-		"sha256": "90582425adc1f40b41362dafb95173931225acaa5e79620d5e6bd52f646292ba",
-		"dest": "maven-local/com/sun/xml/fastinfoset/fastinfoset-project/1.2.16",
-		"dest-filename": "fastinfoset-project-1.2.16.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.pom",
-		"sha256": "f879b6e945854c6900b0dbee1c8384d7ab3de7e157fd7ac84937405c416d2a5e",
-		"dest": "maven-local/com/sun/activation/javax.activation/1.2.0",
-		"dest-filename": "javax.activation-1.2.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.jar",
-		"sha256": "993302b16cd7056f21e779cc577d175a810bb4900ef73cd8fbf2b50f928ba9ce",
-		"dest": "maven-local/com/sun/activation/javax.activation/1.2.0",
-		"dest-filename": "javax.activation-1.2.0.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/activation/all/1.2.0/all-1.2.0.pom",
-		"sha256": "1d8518e3ac7532a104e4f7be77def37c982e530723c6bdb3d67708cce2b0c2c4",
-		"dest": "maven-local/com/sun/activation/all/1.2.0",
-		"dest-filename": "all-1.2.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/activation/all/1.2.1/all-1.2.1.pom",
-		"sha256": "360883bf64486ecef161b8f282f6503536dd1a670d53a0a871c8fb20170e6795",
-		"dest": "maven-local/com/sun/activation/all/1.2.1",
-		"dest-filename": "all-1.2.1.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons-runtime/3.0.8/istack-commons-runtime-3.0.8.pom",
-		"sha256": "c2e014d34cb84ed287d064986c45c305a4124228a7337eccf6c421d14d708f1c",
-		"dest": "maven-local/com/sun/istack/istack-commons-runtime/3.0.8",
-		"dest-filename": "istack-commons-runtime-3.0.8.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons-runtime/3.0.8/istack-commons-runtime-3.0.8.jar",
-		"sha256": "4ffabb06be454a05e4398e20c77fa2b6308d4b88dfbef7ca30a76b5b7d5505ef",
-		"dest": "maven-local/com/sun/istack/istack-commons-runtime/3.0.8",
-		"dest-filename": "istack-commons-runtime-3.0.8.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/sun/istack/istack-commons/3.0.8/istack-commons-3.0.8.pom",
-		"sha256": "a0f0517e8512f0fbcc7b8295c12f6566a3d0c2d86d655639dc662ef8c0c7ebe5",
-		"dest": "maven-local/com/sun/istack/istack-commons/3.0.8",
-		"dest-filename": "istack-commons-3.0.8.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/javapoet/1.10.0/javapoet-1.10.0.pom",
-		"sha256": "1690340a222279f2cbadf373e88826fa20f7f3cc3ec0252f36818fed32701ab1",
-		"dest": "maven-local/com/squareup/javapoet/1.10.0",
-		"dest-filename": "javapoet-1.10.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/javapoet/1.10.0/javapoet-1.10.0.jar",
-		"sha256": "20ef4b82e43ff7c652281a21313cf3b941092467add3fa73509c26f6969efdab",
-		"dest": "maven-local/com/squareup/javapoet/1.10.0",
-		"dest-filename": "javapoet-1.10.0.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.pom",
-		"sha256": "e1abd7f1116cf5e0c59947693e2189208ec94296b2a3394c959e3511d399a7b0",
-		"dest": "maven-local/com/squareup/javawriter/2.5.0",
-		"dest-filename": "javawriter-2.5.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/javawriter/2.5.0/javawriter-2.5.0.jar",
-		"sha256": "fcfb09fb0ea0aa97d3cfe7ea792398081348e468f126b3603cb3803f240197f0",
-		"dest": "maven-local/com/squareup/javawriter/2.5.0",
-		"dest-filename": "javawriter-2.5.0.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.pom",
-		"sha256": "7a2d427b38b17e076da64ee8d2102e64888dcb238aee5e2dba4a7752c94a3fde",
-		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
-		"dest-filename": "okhttp-4.11.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.module",
-		"sha256": "567c25b51d77796174439184d752412ba97ed9fdb65fc71840dbc5563beb8fa8",
-		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
-		"dest-filename": "okhttp-4.11.0.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.jar",
-		"sha256": "ee8f6bd6cd1257013d748330f4ca147638a9fbcb52fb388d5ac93cf53408745d",
-		"dest": "maven-local/com/squareup/okhttp3/okhttp/4.11.0",
-		"dest-filename": "okhttp-4.11.0.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/3.2.0/okio-3.2.0.pom",
-		"sha256": "8b46f58d9b9aeb1178361d58a6865f4dad665930c5ff7b55e0baa61ef3a972a1",
-		"dest": "maven-local/com/squareup/okio/okio/3.2.0",
-		"dest-filename": "okio-3.2.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio/3.2.0/okio-3.2.0.module",
-		"sha256": "681f5cec170de45b95493e9ee705868eb35adf898ee06f96e22d197250c1b104",
-		"dest": "maven-local/com/squareup/okio/okio/3.2.0",
-		"dest-filename": "okio-3.2.0.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.pom",
-		"sha256": "5c451f94a76bea861b6ef2bf84e8f57200545968c86555abdfed13c7ca2d489d",
-		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
-		"dest-filename": "okio-jvm-3.2.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.module",
-		"sha256": "a778f39085ed6abfcd687112986c6385aa57ac2d8840b21d946b3c2095f30ea4",
-		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
-		"dest-filename": "okio-jvm-3.2.0.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.jar",
-		"sha256": "b642baef4c570055de4cb3d1667b2b16dced901ff8066345a063691aa06025a4",
-		"dest": "maven-local/com/squareup/okio/okio-jvm/3.2.0",
-		"dest-filename": "okio-jvm-3.2.0.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://repo1.maven.org/maven2/com/googlecode/juniversalchardet/juniversalchardet/1.0.3/juniversalchardet-1.0.3.pom",
 		"sha256": "7846399b35c7cd642a9b3a000c3e2d62d04eb37a4547b6933cc8b18bcc2f086b",
 		"dest": "maven-local/com/googlecode/juniversalchardet/juniversalchardet/1.0.3",
@@ -1240,27 +1254,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.pom",
-		"sha256": "054e2364e3ad04a0b5efc1cec1204e0f376fccf59e3e7edeb455cc771f667642",
-		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
-		"dest-filename": "foc-1.2.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.module",
-		"sha256": "c5eabe89ae7320aa7940cbc0dd7be6780049135d413dd015dd249a77a10922a8",
-		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
-		"dest-filename": "foc-1.2.module"
-	},
-	{
-		"type": "file",
-		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.jar",
-		"sha256": "683da6288c0ae5b68db79fdb4eb99e0c14507f062cd1ca453c83c84afd556aaf",
-		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
-		"dest-filename": "foc-1.2.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://jitpack.io/com/github/bailuk/mapsforge-gtk/0.3.0-pre.2/mapsforge-gtk-0.3.0-pre.2.pom",
 		"sha256": "d1c9e211bd83a219c2302ee8e5cb7ea31dd472e3e54aac6e1b304fbe3e9bd979",
 		"dest": "maven-local/com/github/bailuk/mapsforge-gtk/0.3.0-pre.2",
@@ -1300,6 +1293,27 @@
 		"sha256": "0c20594da59077a1d11371222761972301362381cf874bfa6680c68e9a344dc8",
 		"dest": "maven-local/com/github/bailuk/java-gtk/0.4.0",
 		"dest-filename": "java-gtk-0.4.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.pom",
+		"sha256": "054e2364e3ad04a0b5efc1cec1204e0f376fccf59e3e7edeb455cc771f667642",
+		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
+		"dest-filename": "foc-1.2.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.module",
+		"sha256": "c5eabe89ae7320aa7940cbc0dd7be6780049135d413dd015dd249a77a10922a8",
+		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
+		"dest-filename": "foc-1.2.module"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/1.2/foc-1.2.jar",
+		"sha256": "683da6288c0ae5b68db79fdb4eb99e0c14507f062cd1ca453c83c84afd556aaf",
+		"dest": "maven-local/com/github/bailuk/foc/foc/1.2",
+		"dest-filename": "foc-1.2.jar"
 	},
 	{
 		"type": "file",
@@ -1422,20 +1436,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.45.1/grpc-netty-1.45.1.pom",
-		"sha256": "35103fe65cfcd5ddc8fbedaeead923150d539d31a884235c716ec5c9bbb9a196",
-		"dest": "maven-local/io/grpc/grpc-netty/1.45.1",
-		"dest-filename": "grpc-netty-1.45.1.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.45.1/grpc-netty-1.45.1.jar",
-		"sha256": "0fef3ca6747242624cad219fdd13b5dbca121de04ea122f5cb1cb5082d998313",
-		"dest": "maven-local/io/grpc/grpc-netty/1.45.1",
-		"dest-filename": "grpc-netty-1.45.1.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://repo1.maven.org/maven2/io/grpc/grpc-core/1.45.1/grpc-core-1.45.1.pom",
 		"sha256": "6039fc5f3c897ea140940c129075c828833ce31334f134347db15991cda21ec9",
 		"dest": "maven-local/io/grpc/grpc-core/1.45.1",
@@ -1461,6 +1461,20 @@
 		"sha256": "f59fe662030e30923a91c5d80bf3a25486be2740d08b6757575e7c4213782694",
 		"dest": "maven-local/io/grpc/grpc-protobuf/1.45.1",
 		"dest-filename": "grpc-protobuf-1.45.1.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.45.1/grpc-netty-1.45.1.pom",
+		"sha256": "35103fe65cfcd5ddc8fbedaeead923150d539d31a884235c716ec5c9bbb9a196",
+		"dest": "maven-local/io/grpc/grpc-netty/1.45.1",
+		"dest-filename": "grpc-netty-1.45.1.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/grpc/grpc-netty/1.45.1/grpc-netty-1.45.1.jar",
+		"sha256": "0fef3ca6747242624cad219fdd13b5dbca121de04ea122f5cb1cb5082d998313",
+		"dest": "maven-local/io/grpc/grpc-netty/1.45.1",
+		"dest-filename": "grpc-netty-1.45.1.jar"
 	},
 	{
 		"type": "file",
@@ -1576,6 +1590,20 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.72.Final/netty-handler-4.1.72.Final.pom",
+		"sha256": "2849ebc75cc07cad1391de74fcff47b42f055bb67678585c69c2c1b12b323ee9",
+		"dest": "maven-local/io/netty/netty-handler/4.1.72.Final",
+		"dest-filename": "netty-handler-4.1.72.Final.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.72.Final/netty-handler-4.1.72.Final.jar",
+		"sha256": "9cb6012af7e06361d738ac4e3bdc49a158f8cf87d9dee0f2744056b7d99c28d5",
+		"dest": "maven-local/io/netty/netty-handler/4.1.72.Final",
+		"dest-filename": "netty-handler-4.1.72.Final.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.72.Final/netty-transport-4.1.72.Final.pom",
 		"sha256": "cf29bd872a8c2afbcdb74b27a9e90e67195685f57011d5dfc475a4f261794db4",
 		"dest": "maven-local/io/netty/netty-transport/4.1.72.Final",
@@ -1587,6 +1615,34 @@
 		"sha256": "c5fb68e9a65b6e8a516adfcb9fa323479ee7b4d9449d8a529d2ecab3d3711d5a",
 		"dest": "maven-local/io/netty/netty-transport/4.1.72.Final",
 		"dest-filename": "netty-transport-4.1.72.Final.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.72.Final/netty-codec-4.1.72.Final.pom",
+		"sha256": "2d88d1a230acca4797454782c5226e1612721d4e73927c142fde95a29d49542a",
+		"dest": "maven-local/io/netty/netty-codec/4.1.72.Final",
+		"dest-filename": "netty-codec-4.1.72.Final.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.72.Final/netty-codec-4.1.72.Final.jar",
+		"sha256": "5d8591ca271a1e9c224e8de3873aa9936acb581ee0db514e7dc18523df36d16c",
+		"dest": "maven-local/io/netty/netty-codec/4.1.72.Final",
+		"dest-filename": "netty-codec-4.1.72.Final.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.72.Final/netty-buffer-4.1.72.Final.pom",
+		"sha256": "459301da749cb5eaf721b5cac39c0660b2d59fc66264091536e121cb18d8b413",
+		"dest": "maven-local/io/netty/netty-buffer/4.1.72.Final",
+		"dest-filename": "netty-buffer-4.1.72.Final.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.72.Final/netty-buffer-4.1.72.Final.jar",
+		"sha256": "568ff7cd9d8e2284ec980730c88924f686642929f8f219a74518b4e64755f3a1",
+		"dest": "maven-local/io/netty/netty-buffer/4.1.72.Final",
+		"dest-filename": "netty-buffer-4.1.72.Final.jar"
 	},
 	{
 		"type": "file",
@@ -1615,48 +1671,6 @@
 		"sha256": "fa6fec88010bfaf6a7415b5364671b6b18ffb6b35a986ab97b423fd8c3a0174b",
 		"dest": "maven-local/io/netty/netty-codec-http/4.1.72.Final",
 		"dest-filename": "netty-codec-http-4.1.72.Final.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.72.Final/netty-handler-4.1.72.Final.pom",
-		"sha256": "2849ebc75cc07cad1391de74fcff47b42f055bb67678585c69c2c1b12b323ee9",
-		"dest": "maven-local/io/netty/netty-handler/4.1.72.Final",
-		"dest-filename": "netty-handler-4.1.72.Final.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.72.Final/netty-handler-4.1.72.Final.jar",
-		"sha256": "9cb6012af7e06361d738ac4e3bdc49a158f8cf87d9dee0f2744056b7d99c28d5",
-		"dest": "maven-local/io/netty/netty-handler/4.1.72.Final",
-		"dest-filename": "netty-handler-4.1.72.Final.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.72.Final/netty-buffer-4.1.72.Final.pom",
-		"sha256": "459301da749cb5eaf721b5cac39c0660b2d59fc66264091536e121cb18d8b413",
-		"dest": "maven-local/io/netty/netty-buffer/4.1.72.Final",
-		"dest-filename": "netty-buffer-4.1.72.Final.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.72.Final/netty-buffer-4.1.72.Final.jar",
-		"sha256": "568ff7cd9d8e2284ec980730c88924f686642929f8f219a74518b4e64755f3a1",
-		"dest": "maven-local/io/netty/netty-buffer/4.1.72.Final",
-		"dest-filename": "netty-buffer-4.1.72.Final.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.72.Final/netty-codec-4.1.72.Final.pom",
-		"sha256": "2d88d1a230acca4797454782c5226e1612721d4e73927c142fde95a29d49542a",
-		"dest": "maven-local/io/netty/netty-codec/4.1.72.Final",
-		"dest-filename": "netty-codec-4.1.72.Final.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.72.Final/netty-codec-4.1.72.Final.jar",
-		"sha256": "5d8591ca271a1e9c224e8de3873aa9936acb581ee0db514e7dc18523df36d16c",
-		"dest": "maven-local/io/netty/netty-codec/4.1.72.Final",
-		"dest-filename": "netty-codec-4.1.72.Final.jar"
 	},
 	{
 		"type": "file",
@@ -1947,17 +1961,31 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-util-klib/1.8.21/kotlin-util-klib-1.8.21.pom",
-		"sha256": "6ec357337b65082419e123db5e844df3135694b6891083884c02b1c11f301d6b",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-util-klib/1.8.21",
-		"dest-filename": "kotlin-util-klib-1.8.21.pom"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21/kotlin-tooling-core-1.8.21.pom",
+		"sha256": "c551ed7d8bc0bbec110be667567aab4d5a05f53dc0abd6b555e23473187ce1db",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21",
+		"dest-filename": "kotlin-tooling-core-1.8.21.pom"
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-util-klib/1.8.21/kotlin-util-klib-1.8.21.jar",
-		"sha256": "d30ef0448aedf5a3d589697b7ba3ddf35cabe9a91335b274a045bfcb93ab2677",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-util-klib/1.8.21",
-		"dest-filename": "kotlin-util-klib-1.8.21.jar"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21/kotlin-tooling-core-1.8.21.jar",
+		"sha256": "7a412677e73a59588cdad4cb9c7f8e3bb70bae5db66933b4b3f3ece0071b4cad",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21",
+		"dest-filename": "kotlin-tooling-core-1.8.21.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21/kotlin-annotation-processing-gradle-1.8.21.pom",
+		"sha256": "1dae41f693d711537c05c336c002b8aa6c08146766c0023d64e02890954bf4b5",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21",
+		"dest-filename": "kotlin-annotation-processing-gradle-1.8.21.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21/kotlin-annotation-processing-gradle-1.8.21.jar",
+		"sha256": "db32e31c742f3c28c9b834f777967927a34ae5140ae6583ba4698f8f932700e3",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21",
+		"dest-filename": "kotlin-annotation-processing-gradle-1.8.21.jar"
 	},
 	{
 		"type": "file",
@@ -1989,6 +2017,13 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21/kotlin-gradle-plugin-api-1.8.21.jar",
+		"sha256": "41490f12ad0f396c69baefa53c6e4f3381f147b69e12430b46f24fe5530c537c",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-api-1.8.21.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21/kotlin-gradle-plugin-api-1.8.21-gradle76.jar",
 		"sha256": "41490f12ad0f396c69baefa53c6e4f3381f147b69e12430b46f24fe5530c537c",
 		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21",
@@ -1996,10 +2031,38 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21/kotlin-gradle-plugin-api-1.8.21.jar",
-		"sha256": "41490f12ad0f396c69baefa53c6e4f3381f147b69e12430b46f24fe5530c537c",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-api-1.8.21.jar"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21/kotlin-android-extensions-1.8.21.pom",
+		"sha256": "cdb21aabe8b70c284ff6cf66913b6038ec97be95e36d70082d0c4f6d3c57d929",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21",
+		"dest-filename": "kotlin-android-extensions-1.8.21.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21/kotlin-android-extensions-1.8.21.jar",
+		"sha256": "7468557042b350db853c1684cc2e24d37b5e4a1e09220abca93a50c7ba91c08f",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21",
+		"dest-filename": "kotlin-android-extensions-1.8.21.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.pom",
+		"sha256": "31d1befcdcd2534a0d198d478f3a53cf02785f477820d74d365b54de04ab0588",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.module",
+		"sha256": "3263766f403817fb39592d760a100d585061ceb156af79e34a5a9b97c169836e",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.jar",
+		"sha256": "497026858128a22a8e296f2236dd48ebed49d4034c6dc2c332cb6c931c2515cd",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.jar"
 	},
 	{
 		"type": "file",
@@ -2031,6 +2094,20 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-util-klib/1.8.21/kotlin-util-klib-1.8.21.pom",
+		"sha256": "6ec357337b65082419e123db5e844df3135694b6891083884c02b1c11f301d6b",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-util-klib/1.8.21",
+		"dest-filename": "kotlin-util-klib-1.8.21.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-util-klib/1.8.21/kotlin-util-klib-1.8.21.jar",
+		"sha256": "d30ef0448aedf5a3d589697b7ba3ddf35cabe9a91335b274a045bfcb93ab2677",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-util-klib/1.8.21",
+		"dest-filename": "kotlin-util-klib-1.8.21.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea-proto/1.8.21/kotlin-gradle-plugin-idea-proto-1.8.21.pom",
 		"sha256": "fb2223114e1ff586c6205f92afd3bfc6b297c73b857d03a846ee6f8262d8f1e0",
 		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea-proto/1.8.21",
@@ -2042,69 +2119,6 @@
 		"sha256": "10f2cbf865bff376040e41ea2479f0f50f590efc4afeac5ddbb38f251509ca12",
 		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea-proto/1.8.21",
 		"dest-filename": "kotlin-gradle-plugin-idea-proto-1.8.21.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21/kotlin-annotation-processing-gradle-1.8.21.pom",
-		"sha256": "1dae41f693d711537c05c336c002b8aa6c08146766c0023d64e02890954bf4b5",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21",
-		"dest-filename": "kotlin-annotation-processing-gradle-1.8.21.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21/kotlin-annotation-processing-gradle-1.8.21.jar",
-		"sha256": "db32e31c742f3c28c9b834f777967927a34ae5140ae6583ba4698f8f932700e3",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-annotation-processing-gradle/1.8.21",
-		"dest-filename": "kotlin-annotation-processing-gradle-1.8.21.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.pom",
-		"sha256": "a1defe31548fe1789e5230f5302e312408ca6416ab29e73a0ff3d0cacbdb0d4e",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.module",
-		"sha256": "ae5ec66d98a2b606b6190a8c87c23666fedc2f727f8b9ea167d38cb1e33ffe9d",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.jar",
-		"sha256": "503049a1dfc2830a2347dd1bf298d2727e99d2e9673b15c2884e208553dd6adb",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21/kotlin-android-extensions-1.8.21.pom",
-		"sha256": "cdb21aabe8b70c284ff6cf66913b6038ec97be95e36d70082d0c4f6d3c57d929",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21",
-		"dest-filename": "kotlin-android-extensions-1.8.21.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21/kotlin-android-extensions-1.8.21.jar",
-		"sha256": "7468557042b350db853c1684cc2e24d37b5e4a1e09220abca93a50c7ba91c08f",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-android-extensions/1.8.21",
-		"dest-filename": "kotlin-android-extensions-1.8.21.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21/kotlin-tooling-core-1.8.21.pom",
-		"sha256": "c551ed7d8bc0bbec110be667567aab4d5a05f53dc0abd6b555e23473187ce1db",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21",
-		"dest-filename": "kotlin-tooling-core-1.8.21.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21/kotlin-tooling-core-1.8.21.jar",
-		"sha256": "7a412677e73a59588cdad4cb9c7f8e3bb70bae5db66933b4b3f3ece0071b4cad",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-tooling-core/1.8.21",
-		"dest-filename": "kotlin-tooling-core-1.8.21.jar"
 	},
 	{
 		"type": "file",
@@ -2150,24 +2164,24 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.pom",
-		"sha256": "31d1befcdcd2534a0d198d478f3a53cf02785f477820d74d365b54de04ab0588",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.pom"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.pom",
+		"sha256": "a1defe31548fe1789e5230f5302e312408ca6416ab29e73a0ff3d0cacbdb0d4e",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.pom"
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.module",
-		"sha256": "3263766f403817fb39592d760a100d585061ceb156af79e34a5a9b97c169836e",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.module"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.module",
+		"sha256": "ae5ec66d98a2b606b6190a8c87c23666fedc2f727f8b9ea167d38cb1e33ffe9d",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.module"
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21/kotlin-gradle-plugin-model-1.8.21.jar",
-		"sha256": "497026858128a22a8e296f2236dd48ebed49d4034c6dc2c332cb6c931c2515cd",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-model/1.8.21",
-		"dest-filename": "kotlin-gradle-plugin-model-1.8.21.jar"
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21/kotlin-gradle-plugin-idea-1.8.21.jar",
+		"sha256": "503049a1dfc2830a2347dd1bf298d2727e99d2e9673b15c2884e208553dd6adb",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-gradle-plugin-idea/1.8.21",
+		"dest-filename": "kotlin-gradle-plugin-idea-1.8.21.jar"
 	},
 	{
 		"type": "file",
@@ -2325,20 +2339,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21/kotlin-scripting-common-1.8.21.pom",
-		"sha256": "6573449051cdbe6281dfbd42c816d22fe9b0325c99484c0bc5b68bfc1f9b3de4",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21",
-		"dest-filename": "kotlin-scripting-common-1.8.21.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21/kotlin-scripting-common-1.8.21.jar",
-		"sha256": "3f4439d47d2e542433dfa39d2a7514bf7e60aeb8e9db6b96102806684fbafd5f",
-		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21",
-		"dest-filename": "kotlin-scripting-common-1.8.21.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-scripting-jvm/1.8.21/kotlin-scripting-jvm-1.8.21.pom",
 		"sha256": "84a8f6f076516fd5a9fde9ec28b105d294d5cfc0d1b28161af9d5167c173227e",
 		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-jvm/1.8.21",
@@ -2350,6 +2350,20 @@
 		"sha256": "fa7f46ece55a4ebc4435e363c1e2016e2c28f4fe80a1aed5db3d0eae9d31f5dd",
 		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-jvm/1.8.21",
 		"dest-filename": "kotlin-scripting-jvm-1.8.21.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21/kotlin-scripting-common-1.8.21.pom",
+		"sha256": "6573449051cdbe6281dfbd42c816d22fe9b0325c99484c0bc5b68bfc1f9b3de4",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21",
+		"dest-filename": "kotlin-scripting-common-1.8.21.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21/kotlin-scripting-common-1.8.21.jar",
+		"sha256": "3f4439d47d2e542433dfa39d2a7514bf7e60aeb8e9db6b96102806684fbafd5f",
+		"dest": "maven-local/org/jetbrains/kotlin/kotlin-scripting-common/1.8.21",
+		"dest-filename": "kotlin-scripting-common-1.8.21.jar"
 	},
 	{
 		"type": "file",
@@ -2871,34 +2885,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/1.67/bcpkix-jdk15on-1.67.pom",
-		"sha256": "a9bb30bd987dc305b05ee53e9f27e6e902fc10ce3c6e99618cff0362d796b04d",
-		"dest": "maven-local/org/bouncycastle/bcpkix-jdk15on/1.67",
-		"dest-filename": "bcpkix-jdk15on-1.67.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/1.67/bcpkix-jdk15on-1.67.jar",
-		"sha256": "efbca754880ce3922ca47a43c1f0b72c45731450a0ef193b9db33bf4bb38ce5f",
-		"dest": "maven-local/org/bouncycastle/bcpkix-jdk15on/1.67",
-		"dest-filename": "bcpkix-jdk15on-1.67.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.67/bcprov-jdk15on-1.67.pom",
-		"sha256": "a473a77476dd631630ebb3a37b34812f94e6a7245c39765a14d7231b90e0645b",
-		"dest": "maven-local/org/bouncycastle/bcprov-jdk15on/1.67",
-		"dest-filename": "bcprov-jdk15on-1.67.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.67/bcprov-jdk15on-1.67.jar",
-		"sha256": "fa0041a36f9f20af3c6b8dbf6eb49a969e2c9cc029049d61acc526ba3247b3ef",
-		"dest": "maven-local/org/bouncycastle/bcprov-jdk15on/1.67",
-		"dest-filename": "bcprov-jdk15on-1.67.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/glassfish/jaxb/jaxb-runtime/2.3.2/jaxb-runtime-2.3.2.pom",
 		"sha256": "9448a5ad7fa68a6083dfbe4f42c8c83e082b9202a105401fc68e944c26548b34",
 		"dest": "maven-local/org/glassfish/jaxb/jaxb-runtime/2.3.2",
@@ -2931,6 +2917,34 @@
 		"sha256": "4a6a9f483388d461b81aa9a28c685b8b74c0597993bf1884b04eddbca95f48fe",
 		"dest": "maven-local/org/glassfish/jaxb/txw2/2.3.2",
 		"dest-filename": "txw2-2.3.2.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/1.67/bcpkix-jdk15on-1.67.pom",
+		"sha256": "a9bb30bd987dc305b05ee53e9f27e6e902fc10ce3c6e99618cff0362d796b04d",
+		"dest": "maven-local/org/bouncycastle/bcpkix-jdk15on/1.67",
+		"dest-filename": "bcpkix-jdk15on-1.67.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on/1.67/bcpkix-jdk15on-1.67.jar",
+		"sha256": "efbca754880ce3922ca47a43c1f0b72c45731450a0ef193b9db33bf4bb38ce5f",
+		"dest": "maven-local/org/bouncycastle/bcpkix-jdk15on/1.67",
+		"dest-filename": "bcpkix-jdk15on-1.67.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.67/bcprov-jdk15on-1.67.pom",
+		"sha256": "a473a77476dd631630ebb3a37b34812f94e6a7245c39765a14d7231b90e0645b",
+		"dest": "maven-local/org/bouncycastle/bcprov-jdk15on/1.67",
+		"dest-filename": "bcprov-jdk15on-1.67.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.67/bcprov-jdk15on-1.67.jar",
+		"sha256": "fa0041a36f9f20af3c6b8dbf6eb49a969e2c9cc029049d61acc526ba3247b3ef",
+		"dest": "maven-local/org/bouncycastle/bcprov-jdk15on/1.67",
+		"dest-filename": "bcprov-jdk15on-1.67.jar"
 	},
 	{
 		"type": "file",
@@ -3004,6 +3018,20 @@
 	},
 	{
 		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.pom",
+		"sha256": "13128ccf90fb31f18d8109b484516649d5db0e47284d860e71a4cf3148153ed8",
+		"dest": "maven-local/org/bitbucket/b_c/jose4j/0.7.0",
+		"dest-filename": "jose4j-0.7.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.jar",
+		"sha256": "eb14f69c0395d4a106c6c46fe6dff080c4608ccabc99b1f03933d374383d9bbe",
+		"dest": "maven-local/org/bitbucket/b_c/jose4j/0.7.0",
+		"dest-filename": "jose4j-0.7.0.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.pom",
 		"sha256": "7e0747751e9b67e19dcb5206f04ea22cc03d250c422426402eadd03513f2c314",
 		"dest": "maven-local/org/slf4j/slf4j-api/1.7.30",
@@ -3043,20 +3071,6 @@
 		"sha256": "db43711d353748269e4c28730731cd6dc44a5d9781996f34d95fe1e359d45ef1",
 		"dest": "maven-local/org/slf4j/slf4j-parent/1.7.23",
 		"dest-filename": "slf4j-parent-1.7.23.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.pom",
-		"sha256": "13128ccf90fb31f18d8109b484516649d5db0e47284d860e71a4cf3148153ed8",
-		"dest": "maven-local/org/bitbucket/b_c/jose4j/0.7.0",
-		"dest-filename": "jose4j-0.7.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/bitbucket/b_c/jose4j/0.7.0/jose4j-0.7.0.jar",
-		"sha256": "eb14f69c0395d4a106c6c46fe6dff080c4608ccabc99b1f03933d374383d9bbe",
-		"dest": "maven-local/org/bitbucket/b_c/jose4j/0.7.0",
-		"dest-filename": "jose4j-0.7.0.jar"
 	},
 	{
 		"type": "file",
@@ -3249,48 +3263,6 @@
 	},
 	{
 		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.pom",
-		"sha256": "f298a792e263f05622d170580c5275604a89636ca136558a50910043e4bdda4a",
-		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
-		"dest-filename": "mapsforge-core-0.19.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.module",
-		"sha256": "067d0d2fe3566dd2eaedfdce60c4e3c6badf7df6b01f2d266f0bb9b3cb725f5c",
-		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
-		"dest-filename": "mapsforge-core-0.19.0.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.jar",
-		"sha256": "515ae99fe3451d9df3dfe16ee578800c4d37587dc0f44c445689d6f3ae7c298e",
-		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
-		"dest-filename": "mapsforge-core-0.19.0.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.pom",
-		"sha256": "590f624f15c3c5c493cead5a0ab39c0a231b3ef85f8e1b788033cec985842167",
-		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
-		"dest-filename": "mapsforge-map-reader-0.19.0.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.module",
-		"sha256": "b7a24b1912ac75109bac89fcd3e30f2e98295cfc1acb5a329012322e8a8c334f",
-		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
-		"dest-filename": "mapsforge-map-reader-0.19.0.module"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.jar",
-		"sha256": "bf2dcb1ab0b643858e7d380f3cec54dc518f852e4d3a979a7be78ab12b5d361b",
-		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
-		"dest-filename": "mapsforge-map-reader-0.19.0.jar"
-	},
-	{
-		"type": "file",
 		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-poi/0.19.0/mapsforge-poi-0.19.0.pom",
 		"sha256": "2090ab0f3705dae8a9c41f3bde8d327711928bd59aa84775cef55f56c77ed662",
 		"dest": "maven-local/org/mapsforge/mapsforge-poi/0.19.0",
@@ -3330,6 +3302,48 @@
 		"sha256": "867d723153309e8f12600a282b39ce486da60cb19e7e7656d1f25ec561ae1d89",
 		"dest": "maven-local/org/mapsforge/mapsforge-themes/0.19.0",
 		"dest-filename": "mapsforge-themes-0.19.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.pom",
+		"sha256": "590f624f15c3c5c493cead5a0ab39c0a231b3ef85f8e1b788033cec985842167",
+		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
+		"dest-filename": "mapsforge-map-reader-0.19.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.module",
+		"sha256": "b7a24b1912ac75109bac89fcd3e30f2e98295cfc1acb5a329012322e8a8c334f",
+		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
+		"dest-filename": "mapsforge-map-reader-0.19.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map-reader/0.19.0/mapsforge-map-reader-0.19.0.jar",
+		"sha256": "bf2dcb1ab0b643858e7d380f3cec54dc518f852e4d3a979a7be78ab12b5d361b",
+		"dest": "maven-local/org/mapsforge/mapsforge-map-reader/0.19.0",
+		"dest-filename": "mapsforge-map-reader-0.19.0.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.pom",
+		"sha256": "f298a792e263f05622d170580c5275604a89636ca136558a50910043e4bdda4a",
+		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
+		"dest-filename": "mapsforge-core-0.19.0.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.module",
+		"sha256": "067d0d2fe3566dd2eaedfdce60c4e3c6badf7df6b01f2d266f0bb9b3cb725f5c",
+		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
+		"dest-filename": "mapsforge-core-0.19.0.module"
+	},
+	{
+		"type": "file",
+		"url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-core/0.19.0/mapsforge-core-0.19.0.jar",
+		"sha256": "515ae99fe3451d9df3dfe16ee578800c4d37587dc0f44c445689d6f3ae7c298e",
+		"dest": "maven-local/org/mapsforge/mapsforge-core/0.19.0",
+		"dest-filename": "mapsforge-core-0.19.0.jar"
 	},
 	{
 		"type": "file",
@@ -3407,19 +3421,5 @@
 		"sha256": "a840968176645684bb01aed376e067ab39614885f9eee44abe35a5f20ebe7fad",
 		"dest": "maven-local/xml-apis/xml-apis/1.4.01",
 		"dest-filename": "xml-apis-1.4.01.jar"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.pom",
-		"sha256": "d49d179f707d3f3a00b2a7d36136b54aa8d44fa22770703cd82fe52fb39e22eb",
-		"dest": "maven-local/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api",
-		"dest-filename": "transform-api-2.0.0-deprecated-use-gradle-api.pom"
-	},
-	{
-		"type": "file",
-		"url": "https://repo1.maven.org/maven2/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.jar",
-		"sha256": "e8b4151ae1679f1abe7a14ee371ac9b3c651ae7b63290d1f586bdd0f78face9a",
-		"dest": "maven-local/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api",
-		"dest-filename": "transform-api-2.0.0-deprecated-use-gradle-api.jar"
 	}
 ]

@@ -38,12 +38,17 @@ REPO_BASEURL=(
 	'https://jitpack.io/'
 )
 
-gradle_user_home="${project_root}/build/flatpak/gradle"
-maven_repo="${project_root}/build/flatpak/maven"
+gradle_user_home="${project_root}/flatpak/build/gradle"
+maven_repo="${project_root}/flatpak/build/maven"
 
 # Clean cache
-rm -r ${gradle_user_home}/chaches
-rm -r ${maven_repo}
+if [ -d ${gradle_user_home}/chaches ]; then
+  rm -r ${gradle_user_home}/chaches
+fi
+
+if [ -d ${maven_repo} ]; then
+  rm -r ${maven_repo}
+fi
 
 mkdir -p $gradle_user_home
 mkdir -p $maven_repo
