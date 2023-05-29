@@ -12,7 +12,7 @@ app="aat-gtk"
 app_id="ch.bailu.aat"
 app_comment="AAT activity tracker and map viewer"
 app_name="AAT"
-jar="${app}-all-pro.jar"
+jar="${app}-all.jar"
 build="build/libs/"
 
 # arguments
@@ -73,7 +73,7 @@ data="${home}/.config/${app}"
 # build
 if [ "$option_build" = "--build" ]; then
     echo ">> build"
-    ./gradlew build || exit 1
+    ./gradlew aat-gtk:build || exit 1
 fi
 
 # install
