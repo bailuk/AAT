@@ -26,9 +26,7 @@ public abstract class ServiceLink implements
         ServiceConnection,
         Closeable {
 
-    public static class ServiceNotUpError extends Error {
-        private static final long serialVersionUID = 5632759660184034845L;
-
+    public static class ServiceNotUpError extends RuntimeException {
         public ServiceNotUpError(Class<?> service)  {
             super("Service '" + service.getSimpleName() + "' is not running.*");
         }
@@ -41,12 +39,9 @@ public abstract class ServiceLink implements
 
     private final Context context;
 
-
-
     public ServiceLink(Context c) {
         context=c;
     }
-
 
     @Override
     public Context getContext() {

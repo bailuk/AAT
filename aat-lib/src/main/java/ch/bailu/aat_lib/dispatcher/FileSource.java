@@ -11,7 +11,8 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     private final GpxHandler gpxHandler = new GpxHandler();
 
-    private boolean enabled = false;
+    private boolean lifeCycleEnabled = false;
+    private boolean trackEnabled = true;
 
     public FileSource(AppContext context, int iid) {
         this.context = context;
@@ -26,6 +27,7 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     @Override
     public void onPause() {
+        lifeCycleEnabled = false;
         context.getBroadcaster().unregister(onChangedInCache);
         gpxHandler.disable();
     }
@@ -33,10 +35,11 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     @Override
     public void onResume() {
+        lifeCycleEnabled = true;
         context.getBroadcaster().register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
 
-        if (enabled) {
-            gpxHandler.enable(context.getServices().getCacheService());
+        if (trackEnabled) {
+            gpxHandler.enable(context.getServices());
         }
     }
 
@@ -52,21 +55,21 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     @Override
     public void setFileID(String fileID) {
-        gpxHandler.setFileID(context.getServices().getCacheService(), fileID);
+        gpxHandler.setFileID(context.getServices(), fileID);
         requestUpdate();
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return lifeCycleEnabled;
     }
 
     @Override
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.trackEnabled = enabled;
 
-        if (enabled) {
-            gpxHandler.enable(context.getServices().getCacheService());
+        if (lifeCycleEnabled && trackEnabled) {
+            gpxHandler.enable(context.getServices());
         } else {
             gpxHandler.disable();
         }

@@ -12,7 +12,6 @@ import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay;
 
 public class OverlaySource extends FileSource {
     private final SolidOverlayInterface soverlay;
-    private boolean enabled = true;
 
     private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
         @Override
@@ -39,15 +38,14 @@ public class OverlaySource extends FileSource {
 
     public void initAndUpdateOverlay() {
         setFileID(soverlay.getValueAsString());
-        super.setEnabled(enabled && soverlay.isEnabled());
+        super.setEnabled(soverlay.isEnabled());
     }
 
     @Override
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-        super.setEnabled(enabled && soverlay.isEnabled());
+        soverlay.setEnabled(enabled);
+        super.setEnabled(soverlay.isEnabled());
     }
-
 
     @Override
     public void onPause() {
@@ -60,10 +58,5 @@ public class OverlaySource extends FileSource {
         super.onResume();
         soverlay.register(onPreferencesChanged);
         initAndUpdateOverlay();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
     }
 }

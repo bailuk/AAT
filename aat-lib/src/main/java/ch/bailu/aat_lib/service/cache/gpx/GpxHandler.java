@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxInformationProvider;
 import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 
@@ -22,20 +23,22 @@ public class GpxHandler implements GpxInformationProvider {
         return handle;
     }
 
-    public void setFileID(CacheServiceInterface cacheService, String fileID) {
+    public void setFileID(ServicesInterface services, String fileID) {
         this.fileID = fileID;
-        update(cacheService);
+        if (enabled) {
+            update(services);
+        }
     }
 
-    public void enable(CacheServiceInterface cacheService) {
+    public void enable(ServicesInterface services) {
         enabled = true;
-        update(cacheService);
+        update(services);
     }
 
-    private void update(CacheServiceInterface cacheService) {
+    private void update(ServicesInterface services) {
         ObjGpx newHandle = ObjGpx.NULL;
         if (enabled && ! "".equals(fileID)) {
-            newHandle = getObjectSave(cacheService, fileID);
+            newHandle = getObjectSave(services.getCacheService(), fileID);
         }
 
         handle.free();
