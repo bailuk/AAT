@@ -2,7 +2,7 @@
 # Create Flatpak
 
 ```bash
-# generate 'flatpak/gradle-sources.json'
+# generate 'gradle-sources.json'
 ./flatpak-generate-gradle-sources.sh
 
 # create and run flatpak distribution

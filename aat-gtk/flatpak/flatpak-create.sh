@@ -1,4 +1,5 @@
 #!/bin/sh
+
 test -d flatpak || cd ..
 cd flatpak || exit 1
 
