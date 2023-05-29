@@ -27,7 +27,7 @@
         "gradle-sources.json"
       ],
       "build-commands": [
-        "source /usr/lib/sdk/openjdk17/enable.sh && gradle java-gtk:build",
+        "source /usr/lib/sdk/openjdk17/enable.sh && gradle aat-gtk:build",
         "install -Dm644 aat-gtk/build/libs/aat-gtk-all.jar /app/lib/aat.jar",
         "install -Dm644 aat-gtk/flatpak/ch.bailu.aat.desktop /app/share/applications/ch.bailu.aat.desktop",
         "install -Dm644 aat-gtk/flatpak/ch.bailu.aat.metainfo.xml /app/share/metainfo/ch.bailu.aat.metainfo.xml",
