@@ -20,12 +20,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
 dependencies {
     implementation(project(":aat-lib"))
 

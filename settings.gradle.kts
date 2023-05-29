@@ -4,6 +4,7 @@ dependencyResolutionManagement {
         mavenCentral()
         google()
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("maven-local") }
     }
 }
 include("ci")
