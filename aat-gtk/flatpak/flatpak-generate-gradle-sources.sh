@@ -41,6 +41,10 @@ REPO_BASEURL=(
 gradle_user_home="${project_root}/build/flatpak/gradle"
 maven_repo="${project_root}/build/flatpak/maven"
 
+# Clean cache
+rm -r ${gradle_user_home}/chaches
+rm -r ${maven_repo}
+
 mkdir -p $gradle_user_home
 mkdir -p $maven_repo
 
