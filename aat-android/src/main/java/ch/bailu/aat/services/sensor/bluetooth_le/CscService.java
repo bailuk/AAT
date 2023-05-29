@@ -4,7 +4,6 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
@@ -14,15 +13,14 @@ import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 
-@RequiresApi(api = 18)
 public final class CscService extends CscServiceID implements ServiceInterface {
     /**
      *
      * RPM BBB BCP-66 SmartCadence RPM Sensor
-     *
+     * <p>
      * CSC (Cycling Speed And Cadence)
-     * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml
-     * https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence
+     * <a href="https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml">...</a>
+     * <a href="https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence">...</a>
      */
 
     private String location = CadenceSpeedAttributes.SENSOR_LOCATION[0];
@@ -70,7 +68,7 @@ public final class CscService extends CscServiceID implements ServiceInterface {
     }
 
     @Override
-    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executor execute) {
         boolean disc = false;
         if (CSC_SERVICE.equals(c.getService().getUuid())) {
             valid = true;
@@ -103,25 +101,17 @@ public final class CscService extends CscServiceID implements ServiceInterface {
         }
     }
 
-
-
-
     private void readCscSensorLocation(byte[] v) {
         if (v.length > 0 && v[0] < CadenceSpeedAttributes.SENSOR_LOCATION.length) {
             location = CadenceSpeedAttributes.SENSOR_LOCATION[v[0]];
         }
     }
 
-
-
-
     private void readCscMeasurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new Information(new Attributes(this, c, value));
         connectorSpeed.connect(isSpeedSensor);
         connectorCadence.connect(isCadenceSensor);
     }
-
-
 
     private void readCscFeature(byte[] v) {
         if (v.length > 0) {

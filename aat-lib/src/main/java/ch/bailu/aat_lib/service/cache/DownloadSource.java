@@ -27,17 +27,17 @@ public class DownloadSource extends Source {
 
 
     public DownloadSource(String n, int a, final String... url) {
-        this(n, "", MIN_ZOOM, MAX_ZOOM, a, (a != Source.OPAQUE), url);
+        this(n, "", MIN_ZOOM, MAX_ZOOM, a, url);
     }
 
     public DownloadSource(String n, String k, int a, final String... url) {
-        this(n, k, MIN_ZOOM, MAX_ZOOM, a, (a != Source.OPAQUE), url);
+        this(n, k, MIN_ZOOM, MAX_ZOOM, a, url);
     }
     public DownloadSource(String n, int minZ, int maxZ, int a, final String... url) {
-        this(n, "",minZ, maxZ, a, (a != Source.OPAQUE), url);
+        this(n, "",minZ, maxZ, a, url);
     }
 
-    public DownloadSource(String n, String k, int minZ, int maxZ, int a, boolean t, String... u) {
+    public DownloadSource(String n, String k, int minZ, int maxZ, int a, String... u) {
         name = n;
         apiKey = k;
         minZoom = minZ;
@@ -158,18 +158,4 @@ public class DownloadSource extends Source {
                     5, 16,
                     Source.OPAQUE,
                     "https://tileserver.memomaps.de/tilegen/");
-
-    // Support old devices
-    public final static DownloadSource MAPNIK_NO_TLS =
-            new DownloadSource("Mapnik-no-TLS",
-                    Source.OPAQUE,
-                    "http://a.tile.openstreetmap.org/",
-                    "http://b.tile.openstreetmap.org/",
-                    "http://c.tile.openstreetmap.org/") {
-
-                @Override
-                public boolean filterBitmap() {
-                    return true;
-                }
-            };
 }

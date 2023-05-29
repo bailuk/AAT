@@ -3,13 +3,11 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.util.UUID;
 
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
-@RequiresApi(api = 18)
 public final class BatteryService implements ServiceInterface {
 
     public final static UUID BATTERY_SERVICE = ID.toUUID(0x180f);
@@ -39,7 +37,7 @@ public final class BatteryService implements ServiceInterface {
     }
 
     @Override
-    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executor execute) {
         boolean disc = false;
         if (BATTERY_SERVICE.equals(c.getService().getUuid()) && BATTERY_LEVEL.equals(c.getUuid())) {
             valid = true;

@@ -4,7 +4,6 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
@@ -14,7 +13,6 @@ import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes;
 
-@RequiresApi(api = 18)
 public final class CyclingPower extends CyclingPowerID implements ServiceInterface {
     private String location = PowerAttributes.SENSOR_LOCATION[0];
 
@@ -74,7 +72,7 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
     }
 
     @Override
-    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executor execute) {
         boolean disc = false;
         if (CYCLING_POWER_SERVICE.equals(c.getService().getUuid())) {
             valid = true;
@@ -98,11 +96,11 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
     public void read(BluetoothGattCharacteristic c) {
         if (CYCLING_POWER_SERVICE.equals(c.getService().getUuid())) {
             if (CYCLING_POWER_FEATURE.equals(c.getUuid())) {
-                final Integer flags = c.getIntValue(c.FORMAT_UINT32, 0);
+                final Integer flags = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
                 isSpeedSensor = flags != null && isFlagSet(flags, FEATURE_BIT_WHEEL_REVOLUTIONS);
                 isCadenceSensor = flags != null && isFlagSet(flags, FEATURE_BIT_CRANK_REVOLUTIONS);
             } else if (SENSOR_LOCATION.equals(c.getUuid())) {
-                final Integer i = c.getIntValue(c.FORMAT_UINT8, 0);
+                final Integer i = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                 if (i != null && i < PowerAttributes.SENSOR_LOCATION.length)
                     location = PowerAttributes.SENSOR_LOCATION[i];
             }
@@ -151,10 +149,10 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
 
             int offset = 0;
 
-            final int flags = c.getIntValue(c.FORMAT_UINT16, offset);
+            final int flags = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
             offset += 2;
 
-            int instantaneous_power = c.getIntValue(c.FORMAT_SINT16, offset);
+            int instantaneous_power = c.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, offset);
             offset += 2;
 
             broadcastPower(instantaneous_power);
@@ -168,9 +166,9 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
             }
 
             if (isFlagSet(flags, BIT_WHEEL_REVOLUTION_DATA)) {
-                Integer revolutions = c.getIntValue(c.FORMAT_UINT32, offset);
+                Integer revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
                 offset += 4;
-                Integer time = c.getIntValue(c.FORMAT_UINT16, offset);
+                Integer time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
                 offset += 2;
 
                 if (revolutions != null && time != null) {
@@ -180,10 +178,10 @@ public final class CyclingPower extends CyclingPowerID implements ServiceInterfa
             }
 
             if (isFlagSet(flags, BIT_CRANK_REVOLUTION_DATA)) {
-                Integer revolutions = c.getIntValue(c.FORMAT_UINT16, offset);
+                Integer revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
                 offset += 2;
-                Integer time = c.getIntValue(c.FORMAT_UINT16, offset);
-                offset += 2;
+                Integer time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
+                // offset += 2;
 
                 cadence.add(time, revolutions);
                 broadcastCadence(cadence.rpm());

@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
@@ -14,8 +14,7 @@ import ch.bailu.aat.services.sensor.list.SensorList;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.AndroidTimer;
 
-@RequiresApi(api = 18)
-public final class BleSensorsSDK18 extends Sensors {
+public final class BleSensors extends Sensors {
 
     public final static long SCAN_DURATION = 10 * 1000;
 
@@ -25,23 +24,20 @@ public final class BleSensorsSDK18 extends Sensors {
 
     private final SensorList sensorList;
 
-    private final BleScanner scannerBle, scannerBonded;
+    private final AbsBleScanner scannerBle, scannerBonded;
 
     private boolean scanning = false;
-
 
     private final AndroidTimer timer = new AndroidTimer();
 
 
-
-
-    public BleSensorsSDK18(ServiceContext sc, SensorList list) {
+    public BleSensors(ServiceContext sc, SensorList list) {
         sensorList = list;
         scontext = sc;
 
         adapter = getAdapter(sc.getContext());
         scannerBonded = new BleScannerBonded(this);
-        scannerBle = BleScanner.factory(this);
+        scannerBle = AbsBleScanner.factory(this);
     }
 
 
@@ -77,7 +73,7 @@ public final class BleSensorsSDK18 extends Sensors {
         final BluetoothDevice device = adapter.getRemoteDevice(item.getAddress());
 
         if (device != null) {
-            new BleSensorSDK18(scontext, device, sensorList, item);
+            new BleSensor(scontext, device, sensorList, item);
         }
     }
 
@@ -103,7 +99,7 @@ public final class BleSensorsSDK18 extends Sensors {
     public synchronized void foundDevice(BluetoothDevice device) {
         SensorListItem item = sensorList.add(device.getAddress(), device.getName());
         if (item.isUnscanned_or_scanning()) {
-            new BleSensorSDK18(scontext, device, sensorList, item);
+            new BleSensor(scontext, device, sensorList, item);
         }
     }
 

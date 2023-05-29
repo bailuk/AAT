@@ -36,15 +36,8 @@ public class AndroidVolumes {
 
         File[] external_files, external_caches;
 
-        if (android.os.Build.VERSION.SDK_INT >= 19) {
-            external_files = context.getExternalFilesDirs(null);
-            external_caches = context.getExternalCacheDirs();
-        } else {
-            external_files = new File[1];
-            external_caches = new File[1];
-            external_files[0] = context.getExternalFilesDir(null);
-            external_caches[0] = context.getExternalCacheDir();
-        }
+        external_files = context.getExternalFilesDirs(null);
+        external_caches = context.getExternalCacheDirs();
 
         files = getMounted(internal_file, external_files);
         caches = getMounted(internal_cache, external_caches);

@@ -3,7 +3,6 @@ package ch.bailu.aat.services.sensor;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -46,12 +45,6 @@ public final class SensorService extends VirtualService implements WithStatusTex
         updateConnections();
     }
 
-
-    public static boolean isSupported() {
-        return (Build.VERSION.SDK_INT >= 18);
-    }
-
-
     final android.content.BroadcastReceiver onBluetoothStateChanged = new android.content.BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -74,7 +67,7 @@ public final class SensorService extends VirtualService implements WithStatusTex
 
     @Override
     public void appendStatusText(StringBuilder builder) {
-        builder.append(toString());
+        builder.append(this);
     }
 
 
@@ -101,7 +94,6 @@ public final class SensorService extends VirtualService implements WithStatusTex
         }
     }
 
-
     @NonNull
     @Override
     public synchronized String toString() {
@@ -112,7 +104,6 @@ public final class SensorService extends VirtualService implements WithStatusTex
     public synchronized GpxInformation getInformation(int iid) {
         GpxInformation information = getInformationOrNull(iid);
 
-
         if (information == null) {
             information = GpxInformation.NULL;
         }
@@ -120,11 +111,9 @@ public final class SensorService extends VirtualService implements WithStatusTex
         return information;
     }
 
-
     public synchronized GpxInformation getInformationOrNull(int iid) {
         return sensorList.getInformation(iid);
     }
-
 
     public SensorList getSensorList() {
         return sensorList;

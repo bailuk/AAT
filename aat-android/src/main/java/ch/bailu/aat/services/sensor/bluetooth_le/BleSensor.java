@@ -11,7 +11,6 @@ import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
@@ -24,11 +23,10 @@ import ch.bailu.aat.util.AndroidTimer;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.logger.AppLog;
 
-@RequiresApi(api = 18)
-public final class BleSensorSDK18 extends BluetoothGattCallback implements SensorInterface {
+public final class BleSensor extends BluetoothGattCallback implements SensorInterface {
 
 
-    private final Executer execute = new Executer();
+    private final Executor execute = new Executor();
 
     private final ServiceInterface[] services;
     private final BluetoothDevice device;
@@ -45,7 +43,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
     private final AndroidTimer scanningTimeout = new AndroidTimer();
 
-    public BleSensorSDK18(ServiceContext c, BluetoothDevice d, SensorList l, SensorListItem i) {
+    public BleSensor(ServiceContext c, BluetoothDevice d, SensorList l, SensorListItem i) {
         synchronized (this) {
             sensorList = l;
             item = i;
@@ -68,7 +66,7 @@ public final class BleSensorSDK18 extends BluetoothGattCallback implements Senso
 
             } else {
                 execute.next(gatt);
-                scanningTimeout.kick(BleSensorsSDK18.SCAN_DURATION, () -> {
+                scanningTimeout.kick(BleSensors.SCAN_DURATION, () -> {
                     if (item.isScanning())  close();
                 });
                 item.setState(SensorItemState.CONNECTING);

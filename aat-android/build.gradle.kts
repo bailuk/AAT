@@ -19,7 +19,7 @@ android {
     val appId : String by project
 
     defaultConfig {
-        minSdk = 14
+        minSdk = 22
         targetSdk = 33
         versionCode = 37
         versionName = appVersionName

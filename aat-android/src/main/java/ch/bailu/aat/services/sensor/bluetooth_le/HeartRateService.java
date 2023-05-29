@@ -4,23 +4,21 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import java.util.UUID;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.gpx.attributes.SensorInformation;
 import ch.bailu.aat.services.sensor.Connector;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
+import ch.bailu.aat_lib.gpx.attributes.SensorInformation;
 
-@RequiresApi(api = 18)
 public final class HeartRateService extends HeartRateServiceID implements ServiceInterface {
     /**
      *
      * EC DMH30 0ADE BBB Bluepulse+ Heart Rate Sensor BCP-62DB
-     * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
+     * <a href="https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml">...</a>
      *
      */
 
@@ -47,7 +45,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
     }
 
     @Override
-    public boolean discovered(BluetoothGattCharacteristic c, Executer execute) {
+    public boolean discovered(BluetoothGattCharacteristic c, Executor execute) {
         UUID sid = c.getService().getUuid();
         UUID cid = c.getUuid();
         boolean disc = false;
@@ -92,10 +90,7 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
 
     private void readHeartRateMeasurement(BluetoothGattCharacteristic c, byte[] value) {
         information = new SensorInformation(new Attributes(c, value));
-
-
     }
-
 
     @NonNull
     @Override
@@ -110,18 +105,13 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
         }
     }
 
-
     @Override
     public void close()  {
         connector.close();
         broadcaster.broadcast();
     }
 
-
-
     private class Attributes extends HeartRateAttributes {
-
-
         public Attributes(BluetoothGattCharacteristic c, byte[] v) {
             super(HeartRateService.this.location);
             int offset = 0;
@@ -160,9 +150,6 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
                 }
             }
 
-
-
-
             if (haveBpm()) {
                 if (!haveSensorContactStatus) haveSensorContact = true;
                 broadcaster.broadcast();
@@ -176,8 +163,6 @@ public final class HeartRateService extends HeartRateServiceID implements Servic
             }
         }
     }
-
-
 
     @Override
     public GpxInformation getInformation(int iid) {

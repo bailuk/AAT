@@ -7,12 +7,9 @@ import android.widget.LinearLayout;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
 import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
-import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.AppLayout;
 import ch.bailu.aat.util.ui.AppTheme;
@@ -23,6 +20,8 @@ import ch.bailu.aat.views.bar.MainControlBar;
 import ch.bailu.aat.views.preferences.SolidIndexListView;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.TrackerSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidFile;
@@ -79,11 +78,7 @@ public class MainActivity extends ActivityContext {
     private LinearLayout createButtonBar() {
         final MainControlBar bar = new MainControlBar(this);
 
-        if (SensorService.isSupported()) {
-            bar.addSensorState(this);
-        } else {
-            bar.addSpace();
-        }
+        bar.addSensorState(this);
 
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addSpace();

@@ -8,11 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
-import ch.bailu.aat.util.Res;
 import ch.bailu.aat.util.ui.AppDialog;
+import ch.bailu.aat_lib.service.InsideContext;
 
 public final class RemoveTilesMenu extends AbsMenu {
 
@@ -51,8 +50,13 @@ public final class RemoveTilesMenu extends AbsMenu {
 
     @Override
     public Drawable getIcon() {
-        return Res.d(scontext.getContext(), R.drawable.user_trash_inverse);
+        return getDrawable(scontext.getContext(), R.drawable.user_trash_inverse);
     }
+
+    private static Drawable getDrawable(Context context, int resource) {
+        return context.getResources().getDrawable(resource, context.getTheme());
+    }
+
 
     @Override
     public String getTitle() {

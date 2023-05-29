@@ -2,17 +2,14 @@ package ch.bailu.aat.services.sensor.bluetooth_le;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import androidx.annotation.RequiresApi;
 
 import java.util.Set;
 
-@RequiresApi(api = 18)
-public final class BleScannerBonded extends BleScanner {
+public final class BleScannerBonded extends AbsBleScanner {
 
     private final BluetoothAdapter adapter;
 
-
-    public BleScannerBonded(BleSensorsSDK18 sensors) {
+    public BleScannerBonded(BleSensors sensors) {
         super(sensors);
         adapter = sensors.getAdapter();
     }
@@ -31,9 +28,6 @@ public final class BleScannerBonded extends BleScanner {
         }
     }
 
-
     @Override
-    public void stop() {
-
-    }
+    public void stop() {}
 }
