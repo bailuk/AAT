@@ -79,4 +79,5 @@ todo/
 *.gresource
 
 # Flatpak
+.flatpak-builder/
 gradle-sources.json?*

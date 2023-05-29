@@ -114,7 +114,7 @@
 	{
 		"type": "file",
 		"url": "https://repo1.maven.org/maven2/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.pom",
-		"sha256": "7c62f3856e8abca1d79257925f26c12668693f5d95904056bbac88605cfd8575",
+		"sha256": "d49d179f707d3f3a00b2a7d36136b54aa8d44fa22770703cd82fe52fb39e22eb",
 		"dest": "maven-local/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api",
 		"dest-filename": "transform-api-2.0.0-deprecated-use-gradle-api.pom"
 	},
