@@ -77,3 +77,6 @@ todo/
 
 # GLib / GTK
 *.gresource
+
+# Flatpak
+gradle-sources.json?*

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Exec=java -jar /app/lib/aat.jar
+Name=AAT Activity Tracker (Flatpak)
+Comment=Activity tracker and map viewer
+Icon=ch.bailu.aat

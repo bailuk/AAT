@@ -1,0 +1,54 @@
+{
+  "app-id": "ch.bailu.aat",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "44",
+  "sdk": "org.gnome.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.openjdk17"
+  ],
+  "command": "aat.sh",
+  "modules": [
+    {
+      "name": "openjdk",
+      "buildsystem": "simple",
+      "build-commands": [
+        "/usr/lib/sdk/openjdk17/install.sh"
+      ]
+    },
+    {
+      "name": "AAT",
+      "buildsystem": "simple",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/bailuk/AAT.git",
+          "branch": "stage"
+        },
+        "gradle-sources.json"
+      ],
+      "build-commands": [
+        "source /usr/lib/sdk/openjdk17/enable.sh && gradle java-gtk:build",
+        "install -Dm644 aat-gtk/build/libs/aat-gtk-all.jar /app/lib/aat.jar",
+        "install -Dm644 aat-gtk/flatpak/ch.bailu.aat.desktop /app/share/applications/ch.bailu.aat.desktop",
+        "install -Dm644 aat-gtk/flatpak/ch.bailu.aat.metainfo.xml /app/share/metainfo/ch.bailu.aat.metainfo.xml",
+        "install -Dm644 aat-gtk/gresource/icons/scalable/apps/ch.bailu.aat.svg /app/share/icons/scalable/apps/ch.bailu.aat.svg"
+      ]
+    }
+  ],
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--device=dri",
+    "--env=GIO_EXTRA_MODULES=/app/lib/gio/modules",
+    "--env=JAVA_HOME=/app/jre",
+    "--env=LIBO_FLATPAK=1",
+    "--env=PATH=/app/bin:/app/jre/bin",
+    "--filesystem=~/.config/aat-gtk",
+    "--filesystem=~/.java/.userPrefs/ch/bailu/aat"
+  ],
+  "tags": [
+    "nightly"
+  ]
+}
