@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.cache.gpx.GpxHandler;
+import ch.bailu.foc.Foc;
 
 public class FileSource extends ContentSource implements FileSourceInterface {
     private final AppContext context;
@@ -54,8 +55,8 @@ public class FileSource extends ContentSource implements FileSourceInterface {
     }
 
     @Override
-    public void setFileID(String fileID) {
-        gpxHandler.setFileID(context.getServices(), fileID);
+    public void setFile(Foc file) {
+        gpxHandler.setFileID(context.getServices(), file);
         requestUpdate();
     }
 
@@ -75,7 +76,6 @@ public class FileSource extends ContentSource implements FileSourceInterface {
         }
         requestUpdate();
     }
-
 
     @Override
     public void requestUpdate() {

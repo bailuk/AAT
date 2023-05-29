@@ -144,7 +144,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     override fun load(info: GpxInformation) {
         // TODO saveFile()
         mapView.editDraft()
-        customFileSource.setFileID(info.file.toString())
+        customFileSource.setFile(info.file)
         customFileSource.isEnabled = true
     }
 

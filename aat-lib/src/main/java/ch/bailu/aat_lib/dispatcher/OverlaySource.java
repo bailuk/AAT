@@ -37,7 +37,7 @@ public class OverlaySource extends FileSource {
     }
 
     public void initAndUpdateOverlay() {
-        setFileID(soverlay.getValueAsString());
+        setFile(soverlay.getValueAsFile());
         super.setEnabled(soverlay.isEnabled());
     }
 

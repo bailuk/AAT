@@ -32,6 +32,7 @@ import ch.bailu.aat_lib.gpx.GpxListArray;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.html.MarkupBuilderGpx;
 import ch.bailu.aat_lib.map.MapViewInterface;
+import ch.bailu.foc.Foc;
 
 public class NodeDetailActivity extends ActivityContext
         implements OnClickListener, OnContentUpdatedInterface, SeekBar.OnSeekBarChangeListener {
@@ -46,7 +47,7 @@ public class NodeDetailActivity extends ActivityContext
     private GraphView graph;
     private SeekBar seekBar;
 
-    private String fileID="";
+    private Foc file = GpxInformation.FOC_NULL;
 
     private GpxListArray arrayCache = new GpxListArray(GpxList.NULL_ROUTE);
     private GpxInformation infoCache = GpxInformation.NULL;
@@ -61,7 +62,7 @@ public class NodeDetailActivity extends ActivityContext
         super.onCreate(savedInstanceState);
 
         markupBuilder = new MarkupBuilderGpx(getStorage());
-        fileID = getIntent().getStringExtra("ID");
+        file = getAppContext().toFoc(getIntent().getStringExtra("ID"));
 
         final ContentView contentView = new ContentView(this, theme);
         contentView.add(createButtonBar());
@@ -123,7 +124,7 @@ public class NodeDetailActivity extends ActivityContext
     private void createDispatcher() {
         addTarget(this, InfoID.FILEVIEW);
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
-        addSource(new FileViewSource(getAppContext(), fileID));
+        addSource(new FileViewSource(getAppContext(), file));
     }
 
     @Override

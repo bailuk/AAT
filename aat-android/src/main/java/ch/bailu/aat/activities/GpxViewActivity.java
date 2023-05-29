@@ -46,8 +46,7 @@ public class GpxViewActivity extends ActivityContext
     private BusyViewControlIID busyControl;
     private MapViewInterface   map;
 
-    private String fileID;
-    private Foc content;
+    private Foc file;
 
     private final UiTheme theme = AppTheme.trackContent;
 
@@ -66,8 +65,7 @@ public class GpxViewActivity extends ActivityContext
 
         if (uri != null) {
             try {
-                content = FocAndroid.factory(this, uri.toString());
-                fileID = content.getPath();
+                file = FocAndroid.factory(this, uri.toString());
 
                 final ContentView contentView = new ContentView(this, theme);
                 final MainControlBar bar = new MainControlBar(this);
@@ -153,7 +151,7 @@ public class GpxViewActivity extends ActivityContext
         addSource(new TrackerSource(getServiceContext(),getBroadcaster()));
         addSource(new CurrentLocationSource(getServiceContext(),getBroadcaster()));
         addSource(new OverlaysSource(getAppContext()));
-        addSource(new FileViewSource(getAppContext(), fileID));
+        addSource(new FileViewSource(getAppContext(), file));
 
         addTarget(this, InfoID.FILEVIEW);
         addTarget(busyControl, InfoID.FILEVIEW,
@@ -170,12 +168,12 @@ public class GpxViewActivity extends ActivityContext
 
     @Override
     public void onClick(View v) {
-        if (v == copyTo && content != null) {
-            AndroidFileAction.copyToDir(this, getAppContext(), content);
+        if (v == copyTo && file != null) {
+            AndroidFileAction.copyToDir(this, getAppContext(), file);
 
-        } else if (v == fileOperation && content != null) {
+        } else if (v == fileOperation && file != null) {
 
-            new ContentMenu(this, content).showAsPopup(this, fileOperation);
+            new ContentMenu(this, file).showAsPopup(this, fileOperation);
         }
     }
 }

@@ -66,7 +66,7 @@ public abstract class AbsOsmApiActivity extends ActivityContext implements OnCli
 
         setContentView(createContentView());
 
-        addSource(new FileViewSource(getAppContext(), configuration.getResultFile().getPath()));
+        addSource(new FileViewSource(getAppContext(), configuration.getResultFile()));
         addTarget(list, InfoID.FILEVIEW);
 
         OldAppBroadcaster.register(this, onFileTaskChanged,
