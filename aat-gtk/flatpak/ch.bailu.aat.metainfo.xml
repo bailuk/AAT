@@ -16,16 +16,18 @@
 
     <description>
         <p>
-            <ul>
-                <li>Display live tracking on cockpit and map view</li>
-                <li>Store tracks in standard GPX format for sharing with other applications</li>
-                <li>Display offline as well as tile based maps</li>
-                <li>Tile based overlays for displaying cycle and hiking routes (Waymarked Trails)</li>
-                <li>Integration of Offline POI and Nominatim map search</li>
-                <li>Display Offline POIs from Mapsforge compatible Databases</li>
-                <li>Simple GPX editor for quick route planning</li>
-                <li>GPS independent altitude information and hill shading</li>
-            </ul>
+            Track sportive activities while displaying them on cockpit and map view.
+            Store tracks in standard GPX format for sharing with other application.
+        </p>
+        <p>
+            Display offline as well as tile based maps. Tile based overlays for displaying cycle and hiking routes (Waymarked Trails)
+        </p>
+        <p>
+            Integration of Offline POI and Nominatim map search. Display Offline POIs from Mapsforge compatible Databases.
+        </p>
+        <p>
+            Simple GPX editor for quick route planning.
+            GPS independent altitude information and hill shading.
         </p>
     </description>
 
