@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat.map.MapFactory;
 import ch.bailu.aat.map.To;
 import ch.bailu.aat.map.layer.control.FileControlBarLayer;
@@ -31,6 +29,8 @@ import ch.bailu.aat.views.preferences.VerticalScrollView;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.PathDescription;
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
+import ch.bailu.aat_lib.dispatcher.IteratorSource;
+import ch.bailu.aat_lib.dispatcher.OverlaysSource;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.map.MapViewInterface;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
@@ -164,7 +164,7 @@ public abstract class AbsGpxListActivity extends ActivityContext implements OnIt
 
             busyControl = new BusyViewControlDbSync(contentView);
 
-            MapViewInterface map = MapFactory.DEF(AbsGpxListActivity.this, solid_key).list(acontext);
+            MapViewInterface map = MapFactory.DEF(AbsGpxListActivity.this, solid_key).list();
             fileControlBar = new FileControlBarLayer(getAppContext(), map.getMContext(), acontext, getAppContext().getSummaryConfig());
             map.add(fileControlBar);
 

@@ -2,7 +2,6 @@ package ch.bailu.aat.map;
 
 import android.content.Context;
 
-import ch.bailu.aat.activities.AbsGpxListActivity;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.map.layer.control.CustomBarLayer;
 import ch.bailu.aat.map.layer.control.EditorBarLayer;
@@ -45,7 +44,6 @@ public final class MapFactory {
         return new MapFactory(new MapsForgeView(activityContext, activityContext.getAppContext(), activityContext, skey), activityContext);
     }
 
-
     public MapFactory(MapsForgeViewBase map, ActivityContext activityContext) {
         c = activityContext;
         d = activityContext;
@@ -54,16 +52,13 @@ public final class MapFactory {
         s = new Storage(map.getContext());
         ser = activityContext.getServiceContext();
         appContext = activityContext.getAppContext();
-        activityContext.addLC(m);
+        activityContext.addLifeCycle(m);
     }
 
-
-    public MapsForgeViewBase base(int size) {
+    private void base() {
         m.add(new CurrentLocationLayer(mc, d));
-        m.add(new NavigationBarLayer(c, mc, d, size));
-        return m;
+        m.add(new NavigationBarLayer(c, mc, d, 4));
     }
-
 
     public MapsForgeViewBase split() {
         m.add(new CurrentLocationLayer(mc, d));
@@ -80,7 +75,7 @@ public final class MapFactory {
     }
 
     private MapsForgeViewBase tracker(EditorSourceInterface e, int iid) {
-        base(4);
+        base();
         m.add(new GpxOverlayListLayer(s,mc,ser, d));
         m.add(new EditorBarLayer(appContext, c, mc, d, iid, e));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
@@ -91,7 +86,6 @@ public final class MapFactory {
         return m;
     }
 
-
     public MapsForgeViewBase map(EditorSourceInterface e, ControlBar b) {
         tracker(e);
 
@@ -100,9 +94,8 @@ public final class MapFactory {
         return m;
     }
 
-
-    public MapsForgeViewBase list(AbsGpxListActivity a) {
-        base(4);
+    public MapsForgeViewBase list() {
+        base();
 
         m.add(new GpxOverlayListLayer(s,mc, ser, d));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.LIST_SUMMARY));
@@ -116,14 +109,12 @@ public final class MapFactory {
         return tracker(e, InfoID.EDITOR_OVERLAY);
     }
 
-
     public MapsForgeViewBase content(EditorSourceInterface e) {
         return editor(e);
     }
 
-
     public MapsForgeViewBase node() {
-        base(4);
+        base();
 
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
         m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
@@ -131,7 +122,6 @@ public final class MapFactory {
 
         return m;
     }
-
 
     public MapsForgeViewBase externalContent() {
         m.add(new GpxOverlayListLayer(s,mc, ser, d));

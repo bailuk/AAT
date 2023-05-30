@@ -36,7 +36,7 @@ public class NodeEntryView extends LinearLayout {
 
         markupBuilder = new MarkupBuilderGpx(activityContext.getAppContext().getStorage());
         map =  new MapsForgeViewStatic(activityContext, activityContext.getAppContext());
-        activityContext.addLC(map);
+        activityContext.addLifeCycle(map);
 
         gpxOverlay = new GpxDynLayer(activityContext.getAppContext().getStorage(), map.getMContext(), activityContext.getServiceContext());
         map.add(gpxOverlay);

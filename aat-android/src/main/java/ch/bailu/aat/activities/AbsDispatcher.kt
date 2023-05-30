@@ -21,7 +21,7 @@ abstract class AbsDispatcher : AbsServiceLink(), DispatcherInterface {
         lifeCycle = LifeCycleDispatcher()
     }
 
-    fun addLC(t: LifeCycleInterface?) {
+    fun addLifeCycle(t: LifeCycleInterface) {
         lifeCycle?.add(t)
     }
 
