@@ -24,8 +24,8 @@ object Strings {
     // Action names
     const val actionFileEdit   = "app.fileEdit"
     const val actionFileMock   = "app.fileMock"
-    const val actionFileRename =  "app.fileRename"
-    const val actionFileDelete =  "app.fileDelete"
+    const val actionFileRename = "app.fileRename"
+    const val actionFileDelete = "app.fileDelete"
 
 
     // Ids

@@ -111,6 +111,7 @@ class FileList(app: Application,
 
             val factory = SignalListItemFactory().apply {
                 onSetup {
+                    // AppLog.d(this, "onSetup")
                     val item = ListItem(it.cast())
 
                     items[item] = FileListItem(item, descriptions)
@@ -119,8 +120,9 @@ class FileList(app: Application,
 
                 onBind {
                     val item = ListItem(it.cast())
-
                     val index = ListIndex.toIndex(item)
+                    AppLog.d(this, "onBind:${index}")
+
                     iteratorSimple.moveToPosition(index)
                     items[item]?.bind(iteratorSimple.info, index)
                     if (item.selected) {
@@ -129,8 +131,8 @@ class FileList(app: Application,
                 }
 
                 onTeardown {
+                    // AppLog.d(this, "onTeardown")
                     val item = ListItem(it.cast())
-
                     items.remove(item)
                     logItems.log(items.size.toLong())
                 }
