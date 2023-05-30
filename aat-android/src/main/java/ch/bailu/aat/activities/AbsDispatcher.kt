@@ -1,74 +1,61 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.os.Bundle;
+import android.os.Bundle
+import ch.bailu.aat.dispatcher.LifeCycleDispatcher
+import ch.bailu.aat.util.AbsServiceLink
+import ch.bailu.aat_lib.dispatcher.ContentSourceInterface
+import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.InfoID
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+abstract class AbsDispatcher : AbsServiceLink(), DispatcherInterface {
+    private var dispatcher: Dispatcher? = null
+    private var lifeCycle: LifeCycleDispatcher? = null
 
-import ch.bailu.aat.dispatcher.LifeCycleDispatcher;
-import ch.bailu.aat.util.AbsServiceLink;
-import ch.bailu.aat_lib.dispatcher.ContentSourceInterface;
-import ch.bailu.aat_lib.dispatcher.Dispatcher;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.InfoID;
-
-public abstract class AbsDispatcher extends AbsServiceLink
-        implements DispatcherInterface {
-
-    private Dispatcher dispatcher = null;
-    private LifeCycleDispatcher lifeCycle = null;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        dispatcher = new Dispatcher();
-        lifeCycle = new LifeCycleDispatcher();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dispatcher = Dispatcher()
+        lifeCycle = LifeCycleDispatcher()
     }
 
-    public void addLC(LifeCycleInterface t) {
-        lifeCycle.add(t);
+    fun addLC(t: LifeCycleInterface?) {
+        lifeCycle?.add(t)
     }
 
-    public void addTarget(OnContentUpdatedInterface target) {
-        addTarget(target, InfoID.ALL);
+    fun addTarget(target: OnContentUpdatedInterface) {
+        addTarget(target, InfoID.ALL)
     }
 
-    @Override
-    public void addTarget(@Nonnull OnContentUpdatedInterface target, int... iid) {
-        dispatcher.addTarget(target, iid);
+    override fun addTarget(@Nonnull target: OnContentUpdatedInterface, vararg iid: Int) {
+        dispatcher?.addTarget(target, *iid)
     }
 
-    @Override
-    public void addSource(@Nonnull ContentSourceInterface source) {
-        dispatcher.addSource(source);
+    override fun addSource(@Nonnull source: ContentSourceInterface) {
+        dispatcher?.addSource(source)
     }
 
-    @Override
-    public void requestUpdate() {
-        dispatcher.requestUpdate();
+    override fun requestUpdate() {
+        dispatcher?.requestUpdate()
     }
 
-    @Override
-    public void onResumeWithService() {
-        lifeCycle.onResumeWithService();
-        dispatcher.onResume();
-        super.onResumeWithService();
+    override fun onResumeWithService() {
+        lifeCycle?.onResumeWithService()
+        dispatcher?.onResume()
+        super.onResumeWithService()
     }
 
-    @Override
-    public void onPauseWithService() {
-        lifeCycle.onPauseWithService();
-        dispatcher.onPause();
+    override fun onPauseWithService() {
+        lifeCycle?.onPauseWithService()
+        dispatcher?.onPause()
     }
 
-    @Override
-    public void onDestroy() {
-        lifeCycle.onDestroy();
-        lifeCycle = null;
-        dispatcher = null;
-        super.onDestroy();
+    override fun onDestroy() {
+        lifeCycle?.onDestroy()
+        lifeCycle = null
+        dispatcher = null
+        super.onDestroy()
     }
 }

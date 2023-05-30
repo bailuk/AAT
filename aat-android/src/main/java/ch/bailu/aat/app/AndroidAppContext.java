@@ -46,9 +46,9 @@ public class AndroidAppContext implements AppContext {
     private final ServicesInterface services;
     private final FocFactory assets;
 
-    public AndroidAppContext(Context context, ServicesInterface serivces) {
+    public AndroidAppContext(Context context, ServicesInterface services) {
         this.context = context;
-        this.services = serivces;
+        this.services = services;
         this.broadcaster = new AndroidBroadcaster(context);
         this.assets = new FocAssetFactory(context);
     }

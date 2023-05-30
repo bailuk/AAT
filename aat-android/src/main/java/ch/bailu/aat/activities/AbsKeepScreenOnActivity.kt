@@ -1,36 +1,27 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.os.Bundle;
+import android.os.Bundle
+import ch.bailu.aat.util.ui.Backlight
+import ch.bailu.aat_lib.gpx.InfoID
 
-import ch.bailu.aat.util.ui.Backlight;
-import ch.bailu.aat_lib.gpx.InfoID;
+abstract class AbsKeepScreenOnActivity : ActivityContext() {
+    private var backlight: Backlight? = null
 
-public abstract class AbsKeepScreenOnActivity extends ActivityContext {
-
-    private Backlight backlight;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        backlight = new Backlight(this, getServiceContext());
-
-        addTarget(backlight, InfoID.TRACKER);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        backlight = Backlight(this, serviceContext).apply {
+            addTarget(this, InfoID.TRACKER)
+        }
     }
 
-
-    @Override
-    public void onResumeWithService() {
-        super.onResumeWithService();
-
-        backlight.setBacklightAndPreset();
+    override fun onResumeWithService() {
+        super.onResumeWithService()
+        backlight?.setBacklightAndPreset()
     }
 
-
-    @Override
-    public void onDestroy() {
-        backlight.close();
-        super.onDestroy();
+    override fun onDestroy() {
+        backlight?.close()
+        backlight = null
+        super.onDestroy()
     }
-
 }
