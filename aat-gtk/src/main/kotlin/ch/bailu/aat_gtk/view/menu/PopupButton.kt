@@ -1,7 +1,5 @@
 package ch.bailu.aat_gtk.view.menu
 
-import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
@@ -33,8 +31,8 @@ open class PopupButton(private val menuProvider: MenuProvider) {
         button.onClicked { popover.popup() }
     }
 
-    fun setIcon(resource: String, size: Int = Layout.ICON_SIZE) {
-        button.setIcon(resource, size)
+    fun setIcon(resource: String) {
+        button.setIconName(resource)
     }
 
     fun createActions(app: Application) {

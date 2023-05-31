@@ -1,8 +1,6 @@
 package ch.bailu.aat_gtk.lib.extensions
 
-import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.lib.icons.IconMap
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Widget
 
 fun Widget.margin(margin: Int) {
     this.marginEnd    = margin
@@ -25,10 +23,4 @@ fun String.ellipsizeStart(max: Int): String {
 
 fun String.escapeUnderscore(): String {
     return replace("_", "__")
-}
-
-fun Button.setIcon(imageResource: String, size: Int = Layout.ICON_SIZE) {
-    val image = IconMap.getImage(imageResource, size)
-    image.margin(Layout.margin)
-    child = image
 }

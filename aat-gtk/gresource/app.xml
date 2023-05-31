@@ -2,5 +2,30 @@
 <gresources>
     <gresource prefix="/ch/bailu/aat">
         <file preprocess="xml-stripblanks">icons/scalable/apps/ch.bailu.aat.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original_inverse.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/dialog_question.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/edit-redo-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/edit-undo-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/go-down-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/go-previous-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/go-up-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/help-about-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/inc_cockpit.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/inc_map.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/list-add-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/list-remove-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/location.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/menu.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/none.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/open-menu-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/preferences-system-details-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/preferences-system-search-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/search.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-list-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view_grid.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-fit-best-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-in-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-out-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original.svg</file>
     </gresource>
 </gresources>
