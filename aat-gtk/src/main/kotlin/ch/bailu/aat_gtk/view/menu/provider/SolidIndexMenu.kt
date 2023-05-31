@@ -40,7 +40,7 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
                         })
                     }
                 }, solid.key
-            )
+            ) {}
         )
     }
 

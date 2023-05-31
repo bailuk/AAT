@@ -42,12 +42,10 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
     private var file: Foc = FocName(solid.key)
     private var removedFromList = file
-    private val labels: ArrayList<Label> = ArrayList()
 
     fun setFile(file: Foc) {
         this.file = file
         removedFromList = file
-        updateLabels()
     }
 
     override fun createActions(app: Application) {
@@ -108,7 +106,10 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
     }
 
      override fun createCustomWidgets(): Array<CustomWidget> {
-        return arrayOf(
+         val labels: ArrayList<Label> = ArrayList()
+         val checkButtons: ArrayList<CheckButton> = ArrayList()
+
+         return arrayOf(
             CustomWidget(
                 ListBox().apply {
                     selectionMode = 1
@@ -121,16 +122,15 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                         label.xalign = 0f
                         labels.add(label)
 
-                        check.active = it
                         check.onToggled {
                             solid.setEnabled(index, check.active)
                         }
+                        checkButtons.add(check)
                         layout.append(check)
                         layout.append(label)
                         append(layout)
                     }
 
-                    updateLabels()
                     onRowActivated {
                         val foundAt = indexOf(file)
 
@@ -146,10 +146,13 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                             solid[it.index].setValueFromFile(removedFromList)
                         }
 
-                        updateLabels()
+                        updateLabels(labels)
                     }
                 }, solid.key
-            )
+            ) {
+                updateLabels(labels)
+                updateCheckButtons(checkButtons)
+            }
         )
     }
 
@@ -162,7 +165,14 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
         return -1
     }
 
-    private fun updateLabels() {
+    private fun updateCheckButtons(checkButtons: List<CheckButton>) {
+        checkButtons.forEachIndexed { index, it ->
+            it.active = solid[index].isEnabled
+        }
+
+    }
+
+    private fun updateLabels(labels: List<Label>) {
         labels.forEachIndexed { index, it ->
             it.setText(solid[index].valueAsString.ellipsizeStart(30))
         }

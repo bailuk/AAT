@@ -95,11 +95,20 @@ class FileList(app: Application,
     private val logItems = SizeLog("FileListItem")
 
 
+    // TODO: reuse PopupButton?
     private val menuButton = MenuButton().apply {
         menuModel = overlayMenu.createMenu()
         PopoverMenu(popover.cast()).apply {
-            overlayMenu.createCustomWidgets().forEach {
+            val customWidgets = overlayMenu.createCustomWidgets()
+
+            customWidgets.forEach {
                 addChild(it.widget, it.id)
+            }
+
+            onShow {
+                customWidgets.forEach {
+                    it.update()
+                }
             }
         }
     }

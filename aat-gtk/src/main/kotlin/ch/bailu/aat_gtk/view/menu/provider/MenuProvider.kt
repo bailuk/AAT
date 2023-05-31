@@ -11,4 +11,5 @@ interface MenuProvider {
     fun createActions(app: Application)
 }
 
-data class CustomWidget(val widget: Widget, val id: String)
+// TODO change to abstract class / interface?
+data class CustomWidget(val widget: Widget, val id: String, val update: ()->Unit)

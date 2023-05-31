@@ -19,8 +19,14 @@ open class PopupButton(private val menuProvider: MenuProvider) {
         overlay.addOverlay(popover)
 
         PopoverMenu(popover.cast()).apply {
-            menuProvider.createCustomWidgets().forEach {
+            val customWidgets = menuProvider.createCustomWidgets()
+            customWidgets.forEach {
                 addChild(it.widget, it.id)
+            }
+            onShow {
+                customWidgets.forEach {
+                    it.update()
+                }
             }
         }
 

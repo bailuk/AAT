@@ -26,7 +26,7 @@ MenuProvider {
         val trackerButton = TrackerButtonStartStop(services)
         dispatcher.addTarget(trackerButton, InfoID.TRACKER)
 
-        return arrayOf(CustomWidget(trackerButton.button, "tracker-button"))
+        return arrayOf(CustomWidget(trackerButton.button, "tracker-button") {})
     }
 
     override fun createActions(app: Application) {}

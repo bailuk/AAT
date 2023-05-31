@@ -21,6 +21,8 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
+        val checkButtons = ArrayList<CheckButton>()
+
         return arrayOf(
             CustomWidget(
                 Box(Orientation.VERTICAL, Layout.margin).apply {
@@ -29,12 +31,11 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                             addCssClass(Strings.linked)
 
                             val checkButton = CheckButton().apply {
-                                setLabel(it.info.file.name)
-                                active = it.isEnabled
                                 onToggled {
                                     it.isEnabled = active
                                 }
                             }
+                            checkButtons.add(checkButton)
 
                             append(Button().apply {
                                 setIconName("find-location-symbolic")
@@ -54,7 +55,12 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                         })
                     }
                 }
-            , "overlay")
+            , "overlay") {
+                overlays.forEachIndexed { index, fileSource ->
+                    checkButtons[index].setLabel(fileSource.info.file.name)
+                    checkButtons[index].active = fileSource.isEnabled
+                }
+            }
         )
     }
 

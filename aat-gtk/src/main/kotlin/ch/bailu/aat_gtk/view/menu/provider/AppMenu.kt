@@ -42,7 +42,7 @@ class AppMenu(private val window: Window,
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         val trackerButton = TrackerSplitButton(services, dispatcher)
-        return arrayOf(CustomWidget(trackerButton.button, "tracker-button"))
+        return arrayOf(CustomWidget(trackerButton.button, "tracker-button") {})
     }
 
     override fun createActions(app: Application) {

@@ -62,7 +62,7 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     @Override
     public boolean isEnabled() {
-        return lifeCycleEnabled;
+        return lifeCycleEnabled && trackEnabled;
     }
 
     @Override

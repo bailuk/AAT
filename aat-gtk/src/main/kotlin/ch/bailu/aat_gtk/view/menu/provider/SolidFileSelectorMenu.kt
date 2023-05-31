@@ -39,7 +39,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                         append(label)
                     }
                 }, solid.key
-            )
+            ) {}
         )
     }
 
