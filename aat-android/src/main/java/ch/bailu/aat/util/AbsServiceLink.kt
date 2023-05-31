@@ -8,8 +8,8 @@ import ch.bailu.aat.services.ServiceLink
 abstract class AbsServiceLink : AbsHardwareButtons() {
     private var serviceLink: ServiceLink? = null
 
-    val serviceContext: ServiceContext?
-        get() = serviceLink
+    val serviceContext: ServiceContext
+        get() = serviceLink!!
 
 
     private enum class State {

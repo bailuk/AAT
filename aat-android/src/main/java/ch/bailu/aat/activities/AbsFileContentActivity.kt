@@ -1,209 +1,188 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import ch.bailu.aat.R
+import ch.bailu.aat.menus.FileMenu
+import ch.bailu.aat.util.ui.AppDialog
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.views.BusyViewContainer
+import ch.bailu.aat.views.BusyViewControlIID
+import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.PreviewView
+import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.html.AttributesView
+import ch.bailu.aat.views.msg.ErrorMsgView
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
+import ch.bailu.aat_lib.dispatcher.IteratorSource
+import ch.bailu.aat_lib.dispatcher.IteratorSource.FollowFile
+import ch.bailu.aat_lib.dispatcher.OverlaysSource
+import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.util.Objects
 
-import ch.bailu.aat.R;
-import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource;
-import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.BusyViewContainer;
-import ch.bailu.aat.views.BusyViewControlIID;
-import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-import ch.bailu.aat.views.PreviewView;
-import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.html.AttributesView;
-import ch.bailu.aat.views.msg.ErrorMsgView;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.IteratorSource;
-import ch.bailu.aat_lib.dispatcher.OverlaysSource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.util.Objects;
+abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener {
+    private var currentFile: IteratorSource? = null
+    private var nextFile: ImageButtonViewGroup? = null
+    private var previousFile: ImageButtonViewGroup? = null
+    private var fileOperation: PreviewView? = null
+    private var fileError: ErrorMsgView? = null
+    private var busyControl: BusyViewControlIID? = null
 
-public abstract class AbsFileContentActivity extends ActivityContext implements OnClickListener {
+    private var currentFileID: String? = null
 
-    protected final static UiTheme THEME = AppTheme.trackContent;
-
-    private IteratorSource  currentFile;
-    protected ImageButtonViewGroup nextFile, previousFile;
-    protected PreviewView fileOperation;
-
-    private ErrorMsgView fileError;
-
-    private BusyViewControlIID busyControl;
-    protected MapViewInterface map;
-
-    protected EditorOrBackupSource editorSource = null;
-
-    private String currentFileID;
-
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        currentFile = new IteratorSource.FollowFile(getAppContext());
-        editorSource = new EditorOrBackupSource(getAppContext(), currentFile);
-
-        createViews();
-        createDispatcher();
+    companion object {
+        @JvmField
+        protected val THEME: UiTheme = AppTheme.trackContent
     }
 
-    private void createViews() {
-        final ContentView contentView = new ContentView(this, THEME);
+    @JvmField
+    protected var map: MapViewInterface? = null
 
-        MainControlBar bar = new MainControlBar(this,5);
+    @JvmField
+    protected var editorSource: EditorOrBackupSource? = null
 
-        ViewGroup layout = createLayout(bar, contentView);
-
-        contentView.add(bar);
-
-        fileError = new ErrorMsgView(this);
-        contentView.add(fileError);
-
-        contentView.add(getErrorView());
-
-        busyControl = new BusyViewControlIID(contentView);
-        busyControl.busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT);
-
-        contentView.add(layout);
-
-        initButtonBar(bar);
-
-        setContentView(contentView);
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentFile = FollowFile(appContext)
+        editorSource = EditorOrBackupSource(appContext, currentFile)
+        createViews()
+        createDispatcher()
     }
 
-     protected View createAttributesView() {
-        final AttributesView v = new AttributesView(this, getAppContext().getStorage());
-        addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY);
-        return v;
+    private fun createViews() {
+        val contentView = ContentView(this, THEME)
+        val bar = MainControlBar(this, 5)
+        val layout = createLayout(bar, contentView)
+
+        contentView.add(bar)
+        fileError = ErrorMsgView(this)
+        contentView.add(fileError)
+        contentView.add(errorView)
+        busyControl = BusyViewControlIID(contentView).apply {
+            busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT)
+        }
+        contentView.add(layout)
+        initButtonBar(bar)
+        setContentView(contentView)
     }
 
-    private void initButtonBar(MainControlBar bar) {
-        previousFile =  bar.addImageButton(R.drawable.go_up_inverse);
-        nextFile = bar.addImageButton(R.drawable.go_down_inverse);
-
-        fileOperation = new PreviewView(getServiceContext(),getAppContext().getSummaryConfig());
-        bar.addButton(fileOperation);
-
-        bar.setOrientation(LinearLayout.HORIZONTAL);
-        bar.setOnClickListener1(this);
+    protected fun createAttributesView(): View {
+        val v = AttributesView(this, appContext.storage)
+        addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY)
+        return v
     }
 
-    protected abstract ViewGroup createLayout(MainControlBar bar, ContentView contentView);
+    private fun initButtonBar(bar: MainControlBar) {
+        previousFile = bar.addImageButton(R.drawable.go_up_inverse)
+        nextFile = bar.addImageButton(R.drawable.go_down_inverse)
+        fileOperation = PreviewView(serviceContext, appContext.summaryConfig)
+        bar.addButton(fileOperation)
+        bar.orientation = LinearLayout.HORIZONTAL
+        bar.setOnClickListener1(this)
+    }
 
-    private void createDispatcher() {
-        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
-        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
-        addSource(new OverlaysSource(getAppContext()));
+    protected abstract fun createLayout(bar: MainControlBar?, contentView: ContentView?): ViewGroup
 
-        addSource(editorSource);
-
-        addTarget(busyControl,
-                InfoID.FILEVIEW,
-                InfoID.OVERLAY,
-                InfoID.OVERLAY+1,
-                InfoID.OVERLAY+2,
-                InfoID.OVERLAY+3);
-        addTarget(fileOperation, InfoID.FILEVIEW);
-
-        addTarget((iid, info) -> {
-            String newFileID = info.getFile().toString();
-
+    private fun createDispatcher() {
+        addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        addSource(OverlaysSource(appContext))
+        addSource(editorSource!!)
+        addTarget(
+            busyControl!!,
+            InfoID.FILEVIEW,
+            InfoID.OVERLAY,
+            InfoID.OVERLAY + 1,
+            InfoID.OVERLAY + 2,
+            InfoID.OVERLAY + 3
+        )
+        addTarget(fileOperation!!, InfoID.FILEVIEW)
+        addTarget({ _: Int, info: GpxInformation ->
+            val newFileID = info.file.toString()
             if (!Objects.equals(currentFileID, newFileID)) {
-                currentFileID = newFileID;
-                map.frameBounding(info.getBoundingBox());
-                AppLog.i(AbsFileContentActivity.this, info.getFile().getName());
+                currentFileID = newFileID
+                map?.frameBounding(info.boundingBox)
+                AppLog.i(this@AbsFileContentActivity, info.file.name)
             }
-        }, InfoID.FILEVIEW);
-
-
-        addTarget((iid, info) -> fileError.displayError(
-                getServiceContext(),
-                info.getFile()), InfoID.FILEVIEW);
+        }, InfoID.FILEVIEW)
+        addTarget({ _: Int, info: GpxInformation -> fileError?.displayError(serviceContext, info.file)
+        }, InfoID.FILEVIEW)
     }
 
-
-
-    @Override
-    public void onClick(final View v) {
-        if (v == previousFile || v ==nextFile) {
-            changeFileAsk(v);
-        } else if (v == fileOperation) {
-            new FileMenu(this, currentFile.getInfo().getFile()).showAsPopup(this, v);
+    override fun onClick(v: View) {
+        if (v === previousFile || v === nextFile) {
+            changeFileAsk(v)
+        } else if (v === fileOperation) {
+            currentFile?.apply { FileMenu(this@AbsFileContentActivity, info.file).showAsPopup(this@AbsFileContentActivity, v) }
         }
     }
 
-    private void changeFileAsk(View v) {
-        if (editorSource.isModified()) {
-            new AppDialog() {
-                @Override
-                protected void onPositiveClick() {
-                    editorSource.releaseEditorSave();
-                    changeFile(v);
-                }
-
-                @Override
-                public void onNeutralClick() {
-                    editorSource.releaseEditorDiscard();
-                    changeFile(v);
-                }
-
-
-            }.displaySaveDiscardDialog(this, editorSource.getFile().getName());
-        } else {
-            changeFile(v);
-        }
-    }
-
-    private void changeFile(View v) {
-        if (v == previousFile) {
-            editorSource.releaseEditorDiscard();
-            currentFile.moveToPrevious();
-        } else if (v ==nextFile) {
-            editorSource.releaseEditorDiscard();
-            currentFile.moveToNext();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        try {
-            if (editorSource.isModified()) {
-                new AppDialog() {
-                    @Override
-                    protected void onPositiveClick() {
-
-                        editorSource.releaseEditorSave();
-                        closeActivity();
+    private fun changeFileAsk(view: View) {
+        editorSource?.apply {
+            if (isModified) {
+                object : AppDialog() {
+                    override fun onPositiveClick() {
+                        releaseEditorSave()
+                        changeFile(view)
                     }
 
-                    @Override
-                    public void onNeutralClick() {
-                        editorSource.releaseEditorDiscard();
-                        closeActivity();
+                    override fun onNeutralClick() {
+                        releaseEditorDiscard()
+                        changeFile(view)
                     }
-                }.displaySaveDiscardDialog(this, editorSource.getFile().getName());
+                }.displaySaveDiscardDialog(this@AbsFileContentActivity, file.name)
             } else {
-                closeActivity();
+                changeFile(view)
             }
 
-        } catch (Exception e) {
-            AppLog.e(AbsFileContentActivity.this, e);
-            closeActivity();
         }
     }
 
-    private void closeActivity() {
-        super.onBackPressed();
+    private fun changeFile(v: View) {
+        if (v === previousFile) {
+            editorSource?.apply { releaseEditorDiscard() }
+            currentFile?.apply { moveToPrevious() }
+        } else if (v === nextFile) {
+            editorSource?.apply { releaseEditorDiscard() }
+            currentFile?.apply { moveToNext() }
+        }
+    }
+
+    override fun onBackPressed() {
+        editorSource?.apply {
+            try {
+                if (isModified) {
+                    object : AppDialog() {
+                        override fun onPositiveClick() {
+                            releaseEditorSave()
+                            closeActivity()
+                        }
+
+                        override fun onNeutralClick() {
+                            releaseEditorDiscard()
+                            closeActivity()
+                        }
+                    }.displaySaveDiscardDialog(this@AbsFileContentActivity, file.name)
+                } else {
+                    closeActivity()
+                }
+            } catch (e: Exception) {
+                AppLog.e(this@AbsFileContentActivity, e)
+                closeActivity()
+            }
+        }
+    }
+
+    private fun closeActivity() {
+        super.onBackPressed()
     }
 }

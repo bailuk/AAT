@@ -5,16 +5,21 @@ import ch.bailu.aat.app.AndroidAppContext
 import ch.bailu.aat_lib.app.AppContext
 
 abstract class ActivityContext : AbsDispatcher() {
-    var appContext: AppContext? = null
-        private set
+
+    private var _appContext: AppContext? = null
+
+
+    val appContext: AppContext
+        get() = _appContext!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appContext = AndroidAppContext(this, serviceContext)
+        _appContext = AndroidAppContext(this, serviceContext)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        appContext = null
+        _appContext = null
     }
 }
