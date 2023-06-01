@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
@@ -54,17 +55,17 @@ class FileList(app: Application,
 
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
-        iconName = Strings.iconFrame
+        iconName = Icons.zoomFitBestSymbolic
         onClicked { selectAndFrame(indexOfSelected) }
     }
 
     private val trackCenterButton = Button().apply {
-        iconName = Strings.iconCenter
+        iconName = Icons.findLocationSymbolic
         onClicked { selectAndCenter(indexOfSelected) }
     }
 
     private val trackDetailButton = Button().apply {
-        iconName = Strings.iconDetail
+        iconName = Icons.viewContinuousSymbolic
         onClicked { selectAndDetail(indexOfSelected) }
     }
 
@@ -157,7 +158,7 @@ class FileList(app: Application,
                             focFactory
                         ).combo.apply { addCssClass(Strings.linked) })
                     append(Button().apply {
-                        iconName = Strings.iconFolder
+                        iconName = Icons.folderSymbolic
                         onClicked {
                             val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
                             try {

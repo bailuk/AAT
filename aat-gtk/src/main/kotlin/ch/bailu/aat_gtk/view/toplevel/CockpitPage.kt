@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
@@ -33,14 +34,14 @@ class CockpitPage(uiController: UiController, dispatcher: Dispatcher) {
         append(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
             append(Button().apply {
-                iconName = Strings.iconDetail
+                iconName = Icons.viewContinuousSymbolic
                 onClicked {
                     uiController.showDetail()
                     uiController.showInDetail(InfoID.TRACKER)
                 }
             })
             append(Button().apply {
-                iconName = Strings.iconCenter
+                iconName = Icons.zoomFitBestSymbolic
                 onClicked {
                     uiController.showMap()
                     SolidPositionLock(GtkAppContext.storage, GtkCustomMapView.KEY).value = true

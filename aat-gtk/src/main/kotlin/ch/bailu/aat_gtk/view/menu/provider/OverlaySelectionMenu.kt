@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.view.UiController
@@ -38,14 +39,14 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                             checkButtons.add(checkButton)
 
                             append(Button().apply {
-                                setIconName("find-location-symbolic")
+                                iconName = Icons.findLocationSymbolic
                                 onClicked {
                                     checkButton.active = true
                                     uiController.centerInMap(it.info)
                                 }
                             })
                             append(Button().apply {
-                                setIconName("zoom-fit-best-symbolic")
+                                iconName = Icons.zoomFitBestSymbolic
                                 onClicked {
                                     checkButton.active = true
                                     uiController.frameInMap(it.info)

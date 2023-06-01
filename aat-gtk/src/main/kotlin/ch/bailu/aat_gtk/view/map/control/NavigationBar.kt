@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
@@ -21,10 +22,10 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
     private var boundingCycle = 0
 
     init {
-        add("zoom-in-symbolic").onClicked { mcontext.mapView.zoomIn() }
-        add("zoom-out-symbolic").onClicked { mcontext.mapView.zoomOut() }
+        add(Icons.zoomInSymbolic).onClicked { mcontext.mapView.zoomIn() }
+        add(Icons.zoomOutSymbolic).onClicked { mcontext.mapView.zoomOut() }
         add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
-        add("zoom-fit-best-symbolic").onClicked {
+        add(Icons.zoomFitBestSymbolic).onClicked {
             if (nextInBoundingCycle()) {
                 val info = infoCache.getValueAt(boundingCycle)
 
@@ -39,7 +40,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
                 }
             }
         }
-        add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon("view-paged-symbolic") }.overlay)
+        add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon(Icons.viewPagedSymbolic) }.overlay)
     }
 
     private fun nextInBoundingCycle(): Boolean {

@@ -10,6 +10,7 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Widget
+import ch.bailu.gtk.type.Str
 
 open class Bar(private val pos: Position): EdgeViewInterface {
     companion object {
@@ -44,10 +45,10 @@ open class Bar(private val pos: Position): EdgeViewInterface {
         addCssClass(Strings.mapControl)
     }
 
-    fun add(image: String): Button {
+    fun add(iconName: Str): Button {
         val button = Button()
         add(button)
-        button.setIconName(image)
+        button.iconName = iconName
         return button
     }
 

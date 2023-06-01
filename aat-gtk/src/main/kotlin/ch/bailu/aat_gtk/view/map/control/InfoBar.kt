@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.provider.MapMenu
@@ -31,7 +32,7 @@ class InfoBar(app: Application,
     init {
         add(PopupButton(MapMenu(uiController, mcontext, mapDirectories, window)).apply {
             createActions(app)
-            setIcon("menu")
+            setIcon(Icons.openMenuSymbolic)
         }.overlay)
         add(SolidMenuButton(SolidMapGrid(storage, mcontext.solidKey)).apply {
             createActions(app)
@@ -41,7 +42,7 @@ class InfoBar(app: Application,
         }.overlay)
         add(PopupButton(LocationMenu(app)).apply {
             createActions(app)
-            setIcon("location") }.overlay)
+            setIcon(Icons.location) }.overlay)
     }
 
     override fun show() {

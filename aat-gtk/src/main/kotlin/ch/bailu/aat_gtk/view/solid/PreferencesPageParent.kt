@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.gtk.adw.PreferencesGroup
@@ -17,7 +18,7 @@ open class PreferencesPageParent(title: String, name: String) {
         page.vexpand = true
         page.setTitle(title)
         page.setName(name)
-        page.setIconName("preferences-other-symbolic")
+        page.iconName = Icons.preferencesOtherSymbolic
     }
 
     fun add(title: String) {

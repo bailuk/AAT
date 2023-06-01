@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
@@ -19,7 +20,6 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
-import ch.bailu.gtk.type.Str
 import org.mapsforge.core.model.LatLong
 
 class SearchBar(private val uiController: UiController, private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
@@ -59,14 +59,15 @@ class SearchBar(private val uiController: UiController, private val app: Applica
                 }
             })
 
-            append(Button.newFromIconNameButton(Str("edit-find-symbolic")).apply {
+            append(Button().apply {
+                iconName = Icons.editFindSymbolic
                 onClicked {
                     searchController.search(Editable(entry.cast()).text.toString())
                 }
             })
 
             append(MenuButton().apply {
-                iconName = Str("view-more-symbolic")
+                iconName = Icons.viewMoreSymbolic
                 searchModel.observe {
                     menuModel = createMenuModel(it)
                 }

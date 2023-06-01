@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
@@ -59,7 +60,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     init {
         overlay.addOverlay(Button().apply {
-            setIconName("go-previous-symbolic")
+            iconName = Icons.goPreviousSymbolic
             onClicked {
                 uiController.hideMap()
             }

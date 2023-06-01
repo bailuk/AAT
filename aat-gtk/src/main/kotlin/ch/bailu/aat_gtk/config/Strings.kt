@@ -1,7 +1,5 @@
 package ch.bailu.aat_gtk.config
 
-import ch.bailu.gtk.type.Str
-
 object Strings {
     const val appIdName = "aat-gtk"
 
@@ -14,12 +12,6 @@ object Strings {
     // Files
     const val appCss = "/app.css"
     const val appGResource = "/app.gresource"
-
-    // Icon names
-    val iconFrame = Str("zoom-fit-best-symbolic")
-    val iconCenter = Str("find-location-symbolic")
-    val iconDetail = Str("view-continuous-symbolic")
-    val iconFolder = Str("folder-symbolic")
 
     // Action names
     const val actionFileEdit   = "app.fileEdit"

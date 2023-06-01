@@ -5,6 +5,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.PopoverMenu
+import ch.bailu.gtk.type.Str
 
 open class PopupButton(private val menuProvider: MenuProvider) {
     private val button = Button()
@@ -31,8 +32,12 @@ open class PopupButton(private val menuProvider: MenuProvider) {
         button.onClicked { popover.popup() }
     }
 
-    fun setIcon(resource: String) {
-        button.setIconName(resource)
+    fun setIcon(iconName: String) {
+        button.setIconName(iconName)
+    }
+
+    fun setIcon(iconName: Str) {
+        button.iconName = iconName
     }
 
     fun createActions(app: Application) {

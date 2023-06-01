@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.dispatcher.SelectedSource
@@ -23,7 +24,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
             addCssClass(Strings.linked)
 
             append(Button().apply {
-                iconName = Strings.iconFrame
+                iconName = Icons.zoomFitBestSymbolic
                 onClicked {
                     uiController.showMap()
                     uiController.frameInMap(selectedSource.info)
@@ -31,7 +32,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
             })
 
             append(Button().apply {
-                iconName = Strings.iconCenter
+                iconName = Icons.findLocationSymbolic
                 onClicked {
                     uiController.showMap()
                     uiController.centerInMap(selectedSource.info)

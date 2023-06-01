@@ -36,23 +36,21 @@ class StackView(headerBar: HeaderBar) {
             })
     }
 
-    fun addView(widget: Widget, pageId: String, label: String) {
+    fun addView(widget: Widget, pageId: Str, label: String) {
         widget.hexpand = false
-        viewStack.addTitledWithIcon(widget, pageId, label, pageId)
+        viewStack.addTitledWithIcon(widget, pageId, Str(label), pageId)
     }
 
     fun restore(storageInterface: StorageInterface) {
-        showPage(SolidString(storageInterface, solidKey).valueAsString)
+        showPage(Str(SolidString(storageInterface, solidKey).valueAsString))
     }
 
     fun save(storageInterface: StorageInterface) {
         SolidString(storageInterface, solidKey).setValue(viewStack.visibleChildName.toString())
     }
 
-    fun showPage(pageId: String) {
-        val str = Str(pageId)
-        viewStack.visibleChildName = str
-        //TODO str.destroy()
+    fun showPage(pageId: Str) {
+        viewStack.visibleChildName = pageId
     }
 
 

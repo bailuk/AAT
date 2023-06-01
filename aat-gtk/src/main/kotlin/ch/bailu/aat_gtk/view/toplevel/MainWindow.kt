@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.solid.SolidWindowSize
@@ -18,6 +19,7 @@ import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
@@ -32,9 +34,9 @@ import ch.bailu.gtk.lib.bridge.CSS
 class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
 
     companion object {
-        const val pageIdCockpit = "view-grid-symbolic"
-        const val pageIdFileList = "view-list-symbolic"
-        const val pageIdDetail = "view-continuous-symbolic"
+        val pageIdCockpit = Icons.incCockpit
+        val pageIdFileList = Icons.viewListSymbolic
+        val pageIdDetail = Icons.viewContinuousSymbolic
     }
 
     private val showMapButton = Button().apply {
@@ -96,9 +98,9 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
 
         dispatcher.addSource(customFileSource)
 
-        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit,"Cockpit")
-        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList,"Tracks")
-        stackPage.addView(detailViewPage.box, pageIdDetail, "Detail")
+        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, ToDo.translate("Cockpit"))
+        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList, ToDo.translate("Tracks"))
+        stackPage.addView(detailViewPage.box, pageIdDetail, ToDo.translate("Details"))
 
 
         leaflet.visibleChild = stackPage.stackPage
