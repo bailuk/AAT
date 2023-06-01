@@ -1,94 +1,82 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.view.View;
-import android.widget.LinearLayout;
+import android.view.View
+import android.widget.LinearLayout
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.description.mview.MultiView
+import ch.bailu.aat.views.osm_features.PoiView
+import ch.bailu.aat.views.preferences.TitleView
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
+import ch.bailu.aat_lib.search.poi.PoiApi
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import org.mapsforge.poi.storage.PoiCategory
 
-import org.mapsforge.poi.storage.PoiCategory;
+class PoiActivity : AbsOsmApiActivity() {
+    private var multiView: MultiView? = null
+    private var poiView: PoiView? = null
 
-import java.util.ArrayList;
-
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration;
-import ch.bailu.aat_lib.search.poi.PoiApi;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.mview.MultiView;
-import ch.bailu.aat.views.osm_features.PoiView;
-import ch.bailu.aat.views.preferences.TitleView;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-
-public class PoiActivity extends AbsOsmApiActivity {
-
-    private final static String KEY = PoiActivity.class.getSimpleName();
-    private MultiView multiView;
-    private PoiView poiView;
-
-    @Override
-    public OsmApiConfiguration createApiConfiguration(BoundingBoxE6 boundingBox) {
-        return new PoiApi(getAppContext(), boundingBox) {
-
-            @Override
-            protected ArrayList<PoiCategory> getSelectedCategories() {
-                poiView.saveSelected(getQueryFile());
-                return poiView.getSelectedCategories();
-            }
-        };
+    companion object {
+        private val KEY = PoiActivity::class.java.simpleName
     }
 
-    @Override
-    protected View createMainContentView(ContentView contentView) {
-        LinearLayout linear = new LinearLayout(this);
-
-        linear.setOrientation(LinearLayout.VERTICAL);
-        linear.addView(new TitleView(this, getConfiguration().getApiName(), theme));
-        linear.addView(createNodeListView(contentView));
-
-        return linear;
-    }
-
-    @Override
-    protected View createNodeListView(ContentView contentView) {
-        if (AppLayout.isTablet(this)) {
-            PercentageLayout mainView = new PercentageLayout(this);
-            mainView.setOrientation(LinearLayout.HORIZONTAL);
-
-            mainView.add(super.createNodeListView(contentView),50);
-            mainView.add(createPoiListView(), 50);
-
-            return mainView;
-        } else {
-
-            multiView = new MultiView(this, KEY);
-            multiView.add(super.createNodeListView(contentView));
-            multiView.add(createPoiListView());
-
-            contentView.addMvIndicator(multiView);
-            return multiView;
+    public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
+        return object : PoiApi(appContext, boundingBox) {
+            override val selectedCategories: ArrayList<PoiCategory>
+                get() {
+                    poiView!!.saveSelected(queryFile)
+                    return poiView!!.selectedCategories
+                }
         }
-
     }
 
-    @Override
-    public void addCustomButtons(MainControlBar bar) {
+    override fun createMainContentView(contentView: ContentView): View {
+        val linear = LinearLayout(this)
+        linear.orientation = LinearLayout.VERTICAL
+        linear.addView(TitleView(this, configuration!!.apiName, theme))
+        linear.addView(createNodeListView(contentView))
+        return linear
+    }
+
+    override fun createNodeListView(contentView: ContentView): View {
+        return if (AppLayout.isTablet(this)) {
+            val mainView = PercentageLayout(this)
+            mainView.setOrientation(LinearLayout.HORIZONTAL)
+            mainView.add(super.createNodeListView(contentView), 50)
+            mainView.add(createPoiListView(), 50)
+            mainView
+        } else {
+            val multiView = MultiView(this, KEY)
+            this.multiView = multiView
+            multiView.add(super.createNodeListView(contentView))
+            multiView.add(createPoiListView())
+            contentView.addMvIndicator(multiView)
+            multiView
+        }
+    }
+
+    public override fun addCustomButtons(bar: MainControlBar) {
         if (!AppLayout.isTablet(this)) {
-            bar.addMvNext(multiView);
+            bar.addMvNext(multiView)
         } else {
-            bar.addSpace();
+            bar.addSpace()
         }
     }
 
-    private View createPoiListView() {
-        poiView = new PoiView(this, getAppContext(),
-                getConfiguration().getBaseDirectory().child(PoiApi.SELECTED), theme);
-
-        theme.background(poiView);
-        return poiView;
+    private fun createPoiListView(): View {
+        poiView = PoiView(
+            this, appContext,
+            configuration!!.baseDirectory.child(AppDirectory.FILE_SELECTION), theme
+        )
+        theme.background(poiView)
+        return poiView!!
     }
 
-    @Override
-    public void onDestroy() {
-        poiView.close(getServiceContext());
-        super.onDestroy();
+    override fun onDestroy() {
+        poiView!!.close(serviceContext)
+        super.onDestroy()
     }
 }

@@ -15,11 +15,10 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.SearchEntry
 import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.Window
-import org.mapsforge.poi.storage.PoiCategory
 
 class PoiView(private val controller: UiController, app: Application, window: Window) {
     private val sdatabase = SolidPoiDatabase(GtkAppContext.mapDirectory, GtkAppContext)
-    private val selected = AppDirectory.getDataDirectory(GtkAppContext.dataDirectory, AppDirectory.DIR_POI).child(PoiApi.SELECTED)
+    private val selected = AppDirectory.getDataDirectory(GtkAppContext.dataDirectory, AppDirectory.DIR_POI).child(AppDirectory.FILE_SELECTION)
 
     private val searchEntry = SearchEntry().apply {
         onSearchChanged {
@@ -50,20 +49,13 @@ class PoiView(private val controller: UiController, app: Application, window: Wi
         poiList.updateList(text)
     }
 
-    private fun getSelectedCategoriesFromList(): ArrayList<PoiCategory> {
-        return poiList.getSelectedCategories()
-    }
-
-
     fun loadList() {
         val poiApi = object: PoiApi(GtkAppContext, controller.getMapBounding()) {
-            override fun getSelectedCategories(): ArrayList<PoiCategory> {
-                return getSelectedCategoriesFromList()
-            }
+            override val selectedCategories
+                get() = poiList.getSelectedCategories()
         }
 
         poiApi.startTask(GtkAppContext)
-
         poiList.writeSelected()
     }
 }

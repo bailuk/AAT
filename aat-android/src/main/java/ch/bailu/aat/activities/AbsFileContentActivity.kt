@@ -43,10 +43,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         val THEME: UiTheme = AppTheme.trackContent
     }
 
-    @JvmField
     protected var map: MapViewInterface? = null
-
-    @JvmField
     protected var editorSource: EditorOrBackupSource? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

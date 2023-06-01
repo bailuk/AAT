@@ -1,82 +1,75 @@
-package ch.bailu.aat_lib.search.poi;
+package ch.bailu.aat_lib.search.poi
 
-import java.io.UnsupportedEncodingException;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.InsideContext
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
+import java.io.UnsupportedEncodingException
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.BackgroundServiceInterface;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+abstract class OsmApiConfiguration {
+    abstract val apiName: String
 
+    @Throws(UnsupportedEncodingException::class)
+    abstract fun getUrl(query: String): String
 
-public abstract class OsmApiConfiguration {
+    abstract val urlStart: String
+    abstract val baseDirectory: Foc
+    abstract val fileExtension: String
+    abstract val exception: Exception?
+    abstract fun getUrlPreview(query: String): String
 
-        public final static int NAME_MAX=15;
-        public final static int NAME_MIN=2;
+    abstract fun startTask(appContext: AppContext)
 
+    open val resultFile: Foc
+        get() = baseDirectory.child("result$fileExtension")
 
-        public abstract String getApiName();
-        public abstract String getUrl(String query) throws UnsupportedEncodingException;
-        public abstract String getUrlStart();
-        public abstract Foc getBaseDirectory();
-        public abstract String getFileExtension();
-        public abstract Exception getException();
+    val queryFile: Foc
+        get() = baseDirectory.child("query.txt")
 
-        public abstract String getUrlPreview(String s);
-        public abstract void startTask(AppContext scontext);
-
-
-        public Foc getResultFile() {
-            return getBaseDirectory().child("result"+ getFileExtension());
-        }
-
-        public Foc getQueryFile() {
-            return getBaseDirectory().child("query.txt");
-        }
-
-        public static String getFilePrefix(String query) {
-            final StringBuilder name= new StringBuilder();
-
-            for (int i=0; i<query.length() && name.length()<NAME_MAX; i++) {
-                appendToName(query.charAt(i), name);
-            }
-
-            if (name.length()<NAME_MIN) {
-                name.append(AppDirectory.generateDatePrefix());
-            }
-
-            return name.toString();
-        }
-
-        private static void appendToName(char c, StringBuilder name) {
-            if (Character.isLetter(c)) {
-                name.append(c);
+    fun isTaskRunning(scontext: ServicesInterface): Boolean {
+        var running = false
+        object : InsideContext(scontext) {
+            override fun run() {
+                val background = scontext.backgroundService
+                running = background.findTask(resultFile) != null
             }
         }
-
-    final public boolean isTaskRunning(ServicesInterface scontext) {
-        final boolean[] running = {false};
-
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                BackgroundServiceInterface background = scontext.getBackgroundService();
-                running[0] = background.findTask(getResultFile()) != null;
-            }
-        };
-        return running[0];
+        return running
     }
 
-    final public void stopTask(ServicesInterface scontext) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                BackgroundServiceInterface background = scontext.getBackgroundService();
-                BackgroundTask task = background.findTask(getResultFile());
-                if (task != null) task.stopProcessing();
+    fun stopTask(scontext: ServicesInterface) {
+        object : InsideContext(scontext) {
+            override fun run() {
+                val background = scontext.backgroundService
+                val task: BackgroundTask = background.findTask(resultFile)
+                task.stopProcessing()
             }
-        };
+        }
+    }
+
+    companion object {
+        private const val NAME_MAX = 15
+        private const val NAME_MIN = 2
+
+        fun getFilePrefix(query: String): String {
+            val name = StringBuilder()
+            var i = 0
+            while (i < query.length && name.length < NAME_MAX) {
+                appendToName(query[i], name)
+                i++
+            }
+            if (name.length < NAME_MIN) {
+                name.append(AppDirectory.generateDatePrefix())
+            }
+            return name.toString()
+        }
+
+        private fun appendToName(character: Char, name: StringBuilder) {
+            if (Character.isLetter(character)) {
+                name.append(character)
+            }
+        }
     }
 }

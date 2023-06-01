@@ -1,157 +1,125 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat.util
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
+import java.util.Locale
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Locale;
+abstract class OverpassApi(context: Context, b: BoundingBoxE6) : DownloadApi() {
+    final override val apiName: String
+    private val bounding: String
+    final override val baseDirectory: Foc
+    override val urlStart: String
+        get() = "$URL…"
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+    override val fileExtension = ".osm"
 
-public abstract class OverpassApi extends DownloadApi {
-
-    private final static String UTF8 = "UTF-8";
-
-    public final static String EXT=".osm";
-    public final static String URL="https://overpass-api.de/api/interpreter?data=("; // data=node
-    public final static String POST=">;);out;";
-    public final String NAME;
-
-
-    private final String bounding;
-    private final Foc directory;
-
-    public OverpassApi(Context context, BoundingBoxE6 b) {
-        NAME=getName(context);
-        bounding = toString(b);
-        directory = AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_OVERPASS);
+    init {
+        apiName = getName(context)
+        bounding = toString(b)
+        baseDirectory = AppDirectory.getDataDirectory(
+            AndroidSolidDataDirectory(context),
+            AppDirectory.DIR_OVERPASS
+        )
     }
-
-
-    public static String getName(Context context) {
-        return context.getString(R.string.query_overpass);
-    }
-
-
-    @Override
-    public String getApiName() {
-        return NAME;
-    }
-
-    private static String toString(BoundingBoxE6 bounding) {
-        final double lo1 = bounding.getLonWestE6()/1E6;
-        final double la1 = bounding.getLatSouthE6()/1E6;
-        final double lo2 = bounding.getLonEastE6()/1E6;
-        final double la2 = bounding.getLatNorthE6()/1E6;
-
-        return String.format(Locale.ROOT,"(%.2f,%.2f,%.2f,%.2f);",
-                Math.min(la1, la2),
-                Math.min(lo1, lo2),
-                Math.max(la1, la2),
-                Math.max(lo1, lo2));
-    }
-
 
     /**
      * See: http://overpass-api.de/command_line.html
      * Create an encoded URL for Overpass query
      * @throws UnsupportedEncodingException if UTF-8 is not supported by the URLEncoder
      */
-    public String getUrl(String query) throws UnsupportedEncodingException {
-        final String[] queries = query.split(";");
-
-        final StringBuilder url = new StringBuilder();
-        url.setLength(0);
-        url.append(URL);
-
-        for (String q : queries) {
-            q = q.trim();
-
-            if (q.length() > 0) {
-                if (q.charAt(0) == '[') {
-                    url.append("node");
-                    url.append(URLEncoder.encode(q, UTF8));
-                    url.append(URLEncoder.encode(bounding, UTF8));
-
-                    url.append("rel");
-                    url.append(URLEncoder.encode(q, UTF8));
-                    url.append(URLEncoder.encode(bounding, UTF8));
-
-                    url.append("way");
-                    url.append(URLEncoder.encode(q, UTF8));
-                    url.append(URLEncoder.encode(bounding, UTF8));
+    @Throws(UnsupportedEncodingException::class)
+    override fun getUrl(query: String): String {
+        val queries = query.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val url = StringBuilder()
+        url.setLength(0)
+        url.append(URL)
+        for (q in queries) {
+            val qTrimmed = q.trim { it <= ' ' }
+            if (qTrimmed.isNotEmpty()) {
+                if (qTrimmed[0] == '[') {
+                    url.append("node")
+                    url.append(URLEncoder.encode(qTrimmed, UTF8))
+                    url.append(URLEncoder.encode(bounding, UTF8))
+                    url.append("rel")
+                    url.append(URLEncoder.encode(qTrimmed, UTF8))
+                    url.append(URLEncoder.encode(bounding, UTF8))
+                    url.append("way")
+                    url.append(URLEncoder.encode(qTrimmed, UTF8))
+                    url.append(URLEncoder.encode(bounding, UTF8))
                 } else {
-                    url.append(URLEncoder.encode(q, UTF8));
-                    url.append(URLEncoder.encode(bounding, UTF8));
+                    url.append(URLEncoder.encode(qTrimmed, UTF8))
+                    url.append(URLEncoder.encode(bounding, UTF8))
                 }
             }
         }
-
-        url.append(URLEncoder.encode(POST,UTF8));
-
-        return url.toString();
+        url.append(URLEncoder.encode(POST, UTF8))
+        return url.toString()
     }
 
-    @Override
-    public String getUrlPreview(String query) {
-        final String[] queries = query.split(";");
-
-        final StringBuilder url = new StringBuilder();
-        url.setLength(0);
-        url.append(URL);
-
-        url.append('\n');
-        for (String q : queries) {
-            q = q.trim();
-
-            if (q.length() > 0) {
-                if (q.charAt(0) == '[') {
-                    url.append("node");
-                    url.append(q);
-                    url.append(bounding);
-                    url.append('\n');
-
-                    url.append("rel");
-                    url.append(q);
-                    url.append(bounding);
-                    url.append('\n');
-
-                    url.append("way");
-                    url.append(q);
-                    url.append(bounding);
-                    url.append('\n');
-
+    override fun getUrlPreview(query: String): String {
+        val queries = query.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val url = StringBuilder()
+        url.setLength(0)
+        url.append(URL)
+        url.append('\n')
+        for (q in queries) {
+            val qTrimmed = q.trim { it <= ' ' }
+            if (qTrimmed.isNotEmpty()) {
+                if (qTrimmed[0] == '[') {
+                    url.append("node")
+                    url.append(qTrimmed)
+                    url.append(bounding)
+                    url.append('\n')
+                    url.append("rel")
+                    url.append(qTrimmed)
+                    url.append(bounding)
+                    url.append('\n')
+                    url.append("way")
+                    url.append(qTrimmed)
+                    url.append(bounding)
+                    url.append('\n')
                 } else {
-                    url.append(q);
-                    url.append(bounding);
-                    url.append('\n');
+                    url.append(qTrimmed)
+                    url.append(bounding)
+                    url.append('\n')
                 }
             }
+        }
+        url.append(POST)
+        return url.toString()
+    }
 
+
+
+    companion object {
+        private const val UTF8 = "UTF-8"
+
+
+        const val URL = "https://overpass-api.de/api/interpreter?data=(" // data=node
+        const val POST = ">;);out;"
+
+        fun getName(context: Context): String {
+            return context.getString(R.string.query_overpass)
         }
 
-        url.append(POST);
-
-        return url.toString();
-    }
-
-
-    @Override
-    public String getUrlStart() {
-        return URL+"...";
-    }
-
-    @Override
-    public Foc getBaseDirectory() {
-        return directory;
-    }
-
-    @Override
-    public String getFileExtension() {
-        return EXT;
+        private fun toString(bounding: BoundingBoxE6): String {
+            val lo1 = bounding.lonWestE6 / 1E6
+            val la1 = bounding.latSouthE6 / 1E6
+            val lo2 = bounding.lonEastE6 / 1E6
+            val la2 = bounding.latNorthE6 / 1E6
+            return String.format(
+                Locale.ROOT, "(%.2f,%.2f,%.2f,%.2f);",
+                Math.min(la1, la2),
+                Math.min(lo1, lo2),
+                Math.max(la1, la2),
+                Math.max(lo1, lo2)
+            )
+        }
     }
 }

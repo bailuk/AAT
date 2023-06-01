@@ -29,12 +29,12 @@ public class MapQueryMenu extends AbsMenu {
 
     @Override
     public void inflate(Menu menu) {
-        add(menu, NominatimApi.NAME, ()->
+        add(menu, NominatimApi.API_NAME, ()->
                 ActivitySwitcher.start(context,
                         NominatimActivity.class,
                         mcontext.getMetrics().getBoundingBox()));
 
-        add(menu, OverpassApi.getName(context), ()->
+        add(menu, OverpassApi.Companion.getName(context), ()->
                 ActivitySwitcher.start(context,
                         OverpassActivity.class,
                         mcontext.getMetrics().getBoundingBox()));
@@ -57,4 +57,3 @@ public class MapQueryMenu extends AbsMenu {
         return null;
     }
 }
-
