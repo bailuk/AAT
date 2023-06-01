@@ -1,5 +1,7 @@
 package ch.bailu.aat.activities;
 
+import static ch.bailu.foc.Foc.FOC_NULL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +49,7 @@ public class NodeDetailActivity extends ActivityContext
     private GraphView graph;
     private SeekBar seekBar;
 
-    private Foc file = GpxInformation.FOC_NULL;
+    private Foc file = FOC_NULL;
 
     private GpxListArray arrayCache = new GpxListArray(GpxList.NULL_ROUTE);
     private GpxInformation infoCache = GpxInformation.NULL;

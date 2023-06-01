@@ -28,7 +28,7 @@ dependencies {
      */
     val focVersion : String by project
     implementation("com.github.bailuk.foc:foc:$focVersion")
-    //implementation("ch.bailu:foc:$focVersion")
+    implementation("com.github.bailuk.foc:foc-extended:$focVersion")
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     // same version as in mapsforge-poi-awt

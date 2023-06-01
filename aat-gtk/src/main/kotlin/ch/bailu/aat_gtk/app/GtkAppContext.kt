@@ -1,18 +1,20 @@
 package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.dispatcher.GtkBroadcaster
-import ch.bailu.aat_gtk.lib.foc.FocResourceFactory
 import ch.bailu.aat_gtk.map.GtkSyncTileBitmap
 import ch.bailu.aat_gtk.map.GtkTilePainter
 import ch.bailu.aat_gtk.service.GtkServices
 import ch.bailu.aat_gtk.service.location.directory.GtkSummaryConfig
-import ch.bailu.aat_gtk.solid.*
+import ch.bailu.aat_gtk.solid.GtkMapDirectories
+import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
+import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
+import ch.bailu.aat_gtk.solid.GtkStorage
+import ch.bailu.aat_gtk.solid.SolidGtkDataDirectory
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -29,6 +31,7 @@ import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
+import ch.bailu.foc_extended.FocResourceFactory
 import org.mapsforge.poi.awt.storage.AwtPoiPersistenceManagerFactory
 import org.mapsforge.poi.storage.PoiPersistenceManager
 

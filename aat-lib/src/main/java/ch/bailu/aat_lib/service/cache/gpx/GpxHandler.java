@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.cache.gpx;
 
+import static ch.bailu.foc.Foc.FOC_NULL;
+
 import ch.bailu.aat_lib.gpx.GpxFileWrapper;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxInformationProvider;
@@ -11,7 +13,7 @@ import ch.bailu.foc.Foc;
 
 public class GpxHandler implements GpxInformationProvider {
     private ObjGpx handle = ObjGpxStatic.NULL;
-    private Foc file = GpxInformation.FOC_NULL;
+    private Foc file = FOC_NULL;
     private boolean enabled = false;
 
     public void disable() {
