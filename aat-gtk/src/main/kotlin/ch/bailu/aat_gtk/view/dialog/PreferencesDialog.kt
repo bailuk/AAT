@@ -15,6 +15,7 @@ object PreferencesDialog {
     fun show(app: Application) {
         if (window == null) {
             window = PreferencesWindow().apply {
+                application = app // This enables actions in app.* scope
                 canNavigateBack = true
                 modal = false
 

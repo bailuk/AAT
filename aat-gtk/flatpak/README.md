@@ -23,7 +23,8 @@ Solution:
 ```bash
 # Open shell inside runtime
 flatpak run org.gnome.Sdk//44
-
+flatpak run --command=/bin/bash ch.bailu.aat
+export PATH=$PATH:/bin
 ```
 
 # Flatpak examples

@@ -5,6 +5,7 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
@@ -161,14 +162,7 @@ class FileList(app: Application,
                         iconName = Icons.folderSymbolic
                         onClicked {
                             val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
-                            try {
-
-                                val runtime = Runtime.getRuntime()
-                                runtime.exec("xdg-open $path")
-
-                            } catch (e: Exception) {
-                                AppLog.i(this, "Failed to open $path")
-                            }
+                            Directory.openExternal(path)
                         }
                     })
                 })

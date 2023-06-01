@@ -1,8 +1,9 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.FileDialog
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.Directory
+import ch.bailu.aat_gtk.view.dialog.FileDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.ToDo
@@ -19,7 +20,8 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.key))
-            append(ToDo.translate("File dialog..."), "app.showSelectFileDialog${solid.key}")
+            append(ToDo.translate("File dialog..."), "app.get${solid.key}")
+            append(ToDo.translate("Open directory..."), "app.open${solid.key}")
         }
     }
 
@@ -44,7 +46,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "showSelectFileDialog${solid.key}") {
+        MenuHelper.setAction(app, "get${solid.key}") {
             FileDialog()
                 .title(solid.label)
                 .onResponse {
@@ -53,5 +55,8 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                     }
                 }.show(window)
             }
+        MenuHelper.setAction(app, "open${solid.key}") {
+            Directory.openExternal(solid.valueAsFile.path)
+        }
     }
 }
