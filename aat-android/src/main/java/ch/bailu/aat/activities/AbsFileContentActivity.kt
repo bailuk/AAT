@@ -40,8 +40,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     private var currentFileID: String? = null
 
     companion object {
-        @JvmField
-        protected val THEME: UiTheme = AppTheme.trackContent
+        val THEME: UiTheme = AppTheme.trackContent
     }
 
     @JvmField
@@ -90,7 +89,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         bar.setOnClickListener1(this)
     }
 
-    protected abstract fun createLayout(bar: MainControlBar?, contentView: ContentView?): ViewGroup
+    protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
 
     private fun createDispatcher() {
         addSource(TrackerSource(serviceContext, appContext.broadcaster))
@@ -157,6 +156,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         }
     }
 
+    @Deprecated("Android API")
     override fun onBackPressed() {
         editorSource?.apply {
             try {
@@ -183,6 +183,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     }
 
     private fun closeActivity() {
+        @Suppress("DEPRECATION")
         super.onBackPressed()
     }
 }
