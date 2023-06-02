@@ -4,27 +4,39 @@ import ch.bailu.aat_lib.util.Timer
 import ch.bailu.gtk.glib.Glib
 
 class GtkTimer : Timer {
-    private var state = TimerState()
+    private var currentTimer: Timer = TimerCall()
 
     override fun kick(interval: Long, run: Runnable) {
-        val state = TimerState()
-        this.state.enabled = false
-        this.state = state
+        val newTimer: Timer = TimerCall()
+        setTimer(newTimer)
+        newTimer.kick(interval, run)
+    }
 
+    private fun setTimer(timer: Timer) {
+        currentTimer.cancel()
+        currentTimer = timer
+    }
+
+    override fun cancel() {
+        this.currentTimer.cancel()
+    }
+}
+
+private class TimerCall : Timer {
+    private var enabled = true
+
+    override fun kick(interval: Long, run: Runnable) {
         Glib.timeoutAdd(interval.toInt(), { self, _ ->
-            if (state.enabled) {
+            if (enabled) {
                 run.run()
             }
+            enabled = false
             self.unregister()
             false
         }, null)
     }
 
     override fun cancel() {
-        this.state.enabled = false
+        enabled = false
     }
-}
-
-private class TimerState {
-    var enabled = true
 }

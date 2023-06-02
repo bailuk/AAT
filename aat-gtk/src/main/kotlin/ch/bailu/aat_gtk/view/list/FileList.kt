@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.toplevel.list
+package ch.bailu.aat_gtk.view.list
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Icons
@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
+import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
@@ -72,14 +73,30 @@ class FileList(app: Application,
 
     private val listIndex = ListIndex()
 
+    private var listIsDirty = false
+    private val updateTimer = GtkTimer()
+
     private val iteratorSimple = IteratorSimple(GtkAppContext).apply {
         setOnCursorChangedListener {
             if (listIndex.size != count) {
-                listIndex.size = count
+                if (!listIsDirty) {
+                    listIsDirty = true
+                    updateLater()
+                }
             }
+        }
+    }
 
-            if (count == 0) {
-                select(-1)
+    private fun updateLater() {
+        updateTimer.kick(1000) {
+            if (listIsDirty) {
+                listIsDirty = false
+                val count = iteratorSimple.count
+                AppLog.d(this, "Update list, new size: $count")
+                listIndex.size = count
+                if (count == 0) {
+                    select(-1)
+                }
             }
         }
     }
@@ -95,7 +112,6 @@ class FileList(app: Application,
         createActions(app)
     }
     private val logItems = SizeLog("FileListItem")
-
 
     // TODO: reuse PopupButton?
     private val menuButton = MenuButton().apply {
@@ -122,7 +138,6 @@ class FileList(app: Application,
 
             val factory = SignalListItemFactory().apply {
                 onSetup {
-                    // AppLog.d(this, "onSetup")
                     val item = ListItem(it.cast())
 
                     items[item] = FileListItem(item, descriptions)
@@ -132,7 +147,6 @@ class FileList(app: Application,
                 onBind {
                     val item = ListItem(it.cast())
                     val index = ListIndex.toIndex(item)
-                    AppLog.d(this, "onBind:${index}")
 
                     iteratorSimple.moveToPosition(index)
                     items[item]?.bind(iteratorSimple.info, index)
@@ -142,7 +156,6 @@ class FileList(app: Application,
                 }
 
                 onTeardown {
-                    // AppLog.d(this, "onTeardown")
                     val item = ListItem(it.cast())
                     items.remove(item)
                     logItems.log(items.size.toLong())

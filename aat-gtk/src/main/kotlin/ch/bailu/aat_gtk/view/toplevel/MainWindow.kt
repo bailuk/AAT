@@ -12,7 +12,7 @@ import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
-import ch.bailu.aat_gtk.view.toplevel.list.FileList
+import ch.bailu.aat_gtk.view.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
