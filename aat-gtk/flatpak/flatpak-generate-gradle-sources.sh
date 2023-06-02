@@ -53,9 +53,9 @@ fi
 mkdir -p $gradle_user_home
 mkdir -p $maven_repo
 
-proxy_host="192.168.178.80"
-
-if [ ! -z $proxy_host ]; then
+if [ ! -z $1 ]; then
+  echo "_"
+  echo "Using proxy: $1"
   gradle_proxy="-Dhttps.proxyHost=${proxy_host} -Dhttps.proxyPort=8080 -Dhttp.proxyHost=${proxy_host} -Dhttp.proxyPort=8080"
   export http_proxy=http://${proxy_host}:8080
   export https_proxy=http://${proxy_host}:8080

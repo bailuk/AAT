@@ -1317,6 +1317,48 @@
 	},
 	{
 		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/7046fec472/foc-7046fec472.pom",
+		"sha256": "309cb38f6d3ce9b8826c035c9cf80f2705a5ae1e4a4657303cea3cdb0044e78e",
+		"dest": "maven-local/com/github/bailuk/foc/foc/7046fec472",
+		"dest-filename": "foc-7046fec472.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/7046fec472/foc-7046fec472.module",
+		"sha256": "15d4c3b96be74ac25ee7ecd749006d646bd11d74f2813031d25fd64a1117088a",
+		"dest": "maven-local/com/github/bailuk/foc/foc/7046fec472",
+		"dest-filename": "foc-7046fec472.module"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc/7046fec472/foc-7046fec472.jar",
+		"sha256": "37cae574fade02ac368e5804ac2fa50823c0ddd8bf1a6cb709787c54032b0931",
+		"dest": "maven-local/com/github/bailuk/foc/foc/7046fec472",
+		"dest-filename": "foc-7046fec472.jar"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc-extended/7046fec472/foc-extended-7046fec472.pom",
+		"sha256": "70803fb7bcf343ac05e7ae55f24224bf78539d004867ecc0830417ac7f3f038a",
+		"dest": "maven-local/com/github/bailuk/foc/foc-extended/7046fec472",
+		"dest-filename": "foc-extended-7046fec472.pom"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc-extended/7046fec472/foc-extended-7046fec472.module",
+		"sha256": "d3d42e15e19731cad901be20689f4e6c003a006f923c3f6afae8af09d5e99195",
+		"dest": "maven-local/com/github/bailuk/foc/foc-extended/7046fec472",
+		"dest-filename": "foc-extended-7046fec472.module"
+	},
+	{
+		"type": "file",
+		"url": "https://jitpack.io/com/github/bailuk/foc/foc-extended/7046fec472/foc-extended-7046fec472.jar",
+		"sha256": "aacfab49bfe49a12fd1976a65c6386b38443b0499a3617de05bd0f1cf65a7ae6",
+		"dest": "maven-local/com/github/bailuk/foc/foc-extended/7046fec472",
+		"dest-filename": "foc-extended-7046fec472.jar"
+	},
+	{
+		"type": "file",
 		"url": "https://repo1.maven.org/maven2/com/fasterxml/jackson/jackson-bom/2.14.1/jackson-bom-2.14.1.pom",
 		"sha256": "78fdf99e5050fc485f4117dab8cccbfb6fa6c68385eb5f38a09b655371d4a6cc",
 		"dest": "maven-local/com/fasterxml/jackson/jackson-bom/2.14.1",

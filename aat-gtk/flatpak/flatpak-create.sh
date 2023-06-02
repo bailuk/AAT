@@ -7,9 +7,9 @@ mkdir -p build || exit 1
 
 export LANG=C # So we can google error messages
 
-proxy_host="192.168.178.80"
-
-if [ ! -z $proxy_host ]; then
+if [ ! -z $1 ]; then
+  echo "_"
+  echo "Using proxy: $1"
   export http_proxy=http://${proxy_host}:8080
   export https_proxy=http://${proxy_host}:8080
 fi
