@@ -1,60 +1,38 @@
-package ch.bailu.aat.util.ui;
+package ch.bailu.aat.util.ui
 
-import android.content.Context;
-import android.util.DisplayMetrics;
+import android.content.Context
+import android.util.DisplayMetrics
+import ch.bailu.aat_lib.map.AppDensity
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.map.AppDensity;
-
-public class AndroidAppDensity extends AppDensity {
-    private final float density;
-    private final float scaledDensity;
+open class AndroidAppDensity : AppDensity {
+    private val density: Float
+    private val scaledDensity: Float
 
 
-    public AndroidAppDensity(ServiceContext scontext) {
-        this(scontext.getContext());
+    constructor(context: Context) : this(context.resources.displayMetrics)
+    constructor(metrics: DisplayMetrics) : this(metrics.density, metrics.scaledDensity)
+    constructor(d: Float = 1f, sd: Float = 1f) {
+        density = d
+        scaledDensity = sd
     }
 
-    public AndroidAppDensity(Context context) {
-        this(context.getResources().getDisplayMetrics());
+    override fun toPixel_f(diPixel: Float): Float {
+        return density * diPixel
     }
 
-    public AndroidAppDensity(DisplayMetrics metrics) {
-        this(metrics.density, metrics.scaledDensity);
+    override fun toPixelScaled_f(diPixel: Float): Float {
+        return scaledDensity * diPixel
     }
 
-    public AndroidAppDensity() {
-        density=1;
-        scaledDensity=1;
+    override fun toPixel_i(diPixel: Float): Int {
+        return (toPixel_f(diPixel) + 0.5f).toInt()
     }
 
-    public AndroidAppDensity(float d, float sd) {
-        density=d;
-        scaledDensity=sd;
+    override fun toPixel_i(diPixel: Float, min: Int): Int {
+        return Math.max(min, toPixel_i(diPixel))
     }
 
-    @Override
-    public float toPixel_f(float diPixel) {
-        return density * diPixel;
-    }
-
-    @Override
-    public float toPixelScaled_f(float diPixel) {
-        return scaledDensity * diPixel;
-    }
-
-    @Override
-    public int toPixel_i(float diPixel) {
-        return (int) (toPixel_f(diPixel)+0.5f);
-    }
-
-    @Override
-    public int toPixel_i(float diPixel, int min) {
-        return Math.max(min, toPixel_i(diPixel));
-    }
-
-    @Override
-    public int toDensityIndependentPixel(float pixel) {
-        return (int) (pixel / density);
+    override fun toDensityIndependentPixel(pixel: Float): Int {
+        return (pixel / density).toInt()
     }
 }

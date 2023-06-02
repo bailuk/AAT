@@ -1,27 +1,18 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat.map
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.ui.AndroidAppDensity
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
+class MapDensity : AndroidAppDensity {
+    val tileSize: Int
 
-
-public final class MapDensity extends AndroidAppDensity {
-
-    private final int tileSize;
-
-    public MapDensity(Context context) {
-        super(context);
-
-        tileSize = new SolidTileSize(new Storage(context), new AndroidAppDensity(context)).getTileSize();
+    constructor(context: Context) : super(context) {
+        tileSize = SolidTileSize(Storage(context), AndroidAppDensity(context)).tileSize
     }
 
-    public MapDensity() {
-        tileSize = SolidTileSize.DEFAULT_TILESIZE;
-    }
-
-    public int getTileSize() {
-        return tileSize;
+    constructor() : super(1f, 1f) {
+        tileSize = SolidTileSize.DEFAULT_TILESIZE
     }
 }

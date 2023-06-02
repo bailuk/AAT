@@ -21,12 +21,12 @@ public final class Configuration {
     public boolean isConfigured() {
         return renderer != null;     }
 
-    public void configure(Foc mapDir, TileCache cache, XmlRenderTheme theme, String tID) {
+    public void configure(Foc mapDir, TileCache cache, XmlRenderTheme theme, String tID, float scaleFactor) {
         if (!isConfigured() && configureMapList(mapDir)) {
             themeID = tID;
 
             try {
-                renderer = new Renderer(theme, cache, mapFiles);
+                renderer = new Renderer(theme, cache, mapFiles, scaleFactor);
             } catch (Exception e) {
                 AppLog.e(renderer, e);
                 renderer = null;

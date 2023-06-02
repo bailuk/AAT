@@ -17,7 +17,7 @@ public class SVGAssetView extends ImageObjectView {
         super(sc, rid);
         setScaleType(ImageView.ScaleType.CENTER);
 
-         size = new AndroidAppDensity(sc).toPixel_i(IconMapService.BIG_ICON_SIZE);
+         size = new AndroidAppDensity(sc.getContext()).toPixel_i(IconMapService.BIG_ICON_SIZE);
     }
 
 

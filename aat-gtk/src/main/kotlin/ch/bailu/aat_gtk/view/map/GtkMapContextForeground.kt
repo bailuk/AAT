@@ -1,19 +1,25 @@
 package ch.bailu.aat_gtk.view.map
 
-import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.map.*
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapDraw
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.map.NodeBitmap
+import ch.bailu.aat_lib.map.TwoNodes
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import org.mapsforge.core.graphics.Canvas
-import java.util.*
 
 class GtkMapContextForeground(
     appContext: AppContext,
+    appDensity: AppDensity,
     private val metrics: MapsForgeMetrics,
     private val mcontext: MapContext,
     private val layers: ArrayList<MapLayerInterface>) : MapContext {
 
-    private val draw = GtkMapDraw(NodeBitmap.get(GtkAppDensity, appContext))
+    private val draw = GtkMapDraw(appDensity, NodeBitmap.get(appDensity, appContext))
 
     fun dispatchDraw(canvas: Canvas) {
         metrics.init(canvas.dimension)

@@ -1,7 +1,11 @@
 package ch.bailu.aat_gtk.view.map
 
-import ch.bailu.aat_gtk.app.GtkAppDensity
-import ch.bailu.aat_lib.map.*
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.map.MapDraw
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapPaint
+import ch.bailu.aat_lib.map.NodeBitmap
+import ch.bailu.aat_lib.map.TwoNodes
 import ch.bailu.aat_lib.util.Point
 import ch.bailu.aat_lib.util.Rect
 import org.mapsforge.core.graphics.Bitmap
@@ -9,20 +13,19 @@ import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.Paint
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 
-class GtkMapDraw(private val nodeBitmap: NodeBitmap): MapDraw {
+class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): MapDraw {
     companion object {
         private const val SPACE = 5
     }
 
     private var canvas: Canvas? = null
 
-    private val res = GtkAppDensity
-    private val textPaint: Paint = MapPaint.createStatusTextPaint(res)
-    private val gridPaint   = MapPaint.createGridPaint(res)
-    private val legendPaint: Paint = MapPaint.createLegendTextPaint(res)
+    private val textPaint: Paint = MapPaint.createStatusTextPaint(appDensity)
+    private val gridPaint   = MapPaint.createGridPaint(appDensity)
+    private val legendPaint: Paint = MapPaint.createLegendTextPaint(appDensity)
 
     private val textHeight   = textPaint.getTextHeight("X") + 5
-    private val pointRadius = res.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
+    private val pointRadius = appDensity.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
 
     private var left = 0
     private var top = 0

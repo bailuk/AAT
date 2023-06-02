@@ -24,6 +24,7 @@ import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
+import ch.bailu.aat_lib.preferences.map.SolidScaleFactor;
 import ch.bailu.aat_lib.preferences.map.SolidTileSize;
 import ch.bailu.aat_lib.resources.ToDo;
 import ch.bailu.foc_android.FocAndroidFactory;
@@ -50,6 +51,7 @@ public class MapPreferencesView extends VerticalScrollView {
         add(new SolidDirectoryView(context,solidMapFile, theme));
         add(new SolidDirectoryView(context,solidMapDirectory, theme));
         add(new SolidStringView(context,new SolidRenderTheme(solidMapDirectory, new FocAndroidFactory(context)), theme));
+        add(new SolidIndexListView(context, new SolidScaleFactor(storage),theme));
         add(new SolidCheckBox(acontext, new SolidEnableTileCache.MapsForge(storage), theme));
 
         add(new TitleView(context, ToDo.translate("Dem3 altitude tiles"), theme));
