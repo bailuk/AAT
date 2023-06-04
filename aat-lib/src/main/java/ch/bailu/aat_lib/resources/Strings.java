@@ -113,6 +113,8 @@ public class Strings {
 
     public String intro_documentation() { return "Documentation";}
 
+    public String intro_cockpit() { return "Cockpit";}
+
     public String intro_cockpit_a() { return "Cockpit A";}
 
     public String intro_cockpit_b() { return "Cockpit B";}

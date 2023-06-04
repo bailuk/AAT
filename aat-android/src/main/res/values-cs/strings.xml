@@ -58,6 +58,7 @@
     <string name="intro_readme">README</string>
     <string name="intro_documentation">Dokumentace</string>
 
+    <string name="intro_cockpit">Kokpit</string>
     <string name="intro_cockpit_a">Kokpit A</string>
     <string name="intro_cockpit_b">Kokpit B</string>
 

@@ -73,6 +73,9 @@ public class Strings_cs extends Strings {
     public String intro_documentation() { return "Dokumentace";}
 
     @Override
+    public String intro_cockpit() { return "Kokpit";}
+
+    @Override
     public String intro_cockpit_a() { return "Kokpit A";}
 
     @Override

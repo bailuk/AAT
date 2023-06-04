@@ -100,6 +100,7 @@
     <string name="intro_readme">README</string>
     <string name="intro_documentation">Documentation</string>
 
+    <string name="intro_cockpit">Cockpit</string>
     <string name="intro_cockpit_a">Cockpit A</string>
     <string name="intro_cockpit_b">Cockpit B</string>
 

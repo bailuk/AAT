@@ -97,7 +97,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
 
         dispatcher.addSource(customFileSource)
 
-        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, ToDo.translate("Cockpit"))
+        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
         stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList, ToDo.translate("Tracks"))
         stackPage.addView(detailViewPage.box, pageIdDetail, ToDo.translate("Details"))
 

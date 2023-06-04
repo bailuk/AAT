@@ -188,7 +188,6 @@
         </provider>
 
         <provider
-            android:enabled="@bool/atLeastKitKat"
             android:name="ch.bailu.aat.providers.GpxDocumentProvider"
             android:authorities="${applicationId}.gpxdocs"
             android:grantUriPermissions="true"
