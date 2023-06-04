@@ -71,7 +71,9 @@ class FileDialog {
     }
 
     fun show(window: Window) {
-        val dialog = FileChooserDialogExtended(title, window, action)
+        val dialog = FileChooserDialogExtended(title, window, action,
+            FileChooserDialogExtended.DialogButton(cancel, ResponseType.CANCEL),
+            FileChooserDialogExtended.DialogButton(ok, ResponseType.OK))
         dialog.path = initialPath
 
         val chooser = FileChooser(dialog.cast())
@@ -79,8 +81,6 @@ class FileDialog {
             filterMap[key]?.apply { chooser.addFilter(this) }
         }
 
-        dialog.addButton(cancel, ResponseType.CANCEL)
-        dialog.addButton(ok, ResponseType.OK)
         dialog.onDestroy {
             dialog.disconnectSignals()
         }

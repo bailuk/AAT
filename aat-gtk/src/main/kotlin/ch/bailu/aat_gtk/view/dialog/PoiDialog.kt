@@ -13,7 +13,6 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.type.Str
 
 object PoiDialog {
     private var window: Window? = null
@@ -23,11 +22,12 @@ object PoiDialog {
             window = Window().apply {
                 val poiView = PoiView(uiController, app, this)
 
+                application = app
                 content = Box(Orientation.VERTICAL, 0).apply {
                     append(HeaderBar().apply {
                         titleWidget = (WindowTitle(GtkAppConfig.shortName, Res.str().p_mapsforge_poi()))
 
-                        packStart(Button.newWithLabelButton(Str(ToDo.translate("Load"))).apply {
+                        packStart(Button.newWithLabelButton(ToDo.translate("Load")).apply {
                             onClicked { poiView.loadList() }
                         })
                     })

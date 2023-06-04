@@ -10,14 +10,13 @@ import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
+import ch.bailu.aat_gtk.view.list.FileList
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
-import ch.bailu.aat_gtk.view.list.FileList
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.Application
@@ -151,7 +150,6 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     }
 
     override fun showCockpit() {
-        AppLog.e("Error cockpit")
         leaflet.visibleChild = stackPage.stackPage
         stackPage.showPage(pageIdCockpit)
     }

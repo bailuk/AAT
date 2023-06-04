@@ -7,6 +7,7 @@ import ch.bailu.aat_gtk.view.dialog.FileDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.foc.Foc
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Label
@@ -49,6 +50,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
         MenuHelper.setAction(app, "get${solid.key}") {
             FileDialog()
                 .title(solid.label)
+                .path(pathFromFile(solid.valueAsFile))
                 .onResponse {
                     if (it.isNotEmpty()) {
                         solid.setValueFromString(it)
@@ -56,7 +58,15 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                 }.show(window)
             }
         MenuHelper.setAction(app, "open${solid.key}") {
-            Directory.openExternal(solid.valueAsFile.path)
+            Directory.openExternal(pathFromFile(solid.valueAsFile))
+        }
+    }
+
+    private fun pathFromFile(file: Foc): String {
+        return if (file.isFile) {
+            file.parent().path
+        } else {
+            file.path
         }
     }
 }
