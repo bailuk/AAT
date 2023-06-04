@@ -1,127 +1,107 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.os.Bundle;
-import android.view.View;
+import android.os.Bundle
+import android.view.View
+import ch.bailu.aat.dispatcher.SensorSource
+import ch.bailu.aat.map.MapFactory
+import ch.bailu.aat.map.mapsforge.MapViewLinker
+import ch.bailu.aat.util.AndroidTimer
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.description.CockpitView
+import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat_lib.description.AltitudeDescription
+import ch.bailu.aat_lib.description.AverageSpeedDescription
+import ch.bailu.aat_lib.description.CadenceDescription
+import ch.bailu.aat_lib.description.CurrentSpeedDescription
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.EditorSource
+import ch.bailu.aat_lib.description.HeartRateDescription
+import ch.bailu.aat_lib.description.MaximumSpeedDescription
+import ch.bailu.aat_lib.description.PredictiveTimeDescription
+import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
+import ch.bailu.aat_lib.dispatcher.OverlaysSource
+import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
+import ch.bailu.aat_lib.gpx.InfoID
 
-import ch.bailu.aat.dispatcher.SensorSource;
-import ch.bailu.aat.map.MapFactory;
-import ch.bailu.aat.map.mapsforge.MapViewLinker;
-import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.AndroidTimer;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
-import ch.bailu.aat.views.ContentView;
-import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat.views.bar.MainControlBar;
-import ch.bailu.aat.views.description.CockpitView;
-import ch.bailu.aat.views.graph.GraphViewFactory;
-import ch.bailu.aat_lib.description.AltitudeDescription;
-import ch.bailu.aat_lib.description.AverageSpeedDescription;
-import ch.bailu.aat_lib.description.CadenceDescription;
-import ch.bailu.aat_lib.description.CurrentSpeedDescription;
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.description.EditorSource;
-import ch.bailu.aat_lib.description.HeartRateDescription;
-import ch.bailu.aat_lib.description.MaximumSpeedDescription;
-import ch.bailu.aat_lib.description.PredictiveTimeDescription;
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource;
-import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.dispatcher.OverlaysSource;
-import ch.bailu.aat_lib.dispatcher.TrackerSource;
-import ch.bailu.aat_lib.dispatcher.TrackerTimerSource;
-import ch.bailu.aat_lib.gpx.InfoID;
+class CockpitTabletActivity : AbsKeepScreenOnActivity() {
+    private val theme = AppTheme.cockpit
 
-public class CockpitTabletActivity extends AbsKeepScreenOnActivity {
-    private final static String SOLID_KEY="cockpit_tablet";
-    private final static String SOLID_MAP_KEY=SOLID_KEY+"_map";
-
-    private final UiTheme theme  = AppTheme.cockpit;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        EditorSource edit = new EditorSource(getAppContext());
-
-        setContentView(createContentView(edit));
-        createDispatcher(edit);
-
-
+    companion object {
+        private const val SOLID_KEY = "cockpit_tablet"
+        private const val SOLID_MAP_KEY = SOLID_KEY + "_map"
     }
 
-    private View createContentView(EditorSourceInterface edit) {
-        final ContentView result = new ContentView(this, theme);
-
-        final MapsForgeViewBase smallMap = MapFactory.DEF(this, SOLID_KEY).split();
-        final MapsForgeViewBase bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar());
-        new MapViewLinker(bigMap, smallMap);
-
-        final PercentageLayout cockpitAndSmallMap = new PercentageLayout(this);
-        cockpitAndSmallMap.setOrientation(AppLayout.getOrientationAlongSmallSide(this));
-        cockpitAndSmallMap.add(createCockpit(), 60);
-        cockpitAndSmallMap.add(smallMap.toView(),40);
-
-
-        final PercentageLayout cockpitAndBigMap = new PercentageLayout(this);
-        cockpitAndBigMap.setOrientation(AppLayout.getOrientationAlongLargeSide(this));
-        cockpitAndBigMap.add(bigMap,60);
-        cockpitAndBigMap.add(cockpitAndSmallMap,40);
-
-        final PercentageLayout allComponents = new PercentageLayout(this);
-        allComponents.add(cockpitAndBigMap,80);
-        allComponents.add(GraphViewFactory.all(getAppContext(),this, this, theme, InfoID.TRACKER),20);
-
-        result.add(getErrorView());
-        result.add(allComponents);
-        return result;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val edit = EditorSource(appContext)
+        setContentView(createContentView(edit))
+        createDispatcher(edit)
     }
 
+    private fun createContentView(edit: EditorSourceInterface): View {
+        val result = ContentView(this, theme)
+        val smallMap = MapFactory.DEF(this, SOLID_KEY).split()
+        val bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar())
+        MapViewLinker(bigMap, smallMap)
 
-    private CockpitView createCockpit() {
-        Storage storage = new Storage(this);
-        CockpitView c = new CockpitView(this, theme);
+        val cockpitAndSmallMap = PercentageLayout(this)
+        cockpitAndSmallMap.setOrientation(AppLayout.getOrientationAlongSmallSide(this))
+        cockpitAndSmallMap.add(createCockpit(), 60)
+        cockpitAndSmallMap.add(smallMap.toView(), 40)
 
-        c.add(this, new CurrentSpeedDescription(getAppContext().getStorage()),
-                InfoID.SPEED_SENSOR, InfoID.LOCATION);
-        c.addC(this, new AverageSpeedDescription(storage), InfoID.TRACKER);
-        c.add(this, new CadenceDescription(), InfoID.CADENCE_SENSOR);
-        c.add(this, new PredictiveTimeDescription(), InfoID.TRACKER_TIMER);
-        c.addC(this, new DistanceDescription(getAppContext().getStorage()), InfoID.TRACKER);
-        c.add(this, new AltitudeDescription(new Storage(this)), InfoID.LOCATION);
+        val cockpitAndBigMap = PercentageLayout(this)
+        cockpitAndBigMap.setOrientation(AppLayout.getOrientationAlongLargeSide(this))
+        cockpitAndBigMap.add(bigMap, 60)
+        cockpitAndBigMap.add(cockpitAndSmallMap, 40)
 
-        c.add(this, new MaximumSpeedDescription(getAppContext().getStorage()), InfoID.TRACKER);
-        c.add(this, new HeartRateDescription(), InfoID.HEART_RATE_SENSOR);
+        val allComponents = PercentageLayout(this)
+        allComponents.add(cockpitAndBigMap, 80)
+        allComponents.add(GraphViewFactory.all(appContext, this, this, theme, InfoID.TRACKER), 20)
 
-        return c;
+        result.add(errorView)
+        result.add(allComponents)
+        return result
     }
 
-
-    private ControlBar createButtonBar() {
-        MainControlBar bar = new MainControlBar(this);
-
-        bar.addActivityCycle(this);
-        bar.addSpace();
-
-        if (AppLayout.haveExtraSpaceGps(this)) {
-            bar.addGpsState(this);
+    private fun createCockpit(): CockpitView {
+        return CockpitView(this, theme).apply {
+            add(this@CockpitTabletActivity, CurrentSpeedDescription(appContext.storage), InfoID.SPEED_SENSOR, InfoID.LOCATION)
+            addC(this@CockpitTabletActivity, AverageSpeedDescription(appContext.storage), InfoID.TRACKER)
+            add(this@CockpitTabletActivity, CadenceDescription(), InfoID.CADENCE_SENSOR)
+            add(this@CockpitTabletActivity, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
+            addC(this@CockpitTabletActivity, DistanceDescription(appContext.storage), InfoID.TRACKER)
+            add(this@CockpitTabletActivity, AltitudeDescription(appContext.storage), InfoID.LOCATION)
+            add(this@CockpitTabletActivity, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
+            add(this@CockpitTabletActivity, HeartRateDescription(), InfoID.HEART_RATE_SENSOR)
         }
-
-        bar.addTrackerState(this);
-        return bar;
     }
 
+    private fun createButtonBar(): ControlBar {
+        return MainControlBar(this).apply {
+            addActivityCycle(this@CockpitTabletActivity)
+            addSpace()
+            if (AppLayout.haveExtraSpaceGps(this@CockpitTabletActivity)) {
+                addGpsState(this@CockpitTabletActivity)
+            }
+            addTrackerState(this@CockpitTabletActivity)
+        }
+    }
 
-    private void createDispatcher(EditorSource edit) {
-        addSource(edit);
-        addSource(new TrackerSource(getServiceContext(), getAppContext().getBroadcaster()));
-        addSource(new TrackerTimerSource(getServiceContext(), new AndroidTimer()));
-        addSource(new CurrentLocationSource(getServiceContext(), getAppContext().getBroadcaster()));
-        addSource(new OverlaysSource(getAppContext()));
-        addSource(new SensorSource(getServiceContext(), InfoID.HEART_RATE_SENSOR));
-        addSource(new SensorSource(getServiceContext(), InfoID.CADENCE_SENSOR));
-        addSource(new SensorSource(getServiceContext(), InfoID.SPEED_SENSOR));
+    private fun createDispatcher(edit: EditorSource) {
+        addSource(edit)
+        addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
+        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        addSource(OverlaysSource(appContext))
+        addSource(SensorSource(serviceContext, InfoID.HEART_RATE_SENSOR))
+        addSource(SensorSource(serviceContext, InfoID.CADENCE_SENSOR))
+        addSource(SensorSource(serviceContext, InfoID.SPEED_SENSOR))
     }
 }
