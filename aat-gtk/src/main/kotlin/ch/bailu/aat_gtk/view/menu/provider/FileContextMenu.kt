@@ -7,7 +7,6 @@ import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.fs.AFile
 import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
@@ -32,7 +31,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("Load into editor"), Strings.actionFileEdit)
+                append(Res.str().edit_load_menu(), Strings.actionFileEdit)
                 append(Res.str().file_mock(), Strings.actionFileMock)
                 append(Res.str().file_rename(), Strings.actionFileRename)
                 append(Res.str().file_delete(), Strings.actionFileDelete)

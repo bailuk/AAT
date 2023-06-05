@@ -289,22 +289,22 @@ public class Strings_fr extends Strings {
     public String file_copy() { return "Copier vers…";}
 
     @Override
-    public String file_exists() { return "\u0020existe déjà!";}
+    public String file_exists() { return "existe déjà!";}
 
     @Override
-    public String file_is_writeable() { return "\u0020est éditable.";}
+    public String file_is_writeable() { return "éditable.";}
 
     @Override
-    public String file_is_writeonly() { return "\u0020est uniquement éditable.";}
+    public String file_is_writeonly() { return "uniquement éditable.";}
 
     @Override
-    public String file_is_readonly() { return "\u0020est en lecture seule.";}
+    public String file_is_readonly() { return "est en lecture seule.";}
 
     @Override
-    public String file_is_missing() { return "\u0020n\'existe pas.";}
+    public String file_is_missing() { return "n\'existe pas.";}
 
     @Override
-    public String file_is_denied() { return "\u0020n\'est pas accessible.";}
+    public String file_is_denied() { return "n\'est pas accessible.";}
 
     @Override
     public String location_title() { return "Centrer la position";}

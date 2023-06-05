@@ -44,20 +44,20 @@ public abstract class SolidFile extends SolidString implements SolidFileInterfac
             if (f.hasParent()) {
                 return getPermissionText(f.parent());
             } else {
-                return f.getPathName() + Res.str().file_is_missing();
+                return f.getPathName() + ": " + Res.str().file_is_missing();
             }
         } else if (f.canWrite()) {
             if (f.canRead()) {
-                return f.getPathName() + Res.str().file_is_writeable();
+                return f.getPathName() + ": " + Res.str().file_is_writeable();
             } else {
-                return f.getPathName() + Res.str().file_is_writeonly();
+                return f.getPathName() + ": " + Res.str().file_is_writeonly();
             }
         } else if (f.canRead()) {
-            return f.getPathName() + Res.str().file_is_readonly();
+            return f.getPathName() + ": " + Res.str().file_is_readonly();
         } else if (f.hasParent()){
             return getPermissionText(f.parent());
         } else  {
-            return f.getPathName() + Res.str().file_is_denied();
+            return f.getPathName() + ": " + Res.str().file_is_denied();
         }
     }
 

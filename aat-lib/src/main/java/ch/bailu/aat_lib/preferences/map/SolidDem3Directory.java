@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.ToDo;
+import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
 import ch.bailu.foc.FocFactory;
 
@@ -20,7 +20,7 @@ public abstract class SolidDem3Directory extends SolidFile {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Location of dem3 tiles");
+        return Res.str().p_dem_location();
     }
 
     @Override
@@ -49,8 +49,6 @@ public abstract class SolidDem3Directory extends SolidFile {
     }
 
 
-
-
     /**
      *
      * @return a complete file path for a dem3 tile. The base path is taken from configuration.
@@ -59,7 +57,6 @@ public abstract class SolidDem3Directory extends SolidFile {
     public Foc toFile(Dem3Coordinates dem3Coordinates) {
         return toFile(dem3Coordinates, getValueAsFile());
     }
-
 
     private Foc toFile(Dem3Coordinates dem3Coordinates, Foc base) {
         return base.descendant(dem3Coordinates.toExtString() + ".hgt.zip");

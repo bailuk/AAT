@@ -5,7 +5,6 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.search.PoiView
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.adw.Window
 import ch.bailu.gtk.adw.WindowTitle
@@ -27,7 +26,7 @@ object PoiDialog {
                     append(HeaderBar().apply {
                         titleWidget = (WindowTitle(GtkAppConfig.shortName, Res.str().p_mapsforge_poi()))
 
-                        packStart(Button.newWithLabelButton(ToDo.translate("Load")).apply {
+                        packStart(Button.newWithLabelButton(Res.str().load()).apply {
                             onClicked { poiView.loadList() }
                         })
                     })

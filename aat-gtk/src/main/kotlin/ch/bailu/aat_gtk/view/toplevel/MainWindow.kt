@@ -18,7 +18,6 @@ import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
@@ -98,8 +97,8 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         dispatcher.addSource(customFileSource)
 
         stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList, ToDo.translate("Tracks"))
-        stackPage.addView(detailViewPage.box, pageIdDetail, ToDo.translate("Details"))
+        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList, Res.str().label_list())
+        stackPage.addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
 
 
         leaflet.visibleChild = stackPage.stackPage

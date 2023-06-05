@@ -25,6 +25,8 @@ public class Strings {
 
     public String files() { return "Files";}
 
+    public String load() { return "Load";}
+
     public String gps() { return "GPS";}
 
     public String gps_wait() { return "…";}
@@ -111,6 +113,8 @@ public class Strings {
 
     public String intro_readme() { return "README";}
 
+    public String intro_status() { return "Status";}
+
     public String intro_documentation() { return "Documentation";}
 
     public String intro_cockpit() { return "Cockpit";}
@@ -142,6 +146,8 @@ public class Strings {
     public String filter_date_start() { return "Start date";}
 
     public String filter_date_to() { return "End date";}
+
+    public String label_detail() { return "Detail";}
 
     public String query_overpass() { return "Overpass";}
 
@@ -251,6 +257,14 @@ public class Strings {
 
     public String p_mapsforge_poi_db() { return "Offline POI database";}
 
+    public String p_mapsforge_scale_factor() { return "Scale factor";}
+
+    public String p_dem() { return "Dem3 altitude tiles";}
+
+    public String p_dem_location() { return "Location of dem3 tiles";}
+
+    public String p_dem_auto_download() { return "Enable automatic download";}
+
     public String p_trim_cache() { return "Trim tile cache";}
 
     public String p_tiles() { return "Map";}
@@ -299,19 +313,25 @@ public class Strings {
 
     public String file_copy() { return "Copy to…";}
 
-    public String file_exists() { return "\u0020already exists!";}
+    public String file_exists() { return "already exists!";}
 
-    public String file_is_writeable() { return "\u0020is writeable.";}
+    public String file_is_writeable() { return "is writeable.";}
 
-    public String file_is_writeonly() { return "\u0020is writeonly.";}
+    public String file_is_writeonly() { return "is writeonly.";}
 
-    public String file_is_readonly() { return "\u0020is readonly.";}
+    public String file_is_readonly() { return "is readonly.";}
 
-    public String file_is_missing() { return "\u0020does not exist.";}
+    public String file_is_missing() { return "does not exist.";}
 
-    public String file_is_denied() { return "\u0020is not accessible.";}
+    public String file_is_denied() { return "is not accessible.";}
+
+    public String file_dialog() { return "File Dialog";}
+
+    public String file_directory_open() { return "Open directory";}
 
     public String edit_load() { return "Tap here to load file into editor";}
+
+    public String edit_load_menu() { return "Load into editor";}
 
     public String edit_save() { return "Save";}
 

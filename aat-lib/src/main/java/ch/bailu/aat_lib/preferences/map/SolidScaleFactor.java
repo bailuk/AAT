@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.preferences.map;
 
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.ToDo;
+import ch.bailu.aat_lib.resources.Res;
 
 public class SolidScaleFactor extends SolidIndexList {
     private static final String KEY = "map_scale_factor";
@@ -31,7 +31,7 @@ public class SolidScaleFactor extends SolidIndexList {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Scale factor");
+        return Res.str().p_mapsforge_scale_factor();
     }
 
     @Override

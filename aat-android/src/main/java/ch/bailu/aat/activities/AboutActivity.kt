@@ -11,7 +11,6 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.html.HtmlScrollTextView
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.fs.FocUtil
 import ch.bailu.foc_android.FocAsset
 
@@ -52,7 +51,7 @@ class AboutActivity : ActivityContext() {
         mv.add(readme, Res.str().intro_readme())
         mv.add(about, Res.str().intro_about())
         status = HtmlScrollTextView(this).apply {
-            mv.add(this, ToDo.translate("Status"))
+            mv.add(this, Res.str().intro_status())
             themify(THEME)
         }
         readme.themify(THEME)

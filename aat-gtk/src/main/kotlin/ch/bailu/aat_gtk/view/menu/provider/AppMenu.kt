@@ -26,9 +26,10 @@ class AppMenu(private val window: Window,
         return Menu().apply {
 
             append(Res.str().intro_map(), "app.showMap")
-            append(Res.str().intro_list(), "app.showTracks")
-            append(ToDo.translate("Detail"), "app.trackInfo")
             append(Res.str().intro_cockpit(), "app.showCockpit")
+            append(Res.str().label_list(), "app.showTracks")
+            append(Res.str().label_detail(), "app.trackInfo")
+
             appendSection(Res.str().tracker(), Menu().apply {
                 appendItem(MenuHelper.createCustomItem("tracker-button"))
             })

@@ -289,22 +289,22 @@ public class Strings_nl extends Strings {
     public String file_copy() { return "Kopieer naar…";}
 
     @Override
-    public String file_exists() { return "\u0020bestaat al!";}
+    public String file_exists() { return "bestaat al!";}
 
     @Override
-    public String file_is_writeable() { return "\u0020is schrijfbaar.";}
+    public String file_is_writeable() { return "is schrijfbaar.";}
 
     @Override
-    public String file_is_writeonly() { return "\u0020is enkel schrijfbaar.";}
+    public String file_is_writeonly() { return "is enkel schrijfbaar.";}
 
     @Override
-    public String file_is_readonly() { return "\u0020is enkel leesbaar.";}
+    public String file_is_readonly() { return "is enkel leesbaar.";}
 
     @Override
-    public String file_is_missing() { return "\u0020bestaat niet.";}
+    public String file_is_missing() { return "bestaat niet.";}
 
     @Override
-    public String file_is_denied() { return "\u0020niet toegankelijk.";}
+    public String file_is_denied() { return "niet toegankelijk.";}
 
     @Override
     public String location_title() { return "Centreer locatie";}

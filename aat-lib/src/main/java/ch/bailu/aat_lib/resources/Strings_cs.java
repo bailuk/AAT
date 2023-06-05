@@ -292,22 +292,22 @@ public class Strings_cs extends Strings {
     public String file_copy() { return "Kopírovat do…";}
 
     @Override
-    public String file_exists() { return "\u0020již existuje!";}
+    public String file_exists() { return "již existuje!";}
 
     @Override
-    public String file_is_writeable() { return "\u0020je zapisovatelný.";}
+    public String file_is_writeable() { return "je zapisovatelný.";}
 
     @Override
-    public String file_is_writeonly() { return "\u0020je pouze k zápisu.";}
+    public String file_is_writeonly() { return "je pouze k zápisu.";}
 
     @Override
-    public String file_is_readonly() { return "\u0020je pouze ke čtení.";}
+    public String file_is_readonly() { return "je pouze ke čtení.";}
 
     @Override
-    public String file_is_missing() { return "\u0020neexistuje.";}
+    public String file_is_missing() { return "neexistuje.";}
 
     @Override
-    public String file_is_denied() { return "\u0020není dostupný.";}
+    public String file_is_denied() { return "není dostupný.";}
 
     @Override
     public String location_title() { return "Vycentrolvat pozici";}

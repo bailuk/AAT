@@ -16,7 +16,6 @@ import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
 
@@ -26,7 +25,6 @@ class MapPreferencesPage(storage: StorageInterface, app: Application, window: Pr
         add(Res.str().p_map())
 
         val solidMapDirectory = SolidMapsForgeDirectory(storage, GtkAppContext, GtkMapDirectories(storage, GtkAppContext))
-
 
         add(SolidIndexComboView(SolidTileSize(storage, GtkAppDensity())).layout)
 
@@ -40,7 +38,7 @@ class MapPreferencesPage(storage: StorageInterface, app: Application, window: Pr
         add(SolidIndexComboView(SolidScaleFactor(storage)).layout)
         add(SolidBooleanSwitchView(SolidEnableTileCache.MapsForge(storage)).layout)
 
-        add(ToDo.translate("Dem3 altitude tiles"))
+        add(Res.str().p_dem())
         add(SolidDirectorySelectorView(GtkSolidDem3Directory(storage, GtkAppContext), app, window).layout)
         add(SolidBooleanSwitchView(SolidDem3EnableDownload(storage)).layout)
 

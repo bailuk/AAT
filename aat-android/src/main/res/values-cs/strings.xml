@@ -213,12 +213,12 @@
     <string name="file_send">Odeslat…</string>
     <string name="file_view">Zobrazit/Editovat…</string>
     <string name="file_copy">Kopírovat do…</string>
-    <string name="file_exists">\u0020již existuje!</string>
-    <string name="file_is_writeable">\u0020je zapisovatelný.</string>
-    <string name="file_is_writeonly">\u0020je pouze k zápisu.</string>
-    <string name="file_is_readonly">\u0020je pouze ke čtení.</string>
-    <string name="file_is_missing">\u0020neexistuje.</string>
-    <string name="file_is_denied">\u0020není dostupný.</string>
+    <string name="file_exists">již existuje!</string>
+    <string name="file_is_writeable">je zapisovatelný.</string>
+    <string name="file_is_writeonly">je pouze k zápisu.</string>
+    <string name="file_is_readonly">je pouze ke čtení.</string>
+    <string name="file_is_missing">neexistuje.</string>
+    <string name="file_is_denied">není dostupný.</string>
 
 
     <!-- Location menu -->

@@ -41,6 +41,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="files">Files</string>
+    <string name="load">Load</string>
 
 
     <!-- GPS / Tracker-->
@@ -98,6 +99,7 @@
     <!-- Activity main -->
     <string name="intro_about">About</string>
     <string name="intro_readme">README</string>
+    <string name="intro_status">Status</string>
     <string name="intro_documentation">Documentation</string>
 
     <string name="intro_cockpit">Cockpit</string>
@@ -122,6 +124,8 @@
     <string name="filter_date_start">Start date</string>
     <string name="filter_date_to">End date</string>
 
+    <!-- Activity file content -->
+    <string name="label_detail">Detail</string>
 
     <!-- Activity OSM API Query -->
     <string name="query_overpass">Overpass</string>
@@ -240,7 +244,11 @@
     <string name="p_use_volume_keys">Use volume buttons for map zoom</string>
     <string name="p_render_threads">Renderer threads</string>
     <string name="p_mapsforge_poi">Offline POI</string>
-    <string name="p_mapsforge_poi_db">Offline POI database</string>;
+    <string name="p_mapsforge_poi_db">Offline POI database</string>
+    <string name="p_mapsforge_scale_factor">Scale factor</string>
+    <string name="p_dem">Dem3 altitude tiles</string>
+    <string name="p_dem_location">Location of dem3 tiles</string>
+    <string name="p_dem_auto_download">Enable automatic download</string>
 
 
     <!-- Preferences Map trim tiles -->
@@ -278,15 +286,18 @@
     <string name="file_send">Send…</string>
     <string name="file_view">View/Edit…</string>
     <string name="file_copy">Copy to…</string>
-    <string name="file_exists">\u0020already exists!</string>
-    <string name="file_is_writeable">\u0020is writeable.</string>
-    <string name="file_is_writeonly">\u0020is writeonly.</string>
-    <string name="file_is_readonly">\u0020is readonly.</string>
-    <string name="file_is_missing">\u0020does not exist.</string>
-    <string name="file_is_denied">\u0020is not accessible.</string>
+    <string name="file_exists">already exists!</string>
+    <string name="file_is_writeable">is writeable.</string>
+    <string name="file_is_writeonly">is writeonly.</string>
+    <string name="file_is_readonly">is readonly.</string>
+    <string name="file_is_missing">does not exist.</string>
+    <string name="file_is_denied">is not accessible.</string>
+    <string name="file_dialog">File Dialog</string>
+    <string name="file_directory_open">Open directory</string>
 
     <!-- GPX editor -->
     <string name="edit_load">Tap here to load file into editor</string>
+    <string name="edit_load_menu">Load into editor</string>
     <string name="edit_save">Save</string>
     <string name="edit_save_copy">Save copy</string>
     <string name="edit_save_copy_to">Save copy to …</string>

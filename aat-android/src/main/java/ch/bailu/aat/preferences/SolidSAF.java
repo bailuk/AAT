@@ -1,22 +1,18 @@
 package ch.bailu.aat.preferences;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 
-import ch.bailu.aat.menus.DirectoryMenu;
 import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.foc_android.FocAndroid;
 
 /**
  * Helper that handles SAF access permission requests from the user.
  */
 public class SolidSAF {
 
-    private static final int BROWSE_DIR = DirectoryMenu.class.getSimpleName().hashCode();
+    private static final int BROWSE_DIR = SolidSAF.class.getSimpleName().hashCode();
     private static String browseDirKey=null;
 
     private final SolidFile sdirectory;
@@ -32,7 +28,6 @@ public class SolidSAF {
      * the result of this permission request.
      * @param acontext The calling activity
      */
-    @TargetApi(FocAndroid.SAF_MIN_SDK)
     public void setFromPickerActivity(Activity acontext) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
@@ -76,12 +71,7 @@ public class SolidSAF {
     }
 
     private static void requestPersistablePermission(Activity a, Uri uri) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            a.getContentResolver().takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION |
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        }
+        a.getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
     }
 
 
@@ -89,6 +79,5 @@ public class SolidSAF {
         Storage storage = new Storage(c);
         storage.writeString(browseDirKey, "");
         storage.writeString(browseDirKey, uri.toString());
-
     }
 }

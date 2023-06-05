@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.view.dialog.FileDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile
-import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
@@ -21,8 +21,8 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.key))
-            append(ToDo.translate("File dialog..."), "app.get${solid.key}")
-            append(ToDo.translate("Open directory..."), "app.open${solid.key}")
+            append("${Res.str().file_dialog()}…" , "app.get${solid.key}")
+            append("${Res.str().file_directory_open()}…", "app.open${solid.key}")
         }
     }
 

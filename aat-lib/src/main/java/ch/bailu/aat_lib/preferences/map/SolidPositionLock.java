@@ -4,7 +4,6 @@ package ch.bailu.aat_lib.preferences.map;
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.resources.ToDo;
 
 public class SolidPositionLock extends SolidBoolean {
     private static final String POSTFIX = "_POSITION_LOCK";
@@ -38,6 +37,6 @@ public class SolidPositionLock extends SolidBoolean {
 
     @Override
     public String getLabel() {
-        return ToDo.translate("Center");
+        return Res.str().location_title();
     }
 }
