@@ -3,6 +3,7 @@ package ch.bailu.aat.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.dispatcher.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.preferences.system.SolidExternalDirectory

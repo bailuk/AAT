@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;

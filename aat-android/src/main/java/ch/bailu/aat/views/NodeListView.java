@@ -10,7 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import ch.bailu.aat.activities.ActivityContext;
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.activities.NodeDetailActivity;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;

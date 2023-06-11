@@ -5,7 +5,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsDispatcher;
 import ch.bailu.aat.activities.ActivityContext;
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.activities.MainActivity;
 import ch.bailu.aat.menus.OptionsMenu;
 import ch.bailu.aat.util.ui.AppLayout;

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.app.AndroidAppConfig
+import ch.bailu.aat.app.AppThread
 import ch.bailu.aat.util.ui.AppTheme
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.bar.MainControlBar

@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -46,54 +46,14 @@ public final class StatusIcon implements StatusIconInterface {
     }
 
     private Notification createNotification(PendingIntent intent, int status_id) {
-        if (Build.VERSION.SDK_INT < 16) {
-            return createNotificationSDK11(intent, status_id);
-
-        } else if (Build.VERSION.SDK_INT < 21){
-            return createNotificationSDK16(intent, status_id);
-        } else if (Build.VERSION.SDK_INT < 26){
+        if (Build.VERSION.SDK_INT < 26){
             return createNotificationSDK21(intent, status_id);
         } else {
             return createNotificationSDK26(intent, status_id);
         }
     }
 
-    private Notification createNotificationSDK11(PendingIntent intent, int status_id) {
-        String appName = scontext.getContext().getString(R.string.app_name);
-        String appInfo = scontext.getContext().getString(status_id);
 
-        Notification.Builder builder = new Notification.Builder(scontext.getContext())
-                .setContentIntent(intent)
-                .setSmallIcon(R.drawable.status)
-                .setContentTitle(appName)
-                .setContentText(appInfo);
-
-        Notification notification = builder.getNotification();
-
-        notification.flags |= Notification.FLAG_NO_CLEAR;
-
-        return notification;
-    }
-
-    @TargetApi(16)
-    private Notification createNotificationSDK16(PendingIntent intent, int status_id) {
-        String appName = scontext.getContext().getString(R.string.app_name);
-        String appInfo = scontext.getContext().getString(status_id);
-
-        Notification.Builder builder = new Notification.Builder(scontext.getContext())
-                .setContentIntent(intent)
-                .setSmallIcon(R.drawable.status)
-                .setContentTitle(appName)
-                .setContentText(appInfo);
-
-        Notification notification = builder.build();
-
-        notification.flags |= Notification.FLAG_NO_CLEAR;
-
-        return notification;
-    }
-
-    @TargetApi(21)
     private Notification createNotificationSDK21(PendingIntent intent, int status_id) {
         String appName = scontext.getContext().getString(R.string.app_name);
         String appInfo = scontext.getContext().getString(status_id);

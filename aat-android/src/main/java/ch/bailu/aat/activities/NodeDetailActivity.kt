@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import ch.bailu.aat.R
+import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
@@ -162,7 +163,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
     companion object {
         private val SOLID_KEY = NodeDetailActivity::class.java.simpleName
         @JvmStatic
-        fun start(context: Context?, fileId: String?, index: Int) {
+        fun start(context: Context, fileId: String, index: Int) {
             val intent = Intent()
             intent.putExtra("I", index)
             intent.putExtra("ID", fileId)

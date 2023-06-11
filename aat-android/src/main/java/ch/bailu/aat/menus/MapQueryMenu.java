@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.activities.NominatimActivity;
 import ch.bailu.aat.activities.OverpassActivity;
 import ch.bailu.aat.activities.PoiActivity;

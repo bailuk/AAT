@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat.activities.ActivitySwitcher;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -65,7 +65,7 @@ public class ContentView extends FrameLayout{
         final ActivitySwitcher.Entry e = ActivitySwitcher.get(getContext());
 
         if (e != null) {
-            ttTop.set(e.activityLabel);
+            ttTop.set(e.getActivityLabel());
         }
     }
 
