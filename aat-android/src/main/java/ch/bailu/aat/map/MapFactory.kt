@@ -2,10 +2,10 @@ package ch.bailu.aat.map
 
 import android.content.Context
 import ch.bailu.aat.activities.ActivityContext
-import ch.bailu.aat.map.layer.control.CustomBarLayer
-import ch.bailu.aat.map.layer.control.EditorBarLayer
-import ch.bailu.aat.map.layer.control.InformationBarLayer
-import ch.bailu.aat.map.layer.control.NavigationBarLayer
+import ch.bailu.aat.map.layer.CustomBarLayer
+import ch.bailu.aat.map.layer.EditorBarLayer
+import ch.bailu.aat.map.layer.InformationBarLayer
+import ch.bailu.aat.map.layer.NavigationBarLayer
 import ch.bailu.aat.map.mapsforge.MapsForgeView
 import ch.bailu.aat.map.mapsforge.MapsForgeViewBase
 import ch.bailu.aat.util.ui.AppTheme

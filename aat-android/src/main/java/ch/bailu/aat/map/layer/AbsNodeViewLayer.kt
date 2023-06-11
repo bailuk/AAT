@@ -1,9 +1,8 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.content.Context
 import android.view.View
-import android.view.View.OnLongClickListener
-import ch.bailu.aat.map.To.view
+import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -20,8 +19,8 @@ abstract class AbsNodeViewLayer(
     context: Context,
     private val mcontext: MapContext
 ) : AbsNodeSelectorLayer(appContext.services, appContext.storage, mcontext, Position.BOTTOM),
-    OnLongClickListener, View.OnClickListener {
-    private val infoView: NodeInfoView  = NodeInfoView(appContext, context)
+    View.OnLongClickListener, View.OnClickListener {
+    private val infoView: NodeInfoView = NodeInfoView(appContext, context)
     protected val markupBuilder: MarkupBuilderGpx = MarkupBuilderGpx(appContext.storage)
     private val pos: Placer = Placer(context)
 
@@ -29,7 +28,7 @@ abstract class AbsNodeViewLayer(
         infoView.setOnLongClickListener(this)
         infoView.setOnClickListener(this)
         infoView.visibility = View.GONE
-        view(mcontext.mapView)?.addView(infoView)
+        To.view(mcontext.mapView)?.addView(infoView)
     }
 
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {

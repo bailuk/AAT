@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.content.Context
 import android.graphics.Color

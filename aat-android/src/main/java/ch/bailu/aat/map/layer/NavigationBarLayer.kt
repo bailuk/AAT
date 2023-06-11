@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.content.Context
 import android.view.KeyEvent
@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import ch.bailu.aat.R
 import ch.bailu.aat.activities.AbsHardwareButtons
-import ch.bailu.aat.activities.AbsHardwareButtons.OnHardwareButtonPressed
-import ch.bailu.aat.map.To.view
+import ch.bailu.aat.map.To
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.AppTheme
 import ch.bailu.aat.util.ui.ToolTip
@@ -46,7 +45,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
         d.addTarget(this, InfoID.ALL)
         val volumeView = VolumeView(context)
         volumeView.visibility = View.INVISIBLE
-        view(mcontext.mapView)!!.addView(volumeView)
+        To.view(mcontext.mapView)!!.addView(volumeView)
     }
 
     override fun onClick(v: View) {
@@ -96,12 +95,13 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
     override fun onAttached() {}
     override fun onDetached() {}
 
-    private inner class VolumeView(context: Context) : ViewGroup(context), OnHardwareButtonPressed {
+    private inner class VolumeView(context: Context) : ViewGroup(context),
+        AbsHardwareButtons.OnHardwareButtonPressed {
 
         override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 
         override fun onHardwareButtonPressed(code: Int, type: AbsHardwareButtons.EventType): Boolean {
-            if (view(mcontext.mapView)!!.visibility == VISIBLE) {
+            if (To.view(mcontext.mapView)!!.visibility == VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
                     if (type === AbsHardwareButtons.EventType.DOWN) mcontext.mapView.zoomIn()
                     return true

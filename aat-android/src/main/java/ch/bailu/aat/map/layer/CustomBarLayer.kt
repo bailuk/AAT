@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import ch.bailu.aat.util.ui.UiTheme
 import ch.bailu.aat.views.bar.ControlBar

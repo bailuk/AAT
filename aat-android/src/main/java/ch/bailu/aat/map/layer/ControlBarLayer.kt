@@ -1,9 +1,9 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.view.View
 import android.widget.LinearLayout
-import ch.bailu.aat.activities.AbsBackButton.OnBackPressedListener
-import ch.bailu.aat.map.To.view
+import ch.bailu.aat.activities.AbsBackButton
+import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.map.MapColor
@@ -25,10 +25,10 @@ abstract class ControlBarLayer(mc: MapContext, val bar: ControlBar, private val 
         bar.setBackgroundColor(color)
         bar.setOnClickListener2(this)
         bar.visibility = View.GONE
-        view(map)?.addView(bar)
-        view(map)?.addView(object : OnBackPressedListener(bar.context) {
+        To.view(map)?.addView(bar)
+        To.view(map)?.addView(object : AbsBackButton.OnBackPressedListener(bar.context) {
             override fun onBackPressed(): Boolean {
-                if (view(map)?.visibility == VISIBLE && isBarVisible) {
+                if (To.view(map)?.visibility == VISIBLE && isBarVisible) {
                     hideBar()
                     return true
                 }

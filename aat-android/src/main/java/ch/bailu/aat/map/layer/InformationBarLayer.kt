@@ -1,4 +1,4 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.content.Context
 import android.view.View
@@ -24,7 +24,10 @@ class InformationBarLayer(
     private val context: Context,
     private val mcontext: MapContext,
     dispatcher: DispatcherInterface
-) : ControlBarLayer(mcontext, ControlBar(context, getOrientation(Position.RIGHT), AppTheme.bar), Position.RIGHT) {
+) : ControlBarLayer(mcontext,
+    ControlBar(context, getOrientation(Position.RIGHT), AppTheme.bar),
+    Position.RIGHT
+) {
 
     private val map = bar.addImageButton(R.drawable.open_menu)
     private val search = bar.addImageButton(R.drawable.edit_find)

@@ -1,8 +1,8 @@
-package ch.bailu.aat.map.layer.control
+package ch.bailu.aat.map.layer
 
 import android.content.Context
 import android.view.View
-import ch.bailu.aat.activities.NodeDetailActivity.Companion.start
+import ch.bailu.aat.activities.NodeDetailActivity
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
@@ -22,13 +22,13 @@ open class NodeViewLayer(appContext: AppContext, private val context: Context, m
 
     override fun onClick(v: View) {
         val file = file
-        if (file is Foc  && file.isFile) {
+        if (file is Foc && file.isFile) {
             startNodeDetailActivity(file.path)
         }
     }
 
     protected fun startNodeDetailActivity(path: String) {
-        start(context, path, index)
+        NodeDetailActivity.start(context, path, index)
     }
 
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
