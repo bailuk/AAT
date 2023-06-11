@@ -1,51 +1,41 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat.map
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.LightingColorFilter;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.LightingColorFilter
+import android.graphics.Paint
+import ch.bailu.aat_lib.util.Point
 
-import ch.bailu.aat_lib.util.Point;
+class BitmapDraw {
+    private val paint = Paint()
+    private val colorPaint = Paint()
 
-
-public final class BitmapDraw {
-
-    private final Paint paint = new Paint();
-    private final Paint colorPaint = new Paint();
-
-
-    public BitmapDraw() {
-        paint.setFilterBitmap(true);
-        paint.setAntiAlias(true);
-        paint.setDither(true);
+    init {
+        paint.isFilterBitmap = true
+        paint.isAntiAlias = true
+        paint.isDither = true
     }
 
-
-    public void draw(Canvas c, Bitmap b, Point p) {
-        c.drawBitmap(b, centerX(b,p), centerY(b,p), paint);
+    fun draw(c: Canvas, b: Bitmap, p: Point) {
+        c.drawBitmap(b, centerX(b, p).toFloat(), centerY(b, p).toFloat(), paint)
     }
 
-    public void draw(Canvas c, Bitmap b, Rect r) {
-        c.drawBitmap(b, null, r, paint);
+    fun draw(c: Canvas, b: Bitmap, p: Point, color: Int) {
+        colorPaint.colorFilter = LightingColorFilter(color, 0)
+        c.drawBitmap(b, centerX(b, p).toFloat(), centerY(b, p).toFloat(), colorPaint)
     }
 
+    companion object {
+        private fun centerX(b: Bitmap, p: Point): Int {
+            return center(b.width, p.x)
+        }
 
-    public void draw(Canvas c, Bitmap b, Point p, int color) {
-        colorPaint.setColorFilter(new LightingColorFilter(color, 0));
-        c.drawBitmap(b, centerX(b,p), centerY(b,p), colorPaint);
-    }
+        private fun centerY(b: Bitmap, p: Point): Int {
+            return center(b.height, p.y)
+        }
 
-
-    private static int centerX(Bitmap b, Point p) {
-        return center(b.getWidth(), p.x);
-    }
-
-    private static int centerY(Bitmap b, Point p) {
-        return center(b.getHeight(), p.y);
-    }
-
-    private static int center(int size, int pos) {
-        return pos - (size / 2);
+        private fun center(size: Int, pos: Int): Int {
+            return pos - size / 2
+        }
     }
 }

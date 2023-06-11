@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ImageView;
 
-import ch.bailu.aat.map.AndroidDraw;
+import ch.bailu.aat.map.To;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.util.AppIntent;
@@ -124,7 +124,7 @@ public class ImageObjectView extends ImageView {
         if (imageHandle.hasException()) {
             resetImage();
         } else if (imageHandle.isReadyAndLoaded()) {
-            setImageBitmap(AndroidDraw.convert(imageHandle.getBitmap()));
+            setImageBitmap(To.INSTANCE.androidBitmap(imageHandle.getBitmap()));
         }
     }
 

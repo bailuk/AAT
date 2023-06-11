@@ -1,136 +1,124 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat.map
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.activities.ActivityContext
+import ch.bailu.aat.map.layer.control.CustomBarLayer
+import ch.bailu.aat.map.layer.control.EditorBarLayer
+import ch.bailu.aat.map.layer.control.InformationBarLayer
+import ch.bailu.aat.map.layer.control.NavigationBarLayer
+import ch.bailu.aat.map.mapsforge.MapsForgeView
+import ch.bailu.aat.map.mapsforge.MapsForgeViewBase
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
+import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
+import ch.bailu.aat_lib.map.layer.grid.Crosshair
+import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
+import ch.bailu.aat_lib.service.ServicesInterface
 
-import ch.bailu.aat.activities.ActivityContext;
-import ch.bailu.aat.map.layer.control.CustomBarLayer;
-import ch.bailu.aat.map.layer.control.EditorBarLayer;
-import ch.bailu.aat.map.layer.control.InformationBarLayer;
-import ch.bailu.aat.map.layer.control.NavigationBarLayer;
-import ch.bailu.aat.map.mapsforge.MapsForgeView;
-import ch.bailu.aat.map.mapsforge.MapsForgeViewBase;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer;
-import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer;
-import ch.bailu.aat_lib.map.layer.grid.Crosshair;
-import ch.bailu.aat_lib.map.layer.grid.GridDynLayer;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer;
-import ch.bailu.aat_lib.service.ServicesInterface;
+class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityContext) {
+    private val d: DispatcherInterface = activityContext
+    private val mc: MapContext = m.mContext
+    private val s: StorageInterface = activityContext.appContext.storage
+    private val ser: ServicesInterface = activityContext.serviceContext
+    private val appContext: AppContext= activityContext.appContext
+    private val c: Context = activityContext
 
-public final class MapFactory {
-
-    private final MapsForgeViewBase m;
-    private final DispatcherInterface d;
-    private final MapContext mc;
-    private final StorageInterface s;
-    private final ServicesInterface ser;
-    private final AppContext appContext;
-    private final Context c;
-
-
-    public static MapFactory DEF(ActivityContext activityContext, String skey) {
-        return MF(activityContext, skey);
+    init {
+        activityContext.addLifeCycle(m)
     }
 
-    public static MapFactory MF(ActivityContext activityContext, String skey) {
-        return new MapFactory(new MapsForgeView(activityContext, activityContext.getAppContext(), activityContext, skey), activityContext);
+    private fun base() {
+        m.add(CurrentLocationLayer(mc, d))
+        m.add(NavigationBarLayer(c, mc, d, 4))
     }
 
-    public MapFactory(MapsForgeViewBase map, ActivityContext activityContext) {
-        c = activityContext;
-        d = activityContext;
-        m = map;
-        mc = m.getMContext();
-        s = new Storage(map.getContext());
-        ser = activityContext.getServiceContext();
-        appContext = activityContext.getAppContext();
-        activityContext.addLifeCycle(m);
+    fun split(): MapsForgeViewBase {
+        m.add(CurrentLocationLayer(mc, d))
+        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.EDITOR_DRAFT))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
+        m.add(Crosshair())
+        return m
     }
 
-    private void base() {
-        m.add(new CurrentLocationLayer(mc, d));
-        m.add(new NavigationBarLayer(c, mc, d, 4));
+    fun tracker(e: EditorSourceInterface): MapsForgeViewBase {
+        return tracker(e, InfoID.EDITOR_DRAFT)
     }
 
-    public MapsForgeViewBase split() {
-        m.add(new CurrentLocationLayer(mc, d));
-        m.add(new GpxOverlayListLayer(s,mc,ser, d));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.EDITOR_DRAFT));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
-        m.add(new Crosshair());
-
-        return m;
+    private fun tracker(e: EditorSourceInterface, iid: Int): MapsForgeViewBase {
+        base()
+        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        m.add(EditorBarLayer(appContext, c, mc, d, iid, e))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
+        m.add(GridDynLayer(ser, s, mc))
+        m.add(InformationBarLayer(appContext, c, mc, d))
+        return m
     }
 
-    public MapsForgeViewBase tracker(EditorSourceInterface e) {
-        return tracker(e, InfoID.EDITOR_DRAFT);
+    fun map(e: EditorSourceInterface, b: ControlBar?): MapsForgeViewBase {
+        tracker(e)
+        m.add(CustomBarLayer(mc, b, AppTheme.bar))
+        return m
     }
 
-    private MapsForgeViewBase tracker(EditorSourceInterface e, int iid) {
-        base();
-        m.add(new GpxOverlayListLayer(s,mc,ser, d));
-        m.add(new EditorBarLayer(appContext, c, mc, d, iid, e));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
-        m.add(new GridDynLayer(ser, s,mc));
-        m.add(new InformationBarLayer(appContext, c, mc, d));
-
-        return m;
+    fun list(): MapsForgeViewBase {
+        base()
+        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.LIST_SUMMARY))
+        m.add(GridDynLayer(ser, s, mc))
+        m.add(InformationBarLayer(appContext, c, mc, d))
+        return m
     }
 
-    public MapsForgeViewBase map(EditorSourceInterface e, ControlBar b) {
-        tracker(e);
-
-        m.add(new CustomBarLayer(mc, b, AppTheme.bar));
-
-        return m;
+    fun editor(e: EditorSourceInterface): MapsForgeViewBase {
+        return tracker(e, InfoID.EDITOR_OVERLAY)
     }
 
-    public MapsForgeViewBase list() {
-        base();
-
-        m.add(new GpxOverlayListLayer(s,mc, ser, d));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.LIST_SUMMARY));
-        m.add(new GridDynLayer(ser, s,mc));
-        m.add(new InformationBarLayer(appContext, c, mc, d));
-        return m;
+    fun content(e: EditorSourceInterface): MapsForgeViewBase {
+        return editor(e)
     }
 
-
-    public MapsForgeViewBase editor(EditorSourceInterface e) {
-        return tracker(e, InfoID.EDITOR_OVERLAY);
+    fun node(): MapsForgeViewBase {
+        base()
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(GridDynLayer(ser, s, mc))
+        return m
     }
 
-    public MapsForgeViewBase content(EditorSourceInterface e) {
-        return editor(e);
+    fun externalContent(): MapsForgeViewBase {
+        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(CurrentLocationLayer(mc, d))
+        m.add(GridDynLayer(ser, s, mc))
+        m.add(NavigationBarLayer(c, mc, d))
+        m.add(InformationBarLayer(appContext, c, mc, d))
+        return m
     }
 
-    public MapsForgeViewBase node() {
-        base();
+    companion object {
+        fun DEF(activityContext: ActivityContext, skey: String): MapFactory {
+            return MF(activityContext, skey)
+        }
 
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.TRACKER));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
-        m.add(new GridDynLayer(ser, s,mc));
-
-        return m;
-    }
-
-    public MapsForgeViewBase externalContent() {
-        m.add(new GpxOverlayListLayer(s,mc, ser, d));
-        m.add(new GpxDynLayer(s,mc, ser, d, InfoID.FILEVIEW));
-        m.add(new CurrentLocationLayer(mc, d));
-        m.add(new GridDynLayer(ser, s,mc));
-        m.add(new NavigationBarLayer(c, mc, d));
-        m.add(new InformationBarLayer(appContext, c, mc,d));
-
-        return m;
+        fun MF(activityContext: ActivityContext, skey: String): MapFactory {
+            return MapFactory(
+                MapsForgeView(
+                    activityContext,
+                    activityContext.appContext,
+                    activityContext,
+                    skey
+                ), activityContext
+            )
+        }
     }
 }

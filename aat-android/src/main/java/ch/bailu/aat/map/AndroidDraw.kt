@@ -1,216 +1,185 @@
-package ch.bailu.aat.map;
+package ch.bailu.aat.map
 
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.map.MapDraw
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapPaint
+import ch.bailu.aat_lib.map.NodeBitmap
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.graphics.Bitmap
+import org.mapsforge.core.graphics.Canvas
+import org.mapsforge.core.graphics.Paint
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+class AndroidDraw(res: AppDensity, appContext: AppContext?) : MapDraw {
+    var canvas: Canvas? = null
+        private set
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.AppDensity;
-import ch.bailu.aat_lib.map.MapDraw;
-import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.map.NodeBitmap;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.Rect;
-import ch.bailu.aat_lib.map.TwoNodes;
+    private val textPaint: Paint
+    private val gridPaint: Paint
+    private val legendPaint: Paint
+    private val bitmapCanvas = BitmapDraw()
+    private val textHeight: Int
+    private var left = 0
+    private var top = 0
+    private var bottom = 0
+    private var right = 0
+    private val pointRadius: Int
+    private val nodePainter: NodeBitmap
 
-public final class AndroidDraw implements MapDraw {
-    private final static int SPACE=5;
-
-    private Canvas canvas=null;
-
-    private final Paint textPaint;
-    private final Paint gridPaint;
-    private final Paint legendPaint;
-
-    private final BitmapDraw bitmapCanvas = new BitmapDraw();
-
-    private final int textHeight;
-
-    private int left=0, top=0, bottom=0, right = 0;
-
-    private final int point_radius;
-
-    private final NodeBitmap nodePainter;
-
-    public AndroidDraw(AppDensity res, AppContext appContext) {
-        legendPaint = setFakeBoldText(MapPaint.createLegendTextPaint(res));
-        gridPaint   = MapPaint.createGridPaint(res);
-        textPaint   = setFakeBoldText(MapPaint.createStatusTextPaint(res));
-
-        textHeight  = textPaint.getTextHeight("X")+5;
-        nodePainter = NodeBitmap.get(res, appContext);
-        point_radius = res.toPixel_i(POINT_RADIUS);
+    init {
+        legendPaint = setFakeBoldText(MapPaint.createLegendTextPaint(res))
+        gridPaint = MapPaint.createGridPaint(res)
+        textPaint = setFakeBoldText(MapPaint.createStatusTextPaint(res))
+        textHeight = textPaint.getTextHeight("X") + 5
+        nodePainter = NodeBitmap.get(res, appContext)
+        pointRadius = res.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
     }
 
-    public static android.graphics.Rect convert(Rect rect, android.graphics.Rect cache) {
-        cache.bottom = rect.bottom;
-        cache.top = rect.top;
-        cache.left = rect.left;
-        cache.right = rect.right;
-        return cache;
+    private fun setFakeBoldText(p: Paint): Paint {
+        To.androidPaint(p).isFakeBoldText = true
+        return p
     }
 
-    private Paint setFakeBoldText(Paint p) {
-        convert(p).setFakeBoldText(true);
-        return p;
+    private fun init(metric: MapMetrics) {
+        left = metric.left
+        top = metric.top
+        bottom = metric.bottom
+        right = metric.right
     }
 
-
-    private void init(MapMetrics metric) {
-        left   = metric.getLeft();
-        top    = metric.getTop();
-        bottom = metric.getBottom();
-        right  = metric.getRight();
+    fun init(c: Canvas, metric: MapMetrics) {
+        canvas = c
+        init(metric)
     }
 
-    public void init(Canvas c, MapMetrics metric) {
-        canvas = c;
-        init(metric);
+    fun init(c: android.graphics.Canvas, metric: MapMetrics) {
+        init(AndroidGraphicFactory.createGraphicContext(c), metric)
     }
 
-    public void init(android.graphics.Canvas c, MapMetrics metric) {
-        init(AndroidGraphicFactory.createGraphicContext(c),metric);
+    override fun getGridPaint(): Paint {
+        return gridPaint
     }
 
-
-    public Canvas getCanvas() {
-        return canvas;
+    override fun getNodeBitmap(): Bitmap {
+        return nodePainter.tileBitmap.bitmap
     }
 
-
-    @Override
-    public Paint getGridPaint() {
-        return gridPaint;
+    override fun grid(center: Point, space: Int) {
+        run {
+            var x = center.x
+            while (x < right) {
+                vLine(x)
+                x += space
+            }
+        }
+        var x = center.x - space
+        while (x > left) {
+            vLine(x)
+            x -= space
+        }
+        run {
+            var y = center.y
+            while (y < bottom) {
+                hLine(y)
+                y += space
+            }
+        }
+        var y = center.y - space
+        while (y > top) {
+            hLine(y)
+            y -= space
+        }
     }
 
-    @Override
-    public Bitmap getNodeBitmap() {
-        return nodePainter.getTileBitmap().getBitmap();
+    override fun vLine(x: Int) {
+        canvas?.drawLine(x, top, x, bottom, gridPaint)
     }
 
-    @Override
-    public void grid(Point center, int space) {
-        for (int x = center.x; x < right; x+=space)
-            vLine(x);
-
-        for (int x =  (center.x-space); x > left; x-=space)
-            vLine(x);
-
-        for (int y = center.y; y < bottom; y+=space)
-            hLine(y);
-
-        for (int y = (center.y-space); y > top; y-=space)
-            hLine(y);
+    override fun hLine(y: Int) {
+        canvas?.drawLine(left, y, right, y, gridPaint)
     }
 
-
-    @Override
-    public void vLine(int x) {
-        canvas.drawLine(x, top, x, bottom, gridPaint);
+    override fun point(pixel: Point) {
+        circle(pixel, pointRadius, gridPaint)
     }
 
-    @Override
-    public void hLine(int y) {
-        canvas.drawLine(left, y, right, y, gridPaint);
+    override fun textTop(text: String, line: Int) {
+        canvas?.drawText(text, left + SPACE, top + SPACE + textHeight * line, textPaint)
     }
 
-
-    @Override
-    public void point(Point pixel) {
-        circle(pixel, point_radius, gridPaint);
+    override fun textBottom(s: String, line: Int) {
+        canvas?.drawText(s, left + SPACE, bottom - SPACE - textHeight * (line + 1), textPaint)
     }
 
-
-    @Override
-    public void textTop(String text, int line) {
-        canvas.drawText(text, left + SPACE, top + SPACE + textHeight*line, textPaint);
+    override fun circle(pixel: Point, radius: Int, paint: Paint) {
+        canvas?.drawCircle(pixel.x, pixel.y, radius, paint)
     }
 
-    @Override
-    public void textBottom(String s, int line) {
-        canvas.drawText(s, left + SPACE, bottom - SPACE - textHeight*(line+1), textPaint);
+    override fun rect(rect: Rect, paint: Paint) {
+        canvas?.drawLine(rect.left, rect.top, rect.left, rect.bottom, paint)
+        canvas?.drawLine(rect.left, rect.bottom, rect.right, rect.bottom, paint)
+        canvas?.drawLine(rect.right, rect.bottom, rect.right, rect.top, paint)
+        canvas?.drawLine(rect.right, rect.top, rect.left, rect.top, paint)
     }
 
+    override fun bitmap(b: Bitmap, p: Point, c: Int) {
+        canvas?.apply {
+            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(b), p, c)
+        }
 
-    @Override
-    public void circle(Point pixel, int radius, Paint paint) {
-        canvas.drawCircle(pixel.x, pixel.y, radius, paint);
     }
 
+    override fun bitmap(b: Bitmap, p: Point) {
+        canvas?.apply {
+            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(b), p)
+        }
 
-    @Override
-    public void rect(Rect rect, Paint paint) {
-        canvas.drawLine(rect.left,  rect.top,    rect.left,  rect.bottom, paint);
-        canvas.drawLine(rect.left,  rect.bottom, rect.right, rect.bottom, paint);
-        canvas.drawLine(rect.right, rect.bottom, rect.right, rect.top, paint);
-        canvas.drawLine(rect.right, rect.top,    rect.left,  rect.top, paint);
     }
 
-
-
-    @Override
-    public void bitmap(Bitmap b, Point p, int c) {
-        bitmapCanvas.draw(convert(canvas), convert(b), p, c);
+    override fun edge(nodes: TwoNodes, paint: Paint) {
+        canvas?.drawLine(
+            nodes.nodeA.pixel.x,
+            nodes.nodeA.pixel.y,
+            nodes.nodeB.pixel.x,
+            nodes.nodeB.pixel.y,
+            paint
+        )
     }
 
-
-    @Override
-    public void bitmap(Bitmap b, Point p) {
-        bitmapCanvas.draw(convert(canvas), convert(b), p);
+    override fun label(text: String, pixel: Point, background: Paint, frame: Paint) {
+        drawBackground(text, pixel, background)
+        drawBackground(text, pixel, frame)
+        canvas?.drawText(text, pixel.x, pixel.y, legendPaint)
     }
 
-    public static android.graphics.Point convert(Point p) {
-        return new android.graphics.Point(p.x, p.y);
+    private fun drawBackground(text: String, pixel: Point, paint: Paint) {
+        val lp = To.androidPaint(legendPaint)
+        val legendMetrics = lp.fontMetrics
+
+        val canvas = canvas
+
+        if (canvas is Canvas) {
+            To.androidCanvas(canvas).drawRect(
+                pixel.x.toFloat(),
+                pixel.y.toFloat() + legendMetrics.top - MapDraw.MARGIN,
+                pixel.x.toFloat() + lp.measureText(text) + MapDraw.MARGIN * 2,
+                pixel.y.toFloat() + legendMetrics.bottom + MapDraw.MARGIN,
+                To.androidPaint(paint)
+            )
+        }
     }
 
-    public static android.graphics.Bitmap convert(Bitmap b) {
-        return AndroidGraphicFactory.getBitmap(b);
+    override fun createPaint(): Paint {
+        return AndroidGraphicFactory.INSTANCE.createPaint()
     }
 
-
-    @Override
-    public void edge(TwoNodes nodes, Paint paint) {
-        canvas.drawLine(
-                nodes.nodeA.pixel.x,
-                nodes.nodeA.pixel.y,
-                nodes.nodeB.pixel.x,
-                nodes.nodeB.pixel.y,
-                paint);
-    }
-
-    @Override
-    public void label(String text, Point pixel, Paint background, Paint frame) {
-        drawBackground(text, pixel, background);
-        drawBackground(text, pixel, frame);
-        canvas.drawText(text, pixel.x, pixel.y, legendPaint);
-    }
+    companion object {
+        private const val SPACE = 5
 
 
-    public void drawBackground(String text, Point pixel, Paint paint) {
-        android.graphics.Paint lp = convert(legendPaint);
-
-        android.graphics.Paint.FontMetrics legendMetrics = lp.getFontMetrics();
-
-        convert(canvas).drawRect((float)pixel.x,
-                (float)pixel.y + legendMetrics.top - MARGIN,
-                (float)pixel.x + lp.measureText(text) + MARGIN*2,
-                (float)pixel.y + legendMetrics.bottom + MARGIN,
-                convert(paint));
-    }
-
-    public static android.graphics.Canvas convert(org.mapsforge.core.graphics.Canvas c) {
-        return AndroidGraphicFactory.getCanvas(c);
-    }
-
-    public static android.graphics.Paint convert(org.mapsforge.core.graphics.Paint p) {
-        return AndroidGraphicFactory.getPaint(p);
-    }
-
-    @Override
-    public Paint createPaint() {
-        return AndroidGraphicFactory.INSTANCE.createPaint();
     }
 }
