@@ -9,9 +9,10 @@ import androidx.annotation.RequiresApi;
 
 import java.io.Closeable;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
@@ -61,7 +62,7 @@ public class Backlight implements OnContentUpdatedInterface,
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (spreset.hasKey(key)) {
             setBacklightAndPreset();
 
@@ -81,14 +82,9 @@ public class Backlight implements OnContentUpdatedInterface,
 
     private int getPresetIndex() {
         final int[] result = new int[1];
-        result[0] = 0;
 
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                result[0] = scontext.getTrackerService().getPresetIndex();
-            }
-        };
+        scontext.insideContext(() -> result[0] = scontext.getTrackerService().getPresetIndex());
+
         return result[0];
     }
 

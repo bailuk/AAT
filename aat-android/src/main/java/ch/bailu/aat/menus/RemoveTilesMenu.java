@@ -11,7 +11,6 @@ import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo;
 import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat_lib.service.InsideContext;
 
 public final class RemoveTilesMenu extends AbsMenu {
 
@@ -71,23 +70,13 @@ public final class RemoveTilesMenu extends AbsMenu {
     @Override
     public boolean onItemClick(MenuItem item) {
         if (item == removeScanned) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    scontext.getTileRemoverService().getState().remove();
-                }
-            };
+            scontext.insideContext(()-> scontext.getTileRemoverService().getState().remove());
 
         } else if (item == removeAll) {
             new AppDialog() {
                 @Override
                 protected void onPositiveClick() {
-                    new InsideContext(scontext) {
-                        @Override
-                        public void run() {
-                            scontext.getTileRemoverService().getState().removeAll();
-                        }
-                    };
+                    scontext.insideContext(()-> scontext.getTileRemoverService().getState().removeAll());
                 }
             }.displayYesNoDialog(
                     acontext,

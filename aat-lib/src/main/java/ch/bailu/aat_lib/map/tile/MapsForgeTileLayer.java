@@ -18,9 +18,7 @@ import java.util.List;
 import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.map.tile.TileProvider;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.util.Rect;
 
@@ -51,25 +49,22 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
 
         synchronized (tileProvider) {
-            new InsideContext(services) {
-                @Override
-                public void run() {
-                    if (detachAttach(zoom)) {
-                        draw(
-                                box,
-                                zoom,
-                                c,
-                                tlp,
-                                displayModel.getTileSize());
+            services.insideContext(() -> {
+                if (detachAttach(zoom)) {
+                    draw(
+                            box,
+                            zoom,
+                            c,
+                            tlp,
+                            displayModel.getTileSize());
 
-                    }
                 }
-            };
+            });
         }
     }
 
 
-    private void draw (BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
+    private void draw(BoundingBox box, byte zoom, Canvas canvas, Point tlp, int tileSize) {
 
         List<TilePosition> tilePositions = LayerUtil.getTilePositions(box, zoom, tlp, tileSize);
 
@@ -100,7 +95,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void onAttached() {
-        synchronized(tileProvider) {
+        synchronized (tileProvider) {
             isAttached = true;
         }
     }
@@ -108,7 +103,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
     @Override
     public void onDetached() {
-        synchronized(tileProvider) {
+        synchronized (tileProvider) {
             isAttached = false;
             tileProvider.onDetached();
         }
@@ -119,7 +114,7 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
         if (isVisible() && isZoomSupported(zoom) && isAttached) {
             tileProvider.onAttached();
-        } else  {
+        } else {
             tileProvider.onDetached();
         }
 
@@ -140,13 +135,16 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
+    public void onLayout(boolean changed, int l, int t, int r, int b) {
+    }
 
     @Override
-    public void drawInside(MapContext mcontext) {}
+    public void drawInside(MapContext mcontext) {
+    }
 
     @Override
-    public void drawForeground(MapContext mcontext) {}
+    public void drawForeground(MapContext mcontext) {
+    }
 
     @Override
     public boolean onTap(ch.bailu.aat_lib.util.Point tapPos) {
@@ -155,9 +153,12 @@ public class MapsForgeTileLayer extends Layer implements MapLayerInterface, Obse
 
 
     @Override
-    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {return false;}
+    public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
+        return false;
+    }
 
     @Override
-    public void onPreferencesChanged(@NotNull StorageInterface s, @NotNull String key) {}
+    public void onPreferencesChanged(@NotNull StorageInterface s, @NotNull String key) {
+    }
 
 }

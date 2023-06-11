@@ -12,20 +12,19 @@ import ch.bailu.aat.services.cache.ObjBitmap;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract;
 
 public class ImageObjectView extends ImageView {
 
-    private boolean isAttached=false;
+    private boolean isAttached = false;
 
     protected final ServiceContext scontext;
 
-    private ObjImageAbstract imageHandle= ObjBitmap.NULL;
+    private ObjImageAbstract imageHandle = ObjBitmap.NULL;
 
-    private String idToLoad=null;
-    private Obj.Factory factoryToLoad=null;
+    private String idToLoad = null;
+    private Obj.Factory factoryToLoad = null;
 
     private final int defaultImageID;
 
@@ -46,7 +45,7 @@ public class ImageObjectView extends ImageView {
 
     public void setImageObject(String ID, Obj.Factory factory) {
         idToLoad = ID;
-        factoryToLoad=factory;
+        factoryToLoad = factory;
 
         loadAndDisplayImage();
     }
@@ -75,22 +74,16 @@ public class ImageObjectView extends ImageView {
 
     private boolean loadImage(final String id, final Obj.Factory factory) {
         final boolean[] r = {false};
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                final Obj h=scontext.getCacheService().getObject(id, factory);
+        scontext.insideContext(() -> {
+            final Obj h = scontext.getCacheService().getObject(id, factory);
 
-                if (h instanceof ObjImageAbstract)
-                {
-                    imageHandle = (ObjImageAbstract) h;
-                    r[0] = true;
-                } else {
-                    h.free();
-                }
-
-
+            if (h instanceof ObjImageAbstract) {
+                imageHandle = (ObjImageAbstract) h;
+                r[0] = true;
+            } else {
+                h.free();
             }
-        };
+        });
 
         return r[0];
     }
@@ -103,7 +96,7 @@ public class ImageObjectView extends ImageView {
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        isAttached=true;
+        isAttached = true;
 
         OldAppBroadcaster.register(getContext(),
                 onFileChanged,
@@ -116,7 +109,7 @@ public class ImageObjectView extends ImageView {
         getContext().unregisterReceiver(onFileChanged);
         freeImageHandle();
 
-        isAttached=false;
+        isAttached = false;
         super.onDetachedFromWindow();
     }
 
@@ -128,7 +121,7 @@ public class ImageObjectView extends ImageView {
         }
     }
 
-    private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
+    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String file = imageHandle.toString();

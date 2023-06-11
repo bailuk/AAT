@@ -5,7 +5,6 @@ import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
-import ch.bailu.aat_lib.service.InsideContext
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -59,17 +58,15 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override fun startTask(appContext: AppContext) {
         val categories = selectedCategories
         val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).valueAsString
-        object : InsideContext(appContext.services) {
-            override fun run() {
-                task.stopProcessing()
-                task = PoiToGpxTask(
-                    resultFile,
-                    bounding.toBoundingBox(),
-                    categories,
-                    poiDatabase
-                )
-                appContext.services.backgroundService.process(task)
-            }
+        appContext.services.insideContext {
+            task.stopProcessing()
+            task = PoiToGpxTask(
+                resultFile,
+                bounding.toBoundingBox(),
+                categories,
+                poiDatabase
+            )
+            appContext.services.backgroundService.process(task)
         }
         poiOverlay.isEnabled = true
     }
@@ -94,11 +91,11 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
 
         @Throws(IOException::class)
         private fun queryPois(persistenceManager: PoiPersistenceManager, box: BoundingBox) {
-            val pois = searchPoi(persistenceManager, box)
+            val poiCollection = searchPoi(persistenceManager, box)
 
-            if (pois is Collection<PointOfInterest>) {
+            if (poiCollection is Collection<PointOfInterest>) {
                 if (file.exists()) file.remove()
-                writeGpxFile(pois)
+                writeGpxFile(poiCollection)
             }
         }
 

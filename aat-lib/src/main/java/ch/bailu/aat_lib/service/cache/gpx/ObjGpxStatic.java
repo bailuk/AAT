@@ -14,7 +14,6 @@ import ch.bailu.aat_lib.gpx.linked_list.Node;
 import ch.bailu.aat_lib.preferences.SolidAutopause;
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.OnObject;
@@ -47,12 +46,7 @@ public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient
 
     @Override
     public void onRemove(final AppContext appContext) {
-        new InsideContext(appContext.getServices()) {
-            @Override
-            public void run() {
-                appContext.getServices().getElevationService().cancelElevationUpdates(ObjGpxStatic.this);
-            }
-        };
+        appContext.getServices().insideContext(()-> appContext.getServices().getElevationService().cancelElevationUpdates(ObjGpxStatic.this));
     }
 
     @Override

@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.activities.PreferencesActivity;
+import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.AndroidMapDirectories;
 import ch.bailu.aat.preferences.presets.SolidBacklight;
@@ -18,7 +18,6 @@ import ch.bailu.aat.views.preferences.SolidIndexListDialog;
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.tracker.StateInterface;
 import ch.bailu.foc_android.FocAndroidFactory;
 
@@ -62,12 +61,7 @@ public final class OptionsMenu extends AbsMenu {
 
     @Override
     public void prepare(Menu menu) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                updateMenuText(scontext.getTrackerService());
-            }
-        };
+        scontext.insideContext(() -> updateMenuText(scontext.getTrackerService()));
     }
 
 
@@ -83,33 +77,21 @@ public final class OptionsMenu extends AbsMenu {
         final Context c = scontext.getContext();
 
         if (item == start) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    scontext.getTrackerService().onStartStop();
-                }
-
-            };
+            scontext.insideContext(() -> scontext.getTrackerService().onStartStop());
 
         } else if (item == pause) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    scontext.getTrackerService().onPauseResume();
-                }
-            };
+            scontext.insideContext(() -> scontext.getTrackerService().onPauseResume());
 
         } else if (item == backlight) {
-            new SolidIndexListDialog(scontext.getContext(),new SolidBacklight(c, new SolidPreset(new Storage(c)).getIndex()));
+            new SolidIndexListDialog(scontext.getContext(), new SolidBacklight(c, new SolidPreset(new Storage(c)).getIndex()));
 
 
         } else if (item == preferences) {
             ActivitySwitcher.start(c, PreferencesActivity.class);
 
-
         } else if (item == map) {
             SolidRenderTheme stheme = new SolidRenderTheme(new AndroidMapDirectories(c).createSolidDirectory(), new FocAndroidFactory(c));
-            new SolidCheckListDialog(c,new SolidMapTileStack(stheme));
+            new SolidCheckListDialog(c, new SolidMapTileStack(stheme));
         } else {
             return false;
         }

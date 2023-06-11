@@ -1,81 +1,67 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat.map.mapsforge
 
-import android.graphics.Canvas;
+import android.graphics.Canvas
+import ch.bailu.aat.map.AndroidDraw
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapDraw
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import org.mapsforge.core.model.Dimension
+import org.mapsforge.map.android.view.MapView
 
-import org.mapsforge.core.model.Dimension;
-import org.mapsforge.map.android.view.MapView;
+/**
+ * MapContext for Android
+ * For Foreground drawing: To draw over map layers
+ */
+class MapsForgeForeground(
+    appContext: AppContext,
+    mapView: MapView,
+    private val mcontext: MapContext,
+    d: AppDensity,
+    private val layers: ArrayList<MapLayerInterface>
+) : MapContext {
 
-import java.util.ArrayList;
+    private val draw: AndroidDraw
+    private val metrics: MapsForgeMetrics
 
-import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapDraw;
-import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.map.MapsForgeMetrics;
-import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public class MapsForgeForeground implements MapContext {
-
-    private final MapContext mcontext;
-    private final AndroidDraw draw;
-    private final MapsForgeMetrics metrics;
-
-    private final ArrayList<MapLayerInterface> layers;
-
-    public MapsForgeForeground(AppContext appContext, MapView mapView, MapContext mc, AndroidAppDensity d, ArrayList<MapLayerInterface> l) {
-        mcontext = mc;
-        layers = l;
-
-        metrics = new MapsForgeMetrics(mapView, d);
-        draw = new AndroidDraw(mc.getMetrics().getDensity(), appContext);
-
+    init {
+        metrics = MapsForgeMetrics(mapView, d)
+        draw = AndroidDraw(mcontext.metrics.density, appContext)
     }
 
-
-    public void dispatchDraw(ServicesInterface services, final Canvas canvas) {
-
-        new InsideContext(services) {
-            @Override
-            public void run() {
-                metrics.init(new Dimension(canvas.getWidth(), canvas.getHeight()));
-                draw.init(canvas, metrics);
-
-                for (MapLayerInterface l : layers) {
-                    l.drawForeground(MapsForgeForeground.this);
-                }
+    fun dispatchDraw(services: ServicesInterface, canvas: Canvas) {
+        services.insideContext {
+            metrics.init(Dimension(canvas.width, canvas.height))
+            draw.init(canvas, metrics)
+            for (l in layers) {
+                l.drawForeground(this@MapsForgeForeground)
             }
-        };
+        }
     }
 
-
-    @Override
-    public MapMetrics getMetrics() {
-        return metrics;
+    override fun getMetrics(): MapMetrics {
+        return metrics
     }
 
-    @Override
-    public MapDraw draw() {
-        return draw;
+    override fun draw(): MapDraw {
+        return draw
     }
 
-    @Override
-    public String getSolidKey() {
-        return mcontext.getSolidKey();
+    override fun getSolidKey(): String {
+        return mcontext.solidKey
     }
 
-    @Override
-    public TwoNodes getTwoNodes() {
-        return mcontext.getTwoNodes();
+    override fun getTwoNodes(): TwoNodes {
+        return mcontext.twoNodes
     }
 
-    @Override
-    public MapViewInterface getMapView() {
-        return mcontext.getMapView();
+    override fun getMapView(): MapViewInterface {
+        return mcontext.mapView
     }
 }

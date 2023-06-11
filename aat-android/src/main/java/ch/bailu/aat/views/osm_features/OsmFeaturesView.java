@@ -11,22 +11,19 @@ import android.widget.LinearLayout;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat.R;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppIntent;
 import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.lib.filter_list.FilterList;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyIndicator;
 import ch.bailu.aat.views.EditTextTool;
 import ch.bailu.aat.views.preferences.SolidCheckBox;
-import ch.bailu.aat.views.preferences.TitleView;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.lib.filter_list.FilterList;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -81,15 +78,6 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
             else busy.startWaiting();
         }
         listView.onChanged();
-    }
-
-    public View createHeader() {
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(HORIZONTAL);
-        layout.addView(new TitleView(getContext(), R.string.query_features, theme));
-        layout.addView(busy);
-
-        return layout;
     }
 
     public void setOnTextSelected(OnSelected s) {
@@ -156,16 +144,8 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
         }
     }
 
-
     private void getListHandle() {
-        new InsideContext(scontext) {
-
-            @Override
-            public void run() {
-                listHandle = slist.getList(scontext.getCacheService());
-            }
-        };
-
+        scontext.insideContext(()-> listHandle = slist.getList(scontext.getCacheService()));
         updateList();
     }
 

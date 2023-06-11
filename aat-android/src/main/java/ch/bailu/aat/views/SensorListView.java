@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.SensorService;
 import ch.bailu.aat.services.sensor.list.SensorList;
@@ -15,7 +14,7 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 
-public class SensorListView  extends LinearLayout implements OnContentUpdatedInterface {
+public class SensorListView extends LinearLayout implements OnContentUpdatedInterface {
 
     private final ServiceContext scontext;
 
@@ -40,26 +39,22 @@ public class SensorListView  extends LinearLayout implements OnContentUpdatedInt
     }
 
     private void updateViews() {
-        new InsideContext(scontext) {
+        scontext.insideContext(() -> {
+            SensorList sensorList = ((SensorService) scontext.getSensorService()).getSensorList();
 
-            @Override
-            public void run() {
-                SensorList sensorList = ((SensorService)scontext.getSensorService()).getSensorList();
-
-                for (int i=0; i<sensorList.size(); i++) {
-                    if (children.size() <= i) {
-                        children.add(new SensorListItemView(scontext, sensorList.get(i), theme));
-                        addView(children.get(i));
-                    } else {
-                        children.get(i).setItem(sensorList.get(i));
-                    }
-                }
-
-                for (int i = children.size() -1; i >= sensorList.size(); i--) {
-                    removeView(children.get(i));
-                    children.remove(i);
+            for (int i = 0; i < sensorList.size(); i++) {
+                if (children.size() <= i) {
+                    children.add(new SensorListItemView(scontext, sensorList.get(i), theme));
+                    addView(children.get(i));
+                } else {
+                    children.get(i).setItem(sensorList.get(i));
                 }
             }
-        };
+
+            for (int i = children.size() - 1; i >= sensorList.size(); i--) {
+                removeView(children.get(i));
+                children.remove(i);
+            }
+        });
     }
 }

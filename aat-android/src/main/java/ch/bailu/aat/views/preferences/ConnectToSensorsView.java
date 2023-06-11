@@ -5,15 +5,14 @@ import android.view.View;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.service.sensor.SensorState;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.gpx.StateID;
+import ch.bailu.aat_lib.service.sensor.SensorState;
 
 public class ConnectToSensorsView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
 
@@ -34,12 +33,7 @@ public class ConnectToSensorsView extends LabelTextView implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                scontext.getSensorService().updateConnections();
-            }
-        };
+        scontext.insideContext(() -> scontext.getSensorService().updateConnections());
     }
 
     @Override

@@ -1,37 +1,20 @@
-package ch.bailu.aat.views.description;
+package ch.bailu.aat.views.description
 
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat_lib.description.TrackerStateDescription
 
-import ch.bailu.aat_lib.service.InsideContext;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat_lib.description.TrackerStateDescription;
-
-public class TrackerStateButton extends ColorNumberView implements OnClickListener {
-
-    final private ServiceContext scontext;
-
-
-    public TrackerStateButton(ServiceContext c) {
-        super(c.getContext(),new TrackerStateDescription(), AppTheme.bar);
-
-        scontext=c;
-
-        setOnClickListener(this);
+class TrackerStateButton(private val scontext: ServiceContext) : ColorNumberView(
+    scontext.context, TrackerStateDescription(), AppTheme.bar
+), View.OnClickListener {
+    init {
+        setOnClickListener(this)
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v==this) {
-            new InsideContext(scontext) {
-
-                @Override
-                public void run() {
-                    scontext.getTrackerService().onStartPauseResume();
-                }
-            };
-
+    override fun onClick(v: View) {
+        if (v === this) {
+            scontext.insideContext { scontext.trackerService.onStartPauseResume() }
         }
     }
 }

@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.R;
 import ch.bailu.aat.menus.RemoveTilesMenu;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat.util.OldAppBroadcaster;
@@ -38,7 +39,6 @@ public class TileRemoverView
 
     private final ServiceContext scontext;
     private final Activity acontext;
-
 
 
     public TileRemoverView(ServiceContext sc, Activity ac, UiTheme theme) {
@@ -71,7 +71,7 @@ public class TileRemoverView
 
 
     private View createControlBar(Context context, UiTheme theme) {
-        final ControlBar bar =  new ControlBar(context, LinearLayout.VERTICAL, AppTheme.bar);
+        final ControlBar bar = new ControlBar(context, LinearLayout.VERTICAL, AppTheme.bar);
 
         scan = new ImageButtonViewGroup(context, R.drawable.view_refresh_inverse);
         bscan = new BusyViewControl(scan);
@@ -122,7 +122,6 @@ public class TileRemoverView
     };
 
 
-
     private final BroadcastReceiver onTileRemoverRemove = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -143,55 +142,41 @@ public class TileRemoverView
 
 
     public void updateText() {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                final TileRemoverService tr = scontext.getTileRemoverService();
-                summaryView.updateInfo(tr.getSummaries());
-            }
-        };
+        scontext.insideContext(() -> {
+            final TileRemoverService tr = scontext.getTileRemoverService();
+            summaryView.updateInfo(tr.getSummaries());
+        });
     }
 
     @Override
     public void onClick(final View v) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
+        scontext.insideContext(() -> {
 
-                final TileRemoverService tr = scontext.getTileRemoverService();
-                if (v == scan && bscan.isWaiting()) {
-                    tr.getState().stop();
-                } else if (v == scan) {
-                    tr.getState().scan();
-                } else if (v == remove && bremove.isWaiting()) {
-                    tr.getState().stop();
-                } else if (v == remove) { // show menu
-                    new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
-                }
-
+            final TileRemoverService tr = scontext.getTileRemoverService();
+            if (v == scan && bscan.isWaiting()) {
+                tr.getState().stop();
+            } else if (v == scan) {
+                tr.getState().scan();
+            } else if (v == remove && bremove.isWaiting()) {
+                tr.getState().stop();
+            } else if (v == remove) { // show menu
+                new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
             }
-        };
+
+        });
     }
 
-
-
-
-
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
-
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                final TileRemoverService tr = scontext.getTileRemoverService();
-                if (sdirectory.hasKey(key)) {
-                    tr.getState().reset();
-                } else if (key.contains("SolidTrim")) {
-                    tr.getState().rescan();
-                }
-
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+        scontext.insideContext(() -> {
+            final TileRemoverService tr = scontext.getTileRemoverService();
+            if (sdirectory.hasKey(key)) {
+                tr.getState().reset();
+            } else if (key.contains("SolidTrim")) {
+                tr.getState().rescan();
             }
-        };
+
+        });
     }
 
 

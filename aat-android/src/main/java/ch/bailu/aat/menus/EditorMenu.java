@@ -11,7 +11,6 @@ import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
 import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
@@ -88,29 +87,25 @@ public final class EditorMenu extends AbsMenu {
         new AbsSelectOverlayDialog(context) {
             @Override
             protected void onFileSelected(SolidCustomOverlayList slist, int index, Foc file) {
-                new InsideContext(scontext) {
-                    @Override
-                    public void run() {
-                        Obj handle = scontext.getCacheService().getObject(file.getPath(),
-                                new ObjGpx.Factory());
+                scontext.insideContext(() -> {
+                    Obj handle = scontext.getCacheService().getObject(file.getPath(),
+                            new ObjGpx.Factory());
 
-                        if (handle instanceof ObjGpx) {
-                            ObjGpx gpxObject = (ObjGpx) handle;
+                    if (handle instanceof ObjGpx) {
+                        ObjGpx gpxObject = (ObjGpx) handle;
 
-                            if (gpxObject.isReadyAndLoaded()) {
-                                editor.attach(gpxObject.getGpxList());
-                            }
+                        if (gpxObject.isReadyAndLoaded()) {
+                            editor.attach(gpxObject.getGpxList());
                         }
-
-                        handle.free();
-
-                        slist.setEnabled(index, false);
                     }
-                };
+
+                    handle.free();
+
+                    slist.setEnabled(index, false);
+                });
             }
         };
     }
-
 
     private void changeType() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);

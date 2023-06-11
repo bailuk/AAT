@@ -25,4 +25,15 @@ public interface ServicesInterface {
 
     boolean lock();
     void free();
+
+    default void insideContext(Runnable runnable) {
+        if (lock()) {
+            try {
+                runnable.run();
+            }
+            finally {
+                free();
+            }
+        }
+    }
 }

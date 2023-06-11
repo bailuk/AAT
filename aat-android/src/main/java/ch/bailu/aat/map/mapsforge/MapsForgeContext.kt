@@ -1,98 +1,76 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat.map.mapsforge
 
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.Point;
-import org.mapsforge.map.layer.Layer;
+import ch.bailu.aat.map.AndroidDraw
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapDraw
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.graphics.Canvas
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.map.layer.Layer
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+/**
+ * MapContext for Android
+ * For Background drawing: To draw inside map layers
+ */
+class MapsForgeContext(
+    appContext: AppContext,
+    private val map: MapsForgeViewBase,
+    private val key: String,
+    density: AppDensity
+) : Layer(), MapContext, MapLayerInterface {
 
-import ch.bailu.aat.map.AndroidDraw;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapDraw;
-import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.map.MapsForgeMetrics;
-import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+    private val metrics = MapsForgeMetrics(map, density)
+    private val draw = AndroidDraw(metrics.density, appContext)
+    private val nodes = TwoNodes(metrics)
 
-public class MapsForgeContext extends Layer implements MapContext, MapLayerInterface {
-
-    private final String skey;
-
-    private final AndroidDraw draw;
-    private final MapsForgeMetrics metrics;
-    private final TwoNodes nodes;
-
-    private final MapsForgeViewBase mapView;
-
-
-    public MapsForgeContext(AppContext appContext, MapsForgeViewBase map,
-                            String key,
-                            AndroidAppDensity d) {
-        metrics = new MapsForgeMetrics(map, d);
-        draw = new AndroidDraw(metrics.getDensity(), appContext);
-        nodes = new TwoNodes(metrics);
-        skey = key;
-        mapView = map;
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun drawInside(mcontext: MapContext) {}
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public void drawInside(MapContext mcontext) {}
-
-    @Override
-    public void drawForeground(MapContext mcontext) {}
-
-    @Override
-    public boolean onTap(ch.bailu.aat_lib.util.Point tapPos) {
-        return false;
+    override fun draw(
+        boundingBox: BoundingBox,
+        zoomLevel: Byte,
+        canvas: Canvas,
+        topLeftPoint: org.mapsforge.core.model.Point
+    ) {
+        metrics.init(boundingBox, zoomLevel, canvas.dimension, topLeftPoint)
+        draw.init(canvas, metrics)
     }
 
-    @Override
-    public void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
-        metrics.init(boundingBox, zoomLevel, canvas.getDimension(), topLeftPoint);
-        draw.init(canvas, metrics);
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {}
+
+    override fun getMetrics(): MapMetrics {
+        return metrics
     }
 
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-    @Override
-    public MapMetrics getMetrics() {
-        return metrics;
+    override fun draw(): MapDraw {
+        return draw
     }
 
-    @Override
-    public MapDraw draw() {
-        return draw;
+    override fun getSolidKey(): String {
+        return key
     }
 
-    @Override
-    public String getSolidKey() {
-        return skey;
+    override fun getTwoNodes(): TwoNodes {
+        return nodes
     }
 
-    @Override
-    public TwoNodes getTwoNodes() {
-        return nodes;
+    override fun getMapView(): MapViewInterface {
+        return map
     }
 
-    @Override
-    public MapViewInterface getMapView() {
-        return mapView;
-    }
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

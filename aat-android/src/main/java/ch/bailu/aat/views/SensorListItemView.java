@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.sensor.list.SensorListItem;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -33,12 +32,7 @@ public class SensorListItemView extends LinearLayout {
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setEnabled(isChecked);
 
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    scontext.getSensorService().updateConnections();
-                }
-            } ;
+            scontext.insideContext(()-> scontext.getSensorService().updateConnections());
         });
 
         theme.content(checkBox);

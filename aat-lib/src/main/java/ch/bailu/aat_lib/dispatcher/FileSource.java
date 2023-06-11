@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.dispatcher;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.cache.gpx.GpxHandler;
 import ch.bailu.foc.Foc;
 
@@ -79,11 +78,6 @@ public class FileSource extends ContentSource implements FileSourceInterface {
 
     @Override
     public void requestUpdate() {
-        new InsideContext(context.getServices()) {
-            @Override
-            public void run() {
-                sendUpdate(iid, getInfo());
-            }
-        };
+        context.getServices().insideContext(()-> sendUpdate(iid, getInfo()));
     }
 }

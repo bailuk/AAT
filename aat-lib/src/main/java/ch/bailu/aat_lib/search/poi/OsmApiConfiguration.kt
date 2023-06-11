@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.search.poi
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.service.InsideContext
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -30,22 +29,18 @@ abstract class OsmApiConfiguration {
 
     fun isTaskRunning(scontext: ServicesInterface): Boolean {
         var running = false
-        object : InsideContext(scontext) {
-            override fun run() {
-                val background = scontext.backgroundService
-                running = background.findTask(resultFile) != null
-            }
+        scontext.insideContext {
+            val background = scontext.backgroundService
+            running = background.findTask(resultFile) != null
         }
         return running
     }
 
     fun stopTask(scontext: ServicesInterface) {
-        object : InsideContext(scontext) {
-            override fun run() {
-                val background = scontext.backgroundService
-                val task: BackgroundTask = background.findTask(resultFile)
-                task.stopProcessing()
-            }
+        scontext.insideContext {
+            val background = scontext.backgroundService
+            val task: BackgroundTask = background.findTask(resultFile)
+            task.stopProcessing()
         }
     }
 

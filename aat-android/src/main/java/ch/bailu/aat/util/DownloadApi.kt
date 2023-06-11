@@ -4,7 +4,6 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
-import ch.bailu.aat_lib.service.InsideContext
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.DownloadTask
 import ch.bailu.foc.Foc
@@ -40,23 +39,21 @@ abstract class DownloadApi : OsmApiConfiguration() {
     }
 
     override fun startTask(appContext: AppContext) {
-        object : InsideContext(appContext.services) {
-            override fun run() {
-                try {
-                    val background = appContext.services.backgroundService
-                    val query: String = queryString
-                    val url = getUrl(query)
-                    task = ApiQueryTask(
-                        appContext,
-                        url,
-                        resultFile,
-                        query,
-                        queryFile
-                    )
-                    background.process(task)
-                } catch (e: UnsupportedEncodingException) {
-                    e.printStackTrace()
-                }
+        appContext.services.insideContext {
+            try {
+                val background = appContext.services.backgroundService
+                val query: String = queryString
+                val url = getUrl(query)
+                task = ApiQueryTask(
+                    appContext,
+                    url,
+                    resultFile,
+                    query,
+                    queryFile
+                )
+                background.process(task)
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
             }
         }
     }
