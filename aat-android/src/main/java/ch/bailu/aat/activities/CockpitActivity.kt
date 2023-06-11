@@ -96,9 +96,9 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         addSource(OverlaysSource(appContext))
-        addSource(SensorSource(serviceContext, InfoID.HEART_RATE_SENSOR))
-        addSource(SensorSource(serviceContext, InfoID.POWER_SENSOR))
-        addSource(SensorSource(serviceContext, InfoID.CADENCE_SENSOR))
-        addSource(SensorSource(serviceContext, InfoID.SPEED_SENSOR))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))
     }
 }

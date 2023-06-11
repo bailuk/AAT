@@ -36,7 +36,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
         spresetCount = SolidPresetCount(Storage(this))
         spresetCount?.register(this)
         createViews()
-        addSource(SensorSource(serviceContext, InfoID.SENSORS))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }
 
     private fun createViews() {

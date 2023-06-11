@@ -1,34 +1,28 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat.dispatcher
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
 
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
+class LifeCycleDispatcher : LifeCycleInterface {
+    private val targets = ArrayList<LifeCycleInterface>(10)
+    private var awake = false
 
-public class LifeCycleDispatcher implements LifeCycleInterface {
-    private final ArrayList<LifeCycleInterface> targets = new ArrayList<>(10);
-
-    private boolean awake = false;
-
-    @Override
-    public void onResumeWithService() {
-        for (LifeCycleInterface t: targets) t.onResumeWithService();
-        awake = true;
+    override fun onResumeWithService() {
+        for (t in targets) t.onResumeWithService()
+        awake = true
     }
 
-    @Override
-    public void onPauseWithService() {
-        for (LifeCycleInterface t: targets) t.onPauseWithService();
-        awake = false;
+    override fun onPauseWithService() {
+        for (t in targets) t.onPauseWithService()
+        awake = false
     }
 
-    @Override
-    public void onDestroy() {
-        for (LifeCycleInterface t: targets) t.onDestroy();
-        awake = false;
+    override fun onDestroy() {
+        for (t in targets) t.onDestroy()
+        awake = false
     }
 
-    public void add(LifeCycleInterface t) {
-        targets.add(t);
-        if (awake) t.onResumeWithService();
+    fun add(t: LifeCycleInterface) {
+        targets.add(t)
+        if (awake) t.onResumeWithService()
     }
 }

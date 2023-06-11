@@ -1,60 +1,34 @@
-package ch.bailu.aat.dispatcher;
+package ch.bailu.aat.dispatcher
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.dispatcher.ContentSource
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.service.ServicesInterface
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.ContentSource;
-import ch.bailu.aat_lib.gpx.GpxInformation;
+class SensorSource(private val services: ServicesInterface, private val broadcaster: Broadcaster, private val iid: Int) : ContentSource() {
 
-public class SensorSource extends ContentSource {
-    private final ServiceContext scontext;
-    private final int iid;
-    private final String changedAction;
+    private val changedAction: String = AppBroadcaster.SENSOR_CHANGED + iid
+    private val onSensorUpdated = BroadcastReceiver { _: Array<String?>? -> sendUpdate(getIID(), info) }
 
-    public SensorSource(ServiceContext sc, int i) {
-        scontext = sc;
-        iid = i;
-        changedAction = AppBroadcaster.SENSOR_CHANGED + iid;
+    override fun requestUpdate() {
+        sendUpdate(getIID(), info)
     }
 
-
-    private final BroadcastReceiver onSensorUpdated = new BroadcastReceiver () {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            sendUpdate(getIID(), getInfo());
-        }
-
-    };
-
-
-
-    @Override
-    public void requestUpdate() {
-        sendUpdate(getIID(), getInfo());
+    override fun onPause() {
+        broadcaster.unregister(onSensorUpdated)
     }
 
-    @Override
-    public void onPause() {
-        scontext.getContext().unregisterReceiver(onSensorUpdated);
+    override fun onResume() {
+        broadcaster.register(onSensorUpdated, changedAction)
     }
 
-    @Override
-    public void onResume() {
-        OldAppBroadcaster.register(scontext.getContext(), onSensorUpdated,
-                                changedAction);
+    override fun getIID(): Int {
+        return iid
     }
 
-    @Override
-    public int getIID() {
-        return iid;
-    }
-
-    @Override
-    public GpxInformation getInfo() {
-        return scontext.getSensorService().getInformation(iid);
+    override fun getInfo(): GpxInformation {
+        return services.sensorService.getInformation(iid)
     }
 }

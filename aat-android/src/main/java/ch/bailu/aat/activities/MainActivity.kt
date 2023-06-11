@@ -60,7 +60,7 @@ class MainActivity : ActivityContext() {
     private fun createDispatcher() {
         addSource(TrackerSource(serviceContext, appContext.broadcaster))
         addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(SensorSource(serviceContext, InfoID.SENSORS))
+        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }
 
     private fun createButtonBar(): LinearLayout {
