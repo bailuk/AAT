@@ -105,7 +105,7 @@ abstract class AbsNodeSelectorLayer(
         }
     }
 
-    abstract fun setSelectedNode(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int)
+    abstract fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int)
 
     private fun drawSelectedNode(mcontext: MapContext) {
         val node = selectedNode
