@@ -1,7 +1,6 @@
-package ch.bailu.aat.map.tile
+package ch.bailu.aat.map
 
 import android.graphics.Bitmap
-import ch.bailu.aat.map.To
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.source.Source
 import ch.bailu.aat_lib.util.Rect
@@ -17,7 +16,8 @@ class AndroidTilePainter : TilePainter {
     ) {
         val bitmap = AndroidGraphicFactory.getBitmap(tileBitmap)
         if (bitmap is Bitmap) {
-            To.androidCanvas(canvas).drawBitmap(bitmap, null, To.androidRect(rect, rectCache), To.androidPaint(paint))
+            To.androidCanvas(canvas)
+                .drawBitmap(bitmap, null, To.androidRect(rect, rectCache), To.androidPaint(paint))
         }
     }
 

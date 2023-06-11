@@ -1,157 +1,143 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import android.view.View.OnLongClickListener
+import ch.bailu.aat.map.To.view
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.html.MarkupBuilder
+import ch.bailu.aat_lib.html.MarkupBuilderGpx
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit
+import ch.bailu.aat_lib.map.layer.selector.AbsNodeSelectorLayer
 
-import javax.annotation.Nonnull;
+abstract class AbsNodeViewLayer(
+    appContext: AppContext,
+    context: Context,
+    private val mcontext: MapContext
+) : AbsNodeSelectorLayer(appContext.services, appContext.storage, mcontext, Position.BOTTOM),
+    OnLongClickListener, View.OnClickListener {
+    private val infoView: NodeInfoView  = NodeInfoView(appContext, context)
+    protected val markupBuilder: MarkupBuilderGpx = MarkupBuilderGpx(appContext.storage)
+    private val pos: Placer = Placer(context)
 
-import ch.bailu.aat.map.To;
-import ch.bailu.aat_lib.html.MarkupBuilder;
-import ch.bailu.aat_lib.html.MarkupBuilderGpx;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.edge.Position;
-import ch.bailu.aat_lib.map.layer.gpx.GpxVisibleLimit;
-import ch.bailu.aat_lib.map.layer.selector.AbsNodeSelectorLayer;
-
-public abstract class AbsNodeViewLayer extends AbsNodeSelectorLayer implements
-        View.OnLongClickListener, View.OnClickListener {
-
-    private final NodeInfoView infoView;
-    protected final MarkupBuilderGpx markupBuilder;
-    private final MapContext mcontext;
-    private final Placer pos;
-
-    public AbsNodeViewLayer(AppContext appContext, Context context, MapContext mc) {
-        super(appContext.getServices(), appContext.getStorage(), mc, Position.BOTTOM);
-        mcontext = mc;
-
-        pos = new Placer(context);
-
-        markupBuilder = new MarkupBuilderGpx(appContext.getStorage());
-
-        infoView = new NodeInfoView(appContext, context);
-        infoView.setOnLongClickListener(this);
-        infoView.setOnClickListener(this);
-        infoView.setVisibility(View.GONE);
-
-        To.view(mc.getMapView()).addView(infoView);
-
+    init {
+        infoView.setOnLongClickListener(this)
+        infoView.setOnClickListener(this)
+        infoView.visibility = View.GONE
+        view(mcontext.mapView)?.addView(infoView)
     }
 
-    @Override
-    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
-        infoView.setBackgroundColorFromIID(IID);
-
-        GpxVisibleLimit limit = new GpxVisibleLimit(mcontext);
-        limit.walkTrack(info.getGpxList());
-
-        setGraph(info, i, limit.getFirstPoint(), limit.getLastPoint());
+    override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
+        infoView.setBackgroundColorFromIID(iid)
+        val limit = GpxVisibleLimit(mcontext)
+        limit.walkTrack(info.gpxList)
+        setGraph(info, index, limit.firstPoint, limit.lastPoint)
     }
 
-    public void setGraph(GpxInformation info, int index, int firstPoint, int lastPoint) {
-        infoView.setGraph(info, index, firstPoint, lastPoint);
-        measure();
-        layout();
+    fun setGraph(info: GpxInformation, index: Int, firstPoint: Int, lastPoint: Int) {
+        infoView.setGraph(info, index, firstPoint, lastPoint)
+        measure()
+        layout()
     }
 
-    public void setBackgroundColorFromIID(int IID) {
-        infoView.setBackgroundColorFromIID(IID);
+    fun setBackgroundColorFromIID(iid: Int) {
+        infoView.setBackgroundColorFromIID(iid)
     }
 
-    public void setHtmlText(MarkupBuilder html) {
-        infoView.setHtmlText(html.toString());
-        html.clear();
-        measure();
-        layout();
+    fun setHtmlText(html: MarkupBuilder) {
+        infoView.setHtmlText(html.toString())
+        html.clear()
+        measure()
+        layout()
     }
 
-    public void showAtLeft() {
-        pos.toLeft();
-        show();
+    fun showAtLeft() {
+        pos.toLeft()
+        show()
     }
 
-    public void showAtRight() {
-        pos.toRight();
-        show();
+    fun showAtRight() {
+        pos.toRight()
+        show()
     }
 
-    public void hide() {
-        AppLayout.fadeOut(infoView);
-        mcontext.getMapView().requestRedraw();
+    override fun hide() {
+        AppLayout.fadeOut(infoView)
+        mcontext.mapView.requestRedraw()
     }
 
-    public void show() {
-        measure();
-        layout();
-        AppLayout.fadeIn(infoView);
-
-        mcontext.getMapView().requestRedraw();
+    override fun show() {
+        measure()
+        layout()
+        AppLayout.fadeIn(infoView)
+        mcontext.mapView.requestRedraw()
     }
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-        pos.setSize(r-l, b-t);
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        pos.setSize(r - l, b - t)
     }
 
-    private void layout() {
+    private fun layout() {
         infoView.layout(
-                pos.x(),
-                pos.y(),
-                pos.x() + pos.w(),
-                pos.y() + pos.h());
+            pos.x(),
+            pos.y(),
+            pos.x() + pos.w(),
+            pos.y() + pos.h()
+        )
     }
 
-    private void measure() {
-        int wspec = View.MeasureSpec.makeMeasureSpec(pos.w(),
-                View.MeasureSpec.EXACTLY);
-        int hspec = View.MeasureSpec.makeMeasureSpec(pos.h(),
-                View.MeasureSpec.EXACTLY);
-
-        infoView.measure(wspec, hspec);
+    private fun measure() {
+        val wspec = View.MeasureSpec.makeMeasureSpec(
+            pos.w(),
+            View.MeasureSpec.EXACTLY
+        )
+        val hspec = View.MeasureSpec.makeMeasureSpec(
+            pos.h(),
+            View.MeasureSpec.EXACTLY
+        )
+        infoView.measure(wspec, hspec)
     }
 
-    private static class Placer {
-        private int xoffset=0, width, height, right_space;
-        private final int button_space;
+    private class Placer(c: Context) {
+        private var xoffset = 0
+        private var width = 0
+        private var height = 0
+        private var rightSpace = 0
+        private val buttonSpace: Int = AppLayout.getBigButtonSize(c)
 
-        public Placer(Context c) {
-            button_space = AppLayout.getBigButtonSize(c);
+        fun setSize(w: Int, h: Int) {
+            height = minOf(h / 3, buttonSpace * 3)
+            width = minOf(w - buttonSpace, buttonSpace * 5)
+            rightSpace = w - width - buttonSpace
         }
 
-        private void setSize(int w, int h) {
-            height = Math.min(h / 3, button_space * 3);
-            width = Math.min(w - button_space, button_space * 5);
-
-            right_space = w - width - button_space;
+        fun toLeft() {
+            xoffset = rightSpace
         }
 
-        public void toLeft() {
-            xoffset = right_space;
+        fun toRight() {
+            xoffset = buttonSpace
         }
 
-        public void toRight() {
-            xoffset = button_space;
+        fun x(): Int {
+            return xoffset
         }
 
-        public int x() {
-            return xoffset;
+        fun y(): Int {
+            return 0
         }
 
-        public int y() {
-            return 0;
+        fun h(): Int {
+            return height
         }
 
-        public int h() {
-            return height;
+        fun w(): Int {
+            return width
         }
-
-        public int w() {
-            return width;
-        }
-
     }
 }

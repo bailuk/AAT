@@ -1,157 +1,117 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.util.SparseArray;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.KeyEvent
+import android.view.View
+import android.view.ViewGroup
+import ch.bailu.aat.R
+import ch.bailu.aat.activities.AbsHardwareButtons
+import ch.bailu.aat.activities.AbsHardwareButtons.OnHardwareButtonPressed
+import ch.bailu.aat.map.To.view
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.util.IndexedMap
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsHardwareButtons;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat.map.To;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.map.edge.Position;
-import ch.bailu.aat_lib.preferences.map.SolidPositionLock;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.logger.AppLog;
+class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = 4) : ControlBarLayer(
+    mcontext, ControlBar(context, getOrientation(Position.BOTTOM), i, AppTheme.bar), Position.BOTTOM
+), OnContentUpdatedInterface {
 
-public final class NavigationBarLayer extends ControlBarLayer implements OnContentUpdatedInterface {
+    private val buttonPlus: View
+    private val buttonMinus: View
+    private val buttonFrame: View
+    private val infoCache = IndexedMap<Int, GpxInformation>()
+    private var boundingCycle = 0
 
-    private final MapContext mcontext;
-    private final View buttonPlus;
-    private final View buttonMinus;
-    private final View buttonFrame;
-
-    private final SparseArray<GpxInformation> infoCache = new SparseArray<>(10);
-
-    private int boundingCycle=0;
-
-
-    public NavigationBarLayer(Context context, MapContext mc, DispatcherInterface d) {
-        this(context, mc, d, 4);
+    init {
+        buttonPlus = bar.addImageButton(R.drawable.zoom_in)
+        buttonMinus = bar.addImageButton(R.drawable.zoom_out)
+        val lock = bar.addSolidIndexButton(
+            SolidPositionLock(Storage(context), mcontext.solidKey)
+        )
+        buttonFrame = bar.addImageButton(R.drawable.zoom_fit_best)
+        ToolTip.set(buttonPlus, R.string.tt_map_zoomin)
+        ToolTip.set(buttonMinus, R.string.tt_map_zoomout)
+        ToolTip.set(buttonFrame, R.string.tt_map_frame)
+        ToolTip.set(lock, R.string.tt_map_home)
+        d.addTarget(this, InfoID.ALL)
+        val volumeView = VolumeView(context)
+        volumeView.visibility = View.INVISIBLE
+        view(mcontext.mapView)!!.addView(volumeView)
     }
 
-
-    public NavigationBarLayer(Context context, MapContext mc, DispatcherInterface d, int i) {
-        super(mc,new ControlBar(context,
-                getOrientation(Position.BOTTOM), i, AppTheme.bar), Position.BOTTOM);
-
-        mcontext = mc;
-
-        buttonPlus = getBar().addImageButton(R.drawable.zoom_in);
-        buttonMinus = getBar().addImageButton(R.drawable.zoom_out);
-        View lock = getBar().addSolidIndexButton(
-                new SolidPositionLock(new Storage(context), mc.getSolidKey()));
-        buttonFrame = getBar().addImageButton(R.drawable.zoom_fit_best);
-
-        ToolTip.set(buttonPlus, R.string.tt_map_zoomin);
-        ToolTip.set(buttonMinus,R.string.tt_map_zoomout);
-        ToolTip.set(buttonFrame,  R.string.tt_map_frame);
-        ToolTip.set(lock, R.string.tt_map_home);
-
-        d.addTarget(this, InfoID.ALL);
-
-        VolumeView volumeView = new VolumeView(context);
-        volumeView.setVisibility(View.INVISIBLE);
-
-        To.view(mcontext.getMapView()).addView(volumeView);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-
-
-        if (v==buttonPlus) {
-           mcontext.getMapView().zoomIn();
-
-        } else if (v==buttonMinus) {
-            mcontext.getMapView().zoomOut();
-
-        } else if (v==buttonFrame && infoCache.size()>0) {
-
+    override fun onClick(v: View) {
+        super.onClick(v)
+        if (v === buttonPlus) {
+            mcontext.mapView.zoomIn()
+        } else if (v === buttonMinus) {
+            mcontext.mapView.zoomOut()
+        } else if (v === buttonFrame && infoCache.size() > 0) {
             if (nextInBoundingCycle()) {
-                mcontext.getMapView().frameBounding(infoCache.valueAt(boundingCycle).getBoundingBox());
-                AppLog.i(v.getContext(), infoCache.valueAt(boundingCycle).getFile().getName());
+                val info = infoCache.getValueAt(boundingCycle)
 
+                if (info is GpxInformation) {
+                    mcontext.mapView.frameBounding(info.boundingBox)
+                    AppLog.i(v.context, info.file.name)
+                }
             }
         }
     }
 
-
-    private boolean nextInBoundingCycle() {
-        int c = infoCache.size();
-
+    private fun nextInBoundingCycle(): Boolean {
+        var c = infoCache.size()
         while (c > 0) {
-            c--;
-            boundingCycle++;
+            c--
+            boundingCycle++
+            if (boundingCycle >= infoCache.size()) boundingCycle = 0
 
-            if (boundingCycle >= infoCache.size())
-                boundingCycle=0;
-
-            if (       infoCache.valueAt(boundingCycle).getBoundingBox().hasBounding()
-                    || infoCache.valueAt(boundingCycle).getGpxList().getPointList().size()>0)
-                return true;
+            val info = infoCache.getValueAt(boundingCycle)
+            if (info is GpxInformation) {
+                if (info.boundingBox.hasBounding()
+                    || info.gpxList.pointList.size() > 0
+                ) return true
+            }
         }
-        return false;
+        return false
     }
 
-
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        if (info.isLoaded()) {
-
-            infoCache.put(iid, info);
-
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        if (info.isLoaded) {
+            infoCache.put(iid, info)
         } else {
-            infoCache.remove(iid);
+            infoCache.remove(iid)
         }
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {}
+    override fun drawInside(mcontext: MapContext) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 
-    @Override
-    public void onAttached() {}
+    private inner class VolumeView(context: Context) : ViewGroup(context), OnHardwareButtonPressed {
 
-    @Override
-    public void onDetached() {}
+        override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 
-    private class VolumeView extends ViewGroup implements AbsHardwareButtons.OnHardwareButtonPressed {
-
-        public VolumeView(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
-        }
-
-        @Override
-        public boolean onHardwareButtonPressed(int code, AbsHardwareButtons.EventType type) {
-            if (To.view(mcontext.getMapView()).getVisibility()==VISIBLE) {
+        override fun onHardwareButtonPressed(code: Int, type: AbsHardwareButtons.EventType): Boolean {
+            if (view(mcontext.mapView)!!.visibility == VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
-                    if (type == AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomIn();
-                    return true;
+                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.mapView.zoomIn()
+                    return true
                 }
-
                 if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    if (type == AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomOut();
-                    return true;
+                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.mapView.zoomOut()
+                    return true
                 }
             }
-            return false;
+            return false
         }
     }
-
 }

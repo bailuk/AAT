@@ -3,7 +3,7 @@ package ch.bailu.aat.app
 import android.content.Context
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.map.mapsforge.MapsForgePreview
-import ch.bailu.aat.map.tile.AndroidTilePainter
+import ch.bailu.aat.map.AndroidTilePainter
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory

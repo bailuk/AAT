@@ -1,68 +1,47 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import ch.bailu.aat.activities.NodeDetailActivity.Companion.start
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.foc.Foc
 
-import javax.annotation.Nonnull;
+open class NodeViewLayer(appContext: AppContext, private val context: Context, mc: MapContext) :
+    AbsNodeViewLayer(appContext, context, mc) {
 
-import ch.bailu.aat.activities.NodeDetailActivity;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.foc.Foc;
+    private var file: Foc? = null
+    private var index = 0
 
-public class NodeViewLayer extends AbsNodeViewLayer {
-
-    private Foc file = null;
-    private int index = 0;
-
-    private final Context context;
-
-
-    public NodeViewLayer(AppContext appContext, Context context, MapContext mc) {
-        super(appContext, context, mc);
-        this.context = context;
+    override fun onLongClick(view: View): Boolean {
+        return false
     }
 
-    @Override
-    public boolean onLongClick(View view) {
-        return false;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (file != null && file.isFile()) {
-            startNodeDetailActivity(file.getPath());
+    override fun onClick(v: View) {
+        val file = file
+        if (file is Foc  && file.isFile) {
+            startNodeDetailActivity(file.path)
         }
     }
 
-    protected void startNodeDetailActivity(String path) {
-        NodeDetailActivity.start(context, path, index);
+    protected fun startNodeDetailActivity(path: String) {
+        start(context, path, index)
     }
 
-    @Override
-    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int i) {
-        super.setSelectedNode(IID, info, node, i);
-
-        index = i;
-        file = info.getFile();
-
-        markupBuilder.appendInfo(info, index);
-        markupBuilder.appendNode(node, info);
-        markupBuilder.appendAttributes(node.getAttributes());
-        setHtmlText(markupBuilder);
+    override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
+        super.setSelectedNode(iid, info, node, index)
+        this.index = index
+        file = info.file
+        markupBuilder.appendInfo(info, this.index)
+        markupBuilder.appendNode(node, info)
+        markupBuilder.appendAttributes(node.attributes)
+        setHtmlText(markupBuilder)
     }
 
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
-
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
-    }
+    override fun onAttached() {}
+    override fun onDetached() {}
+    override fun onTap(tapPos: Point): Boolean { return false }
 }

@@ -1,89 +1,78 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
+import ch.bailu.foc.Foc
 
-import javax.annotation.Nonnull;
+class EditorNodeViewLayer(appContext: AppContext,
+                          context: Context,
+                          mcontext: MapContext,
+                          private val editorSource: EditorSourceInterface
+) : NodeViewLayer(appContext, context, mcontext) {
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.EditorSourceInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable;
-import ch.bailu.foc.Foc;
+    private var showNode = false
 
-public final class EditorNodeViewLayer extends NodeViewLayer {
-
-    private final EditorSourceInterface editorSource;
-    private boolean showNode = false;
-
-    public EditorNodeViewLayer(AppContext appContext, Context context, MapContext mc, EditorSourceInterface e) {
-        super(appContext, context, mc);
-        editorSource = e;
-
-        setText();
+    init {
+        setText()
     }
 
-    private void setText() {
-        if (editorSource.isEditing()) {
-            if (!showNode) setNoNodeSelectedText(editorSource.getFile());
+    private fun setText() {
+        if (editorSource.isEditing) {
+            if (!showNode) setNoNodeSelectedText(editorSource.file)
         } else {
-            showNode = false;
-            setLoadEditorText(editorSource.getFile());
-            setGraph(GpxInformation.NULL, 0, -1, -1);
+            showNode = false
+            setLoadEditorText(editorSource.file)
+            setGraph(GpxInformation.NULL, 0, -1, -1)
         }
     }
 
-
-    @Override
-    public GpxPointNode getSelectedNode() {
-        return editorSource.getEditor().getSelected();
+    override fun getSelectedNode(): GpxPointNode? {
+        return editorSource.editor.selected
     }
 
-
-    @Override
-    public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int index) {
-        showNode = true;
-        editorSource.getEditor().select(node);
-        super.setSelectedNode(IID, info, node, index);
+    override fun setSelectedNode(
+        iid: Int,
+        info: GpxInformation,
+        node: GpxPointNode,
+        index: Int
+    ) {
+        showNode = true
+        editorSource.editor.select(node)
+        super.setSelectedNode(iid, info, node, index)
     }
 
-
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        super.onContentUpdated(iid, info);
-        setBackgroundColorFromIID(iid);
-
-        setText();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        super.onContentUpdated(iid, info)
+        setBackgroundColorFromIID(iid)
+        setText()
     }
 
-
-    private void setLoadEditorText(Foc file) {
-        markupBuilder.appendHeader(file.getName());
-        markupBuilder.append(Res.str().edit_load());
-        setHtmlText(markupBuilder);
+    private fun setLoadEditorText(file: Foc) {
+        markupBuilder.appendHeader(file.name)
+        markupBuilder.append(Res.str().edit_load())
+        setHtmlText(markupBuilder)
     }
 
-
-    private void setNoNodeSelectedText(Foc file) {
-        markupBuilder.appendHeader(file.getName());
-        setHtmlText(markupBuilder);
+    private fun setNoNodeSelectedText(file: Foc) {
+        markupBuilder.appendHeader(file.name)
+        setHtmlText(markupBuilder)
     }
 
-    @Override
-    public void onClick(View v) {
-        if (editorSource.isEditing())
-            startNodeDetailActivity(ObjGpxEditable.getVirtualID(editorSource.getFile()));
-        else
-            editorSource.edit();
-
+    override fun onClick(v: View) {
+        if (editorSource.isEditing) {
+            startNodeDetailActivity(ObjGpxEditable.getVirtualID(editorSource.file))
+        } else {
+            editorSource.edit()
+        }
     }
 
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

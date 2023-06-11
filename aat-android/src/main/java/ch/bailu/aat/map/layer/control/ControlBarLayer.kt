@@ -1,168 +1,134 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.view.View;
-import android.widget.LinearLayout;
+import android.view.View
+import android.widget.LinearLayout
+import ch.bailu.aat.activities.AbsBackButton.OnBackPressedListener
+import ch.bailu.aat.map.To.view
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.map.MapColor
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+abstract class ControlBarLayer(mc: MapContext, val bar: ControlBar, private val placement: Position, color: Int) :
+    MapLayerInterface, View.OnClickListener {
 
-import ch.bailu.aat.activities.AbsBackButton;
-import ch.bailu.aat.map.To;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.map.edge.Position;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.Point;
+    private var w = 0
+    private var h = 0
 
-public abstract class ControlBarLayer implements MapLayerInterface, View.OnClickListener {
-    private final ControlBar bar;
-
-    private final Position placement;
-
-    private int w, h;
-    public static int getOrientation(Position placement) {
-        if (placement == Position.TOP || placement == Position.BOTTOM) {
-            return LinearLayout.HORIZONTAL;
-        }
-        return LinearLayout.VERTICAL;
-    }
-
-    public ControlBarLayer(MapContext mc, ControlBar b, Position p, int color) {
-        MapViewInterface map = mc.getMapView();
-        placement = p;
-        bar=b;
-        bar.setBackgroundColor(color);
-        bar.setOnClickListener2(this);
-        bar.setVisibility(View.GONE);
-        To.view(map).addView(bar);
-
-
-        To.view(map).addView(new AbsBackButton.OnBackPressedListener(b.getContext()) {
-            @Override
-            public boolean onBackPressed() {
-                if (To.view(map).getVisibility() == VISIBLE && isBarVisible()) {
-                    hideBar();
-                    return true;
+    init {
+        val map = mc.mapView
+        bar.setBackgroundColor(color)
+        bar.setOnClickListener2(this)
+        bar.visibility = View.GONE
+        view(map)?.addView(bar)
+        view(map)?.addView(object : OnBackPressedListener(bar.context) {
+            override fun onBackPressed(): Boolean {
+                if (view(map)?.visibility == VISIBLE && isBarVisible) {
+                    hideBar()
+                    return true
                 }
-                return false;
+                return false
             }
-        });
+        })
     }
 
+    constructor(c: MapContext, b: ControlBar, p: Position) : this(c, b, p, MapColor.MEDIUM)
 
-    public ControlBarLayer(MapContext c, ControlBar b, Position p) {
-        this(c,b,p, MapColor.MEDIUM);
-    }
+    val isBarVisible: Boolean
+        get() = bar.visibility == View.VISIBLE
 
-
-
-    public ControlBar getBar() {
-        return bar;
-    }
-
-
-    public boolean isBarVisible() {
-        return bar.getVisibility() == View.VISIBLE;
-    }
-
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         if (changed) {
-            w = r - l;
-            h = b - t;
-            final int cs = bar.getControlSize();
-
-
-            if (placement == Position.TOP) {
-                bar.place(0, 0, w);
-            } else if (placement == Position.LEFT) {
-                bar.place(0, 0, h);
-            } else if (placement == Position.BOTTOM) {
-
-                bar.place(0, h - cs, w);
-            } else if (placement == Position.RIGHT) {
-                bar.place(w - cs, 0, h);
+            w = r - l
+            h = b - t
+            val cs = bar.controlSize
+            if (placement === Position.TOP) {
+                bar.place(0, 0, w)
+            } else if (placement === Position.LEFT) {
+                bar.place(0, 0, h)
+            } else if (placement === Position.BOTTOM) {
+                bar.place(0, h - cs, w)
+            } else if (placement === Position.RIGHT) {
+                bar.place(w - cs, 0, h)
             }
         }
     }
 
-
-    public void showBar() {
-        if (!isBarVisible()) {
-            AppLayout.fadeIn(bar);
-            onShowBar();
+    fun showBar() {
+        if (!isBarVisible) {
+            AppLayout.fadeIn(bar)
+            onShowBar()
         }
     }
 
-    public void onShowBar(){}
-
-
-    public void hideBar() {
-        if (bar!=null && isBarVisible()) {
-            AppLayout.fadeOut(bar);
-            onHideBar();
+    open fun onShowBar() {}
+    fun hideBar() {
+        if (isBarVisible) {
+            AppLayout.fadeOut(bar)
+            onHideBar()
         }
     }
 
-
-    public void onHideBar() {}
-
-
-    @Override
-    public boolean onTap(Point tapXY) {
-        int size=bar.getControlSize();
-
-        int y = tapXY.y;
-        int x = tapXY.x;
-
+    open fun onHideBar() {}
+    override fun onTap(tapXY: Point): Boolean {
+        val size = bar.controlSize
+        val y = tapXY.y
+        val x = tapXY.x
         if (y < size) {
-            topTap();
-
+            topTap()
         } else if (y > h - size) {
-            bottomTap();
-
+            bottomTap()
         } else if (x < size) {
-            leftTab();
-
-        } else if (x > w-size){
-            rightTab();
-
+            leftTab()
+        } else if (x > w - size) {
+            rightTab()
         } else {
-            middleTap();
-
+            middleTap()
         }
-
-        return false;
+        return false
     }
 
-
-    public void onClick(View v) {
-        showBar();
+    override fun onClick(v: View) {
+        showBar()
     }
 
-
-    public void topTap()   {
-        showHideBar(Position.TOP); }
-    public void bottomTap(){
-        showHideBar(Position.BOTTOM);}
-    public void middleTap(){hideBar();}
-    public void rightTab() {
-        showHideBar(Position.RIGHT);}
-    public void leftTab()  {
-        showHideBar(Position.LEFT);}
-
-    private void showHideBar(Position p) {
-        if (p == placement) showBar();
-        else hideBar();
+    private fun topTap() {
+        showHideBar(Position.TOP)
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {}
+    private fun bottomTap() {
+        showHideBar(Position.BOTTOM)
+    }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
+    private fun middleTap() {
+        hideBar()
+    }
+
+    private fun rightTab() {
+        showHideBar(Position.RIGHT)
+    }
+
+    private fun leftTab() {
+        showHideBar(Position.LEFT)
+    }
+
+    private fun showHideBar(p: Position) {
+        if (p === placement) showBar() else hideBar()
+    }
+
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {}
+
+    companion object {
+        fun getOrientation(placement: Position): Int {
+            return if (placement === Position.TOP || placement === Position.BOTTOM) {
+                LinearLayout.HORIZONTAL
+            } else LinearLayout.VERTICAL
+        }
+    }
 }

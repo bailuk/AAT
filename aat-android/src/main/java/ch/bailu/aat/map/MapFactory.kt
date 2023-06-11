@@ -64,7 +64,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         return m
     }
 
-    fun map(e: EditorSourceInterface, b: ControlBar?): MapsForgeViewBase {
+    fun map(e: EditorSourceInterface, b: ControlBar): MapsForgeViewBase {
         tracker(e)
         m.add(CustomBarLayer(mc, b, AppTheme.bar))
         return m

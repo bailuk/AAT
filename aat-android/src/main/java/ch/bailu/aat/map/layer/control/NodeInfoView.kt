@@ -1,98 +1,80 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.graphics.Color;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.graphics.Color
+import android.widget.LinearLayout
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.graph.GraphView
+import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.html.HtmlScrollTextView
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapColor
 
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.views.PercentageLayout;
-import ch.bailu.aat.views.graph.GraphView;
-import ch.bailu.aat.views.graph.GraphViewFactory;
-import ch.bailu.aat.views.html.HtmlScrollTextView;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapColor;
+class NodeInfoView(appContext: AppContext, context: Context) : PercentageLayout(context, 0) {
+    private val htmlView: HtmlScrollTextView = HtmlScrollTextView(context)
+    private val graphView: GraphView = createGraphView(appContext, context)
+    private val limitGraphView: GraphView = createGraphView(appContext, context)
+    private var backgroundColor = MapColor.LIGHT
 
-
-public final class NodeInfoView extends PercentageLayout {
-    private final HtmlScrollTextView htmlView;
-    private final GraphView graphView;
-    private final GraphView limitGraphView;
-
-
-    private int backgroundColor;
-
-    public NodeInfoView(AppContext appContext, Context context) {
-        super(context,0);
-        setOrientation(LinearLayout.VERTICAL);
-
-        backgroundColor = MapColor.LIGHT;
-
-        htmlView = new HtmlScrollTextView(context);
-        htmlView.getTextView().setTextColor(MapColor.TEXT);
-        htmlView.setBackgroundColor(backgroundColor);
-        add(htmlView, 50);
-
-        graphView = createGraphView(appContext, context);
-        add(graphView, 25);
-
-        limitGraphView = createGraphView(appContext, context);
-        add(limitGraphView, 25);
-
-        setBackgroundColor(Color.TRANSPARENT);
+    init {
+        setOrientation(LinearLayout.VERTICAL)
+        htmlView.textView.setTextColor(MapColor.TEXT)
+        htmlView.setBackgroundColor(backgroundColor)
+        add(htmlView, 50)
+        add(graphView, 25)
+        add(limitGraphView, 25)
+        setBackgroundColor(Color.TRANSPARENT)
     }
 
-    private GraphView createGraphView(AppContext appContext, Context context) {
-        GraphView g = GraphViewFactory.createAltitudeGraph(appContext, context, AppTheme.bar);
-        g.setVisibility(GONE);
-        g.setBackgroundColor(MapColor.DARK);
-        g.showLabel(false);
-        return g;
+    private fun createGraphView(appContext: AppContext, context: Context): GraphView {
+        val g = GraphViewFactory.createAltitudeGraph(appContext, context, AppTheme.bar)
+        g.visibility = GONE
+        g.setBackgroundColor(MapColor.DARK)
+        g.showLabel(false)
+        return g
     }
 
-    @Override
-    public void setOnClickListener(OnClickListener l) {
-        htmlView.setClickable(true);
-        htmlView.setOnClickListener(l);
-        super.setOnClickListener(l);
+    override fun setOnClickListener(l: OnClickListener?) {
+        htmlView.isClickable = true
+        htmlView.setOnClickListener(l)
+        super.setOnClickListener(l)
     }
 
-    @Override
-    public void setOnLongClickListener(OnLongClickListener l) {
-        htmlView.getTextView().setOnLongClickListener(l);
-        super.setOnLongClickListener(l);
+    override fun setOnLongClickListener(l: OnLongClickListener?) {
+        htmlView.textView.setOnLongClickListener(l)
+        super.setOnLongClickListener(l)
     }
 
-    public void setBackgroundColorFromIID(int IID) {
-        int newBackgroundColor = MapColor.getColorFromIID(IID);
-
+    fun setBackgroundColorFromIID(IID: Int) {
+        val newBackgroundColor = MapColor.getColorFromIID(IID)
         if (backgroundColor != newBackgroundColor) {
-            backgroundColor = newBackgroundColor;
-            htmlView.setBackgroundColor(toBackgroundColorLight(backgroundColor));
-            graphView.setBackgroundColor(toBackgroundColorDark(backgroundColor));
-            limitGraphView.setBackgroundColor(toBackgroundColorDark(backgroundColor));
+            backgroundColor = newBackgroundColor
+            htmlView.setBackgroundColor(toBackgroundColorLight(backgroundColor))
+            graphView.setBackgroundColor(toBackgroundColorDark(backgroundColor))
+            limitGraphView.setBackgroundColor(toBackgroundColorDark(backgroundColor))
         }
     }
 
-    public void setHtmlText(String htmlText) {
-        htmlView.setHtmlText(htmlText);
+    fun setHtmlText(htmlText: String?) {
+        htmlView.setHtmlText(htmlText)
     }
 
-    private int toBackgroundColorLight(int color) {
-        return MapColor.toLightTransparent(color);
+    private fun toBackgroundColorLight(color: Int): Int {
+        return MapColor.toLightTransparent(color)
     }
 
-    private int toBackgroundColorDark(int color) {
-        return MapColor.toDarkTransparent(color);
+    private fun toBackgroundColorDark(color: Int): Int {
+        return MapColor.toDarkTransparent(color)
     }
 
-    public void setGraph(GpxInformation info, int index, int firstPoint, int lastPoint) {
-        graphView.setVisibility(info);
-        graphView.onContentUpdated(InfoID.ALL, info, index);
-
-        limitGraphView.setVisibility(info);
-        limitGraphView.setLimit(firstPoint, lastPoint);
-        limitGraphView.onContentUpdated(InfoID.ALL, info, index);
+    fun setGraph(info: GpxInformation?, index: Int, firstPoint: Int, lastPoint: Int) {
+        graphView.setVisibility(info)
+        graphView.onContentUpdated(InfoID.ALL, info, index)
+        limitGraphView.setVisibility(info)
+        limitGraphView.setLimit(firstPoint, lastPoint)
+        limitGraphView.onContentUpdated(InfoID.ALL, info, index)
     }
 }

@@ -1,213 +1,167 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import ch.bailu.aat.R
+import ch.bailu.aat.activities.AbsGpxListActivity
+import ch.bailu.aat.menus.FileMenu
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.fs.AndroidFileAction
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.views.PreviewView
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.description.AverageSpeedDescription
+import ch.bailu.aat_lib.description.CaloriesDescription
+import ch.bailu.aat_lib.description.DateDescription
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.MaximumSpeedDescription
+import ch.bailu.aat_lib.description.TimeDescription
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay
+import ch.bailu.aat_lib.service.directory.Iterator
+import ch.bailu.aat_lib.service.directory.SummaryConfig
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.aat_lib.util.fs.FileAction
+import ch.bailu.foc.Foc
+import ch.bailu.foc_android.FocAndroidFactory
 
-import javax.annotation.Nonnull;
+class FileControlBarLayer(
+    appContext: AppContext,
+    mc: MapContext,
+    private val acontext: AbsGpxListActivity,
+    config: SummaryConfig
+) : ControlBarLayer(
+    mc, ControlBar(
+        acontext,
+        getOrientation(Position.LEFT), AppTheme.bar
+    ), Position.LEFT
+) {
+    private val preview = PreviewView(acontext.serviceContext, config)
+    private val selector = FileViewLayer(appContext, acontext, mc)
+    private val overlay: View = bar.addImageButton(R.drawable.view_paged)
+    private val reloadPreview: View = bar.addImageButton(R.drawable.view_refresh)
+    private val delete: View = bar.addImageButton(R.drawable.user_trash)
+    private var iterator = Iterator.NULL
+    private var selectedFile: Foc? = null
+    private val storage = appContext.storage
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsGpxListActivity;
-import ch.bailu.aat.menus.FileMenu;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.fs.AndroidFileAction;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.PreviewView;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.description.AverageSpeedDescription;
-import ch.bailu.aat_lib.description.CaloriesDescription;
-import ch.bailu.aat_lib.description.ContentDescription;
-import ch.bailu.aat_lib.description.DateDescription;
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.description.MaximumSpeedDescription;
-import ch.bailu.aat_lib.description.TimeDescription;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.edge.Position;
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay;
-import ch.bailu.aat_lib.service.directory.Iterator;
-import ch.bailu.aat_lib.service.directory.SummaryConfig;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.fs.FileAction;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroidFactory;
-
-public final class FileControlBarLayer extends ControlBarLayer {
-
-    private final PreviewView preview;
-    private final AbsGpxListActivity acontext;
-    private final FileViewLayer selector;
-
-    private final View           overlay, reloadPreview, delete;
-
-    private Iterator iterator = Iterator.NULL;
-    private Foc selectedFile = null;
-
-
-    private final Storage storage;
-
-    public FileControlBarLayer(AppContext appContext, MapContext mc, AbsGpxListActivity absGpxListActivity, SummaryConfig config) {
-        super(mc, new ControlBar(
-                absGpxListActivity,
-                getOrientation(Position.LEFT), AppTheme.bar), Position.LEFT);
-
-        final ControlBar bar = getBar();
-
-        storage = new Storage(absGpxListActivity);
-        acontext = absGpxListActivity;
-
-        selector = new FileViewLayer(appContext, absGpxListActivity, mc);
-        preview = new PreviewView(absGpxListActivity.getServiceContext(), config);
-
-        bar.add(preview);
-        overlay = bar.addImageButton(R.drawable.view_paged);
-        reloadPreview = bar.addImageButton(R.drawable.view_refresh);
-        delete = bar.addImageButton(R.drawable.user_trash);
-
-        preview.setOnClickListener(this);
-
-        ToolTip.set(preview, R.string.tt_menu_file);
-        ToolTip.set(overlay, R.string.file_overlay);
-        ToolTip.set(reloadPreview, R.string.file_reload);
-        ToolTip.set(delete, R.string.file_delete);
-
-        acontext.addTarget(selector, InfoID.LIST_SUMMARY);
+    init {
+        bar.add(preview)
+        preview.setOnClickListener(this)
+        ToolTip.set(preview, R.string.tt_menu_file)
+        ToolTip.set(overlay, R.string.file_overlay)
+        ToolTip.set(reloadPreview, R.string.file_reload)
+        ToolTip.set(delete, R.string.file_delete)
+        acontext.addTarget(selector, InfoID.LIST_SUMMARY)
     }
 
-
-    public void setIterator(Iterator i) {
-        iterator = i;
+    fun setIterator(i: Iterator) {
+        iterator = i
     }
 
-
-    @Override
-    public void onShowBar() {
-        selector.showAtRight();
+    override fun onShowBar() {
+        selector.showAtRight()
     }
 
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
-
-    @Override
-    public void drawForeground(MapContext mc) {
-        if (isBarVisible()) {
-            selector.drawForeground(mc);
+    override fun onAttached() {}
+    override fun onDetached() {}
+    override fun drawForeground(mcontext: MapContext) {
+        if (isBarVisible) {
+            selector.drawForeground(mcontext)
         }
     }
 
-    @Override
-    public void drawInside(MapContext mc) {
-        if (isBarVisible()) {
-            selector.drawInside(mc);
+    override fun drawInside(mc: MapContext) {
+        if (isBarVisible) {
+            selector.drawInside(mc)
         }
     }
 
-    @Override
-    public void onLayout(boolean c, int l, int t, int r, int b) {
-        super.onLayout(c, l, t, r, b);
-        selector.onLayout(c, l, t, r,b);
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        selector.onLayout(changed, l, t, r, b)
     }
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-
-        GpxPointNode node =  selector.getSelectedNode();
+    override fun onClick(v: View) {
+        super.onClick(v)
+        val node = selector.getSelectedNode()
         if (node != null && selectedFile != null) {
-            Foc file = selectedFile;
-
-            if (file.exists()) {
-                if        (v == preview) {
-                    new FileMenu(acontext, file).showAsPopup(acontext, v);
-                } else if (v == overlay) {
-                    AndroidFileAction.useAsOverlay(acontext, file);
-                } else if (v == reloadPreview) {
-                    FileAction.reloadPreview(acontext.getAppContext(), file);
-                } else if (v == delete) {
-                    AndroidFileAction.delete(acontext.getAppContext(), acontext, file);
+            val file = selectedFile
+            if (file is Foc && file.exists()) {
+                if (v === preview) {
+                    FileMenu(acontext, file).showAsPopup(acontext, v)
+                } else if (v === overlay) {
+                    AndroidFileAction.useAsOverlay(acontext, file)
+                } else if (v === reloadPreview) {
+                    FileAction.reloadPreview(acontext.appContext, file)
+                } else if (v === delete) {
+                    AndroidFileAction.delete(acontext.appContext, acontext, file)
                 }
             }
         }
     }
 
-    @Override
-    public void onHideBar() {
-        selector.hide();
+    override fun onHideBar() {
+        selector.hide()
     }
 
-    private class FileViewLayer extends AbsNodeViewLayer {
-        public FileViewLayer(AppContext appContext, Context context, MapContext mc) {
-            super(appContext, context, mc);
-        }
+    private inner class FileViewLayer(appContext: AppContext, context: Context, mc: MapContext) :
+        AbsNodeViewLayer(appContext, context, mc) {
+        val summaryData = arrayOf(
+            DateDescription(),
+            TimeDescription(),
+            DistanceDescription(storage),
+            AverageSpeedDescription(storage),
+            MaximumSpeedDescription(storage),
+            CaloriesDescription(storage)
+        )
 
-
-        final ContentDescription[] summaryData = {
-
-                new DateDescription(),
-                new TimeDescription(),
-
-                new DistanceDescription(storage),
-                new AverageSpeedDescription(storage),
-                new MaximumSpeedDescription(storage),
-                new CaloriesDescription(storage),
-        };
-
-        @Override
-        public void setSelectedNode(int IID, @Nonnull GpxInformation info, @Nonnull GpxPointNode node, int index) {
-            super.setSelectedNode(IID, info, node, index);
-
-            new SolidDirectoryQuery(new Storage(acontext), new FocAndroidFactory(acontext)).getPosition().setValue(index);
-
-            iterator.moveToPosition(index);
-            selectedFile = iterator.getInfo().getFile();
-            preview.setFilePath(selectedFile);
-
-            markupBuilder.appendHeader(iterator.getInfo().getFile().getName());
-            for (ContentDescription d: summaryData) {
-                d.onContentUpdated(iterator.getInfoID(), iterator.getInfo());
-                markupBuilder.appendNl(d);
+        override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
+            super.setSelectedNode(iid, info, node, index)
+            SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.value = index
+            iterator.moveToPosition(index)
+            selectedFile = iterator.info.file
+            preview.setFilePath(selectedFile)
+            markupBuilder.appendHeader(iterator.info.file.name)
+            for (d in summaryData) {
+                d.onContentUpdated(iterator.infoID, iterator.info)
+                markupBuilder.appendNl(d)
             }
-
-            setHtmlText(markupBuilder);
+            setHtmlText(markupBuilder)
         }
 
-        @Override
-        public void onClick(View v) {
-            acontext.displayFile();
+        override fun onClick(v: View) {
+            acontext.displayFile()
         }
 
-        @Override
-        public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-            selector.onPreferencesChanged(s, key);
+        override fun onPreferencesChanged(s: StorageInterface, key: String) {
+            selector.onPreferencesChanged(s, key)
         }
 
-        @Override
-        public void onAttached() {}
-
-        @Override
-        public void onDetached() {}
-
-        @Override
-        public boolean onLongClick(View view) {
-            if (selectedFile != null) {
-                new SolidCustomOverlay(new Storage(acontext), new FocAndroidFactory(acontext), 0).setValueFromFile(selectedFile);
-                return true;
+        override fun onAttached() {}
+        override fun onDetached() {}
+        override fun onLongClick(view: View): Boolean {
+            if (selectedFile is Foc) {
+                SolidCustomOverlay(
+                    Storage(acontext),
+                    FocAndroidFactory(acontext),
+                    0
+                ).setValueFromFile(selectedFile)
+                return true
             }
-            return false;
+            return false
         }
 
-        @Override
-        public boolean onTap(Point tapPos) {
-            return false;
+        override fun onTap(tapPos: Point): Boolean {
+            return false
         }
     }
 }

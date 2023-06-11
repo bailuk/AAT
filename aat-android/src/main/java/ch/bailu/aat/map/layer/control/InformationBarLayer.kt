@@ -1,128 +1,85 @@
-package ch.bailu.aat.map.layer.control;
+package ch.bailu.aat.map.layer.control
 
-import android.content.Context;
-import android.view.View;
+import android.content.Context
+import android.view.View
+import ch.bailu.aat.R
+import ch.bailu.aat.menus.LocationMenu
+import ch.bailu.aat.menus.MapMenu
+import ch.bailu.aat.menus.MapQueryMenu
+import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidLegend
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import ch.bailu.aat_lib.resources.Res
 
-import javax.annotation.Nonnull;
+class InformationBarLayer(
+    appContext: AppContext,
+    private val context: Context,
+    private val mcontext: MapContext,
+    dispatcher: DispatcherInterface
+) : ControlBarLayer(mcontext, ControlBar(context, getOrientation(Position.RIGHT), AppTheme.bar), Position.RIGHT) {
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.menus.LocationMenu;
-import ch.bailu.aat.menus.MapMenu;
-import ch.bailu.aat.menus.MapQueryMenu;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.ToolTip;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.edge.Position;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidLegend;
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
-import ch.bailu.aat_lib.resources.Res;
+    private val map = bar.addImageButton(R.drawable.open_menu)
+    private val search = bar.addImageButton(R.drawable.edit_find)
+    private val location = bar.addImageButton(R.drawable.find_location)
+    private val selector = NodeViewLayer(appContext, context, mcontext)
 
-public final class InformationBarLayer extends ControlBarLayer {
+    init {
+        val storage: StorageInterface = appContext.storage
+        val sgrid = SolidMapGrid(storage, mcontext.solidKey)
+        val slegend = SolidLegend(storage, mcontext.solidKey)
+        val grid = bar.addSolidIndexButton(sgrid)
+        val legend = bar.addSolidIndexButton(slegend)
 
-    private final ImageButtonViewGroup map, search, location;
+        ToolTip.set(grid, Res.str().tt_info_grid())
+        ToolTip.set(legend, Res.str().tt_info_legend())
+        ToolTip.set(location, Res.str().tt_info_location())
 
-    private final AbsNodeViewLayer selector;
-    private final MapContext mcontext;
-    private final Context context;
-
-
-    public InformationBarLayer(AppContext appContext, Context context, MapContext mc, DispatcherInterface d) {
-        super(mc,new ControlBar(context, getOrientation(Position.RIGHT), AppTheme.bar), Position.RIGHT);
-
-        this.context = context;
-        StorageInterface storage = new Storage(context);
-        mcontext = mc;
-
-        final SolidIndexList sgrid, slegend;
-
-
-        sgrid = new SolidMapGrid(storage, mc.getSolidKey());
-        slegend = new SolidLegend(storage, mc.getSolidKey());
-
-        ControlBar bar = getBar();
-
-        map = bar.addImageButton(R.drawable.open_menu);
-
-        View grid=bar.addSolidIndexButton(sgrid);
-        View legend=bar.addSolidIndexButton(slegend);
-
-        search = bar.addImageButton(R.drawable.edit_find);
-        location = bar.addImageButton(R.drawable.find_location);
-
-        selector = new NodeViewLayer(appContext, context,  mc);
-
-
-        ToolTip.set(grid, Res.str().tt_info_grid());
-        ToolTip.set(legend,Res.str().tt_info_legend());
-        ToolTip.set(location, Res.str().tt_info_location());
-
-        d.addTarget(selector, InfoID.ALL);
+        dispatcher.addTarget(selector, InfoID.ALL)
     }
 
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-
-        if (v == map) {
-            new MapMenu(context, mcontext).showAsPopup(v.getContext(),v);
-
-        } else if (v==search) {
-            new MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v);
-
-        } else if (v==location) {
-            new LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location);
+    override fun onClick(v: View) {
+        super.onClick(v)
+        if (v === map) {
+            MapMenu(context, mcontext).showAsPopup(v.getContext(), v)
+        } else if (v === search) {
+            MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v)
+        } else if (v === location) {
+            LocationMenu(context, mcontext.mapView).showAsPopup(v.getContext(), location)
         }
     }
 
-    @Override
-    public void onShowBar() {
-        selector.showAtLeft();
+    override fun onShowBar() {
+        selector.showAtLeft()
     }
 
-
-    @Override
-    public void onHideBar() {
-        selector.hide();
+    override fun onHideBar() {
+        selector.hide()
     }
 
-
-    @Override
-    public void onLayout(boolean c, int l, int t, int r, int b) {
-        super.onLayout(c, l, t, r, b);
-        selector.onLayout(c, l, t, r,b);
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        selector.onLayout(changed, l, t, r, b)
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {
-        if (isBarVisible()) selector.drawForeground(mcontext);
+    override fun drawForeground(mcontext: MapContext) {
+        if (isBarVisible) selector.drawForeground(mcontext)
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {
-        if (isBarVisible()) selector.drawInside(mcontext);
+    override fun drawInside(mcontext: MapContext) {
+        if (isBarVisible) selector.drawInside(mcontext)
     }
 
-    @Override
-    public void onAttached() {
-
-    }
-
-    @Override
-    public void onDetached() {
-
-    }
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-        selector.onPreferencesChanged(s, key);
+    override fun onAttached() {}
+    override fun onDetached() {}
+    override fun onPreferencesChanged(s: StorageInterface, key: String) {
+        selector.onPreferencesChanged(s, key)
     }
 }
