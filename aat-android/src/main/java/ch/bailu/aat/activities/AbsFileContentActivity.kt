@@ -44,12 +44,17 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     }
 
     protected var map: MapViewInterface? = null
-    protected var editorSource: EditorOrBackupSource? = null
+
+    private var editorSourcePrivate: EditorOrBackupSource? = null
+
+    val editorSource: EditorOrBackupSource
+        get() = editorSourcePrivate!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentFile = FollowFile(appContext)
-        editorSource = EditorOrBackupSource(appContext, currentFile)
+        editorSourcePrivate = EditorOrBackupSource(appContext, currentFile)
         createViews()
         createDispatcher()
     }
@@ -92,7 +97,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         addSource(TrackerSource(serviceContext, appContext.broadcaster))
         addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         addSource(OverlaysSource(appContext))
-        addSource(editorSource!!)
+        addSource(editorSource)
         addTarget(
             busyControl!!,
             InfoID.FILEVIEW,
@@ -123,7 +128,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     }
 
     private fun changeFileAsk(view: View) {
-        editorSource?.apply {
+        editorSourcePrivate?.apply {
             if (isModified) {
                 object : AppDialog() {
                     override fun onPositiveClick() {
@@ -145,17 +150,17 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     private fun changeFile(v: View) {
         if (v === previousFile) {
-            editorSource?.apply { releaseEditorDiscard() }
+            editorSourcePrivate?.apply { releaseEditorDiscard() }
             currentFile?.apply { moveToPrevious() }
         } else if (v === nextFile) {
-            editorSource?.apply { releaseEditorDiscard() }
+            editorSourcePrivate?.apply { releaseEditorDiscard() }
             currentFile?.apply { moveToNext() }
         }
     }
 
     @Deprecated("Android API")
     override fun onBackPressed() {
-        editorSource?.apply {
+        editorSourcePrivate?.apply {
             try {
                 if (isModified) {
                     object : AppDialog() {
