@@ -52,11 +52,6 @@ public class BusyViewControlDbSync extends BusyViewControlIID implements Closeab
 
     };
 
-
-
-
-
-
     @Override
     public void close() {
         context.unregisterReceiver(onSyncChanged);

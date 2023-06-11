@@ -1,52 +1,34 @@
-package ch.bailu.aat.activities;
+package ch.bailu.aat.activities
 
-import android.content.Intent;
+import android.content.Intent
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.system.SolidExternalDirectory
+import ch.bailu.aat_lib.description.ContentDescription
+import ch.bailu.aat_lib.description.DateDescription
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.NameDescription
+import ch.bailu.aat_lib.description.TrackSizeDescription
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat.R;
-import ch.bailu.aat_lib.description.DateDescription;
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.description.NameDescription;
-import ch.bailu.aat_lib.description.TrackSizeDescription;
-import ch.bailu.aat.preferences.system.SolidExternalDirectory;
-import ch.bailu.aat_lib.description.ContentDescription;
-import ch.bailu.foc.Foc;
+class ExternalListActivity : AbsGpxListActivity() {
+    override val gpxListItemData: Array<ContentDescription>
+        get() = arrayOf(
+            DateDescription(),
+            DistanceDescription(appContext.storage),
+            NameDescription()
+        )
+    override val summaryData: Array<ContentDescription>
+        get() = arrayOf(
+            TrackSizeDescription()
+        )
 
-public class ExternalListActivity extends AbsGpxListActivity {
-
-    @Override
-    public ContentDescription[] getGpxListItemData() {
-        return new ContentDescription[] {
-                new DateDescription(),
-                new DistanceDescription(getAppContext().getStorage()),
-                new NameDescription()
-        };
+    override fun displayFile() {
+        val intent = Intent(this, FileContentActivity::class.java)
+        startActivity(intent)
     }
 
-
-    @Override
-    public ContentDescription[] getSummaryData() {
-        return new ContentDescription[] {
-
-                new TrackSizeDescription(),
-        };
-    }
-
-    @Override
-    public void displayFile() {
-        Intent intent=new Intent(this,FileContentActivity.class);
-        startActivity(intent);
-    }
-
-
-    @Override
-    public Foc getDirectory() {
-        return new SolidExternalDirectory(this).getValueAsFile();
-    }
-
-
-    @Override
-    public String getLabel() {
-        return getString(R.string.intro_external_list);
-    }
-
+    override val directory: Foc
+        get() = SolidExternalDirectory(this).valueAsFile
+    override val label: String
+        get() = getString(R.string.intro_external_list)
 }
