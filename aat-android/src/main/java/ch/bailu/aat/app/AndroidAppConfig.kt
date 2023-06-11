@@ -1,11 +1,10 @@
-package ch.bailu.aat.app;
+package ch.bailu.aat.app
 
-import ch.bailu.aat.BuildConfig;
-import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat.BuildConfig
+import ch.bailu.aat_lib.app.AppConfig
 
-public final class AndroidAppConfig extends AppConfig {
-    @Override
-    public boolean isRelease() {
-        return !BuildConfig.DEBUG;
+class AndroidAppConfig : AppConfig() {
+    override fun isRelease(): Boolean {
+        return !BuildConfig.DEBUG
     }
 }
