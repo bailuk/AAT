@@ -1,71 +1,50 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat.map.mapsforge
 
-import android.content.Context;
-import android.graphics.Canvas;
+import android.content.Context
+import android.graphics.Canvas
+import ch.bailu.aat.map.MapDensity
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.map.layer.MapPositionLayer
+import ch.bailu.aat_lib.map.tile.MapsForgeTileLayerStackConfigured
+import org.mapsforge.map.model.common.Observer
 
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.model.common.Observer;
+class MapsForgeView(
+    context: Context,
+    appContext: AppContext,
+    dispatcher: DispatcherInterface,
+    key: String
+) : MapsForgeViewBase(appContext, context, key, MapDensity(context)) {
 
-import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat_lib.map.tile.MapsForgeTileLayerStackConfigured;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.map.layer.MapPositionLayer;
-import ch.bailu.aat_lib.service.ServicesInterface;
+    private val stack = MapsForgeTileLayerStackConfigured.All(this, appContext)
+    private val pos = MapPositionLayer(mContext, Storage(context), dispatcher)
+    private val services = appContext.services
+    private val foreground = MapsForgeForeground(appContext, this, mContext, MapDensity(context), layers)
 
-public class MapsForgeView extends MapsForgeViewBase {
+    init {
+        add(stack, stack)
+        add(pos)
 
-    private final MapsForgeForeground foreground;
-    private final MapsForgeTileLayerStackConfigured stack;
-    private final MapPositionLayer pos;
-    private final ServicesInterface services;
-
-    public MapsForgeView(Context context, AppContext appContext, DispatcherInterface dispatcher, String key) {
-        super(appContext, context, key, new MapDensity(context));
-
-        stack = new MapsForgeTileLayerStackConfigured.All(this, appContext);
-        add(stack, stack);
-
-        services = appContext.getServices();
-
-        // Depends on zoom limits (setItem by TileLayerStack)
-        pos = new MapPositionLayer(getMContext(), new Storage(context), dispatcher);
-        add(pos);
-
-        foreground = new MapsForgeForeground(appContext,this,
-                getMContext(),
-                new MapDensity(context),
-                getLayers());
-
-        setClickable(true);
-
-        getModel().mapViewPosition.addObserver(new Observer() {
-            private LatLong center = getModel().mapViewPosition.getCenter();
-
-            @Override
-            public void onChange() {
-                LatLong newCenter = getModel().mapViewPosition.getCenter();
-
-                if (newCenter != null && !newCenter.equals(center)) {
-                    center = newCenter;
-                    pos.onMapCenterChanged(center);
+        isClickable = true
+        model.mapViewPosition.addObserver(object : Observer {
+            private var center = model.mapViewPosition.center
+            override fun onChange() {
+                val newCenter = model.mapViewPosition.center
+                if (newCenter != null && newCenter != center) {
+                    center = newCenter
+                    pos.onMapCenterChanged(center)
                 }
             }
-        });
-
+        })
     }
 
-
-    @Override
-    public void reDownloadTiles() {
-        stack.reDownloadTiles();
+    override fun reDownloadTiles() {
+        stack.reDownloadTiles()
     }
 
-
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        foreground.dispatchDraw(services, canvas);
+    public override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        foreground.dispatchDraw(services, canvas)
     }
 }

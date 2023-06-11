@@ -1,5 +1,6 @@
 package ch.bailu.aat.map.tile
 
+import android.graphics.Bitmap
 import ch.bailu.aat.map.To
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.source.Source
@@ -8,7 +9,6 @@ import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.Paint
 import org.mapsforge.core.graphics.TileBitmap
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
-import javax.annotation.Nonnull
 
 class AndroidTilePainter : TilePainter {
     private val rectCache = android.graphics.Rect()
@@ -16,12 +16,12 @@ class AndroidTilePainter : TilePainter {
     override fun paint(tileBitmap: TileBitmap, canvas: Canvas, rect: Rect, paint: Paint
     ) {
         val bitmap = AndroidGraphicFactory.getBitmap(tileBitmap)
-        if (bitmap != null) {
+        if (bitmap is Bitmap) {
             To.androidCanvas(canvas).drawBitmap(bitmap, null, To.androidRect(rect, rectCache), To.androidPaint(paint))
         }
     }
 
-    override fun createPaint(@Nonnull source: Source): Paint {
+    override fun createPaint(source: Source): Paint {
         val paint = AndroidGraphicFactory.INSTANCE.createPaint()
         val androidPaint = To.androidPaint(paint)
 

@@ -1,282 +1,204 @@
-package ch.bailu.aat.map.mapsforge;
+package ch.bailu.aat.map.mapsforge
 
+import android.content.Context
+import android.view.View
+import ch.bailu.aat.map.MapDensity
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.map.layer.LayerWrapper
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.Dimension
+import org.mapsforge.core.model.MapPosition
+import org.mapsforge.core.util.LatLongUtils
+import org.mapsforge.map.android.view.MapView
+import org.mapsforge.map.layer.Layer
+import org.mapsforge.map.model.IMapViewPosition
+import javax.annotation.Nonnull
 
-import android.content.Context;
-import android.view.View;
+open class MapsForgeViewBase(
+    appContext: AppContext,
+    context: Context,
+    key: String,
+    d: MapDensity
+) : MapView(context), MapViewInterface, LifeCycleInterface, OnPreferencesChanged {
 
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.Dimension;
-import org.mapsforge.core.model.MapPosition;
-import org.mapsforge.core.util.LatLongUtils;
-import org.mapsforge.map.android.view.MapView;
-import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.model.IMapViewPosition;
+    private var pendingFrameBounding: BoundingBox? = null
+    private val mcontext: MapsForgeContext
+    private val services: ServicesInterface
+    private val storage: Storage
+    var areServicesUp = false
+    var isVisible = false
+    val layers = ArrayList<MapLayerInterface>(10)
+    private var areLayersAttached = false
 
-import java.util.ArrayList;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.map.MapDensity;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.map.layer.LayerWrapper;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public class MapsForgeViewBase extends MapView implements
-        MapViewInterface,
-        LifeCycleInterface,
-        OnPreferencesChanged {
-
-    private BoundingBox pendingFrameBounding=null;
-
-    private final MapsForgeContext mcontext;
-    private final ServicesInterface services;
-    private final Storage storage;
-
-    public boolean areServicesUp=false;
-    public boolean isVisible=false;
-
-
-
-    private final ArrayList<MapLayerInterface> layers = new ArrayList<>(10);
-
-    private boolean areLayersAttached=false;
-
-
-
-    public MapsForgeViewBase(AppContext appContext, Context context, String key, MapDensity d) {
-        super(context);
-
-        this.setBackgroundColor(getModel().displayModel.getBackgroundColor());
-        getModel().displayModel.setFixedTileSize(d.getTileSize());
-
-        services = appContext.getServices();
-        mcontext = new MapsForgeContext(appContext,this, key, d);
-        add(mcontext, mcontext);
-
-        storage = new Storage(context);
-
-        getMapScaleBar().setVisible(false);
-        setBuiltInZoomControls(false);
+    init {
+        setBackgroundColor(model.displayModel.backgroundColor)
+        model.displayModel.setFixedTileSize(d.tileSize)
+        services = appContext.services
+        mcontext = MapsForgeContext(appContext, this, key, d)
+        add(mcontext, mcontext)
+        storage = Storage(context)
+        mapScaleBar.isVisible = false
+        setBuiltInZoomControls(false)
     }
 
-    @Override
-    public void onChange() {
+    override fun onChange() {
         // Disable MapView.onChange to fix a speed bug in MapsForge
     }
 
-
-    @Override
-    public void add(MapLayerInterface layer) {
-        LayerWrapper wrapper = new LayerWrapper(services, mcontext, layer);
-        add(wrapper, layer);
+    override fun add(layer: MapLayerInterface) {
+        val wrapper = LayerWrapper(services, mcontext, layer)
+        add(wrapper, layer)
     }
 
-    @Override
-    public MapContext getMContext() {
-        return mcontext;
+    override fun getMContext(): MapContext {
+        return mcontext
     }
 
-    public View toView() {
-        return this;
+    fun toView(): View {
+        return this
     }
 
-    @Override
-    public void reDownloadTiles() {}
-
-    @Override
-    public IMapViewPosition getMapViewPosition() {
-        return getModel().mapViewPosition;
+    override fun reDownloadTiles() {}
+    override fun getMapViewPosition(): IMapViewPosition {
+        return model.mapViewPosition
     }
 
-
-    public void add(Layer mfLayer, MapLayerInterface layer) {
-        addLayer(mfLayer);
-        layers.add(layer);
-        if (areLayersAttached) layer.onAttached();
-
+    fun add(mfLayer: Layer, layer: MapLayerInterface) {
+        addLayer(mfLayer)
+        layers.add(layer)
+        if (areLayersAttached) layer.onAttached()
     }
 
-
-    @Override
-    public void zoomOut() {
-        getModel().mapViewPosition.zoomOut();
+    override fun zoomOut() {
+        model.mapViewPosition.zoomOut()
     }
 
-    @Override
-    public void zoomIn() {
-        getModel().mapViewPosition.zoomIn();
+    override fun zoomIn() {
+        model.mapViewPosition.zoomIn()
     }
 
-    @Override
-    public void requestRedraw() {
-        if (areLayersAttached)
-            getLayerManager().redrawLayers();
+    override fun requestRedraw() {
+        if (areLayersAttached) layerManager.redrawLayers()
     }
 
-
-    @Override
-    public void frameBounding(BoundingBoxE6 boundingBox) {
-        frameBounding(boundingBox.toBoundingBox());
+    override fun frameBounding(boundingBox: BoundingBoxE6) {
+        frameBounding(boundingBox.toBoundingBox())
     }
 
-
-    private void frameBounding(BoundingBox bounding) {
-        Dimension dimension = getModel().mapViewDimension.getDimension();
-
-
+    private fun frameBounding(bounding: BoundingBox) {
+        val dimension = model.mapViewDimension.dimension
         if (dimension == null) {
-            pendingFrameBounding=bounding;
+            pendingFrameBounding = bounding
         } else {
-            byte zoom = zoomForBounds(bounding, dimension);
-
-            MapPosition position = new MapPosition(bounding.getCenterPoint(), zoom);
-            getModel().mapViewPosition.setMapPosition(position);
-
-            pendingFrameBounding=null;
+            val zoom = zoomForBounds(bounding, dimension)
+            val position = MapPosition(bounding.centerPoint, zoom)
+            model.mapViewPosition.mapPosition = position
+            pendingFrameBounding = null
         }
     }
 
-
-    private byte zoomForBounds(BoundingBox bounding, Dimension dimension) {
-        byte zoom;
-        if (bounding.minLatitude == 0d && bounding.minLongitude == 0d
-                && bounding.maxLatitude == 0d && bounding.maxLongitude == 0d) {
-            zoom = 0;
-        } else {
-            zoom = LatLongUtils.zoomForBounds(
+    private fun zoomForBounds(bounding: BoundingBox, dimension: Dimension): Byte {
+        var zoom: Byte = if (bounding.minLatitude == 0.0 && bounding.minLongitude == 0.0 && bounding.maxLatitude == 0.0 && bounding.maxLongitude == 0.0) {
+                0
+            } else {
+                LatLongUtils.zoomForBounds(
                     dimension,
                     bounding,
-                    getModel().displayModel.getTileSize());
-        }
-
-        zoom = (byte) Math.min(zoom, getModel().mapViewPosition.getZoomLevelMax());
-        zoom = (byte) Math.max(zoom, getModel().mapViewPosition.getZoomLevelMin());
-
-        return zoom;
+                    model.displayModel.tileSize
+                )
+            }
+        zoom = minOf(zoom.toInt(), model.mapViewPosition.zoomLevelMax.toInt()).toByte()
+        zoom = maxOf(zoom.toInt(), model.mapViewPosition.zoomLevelMin.toInt()).toByte()
+        return zoom
     }
 
-
-    @Override
-    public void onSizeChanged(int nw, int nh, int ow, int oh) {
-        super.onSizeChanged(nw, nh, ow, oh);
-
+    public override fun onSizeChanged(nw: Int, nh: Int, ow: Int, oh: Int) {
+        super.onSizeChanged(nw, nh, ow, oh)
         if (pendingFrameBounding != null) {
-            frameBounding(pendingFrameBounding);
+            frameBounding(pendingFrameBounding!!)
         }
     }
 
-
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-        for(OnPreferencesChanged l: layers)
-            l.onPreferencesChanged(s, key);
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+        for (l in layers) l.onPreferencesChanged(s, key)
     }
 
-
-    @Override
-    public void onLayout(boolean c, int l, int t, int r, int b) {
-
+    public override fun onLayout(c: Boolean, l: Int, t: Int, r: Int, b: Int) {
         if (c) {
-            for (MapLayerInterface layer: layers) layer.onLayout(c,l,t,r,b);
+            for (layer in layers) layer.onLayout(c, l, t, r, b)
         }
     }
 
-    public ArrayList<MapLayerInterface> getLayers() {
-        return layers;
+    public override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isVisible = visibility == VISIBLE
+        attachDetachLayers()
     }
 
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-        isVisible = (getVisibility() == VISIBLE);
-
-        attachDetachLayers();
-
+    public override fun onDetachedFromWindow() {
+        isVisible = false
+        attachDetachLayers()
+        super.onDetachedFromWindow()
     }
 
-
-    @Override
-    public void onDetachedFromWindow() {
-        isVisible = false;
-        attachDetachLayers();
-
-        super.onDetachedFromWindow();
-
+    override fun setVisibility(v: Int) {
+        super.setVisibility(v)
+        isVisible = v == VISIBLE
+        attachDetachLayers()
     }
 
-
-    @Override
-    public void setVisibility(int v) {
-        super.setVisibility(v);
-
-        isVisible = (v == VISIBLE);
-        attachDetachLayers();
+    override fun onResumeWithService() {
+        storage.register(this)
+        areServicesUp = true
+        attachDetachLayers()
     }
 
-    @Override
-    public void onResumeWithService() {
-        storage.register(this);
-        areServicesUp = true;
-
-        attachDetachLayers();
+    override fun onPauseWithService() {
+        storage.unregister(this)
+        areServicesUp = false
+        attachDetachLayers()
     }
 
-    @Override
-    public void onPauseWithService() {
-        storage.unregister(this);
-        areServicesUp = false;
-
-        attachDetachLayers();
-    }
-
-
-
-    @Override
-    public void onDestroy() {
-        detachLayers();
-        destroyAll();
+    override fun onDestroy() {
+        detachLayers()
+        destroyAll()
 
         /* FIXME: this is a workaround to a bug:
          * Sometimes the LayerManager thread is still running after calling destroyAll().
          * This happens when MapView was never attached to window.
-         * Same problem with the Animator thread of MapViewPosition. */
-        getLayerManager().finish();
-        getMapViewPosition().destroy();
+         * Same problem with the Animator thread of MapViewPosition. */layerManager.finish()
+        mapViewPosition.destroy()
     }
 
-
-    private void attachDetachLayers() {
+    private fun attachDetachLayers() {
         if (isVisible && areServicesUp) {
-            attachLayers();
+            attachLayers()
         } else {
-            detachLayers();
+            detachLayers()
         }
     }
 
-    protected void attachLayers() {
+    protected fun attachLayers() {
         if (!areLayersAttached) {
-            for (MapLayerInterface l : layers) l.onAttached();
-            areLayersAttached = true;
-            requestRedraw();
+            for (l in layers) l.onAttached()
+            areLayersAttached = true
+            requestRedraw()
         }
     }
 
-
-    private void detachLayers() {
+    private fun detachLayers() {
         if (areLayersAttached) {
-            for (MapLayerInterface l : layers) l.onDetached();
-            areLayersAttached = false;
+            for (l in layers) l.onDetached()
+            areLayersAttached = false
         }
     }
 }
