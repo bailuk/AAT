@@ -96,7 +96,11 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     }
 
     private fun setDownloadStatus() {
-        if (configuration!!.isTaskRunning(serviceContext)) downloadBusy!!.startWaiting() else downloadBusy!!.stopWaiting()
+        if (configuration!!.isTaskRunning(serviceContext)) {
+            downloadBusy!!.startWaiting()
+        } else {
+            downloadBusy!!.stopWaiting()
+        }
         downloadError!!.displayError(configuration!!.exception)
     }
 

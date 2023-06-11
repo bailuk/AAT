@@ -28,7 +28,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
         poiOverlay = SolidPoiOverlay(context.dataDirectory)
     }
 
-    override val exception: Exception
+    override val exception: Exception?
         get() = task.exception
 
     override val resultFile: Foc
