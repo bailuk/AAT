@@ -4,24 +4,26 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 
-class MenuDialog(context: Context, private val menu: AbsMenu) : DialogInterface.OnClickListener {
-
-    private val array: MenuArray
+class MenuDialog(context: Context, private val menu: AbsMenu) {
 
     init {
         val title = menu.title
-        array = MenuArray(context)
+        val array = MenuArray(context)
         menu.inflate(array)
         menu.prepare(array)
-        val dialog = AlertDialog.Builder(context)
-        if (title.isNotEmpty()) dialog.setTitle(title)
-        dialog.setItems(array.toStringArray(), this)
-        dialog.create()
-        dialog.show()
-    }
 
-    override fun onClick(dialog: DialogInterface, i: Int) {
-        menu.onItemClick(array.getItem(i))
-        dialog.dismiss()
+        AlertDialog.Builder(context).apply {
+            if (title.isNotEmpty()) {
+                setTitle(title)
+            }
+
+            setItems(array.toStringArray()) { dialog: DialogInterface, index: Int ->
+                menu.onItemClick(array.getItem(index))
+                dialog.dismiss()
+            }
+            create()
+            show()
+        }
+
     }
 }

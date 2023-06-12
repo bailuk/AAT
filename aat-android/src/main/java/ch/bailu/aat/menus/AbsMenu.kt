@@ -13,20 +13,16 @@ abstract class AbsMenu {
     abstract fun prepare(menu: Menu)
 
     fun showAsPopup(context: Context, view: View) {
-        showAsPopupSDK11(context, view)
-    }
-
-    fun showAsDialog(context: Context) {
-        MenuDialog(context, this)
-    }
-
-    private fun showAsPopupSDK11(context: Context, view: View) {
         PopupMenu(context, view).apply {
             inflate(menu)
             prepare(menu)
             setOnMenuItemClickListener { item: MenuItem -> onItemClick(item) }
             show()
         }
+    }
+
+    fun showAsDialog(context: Context) {
+        MenuDialog(context, this)
     }
 
     private class Item(private val item: MenuItem, private val onClick: ()->Unit) {
