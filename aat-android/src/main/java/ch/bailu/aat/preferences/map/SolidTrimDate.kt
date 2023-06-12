@@ -1,89 +1,56 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat.preferences.map
 
-import android.content.Context;
-import android.text.format.DateUtils;
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.DateUtil
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.resources.Res;
+/**
+ * TODO move to lib
+ */
+class SolidTrimDate(storageInterface: StorageInterface) : SolidIndexList(storageInterface, SolidTrimDate::class.java.simpleName) {
+    private inner class Entry(value: Long) {
+        val name: String = describe(value)
+    }
 
-public class SolidTrimDate extends SolidIndexList {
-
-
-    private class Entry {
-        public final long age;
-        public final String name;
-
-        private Entry(long s) {
-            age = s;
-            name = describe(s);
+    fun describe(sizeIn: Long): String {
+        var size = sizeIn
+        val s: String
+        if (size >= DateUtil.MILLIS_IN_YEAR) {
+            size /= DateUtil.MILLIS_IN_YEAR
+            s = if (size == 1L) Res.str()
+                .p_trim_year() else Res.str().p_trim_years()
+        } else if (size >= DateUtil.MILLIS_IN_DAY * 30) {
+            size /= (DateUtil.MILLIS_IN_DAY * 30)
+            s = if (size == 1L) Res.str()
+                .p_trim_month() else Res.str().p_trim_months()
+        } else {
+            size /= DateUtil.MILLIS_IN_DAY
+            s = Res.str().p_trim_days()
         }
+        return "$size $s"
     }
 
-    public String describe(long size) {
-        String s;
+    private val entries = arrayOf(
+        Entry(2L * DateUtil.MILLIS_IN_YEAR),
+        Entry(1L * DateUtil.MILLIS_IN_YEAR),
+        Entry(6L * 30L * DateUtil.MILLIS_IN_DAY),
+        Entry(3L * 30L * DateUtil.MILLIS_IN_DAY),
+        Entry(2L * 30L * DateUtil.MILLIS_IN_DAY),
+        Entry(1L * 30L * DateUtil.MILLIS_IN_DAY),
+        Entry(2L * 7L * DateUtil.MILLIS_IN_DAY),
+        Entry(1L * 7L * DateUtil.MILLIS_IN_DAY)
+    )
 
-        if (size >= DateUtils.YEAR_IN_MILLIS) {
-            size=size/ DateUtils.YEAR_IN_MILLIS;
-            if (size == 1)
-                s = Res.str().p_trim_year();
-            else
-                s = Res.str().p_trim_years();
-
-        } else if (size >= DateUtils.DAY_IN_MILLIS*30) {
-            size =size / (DateUtils.DAY_IN_MILLIS*30);
-            if (size == 1)
-                s = Res.str().p_trim_month();
-            else
-                s = Res.str().p_trim_months();
-
-        } else  {
-            size=size / DateUtils.DAY_IN_MILLIS;
-            s = Res.str().p_trim_days();
-
-        }
-
-        return size + " " + s;
+    override fun getLabel(): String {
+        return Res.str().p_trim_age()
     }
 
-
-    private final Entry[] entries = {
-            new Entry(2L * DateUtils.YEAR_IN_MILLIS),
-            new Entry(1L * DateUtils.YEAR_IN_MILLIS),
-            new Entry(6L * 30L * DateUtils.DAY_IN_MILLIS),
-            new Entry(3L * 30L * DateUtils.DAY_IN_MILLIS),
-            new Entry(2L * 30L * DateUtils.DAY_IN_MILLIS),
-            new Entry(1L * 30L * DateUtils.DAY_IN_MILLIS),
-            new Entry(2L * 7L * DateUtils.DAY_IN_MILLIS),
-            new Entry(1L * 7L * DateUtils.DAY_IN_MILLIS),
-    };
-
-
-
-    public SolidTrimDate(Context context) {
-        super(new Storage(context), SolidTrimDate.class.getSimpleName());
+    override fun length(): Int {
+        return entries.size
     }
 
-
-    @Override
-    public String getLabel() {
-        return Res.str().p_trim_age();
+    public override fun getValueAsString(i: Int): String {
+        return entries[i].name
     }
-
-
-    @Override
-    public int length() {
-        return entries.length;
-    }
-
-    @Override
-    public String getValueAsString(int i) {
-        return entries[i].name;
-    }
-
-
-    public long getValue() {
-        return entries[getIndex()].age;
-    }
-
 }

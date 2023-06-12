@@ -1,62 +1,44 @@
-package ch.bailu.aat.preferences.map;
+package ch.bailu.aat.preferences.map
 
-import android.content.Context;
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.MemSize
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.util.MemSize;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.resources.Res;
+/**
+ * TODO: move to lib
+ */
+class SolidTrimSize(storageInterface: StorageInterface) : SolidIndexList(
+    storageInterface, SolidTrimSize::class.java.simpleName
+) {
 
-public class SolidTrimSize extends SolidIndexList {
-
-    private static class Entry {
-        public final long size;
-        public final String text;
-
-        private Entry(long s) {
-            size = s;
-            text = MemSize.describe(new StringBuilder(), size).toString();
-        }
+    private class Entry(value: Long) {
+        val text: String = MemSize.describe(StringBuilder(), value)
     }
 
-
-
-
-    private static final Entry[] entries = {
-            new Entry(16L * MemSize.GB),
-            new Entry(8L * MemSize.GB),
-            new Entry(4L * MemSize.GB),
-            new Entry(2L * MemSize.GB),
-            new Entry(1L * MemSize.GB),
-            new Entry(500L * MemSize.MB),
-            new Entry(200L * MemSize.MB),
-            new Entry(100L * MemSize.MB),
-            new Entry(50L * MemSize.MB),
-    };
-
-
-    public SolidTrimSize(Context context) {
-        super(new Storage(context), SolidTrimSize.class.getSimpleName());
+    override fun length(): Int {
+        return entries.size
     }
 
-    @Override
-    public int length() {
-        return entries.length;
+    override fun getLabel(): String {
+        return Res.str().p_trim_size()
     }
 
-
-    @Override
-    public String getLabel() {
-        return Res.str().p_trim_size();
+    public override fun getValueAsString(i: Int): String {
+        return entries[i].text
     }
 
-    @Override
-    public String getValueAsString(int i) {
-        return entries[i].text;
+    companion object {
+        private val entries = arrayOf(
+            Entry(16L * MemSize.GB),
+            Entry(8L * MemSize.GB),
+            Entry(4L * MemSize.GB),
+            Entry(2L * MemSize.GB),
+            Entry(1L * MemSize.GB),
+            Entry(500L * MemSize.MB),
+            Entry(200L * MemSize.MB),
+            Entry(100L * MemSize.MB),
+            Entry(50L * MemSize.MB)
+        )
     }
-
-    public long getValue() {
-        return entries[getIndex()].size;
-    }
-
 }

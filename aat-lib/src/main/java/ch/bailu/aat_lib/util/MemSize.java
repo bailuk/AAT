@@ -30,8 +30,6 @@ public class MemSize {
             if (Math.abs(size) >= ddivider[i])
                 break;
         }
-
-
         out.append(dec.format(size / ddivider[i]));
         out.append(unit[i]);
         return out;
@@ -39,7 +37,7 @@ public class MemSize {
 
 
 
-    public static StringBuilder describe(StringBuilder out, long size) {
+    public static String describe(StringBuilder out, long size) {
         int i = ldivider.length;
 
         while (i>0) {
@@ -50,7 +48,7 @@ public class MemSize {
 
         out.append(size/ ldivider[i]);
         out.append(unit[i]);
-        return out;
+        return out.toString();
     }
 
 

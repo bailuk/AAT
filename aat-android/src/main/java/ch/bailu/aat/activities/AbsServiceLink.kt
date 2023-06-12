@@ -1,7 +1,6 @@
-package ch.bailu.aat.util
+package ch.bailu.aat.activities
 
 import android.os.Bundle
-import ch.bailu.aat.activities.AbsHardwareButtons
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.ServiceLink
 

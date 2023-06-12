@@ -2,14 +2,12 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import ch.bailu.aat.dispatcher.LifeCycleDispatcher
-import ch.bailu.aat.util.AbsServiceLink
 import ch.bailu.aat_lib.dispatcher.ContentSourceInterface
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.InfoID
-import javax.annotation.Nonnull
 
 abstract class AbsDispatcher : AbsServiceLink(), DispatcherInterface {
     private var dispatcher: Dispatcher? = null
@@ -29,11 +27,11 @@ abstract class AbsDispatcher : AbsServiceLink(), DispatcherInterface {
         addTarget(target, InfoID.ALL)
     }
 
-    override fun addTarget(@Nonnull target: OnContentUpdatedInterface, vararg iid: Int) {
+    override fun addTarget(target: OnContentUpdatedInterface, vararg iid: Int) {
         dispatcher?.addTarget(target, *iid)
     }
 
-    override fun addSource(@Nonnull source: ContentSourceInterface) {
+    override fun addSource(source: ContentSourceInterface) {
         dispatcher?.addSource(source)
     }
 
