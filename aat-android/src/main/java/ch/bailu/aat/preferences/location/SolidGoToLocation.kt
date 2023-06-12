@@ -1,116 +1,93 @@
-package ch.bailu.aat.preferences.location;
+package ch.bailu.aat.preferences.location
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.views.preferences.SolidTextInputDialog
+import ch.bailu.aat_lib.coordinates.CH1903Coordinates
+import ch.bailu.aat_lib.coordinates.Coordinates
+import ch.bailu.aat_lib.coordinates.OlcCoordinates
+import ch.bailu.aat_lib.coordinates.UTMCoordinates
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates
+import ch.bailu.aat_lib.exception.ValidationException
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.preferences.SolidString
+import ch.bailu.aat_lib.resources.Res
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.LatLong;
+class SolidGoToLocation(val context: Context) : SolidString(
+    Storage(context), KEY)
+{
 
-import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
-import ch.bailu.aat_lib.coordinates.Coordinates;
-import ch.bailu.aat_lib.coordinates.OlcCoordinates;
-import ch.bailu.aat_lib.coordinates.UTMCoordinates;
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.views.preferences.SolidTextInputDialog;
-import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.SolidString;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidGoToLocation extends SolidString {
-    private final static String KEY = "GoToLocation";
-    public SolidGoToLocation(Context c) {
-        super(new Storage(c), KEY);
-        this.context = c;
+    companion object {
+        private const val KEY = "GoToLocation"
     }
 
+    private var reference: LatLong? = null
 
-    private final Context context;
-
-
-    public Context getContext() {
-        return context;
+    override fun getLabel(): String {
+        return Res.str().p_goto_location()
     }
 
-    private LatLong reference = null;
-
-
-    @Override
-    public String getLabel() {
-        return Res.str().p_goto_location();
-    }
-
-
-    public void goToLocationFromUser(MapViewInterface map) {
-
-        reference = map.getMapViewPosition().getCenter();
-
-        new SolidTextInputDialog(context, this, SolidTextInputDialog.TEXT, v -> goToLocation(map, getValueAsString()));
-    }
-
-    public void goToLocation(MapViewInterface map, String s) {
-        reference = map.getMapViewPosition().getCenter();
-
-        try {
-            map.setCenter(latLongFromString(s));
-
-        } catch (Exception e) {
-            AppLog.e(this, e);
+    fun goToLocationFromUser(map: MapViewInterface) {
+        reference = map.mapViewPosition.center
+        SolidTextInputDialog(context, this, SolidTextInputDialog.TEXT) {
+            goToLocation(
+                map,
+                valueAsString
+            )
         }
-
     }
 
-
-    private LatLong latLongFromString(String code)
-            throws  IllegalArgumentException, IllegalStateException {
-
+    fun goToLocation(map: MapViewInterface, s: String) {
+        reference = map.mapViewPosition.center
         try {
-            if (reference != null)
-                return new OlcCoordinates(code, reference).toLatLong();
+            map.setCenter(latLongFromString(s))
+        } catch (e: Exception) {
+            AppLog.e(this, e)
+        }
+    }
 
-            else
-                return new OlcCoordinates(code).toLatLong();
-
-
-        } catch (Exception eOLC) {
+    @Throws(IllegalArgumentException::class, IllegalStateException::class)
+    private fun latLongFromString(code: String): LatLong {
+        return try {
+            if (reference != null) OlcCoordinates(code, reference).toLatLong() else OlcCoordinates(
+                code
+            ).toLatLong()
+        } catch (eOLC: Exception) {
             try {
-                return new CH1903Coordinates(code).toLatLong();
-
-            } catch(Exception eCH1903) {
+                CH1903Coordinates(code).toLatLong()
+            } catch (eCH1903: Exception) {
                 try {
-                    return new WGS84Coordinates(code).toLatLong();
-
-                } catch (Exception eWGS) {
+                    WGS84Coordinates(code).toLatLong()
+                } catch (eWGS: Exception) {
                     try {
-                        return new UTMCoordinates(code).toLatLong();
-                    } catch(Exception eUTM) {
-                        throw Coordinates.getCodeNotValidException(code);
+                        UTMCoordinates(code).toLatLong()
+                    } catch (eUTM: Exception) {
+                        throw Coordinates.getCodeNotValidException(code)
                     }
                 }
             }
         }
     }
 
+    @Throws(ValidationException::class)
+    override fun setValueFromString(string: String) {
+        val stringTrimmed = string.trim { it <= ' ' }
 
-    @Override
-    public void setValueFromString(String s) throws ValidationException {
-        s = s.trim();
-
-
-        if (! validate(s)) {
-            throw new ValidationException(Res.str().p_goto_location_hint());
+        if (!validate(stringTrimmed)) {
+            throw ValidationException(Res.str().p_goto_location_hint())
         } else {
-            setValue(s);
+            setValue(stringTrimmed)
         }
     }
 
-
-    @Override
-    public boolean validate(String s) {
-        try  {
-            return latLongFromString(s) != null;
-        } catch (Exception e) {
-            return false;
+    override fun validate(s: String): Boolean {
+        return try {
+            latLongFromString(s)
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 }
