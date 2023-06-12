@@ -1,43 +1,20 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
+import android.view.Menu
+import android.view.MenuItem
+import ch.bailu.aat.views.description.mview.MultiView
 
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import ch.bailu.aat.views.description.mview.MultiView;
-
-public final class MultiViewMenu extends AbsMenu {
-
-    private final MultiView mview;
-
-    public MultiViewMenu(MultiView mv) {
-        mview = mv;
+class MultiViewMenu(private val mview: MultiView) : AbsMenu() {
+    override fun inflate(menu: Menu) {
+        mview.inflateMenu(menu)
     }
 
-    @Override
-    public void inflate(Menu menu) {
-        mview.inflateMenu(menu);
+    override val title: String
+        get() = ""
+
+    override fun prepare(menu: Menu) {}
+    override fun onItemClick(item: MenuItem): Boolean {
+        mview.active = item.itemId
+        return true
     }
-
-    @Override
-    public String getTitle() {
-        return null;
-    }
-
-    @Override
-    public Drawable getIcon() {
-        return null;
-    }
-
-
-    @Override
-    public void prepare(Menu menu) {}
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        mview.setActive(item.getItemId());
-        return true;
-    }
-
 }

@@ -1,118 +1,94 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.view.Menu
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
+import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
+import ch.bailu.aat_lib.service.editor.EditorInterface
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
-import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+class EditorMenu(
+    private val context: Context,
+    private val scontext: ServicesInterface,
+    private val editor: EditorInterface,
+    private val file: Foc
+) : AbsMenu() {
 
-public final class EditorMenu extends AbsMenu {
-    private final EditorInterface editor;
-    private final Foc file;
-    private final ServicesInterface scontext;
-    private final Context context;
-
-    public EditorMenu(Context c, ServicesInterface sc, EditorInterface e, Foc f) {
-        editor = e;
-        scontext = sc;
-        context = c;
-        file = f;
+    override fun inflate(menu: Menu) {
+        add(menu, R.string.edit_save,) { editor.save() }
+        add(menu, R.string.edit_save_copy) { saveCopy() }
+        add(menu, R.string.edit_save_copy_to) { saveCopyTo() }
+        add(menu, R.string.edit_inverse) { editor.inverse() }
+        add(menu, R.string.edit_change_type) { changeType() }
+        add(menu, R.string.edit_simplify) { editor.simplify() }
+        add(menu, R.string.edit_attach) { attach() }
+        add(menu, R.string.edit_fix) { editor.fix() }
+        add(menu, R.string.edit_clear) { editor.clear() }
+        add(menu, R.string.edit_cut_remaining) { editor.cutRemaining() }
+        add(menu, R.string.edit_cut_preceding) { editor.cutPreceding() }
     }
 
+    override val title: String
+        get() = ""
 
-    @Override
-    public void inflate(Menu menu) {
-        add(menu, R.string.edit_save, editor::save);
-        add(menu, R.string.edit_save_copy, this::saveCopy);
-        add(menu, R.string.edit_save_copy_to, this::saveCopyTo);
-        add(menu, R.string.edit_inverse, editor::inverse);
-        add(menu, R.string.edit_change_type, this::changeType);
-        add(menu, R.string.edit_simplify, editor::simplify);
-        add(menu, R.string.edit_attach, this::attach);
-        add(menu, R.string.edit_fix, editor::fix);
-        add(menu, R.string.edit_clear, editor::clear);
-        add(menu, R.string.edit_cut_remaining, editor::cutRemaining);
-        add(menu, R.string.edit_cut_preceding, editor::cutPreceding);
-    }
-
-
-    @Override
-    public String getTitle() {
-        return null;
-    }
-
-    @Override
-    public Drawable getIcon() {
-        return null;
-    }
-
-    @Override
-    public void prepare(Menu menu) {
-
-    }
-
-    private void saveCopy() {
-        if (file.equals(AppDirectory.getEditorDraft(new AndroidSolidDataDirectory(context)))) {
+    override fun prepare(menu: Menu) {}
+    private fun saveCopy() {
+        if (file == AppDirectory.getEditorDraft(AndroidSolidDataDirectory(context))) {
             editor.saveTo(
-                    AppDirectory.getDataDirectory(new AndroidSolidDataDirectory(context), AppDirectory.DIR_OVERLAY));
-
-        } else if (file.hasParent())
-            editor.saveTo(file.parent());
-
+                AppDirectory.getDataDirectory(
+                    AndroidSolidDataDirectory(context),
+                    AppDirectory.DIR_OVERLAY
+                )
+            )
+        } else if (file.hasParent()) editor.saveTo(file.parent())
     }
 
-    private void saveCopyTo() {
-        new AppSelectDirectoryDialog(context, file) {
-            @Override
-            public void copyTo(Context context, Foc srcFile, Foc destDirectory) {
-                editor.saveTo(destDirectory);
+    private fun saveCopyTo() {
+        object : AppSelectDirectoryDialog(context, file) {
+            override fun copyTo(context: Context, srcFile: Foc, destDirectory: Foc) {
+                editor.saveTo(destDirectory)
             }
-        };
+        }
     }
 
-
-    private void attach() {
-        new AbsSelectOverlayDialog(context) {
-            @Override
-            protected void onFileSelected(SolidCustomOverlayList slist, int index, Foc file) {
-                scontext.insideContext(() -> {
-                    Obj handle = scontext.getCacheService().getObject(file.getPath(),
-                            new ObjGpx.Factory());
-
-                    if (handle instanceof ObjGpx) {
-                        ObjGpx gpxObject = (ObjGpx) handle;
-
-                        if (gpxObject.isReadyAndLoaded()) {
-                            editor.attach(gpxObject.getGpxList());
+    private fun attach() {
+        object : AbsSelectOverlayDialog(context) {
+            override fun onFileSelected(slist: SolidCustomOverlayList, index: Int, file: Foc) {
+                scontext.insideContext {
+                    val handle = scontext.cacheService.getObject(
+                        file.path,
+                        Obj.Factory()
+                    )
+                    if (handle is ObjGpx) {
+                        if (handle.isReadyAndLoaded) {
+                            editor.attach(handle.gpxList)
                         }
                     }
-
-                    handle.free();
-
-                    slist.setEnabled(index, false);
-                });
+                    handle.free()
+                    slist.setEnabled(index, false)
+                }
             }
-        };
+        }
     }
 
-    private void changeType() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-
-        dialog.setTitle(R.string.edit_change_type);
-        dialog.setItems(GpxType.toStrings(), (dialogInterface, i) -> editor.setType(GpxType.fromInteger(i)));
-
-        dialog.show();
+    private fun changeType() {
+        val dialog = AlertDialog.Builder(context)
+        dialog.setTitle(R.string.edit_change_type)
+        dialog.setItems(GpxType.toStrings()) { _: DialogInterface?, i: Int ->
+            editor.setType(
+                GpxType.fromInteger(i)
+            )
+        }
+        dialog.show()
     }
 }

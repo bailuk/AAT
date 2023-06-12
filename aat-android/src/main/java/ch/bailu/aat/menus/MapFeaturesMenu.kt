@@ -1,61 +1,32 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
+import android.view.Menu
+import android.view.MenuItem
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry
+import ch.bailu.aat.views.osm_features.OnSelected
 
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
+class MapFeaturesMenu(
+    private val element: MapFeaturesListEntry,
+    private val onSelected: OnSelected
+) : AbsMenu() {
 
-import java.util.ArrayList;
+    private val variants: ArrayList<String> = element.variants
 
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat.views.osm_features.OnSelected;
+    override fun inflate(menu: Menu) {
+        val g = OnSelected.EDIT
 
-public final class MapFeaturesMenu extends AbsMenu {
-
-    private final OnSelected onSelected;
-
-    private final MapFeaturesListEntry element;
-
-    private final ArrayList<String> variants;
-
-    public MapFeaturesMenu(MapFeaturesListEntry d, OnSelected s) {
-        element = d;
-        onSelected = s;
-        variants = element.getVariants();
-    }
-
-
-    @Override
-    public void inflate(Menu menu) {
-
-        int g = OnSelected.EDIT;
-        int i = 0;
-        for (String v : variants) {
-            menu.add(g,i,Menu.NONE,v);
-            i++;
+        for ((i, v) in variants.withIndex()) {
+            menu.add(g, i, Menu.NONE, v)
         }
     }
 
-    @Override
-    public String getTitle() {
-        return "";
+    override val title: String
+        get() = ""
+
+    override fun prepare(menu: Menu) {}
+
+    override fun onItemClick(item: MenuItem): Boolean {
+        onSelected.onSelected(element, OnSelected.EDIT, variants[item.itemId])
+        return true
     }
-
-    @Override
-    public Drawable getIcon() {
-        return null;
-    }
-
-    @Override
-    public void prepare(Menu menu) {
-
-    }
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        onSelected.onSelected(element, OnSelected.EDIT ,variants.get(item.getItemId()));
-        return true;
-    }
-
-
 }

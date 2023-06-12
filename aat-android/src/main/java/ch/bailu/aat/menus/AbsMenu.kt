@@ -1,81 +1,62 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.PopupMenu;
+import android.content.Context
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
 
-import java.util.ArrayList;
+abstract class AbsMenu {
+    abstract val title: String
 
-public abstract class AbsMenu {
-    public abstract void inflate(Menu menu);
+    abstract fun inflate(menu: Menu)
+    abstract fun prepare(menu: Menu)
 
-    public abstract String getTitle();
-    public abstract Drawable getIcon();
-
-    public abstract void prepare(Menu menu);
-
-    public void showAsPopup (Context context, View view) {
-        showAsPopupSDK11(context, view);
+    fun showAsPopup(context: Context, view: View) {
+        showAsPopupSDK11(context, view)
     }
 
-    public void showAsDialog(Context context) {
-        new MenuDialog(context, this);
+    fun showAsDialog(context: Context) {
+        MenuDialog(context, this)
     }
 
-    private void showAsPopupSDK11(Context context, View view) {
-        final PopupMenu popup = new PopupMenu(context, view);
-
-        inflate(popup.getMenu());
-        prepare(popup.getMenu());
-
-        popup.setOnMenuItemClickListener(this::onItemClick);
-
-        popup.show();
-    }
-
-    public interface OnClick {
-        void onClick();
-    }
-
-    private static class Item {
-        private final MenuItem item;
-        private final OnClick onClick;
-
-        public Item(MenuItem item, OnClick onClick) {
-            this.item = item;
-            this.onClick = onClick;
+    private fun showAsPopupSDK11(context: Context, view: View) {
+        PopupMenu(context, view).apply {
+            inflate(menu)
+            prepare(menu)
+            setOnMenuItemClickListener { item: MenuItem -> onItemClick(item) }
+            show()
         }
+    }
 
-        public boolean onClick(MenuItem item) {
-            boolean result = (this.item == item);
-
+    private class Item(private val item: MenuItem, private val onClick: ()->Unit) {
+        fun onClick(item: MenuItem): Boolean {
+            val result = this.item === item
             if (result) {
-                onClick.onClick();
+                onClick()
             }
-            return result;
+            return result
         }
     }
 
-    private final ArrayList<Item> items = new ArrayList<>(5);
-    public MenuItem add(Menu menu, String name, OnClick onClick) {
-        MenuItem result = menu.add(name);
-        items.add(new Item(result, onClick));
-        return  result;
+    private val items = ArrayList<Item>(5)
+
+    fun add(menu: Menu, name: String, onClick: ()->Unit): MenuItem {
+        val result = menu.add(name)
+        items.add(Item(result, onClick))
+        return result
     }
 
-    public MenuItem add(Menu menu, int nameID, OnClick onClick) {
-        MenuItem result = menu.add(nameID);
-        items.add(new Item(result, onClick));
-        return  result;
+    fun add(menu: Menu, nameID: Int, onClick: ()->Unit): MenuItem {
+        val result = menu.add(nameID)
+        items.add(Item(result, onClick))
+        return result
     }
 
-    public boolean onItemClick(MenuItem item) {
-        for (Item i: items) {
-            if (i.onClick(item)) return true;
+    open fun onItemClick(item: MenuItem): Boolean {
+        for (i in items) {
+            if (i.onClick(item)) return true
         }
-        return false;
+        return false
     }
 }

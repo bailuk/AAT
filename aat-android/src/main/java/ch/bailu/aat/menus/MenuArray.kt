@@ -1,398 +1,278 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.view.ActionProvider;
-import android.view.ContextMenu;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.view.ActionProvider
+import android.view.ContextMenu.ContextMenuInfo
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MenuItem.OnActionExpandListener
+import android.view.SubMenu
+import android.view.View
 
-import java.util.ArrayList;
-
-
-public final class MenuArray implements Menu {
-    private final ArrayList<Item> item = new ArrayList<>();
-    private final Context context;
-
-    public MenuArray(Context c) {
-        context=c;
+class MenuArray(private val context: Context) : Menu {
+    private val item = ArrayList<Item>()
+    override fun add(charSequence: CharSequence): MenuItem {
+        val i = Item(context, charSequence)
+        item.add(i)
+        return i
     }
 
-
-    @Override
-    public MenuItem add(CharSequence charSequence) {
-        Item i = new Item(context, charSequence);
-        item.add(i);
-        return i;
+    override fun add(i0: Int, id: Int, i2: Int, charSequence: CharSequence): MenuItem {
+        val i = Item(context, charSequence, id)
+        item.add(i)
+        return i
     }
 
-    @Override
-    public MenuItem add(int i0, int id, int i2, CharSequence charSequence) {
-        Item i = new Item(context, charSequence, id);
-        item.add(i);
-        return i;
+    override fun size(): Int {
+        return item.size
     }
 
-    @Override
-    public int size() {
-        return item.size();
+    override fun getItem(i: Int): MenuItem {
+        return item[i]
     }
 
-
-    @Override
-    public MenuItem getItem(int i) {
-        return item.get(i);
+    fun toStringArray(): Array<CharSequence?> {
+        val r = arrayOfNulls<CharSequence>(item.size)
+        for (i in item.indices) {
+            r[i] = item[i].title
+        }
+        return r
     }
 
-
-
-    public CharSequence[] toStringArray() {
-        CharSequence[] r = new CharSequence[item.size()];
-        for (int i = 0; i < item.size(); i++) {
-            r[i]= item.get(i).getTitle();
-        }
-        return r;
+    override fun add(i: Int): MenuItem {
+        return add(context.getString(i))
     }
 
-
-
-    @Override
-    public MenuItem add(int i) {
-        return add(context.getString(i));
+    override fun add(i: Int, id: Int, i2: Int, res: Int): MenuItem {
+        return add(i, id, i2, context.getString(res))
     }
 
-
-
-
-    @Override
-    public MenuItem add(int i, int id, int i2, int res) {
-        return add(i, id, i2, context.getString(res));
+    override fun addSubMenu(charSequence: CharSequence): SubMenu? {
+        return null
     }
 
-    @Override
-    public SubMenu addSubMenu(CharSequence charSequence) {
-        return null;
+    override fun addSubMenu(i: Int): SubMenu? {
+        return null
     }
 
-    @Override
-    public SubMenu addSubMenu(int i) {
-        return null;
+    override fun addSubMenu(i: Int, i1: Int, i2: Int, charSequence: CharSequence): SubMenu? {
+        return null
     }
 
-    @Override
-    public SubMenu addSubMenu(int i, int i1, int i2, CharSequence charSequence) {
-        return null;
+    override fun addSubMenu(i: Int, i1: Int, i2: Int, i3: Int): SubMenu? {
+        return null
     }
 
-    @Override
-    public SubMenu addSubMenu(int i, int i1, int i2, int i3) {
-        return null;
+    override fun addIntentOptions(
+        i: Int,
+        i1: Int,
+        i2: Int,
+        componentName: ComponentName,
+        intents: Array<Intent>,
+        intent: Intent,
+        i3: Int,
+        menuItems: Array<MenuItem>
+    ): Int {
+        return 0
     }
 
-    @Override
-    public int addIntentOptions(int i, int i1, int i2, ComponentName componentName, Intent[] intents, Intent intent, int i3, MenuItem[] menuItems) {
-        return 0;
+    override fun removeItem(i: Int) {}
+    override fun removeGroup(i: Int) {}
+    override fun clear() {}
+    override fun setGroupCheckable(i: Int, b: Boolean, b1: Boolean) {}
+    override fun setGroupVisible(i: Int, b: Boolean) {}
+    override fun setGroupEnabled(i: Int, b: Boolean) {}
+    override fun hasVisibleItems(): Boolean {
+        return false
     }
 
-    @Override
-    public void removeItem(int i) {
-
+    override fun findItem(i: Int): MenuItem? {
+        return null
     }
 
-    @Override
-    public void removeGroup(int i) {
-
+    override fun close() {}
+    override fun performShortcut(i: Int, keyEvent: KeyEvent, i1: Int): Boolean {
+        return false
     }
 
-    @Override
-    public void clear() {
-
+    override fun isShortcutKey(i: Int, keyEvent: KeyEvent): Boolean {
+        return false
     }
 
-    @Override
-    public void setGroupCheckable(int i, boolean b, boolean b1) {
-
+    override fun performIdentifierAction(i: Int, i1: Int): Boolean {
+        return false
     }
 
-    @Override
-    public void setGroupVisible(int i, boolean b) {
-
-    }
-
-    @Override
-    public void setGroupEnabled(int i, boolean b) {
-
-    }
-
-    @Override
-    public boolean hasVisibleItems() {
-        return false;
-    }
-
-    @Override
-    public MenuItem findItem(int i) {
-        return null;
-    }
-
-
-
-    @Override
-    public void close() {
-
-    }
-
-    @Override
-    public boolean performShortcut(int i, KeyEvent keyEvent, int i1) {
-        return false;
-    }
-
-    @Override
-    public boolean isShortcutKey(int i, KeyEvent keyEvent) {
-        return false;
-    }
-
-    @Override
-    public boolean performIdentifierAction(int i, int i1) {
-        return false;
-    }
-
-    @Override
-    public void setQwertyMode(boolean b) {
-
-    }
-
-
-    private static final class Item implements MenuItem {
-        private final Context context;
-        private CharSequence title;
-        private final int id;
-
-
-        public Item(Context c, CharSequence t) {
-            this (c, t, 0);
+    override fun setQwertyMode(b: Boolean) {}
+    private class Item @JvmOverloads constructor(
+        private val context: Context,
+        private var title: CharSequence?,
+        private val id: Int = 0
+    ) : MenuItem {
+        override fun setTitle(t: CharSequence?): MenuItem {
+            title = t
+            return this
         }
 
-        public Item(Context c, CharSequence t, int i) {
-            context = c;
-            title = t;
-            id = i;
+        override fun setTitle(i: Int): MenuItem {
+            return setTitle(context.getString(i))
         }
 
-
-        @Override
-        public MenuItem setTitle(CharSequence t) {
-            title = t;
-            return this;
+        override fun getTitle(): CharSequence? {
+            return title
         }
 
-
-        @Override
-        public MenuItem setTitle(int i) {
-            return setTitle(context.getString(i));
+        override fun getItemId(): Int {
+            return id
         }
 
-        @Override
-        public CharSequence getTitle() {
-            return title;
+        override fun getGroupId(): Int {
+            return 0
         }
 
-
-        @Override
-        public int getItemId() {
-            return id;
+        override fun getOrder(): Int {
+            return 0
         }
 
-        @Override
-        public int getGroupId() {
-            return 0;
+        override fun setTitleCondensed(charSequence: CharSequence?): MenuItem {
+            return this
         }
 
-        @Override
-        public int getOrder() {
-            return 0;
+        override fun getTitleCondensed(): CharSequence? {
+            return null
         }
 
-
-
-
-        @Override
-        public MenuItem setTitleCondensed(CharSequence charSequence) {
-            return null;
+        override fun setIcon(drawable: Drawable?): MenuItem {
+            return this
         }
 
-        @Override
-        public CharSequence getTitleCondensed() {
-            return null;
+        override fun setIcon(i: Int): MenuItem {
+            return this
         }
 
-        @Override
-        public MenuItem setIcon(Drawable drawable) {
-            return null;
+        override fun getIcon(): Drawable? {
+            return null
         }
 
-        @Override
-        public MenuItem setIcon(int i) {
-            return null;
+        override fun setIntent(intent: Intent?): MenuItem {
+            return this
         }
 
-        @Override
-        public Drawable getIcon() {
-            return null;
+        override fun getIntent(): Intent? {
+            return null
         }
 
-        @Override
-        public MenuItem setIntent(Intent intent) {
-            return null;
+        override fun setShortcut(c: Char, c1: Char): MenuItem {
+            return this
         }
 
-        @Override
-        public Intent getIntent() {
-            return null;
+        override fun setNumericShortcut(c: Char): MenuItem {
+            return this
         }
 
-        @Override
-        public MenuItem setShortcut(char c, char c1) {
-            return null;
+        override fun getNumericShortcut(): Char {
+            return Char(0)
         }
 
-        @Override
-        public MenuItem setNumericShortcut(char c) {
-            return null;
+        override fun setAlphabeticShortcut(c: Char): MenuItem {
+            return this
         }
 
-        @Override
-        public char getNumericShortcut() {
-            return 0;
+        override fun getAlphabeticShortcut(): Char {
+            return Char(0)
         }
 
-        @Override
-        public MenuItem setAlphabeticShortcut(char c) {
-            return null;
+        override fun setCheckable(b: Boolean): MenuItem {
+            return this
         }
 
-        @Override
-        public char getAlphabeticShortcut() {
-            return 0;
+        override fun isCheckable(): Boolean {
+            return false
         }
 
-        @Override
-        public MenuItem setCheckable(boolean b) {
-            return null;
+        override fun setChecked(b: Boolean): MenuItem {
+            return this
         }
 
-        @Override
-        public boolean isCheckable() {
-            return false;
+        override fun isChecked(): Boolean {
+            return false
         }
 
-        @Override
-        public MenuItem setChecked(boolean b) {
-            return null;
+        override fun setVisible(b: Boolean): MenuItem {
+            return this
         }
 
-        @Override
-        public boolean isChecked() {
-            return false;
+        override fun isVisible(): Boolean {
+            return false
         }
 
-        @Override
-        public MenuItem setVisible(boolean b) {
-            return null;
+        override fun setEnabled(b: Boolean): MenuItem {
+            return this
         }
 
-        @Override
-        public boolean isVisible() {
-            return false;
+        override fun isEnabled(): Boolean {
+            return false
         }
 
-        @Override
-        public MenuItem setEnabled(boolean b) {
-            return null;
+        override fun hasSubMenu(): Boolean {
+            return false
         }
 
-        @Override
-        public boolean isEnabled() {
-            return false;
+        override fun getSubMenu(): SubMenu? {
+            return null
         }
 
-        @Override
-        public boolean hasSubMenu() {
-            return false;
+        override fun setOnMenuItemClickListener(onMenuItemClickListener: MenuItem.OnMenuItemClickListener?): MenuItem {
+            return this
         }
 
-        @Override
-        public SubMenu getSubMenu() {
-            return null;
+        override fun getMenuInfo(): ContextMenuInfo? {
+            return null
         }
 
-        @Override
-        public MenuItem setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
-            return null;
+        override fun setShowAsAction(i: Int) {}
+        override fun setShowAsActionFlags(i: Int): MenuItem {
+            return this
         }
 
-        @Override
-        public ContextMenu.ContextMenuInfo getMenuInfo() {
-            return null;
+        override fun setActionView(view: View?): MenuItem {
+            return this
         }
 
-        @Override
-        public void setShowAsAction(int i) {
-
+        override fun setActionView(i: Int): MenuItem {
+            return this
         }
 
-        @Override
-        public MenuItem setShowAsActionFlags(int i) {
-            return null;
+        override fun getActionView(): View? {
+            return null
         }
 
-        @Override
-        public MenuItem setActionView(View view) {
-            return null;
+        override fun setActionProvider(actionProvider: ActionProvider?): MenuItem {
+            return this
         }
 
-        @Override
-        public MenuItem setActionView(int i) {
-            return null;
+        override fun getActionProvider(): ActionProvider? {
+            return null
         }
 
-        @Override
-        public View getActionView() {
-            return null;
+        override fun expandActionView(): Boolean {
+            return false
         }
 
-        @Override
-        public MenuItem setActionProvider(ActionProvider actionProvider) {
-            return null;
+        override fun collapseActionView(): Boolean {
+            return false
         }
 
-        @Override
-        public ActionProvider getActionProvider() {
-            return null;
+        override fun isActionViewExpanded(): Boolean {
+            return false
         }
 
-        @Override
-        public boolean expandActionView() {
-            return false;
-        }
-
-        @Override
-        public boolean collapseActionView() {
-            return false;
-        }
-
-        @Override
-        public boolean isActionViewExpanded() {
-            return false;
-        }
-
-        @Override
-        public MenuItem setOnActionExpandListener(OnActionExpandListener onActionExpandListener) {
-            return null;
+        override fun setOnActionExpandListener(onActionExpandListener: OnActionExpandListener?): MenuItem {
+            return this
         }
     }
 }

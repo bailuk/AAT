@@ -140,7 +140,10 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
         if (v === copyTo && file.exists()) {
             AndroidFileAction.copyToDir(this, appContext, file)
         } else if (v === fileOperation && file.exists()) {
-            ContentMenu(this, file).showAsPopup(this, fileOperation)
+            fileOperation?.apply {
+                ContentMenu(this@GpxViewActivity, file).showAsPopup(this@GpxViewActivity, this)
+            }
+
         }
     }
 

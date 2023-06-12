@@ -1,101 +1,52 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Menu
+import android.view.MenuItem
+import ch.bailu.aat.R
+import ch.bailu.aat.activities.PreferencesActivity
+import ch.bailu.aat.app.ActivitySwitcher.Companion.start
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.map.AndroidMapDirectories
+import ch.bailu.aat.preferences.presets.SolidBacklight
+import ch.bailu.aat.resource.Images
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.views.preferences.SolidCheckListDialog
+import ch.bailu.aat.views.preferences.SolidIndexListDialog
+import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.service.tracker.StateInterface
+import ch.bailu.foc_android.FocAndroidFactory
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.activities.PreferencesActivity;
-import ch.bailu.aat.app.ActivitySwitcher;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.AndroidMapDirectories;
-import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.resource.Images;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.views.preferences.SolidCheckListDialog;
-import ch.bailu.aat.views.preferences.SolidIndexListDialog;
-import ch.bailu.aat_lib.preferences.map.SolidMapTileStack;
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.tracker.StateInterface;
-import ch.bailu.foc_android.FocAndroidFactory;
+class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
 
-public final class OptionsMenu extends AbsMenu {
-    private MenuItem start, pause, backlight, preferences, map;
+    private var start: MenuItem? = null
+    private var pause: MenuItem? = null
+    override fun inflate(menu: Menu) {
+        val c = scontext.context
 
-    private final ServiceContext scontext;
+        start = add(menu,R.string.tracker_start) { scontext.insideContext { scontext.trackerService.onStartStop() }}.apply { setIcon(R.drawable.media_playback_start_inverse) }
+        pause = add(menu, R.string.tracker_pause) {scontext.insideContext { scontext.trackerService.onPauseResume() }}.apply { setIcon(R.drawable.media_playback_pause_inverse) }
 
-
-    public OptionsMenu(ServiceContext sc) {
-        scontext = sc;
+        add(menu, R.string.p_backlight_title) { SolidIndexListDialog(scontext.context, SolidBacklight(c, SolidPreset(Storage(c)).index))}
+        add(menu, R.string.intro_settings) {start(c, PreferencesActivity::class.java)}
+        add(menu, R.string.p_map) { val stheme = SolidRenderTheme(
+            AndroidMapDirectories(c).createSolidDirectory(),
+            FocAndroidFactory(c)
+        )
+            SolidCheckListDialog(c, SolidMapTileStack(stheme))}
     }
 
+    override val title: String
+        get() = scontext.context.getString(R.string.app_sname)
 
-    @Override
-    public void inflate(Menu menu) {
-        start = menu.add(R.string.tracker_start);
-        start.setIcon(R.drawable.media_playback_start_inverse);
-
-        pause = menu.add(R.string.tracker_pause);
-        pause.setIcon(R.drawable.media_playback_pause_inverse);
-
-
-        backlight = menu.add(R.string.p_backlight_title);
-
-        preferences = menu.add(R.string.intro_settings);
-
-        map = menu.add(R.string.p_map);
+    override fun prepare(menu: Menu) {
+        scontext.insideContext { updateMenuText(scontext.trackerService) }
     }
 
-    @Override
-    public String getTitle() {
-        return scontext.getContext().getString(R.string.app_sname);
-    }
-
-    @Override
-    public Drawable getIcon() {
-        return null;
-    }
-
-
-    @Override
-    public void prepare(Menu menu) {
-        scontext.insideContext(() -> updateMenuText(scontext.getTrackerService()));
-    }
-
-
-    private void updateMenuText(StateInterface state) {
-        start.setTitle(state.getStartStopText());
-        start.setIcon(Images.get(state.getStartStopIcon()));
-        pause.setTitle(state.getPauseResumeText());
-    }
-
-
-    @Override
-    public boolean onItemClick(MenuItem item) {
-        final Context c = scontext.getContext();
-
-        if (item == start) {
-            scontext.insideContext(() -> scontext.getTrackerService().onStartStop());
-
-        } else if (item == pause) {
-            scontext.insideContext(() -> scontext.getTrackerService().onPauseResume());
-
-        } else if (item == backlight) {
-            new SolidIndexListDialog(scontext.getContext(), new SolidBacklight(c, new SolidPreset(new Storage(c)).getIndex()));
-
-
-        } else if (item == preferences) {
-            ActivitySwitcher.start(c, PreferencesActivity.class);
-
-        } else if (item == map) {
-            SolidRenderTheme stheme = new SolidRenderTheme(new AndroidMapDirectories(c).createSolidDirectory(), new FocAndroidFactory(c));
-            new SolidCheckListDialog(c, new SolidMapTileStack(stheme));
-        } else {
-            return false;
-        }
-
-        return true;
+    private fun updateMenuText(state: StateInterface) {
+        start?.title = state.startStopText
+        start?.setIcon(Images.get(state.startStopIcon))
+        pause?.title = state.pauseResumeText
     }
 }

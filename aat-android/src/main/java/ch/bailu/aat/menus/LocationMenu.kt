@@ -1,110 +1,78 @@
-package ch.bailu.aat.menus;
+package ch.bailu.aat.menus
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.view.Menu
+import android.view.MenuItem
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.location.SolidGoToLocation
+import ch.bailu.aat.util.Clipboard
+import ch.bailu.aat_lib.coordinates.OlcCoordinates
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.LatLong;
+class LocationMenu(private val context: Context, private val map: MapViewInterface) : AbsMenu() {
+    private val clipboard: Clipboard = Clipboard(context)
+    private var paste: MenuItem? = null
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.location.SolidGoToLocation;
-import ch.bailu.aat.util.Clipboard;
-import ch.bailu.aat_lib.coordinates.OlcCoordinates;
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat_lib.map.MapViewInterface;
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
+    override fun inflate(menu: Menu) {
+        add(menu, R.string.location_send) { send() }
+        add(menu, R.string.location_view) { view() }
+        add(menu, R.string.clipboard_copy) { copy() }
 
-public final class LocationMenu extends AbsMenu{
+        paste = add(menu, R.string.clipboard_paste) { paste() }
 
-    private final MapViewInterface map;
-    private final Context context;
-    private final Clipboard clipboard;
-
-    private MenuItem paste;
-
-
-    public LocationMenu(Context c, MapViewInterface m) {
-        map = m;
-        context = c;
-        clipboard = new Clipboard(context);
+        add(menu, SolidGoToLocation(context).label) { SolidGoToLocation(context).goToLocationFromUser(map) }
     }
 
+    override val title: String
+        get() = context.getString(R.string.location_title)
 
-    @Override
-    public void inflate(Menu menu) {
-        add(menu,R.string.location_send, this::send);
-        add(menu,R.string.location_view, this::view);
-        add(menu, R.string.clipboard_copy, this::copy);
-        paste = add(menu, R.string.clipboard_paste, this::paste);
-        add(menu, new SolidGoToLocation(context).getLabel(),
-                ()->new SolidGoToLocation(context).goToLocationFromUser(map));
+    override fun prepare(menu: Menu) {
+        paste?.isEnabled = clipboard.text != null
     }
 
-    @Override
-    public String getTitle() {
-        return context.getString(R.string.location_title);
+    private fun paste() {
+        val s = clipboard.text.toString()
+        SolidGoToLocation(context).goToLocation(map, s)
     }
 
-
-    @Override
-    public Drawable getIcon() {
-        return null;
+    private fun copy() {
+        val sgrid = SolidMapGrid(
+            Storage(context),
+            map.mContext.solidKey
+        )
+        clipboard.setText(sgrid.clipboardLabel, sgrid.getCode(center))
     }
 
-     @Override
-    public void prepare(Menu menu) {
-        paste.setEnabled(clipboard.getText() != null);
+    private fun view() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        val uri = Uri.parse(WGS84Coordinates.getGeoUri(center))
+        intent.data = uri
+        context.startActivity(Intent.createChooser(intent, uri.toString()))
     }
 
-
-    private void paste() {
-        final String s = clipboard.getText().toString();
-
-        new SolidGoToLocation(context).goToLocation(map, s);
+    private fun send() {
+        val intent = Intent(Intent.ACTION_SEND)
+        val url = WGS84Coordinates.getGeoUri(center)
+        val desc = WGS84Coordinates.getGeoPointDescription(center)
+        val body = """
+            $desc
+            
+            $url
+            
+            ${OlcCoordinates(center)}
+            """.trimIndent()
+        intent.type = "label/plain"
+        intent.putExtra(Intent.EXTRA_SUBJECT, url)
+        intent.putExtra(Intent.EXTRA_TEXT, body)
+        context.startActivity(Intent.createChooser(intent, url))
     }
 
-
-
-    private void copy() {
-        SolidMapGrid sgrid = new SolidMapGrid(new Storage(context),
-                map.getMContext().getSolidKey());
-
-        clipboard.setText(sgrid.getClipboardLabel(), sgrid.getCode(getCenter()));
-    }
-
-
-    private void view() {
-        final Intent intent = new Intent(Intent.ACTION_VIEW);
-        final LatLong center = getCenter();
-        final Uri uri = Uri.parse(WGS84Coordinates.getGeoUri(center));
-
-        intent.setData(uri);
-        context.startActivity(Intent.createChooser(intent, uri.toString()));
-    }
-
-
-    private void send() {
-        final Intent intent = new Intent(Intent.ACTION_SEND);
-        final LatLong center = getCenter();
-
-
-        final String url = WGS84Coordinates.getGeoUri(center);
-        final String desc = WGS84Coordinates.getGeoPointDescription(center);
-        final String body = desc+ "\n\n" + url + "\n\n" + new OlcCoordinates(center).toString();
-
-
-        intent.setType("label/plain");
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, url);
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-        context.startActivity(Intent.createChooser(intent, url));
-    }
-
-    private LatLong getCenter() {
-        return map.getMapViewPosition().getCenter();
-    }
-
+    private val center: LatLong
+        get() = map.mapViewPosition.center
 }
