@@ -5,6 +5,7 @@ import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaries;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -27,7 +28,7 @@ public class TileSummariesView extends RadioGroup  {
     public void updateInfo(final SourceSummaries summaries) {
 
         if (summaries.size() != views.size()) {
-            int selected = new SolidTrimIndex(getContext()).getValue();
+            int selected = new SolidTrimIndex(new Storage(getContext())).getValue();
 
 
             // remove views
@@ -51,7 +52,7 @@ public class TileSummariesView extends RadioGroup  {
 
             if (selected >= summaries.size()) {
                 views.get(0).select();
-                new SolidTrimIndex(getContext()).setValue(0);
+                new SolidTrimIndex(new Storage(getContext())).setValue(0);
             }
         }
 

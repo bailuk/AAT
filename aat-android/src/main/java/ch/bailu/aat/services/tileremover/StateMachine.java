@@ -2,6 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import android.content.Context;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.OldAppBroadcaster;
@@ -85,7 +86,7 @@ public final class StateMachine implements State {
     }
 
     public SelectedTileDirectoryInfo getInfo() {
-        int index = new SolidTrimIndex(context).getValue();
+        int index = new SolidTrimIndex(new Storage(context)).getValue();
 
         String name = summaries.get(index).getName();
 

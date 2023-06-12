@@ -62,9 +62,9 @@ public class MapPreferencesView extends VerticalScrollView {
         add(new SolidCheckBox(acontext, new SolidEnableTileCache.Hillshade(storage), theme));
 
         add(new TitleView(context, context.getString(R.string.p_trim_cache), theme));
-        add(new SolidIndexListView(context,new SolidTrimMode(context), theme));
-        add(new SolidIndexListView(context,new SolidTrimSize(context), theme));
-        add(new SolidIndexListView(context,new SolidTrimDate(context), theme));
+        add(new SolidIndexListView(context,new SolidTrimMode(storage), theme));
+        add(new SolidIndexListView(context,new SolidTrimSize(storage), theme));
+        add(new SolidIndexListView(context,new SolidTrimDate(storage), theme));
 
         tileRemover = new TileRemoverView(scontext, acontext, theme);
         add(tileRemover);

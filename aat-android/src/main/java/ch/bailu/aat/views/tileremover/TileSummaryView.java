@@ -7,6 +7,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaryInterface;
 import ch.bailu.aat.util.ui.UiTheme;
@@ -45,11 +46,9 @@ public class TileSummaryView implements View.OnClickListener {
     }
 
 
-    public StringBuilder displaySummaryReport(StringBuilder builder, SourceSummaryInterface summary) {
+    public void displaySummaryReport(StringBuilder builder, SourceSummaryInterface summary) {
         builder.setLength(0);
         textView.setText(summary.buildReport(builder).toString());
-
-        return builder;
     }
 
 
@@ -66,6 +65,6 @@ public class TileSummaryView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        new SolidTrimIndex(parent.getContext()).setValue(v.getId());
+        new SolidTrimIndex(new Storage(parent.getContext())).setValue(v.getId());
     }
 }

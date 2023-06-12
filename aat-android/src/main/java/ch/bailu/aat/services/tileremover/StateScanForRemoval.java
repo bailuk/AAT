@@ -2,6 +2,7 @@ package ch.bailu.aat.services.tileremover;
 
 import java.util.Iterator;
 
+import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimDate;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.preferences.map.SolidTrimMode;
@@ -22,13 +23,13 @@ public final class StateScanForRemoval implements State, Runnable {
     public StateScanForRemoval(StateMachine s) {
         state = s;
 
-        trimMode = new SolidTrimMode(s.context).getIndex();
-        trimSize = new SolidTrimSize(s.context).getValue();
-        trimAge = System.currentTimeMillis() - new SolidTrimDate(s.context).getValue();
+        trimMode = new SolidTrimMode(new Storage(s.context)).getIndex();
+        trimSize = new SolidTrimSize(new Storage(s.context)).getValue();
+        trimAge = System.currentTimeMillis() - new SolidTrimDate(new Storage(s.context)).getValue();
 
 
 
-        trimSummaryIndex = new SolidTrimIndex(s.context).getValue();
+        trimSummaryIndex = new SolidTrimIndex(new Storage(s.context)).getValue();
 
 
         state.summaries.resetToRemove();

@@ -12,7 +12,7 @@ class SolidTrimSize(storageInterface: StorageInterface) : SolidIndexList(
     storageInterface, SolidTrimSize::class.java.simpleName
 ) {
 
-    private class Entry(value: Long) {
+    private class Entry(val value: Long) {
         val text: String = MemSize.describe(StringBuilder(), value)
     }
 
@@ -22,6 +22,10 @@ class SolidTrimSize(storageInterface: StorageInterface) : SolidIndexList(
 
     override fun getLabel(): String {
         return Res.str().p_trim_size()
+    }
+
+    fun getValue(): Long {
+        return entries[index].value
     }
 
     public override fun getValueAsString(i: Int): String {
