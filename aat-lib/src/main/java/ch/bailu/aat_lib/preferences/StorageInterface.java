@@ -1,12 +1,6 @@
 package ch.bailu.aat_lib.preferences;
 
-import java.io.File;
-
 public interface StorageInterface {
-
-    void backup();
-    File getSharedPrefsDirectory();
-    void restore();
     String readString(String key);
     void writeString(String key, String value);
     int readInteger(String key);
