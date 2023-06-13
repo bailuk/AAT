@@ -17,13 +17,13 @@ abstract class InternalSensorSDK23(
     sensor: Sensor,
     iid: Int
 ) : SensorEventListener, SensorInterface {
-    private val name: String
+
+    override val name: String = InternalSensorsSDK23.toName(sensor)
     private val address: String
     private var registered = false
     private val connector: Connector
 
     init {
-        name = InternalSensorsSDK23.toName(sensor)
         address = InternalSensorsSDK23.toAddress(sensor)
         connector = Connector(context, iid)
         if (item.lock(this)) {
@@ -41,12 +41,8 @@ abstract class InternalSensorSDK23(
     protected val isLocked: Boolean
         get() = item.isLocked(this)
 
-    override fun getName(): String {
-        return name
-    }
-
     override fun toString(): String {
-        return getName() + "@" + address + ":" + item.getSensorStateDescription(context)
+        return name + "@" + address + ":" + item.getSensorStateDescription(context)
     }
 
     override fun close() {

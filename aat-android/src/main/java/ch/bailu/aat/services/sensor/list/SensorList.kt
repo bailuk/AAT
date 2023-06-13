@@ -22,11 +22,11 @@ class SensorList(private val context: Context) :  Closeable {
     }
 
     fun add(address: String, name: String): SensorListItem {
-        return add(address, name, SensorListItem.UNSCANNED)
+        return add(address, name, SensorItemState.UNSCANNED)
     }
 
     fun addEnabled(address: String, name: String): SensorListItem {
-        return add(address, name, SensorListItem.ENABLED)
+        return add(address, name, SensorItemState.ENABLED)
     }
 
     private fun add(address: String, name: String, initialState: Int): SensorListItem {

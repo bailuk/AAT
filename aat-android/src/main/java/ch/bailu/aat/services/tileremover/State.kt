@@ -1,23 +1,22 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-public interface State {
+interface State {
+    /** firstPixelIndex scanning  */
+    fun scan()
 
-    /** firstPixelIndex scanning **/
-    void scan();
+    /** chancel  */
+    fun stop()
 
-    /** chancel **/
-    void stop();
+    /** setItem to initial state  */
+    fun reset()
 
-    /** setItem to initial state **/
-    void reset();
-
-    /** firstPixelIndex removing **/
-    void remove();
+    /** firstPixelIndex removing  */
+    fun remove()
 
     /** rebuild list of files to remove
-     * (trim settings have been changed) **/
-    void rescan();
+     * (trim settings have been changed)  */
+    fun rescan()
 
-    /** remove all tiles in selected directory **/
-    void removeAll();
+    /** remove all tiles in selected directory  */
+    fun removeAll()
 }

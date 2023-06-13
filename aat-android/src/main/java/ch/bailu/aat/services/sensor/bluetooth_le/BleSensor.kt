@@ -164,14 +164,15 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
                 + item.getSensorStateDescription(context))
     }
 
-    override fun getName(): String {
-        val builder = StringBuilder(20)
-        if (device.name != null) builder.append(device.name)
-        for (s in services) {
-            if (s.isValid) builder.append(" ").append(s)
+    override val name: String
+        get() {
+            val builder = StringBuilder(20)
+            if (device.name != null) builder.append(device.name)
+            for (s in services) {
+                if (s.isValid) builder.append(" ").append(s)
+            }
+            return builder.toString()
         }
-        return builder.toString()
-    }
 
     @Synchronized
     override fun getInformation(iid: Int): GpxInformation? {

@@ -1,40 +1,33 @@
-package ch.bailu.aat.services.sensor.list;
+package ch.bailu.aat.services.sensor.list
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.provider.BaseColumns
 
-public final class SensorListDbHelper  extends SQLiteOpenHelper {
-
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + SensorListDbContract.TABLE_NAME + " (" +
-                    SensorListDbContract._ID + " INTEGER PRIMARY KEY," +
-                    SensorListDbContract.COLUMN_NAME + " TEXT," +
-                    SensorListDbContract.COLUMN_ADDRESS + " TEXT)";
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + SensorListDbContract.TABLE_NAME;
-
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "SensorList.db";
-
-
-    public SensorListDbHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+class SensorListDbHelper(context: Context?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(SQL_CREATE_ENTRIES)
     }
 
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL(SQL_DELETE_ENTRIES)
+        onCreate(db)
     }
 
-
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        onUpgrade(db, oldVersion, newVersion)
     }
 
-
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
+    companion object {
+        private const val SQL_CREATE_ENTRIES = "CREATE TABLE " + SensorListDbContract.TABLE_NAME + " (" +
+                BaseColumns._ID + " INTEGER PRIMARY KEY," +
+                SensorListDbContract.COLUMN_NAME + " TEXT," +
+                SensorListDbContract.COLUMN_ADDRESS + " TEXT)"
+        private const val SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + SensorListDbContract.TABLE_NAME
+        const val DATABASE_VERSION = 1
+        const val DATABASE_NAME = "SensorList.db"
     }
 }

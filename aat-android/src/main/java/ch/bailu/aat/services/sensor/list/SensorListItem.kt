@@ -1,129 +1,82 @@
-package ch.bailu.aat.services.sensor.list;
+package ch.bailu.aat.services.sensor.list
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.R
+import ch.bailu.aat.services.sensor.SensorInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
 
-import androidx.annotation.NonNull;
+class SensorListItem(
+    private val context: Context,
+    val address: String,
+    override var name: String,
+    initialState: Int
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
+) : SensorItemState(initialState), SensorInterface {
+    private var sensor: SensorInterface? = null
 
-public final class SensorListItem extends SensorItemState implements SensorInterface {
+    val isBluetoothDevice: Boolean
+        get() = address.matches(BLUETOOTH_ADDRESS)
 
-    private final static String BLUETOOTH_ADDRESS = "^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$";
-
-    private final String address;
-    private String name = "";
-
-    private SensorInterface sensor;
-
-    private final Context context;
-
-    public SensorListItem(Context context, String address, String name, int initialState) {
-        super(initialState);
-        this.context = context;
-        this.address = address;
-        setName(name);
-    }
-
-    public boolean isBluetoothDevice() {
-        return address.matches(BLUETOOTH_ADDRESS);
-    }
-
-    public boolean lock(SensorInterface s) {
-        if (s == null) {
-            return false;
-
-        } else if (!isLocked() || sensor == s) {
-            sensor = s;
-            return true;
-
+    fun lock(s: SensorInterface?): Boolean {
+        return if (s == null) {
+            false
+        } else if (!isLocked || sensor === s) {
+            sensor = s
+            true
         } else {
-            return false;
-
+            false
         }
     }
 
-
-    public boolean unlock(SensorInterface s) {
+    fun unlock(s: SensorInterface): Boolean {
         if (isLocked(s)) {
-            sensor = null;
-            return true;
+            sensor = null
+            return true
         }
-        return false;
+        return false
     }
 
+    private val isLocked: Boolean
+        get() = sensor != null
 
-    private boolean isLocked() {
-        return sensor != null;
+    fun isLocked(s: SensorInterface): Boolean {
+        return sensor === s
     }
 
-    public boolean isLocked(SensorInterface s) {
-        return sensor == s;
+    override fun getInformation(iid: Int): GpxInformation? {
+        return if (isLocked) sensor!!.getInformation(iid) else null
     }
 
-
-    public void setName(String n) {
-        if (n != null) name = n;
+    override fun toString(): String {
+        val sensorType = sensorTypeDescription
+        val sensorState = getSensorStateDescription(context)
+        val sensorName = name
+        return "$sensorType $sensorName\n$sensorState"
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-
-    @Override
-    public GpxInformation getInformation(int iid) {
-        if (isLocked()) return sensor.getInformation(iid);
-        return null;
-    }
-
-
-
-    public String getAddress() {
-        return address;
-    }
-
-
-    @NonNull
-    @Override
-    public String toString() {
-
-        final String sensorType = getSensorTypeDescription();
-        final String sensorState = getSensorStateDescription(context);
-        final String sensorName = getName();
-
-
-        return sensorType + " " + sensorName + "\n" + sensorState;
-    }
-
-
-
-    private String getSensorTypeDescription() {
-        if (isBluetoothDevice()) {
-            return context.getString(R.string.sensor_type_bluetooth);
+    private val sensorTypeDescription: String
+        get() = if (isBluetoothDevice) {
+            context.getString(R.string.sensor_type_bluetooth)
         } else {
-            return context.getString(R.string.sensor_type_internal);
+            context.getString(R.string.sensor_type_internal)
         }
+
+    override fun close() {
+        if (isLocked) sensor!!.close()
     }
 
-
-
-    @Override
-    public void close() {
-        if (isLocked()) sensor.close();
-    }
-
-    public void setEnabled(boolean enabled) {
+    fun setEnabled(enabled: Boolean) {
         if (enabled) {
-            setState(ENABLED);
-
+            setState(ENABLED)
         } else {
-            if (isLocked()) {
-                sensor.close();
+            if (isLocked) {
+                sensor!!.close()
             }
-            setState(SUPPORTED);
+            setState(SUPPORTED)
         }
+    }
+
+    companion object {
+        private val BLUETOOTH_ADDRESS = Regex("^([0-9A-F]{2}[:]){5}([0-9A-F]{2})$")
     }
 }
