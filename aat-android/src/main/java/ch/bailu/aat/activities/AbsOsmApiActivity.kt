@@ -1,18 +1,15 @@
 package ch.bailu.aat.activities
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.R
 import ch.bailu.aat.menus.ResultFileMenu
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat.util.OldAppBroadcaster
 import ch.bailu.aat.util.TextBackup
 import ch.bailu.aat.util.ui.AppTheme
 import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.util.ui.UiTheme
 import ch.bailu.aat.views.BusyViewControl
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
@@ -38,13 +35,12 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     protected var editorView: OsmApiEditorView? = null
     private var downloadError: ErrorMsgView? = null
 
-    protected val theme = AppTheme.search
+    protected val theme: UiTheme = AppTheme.search
 
-    private val onFileTaskChanged: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            setDownloadStatus()
-        }
+    private val onFileTaskChanged: (Array<String>)->Unit = {
+        setDownloadStatus()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +48,9 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         setContentView(createContentView())
         addSource(FileViewSource(appContext, configuration!!.resultFile))
         addTarget(list!!, InfoID.FILEVIEW)
-        OldAppBroadcaster.register(
-            this, onFileTaskChanged,
+
+        appContext.broadcaster.register(
+            onFileTaskChanged,
             AppBroadcaster.FILE_BACKGROND_TASK_CHANGED
         )
     }
@@ -177,7 +174,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     }
 
     override fun onDestroy() {
-        unregisterReceiver(onFileTaskChanged)
+        appContext.broadcaster.unregister(onFileTaskChanged)
         super.onDestroy()
     }
 }

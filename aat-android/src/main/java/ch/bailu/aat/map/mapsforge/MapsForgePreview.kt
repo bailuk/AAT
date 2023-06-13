@@ -3,9 +3,9 @@ package ch.bailu.aat.map.mapsforge
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.map.MapDensity
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.util.OldAppBroadcaster
 import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
@@ -126,7 +126,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
             val outStream = imageFile.openW()
             bitmap.androidBitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, outStream)
             outStream.close()
-            OldAppBroadcaster.broadcast(
+            AndroidBroadcaster.broadcast(
                 context,
                 AppBroadcaster.FILE_CHANGED_ONDISK,
                 imageFile.toString(),

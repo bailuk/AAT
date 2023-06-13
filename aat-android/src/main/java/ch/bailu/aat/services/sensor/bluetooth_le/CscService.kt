@@ -1,272 +1,199 @@
+package ch.bailu.aat.services.sensor.bluetooth_le
 
-package ch.bailu.aat.services.sensor.bluetooth_le;
+import android.bluetooth.BluetoothGattCharacteristic
+import ch.bailu.aat.R
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.sensor.Connector
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 
-import android.bluetooth.BluetoothGattCharacteristic;
-
-import androidx.annotation.NonNull;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.sensor.Connector;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-
-public final class CscService extends CscServiceID implements ServiceInterface {
+class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
     /**
      *
      * RPM BBB BCP-66 SmartCadence RPM Sensor
-     * <p>
+     *
+     *
      * CSC (Cycling Speed And Cadence)
-     * <a href="https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml">...</a>
-     * <a href="https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence">...</a>
+     * [...](https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.cycling_speed_and_cadence.xml)
+     * [...](https://developer.polar.com/wiki/Cycling_Speed_%26_Cadence)
      */
+    private var location = CadenceSpeedAttributes.SENSOR_LOCATION[0]
+    private var isSpeedSensor = false
+    private var isCadenceSensor = false
+    private val cadence = Revolution()
+    private val speed = Revolution()
+    private val wheelCircumference: WheelCircumference
+    private var information = GpxInformation.NULL
+    override var isValid = false
+        private set
+    private val connectorSpeed: Connector
+    private val connectorCadence: Connector
+    private val broadcasterSpeed: Broadcaster
+    private val broadcasterCadence: Broadcaster
+    private val nameSpeed: String
+    private val nameCadence: String
 
-    private String location = CadenceSpeedAttributes.SENSOR_LOCATION[0];
-
-    private boolean isSpeedSensor = false;
-    private boolean isCadenceSensor = false;
-
-    private final Revolution cadence = new Revolution();
-    private final Revolution speed = new Revolution();
-    private final WheelCircumference wheelCircumference;
-
-
-    private GpxInformation information = GpxInformation.NULL;
-
-    private boolean valid = false;
-
-    private final Connector connectorSpeed, connectorCadence;
-    private final Broadcaster broadcasterSpeed, broadcasterCadence;
-
-    private final String name_speed, name_cadence;
-
-    public CscService(ServiceContext c) {
-        wheelCircumference = new WheelCircumference(c, speed);
-        connectorCadence = new Connector(c.getContext(), InfoID.CADENCE_SENSOR);
-        connectorSpeed = new Connector(c.getContext(), InfoID.SPEED_SENSOR);
-        broadcasterCadence = new Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR);
-        broadcasterSpeed = new Broadcaster(c.getContext(), InfoID.SPEED_SENSOR);
-
-        name_speed = c.getContext().getString(R.string.sensor_speed);
-        name_cadence = c.getContext().getString(R.string.sensor_cadence);
+    init {
+        wheelCircumference = WheelCircumference(c, speed)
+        connectorCadence = Connector(c.context, InfoID.CADENCE_SENSOR)
+        connectorSpeed = Connector(c.context, InfoID.SPEED_SENSOR)
+        broadcasterCadence = Broadcaster(c.context, InfoID.CADENCE_SENSOR)
+        broadcasterSpeed = Broadcaster(c.context, InfoID.SPEED_SENSOR)
+        nameSpeed = c.context.getString(R.string.sensor_speed)
+        nameCadence = c.context.getString(R.string.sensor_cadence)
     }
 
-    @Override
-    public boolean isValid() {
-        return valid;
-    }
-
-    @Override
-    public void changed(BluetoothGattCharacteristic c) {
-        if (CSC_SERVICE.equals(c.getService().getUuid())) {
-            if (CSC_MEASUREMENT.equals(c.getUuid())) {
-                readCscMeasurement(c, c.getValue());
+    override fun changed(c: BluetoothGattCharacteristic) {
+        if (CSC_SERVICE == c.service.uuid) {
+            if (CSC_MEASUREMENT == c.uuid) {
+                readCscMeasurement(c, c.value)
             }
         }
     }
 
-    @Override
-    public boolean discovered(BluetoothGattCharacteristic c, Executor execute) {
-        boolean disc = false;
-        if (CSC_SERVICE.equals(c.getService().getUuid())) {
-            valid = true;
-            disc = true;
-
-            if (CSC_FEATURE.equals(c.getUuid())) {
-                execute.read(c);
-
-            } else if (CSC_SENSOR_LOCATION.equals(c.getUuid())) {
-                execute.read(c);
-
-            } else if (CSC_MEASUREMENT.equals(c.getUuid())) {
-                execute.notify(c);
-
+    override fun discovered(c: BluetoothGattCharacteristic, execute: Executor): Boolean {
+        var disc = false
+        if (CSC_SERVICE == c.service.uuid) {
+            isValid = true
+            disc = true
+            if (CSC_FEATURE == c.uuid) {
+                execute.read(c)
+            } else if (CSC_SENSOR_LOCATION == c.uuid) {
+                execute.read(c)
+            } else if (CSC_MEASUREMENT == c.uuid) {
+                execute.notify(c)
             }
         }
-        return disc;
+        return disc
     }
 
-    @Override
-    public void read(BluetoothGattCharacteristic c) {
-        if (CSC_SERVICE.equals(c.getService().getUuid())) {
-            if (CSC_FEATURE.equals(c.getUuid())) {
-                readCscFeature(c.getValue());
-
-            } else if (CSC_SENSOR_LOCATION.equals(c.getUuid())) {
-                readCscSensorLocation(c.getValue());
-
+    override fun read(c: BluetoothGattCharacteristic) {
+        if (CSC_SERVICE == c.service.uuid) {
+            if (CSC_FEATURE == c.uuid) {
+                readCscFeature(c.value)
+            } else if (CSC_SENSOR_LOCATION == c.uuid) {
+                readCscSensorLocation(c.value)
             }
         }
     }
 
-    private void readCscSensorLocation(byte[] v) {
-        if (v.length > 0 && v[0] < CadenceSpeedAttributes.SENSOR_LOCATION.length) {
-            location = CadenceSpeedAttributes.SENSOR_LOCATION[v[0]];
+    private fun readCscSensorLocation(v: ByteArray) {
+        if (v.isNotEmpty() && v[0] < CadenceSpeedAttributes.SENSOR_LOCATION.size) {
+            location = CadenceSpeedAttributes.SENSOR_LOCATION[v[0].toInt()]
         }
     }
 
-    private void readCscMeasurement(BluetoothGattCharacteristic c, byte[] value) {
-        information = new Information(new Attributes(this, c, value));
-        connectorSpeed.connect(isSpeedSensor);
-        connectorCadence.connect(isCadenceSensor);
+    private fun readCscMeasurement(c: BluetoothGattCharacteristic, value: ByteArray) {
+        information = Information(Attributes(this, c, value))
+        connectorSpeed.connect(isSpeedSensor)
+        connectorCadence.connect(isCadenceSensor)
     }
 
-    private void readCscFeature(byte[] v) {
-        if (v.length > 0) {
-            byte b = v[0];
-            isCadenceSensor = ID.isBitSet(b, BIT_CADENCE);
-            isSpeedSensor = ID.isBitSet(b, BIT_SPEED);
+    private fun readCscFeature(v: ByteArray) {
+        if (v.size > 0) {
+            val b = v[0]
+            isCadenceSensor = isBitSet(b, BIT_CADENCE)
+            isSpeedSensor = isBitSet(b, BIT_SPEED)
         }
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        String result = "";
-
-        if (valid) {
+    override fun toString(): String {
+        var result = ""
+        if (isValid) {
             if (isSpeedSensor && isCadenceSensor) {
-                result =  name_speed + " & " + name_cadence;
+                result = "$nameSpeed & $nameCadence"
             } else if (isSpeedSensor) {
-                result = name_speed;
+                result = nameSpeed
             } else if (isCadenceSensor) {
-                result = name_cadence;
+                result = nameCadence
             }
         }
-
-        return result;
+        return result
     }
 
-
-    @Override
-    public void close()  {
-        connectorSpeed.close();
-        connectorCadence.close();
-        wheelCircumference.close();
+    override fun close() {
+        connectorSpeed.close()
+        connectorCadence.close()
+        wheelCircumference.close()
     }
 
+    private class Attributes(parent: CscService, c: BluetoothGattCharacteristic, v: ByteArray) :
+        CadenceSpeedAttributes(parent.location, parent.isCadenceSensor, parent.isSpeedSensor) {
+        var speedSI = 0f
+            private set
 
-    private static class Attributes extends CadenceSpeedAttributes {
-
-        private float speedSI = 0f;
-
-
-        public Attributes(CscService parent, BluetoothGattCharacteristic c, byte[] v) {
-            super(parent.location, parent.isCadenceSensor, parent.isSpeedSensor);
-
-            int offset = 0;
-
-            byte data = v[offset];
-            offset += 1;
-
-            final boolean haveCadence = ID.isBitSet(data, BIT_CADENCE);
-            final boolean haveSpeed = ID.isBitSet(data, BIT_SPEED);
-
+        init {
+            var offset = 0
+            val data = v[offset]
+            offset += 1
+            val haveCadence = isBitSet(data, BIT_CADENCE)
+            val haveSpeed = isBitSet(data, BIT_SPEED)
             if (haveSpeed) {
-                long revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset);
-                offset += 4;
-
-                int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-
-                offset += 2;
-
-                parent.speed.addUINT32(time, revolutions);
-                broadcastSpeed(parent.broadcasterSpeed, parent.speed,
-                               parent.wheelCircumference);
+                val revolutions =
+                    c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset).toLong()
+                offset += 4
+                val time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
+                offset += 2
+                parent.speed.addUINT32(time, revolutions)
+                broadcastSpeed(
+                    parent.broadcasterSpeed, parent.speed,
+                    parent.wheelCircumference
+                )
             }
-
-
             if (haveCadence) {
-                int revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-                offset += 2;
-
-                int time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
-
-                parent.cadence.add(time, revolutions);
-                broadcastCadence(parent.broadcasterCadence, parent.cadence.rpm());
+                val revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
+                offset += 2
+                val time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
+                parent.cadence.add(time, revolutions)
+                broadcastCadence(parent.broadcasterCadence, parent.cadence.rpm())
             }
         }
 
-
-        private void broadcastSpeed(Broadcaster broadcasterSpeed,
-                                    Revolution speed,
-                                    WheelCircumference wheelCircumference) {
+        private fun broadcastSpeed(
+            broadcasterSpeed: Broadcaster,
+            speed: Revolution,
+            wheelCircumference: WheelCircumference
+        ) {
             if (speed.rpm() != 0 || broadcasterSpeed.timeout()) {
-
-                circumferenceSI = wheelCircumference.getCircumferenceSI();
-
+                circumferenceSI = wheelCircumference.circumferenceSI
                 if (circumferenceSI > 0f) {
-                    speedSI = speed.getSpeedSI(circumferenceSI);
+                    speedSI = speed.getSpeedSI(circumferenceSI)
                 }
-
-                circumferenceDebugString = wheelCircumference.getDebugString();
-
-                broadcasterSpeed.broadcast();
+                circumferenceDebugString = wheelCircumference.debugString
+                broadcasterSpeed.broadcast()
             }
-
         }
 
-        private void broadcastCadence(Broadcaster broadcasterCadence, int rpm) {
+        private fun broadcastCadence(broadcasterCadence: Broadcaster, rpm: Int) {
             if (rpm != 0 || broadcasterCadence.timeout()) {
-
-                cadence_rpm = rpm;
-                cadence_rpm_average = rpm;
-
-                broadcasterCadence.broadcast();
-
+                cadence_rpm = rpm
+                cadence_rpm_average = rpm
+                broadcasterCadence.broadcast()
             }
         }
+    }
 
+    private class Information(private val attributes: Attributes) : GpxInformation() {
+        private val timeStamp = System.currentTimeMillis()
+        override fun getAttributes(): GpxAttributes {
+            return attributes
+        }
 
+        override fun getTimeStamp(): Long {
+            return timeStamp
+        }
 
-
-
-        public float getSpeedSI() {
-            return speedSI;
+        override fun getSpeed(): Float {
+            return attributes.speedSI
         }
     }
 
-
-    private static class Information extends GpxInformation {
-        private final Attributes attributes;
-        private final long timeStamp = System.currentTimeMillis();
-
-
-        public Information(Attributes a) {
-            attributes = a;
-
+    override fun getInformation(iid: Int): GpxInformation? {
+        if (isSpeedSensor && iid == InfoID.SPEED_SENSOR) return information else if (isCadenceSensor && iid == InfoID.CADENCE_SENSOR) {
+            return information
         }
-
-        @Override
-        public GpxAttributes getAttributes() {
-            return attributes;
-        }
-
-        @Override
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-
-
-        @Override
-        public float getSpeed() {
-            return attributes.getSpeedSI();
-        }
-    }
-
-
-    @Override
-    public GpxInformation getInformation(int iid) {
-        if (isSpeedSensor && iid == InfoID.SPEED_SENSOR)
-            return information;
-
-        else if (isCadenceSensor && iid == InfoID.CADENCE_SENSOR) {
-            return information;
-        }
-
-        return null;
+        return null
     }
 }

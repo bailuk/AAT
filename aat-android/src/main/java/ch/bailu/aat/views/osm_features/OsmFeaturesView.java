@@ -11,12 +11,12 @@ import android.widget.LinearLayout;
 
 import javax.annotation.Nonnull;
 
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyIndicator;
@@ -116,7 +116,7 @@ public class OsmFeaturesView extends LinearLayout implements OnPreferencesChange
     }
 
     public void onResume(final ServiceContext sc) {
-        OldAppBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
+        AndroidBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
 
         filterView.setText(new SolidString(new Storage(getContext()), FILTER_KEY ).getValueAsStringNonDef());
 

@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat.util.OldAppBroadcaster
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.foc.Foc
 
@@ -72,7 +72,7 @@ class ErrorMsgView(context: Context) : AbsMsgView(context, DISPLAY_FOR_MILLIS) {
      * Receive and display error logs sent from [ch.bailu.aat_lib.logger.AppLog]
      */
     fun registerReceiver() {
-        OldAppBroadcaster.register(context, onMessage, AppBroadcaster.LOG_ERROR)
+        AndroidBroadcaster.register(context, onMessage, AppBroadcaster.LOG_ERROR)
     }
 
     /**

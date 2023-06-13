@@ -7,7 +7,6 @@ import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.dispatcher.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
-import ch.bailu.aat.util.OldAppBroadcaster
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.AppTheme
 import ch.bailu.aat.util.ui.UiTheme
@@ -37,7 +36,7 @@ class MainActivity : ActivityContext() {
 
     override fun onResumeWithService() {
         super.onResumeWithService()
-        OldAppBroadcaster.broadcast(this, AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS)
+        appContext.broadcaster.broadcast( AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS)
     }
 
     private fun createViews() {

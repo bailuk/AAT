@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import ch.bailu.aat.util.OldAppBroadcaster;
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.views.msg.AbsMsgView;
 
 public abstract class AbsBroadcastMsgView extends AbsMsgView {
@@ -26,7 +26,7 @@ public abstract class AbsBroadcastMsgView extends AbsMsgView {
 
     @Override
     public void attach() {
-        OldAppBroadcaster.register(getContext(), onMessage, broadcastMessage);
+        AndroidBroadcaster.register(getContext(), onMessage, broadcastMessage);
     }
 
     @Override

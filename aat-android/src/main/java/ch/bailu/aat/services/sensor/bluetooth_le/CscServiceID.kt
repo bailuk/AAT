@@ -1,18 +1,14 @@
-package ch.bailu.aat.services.sensor.bluetooth_le;
+package ch.bailu.aat.services.sensor.bluetooth_le
 
-import java.util.UUID;
-
-public class CscServiceID extends ID {
-
-    public final static UUID CSC_SERVICE = toUUID(0x1816);
-    public final static UUID CSC_MEASUREMENT = toUUID(0x2A5B);
-    public final static int BIT_SPEED = 0;
-    public final static int BIT_CADENCE = 1;
-    public final static int BIT_SPEED_AND_CADENCE = 2;
-
-    public final static UUID CSC_FEATURE = toUUID(0x2A5C);
-    public final static UUID CSC_SENSOR_LOCATION = toUUID(0x2A5D);
-    public final static UUID CSC_CONTROL_POINT = toUUID(0x2A55);
-
-
+open class CscServiceID : ID() {
+    companion object {
+        val CSC_SERVICE = toUUID(0x1816)
+        val CSC_MEASUREMENT = toUUID(0x2A5B)
+        const val BIT_SPEED = 0
+        const val BIT_CADENCE = 1
+        const val BIT_SPEED_AND_CADENCE = 2
+        val CSC_FEATURE = toUUID(0x2A5C)
+        val CSC_SENSOR_LOCATION = toUUID(0x2A5D)
+        val CSC_CONTROL_POINT = toUUID(0x2A55)
+    }
 }

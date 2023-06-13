@@ -1,61 +1,41 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.view.ViewGroup;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.view.ViewGroup
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import java.io.Closeable
 
-import java.io.Closeable;
+class BusyViewControlDbSync(parent: ViewGroup) : BusyViewControlIID(parent), Closeable {
+    private val context: Context = parent.context
 
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-
-public class BusyViewControlDbSync extends BusyViewControlIID implements Closeable {
-    private final Context context;
-
-    public BusyViewControlDbSync(ViewGroup parent) {
-        super(parent);
-        context = parent.getContext();
-        OldAppBroadcaster.register(context, onSyncStart,   AppBroadcaster.DBSYNC_START);
-        OldAppBroadcaster.register(context, onSyncDone,    AppBroadcaster.DBSYNC_DONE);
-        OldAppBroadcaster.register(context, onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
-
+    private val onSyncStart: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            startWaiting()
+        }
+    }
+    private val onSyncChanged: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            startWaiting()
+        }
+    }
+    private val onSyncDone: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            stopWaiting()
+        }
     }
 
-    private final BroadcastReceiver
-            onSyncStart = new BroadcastReceiver () {
+    init {
+        AndroidBroadcaster.register(context, onSyncStart, AppBroadcaster.DBSYNC_START)
+        AndroidBroadcaster.register(context, onSyncDone, AppBroadcaster.DBSYNC_DONE)
+        AndroidBroadcaster.register(context, onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED)
+    }
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            startWaiting();
-
-        }
-
-    },
-
-    onSyncChanged  =new BroadcastReceiver () {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            startWaiting();
-
-        }
-
-    },
-
-    onSyncDone = new BroadcastReceiver () {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            stopWaiting();
-        }
-
-    };
-
-    @Override
-    public void close() {
-        context.unregisterReceiver(onSyncChanged);
-        context.unregisterReceiver(onSyncDone);
-        context.unregisterReceiver(onSyncStart);
+    override fun close() {
+        context.unregisterReceiver(onSyncChanged)
+        context.unregisterReceiver(onSyncDone)
+        context.unregisterReceiver(onSyncStart)
     }
 }

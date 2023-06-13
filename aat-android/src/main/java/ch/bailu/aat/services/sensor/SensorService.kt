@@ -1,121 +1,103 @@
-package ch.bailu.aat.services.sensor;
+package ch.bailu.aat.services.sensor
 
-import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
-import android.content.Intent;
+import android.bluetooth.BluetoothAdapter
+import android.content.Context
+import android.content.Intent
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.sensor.list.SensorList
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
+import ch.bailu.aat_lib.util.WithStatusText
 
-import androidx.annotation.NonNull;
-
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.sensor.list.SensorList;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
-import ch.bailu.aat_lib.util.WithStatusText;
-
-public final class SensorService extends VirtualService implements WithStatusText, SensorServiceInterface {
-    private final SensorList sensorList;
-
-    private final Sensors bluetoothLE;
-    private final Sensors internal;
-
-    private final Broadcaster broadcaster;
-
-    private final Context context;
-
-    public SensorService(ServiceContext sc) {
-        context = sc.getContext();
-        sensorList = new SensorList(sc.getContext());
-        bluetoothLE = Sensors.factoryBle(sc, sensorList);
-        internal = Sensors.factoryInternal(sc.getContext(), sensorList);
-
-        broadcaster = new AndroidBroadcaster(sc.getContext());
-
-        OldAppBroadcaster.register(context, onBluetoothStateChanged, BluetoothAdapter.ACTION_STATE_CHANGED);
-        broadcaster.register(onSensorDisconnected, AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS);
-        broadcaster.register(onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS);
-
-        updateConnections();
-    }
-
-    final android.content.BroadcastReceiver onBluetoothStateChanged = new android.content.BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int state = intent.getIntExtra(BluetoothAdapter.ACTION_STATE_CHANGED,0);
-            if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
-                updateConnections();
+class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, SensorServiceInterface {
+    val sensorList: SensorList
+    private val bluetoothLE: Sensors
+    private val internal: Sensors
+    private val broadcaster: Broadcaster
+    private val context: Context
+    private val onBluetoothStateChanged: android.content.BroadcastReceiver =
+        object : android.content.BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                val state = intent.getIntExtra(BluetoothAdapter.ACTION_STATE_CHANGED, 0)
+                if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_OFF) {
+                    updateConnections()
+                }
             }
         }
-    };
-
-
-    final BroadcastReceiver onSensorDisconnected = args -> updateConnections();
-
-
-    final BroadcastReceiver onSensorReconnect = args -> {
-        updateConnections();
-        scan();                        // rescan to get them in cache if they were not
-    };
-
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-        builder.append(this);
+    private val onSensorDisconnected =
+        ch.bailu.aat_lib.dispatcher.BroadcastReceiver { args: Array<String?>? -> updateConnections() }
+    private val onSensorReconnect = ch.bailu.aat_lib.dispatcher.BroadcastReceiver { args: Array<String?>? ->
+        updateConnections()
+        scan() // rescan to get them in cache if they were not
     }
 
-
-    public synchronized void close() {
-        bluetoothLE.close();
-        internal.close();
-        sensorList.close();
-        context.unregisterReceiver(onBluetoothStateChanged);
-        broadcaster.unregister(onSensorDisconnected);
-        broadcaster.unregister(onSensorReconnect);
+    init {
+        context = sc.context
+        sensorList = SensorList(sc.context)
+        bluetoothLE = Sensors.factoryBle(sc, sensorList)
+        internal = Sensors.factoryInternal(sc.context, sensorList)
+        broadcaster = AndroidBroadcaster(sc.context)
+        AndroidBroadcaster.register(
+            context,
+            onBluetoothStateChanged,
+            BluetoothAdapter.ACTION_STATE_CHANGED
+        )
+        broadcaster.register(
+            onSensorDisconnected,
+            AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS
+        )
+        broadcaster.register(onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS)
+        updateConnections()
     }
 
-    public synchronized void updateConnections() {
-        bluetoothLE.updateConnections();
-        internal.updateConnections();
-        sensorList.broadcast();
+    override fun appendStatusText(builder: StringBuilder) {
+        builder.append(this)
     }
 
-    public synchronized void scan() {
+    @Synchronized
+    fun close() {
+        bluetoothLE.close()
+        internal.close()
+        sensorList.close()
+        context.unregisterReceiver(onBluetoothStateChanged)
+        broadcaster.unregister(onSensorDisconnected)
+        broadcaster.unregister(onSensorReconnect)
+    }
+
+    @Synchronized
+    override fun updateConnections() {
+        bluetoothLE.updateConnections()
+        internal.updateConnections()
+        sensorList.broadcast()
+    }
+
+    @Synchronized
+    override fun scan() {
         try {
-            bluetoothLE.scan();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            bluetoothLE.scan()
+        } catch (e: Exception) {
+            AppLog.e(this, e)
         }
     }
 
-    @NonNull
-    @Override
-    public synchronized String toString() {
-        return bluetoothLE.toString();
-
+    @Synchronized
+    override fun toString(): String {
+        return bluetoothLE.toString()
     }
 
-    public synchronized GpxInformation getInformation(int iid) {
-        GpxInformation information = getInformationOrNull(iid);
-
-        if (information == null) {
-            information = GpxInformation.NULL;
-        }
-
-        return information;
+    @Synchronized
+    override fun getInformation(iid: Int): GpxInformation? {
+        return getInformationOrNull(iid)
     }
 
-    public synchronized GpxInformation getInformationOrNull(int iid) {
-        return sensorList.getInformation(iid);
-    }
-
-    public SensorList getSensorList() {
-        return sensorList;
+    @Synchronized
+    override fun getInformationOrNull(iid: Int): GpxInformation? {
+        return sensorList.getInformation(iid)
     }
 }

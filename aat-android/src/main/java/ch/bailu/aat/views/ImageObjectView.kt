@@ -1,131 +1,110 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.widget.ImageView
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.map.To.androidBitmap
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.cache.ObjBitmap
+import ch.bailu.aat.util.AppIntent
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.ImageView;
-
-import ch.bailu.aat.map.To;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.ObjBitmap;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract;
-
-public class ImageObjectView extends ImageView {
-
-    private boolean isAttached = false;
-
-    protected final ServiceContext scontext;
-
-    private ObjImageAbstract imageHandle = ObjBitmap.NULL;
-
-    private String idToLoad = null;
-    private Obj.Factory factoryToLoad = null;
-
-    private final int defaultImageID;
-
-    public ImageObjectView(ServiceContext sc, int resID) {
-        super(sc.getContext());
-        scontext = sc;
-        defaultImageID = resID;
-
-        resetImage();
+open class ImageObjectView(
+    private val scontext: ServiceContext,
+    private val defaultImageID: Int
+) : ImageView(
+    scontext.context
+) {
+    private var isAttached = false
+    private var imageHandle: ObjImageAbstract = ObjBitmap.NULL
+    private var idToLoad: String? = null
+    private var factoryToLoad: Obj.Factory? = null
+    fun setImageObject() {
+        idToLoad = null
+        factoryToLoad = null
+        resetImage()
     }
 
-    public void setImageObject() {
-        idToLoad = null;
-        factoryToLoad = null;
-
-        resetImage();
+    fun setImageObject(ID: String?, factory: Obj.Factory?) {
+        idToLoad = ID
+        factoryToLoad = factory
+        loadAndDisplayImage()
     }
 
-    public void setImageObject(String ID, Obj.Factory factory) {
-        idToLoad = ID;
-        factoryToLoad = factory;
-
-        loadAndDisplayImage();
-    }
-
-
-    private void loadAndDisplayImage() {
+    private fun loadAndDisplayImage() {
         if (idToLoad != null && isAttached) {
-
-            freeImageHandle();
-
-            if (loadImage(idToLoad, factoryToLoad)) {
-                displayImage();
+            freeImageHandle()
+            if (loadImage(idToLoad!!, factoryToLoad)) {
+                displayImage()
             } else {
-                resetImage();
+                resetImage()
             }
-
-            idToLoad = null;
-            factoryToLoad = null;
+            idToLoad = null
+            factoryToLoad = null
         }
     }
 
-    private void resetImage() {
-        if (defaultImageID != 0) setImageResource(defaultImageID);
-        else setImageDrawable(null);
+    private fun resetImage() {
+        if (defaultImageID != 0) setImageResource(defaultImageID) else setImageDrawable(null)
     }
 
-    private boolean loadImage(final String id, final Obj.Factory factory) {
-        final boolean[] r = {false};
-        scontext.insideContext(() -> {
-            final Obj h = scontext.getCacheService().getObject(id, factory);
-
-            if (h instanceof ObjImageAbstract) {
-                imageHandle = (ObjImageAbstract) h;
-                r[0] = true;
+    private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
+        val r = booleanArrayOf(false)
+        scontext.insideContext {
+            val h = scontext.cacheService.getObject(id, factory)
+            if (h is ObjImageAbstract) {
+                imageHandle = h
+                r[0] = true
             } else {
-                h.free();
+                h.free()
             }
-        });
-
-        return r[0];
+        }
+        return r[0]
     }
 
-    private void freeImageHandle() {
-        imageHandle.free();
-        imageHandle = ObjBitmap.NULL;
+    private fun freeImageHandle() {
+        imageHandle.free()
+        imageHandle = ObjBitmap.NULL
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        isAttached = true;
-
-        OldAppBroadcaster.register(getContext(),
-                onFileChanged,
-                AppBroadcaster.FILE_CHANGED_INCACHE);
-        loadAndDisplayImage();
+    public override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isAttached = true
+        AndroidBroadcaster.register(
+            context,
+            onFileChanged,
+            AppBroadcaster.FILE_CHANGED_INCACHE
+        )
+        loadAndDisplayImage()
     }
 
-    @Override
-    public void onDetachedFromWindow() {
-        getContext().unregisterReceiver(onFileChanged);
-        freeImageHandle();
-
-        isAttached = false;
-        super.onDetachedFromWindow();
+    public override fun onDetachedFromWindow() {
+        context.unregisterReceiver(onFileChanged)
+        freeImageHandle()
+        isAttached = false
+        super.onDetachedFromWindow()
     }
 
-    private void displayImage() {
+    private fun displayImage() {
         if (imageHandle.hasException()) {
-            resetImage();
-        } else if (imageHandle.isReadyAndLoaded()) {
-            setImageBitmap(To.INSTANCE.androidBitmap(imageHandle.getBitmap()));
+            resetImage()
+        } else if (imageHandle.isReadyAndLoaded) {
+            setImageBitmap(androidBitmap(imageHandle.bitmap))
         }
     }
 
-    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String file = imageHandle.toString();
-            if (AppIntent.hasFile(intent, file)) displayImage();
+    private val onFileChanged: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val file = imageHandle.toString()
+            if (AppIntent.hasFile(intent, file)) displayImage()
         }
-    };
+    }
+
+    init {
+        resetImage()
+    }
 }

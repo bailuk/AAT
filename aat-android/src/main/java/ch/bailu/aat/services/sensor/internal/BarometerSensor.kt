@@ -1,173 +1,126 @@
-package ch.bailu.aat.services.sensor.internal;
+package ch.bailu.aat.services.sensor.internal
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-
-import androidx.annotation.RequiresApi;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat_lib.preferences.location.SolidPressureAtSeaLevel;
-import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude;
-import ch.bailu.aat.services.location.Hypsometric;
-import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.Keys;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import androidx.annotation.RequiresApi
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.services.location.Hypsometric
+import ch.bailu.aat.services.sensor.list.SensorListItem
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.Keys
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.preferences.location.SolidPressureAtSeaLevel
+import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude
 
 @RequiresApi(api = 23)
-public final class BarometerSensor extends InternalSensorSDK23
-        implements OnPreferencesChanged {
+class BarometerSensor(private val context: Context, item: SensorListItem, sensor: Sensor) :
+    InternalSensorSDK23(
+        context, item, sensor, InfoID.BAROMETER_SENSOR
+    ), OnPreferencesChanged {
+    private val hypsometric = Hypsometric()
+    private val spressure: SolidPressureAtSeaLevel = SolidPressureAtSeaLevel(Storage(context))
+    private val saltitude: SolidProvideAltitude = SolidProvideAltitude(Storage(context), SolidUnit.SI)
+    private var information: GpxInformation? = null
 
-    private static final String changedAction =
-        AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR;
-
-    private final Hypsometric hypsometric = new Hypsometric();
-
-    private final SolidPressureAtSeaLevel spressure;
-    private final SolidProvideAltitude saltitude;
-
-    private final Context context;
-
-
-    private GpxInformation information = null;
-
-    public BarometerSensor(Context c, SensorListItem item, Sensor sensor) {
-        super(c, item, sensor, InfoID.BAROMETER_SENSOR);
-
-        context = c;
-        spressure  = new SolidPressureAtSeaLevel(new Storage(c));
-        saltitude  = new SolidProvideAltitude(new Storage(c), SolidUnit.SI);
-
-        if (isLocked()) {
-            hypsometric.setPressureAtSeaLevel(spressure.getPressure());
-
-            spressure.register(this);
+    init {
+        if (isLocked) {
+            hypsometric.pressureAtSeaLevel = spressure.pressure.toDouble()
+            spressure.register(this)
         }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float pressure = getPressure(event);
-        hypsometric.setPressure(pressure);
-
-        information = new Information(hypsometric.getAltitude(), pressure);
-
-
-        OldAppBroadcaster.broadcast(context, changedAction);
+    override fun onSensorChanged(event: SensorEvent) {
+        val pressure = getPressure(event)
+        hypsometric.setPressure(pressure.toDouble())
+        information = Information(hypsometric.altitude, pressure)
+        AndroidBroadcaster.broadcast(context, changedAction)
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    public static float getPressure(SensorEvent event) {
-        if (event.values.length > 0) {
-            return event.values[0];
-        }
-        return 0f;
-    }
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+    override fun onPreferencesChanged(s: StorageInterface, key: String) {
         if (saltitude.hasKey(key)) {
-            hypsometric.setAltitude(saltitude.getValue());
-            if (hypsometric.isPressureAtSeaLevelValid()) {
-                spressure.setPressure((float) hypsometric.getPressureAtSeaLevel());
+            hypsometric.altitude = saltitude.value.toDouble()
+            if (hypsometric.isPressureAtSeaLevelValid) {
+                spressure.pressure = hypsometric.pressureAtSeaLevel.toFloat()
             }
-
         } else if (spressure.hasKey(key)) {
-            hypsometric.setPressureAtSeaLevel(spressure.getPressure());
+            hypsometric.pressureAtSeaLevel = spressure.pressure.toDouble()
         }
     }
 
-    @Override
-    public GpxInformation getInformation(int iid) {
-        if (iid == InfoID.BAROMETER_SENSOR)
-            return information;
-        return null;
+    override fun getInformation(iid: Int): GpxInformation? {
+        return if (iid == InfoID.BAROMETER_SENSOR) information else null
     }
 
-    @Override
-    public void close() {
-        if (isLocked()) {
-            spressure.unregister(this);
+    override fun close() {
+        if (isLocked) {
+            spressure.unregister(this)
         }
-
-        super.close();
+        super.close()
     }
 
-    public static class Information extends GpxInformation {
+    class Information(a: Double, p: Float) : GpxInformation() {
+        private val attributes: GpxAttributes
+        private val altitude: Double
+        private val time = System.currentTimeMillis()
 
-        private final GpxAttributes attributes;
-        private final double altitude;
-        private final long time = System.currentTimeMillis();
-
-        public Information(double a, float p) {
-            attributes = new Attributes(p);
-            altitude = a;
+        init {
+            attributes = Attributes(p)
+            altitude = a
         }
 
-        @Override
-        public GpxAttributes getAttributes() {
-            return attributes;
+        override fun getAttributes(): GpxAttributes {
+            return attributes
         }
 
-        @Override
-        public double getAltitude() {
-            return  altitude;
+        override fun getAltitude(): Double {
+            return altitude
         }
 
-        @Override
-        public long getTimeStamp() {
-            return time;
+        override fun getTimeStamp(): Long {
+            return time
         }
     }
 
-    public static class Attributes extends GpxAttributes {
-
-        final float pressure;
-
-        public static final int KEY_INDEX_PRESSURE= Keys.toIndex("Pressure");
-
-        public Attributes(float p) {
-            pressure = p;
+    class Attributes(private val pressure: Float) : GpxAttributes() {
+        override fun get(index: Int): String {
+            return if (index == KEY_INDEX_PRESSURE) pressure.toString() else NULL_VALUE
         }
 
-        @Override
-        public String get(int index) {
-            if (index == KEY_INDEX_PRESSURE) return String.valueOf(pressure);
-            return NULL_VALUE;
+        override fun hasKey(keyIndex: Int): Boolean {
+            return keyIndex == KEY_INDEX_PRESSURE
         }
 
-        @Override
-        public boolean hasKey(int keyIndex) {
-            return keyIndex == KEY_INDEX_PRESSURE;
+        override fun size(): Int {
+            return 1
         }
 
-        @Override
-        public int size() {
-            return 1;
+        override fun getAt(i: Int): String {
+            return get(KEY_INDEX_PRESSURE)
         }
 
-        @Override
-        public String getAt(int i) {
-            return get(KEY_INDEX_PRESSURE);
+        override fun getKeyAt(i: Int): Int {
+            return KEY_INDEX_PRESSURE
         }
 
-        @Override
-        public int getKeyAt(int i) {
-            return KEY_INDEX_PRESSURE;
+        companion object {
+            val KEY_INDEX_PRESSURE = Keys.toIndex("Pressure")
+        }
+    }
+
+    companion object {
+        private val changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR
+        fun getPressure(event: SensorEvent): Float {
+            return if (event.values.isNotEmpty()) {
+                event.values[0]
+            } else 0f
         }
     }
 }

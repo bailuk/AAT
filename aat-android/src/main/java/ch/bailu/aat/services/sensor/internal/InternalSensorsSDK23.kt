@@ -1,115 +1,94 @@
-package ch.bailu.aat.services.sensor.internal;
+package ch.bailu.aat.services.sensor.internal
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import androidx.annotation.RequiresApi;
-
-import java.util.List;
-
-import ch.bailu.aat.services.sensor.Sensors;
-import ch.bailu.aat.services.sensor.list.SensorList;
-import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat.services.sensor.list.SensorItemState;
-
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import androidx.annotation.RequiresApi
+import ch.bailu.aat.services.sensor.Sensors
+import ch.bailu.aat.services.sensor.list.SensorItemState
+import ch.bailu.aat.services.sensor.list.SensorList
+import ch.bailu.aat.services.sensor.list.SensorListItem
 
 @RequiresApi(api = 23)
-public final class InternalSensorsSDK23 extends Sensors {
+class InternalSensorsSDK23(private val context: Context, private val sensorList: SensorList) :
+    Sensors() {
+    private val manager: SensorManager = context.getSystemService(SensorManager::class.java)
 
-    private final SensorManager manager;
-    private final Context context;
-
-    private final SensorList sensorList;
-
-    public InternalSensorsSDK23(Context c, SensorList list) {
-        sensorList = list;
-        context = c;
-        manager = context.getSystemService(SensorManager.class);
-
-        scan();
+    init {
+        scan()
     }
 
-
-    @Override
-    public void scan() {
-        scan(Sensor.TYPE_STEP_COUNTER);
-        scan(Sensor.TYPE_PRESSURE);
-        scan(Sensor.TYPE_HEART_RATE);
+    override fun scan() {
+        scan(Sensor.TYPE_STEP_COUNTER)
+        scan(Sensor.TYPE_PRESSURE)
+        scan(Sensor.TYPE_HEART_RATE)
     }
 
-
-    private void scan(int type) {
-        List<Sensor> sensors = manager.getSensorList(type);
-
+    private fun scan(type: Int) {
+        val sensors = manager.getSensorList(type)
         if (sensors != null) {
-            for (Sensor sensor : sensors) {
-                SensorListItem item =
-                    sensorList.add(toAddress(sensor), toName(sensor));
-
-                if (item.getState() == SensorItemState.UNSCANNED) {
-                    item.setState(SensorItemState.SCANNING);
+            for (sensor in sensors) {
+                val item = sensorList.add(toAddress(sensor), toName(sensor))
+                if (item.state == SensorItemState.UNSCANNED) {
+                    item.state = SensorItemState.SCANNING
                     if (isSupported(sensor)) {
-                        item.setState(SensorItemState.SUPPORTED);
+                        item.state = SensorItemState.SUPPORTED
                     } else {
-                        item.setState(SensorItemState.UNSUPPORTED);
+                        item.state = SensorItemState.UNSUPPORTED
                     }
                 }
             }
         }
     }
 
-    private boolean isSupported(Sensor sensor) {
-        return     sensor.getType() == Sensor.TYPE_PRESSURE
-                || sensor.getType() == Sensor.TYPE_HEART_RATE
-                || sensor.getType() == Sensor.TYPE_STEP_COUNTER;
-
+    private fun isSupported(sensor: Sensor): Boolean {
+        return sensor.type == Sensor.TYPE_PRESSURE || sensor.type == Sensor.TYPE_HEART_RATE || sensor.type == Sensor.TYPE_STEP_COUNTER
     }
 
-
-    public static String toName(Sensor sensor) {
-        return sensor.getVendor() + " " + sensor.getName();
-    }
-
-    @Override
-    public void updateConnections() {
-        for (SensorListItem item : sensorList) {
-            if (item.isEnabled() && item.isConnected() == false) {
-                factory(item.getAddress(), item);
+    override fun updateConnections() {
+        sensorList.forEach {
+            if (it.isEnabled && !it.isConnected) {
+                factory(it.address, it)
             }
         }
     }
 
-
-    private InternalSensorSDK23 factory(String address, SensorListItem item) {
-        List<Sensor> sensors = manager.getSensorList(Sensor.TYPE_ALL);
-
+    private fun factory(address: String, item: SensorListItem): InternalSensorSDK23? {
+        val sensors = manager.getSensorList(Sensor.TYPE_ALL)
         if (sensors != null) {
-            for (Sensor sensor : sensors) {
-
-                if (address.equals(toAddress(sensor))) {
-                    return factory(sensor, item);
+            for (sensor in sensors) {
+                if (address == toAddress(sensor)) {
+                    return factory(sensor, item)
                 }
             }
         }
-
-        return null;
+        return null
     }
 
-
-    private InternalSensorSDK23 factory(Sensor sensor, SensorListItem item) {
-        if (sensor.getType() == Sensor.TYPE_HEART_RATE)
-            return new HeartRateSensor(context, item, sensor);
-        else if (sensor.getType() == Sensor.TYPE_PRESSURE)
-            return new BarometerSensor(context, item, sensor);
-        else if (sensor.getType() == Sensor.TYPE_STEP_COUNTER)
-            return new StepCounterSensor(context, item, sensor);
-
-        return null;
+    private fun factory(sensor: Sensor, item: SensorListItem): InternalSensorSDK23? {
+        if (sensor.type == Sensor.TYPE_HEART_RATE) return HeartRateSensor(
+            context,
+            item,
+            sensor
+        ) else if (sensor.type == Sensor.TYPE_PRESSURE) return BarometerSensor(
+            context,
+            item,
+            sensor
+        ) else if (sensor.type == Sensor.TYPE_STEP_COUNTER) return StepCounterSensor(
+            context,
+            item,
+            sensor
+        )
+        return null
     }
 
+    companion object {
+        fun toName(sensor: Sensor): String {
+            return sensor.vendor + " " + sensor.name
+        }
 
-    public static String toAddress(Sensor sensor) {
-        return sensor.getVendor()+sensor.getName();
+        fun toAddress(sensor: Sensor): String {
+            return sensor.vendor + sensor.name
+        }
     }
-
 }

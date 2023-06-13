@@ -1,137 +1,106 @@
-package ch.bailu.aat.services.sensor.internal;
+package ch.bailu.aat.services.sensor.internal
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-
-import androidx.annotation.RequiresApi;
-
-import ch.bailu.aat_lib.gpx.attributes.SensorInformation;
-import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster;
-import ch.bailu.aat.services.sensor.list.SensorListItem;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import androidx.annotation.RequiresApi
+import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster
+import ch.bailu.aat.services.sensor.list.SensorListItem
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.SensorInformation
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
+import kotlin.math.roundToInt
 
 @RequiresApi(api = 23)
-public final class StepCounterSensor extends InternalSensorSDK23 {
-    private static final int SAMPLES=25;
+class StepCounterSensor(c: Context, item: SensorListItem, sensor: Sensor) : InternalSensorSDK23(
+    c, item, sensor, InfoID.STEP_COUNTER_SENSOR
+) {
+    private var first: Sample = Sample.NULL
+    private val samples = Array(SAMPLES) { Sample.NULL }
+    private var index = 0
+    private val broadcaster: Broadcaster
+    private var information: GpxInformation? = null
 
-    private Sample first = Sample.NULL;
-    private final Sample[] samples = new Sample[SAMPLES];
-    private int index = 0;
-
-    private final Broadcaster broadcaster;
-    private GpxInformation information = null;
-
-
-
-    public StepCounterSensor(Context c, SensorListItem item, Sensor sensor) {
-        super(c, item, sensor, InfoID.STEP_COUNTER_SENSOR);
-
-        for (int i = 0; i< samples.length; i++) {
-            samples[i] = Sample.NULL;
-        }
-
-        broadcaster = new Broadcaster(c, InfoID.STEP_COUNTER_SENSOR);
+    init {
+        broadcaster = Broadcaster(c, InfoID.STEP_COUNTER_SENSOR)
     }
 
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        StepCounterAttributes attr = new StepCounterAttributes();
-
-        addSample(event);
-        setAttributes(attr);
-
-        information = new SensorInformation(attr);
-        broadcaster.broadcast();
+    override fun onSensorChanged(event: SensorEvent) {
+        val attr = StepCounterAttributes()
+        addSample(event)
+        setAttributes(attr)
+        information = SensorInformation(attr)
+        broadcaster.broadcast()
     }
 
-
-    private void setAttributes(StepCounterAttributes attr) {
-        attr.stepsTotal = getTotalSteps();
-        attr.stepsRate = getStepsRate();
+    private fun setAttributes(attr: StepCounterAttributes) {
+        attr.stepsTotal = totalSteps
+        attr.stepsRate = stepsRate
     }
 
+    private val totalSteps: Int
+        get() = samples[index].steps - first.steps
 
-    private int getTotalSteps() {
-        return samples[index].steps - first.steps;
-    }
-
-
-    private void addSample(SensorEvent event) {
-        index++;
-        index = index % samples.length;
-
-        samples[index] = new Sample(event);
-
-        if (first == Sample.NULL) {
-            first = samples[index];
+    private fun addSample(event: SensorEvent) {
+        index++
+        index %= samples.size
+        samples[index] = Sample(event)
+        if (first === Sample.NULL) {
+            first = samples[index]
         }
     }
 
-
-    private Sample getFirstSample() {
-        int index = this.index + 1;
-
-        for (int i = 0; i< samples.length; i++) {
-            index = index % samples.length;
-
-            if (samples[index] != Sample.NULL) {
-                return samples[index];
+    private val firstSample: Sample
+        get() {
+            var index = index + 1
+            for (i in samples.indices) {
+                index %= samples.size
+                if (samples[index] !== Sample.NULL) {
+                    return samples[index]
+                }
+                index++
             }
-            index ++;
-        }
-        return Sample.NULL;
-    }
-
-
-    private int getStepsRate() {
-        Sample a = getFirstSample();
-        Sample b = samples[index];
-
-        long timeDelta = b.timeMillis - a.timeMillis;
-        int steps = b.steps - a.steps;
-
-        //AppLog.d(this , "s: " + steps + " t: " + timeDelta);
-
-        if (timeDelta > 0 && steps > 0) {
-            return Math.round((steps * 1000 * 60)  / (float)timeDelta);
-        }
-        return 0;
-    }
-
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-
-    @Override
-    public GpxInformation getInformation(int iid) {
-        if (iid == InfoID.STEP_COUNTER_SENSOR)
-            return information;
-
-        return null;
-    }
-
-
-    private static class Sample {
-        private static final Sample NULL = new Sample();
-
-        public final long timeMillis;
-        public final int steps;
-
-        public Sample(SensorEvent event) {
-            timeMillis = event.timestamp / 1000000;
-            steps = (int) event.values[0];
+            return Sample.NULL
         }
 
-        private Sample() {
-            timeMillis = 0;
-            steps = 0;
+    private val stepsRate: Int
+        get() {
+            val a = firstSample
+            val b = samples[index]
+            val timeDelta = b.timeMillis - a.timeMillis
+            val steps = b.steps - a.steps
+
+            return if (timeDelta > 0 && steps > 0) {
+                (steps * 1000 * 60 / timeDelta.toFloat()).roundToInt()
+            } else 0
         }
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+    override fun getInformation(iid: Int): GpxInformation? {
+        return if (iid == InfoID.STEP_COUNTER_SENSOR) information else null
+    }
+
+    private class Sample {
+        val timeMillis: Long
+        val steps: Int
+
+        constructor(event: SensorEvent) {
+            timeMillis = event.timestamp / 1000000
+            steps = event.values[0].toInt()
+        }
+
+        private constructor() {
+            timeMillis = 0
+            steps = 0
+        }
+
+        companion object {
+            val NULL = Sample()
+        }
+    }
+
+    companion object {
+        private const val SAMPLES = 25
     }
 }

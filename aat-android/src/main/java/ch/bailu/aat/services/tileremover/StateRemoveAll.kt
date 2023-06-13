@@ -1,115 +1,80 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat.util.OldAppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.foc.Foc;
+class StateRemoveAll(private val state: StateMachine) : State, Runnable {
+    private var nextState: Class<*> = StateRemoved::class.java
 
-public final class StateRemoveAll implements State, Runnable{
-
-    private final StateMachine state;
-    private Class nextState = StateRemoved.class;
-
-
-
-    public StateRemoveAll(StateMachine s) {
-        state = s;
-
-        new Thread(this).start();
+    init {
+        Thread(this).start()
     }
 
-    @Override
-    public void stop() {
-        nextState = StateUnscanned.class;
+    override fun stop() {
+        nextState = StateUnscanned::class.java
     }
 
-
-    @Override
-    public void reset() {
-        nextState = StateUnscanned.class;
+    override fun reset() {
+        nextState = StateUnscanned::class.java
     }
 
-
-    @Override
-    public void scan() {}
-
-
-    @Override
-    public void remove() {}
-
-    @Override
-    public void rescan() {}
-
-    @Override
-    public void removeAll() {}
-
-    @Override
-    public void run() {
-        SelectedTileDirectoryInfo info = state.getInfo();
-
-        TileScanner scanner = new TileScanner(info.directory) {
-            int sourceIndex=0;
-
-            @Override
-            protected boolean doSourceContainer(Foc dir) {
-                return keepUp();
+    override fun scan() {}
+    override fun remove() {}
+    override fun rescan() {}
+    override fun removeAll() {}
+    override fun run() {
+        val info = state.info
+        val scanner: TileScanner = object : TileScanner(info.directory) {
+            var sourceIndex = 0
+            override fun doSourceContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-            @Override
-            protected boolean doZoomContainer(Foc dir) {
-                sourceIndex = state.summaries.findIndex(source);
-                return keepUp();
+            override fun doZoomContainer(dir: Foc): Boolean {
+                sourceIndex = state.summaries.findIndex(source)
+                return keepUp()
             }
 
-            @Override
-            protected boolean doXContainer(Foc dir) {
-                return keepUp();
+            override fun doXContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-            @Override
-            protected boolean doYContainer(Foc dir) {
-                return keepUp();
+            override fun doYContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-            @Override
-            protected void doFile(Foc file) {
-                delete(file, new TileFile(sourceIndex, zoom, x, y, file));
+            override fun doFile(file: Foc) {
+                delete(file, TileFile(sourceIndex, zoom, x, y, file))
             }
-        };
-
+        }
         if (info.index == 0) {
-            scanner.scanSourceContainer();
+            scanner.scanSourceContainer()
         } else {
-            scanner.scanZoomContainer();
+            scanner.scanZoomContainer()
         }
-
         if (keepUp()) {
-            info.directory.rmdirs();
+            info.directory.rmdirs()
             //MemSize.deleteEmptiyDirectoriesRecursive(info.directory);
-            broadcast();
+            broadcast()
         }
-
-        state.setFromClass(nextState);
+        state.setFromClass(nextState)
     }
 
-
-
-    private boolean delete(Foc f, TileFile t) {
+    private fun delete(f: Foc, t: TileFile): Boolean {
         if (f.rm()) {
-            state.summaries.addFileRemoved(t);
-            state.broadcastLimited( AppBroadcaster.TILE_REMOVER_REMOVE);
-            return true;
+            state.summaries.addFileRemoved(t)
+            state.broadcastLimited(AppBroadcaster.TILE_REMOVER_REMOVE)
+            return true
         }
-
-        return false;
+        return false
     }
 
-
-    private boolean keepUp() {
-        return (nextState == StateRemoved.class);
+    private fun keepUp(): Boolean {
+        return nextState == StateRemoved::class.java
     }
 
-    private void broadcast() {
-        OldAppBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_REMOVE);
+    private fun broadcast() {
+        AndroidBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_REMOVE)
     }
 }

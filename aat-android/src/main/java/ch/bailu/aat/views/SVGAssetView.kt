@@ -1,40 +1,33 @@
-package ch.bailu.aat.views;
+package ch.bailu.aat.views
 
-import android.widget.ImageView;
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.util.ui.AndroidAppDensity
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.service.cache.icons.ObjSVGAsset
+import ch.bailu.aat_lib.service.icons.IconMapService
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.service.cache.icons.ObjSVGAsset;
-import ch.bailu.aat_lib.service.icons.IconMapService;
+class SVGAssetView(private val scontext: ServiceContext, rid: Int) : ImageObjectView(scontext, rid) {
+    private val size: Int
 
-
-public class SVGAssetView extends ImageObjectView {
-    private final int size;
-
-    public SVGAssetView(ServiceContext sc, int rid) {
-        super(sc, rid);
-        setScaleType(ImageView.ScaleType.CENTER);
-
-         size = new AndroidAppDensity(sc.getContext()).toPixel_i(IconMapService.BIG_ICON_SIZE);
+    init {
+        scaleType = ScaleType.CENTER
+        size = AndroidAppDensity(scontext.context).toPixel_i(IconMapService.BIG_ICON_SIZE)
     }
 
-
-    public void setImageObject(final int key, final String value) {
-        scontext.insideContext(() -> setImageObject(scontext.getIconMapService().toAssetPath(key, value)));
+    fun setImageObject(key: Int, value: String?) {
+        scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(key, value)) }
     }
 
-    public void setImageObject(final GpxPointNode gpxPointNode) {
-        scontext.insideContext(() -> setImageObject(scontext.getIconMapService().toAssetPath(gpxPointNode)));
+    fun setImageObject(gpxPointNode: GpxPointNode?) {
+        scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(gpxPointNode)) }
     }
 
-    private void setImageObject(String name) {
+    private fun setImageObject(name: String?) {
         if (name != null) {
-
-            String id = ObjSVGAsset.toID(name, size);
-            setImageObject(id, new ObjSVGAsset.Factory(name, size));
+            val id = ObjSVGAsset.toID(name, size)
+            setImageObject(id, ObjSVGAsset.Factory(name, size))
         } else {
-            setImageObject();
+            setImageObject()
         }
     }
 }

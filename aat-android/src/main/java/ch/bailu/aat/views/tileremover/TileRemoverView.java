@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
+import ch.bailu.aat.dispatcher.AndroidBroadcaster;
 import ch.bailu.aat.menus.RemoveTilesMenu;
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.tileremover.TileRemoverService;
-import ch.bailu.aat.util.OldAppBroadcaster;
 import ch.bailu.aat.util.ui.AppTheme;
 import ch.bailu.aat.util.ui.UiTheme;
 import ch.bailu.aat.views.BusyViewControl;
@@ -96,16 +96,16 @@ public class TileRemoverView
         super.onAttachedToWindow();
         sdirectory.register(this);
 
-        OldAppBroadcaster.register(getContext(),
+        AndroidBroadcaster.register(getContext(),
                 onTileRemoverStopped,
                 AppBroadcaster.TILE_REMOVER_STOPPED);
 
 
-        OldAppBroadcaster.register(getContext(),
+        AndroidBroadcaster.register(getContext(),
                 onTileRemoverScan,
                 AppBroadcaster.TILE_REMOVER_SCAN);
 
-        OldAppBroadcaster.register(getContext(),
+        AndroidBroadcaster.register(getContext(),
                 onTileRemoverRemove,
                 AppBroadcaster.TILE_REMOVER_REMOVE);
 

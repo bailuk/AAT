@@ -1,48 +1,36 @@
-package ch.bailu.aat.services.sensor.internal;
+package ch.bailu.aat.services.sensor.internal
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import ch.bailu.aat.services.sensor.Connector;
-import ch.bailu.aat.services.sensor.SensorInterface;
-import ch.bailu.aat.services.sensor.list.SensorItemState;
-import ch.bailu.aat.services.sensor.list.SensorListItem;
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import androidx.annotation.RequiresApi
+import ch.bailu.aat.services.sensor.Connector
+import ch.bailu.aat.services.sensor.SensorInterface
+import ch.bailu.aat.services.sensor.list.SensorItemState
+import ch.bailu.aat.services.sensor.list.SensorListItem
 
 @RequiresApi(api = 23)
-public abstract class InternalSensorSDK23 implements SensorEventListener, SensorInterface {
+abstract class InternalSensorSDK23(
+    private val context: Context,
+    private val item: SensorListItem,
+    sensor: Sensor,
+    iid: Int
+) : SensorEventListener, SensorInterface {
+    private val name: String
+    private val address: String
+    private var registered = false
+    private val connector: Connector
 
-
-    private final Context context;
-
-    private final String name;
-    private final String address;
-
-    private boolean registered = false;
-
-    private final Connector connector;
-    private final SensorListItem item;
-
-
-    public InternalSensorSDK23(Context c, SensorListItem i, Sensor sensor, int iid) {
-        context = c;
-        item = i;
-        name = InternalSensorsSDK23.toName(sensor);
-        address = InternalSensorsSDK23.toAddress(sensor);
-        connector = new Connector(c, iid);
-
+    init {
+        name = InternalSensorsSDK23.toName(sensor)
+        address = InternalSensorsSDK23.toAddress(sensor)
+        connector = Connector(context, iid)
         if (item.lock(this)) {
-            item.setState(SensorItemState.CONNECTING);
-            item.setState(SensorItemState.CONNECTED);
-
-            connector.connect();
-
-            requestUpdates(this, sensor);
-
+            item.state = SensorItemState.CONNECTING
+            item.state = SensorItemState.CONNECTED
+            connector.connect()
+            requestUpdates(this, sensor)
         }
     }
 
@@ -50,53 +38,38 @@ public abstract class InternalSensorSDK23 implements SensorEventListener, Sensor
      * Was this instance successfully registered with the
      * SensorListItem?
      */
-    protected final boolean isLocked() {
-        return item.isLocked(this);
+    protected val isLocked: Boolean
+        get() = item.isLocked(this)
+
+    override fun getName(): String {
+        return name
     }
 
-    @Override
-    public String getName() {
-        return name;
+    override fun toString(): String {
+        return getName() + "@" + address + ":" + item.getSensorStateDescription(context)
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return getName() + "@" + address + ":" + item.getSensorStateDescription(context);
-    }
-
-
-
-    @Override
-    public void close() {
+    override fun close() {
         if (item.unlock(this)) {
-
-            connector.close();
-            cancelUpdates(this);
-
-            item.setState(SensorItemState.ENABLED);
+            connector.close()
+            cancelUpdates(this)
+            item.state = SensorItemState.ENABLED
         }
     }
 
-
-    private void requestUpdates(SensorEventListener listener, Sensor sensor) {
-        final SensorManager manager = context.getSystemService(SensorManager.class);
-
+    private fun requestUpdates(listener: SensorEventListener, sensor: Sensor) {
+        val manager = context.getSystemService(SensorManager::class.java)
         if (manager != null) {
-            manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-            registered = true;
+            manager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+            registered = true
         }
     }
 
-
-    private void cancelUpdates(SensorEventListener listener) {
-        final SensorManager manager = context.getSystemService(SensorManager.class);
-
+    private fun cancelUpdates(listener: SensorEventListener) {
+        val manager = context.getSystemService(SensorManager::class.java)
         if (registered) {
-            manager.unregisterListener(listener);
-            registered = false;
+            manager.unregisterListener(listener)
+            registered = false
         }
     }
 }
-
