@@ -9,11 +9,16 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.service.VirtualService
 
 class TileRemoverService(val serviceContext: ServiceContext) : VirtualService() {
-    private val state: StateMachine
     private var locked = false
 
-    val context: Context
-        get() = serviceContext.context
+    val state: StateMachine
+
+    val info: SelectedTileDirectoryInfo
+        get() = state.info
+
+    val summaries: SourceSummaries
+        get() = state.summaries
+
 
     private val onRemove: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -47,17 +52,9 @@ class TileRemoverService(val serviceContext: ServiceContext) : VirtualService() 
     }
 
     fun close() {
-        context.unregisterReceiver(onRemove)
-        context.unregisterReceiver(onStop)
+        serviceContext.context.unregisterReceiver(onRemove)
+        serviceContext.context.unregisterReceiver(onStop)
         state.reset()
     }
 
-    fun getState(): State {
-        return state
-    }
-
-    val info: SelectedTileDirectoryInfo
-        get() = state.info
-    val summaries: SourceSummaries
-        get() = state.summaries
 }
