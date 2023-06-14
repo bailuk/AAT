@@ -41,7 +41,7 @@ class AndroidSolidLocationProvider(val context: Context) : SolidLocationProvider
         } else GpsLocation(last, context, 1000)
     }
 
-    override fun getToolTip(): String {
+    override fun getToolTip(): String? {
         return if (!AppPermission.checkLocation(context)) {
             Res.str().p_location_provider_permission()
         } else super.getToolTip()

@@ -8,16 +8,21 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.foc.Foc
 
 class StateMachine(sc: ServiceContext) : State {
-    private var state: State = StateUnscanned(this)
+
+    @JvmField
+    val context: Context = sc.context
 
     @JvmField
     var list: TilesList? = null
+
     @JvmField
-    val summaries: SourceSummaries
+    val summaries = SourceSummaries(sc.context)
+
+    private var state: State = StateUnscanned(this)
+
     @JvmField
     var baseDirectory: Foc? = null
-    @JvmField
-    val context: Context
+
     @Synchronized
     fun set(s: State) {
         state = s
@@ -83,8 +88,6 @@ class StateMachine(sc: ServiceContext) : State {
     private var stamp: Long = 0
 
     init {
-        summaries = SourceSummaries(sc.context)
-        context = sc.context
         set(StateUnscanned(this))
     }
 
