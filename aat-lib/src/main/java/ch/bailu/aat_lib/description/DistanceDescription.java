@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.description;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -13,6 +14,7 @@ public class DistanceDescription extends FloatDescription {
     private final SolidUnit unit;
 
     public DistanceDescription(StorageInterface storage) {
+        Objects.requireNonNull(storage);
         unit = new SolidUnit(storage);
     }
 

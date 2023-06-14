@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.exception.ValidationException;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.resources.Res;
@@ -9,9 +11,9 @@ public class SolidInteger extends AbsSolidType {
     private final StorageInterface storage;
 
 
-    public SolidInteger(StorageInterface s, String k) {
-        storage = s;
-        key = k;
+    public SolidInteger(@Nonnull StorageInterface storage, @Nonnull String key) {
+        this.storage = storage;
+        this.key = key;
     }
 
 
@@ -62,4 +64,3 @@ public class SolidInteger extends AbsSolidType {
         return s.matches("-?[1-9]\\d*");
     }
 }
-

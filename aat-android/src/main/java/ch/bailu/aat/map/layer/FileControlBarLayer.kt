@@ -51,7 +51,6 @@ class FileControlBarLayer(
     private val delete: View = bar.addImageButton(R.drawable.user_trash)
     private var iterator = Iterator.NULL
     private var selectedFile: Foc? = null
-    private val storage = appContext.storage
 
     init {
         bar.add(preview)
@@ -115,6 +114,9 @@ class FileControlBarLayer(
 
     private inner class FileViewLayer(appContext: AppContext, context: Context, mc: MapContext) :
         AbsNodeViewLayer(appContext, context, mc) {
+
+        private val storage = appContext.storage
+
         val summaryData = arrayOf(
             DateDescription(),
             TimeDescription(),

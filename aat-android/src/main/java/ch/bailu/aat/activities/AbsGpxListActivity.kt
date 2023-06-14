@@ -154,9 +154,12 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             registerForContextMenu(listView)
             busyControl = BusyViewControlDbSync(contentView)
             val map: MapViewInterface = MapFactory.DEF(acontext, solidKey).list()
+
             fileControlBar =
                 FileControlBarLayer(appContext, map.mContext, acontext, appContext.summaryConfig)
+
             map.add(fileControlBar)
+
             val summary = VerticalScrollView(acontext)
             summary.add(TitleView(acontext, label, theme))
             summary.add(acontext, PathDescription(), theme, InfoID.LIST_SUMMARY)

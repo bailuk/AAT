@@ -1,5 +1,9 @@
 package ch.bailu.aat_lib.preferences.general;
 
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -19,8 +23,9 @@ public class SolidUnit extends SolidStaticIndexList {
     static public final String[] ALT_UNIT = {"m", "f", "m", "m"};
     static public final String[] PACE_UNIT = {"T/km", "T/miles", "T/m", "s/m"};
 
-    public SolidUnit(StorageInterface s) {
-        super(s, KEY, Res.str().p_unit_list());
+    public SolidUnit(@Nonnull StorageInterface storage) {
+        super(storage, KEY, Res.str().p_unit_list());
+        Objects.requireNonNull(storage);
     }
 
 
