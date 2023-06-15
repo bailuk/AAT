@@ -1,120 +1,85 @@
-package ch.bailu.aat.services.cache;
+package ch.bailu.aat.services.cache
 
-import org.mapsforge.core.graphics.Bitmap;
+import ch.bailu.aat.util.graphic.SyncBitmap
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.FileTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.OnObject
+import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract
+import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.Bitmap
 
-import ch.bailu.aat.util.graphic.SyncBitmap;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
-import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocName;
+class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
+    private val syncBitmap = SyncBitmap()
 
-public final class ObjBitmap extends ObjImageAbstract {
-    public final static ObjBitmap NULL=new ObjBitmap();
+    private constructor() : this(Foc.FOC_NULL)
 
-    private final SyncBitmap bitmap=new SyncBitmap();
-    private final Foc imageFile;
-
-
-    private ObjBitmap() {
-        this(new FocName(""));
+    override fun onInsert(sc: AppContext) {
+        load(sc.services)
+        sc.services.cacheService.addToBroadcaster(this)
     }
 
-    public ObjBitmap(Foc id) {
-        super(id.getPath());
-        imageFile = id;
+    override fun onRemove(sc: AppContext) {
+        super.onRemove(sc)
+        syncBitmap.free()
     }
 
-
-    @Override
-    public void onInsert(AppContext sc){
-        load(sc.getServices());
-
-        sc.getServices().getCacheService().addToBroadcaster(this);
+    private fun load(sc: ServicesInterface) {
+        sc.backgroundService.process(BitmapLoader(imageFile))
     }
 
-
-    @Override
-    public void onRemove(AppContext sc) {
-        super.onRemove(sc);
-        bitmap.free();
+    override fun getSize(): Long {
+        return syncBitmap.size
     }
 
-
-
-    private void load(ServicesInterface sc) {
-        sc.getBackgroundService().process(new BitmapLoader(imageFile));
+    override fun isReadyAndLoaded(): Boolean {
+        return syncBitmap.bitmap != null
     }
 
-
-    @Override
-    public long getSize() {
-        return bitmap.getSize();
+    override fun getBitmap(): Bitmap? {
+        return syncBitmap.bitmap
     }
 
-    @Override
-    public boolean isReadyAndLoaded() {
-        return getBitmap() != null;
-    }
-
-    @Override
-    public synchronized Bitmap getBitmap() {
-        return bitmap.getBitmap();
-    }
-
-    public static class Factory extends Obj.Factory {
-        @Override
-        public Obj factory(String id, AppContext sc) {
-            return new ObjBitmap(sc.toFoc(id));
+    class Factory : Obj.Factory() {
+        override fun factory(id: String, sc: AppContext): Obj {
+            return ObjBitmap(sc.toFoc(id))
         }
     }
 
-
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {
-        if (id.equals(toString())) {
-            load(sc.getServices());
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {
+        if (id == toString()) {
+            load(sc.services)
         }
     }
 
+    override fun onChanged(id: String, sc: AppContext) {}
+    private class BitmapLoader(f: Foc) : FileTask(f) {
 
-    @Override
-    public void onChanged(String id, AppContext sc) {}
+        override fun bgOnProcess(appContext: AppContext): Long {
 
-
-
-    private static class BitmapLoader extends FileTask {
-
-        public BitmapLoader(Foc f) {
-            super(f);
-        }
-
-        @Override
-        public long bgOnProcess(final AppContext appContext) {
-            final long[] size = {0};
-
-            new OnObject(appContext, toString(), ObjBitmap.class) {
-                @Override
-                public void run(Obj obj) {
-                    ObjBitmap self = (ObjBitmap) obj;
-
+            var size = 0L
+            object : OnObject(appContext, toString(), ObjBitmap::class.java) {
+                override fun run(obj: Obj) {
+                    val self = obj as ObjBitmap
                     try {
-                        self.bitmap.set(self.imageFile);
-                        size[0] =  self.bitmap.getSize();
-                    } catch (Exception e) {
-                        self.setException(e);
+                        self.syncBitmap.set(self.imageFile)
+                        size = self.syncBitmap.size
+                    } catch (e: Exception) {
+                        self.exception = e
                     }
-
-                    appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE,
-                            self.imageFile.getPath());
-
+                    appContext.broadcaster.broadcast(
+                        AppBroadcaster.FILE_CHANGED_INCACHE,
+                        self.imageFile.path
+                    )
                 }
-            };
-            return size[0];
+            }
+            return size
         }
+    }
+
+    companion object {
+        val NULL = ObjBitmap()
     }
 }

@@ -1,277 +1,207 @@
-package ch.bailu.aat.services.cache.osm_features;
+package ch.bailu.aat.services.cache.osm_features
 
-import java.io.IOException;
-import java.util.Locale;
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.xml.parser.util.Stream
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFactory
+import java.io.IOException
 
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.xml.parser.util.Stream;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocFactory;
+class MapFeaturesParser(
+    assets: FocFactory,
+    onParseFile: (String) -> Boolean,
+    private val onHaveFeature: (MapFeaturesParser)->Unit
+) {
+    private val out = StringBuilder()
+    private val outName = StringBuilder()
+    private val outKey = StringBuilder()
+    private val outValue = StringBuilder()
 
-public final class MapFeaturesParser {
-    private static final String MAP_FEATURES_ASSET = "map-features";
+    var summarySearchKey = ""
+        private set
 
-    private final OnHaveFeature haveFeature;
+    var summaryKey = ""
+        private set
 
-    private final StringBuilder out = new StringBuilder();
+    var id = 0
+        private set
 
-    private final StringBuilder outName = new StringBuilder();
-    private final StringBuilder outKey = new StringBuilder();
-    private final StringBuilder outValue = new StringBuilder();
-
-    private String outSummarySearchKey = "";
-    private String outSummaryKey = "";
-
-    private int id = 0;
-
-    public MapFeaturesParser(FocFactory assets, OnHaveFeature hf) {
-        haveFeature = hf;
-
-        assets.toFoc(MAP_FEATURES_ASSET).foreach(child -> {
-            if (haveFeature.onParseFile(child.toString())) {
+    init {
+        assets.toFoc(MAP_FEATURES_ASSET).foreach { child: Foc ->
+            if (onParseFile(child.toString())) {
                 try {
-                    parseFeatures(child);
-                } catch (IOException e) {
-                    AppLog.e(MapFeaturesParser.this, e);
+                    parseFeatures(child)
+                } catch (e: IOException) {
+                    AppLog.e(this@MapFeaturesParser, e)
                 }
             }
-        });
-    }
-
-
-    public String getSummarySearchKey() {
-        return outSummarySearchKey;
-    }
-
-    public String getSumaryKey() {
-        return outSummaryKey;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-
-    public interface OnHaveFeature {
-        boolean onParseFile(String file);
-        void onHaveFeature(MapFeaturesParser parser);
-    }
-
-
-
-
-
-    public StringBuilder addHtml(StringBuilder b) {
-        b.append(out);
-        return b;
-    }
-
-
-    public String getName() {
-        return outName.toString();
-    }
-
-    public String getKey() {
-        return outKey.toString();
-    }
-
-    public String getValue() {
-        return outValue.toString();
-    }
-
-
-
-    private void parseFeatures(Foc file) throws IOException {
-        Stream in = new Stream(file);
-
-        parseSummary(in);
-        haveSummary();
-
-        while(!in.haveEOF()) {
-            parseFeature(in);
-            haveFeature();
         }
-
-        in.close();
     }
 
-
-
-    private void parseFeature(Stream in) throws IOException {
-        parseKeyValue(in);
-        parseToEndOfParagraph(in);
+    fun addHtml(b: StringBuilder): StringBuilder {
+        b.append(out)
+        return b
     }
 
+    val name: String
+        get() = outName.toString()
+    val key: String
+        get() = outKey.toString()
+    val value: String
+        get() = outValue.toString()
 
-    private void parseKeyValue(Stream in) throws IOException {
+    @Throws(IOException::class)
+    private fun parseFeatures(file: Foc) {
+        val stream = Stream(file)
+        parseSummary(stream)
+        haveSummary()
+        while (!stream.haveEOF()) {
+            parseFeature(stream)
+            haveFeature()
+        }
+        stream.close()
+    }
+
+    @Throws(IOException::class)
+    private fun parseFeature(stream: Stream) {
+        parseKeyValue(stream)
+        parseToEndOfParagraph(stream)
+    }
+
+    @Throws(IOException::class)
+    private fun parseKeyValue(`in`: Stream) {
         // <b><a ...>key</a></b>=<a ...>value</a>
-        parseBoldName(in, outKey);
-        parseBoldName(in, outValue);
+        parseBoldName(`in`, outKey)
+        parseBoldName(`in`, outValue)
     }
 
-
-    private void parseBoldName(Stream in, StringBuilder outString) throws IOException {
-        int state=0;
-
-        while(state<4) {
-            in.read();
-
-            if (in.haveEOF()) {
-                break;
-            } else if (in.haveA('<')) {
-                state++;
-            } else if (in.haveA('b') && state==1) {
-                state++;
-            } else if (in.haveA('>') && state==2) {
-                state++;
-            } else if (state==3) {
-                parseName(in, outString);
-                state++;
+    @Throws(IOException::class)
+    private fun parseBoldName(`in`: Stream, outString: StringBuilder) {
+        var state = 0
+        while (state < 4) {
+            `in`.read()
+            if (`in`.haveEOF()) {
+                break
+            } else if (`in`.haveA('<'.code)) {
+                state++
+            } else if (`in`.haveA('b'.code) && state == 1) {
+                state++
+            } else if (`in`.haveA('>'.code) && state == 2) {
+                state++
+            } else if (state == 3) {
+                parseName(`in`, outString)
+                state++
             } else {
-                state=0;
+                state = 0
             }
-
-            out.append((char)in.get());
+            out.append(`in`.get().toChar())
         }
     }
 
-
-    private void parseName(Stream in, StringBuilder outString) throws IOException {
-        int state=0;
-        int lock=0;
-
-        while(state < 3) {
-
-            if (in.haveEOF()) {
-                break;
-
-            } else if (in.haveA('<') && state==0) {
-                state++;
-                lock++;
-
-            } else if (in.haveA('/') && state==1) {
-                state++;
-
-            } else if (in.haveA('b') && state==2) {
-                state++;
-
+    @Throws(IOException::class)
+    private fun parseName(stream: Stream, outString: StringBuilder) {
+        var state = 0
+        var lock = 0
+        while (state < 3) {
+            if (stream.haveEOF()) {
+                break
+            } else if (stream.haveA('<'.code) && state == 0) {
+                state++
+                lock++
+            } else if (stream.haveA('/'.code) && state == 1) {
+                state++
+            } else if (stream.haveA('b'.code) && state == 2) {
+                state++
             } else {
-                if (in.haveA('>')) {
-                    lock--;
+                if (stream.haveA('>'.code)) {
+                    lock--
                 }
-                state=0;
+                state = 0
             }
-
-            if (lock < 1 && !in.haveA('>') )
-                outString.append((char)in.get());
-
-            out.append((char)in.get());
-
-            in.read();
+            if (lock < 1 && !stream.haveA('>'.code)) outString.append(stream.get().toChar())
+            out.append(stream.get().toChar())
+            stream.read()
         }
     }
 
-
-    private void parseString(Stream in, StringBuilder outString) throws IOException {
-
+    @Throws(IOException::class)
+    private fun parseString(`in`: Stream, outString: StringBuilder) {
         while (true) {
-            if (in.haveEOF() || in.haveA('<')) {
-                break;
-
-            } else if (in.haveCharacter()) {
-                outString.append((char)in.get());
+            if (`in`.haveEOF() || `in`.haveA('<'.code)) {
+                break
+            } else if (`in`.haveCharacter()) {
+                outString.append(`in`.get().toChar())
             }
-
-            out.append((char)in.get());
-
-            in.read();
+            out.append(`in`.get().toChar())
+            `in`.read()
         }
     }
 
-
-    private void parseSummary(Stream in) throws IOException {
-        parseSummaryHeading(in);
-        parseToEndOfParagraph(in);
-
+    @Throws(IOException::class)
+    private fun parseSummary(`in`: Stream) {
+        parseSummaryHeading(`in`)
+        parseToEndOfParagraph(`in`)
     }
 
-
-    private void haveSummary() {
-
-        outSummaryKey = outName.toString().toLowerCase(Locale.ROOT);
-        outSummarySearchKey = "_" + outSummaryKey;
-
-
-        haveFeature.onHaveFeature(this);
-        resetFeature();
+    private fun haveSummary() {
+        summaryKey = outName.toString().lowercase()
+        summarySearchKey = "_$summaryKey"
+        onHaveFeature(this)
+        resetFeature()
     }
 
-    private void haveFeature() {
-        if (outKey.length() > 0)
-            haveFeature.onHaveFeature(this);
-
-        resetFeature();
+    private fun haveFeature() {
+        if (outKey.isNotEmpty()) onHaveFeature(this)
+        resetFeature()
     }
 
-
-    private void resetFeature() {
-        id++;
-        out.setLength(0);
-        outKey.setLength(0);
-        outValue.setLength(0);
-        outName.setLength(0);
+    private fun resetFeature() {
+        id++
+        out.setLength(0)
+        outKey.setLength(0)
+        outValue.setLength(0)
+        outName.setLength(0)
     }
 
-
-    private void parseToEndOfParagraph(Stream in) throws IOException {
-        int state=0;
-
-        while(state < 4) {
-            in.read();
-
-            if (in.haveEOF()) {
-                break;
-
-            } else if (in.haveA('<') && state==0) {
-                state++;
-
-            } else if (in.haveA('/') && state==1) {
-                state++;
-
-            } else if (in.haveA('p') && state==2) {
-                state++;
-
-            } else if (in.haveA('>') && state == 3) {
-                state++;
-
+    @Throws(IOException::class)
+    private fun parseToEndOfParagraph(stream: Stream) {
+        var state = 0
+        while (state < 4) {
+            stream.read()
+            if (stream.haveEOF()) {
+                break
+            } else if (stream.haveA('<'.code) && state == 0) {
+                state++
+            } else if (stream.haveA('/'.code) && state == 1) {
+                state++
+            } else if (stream.haveA('p'.code) && state == 2) {
+                state++
+            } else if (stream.haveA('>'.code) && state == 3) {
+                state++
             } else {
-                state=0;
-
+                state = 0
             }
-
-            out.append((char)in.get());
+            out.append(stream.get().toChar())
         }
     }
 
-
-    private void parseSummaryHeading(Stream in) throws IOException {
-        int state=0;
-
-        while(state<2) {
-            in.read();
-
-            if (in.haveEOF()) {
-                break;
-
-            } else if (in.haveA('>') ) {
-                state=1;
+    @Throws(IOException::class)
+    private fun parseSummaryHeading(`in`: Stream) {
+        var state = 0
+        while (state < 2) {
+            `in`.read()
+            if (`in`.haveEOF()) {
+                break
+            } else if (`in`.haveA('>'.code)) {
+                state = 1
             } else if (state == 1) {
-                parseString(in, outName);
-                state=2;
+                parseString(`in`, outName)
+                state = 2
             }
-
-            out.append((char)in.get());
+            out.append(`in`.get().toChar())
         }
+    }
+
+    companion object {
+        private const val MAP_FEATURES_ASSET = "map-features"
     }
 }

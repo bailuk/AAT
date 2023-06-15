@@ -1,150 +1,101 @@
-package ch.bailu.aat.services.cache.osm_features;
+package ch.bailu.aat.services.cache.osm_features
 
+import ch.bailu.aat.preferences.map.SolidOsmFeaturesList.Companion.getKeyList
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.lib.filter_list.AbsFilterList
+import ch.bailu.aat_lib.lib.filter_list.ListEntry
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.OnObject
 
-import java.util.ArrayList;
-import java.util.Locale;
+class ObjMapFeatures(id: String) : Obj(id) {
+    private var isLoaded = false
+    private var size: Long = 0
 
-import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat_lib.lib.filter_list.AbsFilterList;
-import ch.bailu.aat_lib.lib.filter_list.KeyList;
-import ch.bailu.aat_lib.lib.filter_list.ListEntry;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
+    private inner class List {
+        private val list = ArrayList<MapFeaturesListEntry>(50)
 
-public final class ObjMapFeatures extends Obj {
-
-    public static final String ID_FULL = ObjMapFeatures.class.getSimpleName();
-    public static final String ID_SMALL = ObjMapFeatures.class.getSimpleName()+"/s";
-
-    private boolean isLoaded = false;
-    private long size = 0;
-
-    private class List {
-        private final ArrayList<MapFeaturesListEntry> list = new ArrayList<>(50);
-
-        public synchronized void clear() {
-            list.clear();
-        }
-
-        public synchronized void sync(AbsFilterList<ListEntry> f) {
-            for (int i = f.sizeAll(); i < list.size(); i++) {
-                f.add(list.get(i));
+        @Synchronized
+        fun sync(f: AbsFilterList<ListEntry>) {
+            for (i in f.sizeAll() until list.size) {
+                f.add(list[i])
             }
         }
 
-        public synchronized void add(MapFeaturesListEntry d) {
-            list.add(d);
+        @Synchronized
+        fun add(d: MapFeaturesListEntry) {
+            list.add(d)
         }
     }
 
-    private final List list = new List();
+    private val list: List = List()
 
-    public ObjMapFeatures(String ID) {
-        super(ID);
+    override fun onInsert(sc: AppContext) {
+        super.onInsert(sc)
+        sc.services.backgroundService.process(ListLoader(id))
     }
 
-    @Override
-    public void onInsert(AppContext sc) {
-        super.onInsert(sc);
-
-        sc.getServices().getBackgroundService().process(new ListLoader(getID()));
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onChanged(id: String, sc: AppContext) {}
+    override fun getSize(): Long {
+        return size
     }
 
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
-
-    @Override
-    public void onChanged(String id, AppContext sc) {}
-
-    @Override
-    public long getSize() {
-        return size;
+    fun syncList(filterList: AbsFilterList<ListEntry>) {
+        list.sync(filterList)
     }
 
-    public void syncList(AbsFilterList<ListEntry> filterList) {
-        list.sync(filterList);
+    override fun isReadyAndLoaded(): Boolean {
+        return isLoaded
     }
 
-    @Override
-    public boolean isReadyAndLoaded() {
-        return isLoaded;
-    }
+    class ListLoader(private val ID: String) : BackgroundTask() {
+        private var doBroadcast = 0
 
-    public static class ListLoader extends BackgroundTask implements MapFeaturesParser.OnHaveFeature {
-        private final String ID;
+        override fun bgOnProcess(appContext: AppContext): Long {
+            var size = 0L
 
-        private AppContext appContext;
-
-        private ObjMapFeatures owner = null;
-        public ListLoader(String id) {
-            ID = id;
-        }
-
-        public KeyList keyList;
-
-        private int doBroadcast = 0;
-
-        @Override
-        public long bgOnProcess(final AppContext appContext) {
-            ListLoader.this.appContext = appContext;
-            final long[] size = {0};
-            new OnObject(appContext, ID, ObjMapFeatures.class) {
-                @Override
-                public void run(Obj handle) {
-                    owner = (ObjMapFeatures) handle;
-
-                    parseMapFeatures();
-
-                    owner.isLoaded = true;
-                    ListLoader.this.appContext.getBroadcaster().broadcast(
-                            AppBroadcaster.FILE_CHANGED_INCACHE, ID);
-
-                    size[0] = owner.size;
-                    owner = null;
-                    ListLoader.this.appContext = null;
+            object : OnObject(appContext, ID, ObjMapFeatures::class.java) {
+                override fun run(handle: Obj) {
+                    if (handle is ObjMapFeatures) {
+                        parseMapFeatures(appContext, handle)
+                        handle.isLoaded = true
+                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
+                        size = handle.size
+                    }
                 }
-            };
-            return size[0];
-        }
-
-        private void parseMapFeatures() {
-            keyList = SolidOsmFeaturesList.getKeyList(ID);
-            new MapFeaturesParser(appContext.getAssets(), this);
-        }
-
-        @Override
-        public boolean onParseFile(String file) {
-            return keyList.isEmpty() || keyList.hasKey(file.toLowerCase(Locale.ROOT));
-        }
-
-        @Override
-        public void onHaveFeature(MapFeaturesParser parser) {
-            MapFeaturesListEntry d = new MapFeaturesListEntry(parser);
-
-            owner.size += d.length() * 2L;
-            owner.list.add(d);
-
-            doBroadcast++;
-            if (doBroadcast > 10) {
-                doBroadcast = 0;
-                appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
             }
+            return size
+        }
+
+        private fun parseMapFeatures(appContext: AppContext, handle: ObjMapFeatures) {
+            val keyList = getKeyList(ID)
+
+            MapFeaturesParser(appContext.assets, { file ->
+                    keyList.isEmpty || keyList.hasKey(file.lowercase())
+                },
+                { parser ->
+                    val d = MapFeaturesListEntry(parser)
+                    handle.size += d.length() * 2L
+                    handle.list.add(d)
+                    doBroadcast++
+                    if (doBroadcast > 10) {
+                        doBroadcast = 0
+                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
+                }
+            })
         }
     }
 
-    public static class Factory extends Obj.Factory {
-        final String ID;
-
-        public Factory(String id) {
-            ID = id;
+    class Factory(val ID: String) : Obj.Factory() {
+        override fun factory(id: String, cs: AppContext): Obj {
+            return ObjMapFeatures(ID)
         }
+    }
 
-        @Override
-        public Obj factory(String id, AppContext cs) {
-            return new ObjMapFeatures(ID);
-        }
+    companion object {
+        val ID_FULL: String = ObjMapFeatures::class.java.simpleName
+        val ID_SMALL = ObjMapFeatures::class.java.simpleName + "/s"
     }
 }

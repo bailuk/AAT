@@ -1,106 +1,81 @@
-package ch.bailu.aat.services.cache.osm_features;
+package ch.bailu.aat.services.cache.osm_features
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.gpx.attributes.Keys
+import ch.bailu.aat_lib.lib.filter_list.KeyList
+import ch.bailu.aat_lib.lib.filter_list.ListEntry
 
-import ch.bailu.aat_lib.lib.filter_list.KeyList;
-import ch.bailu.aat_lib.lib.filter_list.ListEntry;
-import ch.bailu.aat_lib.gpx.attributes.Keys;
+class MapFeaturesListEntry(parser: MapFeaturesParser) : ListEntry() {
+    private val isSummary: Boolean
+    private val name: String
+    private var key: String
+    val osmValue: String
+    private val summarySearchKey: String
+    val html: String
+    private val keys: KeyList
+    private val id: Int
 
+    init {
+        val k = parser.key
+        isSummary = k.isEmpty()
 
-public final class MapFeaturesListEntry extends ListEntry {
-    private final boolean isSummary;
-    private final String name, key, value, summarySearchKey, html;
-
-    private final KeyList keys;
-    private final int id;
-
-    public MapFeaturesListEntry(MapFeaturesParser parser) {
-
-        String k = parser.getKey();
-        isSummary = k.isEmpty();
-        name = parser.getName();
-
-        if (isSummary) {
-            key = parser.getSumaryKey();
+        name = parser.name
+        key = if (isSummary) {
+            parser.summaryKey
         } else {
-            key = k;
+            k
         }
 
-        value = parser.getValue();
-        id = parser.getId();
-        html = parser.addHtml(new StringBuilder()).toString();
-
-        summarySearchKey = parser.getSummarySearchKey();
-        keys = new KeyList(summarySearchKey);
-
-        if (!isSummary())
-            keys.addKeys(html);
-
+        osmValue = parser.value
+        id = parser.id
+        html = parser.addHtml(StringBuilder()).toString()
+        summarySearchKey = parser.summarySearchKey
+        keys = KeyList(summarySearchKey)
+        if (!isSummary()) keys.addKeys(html)
     }
 
-    @Override
-    public boolean isSelected() {
-        return false;
+    override fun isSelected(): Boolean {
+        return false
     }
 
-    @Override
-    public boolean isSummary() {
-        return isSummary;
+    override fun isSummary(): Boolean {
+        return isSummary
     }
 
-    @Override
-    public KeyList getKeys() {
-        return keys;
+    override fun getKeys(): KeyList {
+        return keys
     }
 
-    @Override
-    public String getSummaryKey() {
-        return summarySearchKey;
+    override fun getSummaryKey(): String {
+        return summarySearchKey
     }
 
-    public int getID() {
-        return id;
+    override fun getID(): Int {
+        return id
     }
 
-    @Override
-    public void setSelected(boolean selected) {}
-
-    public int length() {
-        return name.length() +
-                key.length() +
-                html.length() +
-                keys.length();
+    override fun setSelected(selected: Boolean) {}
+    fun length(): Int {
+        return name.length +
+                key.length +
+                html.length +
+                keys.length()
     }
 
-    public String getDefaultQuery() {
-        if (!key.isEmpty()) {
-            if (!value.isEmpty()) {
-                return "["+ key +"=\""+value+"\"];";
+    val defaultQuery: String
+        get() = if (key.isNotEmpty()) {
+            if (osmValue.isNotEmpty()) {
+                "[$key=\"$osmValue\"];"
+            } else "[$key];"
+        } else ""
+    val variants: ArrayList<String>
+        get() {
+            val list = ArrayList<String>(10)
+            list.add(defaultQuery)
+            if (!isSummary) {
+                list.add("[$key~\"$osmValue\",i];")
             }
-            return "["+key+"];";
+            return list
         }
-        return "";
-    }
-
-    public ArrayList<String> getVariants() {
-        ArrayList<String> list = new ArrayList<>(10);
-
-        list.add(getDefaultQuery());
-        if (!isSummary) {
-            list.add("["+ key +"~\"" + value + "\",i];");
-        }
-        return list;
-    }
-
-    public int getOsmKey() {
-        return Keys.toIndex(key);
-    }
-
-    public String getOsmValue() {
-        return value;
-    }
-
-    public String getHtml() {
-        return html;
-    }
+    val osmKey: Int
+        get() = Keys.toIndex(key)
 }
