@@ -1,42 +1,34 @@
-package ch.bailu.aat.services.location;
+package ch.bailu.aat.services.location
 
-import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
+import android.content.Context
+import android.location.Location
+import android.location.LocationManager
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.location.SolidGpsTimeFix
+import ch.bailu.aat.preferences.location.SolidGpsTimeFix.Companion.fix
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.location.LocationInformation
+import ch.bailu.aat_lib.service.location.LocationStackItem
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.location.LocationInformation;
-import ch.bailu.aat_lib.service.location.LocationStackItem;
+class GpsLocation(i: LocationStackItem?, context: Context, interval: Int) :
+    RealLocation(i, context, LocationManager.GPS_PROVIDER, interval) {
+    private var fixTime: Boolean = SolidGpsTimeFix(Storage(context)).value
 
-public final class GpsLocation extends RealLocation {
 
-    private boolean fixTime;
-
-    public GpsLocation(LocationStackItem i, Context c, int interval) {
-        super(i, c, LocationManager.GPS_PROVIDER, interval);
-        fixTime = new SolidGpsTimeFix(new Storage(c)).getValue();
+    override fun factoryLocationInformation(location: Location, state: Int): LocationInformation {
+        val result: LocationInformation = GpsLocationInformation(location, state)
+        fixGpsTime(location, result.creationTime)
+        return result
     }
 
-    @Override
-    protected LocationInformation factoryLocationInformation(Location location, int state) {
-        LocationInformation l = new GpsLocationInformation(location, state);
-        fixGpsTime(location, l.getCreationTime());
-
-        return l;
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        fixTime = SolidGpsTimeFix(storage).value
     }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
-        fixTime = new SolidGpsTimeFix(storage).getValue();
-    }
-
-    private void fixGpsTime(Location l, long systemTime) {
-        long time = SolidGpsTimeFix.fix(l.getTime(), systemTime);
-
+    private fun fixGpsTime(location: Location, systemTime: Long) {
+        val time = fix(location.time, systemTime)
         if (fixTime) {
-            l.setTime(time);
+            location.time = time
         }
     }
 }

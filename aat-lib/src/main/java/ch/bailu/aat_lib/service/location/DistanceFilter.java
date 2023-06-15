@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxDeltaHelper;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.SolidDistanceFilter;
@@ -16,7 +18,7 @@ public final class DistanceFilter extends LocationStackChainedItem {
     public void close() {}
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
         if (oldLocation==null || notTooClose(oldLocation,location)) {
             oldLocation=location;
             super.passLocation(location);

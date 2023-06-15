@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger;
 
@@ -13,7 +15,7 @@ public final class MissingTrigger extends LocationStackChainedItem {
 
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
         stamp=location.getTimeStamp();
         super.passLocation(location);
 

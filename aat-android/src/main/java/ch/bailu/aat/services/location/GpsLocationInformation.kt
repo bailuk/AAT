@@ -1,28 +1,15 @@
-package ch.bailu.aat.services.location;
+package ch.bailu.aat.services.location
 
-import android.location.Location;
+import android.location.Location
 
+class GpsLocationInformation(location: Location, state: Int) : RealLocationInformation(location, state) {
+    private val time = System.currentTimeMillis()
 
-public final class GpsLocationInformation extends RealLocationInformation {
-    private final long time = System.currentTimeMillis();
-
-    public GpsLocationInformation(Location l, int s) {
-        super(l, s);
+    override fun getCreationTime(): Long {
+        return time
     }
 
-
-    @Override
-    public long getCreationTime() {
-        return time;
+    override fun isFromGPS(): Boolean {
+        return true
     }
-
-
-    @Override
-    public boolean isFromGPS() {
-        return true;
-    }
-
-
-
-
 }

@@ -61,7 +61,10 @@ class AndroidSolidLocationProvider(val context: Context) : SolidLocationProvider
                 providerList.add(c.getString(R.string.p_location_gpsnet))
                 providerList.add(c.getString(R.string.p_location_network))
                 providerList.add(c.getString(R.string.p_location_mock))
-                providerList.addAll(providers)
+
+                if (providers is List<String>) {
+                    providerList.addAll(providers)
+                }
             }
             return providerList
         }

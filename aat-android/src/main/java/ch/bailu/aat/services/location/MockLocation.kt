@@ -1,101 +1,92 @@
-package ch.bailu.aat.services.location;
+package ch.bailu.aat.services.location
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.AndroidTimer
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem
+import ch.bailu.aat_lib.service.location.LocationStackItem
+import ch.bailu.aat_lib.service.location.MockLocationInformation
+import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
+import ch.bailu.foc.Foc
+import ch.bailu.foc_android.FocAndroid
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.AndroidTimer;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile;
-import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
-import ch.bailu.aat_lib.service.location.LocationStackItem;
-import ch.bailu.aat_lib.service.location.MockLocationInformation;
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc_android.FocAndroid;
+/**
+ * TODO move to lib and merge with ThreadedMockLocation
+ */
+class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem(i), Runnable {
+    private var list: GpxList = GpxList(GpxType.TRACK, GpxListAttributes.NULL)
+    private var node: GpxPointNode? = null
+    private var state = StateID.NOSERVICE
+    private var interval = INTERVAL
+    private val file: Foc
 
-public final class MockLocation extends LocationStackChainedItem implements Runnable{
+    private val timer: AndroidTimer = AndroidTimer()
 
-    private static final long INTERVAL=1000L;
-
-    private GpxList list;
-    private GpxPointNode node;
-    private int state = StateID.NOSERVICE;
-
-    private long interval = INTERVAL;
-    private final Foc file;
-
-    private final AndroidTimer timer;
-
-    public MockLocation(Context c, LocationStackItem i) {
-        super(i);
-
-        list = new GpxList(GpxType.TRACK, GpxListAttributes.NULL);
-        timer = new AndroidTimer();
-
-        file = FocAndroid.factory(c,(new SolidMockLocationFile(new Storage(c)).getValueAsString()));
-        list = new GpxListReader(file, AutoPause.NULL).getGpxList();
-
-        timer.kick(INTERVAL, this);
-        passState(StateID.WAIT);
-
+    companion object {
+        private const val INTERVAL = 1000L
     }
 
-
-    @Override
-    public void close() {
-        timer.cancel();
+    init {
+        file = FocAndroid.factory(c, SolidMockLocationFile(Storage(c)).valueAsString)
+        list = GpxListReader(file, AutoPause.NULL).gpxList
+        timer.kick(INTERVAL, this)
+        passState(StateID.WAIT)
     }
 
-    @Override
-    public void run() {
+    override fun close() {
+        timer.cancel()
+    }
+
+    override fun run() {
         if (sendLocation()) {
-            kickTimer();
+            kickTimer()
         } else {
-            node = (GpxPointNode) list.getPointList().getFirst();
+            node = list.pointList.first as GpxPointNode
             if (sendLocation()) {
-                passState(StateID.ON);
-                kickTimer();
+                passState(StateID.ON)
+                kickTimer()
             } else {
-                passState(StateID.OFF);
+                passState(StateID.OFF)
             }
         }
     }
 
-    private boolean sendLocation() {
-        if (node != null) {
-            passLocation(new MockLocationInformation(file, state, node));
+    private fun sendLocation(): Boolean {
+        val currentNode = node
+        if (currentNode != null) {
+            passLocation(MockLocationInformation(file, state, node))
 
-            node = (GpxPointNode)node.getNext();
-            if (node != null) {
-                interval = node.getTimeDelta();
+            val nextNode = currentNode.next
+            if (nextNode is GpxPointNode) {
+                interval = nextNode.timeDelta
+                node = nextNode
+            } else {
+                node = null
             }
-            return true;
+            return true
         }
-
-        return false;
+        return false
     }
 
-    private void kickTimer() {
-        if (interval <= 0 || interval > 10*INTERVAL) {
-            timer.kick(INTERVAL,this);
-
+    private fun kickTimer() {
+        if (interval <= 0 || interval > 10 * INTERVAL) {
+            timer.kick(INTERVAL, this)
         } else {
-            timer.kick(interval, this);
-
+            timer.kick(interval, this)
         }
     }
 
-
-    @Override
-    public void passState(int s) {
+    override fun passState(s: Int) {
         if (state != s) {
-            state = s;
-            super.passState(s);
+            state = s
+            super.passState(s)
         }
     }
 }

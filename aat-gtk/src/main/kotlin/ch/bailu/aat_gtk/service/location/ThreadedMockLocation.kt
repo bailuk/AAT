@@ -13,15 +13,21 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 
 
+/**
+ * TODO move to lib and merge with MockLocation
+ */
 class ThreadedMockLocation(
     locationService: LocationServiceInterface,
     item: LocationStackItem,
     storage: StorageInterface,
     private val foc: FocFactory
 ) :
+
     LocationStackChainedItem(item) {
     private var serviceState = StateID.NOSERVICE
+
     private val innerThread = InnerThread()
+
     private val lock = locationService
     private val smock = SolidMockLocationFile(storage)
     private var reload = true

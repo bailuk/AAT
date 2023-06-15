@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.coordinates.LatLongInterface;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
@@ -39,7 +41,7 @@ public final class DirtyLocation extends LocationStackChainedItem {
 
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
         locationInformation=location;
         super.passLocation(location);
         broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED);

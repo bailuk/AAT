@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
@@ -31,11 +33,11 @@ public final class AdjustGpsAltitude extends LocationStackChainedItem {
     }
 
     @Override
-    public void passLocation(LocationInformation l) {
-        if (altitude.set(l) && enabled) {
-            l.setAltitude(l.getAltitude() + adjust);
+    public void passLocation(@Nonnull LocationInformation location) {
+        if (altitude.set(location) && enabled) {
+            location.setAltitude(location.getAltitude() + adjust);
         }
-        super.passLocation(l);
+        super.passLocation(location);
     }
 
     @Override

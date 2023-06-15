@@ -1,71 +1,49 @@
-package ch.bailu.aat.services.location;
+package ch.bailu.aat.services.location
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.service.location.LocationInformation
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem
+import ch.bailu.aat_lib.service.location.LocationStackItem
 
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.service.location.LocationInformation;
-import ch.bailu.aat_lib.service.location.LocationStackChainedItem;
-import ch.bailu.aat_lib.service.location.LocationStackItem;
+class GpsOrNetworkLocation(i: LocationStackItem?, context: Context, interval: Int) :
+    LocationStackChainedItem(i) {
+    private val network: NetworkLocation
+    private val gps: GpsLocation
+    private var haveGps = false
 
-public final class GpsOrNetworkLocation extends LocationStackChainedItem {
+    init {
+        network = NetworkLocation(object : LocationStackItem() {
+            override fun passState(state: Int) {}
+            override fun passLocation(location: LocationInformation) {
+                if (!haveGps) this@GpsOrNetworkLocation.passLocation(location)
+            }
+        }, context, interval * 5)
 
-    private final NetworkLocation network;
-    private final GpsLocation gps;
-
-
-    private boolean haveGps=false;
-
-
-    public GpsOrNetworkLocation(LocationStackItem i, Context c, int interval) {
-        super(i);
-
-        network = new NetworkLocation(new LocationStackItem() {
-
-            @Override
-            public void passState(int state) {}
-
-            @Override
-            public void passLocation(LocationInformation location) {
-                if (!haveGps) GpsOrNetworkLocation.this.passLocation(location);
+        gps = GpsLocation(object : LocationStackItem() {
+            override fun passState(state: Int) {
+                haveGps = state == StateID.ON
+                this@GpsOrNetworkLocation.passState(state)
             }
 
-        }, c, interval * 5);
-
-        gps = new GpsLocation(new LocationStackItem() {
-            @Override
-            public void passState(int state) {
-                haveGps =  (state == StateID.ON);
-                GpsOrNetworkLocation.this.passState(state);
+            override fun passLocation(location: LocationInformation) {
+                this@GpsOrNetworkLocation.passLocation(location)
             }
-
-
-            @Override
-            public void passLocation(LocationInformation location) {
-                GpsOrNetworkLocation.this.passLocation(location);
-            }
-
-        }, c, interval);
-
+        }, context, interval)
     }
 
-
-
-    @Override
-    public void close() {
-        super.close();
-        network.close();
-        gps.close();
+    override fun close() {
+        super.close()
+        network.close()
+        gps.close()
     }
 
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-        super.appendStatusText(builder);
-
-        network.appendStatusText(builder);
-        gps.appendStatusText(builder);
-
+    override fun appendStatusText(builder: StringBuilder) {
+        super.appendStatusText(builder)
+        network.appendStatusText(builder)
+        gps.appendStatusText(builder)
         if (haveGps) {
-            builder.append("have GPS");
+            builder.append("have GPS")
         }
     }
 }
