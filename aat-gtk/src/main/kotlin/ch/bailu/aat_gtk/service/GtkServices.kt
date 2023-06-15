@@ -71,8 +71,8 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
                 return null
             }
 
-            override fun getInformation(iid: Int): GpxInformation? {
-                return null
+            override fun getInfo(iid: Int): GpxInformation {
+                return GpxInformation.NULL
             }
 
             override fun updateConnections() {}

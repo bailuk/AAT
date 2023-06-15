@@ -31,8 +31,8 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
             }
         }
     private val onSensorDisconnected =
-        ch.bailu.aat_lib.dispatcher.BroadcastReceiver { args: Array<String?>? -> updateConnections() }
-    private val onSensorReconnect = ch.bailu.aat_lib.dispatcher.BroadcastReceiver { args: Array<String?>? ->
+        ch.bailu.aat_lib.dispatcher.BroadcastReceiver { _: Array<String?>? -> updateConnections() }
+    private val onSensorReconnect = ch.bailu.aat_lib.dispatcher.BroadcastReceiver { _: Array<String?>? ->
         updateConnections()
         scan() // rescan to get them in cache if they were not
     }
@@ -92,8 +92,13 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
     }
 
     @Synchronized
-    override fun getInformation(iid: Int): GpxInformation? {
-        return getInformationOrNull(iid)
+    override fun getInfo(iid: Int): GpxInformation {
+        val info = getInformationOrNull(iid)
+        return if (info is GpxInformation) {
+            info
+        } else {
+            GpxInformation.NULL
+        }
     }
 
     @Synchronized

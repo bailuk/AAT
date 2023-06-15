@@ -29,6 +29,6 @@ class SensorSource(private val services: ServicesInterface, private val broadcas
     }
 
     override fun getInfo(): GpxInformation {
-        return services.sensorService.getInformation(iid)
+        return services.sensorService.getInfo(iid)
     }
 }

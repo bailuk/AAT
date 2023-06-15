@@ -12,13 +12,8 @@ import java.io.UnsupportedEncodingException
 abstract class DownloadApi : OsmApiConfiguration() {
     private var task = BackgroundTask.NULL
 
-    private class ApiQueryTask(
-        c: AppContext?,
-        source: String?,
-        target: Foc?,
-        private val queryString: String,
-        private val queryFile: Foc
-    ) : DownloadTask(source, target, c!!.downloadConfig) {
+    private class ApiQueryTask(c: AppContext, source: String, target: Foc, private val queryString: String, private val queryFile: Foc) : DownloadTask(source, target, c.downloadConfig) {
+
         override fun bgOnProcess(sc: AppContext): Long {
             return try {
                 val size = bgDownload()
@@ -59,6 +54,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
     }
 
     protected abstract val queryString: String
-    override val exception: Exception
+
+    override val exception: Exception?
         get() = task.exception
 }
