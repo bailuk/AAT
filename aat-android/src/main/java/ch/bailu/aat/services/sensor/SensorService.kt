@@ -7,6 +7,7 @@ import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.list.SensorList
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -30,8 +31,7 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
                 }
             }
         }
-    private val onSensorDisconnected =
-        ch.bailu.aat_lib.dispatcher.BroadcastReceiver { _: Array<String?>? -> updateConnections() }
+    private val onSensorDisconnected =  BroadcastReceiver { _: Array<String?>? -> updateConnections() }
     private val onSensorReconnect = ch.bailu.aat_lib.dispatcher.BroadcastReceiver { _: Array<String?>? ->
         updateConnections()
         scan() // rescan to get them in cache if they were not

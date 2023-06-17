@@ -12,7 +12,7 @@ class RemoveTilesMenu(private val scontext: ServiceContext, private val acontext
     AbsMenu() {
     private var removeScanned: MenuItem? = null
     private var removeAll: MenuItem? = null
-    private val info: SelectedTileDirectoryInfo = scontext.tileRemoverService.info
+    private val info: SelectedTileDirectoryInfo = scontext.getTileRemoverService().info
 
     override fun inflate(menu: Menu) {
         val c = scontext.context
@@ -31,11 +31,11 @@ class RemoveTilesMenu(private val scontext: ServiceContext, private val acontext
     override fun prepare(menu: Menu) {}
     override fun onItemClick(item: MenuItem): Boolean {
         if (item === removeScanned) {
-            scontext.insideContext { scontext.tileRemoverService.state.remove() }
+            scontext.insideContext { scontext.getTileRemoverService().state.remove() }
         } else if (item === removeAll) {
             object : AppDialog() {
                 override fun onPositiveClick() {
-                    scontext.insideContext { scontext.tileRemoverService.state.removeAll() }
+                    scontext.insideContext { scontext.getTileRemoverService().state.removeAll() }
                 }
             }.displayYesNoDialog(
                 acontext,

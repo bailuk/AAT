@@ -5,11 +5,11 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc.Foc.OnHaveFoc
 
 abstract class TileScanner(private val root: Foc) {
-    protected var source: String? = null
+    protected var source: String = ""
     protected var zoom: Short = 0
     protected var x = 0
     protected var y = 0
-    protected var ext: String? = null
+    protected var ext: String = ""
 
     companion object {
         fun doDirectory(file: Foc): Boolean {

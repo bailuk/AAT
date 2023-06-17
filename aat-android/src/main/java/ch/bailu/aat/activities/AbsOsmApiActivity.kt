@@ -19,6 +19,7 @@ import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -37,9 +38,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
 
     protected val theme: UiTheme = AppTheme.search
 
-    private val onFileTaskChanged: (Array<String>)->Unit = {
-        setDownloadStatus()
-    }
+    private val onFileTaskChanged = BroadcastReceiver { _: Array<String> -> setDownloadStatus() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +76,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private fun fileErrorView(): View {
         val fileError = ErrorMsgView(this)
         addTarget(
-            { iid: Int, info: GpxInformation -> fileError.displayError(serviceContext, info.file) },
+            { _: Int, info: GpxInformation -> fileError.displayError(serviceContext, info.file) },
             InfoID.FILEVIEW
         )
         return fileError

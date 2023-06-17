@@ -1,6 +1,5 @@
 package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.foc.Foc
 
@@ -75,6 +74,6 @@ class StateRemoveAll(private val state: StateMachine) : State, Runnable {
     }
 
     private fun broadcast() {
-        AndroidBroadcaster.broadcast(state.context, AppBroadcaster.TILE_REMOVER_REMOVE)
+        state.appContext.broadcaster.broadcast(AppBroadcaster.TILE_REMOVER_REMOVE)
     }
 }
