@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.logger;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
 
 public class BroadcastLogger implements Logger {
@@ -15,7 +17,7 @@ public class BroadcastLogger implements Logger {
     }
 
     @Override
-    public void log(String tag, String msg) {
+    public void log(@Nonnull String tag, @Nonnull String msg) {
         console.log(tag, msg);
         broadcaster.broadcast(id, tag, msg);
     }

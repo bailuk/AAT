@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.logger;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nonnull;
+
 public class PrintLnLogger implements Logger {
 
     private final String prefix;
@@ -18,7 +20,7 @@ public class PrintLnLogger implements Logger {
     }
 
     @Override
-    public void log(String tag, String msg) {
+    public void log(@Nonnull String tag, @Nonnull String msg) {
         target.println("[" + prefix + "] " + tag + ": " + msg);
     }
 }
