@@ -1,27 +1,21 @@
 package ch.bailu.aat.services.tileremover
 
-import android.content.Context
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.SolidTrimIndex
-import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.foc.Foc
 
-class StateMachine(sc: ServiceContext) : State {
+class StateMachine(val appContext: AppContext) : State {
 
     @JvmField
-    val context: Context = sc.context
+    var list: TilesList = TilesList()
 
     @JvmField
-    var list: TilesList? = null
-
-    @JvmField
-    val summaries = SourceSummaries(sc.context)
+    val summaries = SourceSummaries()
 
     private var state: State = StateUnscanned(this)
 
     @JvmField
-    var baseDirectory: Foc? = null
+    var baseDirectory: Foc = Foc.FOC_NULL
 
     @Synchronized
     fun set(s: State) {
@@ -79,11 +73,11 @@ class StateMachine(sc: ServiceContext) : State {
 
     val info: SelectedTileDirectoryInfo
         get() {
-            val index = SolidTrimIndex(Storage(context)).value
+            val index = SolidTrimIndex(appContext.storage).value
             val name = summaries[index].name
             var subDirectory = baseDirectory
-            if (index > 0) subDirectory = baseDirectory!!.child(name)
-            return SelectedTileDirectoryInfo(baseDirectory, subDirectory, name, index)
+            if (index > 0) subDirectory = baseDirectory.child(name)
+            return SelectedTileDirectoryInfo(subDirectory, name, index)
         }
     private var stamp: Long = 0
 
@@ -91,16 +85,16 @@ class StateMachine(sc: ServiceContext) : State {
         set(StateUnscanned(this))
     }
 
-    fun broadcastLimited(msg: String) {
+    fun broadcastLimited(message: String) {
         val stamp = System.currentTimeMillis()
         if (stamp - this.stamp > LIMIT) {
             this.stamp = stamp
-            broadcast(msg)
+            broadcast(message)
         }
     }
 
-    fun broadcast(msg: String) {
-        AndroidBroadcaster.broadcast(context, msg)
+    fun broadcast(message: String) {
+        appContext.broadcaster.broadcast(message)
     }
 
     companion object {

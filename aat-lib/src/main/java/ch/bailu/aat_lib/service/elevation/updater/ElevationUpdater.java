@@ -5,6 +5,8 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
 import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.app.AppContext;
@@ -35,7 +37,7 @@ public final class ElevationUpdater implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@Nonnull String... args) {
             String id = args[0];
 
             synchronized(ElevationUpdater.this) {

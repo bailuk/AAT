@@ -1,83 +1,82 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat_lib.util.MemSize;
+import ch.bailu.aat_lib.util.MemSize
 
-public final class SourceSummary implements SourceSummaryInterface {
-    private final String name;
-    public int count, countToRemove, countNew;
-    public long size, sizeToRemove, sizeNew;
+// TODO move to lib
+class SourceSummary(override val name: String) : SourceSummaryInterface {
+    private var count = 0
 
+    @JvmField
+    var countToRemove = 0
+    private var countNew = 0
+    var size: Long = 0
+    private var sizeToRemove: Long = 0
 
-    public SourceSummary(String n) {
-        name = n;
+    @JvmField
+    var sizeNew: Long = 0
+
+    fun addFile(length: Long) {
+        size += length
+        sizeNew += length
+        count++
+        countNew++
     }
 
-
-    public void addFile(long length) {
-        size += length;
-        sizeNew += length;
-        count++;
-        countNew++;
+    fun addFileToRemove(length: Long) {
+        sizeToRemove += length
+        countToRemove++
+        sizeNew -= length
+        countNew--
     }
 
-    public void addFileToRemove(long length) {
-        sizeToRemove += length;
-        countToRemove++;
-
-        sizeNew -= length;
-        countNew--;
+    fun addFileRemoved(length: Long) {
+        size -= length
+        sizeToRemove -= length
+        count--
+        countToRemove--
     }
 
-
-    public void addFileRemoved(long length) {
-        size -= length;
-        sizeToRemove -= length;
-
-        count --;
-        countToRemove--;
+    fun clearRm() {
+        sizeNew = size
+        countNew = count
+        sizeToRemove = 0
+        countToRemove = 0
     }
 
-    public void clear_rm() {
-        sizeNew = size;
-        countNew = count;
-
-        sizeToRemove = 0;
-        countToRemove = 0;
+    fun clear() {
+        size = 0
+        count = 0
+        clearRm()
     }
 
-    public void clear() {
-        size = 0;
-        count = 0;
-        clear_rm();
+    override fun hashCode(): Int {
+        return name.hashCode()
     }
 
-    @Override
-    public int hashCode() {
-        return name.hashCode();
+    override fun buildReport(builder: StringBuilder): StringBuilder {
+        builder.append(count)
+        builder.append('-')
+        builder.append(countToRemove)
+        builder.append('=')
+        builder.append(countNew)
+        builder.append('\n')
+        MemSize.describe(builder, size.toDouble())
+        builder.append('-')
+        MemSize.describe(builder, sizeToRemove.toDouble())
+        builder.append('=')
+        MemSize.describe(builder, sizeNew.toDouble())
+        return builder
     }
 
-    @Override
-    public synchronized String getName() {
-        return name;
-    }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    @Override
-    public StringBuilder buildReport(StringBuilder builder) {
-        builder.append(count);
-        builder.append('-');
-        builder.append(countToRemove);
-        builder.append('=');
-        builder.append(countNew);
+        other as SourceSummary
 
-        builder.append('\n');
+        if (name != other.name) return false
 
-        MemSize.describe(builder, (double)size);
-        builder.append('-');
-        MemSize.describe(builder, (double)sizeToRemove);
-        builder.append('=');
-        MemSize.describe(builder, (double)sizeNew);
-
-        return builder;
+        return true
     }
 
 }

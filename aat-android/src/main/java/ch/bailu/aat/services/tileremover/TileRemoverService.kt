@@ -1,14 +1,12 @@
 package ch.bailu.aat.services.tileremover
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.service.VirtualService
 
-class TileRemoverService(val serviceContext: ServiceContext) : VirtualService() {
+// TODO move to lib
+class TileRemoverService(val appContext: AppContext) : VirtualService() {
     private var locked = false
 
     val state: StateMachine
@@ -20,41 +18,33 @@ class TileRemoverService(val serviceContext: ServiceContext) : VirtualService() 
         get() = state.summaries
 
 
-    private val onRemove: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            lock()
-        }
-    }
-    private val onStop: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            free()
-        }
-    }
+    private val onRemove: BroadcastReceiver = BroadcastReceiver { lock() }
+    private val onStopped: BroadcastReceiver = BroadcastReceiver {free() }
 
     init {
-        AndroidBroadcaster.register(serviceContext.context, onStop, AppBroadcaster.TILE_REMOVER_STOPPED)
-        AndroidBroadcaster.register(serviceContext.context, onRemove, AppBroadcaster.TILE_REMOVER_REMOVE)
-        state = StateMachine(serviceContext)
+        appContext.broadcaster.register(onStopped, AppBroadcaster.TILE_REMOVER_STOPPED)
+        appContext.broadcaster.register(onRemove, AppBroadcaster.TILE_REMOVER_REMOVE)
+
+        state = StateMachine(appContext)
     }
 
     private fun lock() {
         if (!locked) {
             locked = true
-            serviceContext.lock(TileRemoverService::class.java.simpleName)
+            appContext.services.lock(TileRemoverService::class.java.simpleName)
         }
     }
 
     private fun free() {
         if (locked) {
             locked = false
-            serviceContext.free(TileRemoverService::class.java.simpleName)
+            appContext.services.free(TileRemoverService::class.java.simpleName)
         }
     }
 
     fun close() {
-        serviceContext.context.unregisterReceiver(onRemove)
-        serviceContext.context.unregisterReceiver(onStop)
+        appContext.broadcaster.unregister(onRemove)
+        appContext.broadcaster.unregister(onStopped)
         state.reset()
     }
-
 }

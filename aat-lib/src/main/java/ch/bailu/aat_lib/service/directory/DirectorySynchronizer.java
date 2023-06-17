@@ -4,6 +4,8 @@ import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
@@ -57,7 +59,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@Nonnull String... args) {
             state.ping();
         }
     };

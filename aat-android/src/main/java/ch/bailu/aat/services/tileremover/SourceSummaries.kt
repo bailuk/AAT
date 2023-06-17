@@ -1,112 +1,91 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import android.content.Context;
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
+import java.io.IOException
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import ch.bailu.aat.R;
-import ch.bailu.foc.Foc;
-
-public final class SourceSummaries {
-    public final static int SUMMARY_SIZE = 20;
-
-    private final ArrayList<SourceSummary>
-            sourceSummaries = new ArrayList<>(SUMMARY_SIZE);
-
-    private final static SourceSummary NULL_SUMMARY = new SourceSummary("NULL");
-
-    public SourceSummaries(Context c) {
-        reset(c);
+// TODO move to lib
+class SourceSummaries {
+    companion object {
+        const val SUMMARY_SIZE = 20
+        private val NULL_SUMMARY = SourceSummary("")
+        private fun findInList(old: ArrayList<SourceSummary>, name: String): Int {
+            for (i in old.indices) {
+                if (old[i].name == name) return i
+            }
+            return -1
+        }
     }
 
-    private void reset(Context c) {
-        sourceSummaries.clear();
-        sourceSummaries.add(new SourceSummary(c.getString(R.string.p_trim_total)));
+    private val sourceSummaries = ArrayList<SourceSummary>(SUMMARY_SIZE)
+
+    init {
+        reset()
     }
 
-    public void rescanKeep(Context c, Foc tileCacheDirectory) throws IOException {
-        ArrayList<SourceSummary> old = new ArrayList<>(sourceSummaries);
-
-        rescan(c, tileCacheDirectory);
-        replaceFromList(old);
+    private fun reset() {
+        sourceSummaries.clear()
+        sourceSummaries.add(SourceSummary(Res.str().p_trim_total()))
     }
 
-    private void replaceFromList(ArrayList<SourceSummary> list) {
-        for (int index=0; index < size(); index++) {
-            int foundIndex = findInList(list, get(index).getName());
+    @Throws(IOException::class)
+    fun rescanKeep(tileCacheDirectory: Foc) {
+        val old = ArrayList(sourceSummaries)
+        rescan(tileCacheDirectory)
+        replaceFromList(old)
+    }
 
+    private fun replaceFromList(list: ArrayList<SourceSummary>) {
+        for (index in 0 until size()) {
+            val foundIndex = findInList(list, get(index).name)
             if (foundIndex > -1) {
-                sourceSummaries.set(index, list.get(foundIndex));
+                sourceSummaries[index] = list[foundIndex]
             }
         }
     }
 
-    public int findIndex(String name) {
-        return findInList(sourceSummaries, name);
+    fun findIndex(name: String): Int {
+        return findInList(sourceSummaries, name)
     }
 
-
-    private static int findInList(ArrayList<SourceSummary> old, String name) {
-        for (int i=0; i<old.size(); i++) {
-            if (old.get(i).getName().equals(name)) return i;
-        }
-        return -1;
+    fun rescan(tileCacheDirectory: Foc) {
+        reset()
+        tileCacheDirectory.foreachDir { child: Foc -> sourceSummaries.add(SourceSummary(child.name)) }
     }
 
-
-    public void rescan(Context c, Foc tileCacheDirectory) {
-        //tileCacheDirectory = tileCacheDirectory.getCanonicalFile();
-
-        reset(c);
-
-        tileCacheDirectory.foreachDir(child -> sourceSummaries.add(new SourceSummary(child.getName())));
-
+    fun addFile(file: TileFile) {
+        val length = file.length()
+        get(0).addFile(length)
+        get(file.source).addFile(length)
     }
 
-
-    public void addFile(TileFile file) {
-        long length = file.length();
-
-        get(0).addFile(length);
-        get(file.getSource()).addFile(length);
-    }
-
-
-    public void resetToRemove() {
-        for (SourceSummary summary : sourceSummaries) {
-            summary.clear_rm();
+    fun resetToRemove() {
+        for (summary in sourceSummaries) {
+            summary.clearRm()
         }
     }
 
-    public void addFileToRemove(TileFile f) {
-        final long l = f.length();
-
-        get(0).addFileToRemove(f.length());
-        get(f.getSource()).addFileToRemove(l);
+    fun addFileToRemove(f: TileFile) {
+        val l = f.length()
+        get(0).addFileToRemove(f.length())
+        get(f.source).addFileToRemove(l)
     }
 
-
-    public void addFileRemoved(TileFile f) {
-        final long length = f.length();
-
-        get(0).addFileRemoved(length);
-        get(f.getSource()).addFileRemoved(length);
+    fun addFileRemoved(f: TileFile) {
+        val length = f.length()
+        get(0).addFileRemoved(length)
+        get(f.source).addFileRemoved(length)
     }
 
-    public SourceSummary get(int index) {
-        if (index < sourceSummaries.size())
-            return sourceSummaries.get(index);
-
-        return NULL_SUMMARY;
+    operator fun get(index: Int): SourceSummary {
+        return if (index < sourceSummaries.size) sourceSummaries[index] else NULL_SUMMARY
     }
 
-    public int size() {
-        return sourceSummaries.size();
+    fun size(): Int {
+        return sourceSummaries.size
     }
 
-
-    public Foc toFile(Foc baseDirectory, TileFile t) {
-        return t.toFile(baseDirectory.child(get(t.getSource()).getName()));
+    fun toFile(baseDirectory: Foc, t: TileFile): Foc {
+        return t.toFile(baseDirectory.child(get(t.source).name))
     }
 }

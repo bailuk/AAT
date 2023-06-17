@@ -1,6 +1,8 @@
  package ch.bailu.aat_lib.dispatcher;
 
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.service.ServicesInterface;
@@ -18,7 +20,7 @@ public class TrackerSource extends ContentSource {
 
     private final BroadcastReceiver onTrackChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@Nonnull String... args) {
             sendUpdate(InfoID.TRACKER, services.getTrackerService().getInfo());
         }
     };

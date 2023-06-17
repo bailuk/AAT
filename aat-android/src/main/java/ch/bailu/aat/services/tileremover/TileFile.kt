@@ -1,108 +1,74 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import androidx.annotation.NonNull;
+import ch.bailu.foc.Foc
 
-import ch.bailu.foc.Foc;
+class TileFile(
+    val source: Int,
+    private val zoom: Short,
+    private val x: Int,
+    private val y: Int,
+    file: Foc
+) {
 
-public final class TileFile {
-
-    private final short zoom;
-    private final int x, y, source;
-    private final long age;
-    private final long size;
-
-
-    public static int getX(Foc file)throws NumberFormatException {
-        return Integer.parseInt(file.getName());
-    }
-
-
-    public static short getZoom(Foc file) throws NumberFormatException {
-        return Short.parseShort(file.getName());
-    }
-
-
-    public static int getY(Foc file) throws NumberFormatException {
-        final String name = file.getName();
-        final String yname = name.substring(0, name.length()-4);
-
-        return Integer.parseInt(yname);
-    }
-
-
-    public static TileFile toTileFile(Foc file, int source) {
-
-        try {
-            Foc pX = file.parent();
-
-            if (pX != null) {
-                Foc pZoom = pX.parent();
-
-                if (pZoom != null) {
-                    int x = getX(pX);
-                    short zoom = getZoom(pZoom);
-
-                    return new TileFile(source, zoom, x, file);
-                }
-            }
-        } catch (NumberFormatException e) {
-            return null;
+    companion object {
+        @Throws(NumberFormatException::class)
+        fun getY(file: Foc): Int {
+            val name = file.name
+            val yName = name.substring(0, name.length - 4)
+            return yName.toInt()
         }
-        return null;
-
     }
 
-    public TileFile(int summary, short zoom, int x, int y, Foc file) {
-        this.source = summary;
-        this.zoom = zoom;
-        this.x = x;
-        this.y = y;
-        age = file.lastModified();
-        size = file.length();
+    private val age: Long
+    private val size: Long
+
+    init {
+        age = file.lastModified()
+        size = file.length()
     }
 
-    public TileFile(int summary, short zoom, int x, Foc file) {
-        this(summary, zoom, x, getY(file), file);
+    constructor(summary: Int, zoom: Short, x: Int, file: Foc) : this(
+        summary,
+        zoom,
+        x,
+        getY(file),
+        file
+    )
+
+    fun toFile(base_dir: Foc): Foc {
+        return base_dir.child(toString())
     }
 
-
-    public Foc toFile(Foc base_dir) {
-        return base_dir.child(toString());
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return zoom +"/" +
+    override fun toString(): String {
+        return zoom.toString() + "/" +
                 x +
                 "/" +
-                y + ".png";
-    }
-    public long lastModified() {
-        return age;
+                y + ".png"
     }
 
-    public long length() {
-        return size;
+    fun lastModified(): Long {
+        return age
     }
 
-
-    public int getSource() {
-        return source;
+    fun length(): Long {
+        return size
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (o == this) return true;
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other === this) return true
+        return if (other is TileFile) {
+            other.x == x && other.y == y && other.zoom == zoom && other.source == source
+        } else false
+    }
 
-        if (o instanceof TileFile) {
-            return (((TileFile) o).x == x &&
-                    ((TileFile) o).y == y &&
-                    ((TileFile) o).zoom == zoom &&
-                    ((TileFile) o).source == source
-            );
-        }
-        return false;
+    override fun hashCode(): Int {
+        var result = source
+        result = 31 * result + zoom
+        result = 31 * result + x
+        result = 31 * result + y
+        result = 31 * result + age.hashCode()
+        result = 31 * result + size.hashCode()
+        return result
     }
 }

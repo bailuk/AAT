@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.description;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastData;
@@ -21,7 +23,7 @@ public class EditorSource extends ContentSource implements EditorSourceInterface
 
     private final BroadcastReceiver onFileEdited = new BroadcastReceiver () {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@Nonnull String... args) {
             if (BroadcastData.has(args, edit.getVID())) {
                 requestUpdate();
             }

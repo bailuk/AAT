@@ -9,6 +9,8 @@ import android.os.IBinder;
 
 import java.io.Closeable;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat.services.tileremover.TileRemoverService;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.IconMapServiceInterface;
@@ -27,20 +29,20 @@ public abstract class ServiceLink implements
         Closeable {
 
     public static class ServiceNotUpError extends RuntimeException {
-        public ServiceNotUpError(Class<?> service)  {
+        public ServiceNotUpError(Class<?> service) {
             super("Service '" + service.getSimpleName() + "' is not running.*");
         }
     }
 
     private int lock = 0;
 
-    private ServiceContext service= null;
+    private ServiceContext service = null;
     private boolean bound = false;
 
     private final Context context;
 
     public ServiceLink(Context c) {
-        context=c;
+        context = c;
     }
 
     @Override
@@ -70,7 +72,7 @@ public abstract class ServiceLink implements
     }
 
     private void grabService(IBinder binder) {
-        service = (ServiceContext)((AbsService.CommonBinder)binder).getService();
+        service = (ServiceContext) ((AbsService.CommonBinder) binder).getService();
         service.lock(ServiceLink.class.getSimpleName());
     }
 
@@ -86,7 +88,7 @@ public abstract class ServiceLink implements
                 }
             }
         } catch (Exception e) {
-                AppLog.e(context, e);
+            AppLog.e(context, e);
         }
     }
 
@@ -121,7 +123,7 @@ public abstract class ServiceLink implements
 
     public abstract void onServiceUp();
 
-    private ServiceContext getService()  {
+    private ServiceContext getService() {
         if (isUp())
             return service;
         else
@@ -148,12 +150,12 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public synchronized void lock(String s) {
+    public synchronized void lock(@Nonnull String s) {
         if (isUp()) getService().lock(s);
     }
 
     @Override
-    public synchronized void free(String s) {
+    public synchronized void free(@Nonnull String s) {
         if (isUp()) getService().free(s);
     }
 
@@ -168,7 +170,9 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public LocationServiceInterface getLocationService() {return getService().getLocationService(); }
+    public LocationServiceInterface getLocationService() {
+        return getService().getLocationService();
+    }
 
     @Override
     public BackgroundServiceInterface getBackgroundService() {
@@ -196,9 +200,12 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public RenderServiceInterface getRenderService() { return getService().getRenderService();}
+    public RenderServiceInterface getRenderService() {
+        return getService().getRenderService();
+    }
 
 
+    @Nonnull
     @Override
     public TileRemoverService getTileRemoverService() {
         return getService().getTileRemoverService();
@@ -211,7 +218,7 @@ public abstract class ServiceLink implements
 
 
     @Override
-    public void startForeground(int id, Notification notification) {
+    public void startForeground(int id, @Nonnull Notification notification) {
         getService().startForeground(id, notification);
     }
 
@@ -221,7 +228,7 @@ public abstract class ServiceLink implements
     }
 
     @Override
-    public void appendStatusText(StringBuilder content) {
+    public void appendStatusText(@Nonnull StringBuilder content) {
         getService().appendStatusText(content);
     }
 }

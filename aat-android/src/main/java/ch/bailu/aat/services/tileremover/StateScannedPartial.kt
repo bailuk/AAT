@@ -1,44 +1,29 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 
-public final class StateScannedPartial implements State {
-
-    private final StateMachine state;
-
-    public StateScannedPartial(StateMachine s) {
-        state = s;
-
-        state.list.resetToRemove();
-        state.summaries.resetToRemove();
-        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED);
+class StateScannedPartial(private val state: StateMachine) : State {
+    init {
+        state.list.resetToRemove()
+        state.summaries.resetToRemove()
+        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED)
     }
 
-
-    @Override
-    public void scan() {
-        rescan();
+    override fun scan() {
+        rescan()
     }
 
-
-    @Override
-    public void rescan() {
-        state.set(new StateScanForRemoval(state));
+    override fun rescan() {
+        state.set(StateScanForRemoval(state))
     }
 
-
-    @Override
-    public void stop() {}
-
-    @Override
-    public void reset() {
-        state.set(new StateUnscanned(state));
+    override fun stop() {}
+    override fun reset() {
+        state.set(StateUnscanned(state))
     }
 
-
-    @Override
-    public void remove() {}
-
-    @Override
-    public void removeAll() {state.set(new StateRemoveAll(state));}
+    override fun remove() {}
+    override fun removeAll() {
+        state.set(StateRemoveAll(state))
+    }
 }

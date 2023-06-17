@@ -1,53 +1,37 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.TreeSet
 
-public final class TilesList {
-    private final static int FILES_LIMIT=50000;
-
-
-    private final TreeSet<TileFile> files = new TreeSet<>(
-
-            (o1, o2) -> Long.compare(o1.lastModified(), o2.lastModified()));
-
-    private  final ArrayList<TileFile> filesToRemove = new ArrayList<>(FILES_LIMIT);
-
-
-    public void resetToRemove() {
-        filesToRemove.clear();
+class TilesList {
+    private val files = TreeSet { o1: TileFile, o2: TileFile ->
+        o1.lastModified().compareTo(o2.lastModified())
     }
 
-    public void add(TileFile file) {
-        files.add(file);
+    private val filesToRemove = ArrayList<TileFile>(FILES_LIMIT)
+    fun resetToRemove() {
+        filesToRemove.clear()
+    }
 
-        /*
-        if (!files.add(file)) {
-            AppLog.d(this, file.getSource() +"/"+ file.toString());
-        }*/
-        if (files.size()>= FILES_LIMIT) {
-            files.pollLast();
+    fun add(file: TileFile) {
+        files.add(file)
+        if (files.size >= FILES_LIMIT) {
+            files.pollLast()
         }
     }
 
-    public void addToRemove(TileFile file) {
-        filesToRemove.add(file);
+    fun addToRemove(file: TileFile) {
+        filesToRemove.add(file)
     }
 
-
-    public Iterator<TileFile> iteratorToRemove() {
-        return filesToRemove.iterator();
+    fun iteratorToRemove(): Iterator<TileFile> {
+        return filesToRemove.iterator()
     }
 
-
-    public Iterator<TileFile> iterator() {
-        return files.iterator();
+    operator fun iterator(): Iterator<TileFile> {
+        return files.iterator()
     }
 
-    /*
-    public void log() {
-        AppLog.d(this, "Files: " + files.size());
+    companion object {
+        private const val FILES_LIMIT = 50000
     }
-    */
 }

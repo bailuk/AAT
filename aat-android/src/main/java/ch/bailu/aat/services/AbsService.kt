@@ -1,196 +1,128 @@
-package ch.bailu.aat.services;
+package ch.bailu.aat.services
 
+import android.app.Service
+import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
+import android.text.format.DateFormat
+import ch.bailu.aat.util.AndroidTimer
+import ch.bailu.aat_lib.logger.AppLog
+import java.util.Date
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
+abstract class AbsService : Service() {
+    private var creations = 0
+    private var startTime: Long = 0
+    private var up = false
+    private var lock = 0
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import ch.bailu.aat.util.AndroidTimer;
-import ch.bailu.aat_lib.logger.AppLog;
-
-public abstract class AbsService  extends Service {
-    private static int allinstances, allcreations;
-    private int creations;
-
-
-    private long startTime;
-
-    private boolean up = false;
-    private int lock = 0;
-
-
-
-    public synchronized boolean lock() {
+    @Synchronized
+    fun lock(): Boolean {
         if (up) {
-            lock++;
-
+            lock++
             try {
-                startService(new Intent(this, OneService.class));
-            } catch (IllegalStateException e) {
-                AppLog.w(this, e);
+                startService(Intent(this, OneService::class.java))
+            } catch (e: IllegalStateException) {
+                AppLog.w(this, e)
             }
-
-            lazyOff.cancel();
-
+            lazyOff.cancel()
         }
-        return up;
+        return up
     }
 
-
-
-    public synchronized void free() {
+    @Synchronized
+    fun free() {
         if (up) {
-            lock--;
-
+            lock--
             if (lock == 0) {
-                lazyOff.kick(15*1000, this::stopService);
-
+                lazyOff.kick((15 * 1000).toLong()) { this.stopService() }
             } else if (lock < 0) {
-                AppLog.w(this, "lock < 0 !!!");
+                AppLog.w(this, "lock < 0 !!!")
             }
         }
     }
 
+    private val locks: MutableSet<String> = HashSet()
+    private val lazyOff = AndroidTimer()
 
-
-    private final Set<String> locks = new HashSet<>();
-
-    private final AndroidTimer lazyOff = new AndroidTimer();
-
-
-    private synchronized void stopService() {
-
+    @Synchronized
+    private fun stopService() {
         if (lock == 0) {
-            lazyOff.cancel();
-            stopSelf();
+            lazyOff.cancel()
+            stopSelf()
         } else if (lock < 0) {
-            AppLog.w(this, "lock < 0 !!!");
+            AppLog.w(this, "lock < 0 !!!")
         }
     }
 
-    public synchronized void lock(String r) {
-        if (locks.add(r)) {
-            lock();
+    @Synchronized
+    fun lock(resource: String) {
+        if (locks.add(resource)) {
+            lock()
         }
     }
 
-    public synchronized void free(String r) {
-        if (locks.remove(r)) free();
+    @Synchronized
+    fun free(resource: String) {
+        if (locks.remove(resource)) free()
     }
 
-    public AbsService() {
-        allinstances++;
+    inner class CommonBinder : Binder() {
+        val service: AbsService
+            get() = this@AbsService
     }
 
-
-    @Override
-    protected void finalize() throws Throwable {
-        allinstances--;
-        super.finalize();
+    @Synchronized
+    override fun onCreate() {
+        super.onCreate()
+        up = true
+        creations++
+        startTime = System.currentTimeMillis()
     }
 
-
-
-
-
-    public class CommonBinder extends Binder {
-        public AbsService getService() {
-            return AbsService.this;
-        }
+    protected fun onDestroyCalled() {
+        up = false
     }
 
-
-    @Override
-    public synchronized void onCreate() {
-        super.onCreate();
-
-
-
-        up = true;
-        allcreations++;
-        creations++;
-
-
-        startTime=System.currentTimeMillis();
+    @Synchronized
+    override fun onDestroy() {
+        creations--
+        super.onDestroy()
     }
 
-
-    protected void onDestroyCalled() {
-        up = false;
+    override fun onBind(intent: Intent): IBinder? {
+        return CommonBinder()
     }
 
-    @Override
-    public synchronized void onDestroy() {
-
-        creations--;
-        allcreations--;
-
-        super.onDestroy();
+    override fun onUnbind(intent: Intent): Boolean {
+        return false
     }
 
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return
-                new CommonBinder();
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        return START_STICKY
     }
 
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        return false;
+    open fun appendStatusText(builder: StringBuilder) {
+        builder.append("<h1>")
+        builder.append(javaClass.simpleName)
+        builder.append("</h1>")
+        builder.append("<p>Start time: ")
+        builder.append(formatDate(startTime))
+        builder.append(" - ")
+        builder.append(formatTime(startTime))
+        builder.append("<br>Created services: ")
+        builder.append(creations)
+        builder.append("</p>")
     }
 
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+    private fun formatDate(time: Long): String {
+        val date = Date(time)
+        val dateFormat = DateFormat.getDateFormat(applicationContext)
+        return dateFormat.format(date)
     }
 
-
-    public void appendStatusText(StringBuilder builder) {
-        builder.append("<h1>");
-        builder.append(getClass().getSimpleName());
-        builder.append("</h1>");
-
-        builder.append("<p>Start time: ");
-        builder.append(formatDate(startTime));
-        builder.append(" - ");
-        builder.append(formatTime(startTime));
-        builder.append("<br>Created services: ");
-        builder.append(creations);
-
-        builder.append("</p>");
-    }
-
-
-    public static void appendStatusTextStatic(StringBuilder builder) {
-        builder.append("<h1>");
-        builder.append(AbsService.class.getSimpleName());
-        builder.append("</h1>");
-
-        builder.append("<p>Instantiated services: ");
-        builder.append(allinstances);
-        builder.append("<br>Created services: ");
-        builder.append(allcreations);
-        builder.append("</p>");
-    }
-
-
-    private String formatDate(long time) {
-        Date date = new Date(time);
-        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
-        return dateFormat.format(date);
-    }
-
-    private String formatTime(long time) {
-        Date date = new Date(time);
-        java.text.DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
-        return dateFormat.format(date);
+    private fun formatTime(time: Long): String {
+        val date = Date(time)
+        val dateFormat = DateFormat.getTimeFormat(applicationContext)
+        return dateFormat.format(date)
     }
 }

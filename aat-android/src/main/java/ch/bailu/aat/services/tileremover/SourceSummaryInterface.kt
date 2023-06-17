@@ -1,6 +1,6 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-public interface SourceSummaryInterface {
-    String getName();
-    StringBuilder buildReport(StringBuilder builder);
+interface SourceSummaryInterface {
+    val name: String
+    fun buildReport(builder: StringBuilder): StringBuilder
 }

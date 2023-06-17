@@ -1,133 +1,90 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import java.util.Iterator;
+import ch.bailu.aat.preferences.map.SolidTrimDate
+import ch.bailu.aat.preferences.map.SolidTrimIndex
+import ch.bailu.aat.preferences.map.SolidTrimMode
+import ch.bailu.aat.preferences.map.SolidTrimSize
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidTrimDate;
-import ch.bailu.aat.preferences.map.SolidTrimIndex;
-import ch.bailu.aat.preferences.map.SolidTrimMode;
-import ch.bailu.aat.preferences.map.SolidTrimSize;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+class StateScanForRemoval(private val state: StateMachine) : State, Runnable {
+    private var nextState: Class<*> = StateScanned::class.java
+    private val trimMode: Int = SolidTrimMode(state.appContext.storage).index
+    private val trimSummaryIndex: Int = SolidTrimIndex(state.appContext.storage).value
+    private val trimSize: Long = SolidTrimSize(state.appContext.storage).getValue()
+    private val trimAge: Long = System.currentTimeMillis() - SolidTrimDate(state.appContext.storage).getValue()
 
-public final class StateScanForRemoval implements State, Runnable {
-    private final StateMachine state;
-    private Class nextState = StateScanned.class;
-
-
-    private final int trimMode, trimSummaryIndex;
-    private final long trimSize;
-    private final long trimAge;
-
-
-
-    public StateScanForRemoval(StateMachine s) {
-        state = s;
-
-        trimMode = new SolidTrimMode(new Storage(s.context)).getIndex();
-        trimSize = new SolidTrimSize(new Storage(s.context)).getValue();
-        trimAge = System.currentTimeMillis() - new SolidTrimDate(new Storage(s.context)).getValue();
-
-
-
-        trimSummaryIndex = new SolidTrimIndex(new Storage(s.context)).getValue();
-
-
-        state.summaries.resetToRemove();
-        state.list.resetToRemove();
-
-        new Thread(this).start();
-
-
+    init {
+        state.summaries.resetToRemove()
+        state.list.resetToRemove()
+        Thread(this).start()
     }
 
-
-    @Override
-    public void scan() {
-        nextState = StateScanned.class;
+    override fun scan() {
+        nextState = StateScanned::class.java
     }
 
-    @Override
-    public void stop() {
-        nextState = StateScannedPartial.class;
-
+    override fun stop() {
+        nextState = StateScannedPartial::class.java
     }
 
-    @Override
-    public void reset() {
-        nextState = StateUnscanned.class;
+    override fun reset() {
+        nextState = StateUnscanned::class.java
     }
 
-
-    @Override
-    public void remove() {}
-
-    @Override
-    public void removeAll() { nextState = StateRemoveAll.class; }
-
-
-    @Override
-    public void rescan() {
-        nextState = StateScanForRemoval.class;
+    override fun remove() {}
+    override fun removeAll() {
+        nextState = StateRemoveAll::class.java
     }
 
+    override fun rescan() {
+        nextState = StateScanForRemoval::class.java
+    }
 
-    @Override
-    public void run() {
-        final Iterator<TileFile> iterator = state.list.iterator();
-
+    override fun run() {
+        val iterator = state.list.iterator()
         while (iterator.hasNext() && keepUp()) {
-            TileFile file = iterator.next();
-
+            val file = iterator.next()
             if (passFilter(file)) {
-                if (passDirectory(file)) addFile(file);
-                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN);
+                if (passDirectory(file)) addFile(file)
+                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN)
             } else {
-                break;
+                break
             }
-
-
         }
-
-        state.setFromClass(nextState);
+        state.setFromClass(nextState)
     }
 
-    private void addFile(TileFile file) {
-        state.summaries.addFileToRemove(file);
-        state.list.addToRemove(file);
+    private fun addFile(file: TileFile) {
+        state.summaries.addFileToRemove(file)
+        state.list.addToRemove(file)
     }
 
-    private boolean passFilter(TileFile file) {
-        if        (trimMode == SolidTrimMode.MODE_TO_SIZE) {
-            return passSize();
-
+    private fun passFilter(file: TileFile): Boolean {
+        if (trimMode == SolidTrimMode.MODE_TO_SIZE) {
+            return passSize()
         } else if (trimMode == SolidTrimMode.MODE_TO_AGE) {
-            return passAge(file);
-
+            return passAge(file)
         } else if (trimMode == SolidTrimMode.MODE_TO_SIZE_AND_AGE) {
-            return passSize() || passAge(file);
-
+            return passSize() || passAge(file)
         } else if (trimMode == SolidTrimMode.MODE_TO_SIZE_OR_AGE) {
-            return passSize() && passAge(file);
+            return passSize() && passAge(file)
         }
-        return false;
+        return false
     }
 
-
-    private boolean passDirectory(TileFile file) {
-        return trimSummaryIndex == 0 || file.getSource() == trimSummaryIndex;
+    private fun passDirectory(file: TileFile): Boolean {
+        return trimSummaryIndex == 0 || file.source == trimSummaryIndex
     }
 
-
-    private boolean passSize() {
-        return state.summaries.get(trimSummaryIndex).sizeNew > trimSize;
+    private fun passSize(): Boolean {
+        return state.summaries[trimSummaryIndex].sizeNew > trimSize
     }
 
-    private boolean passAge(TileFile file) {
-        return file.lastModified() < trimAge;
+    private fun passAge(file: TileFile): Boolean {
+        return file.lastModified() < trimAge
     }
 
-    private boolean keepUp() {
-        return (nextState == StateScanned.class);
+    private fun keepUp(): Boolean {
+        return nextState == StateScanned::class.java
     }
-
 }

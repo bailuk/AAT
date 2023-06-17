@@ -49,7 +49,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@Nonnull String... args) {
             String id = BroadcastData.getFile(args);
             Dem3Tile tile = tiles.get(id);
 

@@ -1,50 +1,37 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import java.io.IOException;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import java.io.IOException
 
-import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-
-public class StateUnscanned implements State {
-
-    private final StateMachine state;
-
-
-    public StateUnscanned(StateMachine s) {
-        state = s;
-        reset();
+open class StateUnscanned(private val state: StateMachine) : State {
+    init {
+        reset()
     }
 
-    @Override
-    public void scan() {
-        state.set(new StateScan(state));
+    override fun scan() {
+        state.set(StateScan(state))
     }
 
-    @Override
-    public void stop() {}
+    override fun stop() {}
 
-    @Override
-    public void reset() {
-        state.list = null;
-        state.baseDirectory = new AndroidSolidTileCacheDirectory(state.context).getValueAsFile();
+    override fun reset() {
+        state.list = TilesList()
+        state.baseDirectory = state.appContext.tileCacheDirectory.valueAsFile
         try {
-            state.summaries.rescanKeep(state.context, state.baseDirectory);
-        } catch (IOException e) {
-            e.printStackTrace();
+            state.summaries.rescanKeep(state.baseDirectory)
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-
-        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED);
+        state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED)
     }
 
-
-    @Override
-    public void remove() { state.set(new StateScan(state));}
-
-    @Override
-    public void removeAll() {
-        state.set(new StateRemoveAll(state));
+    override fun remove() {
+        state.set(StateScan(state))
     }
 
-    @Override
-    public void rescan() {}
+    override fun removeAll() {
+        state.set(StateRemoveAll(state))
+    }
+
+    override fun rescan() {}
 }

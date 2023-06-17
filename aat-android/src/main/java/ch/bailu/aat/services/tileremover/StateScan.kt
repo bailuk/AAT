@@ -1,126 +1,92 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.foc.Foc
 
+/**
+ * TODO move to lib
+ */
+class StateScan(private val state: StateMachine) : State, Runnable {
+    private var nextState: Class<*> = StateScanForRemoval::class.java
 
-public final class StateScan implements State, Runnable {
-    private final StateMachine state;
-    private Class nextState = StateScanForRemoval.class;
-
-    public StateScan(StateMachine s) {
-        state = s;
-        state.baseDirectory = new AndroidSolidTileCacheDirectory(s.context).getValueAsFile();
-
-        state.list = new TilesList();
-        new Thread(this).start();
-
+    init {
+        state.baseDirectory = state.appContext.tileCacheDirectory.valueAsFile
+        state.list = TilesList()
+        Thread(this).start()
     }
 
-
-    @Override
-    public void scan() {
-        nextState = StateScanForRemoval.class;
+    override fun scan() {
+        nextState = StateScanForRemoval::class.java
     }
 
-    @Override
-    public void stop() {
-        nextState = StateUnscanned.class;
+    override fun stop() {
+        nextState = StateUnscanned::class.java
     }
 
-    @Override
-    public void reset() {
-        nextState = StateUnscanned.class;
+    override fun reset() {
+        nextState = StateUnscanned::class.java
     }
 
-
-    @Override
-    public void remove() {}
-
-    @Override
-    public void removeAll() {
-        nextState = StateRemoveAll.class;
+    override fun remove() {}
+    override fun removeAll() {
+        nextState = StateRemoveAll::class.java
     }
 
-    @Override
-    public void rescan() {}
-
-
-    @Override
-    public void run() {
-        scanSourceContainer(state.baseDirectory);
-
-        if(keepUp()) {
-            state.broadcast(AppBroadcaster.TILE_REMOVER_SCAN);
+    override fun rescan() {}
+    override fun run() {
+        scanSourceContainer(state.baseDirectory)
+        if (keepUp()) {
+            state.broadcast(AppBroadcaster.TILE_REMOVER_SCAN)
         }
-        state.setFromClass(nextState);
+        state.setFromClass(nextState)
     }
 
-
-
-    private boolean keepUp() {
-        return (nextState == StateScanForRemoval.class);
+    private fun keepUp(): Boolean {
+        return nextState == StateScanForRemoval::class.java
     }
 
-
-    private void scanSourceContainer(Foc sourceContainer) {
+    private fun scanSourceContainer(sourceContainer: Foc) {
         try {
-            //sourceContainer = sourceContainer.getCanonicalFile();
-
-            state.summaries.rescan(state.context, sourceContainer);
-
-            for (int summaryIndex=1; summaryIndex< state.summaries.size(); summaryIndex++) {
-                String sourceName = state.summaries.get(summaryIndex).getName();
-
-                if (sourceName != null && sourceName.length()>0 ) {
-                    Foc zoomContainer = sourceContainer.child(sourceName);
-                    scanZoomContainer(zoomContainer, summaryIndex);
+            state.summaries.rescan(sourceContainer)
+            for (summaryIndex in 1 until state.summaries.size()) {
+                val sourceName = state.summaries[summaryIndex].name
+                if (sourceName.isNotEmpty()) {
+                    val zoomContainer = sourceContainer.child(sourceName)
+                    scanZoomContainer(zoomContainer, summaryIndex)
                 } else {
-                    break;
+                    break
                 }
             }
-
-        } catch (Exception e) {
-            AppLog.e(state.context, e);
+        } catch (e: Exception) {
+            AppLog.e(this, e)
         }
     }
 
-
-    private void scanZoomContainer(Foc zoomContainer, final int summaryIndex) {
-        new TileScanner(zoomContainer) {
-
-            @Override
-            protected boolean doSourceContainer(Foc dir) {
-                return keepUp();
-
+    private fun scanZoomContainer(zoomContainer: Foc, summaryIndex: Int) {
+        object : TileScanner(zoomContainer) {
+            override fun doSourceContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-            @Override
-            protected boolean doZoomContainer(Foc dir) {
-                return keepUp();
+            override fun doZoomContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-            @Override
-            protected boolean doXContainer(Foc dir) {
-                return keepUp();
+            override fun doXContainer(dir: Foc): Boolean {
+                return keepUp()
             }
 
-
-            @Override
-            protected boolean doYContainer(Foc dir) {
-                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN);
-                return keepUp();
+            override fun doYContainer(dir: Foc): Boolean {
+                state.broadcastLimited(AppBroadcaster.TILE_REMOVER_SCAN)
+                return keepUp()
             }
 
-
-            @Override
-            protected void doFile(Foc file) {
-                TileFile tile = new TileFile(summaryIndex, zoom, x, file);
-                state.list.add(tile);
-                state.summaries.addFile(tile);
+            override fun doFile(file: Foc) {
+                val tile = TileFile(summaryIndex, zoom, x, file)
+                state.list.add(tile)
+                state.summaries.addFile(tile)
             }
-        }.scanZoomContainer();
+        }.scanZoomContainer()
     }
 }

@@ -1,142 +1,98 @@
-package ch.bailu.aat.services.tileremover;
+package ch.bailu.aat.services.tileremover
 
-import java.io.File;
-import java.io.IOException;
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.foc.Foc
+import ch.bailu.foc.Foc.OnHaveFoc
 
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.foc.Foc;
+abstract class TileScanner(private val root: Foc) {
+    protected var source: String? = null
+    protected var zoom: Short = 0
+    protected var x = 0
+    protected var y = 0
+    protected var ext: String? = null
 
-public abstract class TileScanner {
-
-    private final Foc root;
-
-    protected String source;
-    protected short zoom;
-    protected int x,y;
-    protected String ext;
-
-    public TileScanner(Foc r) {
-        root = r;
+    companion object {
+        fun doDirectory(file: Foc): Boolean {
+            return file.isDir
+        }
     }
 
-    public void scanZoomContainer() {
-        source = root.getName();
-        scanZoomContainer(root);
+    fun scanZoomContainer() {
+        source = root.name
+        scanZoomContainer(root)
     }
 
-    public void scanSourceContainer() {
-        scanSourceContainer(root);
+    fun scanSourceContainer() {
+        scanSourceContainer(root)
     }
 
-
-    private void scanSourceContainer(Foc dir) {
+    private fun scanSourceContainer(dir: Foc) {
         if (doDirectory(dir) && doSourceContainer(dir)) {
-            dir.foreachDir(new Foc.OnHaveFoc() {
-                @Override
-                public void run(Foc child) {
-                    source = child.getName();
-                    scanZoomContainer(child);
-                }
-            });
+            dir.foreachDir { child ->
+                source = child.name
+                scanZoomContainer(child)
+            }
         }
     }
 
-    protected abstract boolean doSourceContainer(Foc dir);
-
-
-    private void scanZoomContainer(final Foc dir) {
+    protected abstract fun doSourceContainer(dir: Foc): Boolean
+    private fun scanZoomContainer(dir: Foc) {
         if (doZoomContainer(dir)) {
-            dir.foreachDir(new Foc.OnHaveFoc() {
-                @Override
-                public void run(Foc child) {
+            dir.foreachDir(object : OnHaveFoc {
+                override fun run(child: Foc) {
                     try {
-                        zoom = Short.decode(child.getName());
-                        scanXContainer(child);
-
-                    } catch (NumberFormatException e) {
-                        AppLog.w(this, e);
+                        zoom = java.lang.Short.decode(child.name)
+                        scanXContainer(child)
+                    } catch (e: NumberFormatException) {
+                        AppLog.w(this, e)
                     }
-
                 }
-            });
+            })
         }
     }
 
-    protected abstract boolean doZoomContainer(Foc dir);
-
-
-    private void scanXContainer(Foc dir) {
-
+    protected abstract fun doZoomContainer(dir: Foc): Boolean
+    private fun scanXContainer(dir: Foc) {
         if (doXContainer(dir)) {
-            dir.foreachDir(new Foc.OnHaveFoc() {
-                @Override
-                public void run(Foc child) {
+            dir.foreachDir(object : OnHaveFoc {
+                override fun run(child: Foc) {
                     try {
-                        x = Integer.decode(child.getName());
-                        scanYContainer(child);
-
-                    } catch (NumberFormatException e) {
-                        AppLog.w(this, e);
+                        x = Integer.decode(child.name)
+                        scanYContainer(child)
+                    } catch (e: NumberFormatException) {
+                        AppLog.w(this, e)
                     }
-
                 }
-            });
+            })
         }
     }
 
-    protected abstract boolean doXContainer(Foc dir);
-
-
-    private void scanYContainer(Foc dir) {
+    protected abstract fun doXContainer(dir: Foc): Boolean
+    private fun scanYContainer(dir: Foc) {
         if (doYContainer(dir)) {
-            dir.foreachFile(new Foc.OnHaveFoc() {
-                @Override
-                public void run(Foc child) {
-
+            dir.foreachFile(object : OnHaveFoc {
+                override fun run(child: Foc) {
                     try {
-                        String[] parts = child.getName().split("\\.");
-
-                        if (parts.length==2) {
-                            y = Integer.decode(parts[0]);
-                            ext = parts[1];
-
-                            scanFile(child);
+                        val parts = child.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }
+                            .toTypedArray()
+                        if (parts.size == 2) {
+                            y = Integer.decode(parts[0])
+                            ext = parts[1]
+                            scanFile(child)
                         }
-
-
-                    } catch (NumberFormatException e) {
-                        AppLog.w(this, e);
+                    } catch (e: NumberFormatException) {
+                        AppLog.w(this, e)
                     }
                 }
-            });
+            })
         }
     }
 
-    protected abstract boolean doYContainer(Foc dir);
-
-
-    private void scanFile(Foc file) {
-        if (file.isFile())
-            doFile(file);
+    protected abstract fun doYContainer(dir: Foc): Boolean
+    private fun scanFile(file: Foc) {
+        if (file.isFile) doFile(file)
     }
 
-    protected abstract void doFile(Foc file);
+    protected abstract fun doFile(file: Foc)
 
-
-    public static boolean doDirectory(Foc file) {
-        return file.isDir();
-    }
-
-
-    private static boolean isReal(File file) {
-        try {
-            final String c = file.getCanonicalPath();
-            final String a = file.getAbsolutePath();
-
-            return c.equals(a);
-
-        } catch (IOException e) {
-            return false;
-        }
-    }
 }

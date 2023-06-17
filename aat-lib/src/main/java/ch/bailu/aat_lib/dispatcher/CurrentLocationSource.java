@@ -1,6 +1,8 @@
 package ch.bailu.aat_lib.dispatcher;
 
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.service.ServicesInterface;
@@ -13,7 +15,7 @@ public class CurrentLocationSource extends ContentSource {
 
     private final BroadcastReceiver onLocationChange = new BroadcastReceiver () {
         @Override
-        public void onReceive(String ...args) {
+        public void onReceive(@Nonnull String ...args) {
             sendUpdate(InfoID.LOCATION, services.getLocationService().getLocationInformation());
         }
 
