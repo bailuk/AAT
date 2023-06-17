@@ -5,8 +5,8 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat.util.ui.ToolTipView;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.tooltip.ToolTipView;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 
 public class SolidCheckBox extends LinearLayout {

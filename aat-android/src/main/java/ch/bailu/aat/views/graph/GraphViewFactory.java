@@ -3,7 +3,7 @@ package ch.bailu.aat.views.graph;
 import android.content.Context;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.PercentageLayout;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;

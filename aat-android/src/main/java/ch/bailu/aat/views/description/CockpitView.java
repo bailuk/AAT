@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.location.AndroidSolidAltitudeUtil;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat_lib.description.AltitudeConfigurationDescription;
 import ch.bailu.aat_lib.description.CadenceDescription;
 import ch.bailu.aat_lib.description.ContentDescription;

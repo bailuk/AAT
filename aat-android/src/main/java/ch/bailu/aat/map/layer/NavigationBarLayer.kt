@@ -8,8 +8,8 @@ import ch.bailu.aat.R
 import ch.bailu.aat.activities.AbsHardwareButtons
 import ch.bailu.aat.map.To
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface

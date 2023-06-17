@@ -3,8 +3,8 @@ package ch.bailu.aat.views.description.mview;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 public class MultiViewIndicator extends ViewGroup {
     private final static UiTheme THEME = AppTheme.bar;

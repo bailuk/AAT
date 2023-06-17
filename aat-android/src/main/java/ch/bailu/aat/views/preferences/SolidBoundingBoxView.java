@@ -2,7 +2,9 @@ package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.UiTheme;
+import javax.annotation.Nonnull;
+
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
 import ch.bailu.aat_lib.map.MapContext;
@@ -35,7 +37,7 @@ public class SolidBoundingBoxView extends LabelTextView implements OnPreferences
 
 
     @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
         if (sbounding.hasKey(key)) {
             setText(sbounding.getValueAsString());
         }

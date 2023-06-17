@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.description.DescriptionLabelTextView;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface;

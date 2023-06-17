@@ -27,7 +27,7 @@ class PoiActivity : AbsOsmApiActivity() {
         return object : PoiApi(appContext, boundingBox) {
             override val selectedCategories: ArrayList<PoiCategory>
                 get() {
-                    poiView!!.saveSelected(queryFile)
+                    poiView?.saveSelected(queryFile)
                     return poiView!!.selectedCategories
                 }
         }
@@ -67,16 +67,18 @@ class PoiActivity : AbsOsmApiActivity() {
     }
 
     private fun createPoiListView(): View {
-        poiView = PoiView(
+        val poiView = PoiView(
             this, appContext,
-            configuration!!.baseDirectory.child(AppDirectory.FILE_SELECTION), theme
+            configuration?.baseDirectory?.child(AppDirectory.FILE_SELECTION), theme
         )
+        this.poiView = poiView
+
         theme.background(poiView)
-        return poiView!!
+        return poiView
     }
 
     override fun onDestroy() {
-        poiView!!.close(serviceContext)
+        poiView?.close(serviceContext)
         super.onDestroy()
     }
 }

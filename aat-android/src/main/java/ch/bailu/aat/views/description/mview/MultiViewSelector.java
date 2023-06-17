@@ -5,7 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ch.bailu.aat.menus.MultiViewMenu;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
 
 public class MultiViewSelector extends LinearLayout {
     private final MultiView multiView;

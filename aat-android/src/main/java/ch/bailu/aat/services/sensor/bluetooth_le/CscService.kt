@@ -37,12 +37,12 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
 
     init {
         wheelCircumference = WheelCircumference(c, speed)
-        connectorCadence = Connector(c.context, InfoID.CADENCE_SENSOR)
-        connectorSpeed = Connector(c.context, InfoID.SPEED_SENSOR)
-        broadcasterCadence = Broadcaster(c.context, InfoID.CADENCE_SENSOR)
-        broadcasterSpeed = Broadcaster(c.context, InfoID.SPEED_SENSOR)
-        nameSpeed = c.context.getString(R.string.sensor_speed)
-        nameCadence = c.context.getString(R.string.sensor_cadence)
+        connectorCadence = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
+        connectorSpeed = Connector(c.getContext(), InfoID.SPEED_SENSOR)
+        broadcasterCadence = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
+        broadcasterSpeed = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
+        nameSpeed = c.getContext().getString(R.string.sensor_speed)
+        nameCadence = c.getContext().getString(R.string.sensor_cadence)
     }
 
     override fun changed(c: BluetoothGattCharacteristic) {

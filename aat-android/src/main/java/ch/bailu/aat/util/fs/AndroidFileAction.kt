@@ -1,123 +1,105 @@
-package ch.bailu.aat.util.fs;
+package ch.bailu.aat.util.fs
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.widget.EditText;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.EditText
+import ch.bailu.aat.util.Clipboard
+import ch.bailu.aat.util.fs.FileIntent.send
+import ch.bailu.aat.util.fs.FileIntent.view
+import ch.bailu.aat.util.ui.AppDialog
+import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
+import ch.bailu.aat.views.preferences.AddOverlayDialog
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.fs.AFile
+import ch.bailu.aat_lib.util.fs.FileAction
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat.util.Clipboard;
-import ch.bailu.aat.util.ui.AppDialog;
-import ch.bailu.aat.util.ui.AppSelectDirectoryDialog;
-import ch.bailu.aat.views.preferences.AddOverlayDialog;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.util.fs.AFile;
-import ch.bailu.aat_lib.util.fs.FileAction;
-import ch.bailu.foc.Foc;
+object AndroidFileAction {
 
-public class AndroidFileAction {
-
-
-
-    public static void delete(final AppContext context,
-                              final Activity activity,
-                              final Foc file) {
-
+    fun delete(
+        context: AppContext,
+        activity: Activity,
+        file: Foc
+    ) {
         if (file.canWrite()) {
-            new AppDialog() {
-                @Override
-                protected void onPositiveClick() {
-                    file.rm();
-                    FileAction.rescanDirectory(context, file);
+            object : AppDialog() {
+                override fun onPositiveClick() {
+                    file.rm()
+                    FileAction.rescanDirectory(context, file)
                 }
-            }.displayYesNoDialog(activity,
-                    Res.str().file_delete_ask(),
-                    file.getPathName());
+            }.displayYesNoDialog(
+                activity,
+                Res.str().file_delete_ask(),
+                file.pathName
+            )
         } else {
-            AFile.logErrorReadOnly(file);
+            AFile.logErrorReadOnly(file)
         }
     }
 
-
-    public static void copyToClipboard(Context context, Uri uri) {
-        copyToClipboard(uri.getLastPathSegment(), uri.toString(), context);
+    fun copyToClipboard(context: Context, file: Foc) {
+        copyToClipboard(file.name, file.toString(), context)
     }
 
-    public static void copyToClipboard(Context context, Foc file) {
-        copyToClipboard(file.getName(), file.toString(), context);
-
+    private fun copyToClipboard(label: String?, content: String?, context: Context) {
+        if (label != null && content != null) Clipboard(context).setText(label, content)
     }
 
-    private static void copyToClipboard(String label, String content, Context context) {
-        if (label != null && content != null)
-            new Clipboard(context).setText(label, content);
-
+    fun useAsOverlay(context: Context?, file: Foc?) {
+        AddOverlayDialog(context, file)
     }
 
-    public static void useAsOverlay(Context context, Foc file) {
-        new AddOverlayDialog(context, file);
+    fun view(context: Context, uri: Uri) {
+        view(context, Intent(), uri)
     }
 
-
-    public static void view(Context context, Uri uri) {
-        FileIntent.view(context, new Intent(), uri);
+    fun view(context: Context, file: Foc) {
+        view(context, Intent(), file)
     }
 
-
-    public static void view(Context context, Foc file) {
-        FileIntent.view(context, new Intent(), file);
+    fun sendTo(context: Context, file: Foc) {
+        send(context, Intent(), file)
     }
 
-    public static void sendTo(Context context, Foc file) {
-        FileIntent.send(context, new Intent(), file);
-    }
-
-
-    public static void sendTo(Context context, Uri uri) {
-        FileIntent.send(context, new Intent(), uri);
-    }
-
-
-    public static void copyToDir(Context context, AppContext appContext, Foc src) {
-        new AppSelectDirectoryDialog(context, src) {
-            @Override
-            public void copyTo(Context _context, Foc srcFile, Foc destDirectory) {
+    fun copyToDir(context: Context, appContext: AppContext, src: Foc) {
+        object : AppSelectDirectoryDialog(context, src) {
+            override fun copyTo(
+                context: Context,
+                srcFile: Foc,
+                destDirectory: Foc
+            ) {
                 try {
-
-                    FileAction.copyToDir(appContext, srcFile, destDirectory);
-                } catch (Exception e) {
-                    AppLog.e(appContext, e);
+                    FileAction.copyToDir(appContext, srcFile, destDirectory)
+                } catch (e: Exception) {
+                    AppLog.e(appContext, e)
                 }
-
             }
-        };
+        }
     }
 
-    public static void rename(final AppContext context, final Activity activity, final Foc file) {
+    fun rename(context: AppContext, activity: Activity, file: Foc) {
 
         if (file.canWrite() && file.hasParent()) {
-            final Foc directory = file.parent();
+            val directory = file.parent()
+            val title = Res.str().file_rename() + " " + file.name
+            val edit = EditText(activity)
 
-            final String title = Res.str().file_rename() + " " + file.getName();
-            final EditText edit = new EditText(activity);
-            edit.setText(file.getName());
+            edit.setText(file.name)
 
-            new AppDialog() {
-
-                @Override
-                protected void onPositiveClick() {
-                    Foc source = directory.child(file.getName());
-                    Foc target = directory.child(edit.getText().toString());
-
-                    FileAction.rename(context, source, target);
-
+            object : AppDialog() {
+                override fun onPositiveClick() {
+                    val source = directory.child(file.name)
+                    val target = directory.child(edit.text.toString())
+                    FileAction.rename(context, source, target)
                 }
-            }.displayTextDialog(activity, title, edit);
+            }.displayTextDialog(activity, title, edit)
+
         } else {
-            AFile.logErrorReadOnly(file);
+            AFile.logErrorReadOnly(file)
         }
     }
-
 }

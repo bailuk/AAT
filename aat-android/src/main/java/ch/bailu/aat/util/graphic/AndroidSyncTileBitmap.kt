@@ -1,176 +1,159 @@
-package ch.bailu.aat.util.graphic;
+package ch.bailu.aat.util.graphic
 
-import android.graphics.Canvas;
-import android.graphics.Picture;
-import android.graphics.RectF;
+import android.graphics.Canvas
+import android.graphics.RectF
+import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.util.Rect
+import ch.bailu.foc.Foc
+import com.caverock.androidsvg.SVG
+import com.caverock.androidsvg.SVGParseException
+import org.mapsforge.core.graphics.Bitmap
+import org.mapsforge.core.graphics.CorruptedInputStreamException
+import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.map.android.graphics.AndroidGraphicFactory
+import java.io.IOException
+import java.io.InputStream
+import javax.annotation.Nonnull
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
+class AndroidSyncTileBitmap : MapTileInterface {
+    private var bitmap: Bitmap? = null
+    private var size: Long = 0
+    override fun getTileBitmap(): TileBitmap? {
+        val b = bitmap
+        return if (b is TileBitmap) {
+            b
+        } else null
+    }
 
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.CorruptedInputStreamException;
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
+    override fun getBitmap(): Bitmap? {
+        return bitmap
+    }
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.util.Rect;
-import ch.bailu.foc.Foc;
-
-public class AndroidSyncTileBitmap implements MapTileInterface {
-    private Bitmap bitmap = null;
-
-    private long size = 0;
-
-    @Override
-    public TileBitmap getTileBitmap() {
-        var b = bitmap;
-        if (b instanceof TileBitmap) {
-            return (TileBitmap) b;
+    val androidBitmap: android.graphics.Bitmap?
+        get() {
+            val b = bitmap
+            return if (b != null) {
+                AndroidGraphicFactory.getBitmap(b)
+            } else null
         }
-        return null;
-    }
 
-    @Override
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-
-    public android.graphics.Bitmap getAndroidBitmap() {
-        var b = bitmap;
-        if (b != null) {
-            return AndroidGraphicFactory.getBitmap(b);
+    val androidCanvas: Canvas?
+        get() {
+            val b = androidBitmap
+            return if (b != null) {
+                Canvas(b)
+            } else null
         }
-        return null;
+
+    override fun getCanvas(): org.mapsforge.core.graphics.Canvas? {
+        val c = androidCanvas
+        return if (c != null) {
+            AndroidGraphicFactory.createGraphicContext(c)
+        } else null
     }
 
-
-    public Canvas getAndroidCanvas() {
-        var b = getAndroidBitmap();
-        if (b != null) {
-            return new Canvas(b);
-        }
-        return null;
+    @Synchronized
+    override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
+        set(load(file, defaultTileSize, transparent)!!)
     }
 
-    @Override
-    public org.mapsforge.core.graphics.Canvas getCanvas() {
-        var c = getAndroidCanvas();
-        if (c != null) {
-            return AndroidGraphicFactory.createGraphicContext(c);
-        }
-        return null;
-    }
-
-    private static TileBitmap load(Foc file, int size, boolean transparent) {
-        TileBitmap bitmap;
-        InputStream inputStream = null;
+    @Throws(IOException::class)
+    override fun setSVG(file: Foc, size: Int, transparent: Boolean) {
+        var input: InputStream? = null
         try {
-            inputStream = file.openR();
-            bitmap = AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent);
-            bitmap.setTimestamp(file.lastModified());
-
-        } catch (CorruptedInputStreamException | OutOfMemoryError | IOException e) {
-            bitmap = null;
+            input = file.openR()
+            val svg = SVG.getFromInputStream(input)
+            set(svg, size)
+        } catch (e: SVGParseException) {
+            throw IOException(e.message)
         } finally {
-            Foc.close(inputStream);
-        }
-        return bitmap;
-    }
-
-
-    public synchronized void set(Foc file, int defaultTileSize, boolean transparent) {
-        set(load(file, defaultTileSize, transparent));
-    }
-
-    @Override
-    public void setSVG(Foc file, int size, boolean transparent) throws IOException {
-        InputStream input = null;
-        try {
-            input = file.openR();
-            SVG svg = SVG.getFromInputStream(input);
-            set(svg, size);
-        } catch (SVGParseException e) {
-            throw new IOException(e.getMessage());
-        } finally {
-            Foc.close(input);
+            Foc.close(input)
         }
     }
 
-
-    public synchronized void set(Bitmap b) {
-        if (bitmap == b) return;
-
-        free();
-        bitmap = b;
-        size = getSizeOfBitmap();
+    @Synchronized
+    override fun set(b: Bitmap) {
+        if (bitmap === b) return
+        free()
+        bitmap = b
+        size = sizeOfBitmap
     }
 
-
-    private long getSizeOfBitmap() {
-        var result = Obj.MIN_SIZE;
-        var b = getAndroidBitmap();
-
-        if (b != null) {
-            result = b.getRowBytes() * b.getHeight();
+    private val sizeOfBitmap: Long
+        get() {
+            var result = Obj.MIN_SIZE
+            val b = androidBitmap
+            if (b != null) {
+                result = b.rowBytes * b.height
+            }
+            return result.toLong()
         }
-        return result;
+
+    @Synchronized
+    override fun set(defaultTileSize: Int, transparent: Boolean) {
+        set(AndroidGraphicFactory.INSTANCE.createTileBitmap(defaultTileSize, transparent))
     }
 
-
-    @Override
-    public synchronized void set(int defaultTileSize, boolean transparent) {
-        set(AndroidGraphicFactory.INSTANCE.createTileBitmap(defaultTileSize, transparent));
+    @Synchronized
+    operator fun set(svg: SVG, size: Int) {
+        set(size, true)
+        val p = svg.renderToPicture()
+        val c = androidCanvas
+        c?.drawPicture(p, RectF(0f, 0f, size.toFloat(), size.toFloat()))
     }
 
-    public synchronized void set(SVG svg, int size) {
-        set(size, true);
-
-        Picture p = svg.renderToPicture();
-        Canvas c = getAndroidCanvas();
-
-        if (c != null) {
-            c.drawPicture(p, new RectF(0, 0, size, size));
-        }
+    @Synchronized
+    override fun getSize(): Long {
+        return size
     }
 
-    public synchronized long getSize() {
-        return size;
+    @Synchronized
+    override fun setBuffer(@Nonnull buffer: IntArray, @Nonnull r: Rect) {
+        initBitmap()
+        val b = androidBitmap
+        b?.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height())
     }
 
-
-    @Override
-    public synchronized void setBuffer(@Nonnull int[] buffer, @Nonnull Rect r) {
-        initBitmap();
-        var b = getAndroidBitmap();
-
-        if (b != null) {
-            b.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height());
-        }
-    }
-
-    private void initBitmap() {
+    private fun initBitmap() {
         if (bitmap == null) {
-            set(SolidTileSize.DEFAULT_TILESIZE, true);
+            set(SolidTileSize.DEFAULT_TILESIZE, true)
         }
     }
 
-    public synchronized void free() {
+    @Synchronized
+    override fun free() {
         if (bitmap != null) {
-            bitmap.decrementRefCount();
+            bitmap!!.decrementRefCount()
         }
-        bitmap = null;
-        size = Obj.MIN_SIZE;
+        bitmap = null
+        size = Obj.MIN_SIZE.toLong()
     }
 
-    public boolean isLoaded() {
-        return bitmap != null;
+    override fun isLoaded(): Boolean {
+        return bitmap != null
+    }
+
+    companion object {
+        private fun load(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
+            var bitmap: TileBitmap?
+            var inputStream: InputStream? = null
+            try {
+                inputStream = file.openR()
+                bitmap =
+                    AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent)
+                bitmap.timestamp = file.lastModified()
+            } catch (e: CorruptedInputStreamException) {
+                bitmap = null
+            } catch (e: OutOfMemoryError) {
+                bitmap = null
+            } catch (e: IOException) {
+                bitmap = null
+            } finally {
+                Foc.close(inputStream)
+            }
+            return bitmap
+        }
     }
 }

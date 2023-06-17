@@ -13,7 +13,7 @@ import ch.bailu.aat.preferences.map.SolidTrimMode;
 import ch.bailu.aat.preferences.map.SolidTrimSize;
 import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.tileremover.TileRemoverView;
 import ch.bailu.aat_lib.map.tile.source.ElevationSource;
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;

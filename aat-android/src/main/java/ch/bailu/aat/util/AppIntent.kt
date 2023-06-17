@@ -1,100 +1,78 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat.util
 
-import android.content.Intent;
+import android.content.Intent
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.util.Objects
+import org.mapsforge.core.model.BoundingBox
 
-import org.mapsforge.core.model.BoundingBox;
+object AppIntent {
+    private const val EXTRA_FILE = "file"
+    private const val EXTRA_URL = "source"
+    const val EXTRA_MESSAGE = "source"
+    private val KEYS = arrayOf("file", "source", "c", "d", "e", "f")
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.util.Objects;
-
-public class AppIntent {
-    private static final String EXTRA_FILE="file";
-    private static final String EXTRA_URL="source";
-    public final static String EXTRA_MESSAGE = "source";
-
-    private static final String[] KEYS ={ "file", "source", "c", "d", "e", "f"};
-
-    public static void setUrl(Intent intent, String url) {
-        intent.putExtra(EXTRA_URL, url);
+    fun setUrl(intent: Intent, url: String?) {
+        intent.putExtra(EXTRA_URL, url)
     }
 
-    public static boolean hasUrl(Intent intent, String url) {
-        return intent.getStringExtra(EXTRA_URL).equals(url);
+    @JvmStatic
+    fun getUrl(intent: Intent): String? {
+        return intent.getStringExtra(EXTRA_URL)
     }
 
-
-    public static String getUrl(Intent intent) {
-        return intent.getStringExtra(EXTRA_URL);
-    }
-    public static void setFile(Intent intent, String file) {
-        intent.putExtra(EXTRA_FILE, file);
+    fun setFile(intent: Intent, file: String?) {
+        intent.putExtra(EXTRA_FILE, file)
     }
 
-    public static String getFile(Intent intent) {
-        return intent.getStringExtra(EXTRA_FILE);
+    @JvmStatic
+    fun getFile(intent: Intent): String? {
+        return intent.getStringExtra(EXTRA_FILE)
     }
 
-    public static boolean hasFile(Intent intent, String file) {
-        return Objects.equals(intent.getStringExtra(EXTRA_FILE), file);
+    @JvmStatic
+    fun hasFile(intent: Intent, file: String?): Boolean {
+        return Objects.equals(intent.getStringExtra(EXTRA_FILE), file)
     }
 
-
-
-    public static void setBoundingBox(Intent intent, BoundingBox box) {
-        intent.putExtra("N", (int) (box.maxLatitude * 1E6d));
-        intent.putExtra("E", (int) (box.maxLongitude * 1E6d));
-        intent.putExtra("S", (int) (box.minLatitude * 1E6d));
-        intent.putExtra("W", (int) (box.minLongitude * 1E6d));
-
+    fun setBoundingBox(intent: Intent, box: BoundingBox) {
+        intent.putExtra("N", (box.maxLatitude * 1E6).toInt())
+        intent.putExtra("E", (box.maxLongitude * 1E6).toInt())
+        intent.putExtra("S", (box.minLatitude * 1E6).toInt())
+        intent.putExtra("W", (box.minLongitude * 1E6).toInt())
     }
 
-
-
-
-    public static void setBoundingBox(Intent intent, BoundingBoxE6 box) {
-        intent.putExtra("N", box.getLatNorthE6());
-        intent.putExtra("E", box.getLonEastE6());
-        intent.putExtra("S", box.getLatSouthE6());
-        intent.putExtra("W", box.getLonWestE6());
-
+    fun getBoundingBox(intent: Intent): BoundingBoxE6 {
+        return BoundingBoxE6(
+            intent.getIntExtra("N", 0),
+            intent.getIntExtra("E", 0),
+            intent.getIntExtra("S", 0),
+            intent.getIntExtra("W", 0)
+        )
     }
 
-    public static BoundingBoxE6 getBoundingBox(Intent intent) {
-        return new BoundingBoxE6(
-                intent.getIntExtra("N",0),
-                intent.getIntExtra("E",0),
-                intent.getIntExtra("S",0),
-                intent.getIntExtra("W",0)
-                );
-    }
-
-    public static Intent toIntent(String action, Object[] args) {
-        int size = Math.min(args.length, KEYS.length);
-        Intent result = new Intent(action);
-
-        result.putExtra("size", size);
-
-        for (int i = 0; i < size; i++) {
-            result.putExtra(KEYS[i], args[i].toString());
+    fun toIntent(action: String, vararg args: String): Intent {
+        val size = Math.min(args.size, KEYS.size)
+        val result = Intent(action)
+        result.putExtra("size", size)
+        for (i in 0 until size) {
+            result.putExtra(KEYS[i], args[i])
         }
-        return result;
+        return result
     }
 
-    public static String[] toArgs(Intent intent) {
-        int size = Math.min(intent.getIntExtra("size", 0), KEYS.length);
-
-        String[] result = new String[size];
-
-        for (int i = 0; i< size; i++) {
-            result[i] = toSaveString(intent.getStringExtra(KEYS[i]));
+    fun toArgs(intent: Intent): Array<String?> {
+        val size = Math.min(intent.getIntExtra("size", 0), KEYS.size)
+        val result = arrayOfNulls<String>(size)
+        for (i in 0 until size) {
+            result[i] = toSaveString(intent.getStringExtra(KEYS[i]))
         }
-        return result;
+        return result
     }
 
-    private static String toSaveString(String stringExtra) {
+    private fun toSaveString(stringExtra: String?): String {
         if (stringExtra == null) {
-            stringExtra = "";
+            return ""
         }
-        return stringExtra;
+        return stringExtra
     }
 }

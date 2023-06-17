@@ -23,12 +23,12 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
     private var start: MenuItem? = null
     private var pause: MenuItem? = null
     override fun inflate(menu: Menu) {
-        val c = scontext.context
+        val c = scontext.getContext()
 
         start = add(menu,R.string.tracker_start) { scontext.insideContext { scontext.trackerService.onStartStop() }}.apply { setIcon(R.drawable.media_playback_start_inverse) }
         pause = add(menu, R.string.tracker_pause) {scontext.insideContext { scontext.trackerService.onPauseResume() }}.apply { setIcon(R.drawable.media_playback_pause_inverse) }
 
-        add(menu, R.string.p_backlight_title) { SolidIndexListDialog(scontext.context, SolidBacklight(c, SolidPreset(Storage(c)).index))}
+        add(menu, R.string.p_backlight_title) { SolidIndexListDialog(scontext.getContext(), SolidBacklight(c, SolidPreset(Storage(c)).index))}
         add(menu, R.string.intro_settings) {start(c, PreferencesActivity::class.java)}
         add(menu, R.string.p_map) { val stheme = SolidRenderTheme(
             AndroidMapDirectories(c).createSolidDirectory(),
@@ -38,7 +38,7 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
     }
 
     override val title: String
-        get() = scontext.context.getString(R.string.app_sname)
+        get() = scontext.getContext().getString(R.string.app_sname)
 
     override fun prepare(menu: Menu) {
         scontext.insideContext { updateMenuText(scontext.trackerService) }

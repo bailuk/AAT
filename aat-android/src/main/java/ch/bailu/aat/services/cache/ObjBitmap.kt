@@ -31,7 +31,7 @@ class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
     }
 
     override fun getSize(): Long {
-        return syncBitmap.size
+        return syncBitmap.size.toLong()
     }
 
     override fun isReadyAndLoaded(): Boolean {
@@ -65,7 +65,7 @@ class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
                     val self = obj as ObjBitmap
                     try {
                         self.syncBitmap.set(self.imageFile)
-                        size = self.syncBitmap.size
+                        size = self.syncBitmap.size.toLong()
                     } catch (e: Exception) {
                         self.exception = e
                     }

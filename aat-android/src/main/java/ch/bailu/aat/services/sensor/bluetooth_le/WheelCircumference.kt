@@ -48,7 +48,7 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
 
     init {
         AndroidBroadcaster.register(
-            scontext.context,
+            scontext.getContext(),
             onLocationChanged,
             AppBroadcaster.LOCATION_CHANGED
         )
@@ -74,7 +74,7 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
     }
 
     override fun close() {
-        scontext.context.unregisterReceiver(onLocationChanged)
+        scontext.getContext().unregisterReceiver(onLocationChanged)
     }
 
     // + " D: " + revolutionsDelta;

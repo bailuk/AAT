@@ -1,122 +1,108 @@
-package ch.bailu.aat.util.sql;
+package ch.bailu.aat.util.sql
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteDatabase.CursorFactory
+import android.database.sqlite.SQLiteOpenHelper
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
+import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbException
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.aat_lib.util.sql.SaveDbResultSet
+import ch.bailu.aat_lib.util.sql.Sql
 
-import androidx.annotation.Nullable;
-
-import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
-import ch.bailu.aat_lib.util.sql.DbConnection;
-import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.aat_lib.util.sql.SaveDbResultSet;
-import ch.bailu.aat_lib.util.sql.Sql;
-
-public class AndroidDbConnection implements DbConnection {
-
-    private SQLiteDatabase database;
-    private boolean needsUpdate = false;
-    private final Context context;
-
-    public AndroidDbConnection(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public void open(String path, int version) {
+class AndroidDbConnection(private val context: Context) : DbConnection {
+    private var database: SQLiteDatabase? = null
+    private var needsUpdate = false
+    override fun open(path: String, version: Int) {
         try {
-            close();
-            database = new OpenHelper(context, path, null, version).getReadableDatabase();
+            close()
+            database = OpenHelper(context, path, null, version).readableDatabase
             if (needsUpdate) {
-                createTable();
-                needsUpdate = false;
+                createTable()
+                needsUpdate = false
             }
-        } catch (Exception e) {
-            throw new DbException(e);
+        } catch (e: Exception) {
+            throw DbException(e)
         }
     }
 
-    private void createTable() {
-        execSQL(Sql.getTableDropStatement(GpxDbConfiguration.TABLE));
-        execSQL(Sql.getCreateTableExpression(GpxDbConfiguration.TABLE, GpxDbConfiguration.KEY_LIST, GpxDbConfiguration.TYPE_LIST));
+    private fun createTable() {
+        execSQL(Sql.getTableDropStatement(GpxDbConfiguration.TABLE))
+        execSQL(
+            Sql.getCreateTableExpression(
+                GpxDbConfiguration.TABLE,
+                GpxDbConfiguration.KEY_LIST,
+                GpxDbConfiguration.TYPE_LIST
+            )
+        )
     }
 
-    @Override
-    public void execSQL(String sql, Object ... bindArgs) {
+    override fun execSQL(sql: String, vararg bindArgs: Any) {
         try {
-            if (isOpen()) {
-                if (bindArgs.length > 0) {
-                    database.execSQL(sql, toStringArgs(bindArgs));
+            val database = this.database
+            if (database != null) {
+                if (bindArgs.isNotEmpty()) {
+                    database.execSQL(sql, toStringArgs(bindArgs as Array<Any>))
                 } else {
-                    database.execSQL(sql);
+                    database.execSQL(sql)
                 }
             }
-        } catch (Exception e) {
-            throw new DbException(e);
+        } catch (e: Exception) {
+            throw DbException(e)
         }
     }
 
-    @Override
-    public DbResultSet query(String sql, Object ... bindArgs) {
-        try {
-            if (isOpen()) {
-                Cursor cursor = database.rawQuery(sql, toStringArgs(bindArgs));
-                return new SaveDbResultSet(new AndroidDbResultSet(cursor));
+    override fun query(sql: String, vararg bindArgs: Any): DbResultSet? {
+        return try {
+            val database = this.database
+            if (database != null) {
+                val cursor = database.rawQuery(sql, toStringArgs(bindArgs as Array<Any>))
+                return SaveDbResultSet(AndroidDbResultSet(cursor))
             }
-            return null;
-        } catch (Exception e) {
-            throw new DbException(e);
+            null
+        } catch (e: Exception) {
+            throw DbException(e)
         }
     }
 
-    private String[] toStringArgs(Object[] bindArgs) {
-        String[] res = new String[bindArgs.length];
-
-        int index = 0;
-        for (Object o: bindArgs) {
-            res [index++] = o.toString();
+    private fun toStringArgs(bindArgs: Array<Any>): Array<String?> {
+        val res = arrayOfNulls<String>(bindArgs.size)
+        var index = 0
+        for (o in bindArgs) {
+            res[index++] = o.toString()
         }
-        return res;
+        return res
     }
 
-
-    @Override
-    public void close() {
+    override fun close() {
         try {
-            if (isOpen()) {
-                database.close();
-                database = null;
+            val database = this.database
+            if (database != null) {
+                database.close()
+                this.database = null
             }
-        } catch (Exception e) {
-            throw new DbException(e);
+        } catch (e: Exception) {
+            throw DbException(e)
         }
     }
 
-     private class OpenHelper extends SQLiteOpenHelper {
-
-        public OpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+    private inner class OpenHelper(
+        context: Context?,
+        name: String?,
+        factory: CursorFactory?,
+        version: Int
+    ) : SQLiteOpenHelper(context, name, factory, version) {
+        override fun onCreate(db: SQLiteDatabase) {
+            needsUpdate = true
         }
 
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            needsUpdate=true;
+        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            needsUpdate = true
         }
 
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            needsUpdate=true;
+        override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            needsUpdate = true
         }
-
-         @Override
-         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-             needsUpdate=true;
-         }
-    }
-
-    private boolean isOpen() {
-        return database != null;
     }
 }

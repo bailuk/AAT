@@ -2,7 +2,7 @@ package ch.bailu.aat.views.html;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.preferences.VerticalScrollView;
 
 
@@ -15,13 +15,6 @@ public class HtmlScrollTextView extends VerticalScrollView {
         textView = new HtmlTextView(context);
         add(textView);
     }
-
-    public HtmlScrollTextView(Context context, String text, LinkHandler linkHandler) {
-        this(context);
-        setHtmlText(text);
-        textView.setLinkHandler(linkHandler);
-    }
-
 
     public HtmlScrollTextView(Context context, String text) {
         this(context);

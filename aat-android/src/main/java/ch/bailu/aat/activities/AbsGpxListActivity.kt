@@ -12,8 +12,8 @@ import ch.bailu.aat.map.To
 import ch.bailu.aat.map.layer.FileControlBarLayer
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.BusyViewControlDbSync
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.GpxListView

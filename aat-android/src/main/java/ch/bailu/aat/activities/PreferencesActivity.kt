@@ -6,8 +6,8 @@ import ch.bailu.aat.R
 import ch.bailu.aat.dispatcher.SensorSource
 import ch.bailu.aat.preferences.SolidSAF
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView

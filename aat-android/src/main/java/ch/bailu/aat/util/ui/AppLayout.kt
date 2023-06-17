@@ -1,144 +1,96 @@
-package ch.bailu.aat.util.ui;
+package ch.bailu.aat.util.ui
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Point;
-import android.view.Display;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Point
+import android.view.Display
+import android.view.View
+import android.view.WindowManager
+import android.view.animation.AlphaAnimation
+import android.widget.LinearLayout
 
-import ch.bailu.aat_lib.logger.AppLog;
+object AppLayout {
+    private const val BIG_BUTTON_SIZE = 100
+    const val DEFAULT_VISIBLE_BUTTON_COUNT = 4
+    private const val GPS_EXTRA_BUTTON_COUNT = DEFAULT_VISIBLE_BUTTON_COUNT + 1
+    private const val BACK_EXTRA_BUTTON_COUNT = GPS_EXTRA_BUTTON_COUNT + 1
+    private const val TABLET_BUTTON_COUNT = BACK_EXTRA_BUTTON_COUNT
+    private val size = Point()
 
-public class AppLayout {
-    private static final int BIG_BUTTON_SIZE=100;
-
-    public final static int DEFAULT_VISIBLE_BUTTON_COUNT = 4;
-    private final static int GPS_EXTRA_BUTTON_COUNT = DEFAULT_VISIBLE_BUTTON_COUNT +1;
-    private final static int BACK_EXTRA_BUTTON_COUNT = GPS_EXTRA_BUTTON_COUNT+1;
-    private final static int TABLET_BUTTON_COUNT=BACK_EXTRA_BUTTON_COUNT;
-
-    private static final Point size = new Point();
-
-    public static void updateMeasurement(Context context) {
-
-        if (size.x==0 || size.y==0) {
-            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-
-            if (wm != null) {
-                Display disp = wm.getDefaultDisplay();
-                if (disp != null) {
-                    getSizeSDK13(disp, size);
+    private fun updateMeasurement(context: Context) {
+        if (size.x == 0 || size.y == 0) {
+            val wm = context.getSystemService(Context.WINDOW_SERVICE)
+            if (wm is WindowManager) {
+                val display = wm.defaultDisplay
+                if (display is Display) {
+                    getSizeSDK13(display, size)
                 }
             }
         }
     }
 
-    public static void getSizeSDK13(Display disp, Point size) {
-        disp.getSize(size);
+    private fun getSizeSDK13(display: Display, size: Point) {
+        display.getSize(size)
     }
 
-    public static int getScreenSmallSide(Context context) {
-        updateMeasurement(context);
-        return Math.min(size.x, size.y);
-    }
-
-    public static int getScreenLargeSide(Context context) {
-        updateMeasurement(context);
-        return Math.max(size.x, size.y);
+    private fun getScreenSmallSide(context: Context): Int {
+        updateMeasurement(context)
+        return Math.min(size.x, size.y)
     }
 
 
-    public static int getOrientation(Context c) {
-        return c.getResources().getConfiguration().orientation;
+    fun getOrientation(c: Context): Int {
+        return c.resources.configuration.orientation
     }
 
-    public static int getOrientationAlongSmallSide(Context context) {
-        if (getOrientation(context) == Configuration.ORIENTATION_LANDSCAPE)
-            return LinearLayout.VERTICAL;
-
-        return LinearLayout.HORIZONTAL;
+    fun getOrientationAlongSmallSide(context: Context): Int {
+        return if (getOrientation(context) == Configuration.ORIENTATION_LANDSCAPE) LinearLayout.VERTICAL else LinearLayout.HORIZONTAL
     }
 
-    public static int getOrientationAlongLargeSide(Context context) {
-        if (getOrientationAlongSmallSide(context) == LinearLayout.VERTICAL)
-            return LinearLayout.HORIZONTAL;
-        return LinearLayout.VERTICAL;
+    fun getOrientationAlongLargeSide(context: Context): Int {
+        return if (getOrientationAlongSmallSide(context) == LinearLayout.VERTICAL) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
     }
 
-    public static int getBigButtonSize(Context context) {
-        return getBigButtonSize(context, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
+    @JvmStatic
+    fun getBigButtonSize(context: Context): Int {
+        return getBigButtonSize(context, DEFAULT_VISIBLE_BUTTON_COUNT)
     }
 
-    public static int getBigButtonSize(Context context, int buttonCount) {
-        int big_button_size = new AndroidAppDensity(context).toPixel_i(BIG_BUTTON_SIZE);
-        return Math.min(AppLayout.getScreenSmallSide(context) / buttonCount, big_button_size);
+    @JvmStatic
+    fun getBigButtonSize(context: Context, buttonCount: Int): Int {
+        val bigButtonSize = AndroidAppDensity(context).toPixel_i(BIG_BUTTON_SIZE.toFloat())
+        return Math.min(getScreenSmallSide(context) / buttonCount, bigButtonSize)
     }
 
-    public static boolean haveExtraSpaceGps(Context context) {
-        return getVisibleButtonCount(context) >= GPS_EXTRA_BUTTON_COUNT;
+    fun haveExtraSpaceGps(context: Context): Boolean {
+        return getVisibleButtonCount(context) >= GPS_EXTRA_BUTTON_COUNT
     }
 
-    public static boolean haveExtraSpaceBack(Context context) {
-        return getVisibleButtonCount(context) >= BACK_EXTRA_BUTTON_COUNT;
+    private fun getVisibleButtonCount(context: Context): Int {
+        val screenSize = getScreenSmallSide(context)
+        val buttonSize = getBigButtonSize(context)
+        return screenSize / buttonSize
     }
 
-    public static int getVisibleButtonCount(Context context) {
-        int screen_size = getScreenSmallSide(context);
-        int button_size = getBigButtonSize(context);
-
-        return screen_size / button_size;
+    fun isTablet(context: Context): Boolean {
+        return getVisibleButtonCount(context) >= TABLET_BUTTON_COUNT
     }
 
-    public static boolean isTablet(Context context) {
-        return getVisibleButtonCount(context)>=TABLET_BUTTON_COUNT;
+    @JvmStatic
+    fun fadeOut(v: View) {
+        fade(v, View.GONE, 1.0f, 0.0f)
     }
 
-
-    public static void fadeOut(View v) {
-        fade(v, View.GONE, 1.0f, 0.0f);
+    @JvmStatic
+    fun fadeIn(v: View) {
+        fade(v, View.VISIBLE, 0.0f, 1.0f)
     }
 
-    public static void fadeIn(View v) {
-        fade(v, View.VISIBLE, 0.0f, 1.0f);
-    }
-
-
-    private static void fade(View view, int visibility, float startAlpha, float endAlpha) {
+    private fun fade(view: View, visibility: Int, startAlpha: Float, endAlpha: Float) {
         // Taken from org.mapsforge.map.android.input.MapZoomControls
-        AlphaAnimation anim = new AlphaAnimation(startAlpha, endAlpha);
-        anim.setDuration(250);
-        view.startAnimation(anim);
-        view.setVisibility(visibility);
-    }
-
-    public static void logMeasuredDimension(View view, String view_string) {
-        int height = view.getMeasuredHeight();
-        int width = view.getMeasuredWidth();
-
-        AppLog.d(view, view_string + " w:" + width + " h:" + height);
-    }
-
-    public static void logSpec(View view, int widthMeasureSpec, int heightMeasureSpec) {
-        logSpec(view, widthMeasureSpec, "widthMeasureSpec");
-        logSpec(view, heightMeasureSpec, "heightMeasureSpec");
-    }
-
-    public static void logSpec(View view, int spec, String spec_string) {
-        int mode = View.MeasureSpec.getMode(spec);
-        int size = View.MeasureSpec.getSize(spec);
-
-        String mode_string = "Unknown";
-
-        if (mode == View.MeasureSpec.UNSPECIFIED) {
-            mode_string = "MeasureSpec.UNSPECIFIED";
-        } else if (mode == View.MeasureSpec.EXACTLY) {
-            mode_string = "MeasureSpec.EXACTLY";
-        } else if (mode == View.MeasureSpec.AT_MOST) {
-            mode_string = "MeasureSpec.AT_MOST";
-        }
-
-        AppLog.d(view, spec_string + ": " + size + "[" + mode_string + "]");
+        val anim = AlphaAnimation(startAlpha, endAlpha)
+        anim.duration = 250
+        view.startAnimation(anim)
+        view.visibility = visibility
     }
 }

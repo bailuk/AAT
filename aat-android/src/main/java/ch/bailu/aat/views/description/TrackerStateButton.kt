@@ -2,11 +2,11 @@ package ch.bailu.aat.views.description
 
 import android.view.View
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat_lib.description.TrackerStateDescription
 
 class TrackerStateButton(private val scontext: ServiceContext) : ColorNumberView(
-    scontext.context, TrackerStateDescription(), AppTheme.bar
+    scontext.getContext(), TrackerStateDescription(), AppTheme.bar
 ), View.OnClickListener {
     init {
         setOnClickListener(this)

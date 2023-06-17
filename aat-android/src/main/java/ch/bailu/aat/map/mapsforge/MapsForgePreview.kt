@@ -110,12 +110,11 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         if (bitmap.androidBitmap != null) {
             val c = bitmap.androidCanvas
             val canvas = AndroidGraphicFactory.createGraphicContext(c)
-            bitmap.androidBitmap.eraseColor(Color.BLACK)
+            bitmap.androidBitmap?.eraseColor(Color.BLACK)
             for (layer in layerManager.layers) {
                 layer.draw(bounding, mapPosition.zoomLevel, canvas, tlPoint)
             }
         }
-        //drawingCanvas.destroy();
         return bitmap
     }
 
@@ -124,7 +123,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         val bitmap = generateBitmap()
         try {
             val outStream = imageFile.openW()
-            bitmap.androidBitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, outStream)
+            bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, outStream)
             outStream.close()
             AndroidBroadcaster.broadcast(
                 context,

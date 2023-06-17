@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ch.bailu.aat.R
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat.util.ui.ToolTip
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.tooltip.ToolTip
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
@@ -53,7 +53,7 @@ open class NumberView(context: Context, data: ContentDescription, private val th
     }
 
     fun setHighlightUnitLabelColor() {
-        setHighlightUnitLabelColor(theme.highlightColor)
+        setHighlightUnitLabelColor(theme.getHighlightColor())
     }
 
     fun setHighlightUnitLabelColor(color: Int) {

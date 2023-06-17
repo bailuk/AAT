@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.util.ui.tooltip.ToolTip;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 
 public class InfoLogMsgView extends AbsBroadcastMsgView {

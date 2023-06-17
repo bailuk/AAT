@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.activities.ActivityContext;
 import ch.bailu.aat.menus.FileMenu;
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;

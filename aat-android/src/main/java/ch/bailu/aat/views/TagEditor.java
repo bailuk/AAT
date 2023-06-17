@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.InputType;
 import android.widget.EditText;
 
-import ch.bailu.aat.util.TextBackup;
+import ch.bailu.aat.util.fs.TextBackup;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.foc.Foc;
 

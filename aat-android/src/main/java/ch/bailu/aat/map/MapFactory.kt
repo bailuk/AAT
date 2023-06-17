@@ -8,7 +8,7 @@ import ch.bailu.aat.map.layer.InformationBarLayer
 import ch.bailu.aat.map.layer.NavigationBarLayer
 import ch.bailu.aat.map.mapsforge.MapsForgeView
 import ch.bailu.aat.map.mapsforge.MapsForgeViewBase
-import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface

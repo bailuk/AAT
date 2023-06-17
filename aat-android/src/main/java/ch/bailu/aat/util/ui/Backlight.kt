@@ -1,160 +1,125 @@
-package ch.bailu.aat.util.ui;
+package ch.bailu.aat.util.ui
 
-import android.app.Activity;
-import android.os.Build;
-import android.view.Window;
-import android.view.WindowManager;
+import android.app.Activity
+import android.os.Build
+import android.view.Window
+import android.view.WindowManager
+import androidx.annotation.RequiresApi
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.presets.SolidBacklight
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import java.io.Closeable
+import javax.annotation.Nonnull
 
-import androidx.annotation.RequiresApi;
+class Backlight(private val activity: Activity, private val scontext: ServiceContext) :
+    OnContentUpdatedInterface, OnPreferencesChanged, Closeable {
+    private val window: Window = activity.window
+    private val spreset: SolidPreset = SolidPreset(Storage(scontext.getContext()))
+    private var sbacklight: SolidBacklight
+    private var state = StateID.OFF
 
-import java.io.Closeable;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.presets.SolidBacklight;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-
-public class Backlight implements OnContentUpdatedInterface,
-        OnPreferencesChanged, Closeable {
-
-    private final ServiceContext scontext;
-    private final Activity activity;
-    private final Window window;
-
-    private final SolidPreset spreset;
-    private SolidBacklight sbacklight;
-
-    private int state = StateID.OFF;
-
-
-    public Backlight(Activity a, ServiceContext sc) {
-        scontext = sc;
-        activity = a;
-        window = a.getWindow();
-
-        spreset = new SolidPreset(new Storage(sc.getContext()));
-        sbacklight = setToPreset();
-
-        spreset.register(this);
+    init {
+        sbacklight = setToPreset()
+        spreset.register(this)
     }
 
-
-    public void setBacklightAndPreset() {
-        setToPreset();
-        setBacklight();
+    fun setBacklightAndPreset() {
+        setToPreset()
+        setBacklight()
     }
 
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        if (state != info.getState()) {
-            state = info.getState();
-            setBacklight();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        if (state != info.state) {
+            state = info.state
+            setBacklight()
         }
     }
 
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
         if (spreset.hasKey(key)) {
-            setBacklightAndPreset();
-
+            setBacklightAndPreset()
         } else if (sbacklight.hasKey(key)) {
-            setBacklight();
+            setBacklight()
         }
     }
 
-
-    private SolidBacklight setToPreset() {
-        int presetIndex = getPresetIndex();
-
-        sbacklight = new SolidBacklight(scontext.getContext(), presetIndex);
-        return sbacklight;
+    private fun setToPreset(): SolidBacklight {
+        val presetIndex = presetIndex
+        sbacklight = SolidBacklight(scontext.getContext(), presetIndex)
+        return sbacklight
     }
 
+    private val presetIndex: Int
+        get() {
+            val result = IntArray(1)
+            scontext.insideContext { result[0] = scontext.trackerService.presetIndex }
+            return result[0]
+        }
 
-    private int getPresetIndex() {
-        final int[] result = new int[1];
-
-        scontext.insideContext(() -> result[0] = scontext.getTrackerService().getPresetIndex());
-
-        return result[0];
-    }
-
-
-    private void setBacklight() {
+    private fun setBacklight() {
         if (state == StateID.ON && sbacklight.keepScreenOn()) {
-            keepOn();
+            keepOn()
         } else {
-            autoOff();
+            autoOff()
         }
     }
 
-
-    private void autoOff() {
-        keepScreenOn(false);
-        dismissKeyGuard(false);
+    private fun autoOff() {
+        keepScreenOn(false)
+        dismissKeyGuard(false)
     }
 
-
-    private void keepOn() {
-        keepScreenOn(true);
-        dismissKeyGuard(sbacklight.dismissKeyGuard());
+    private fun keepOn() {
+        keepScreenOn(true)
+        dismissKeyGuard(sbacklight.dismissKeyGuard())
     }
 
-
-    private void dismissKeyGuard(boolean dismiss) {
+    private fun dismissKeyGuard(dismiss: Boolean) {
         if (Build.VERSION.SDK_INT >= 27) {
-            dismissKeyGuardSDK27(dismiss);
+            dismissKeyGuardSDK27(dismiss)
         } else if (Build.VERSION.SDK_INT >= 26) {
-            dismissKeyGuardSDK26(dismiss);
+            dismissKeyGuardSDK26(dismiss)
         } else {
-            dismissKeyGuardSDK5(dismiss);
+            dismissKeyGuardSDK5(dismiss)
         }
     }
-
 
     @RequiresApi(api = 27)
-    private void dismissKeyGuardSDK27(boolean dismiss) {
-        activity.setShowWhenLocked(dismiss);
+    private fun dismissKeyGuardSDK27(dismiss: Boolean) {
+        activity.setShowWhenLocked(dismiss)
     }
-
 
     @RequiresApi(api = 26)
-    private void dismissKeyGuardSDK26(boolean dismiss) {
-        updateFlags(dismiss, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    private fun dismissKeyGuardSDK26(dismiss: Boolean) {
+        updateFlags(dismiss, WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
     }
 
-
-    private void dismissKeyGuardSDK5(boolean dismiss) {
-        updateFlags(dismiss,
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-
+    private fun dismissKeyGuardSDK5(dismiss: Boolean) {
+        updateFlags(
+            dismiss, WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+        )
     }
 
-
-    private void keepScreenOn(boolean keepOn) {
-        updateFlags(keepOn, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    private fun keepScreenOn(keepOn: Boolean) {
+        updateFlags(keepOn, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    private void updateFlags(boolean on, int flags) {
+    private fun updateFlags(on: Boolean, flags: Int) {
         if (on) {
-            window.addFlags(flags);
+            window.addFlags(flags)
         } else {
-            window.clearFlags(flags);
+            window.clearFlags(flags)
         }
     }
 
-    @Override
-    public void close() {
-        spreset.unregister(this);
+    override fun close() {
+        spreset.unregister(this)
     }
 }

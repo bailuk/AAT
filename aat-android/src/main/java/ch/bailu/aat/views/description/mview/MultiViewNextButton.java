@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.activities.AbsHardwareButtons;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 
 public class MultiViewNextButton extends ImageButtonViewGroup implements AbsHardwareButtons.OnHardwareButtonPressed {

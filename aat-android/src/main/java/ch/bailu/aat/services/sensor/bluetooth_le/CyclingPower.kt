@@ -32,15 +32,15 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
 
     init {
         wheelCircumference = WheelCircumference(c, speed)
-        connectorPower = Connector(c.context, InfoID.POWER_SENSOR)
-        connectorCadence = Connector(c.context, InfoID.CADENCE_SENSOR)
-        connectorSpeed = Connector(c.context, InfoID.SPEED_SENSOR)
-        broadcasterPower = Broadcaster(c.context, InfoID.POWER_SENSOR)
-        broadcasterCadence = Broadcaster(c.context, InfoID.CADENCE_SENSOR)
-        broadcasterSpeed = Broadcaster(c.context, InfoID.SPEED_SENSOR)
-        namePower = c.context.getString(R.string.sensor_power)
-        nameSpeed = c.context.getString(R.string.sensor_speed)
-        nameCadence = c.context.getString(R.string.sensor_cadence)
+        connectorPower = Connector(c.getContext(), InfoID.POWER_SENSOR)
+        connectorCadence = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
+        connectorSpeed = Connector(c.getContext(), InfoID.SPEED_SENSOR)
+        broadcasterPower = Broadcaster(c.getContext(), InfoID.POWER_SENSOR)
+        broadcasterCadence = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
+        broadcasterSpeed = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
+        namePower = c.getContext().getString(R.string.sensor_power)
+        nameSpeed = c.getContext().getString(R.string.sensor_speed)
+        nameCadence = c.getContext().getString(R.string.sensor_cadence)
     }
 
     override fun close() {

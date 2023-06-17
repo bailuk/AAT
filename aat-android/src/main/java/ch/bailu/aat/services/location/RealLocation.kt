@@ -8,7 +8,6 @@ import android.location.LocationManager
 import android.location.LocationProvider
 import android.os.Bundle
 import ch.bailu.aat.util.AppPermission
-import ch.bailu.aat.util.ContextWrapperInterface
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.service.location.LocationInformation
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
@@ -21,7 +20,7 @@ open class RealLocation(i: LocationStackItem?,
                         private val provider: String,
                         interval: Int
 
-) : LocationStackChainedItem(i), LocationListener, ContextWrapperInterface {
+) : LocationStackChainedItem(i), LocationListener {
     private var state = INITIAL_STATE
 
 
@@ -124,10 +123,6 @@ open class RealLocation(i: LocationStackItem?,
             state = s
             super.passState(s)
         }
-    }
-
-    override fun getContext(): Context {
-        return context
     }
 
     override fun appendStatusText(builder: StringBuilder) {

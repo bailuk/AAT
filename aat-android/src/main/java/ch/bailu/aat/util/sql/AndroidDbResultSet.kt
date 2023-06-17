@@ -1,81 +1,53 @@
-package ch.bailu.aat.util.sql;
+package ch.bailu.aat.util.sql
 
-import android.database.Cursor;
+import android.database.Cursor
+import ch.bailu.aat_lib.util.sql.DbResultSet
 
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-
-public class AndroidDbResultSet implements DbResultSet {
-    private final Cursor cursor;
-
-    public AndroidDbResultSet(Cursor cursor) {
-        this.cursor = cursor;
+class AndroidDbResultSet(private val cursor: Cursor) : DbResultSet {
+    override fun moveToFirst(): Boolean {
+        return cursor.moveToFirst()
     }
 
-    @Override
-    public boolean moveToFirst() {
-        return cursor.moveToFirst();
+    override fun moveToNext(): Boolean {
+        return cursor.moveToNext()
     }
 
-    @Override
-    public boolean moveToNext() {
-        return cursor.moveToNext();
+    override fun close() {
+        cursor.close()
     }
 
-    @Override
-    public void close() {
-        cursor.close();
+    override fun moveToPrevious(): Boolean {
+        return cursor.moveToPrevious()
     }
 
-
-    @Override
-    public boolean moveToPrevious() {
-        return cursor.moveToPrevious();
+    override fun moveToPosition(pos: Int): Boolean {
+        return cursor.moveToPosition(pos)
     }
 
-    @Override
-    public boolean moveToPosition(int pos) {
-        return cursor.moveToPosition(pos);
+    override fun getCount(): Int {
+        return cursor.count
     }
 
-    @Override
-    public int getCount() {
-        return cursor.getCount();
+    override fun getString(column: String): String {
+        val index = cursor.getColumnIndex(column)
+        return if (index > -1) cursor.getString(index) else ""
     }
 
-    @Override
-    public String getString(String column) {
-        int index = cursor.getColumnIndex(column);
-
-        if (index > -1)
-            return cursor.getString(index);
-        return "";
+    override fun getLong(column: String): Long {
+        val index = cursor.getColumnIndex(column)
+        return if (index > -1) cursor.getLong(index) else 0
     }
 
-    @Override
-    public long getLong(String column) {
-        int index = cursor.getColumnIndex(column);
-
-        if (index > -1)
-            return cursor.getLong(index);
-        return 0;
+    override fun getFloat(column: String): Float {
+        val index = cursor.getColumnIndex(column)
+        return if (index > -1) cursor.getFloat(index) else 0f
     }
 
-    @Override
-    public float getFloat(String column) {
-        int index = cursor.getColumnIndex(column);
-
-        if (index > -1)
-            return cursor.getFloat(index);
-        return 0f;
+    override fun getPosition(): Int {
+        return cursor.position
     }
 
-    @Override
-    public int getPosition() {
-        return cursor.getPosition();
-    }
-
-    @Override
-    public boolean isClosed() {
-        return cursor.isClosed();
+    override fun isClosed(): Boolean {
+        return cursor.isClosed
     }
 }

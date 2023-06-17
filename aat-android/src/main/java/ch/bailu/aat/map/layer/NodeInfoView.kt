@@ -3,7 +3,7 @@ package ch.bailu.aat.map.layer
 import android.content.Context
 import android.graphics.Color
 import android.widget.LinearLayout
-import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.PercentageLayout
 import ch.bailu.aat.views.graph.GraphView
 import ch.bailu.aat.views.graph.GraphViewFactory

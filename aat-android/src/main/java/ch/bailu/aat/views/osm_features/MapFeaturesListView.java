@@ -11,8 +11,8 @@ import ch.bailu.aat.services.ServiceContext;
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
 import ch.bailu.aat_lib.lib.filter_list.AbsFilterList;
 import ch.bailu.aat_lib.lib.filter_list.ListEntry;
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 
 public class MapFeaturesListView extends ListView  {

@@ -17,7 +17,7 @@ open class ImageObjectView(
     private val scontext: ServiceContext,
     private val defaultImageID: Int
 ) : ImageView(
-    scontext.context
+    scontext.getContext()
 ) {
     private var isAttached = false
     private var imageHandle: ObjImageAbstract = ObjBitmap.NULL

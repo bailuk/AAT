@@ -14,7 +14,7 @@ import ch.bailu.aat.util.AndroidTimer
 
 class BleSensors(private val scontext: ServiceContext, private val sensorList: SensorList) : Sensors() {
 
-    val adapter: BluetoothAdapter = getAdapter(scontext.context)
+    val adapter: BluetoothAdapter = getAdapter(scontext.getContext())
 
     private val scannerBonded: AbsBleScanner = BleScannerBonded(this)
     private val scannerBle: AbsBleScanner = factory(this)
@@ -80,7 +80,7 @@ class BleSensors(private val scontext: ServiceContext, private val sensorList: S
     }
 
     private fun getString(r: Int): String {
-        return scontext.context.getString(r)
+        return scontext.getContext().getString(r)
     }
 
     @Synchronized

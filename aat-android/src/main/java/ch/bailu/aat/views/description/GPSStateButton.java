@@ -2,7 +2,7 @@ package ch.bailu.aat.views.description;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
 import ch.bailu.aat_lib.description.GpsStateDescription;
 
 public class GPSStateButton extends ColorNumberView {

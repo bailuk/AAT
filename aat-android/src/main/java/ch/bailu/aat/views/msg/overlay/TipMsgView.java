@@ -2,7 +2,7 @@ package ch.bailu.aat.views.msg.overlay;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.ToolTip;
+import ch.bailu.aat.util.ui.tooltip.ToolTip;
 import ch.bailu.aat.views.msg.AbsMsgView;
 
 public class TipMsgView extends AbsMsgView {

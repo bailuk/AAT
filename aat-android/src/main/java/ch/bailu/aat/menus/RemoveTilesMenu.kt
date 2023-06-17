@@ -15,13 +15,13 @@ class RemoveTilesMenu(private val scontext: ServiceContext, private val acontext
     private val info: SelectedTileDirectoryInfo = scontext.getTileRemoverService().info
 
     override fun inflate(menu: Menu) {
-        val c = scontext.context
+        val context = scontext.getContext()
         if (info.index == 0) {
-            removeScanned = menu.add(c.getString(R.string.p_remove_old))
-            removeAll = menu.add(c.getString(R.string.p_remove_all))
+            removeScanned = menu.add(context.getString(R.string.p_remove_old))
+            removeAll = menu.add(context.getString(R.string.p_remove_all))
         } else {
-            removeScanned = menu.add(c.getString(R.string.p_remove_old_in) + info.name)
-            removeAll = menu.add(c.getString(R.string.p_remove_all_in) + info.name)
+            removeScanned = menu.add(context.getString(R.string.p_remove_old_in) + info.name)
+            removeAll = menu.add(context.getString(R.string.p_remove_all_in) + info.name)
         }
     }
 
@@ -39,8 +39,8 @@ class RemoveTilesMenu(private val scontext: ServiceContext, private val acontext
                 }
             }.displayYesNoDialog(
                 acontext,
-                scontext.context.getString(R.string.p_remove_all),
-                scontext.context.getString(R.string.p_remove_all_in) + " " + info.directory
+                scontext.getContext().getString(R.string.p_remove_all),
+                scontext.getContext().getString(R.string.p_remove_all_in) + " " + info.directory
             )
         }
         return false

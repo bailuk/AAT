@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.ImageButtonViewGroup;
 import ch.bailu.aat.views.preferences.SolidImageButton;
 import ch.bailu.aat_lib.logger.AppLog;
@@ -63,18 +63,17 @@ public class ControlBar extends LinearLayout {
 
 
     public void place(int x, int y, int length) {
-        int large = length;
         int small = controlSize;
 
-        int large_spec = MeasureSpec.makeMeasureSpec(large, MeasureSpec.EXACTLY);
+        int large_spec = MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY);
         int small_spec = MeasureSpec.makeMeasureSpec(small, MeasureSpec.EXACTLY);
 
         if (orientation == HORIZONTAL) {
             measure(large_spec, small_spec);
-            layout(x, y, x+large, y+small);
+            layout(x, y, x+ length, y+small);
         } else {
             measure(small_spec, large_spec);
-            layout(x, y, x+small, y+large);
+            layout(x, y, x+small, y+ length);
         }
     }
 
@@ -123,11 +122,6 @@ public class ControlBar extends LinearLayout {
         return button;
 
     }
-
-    public void addIgnoreSize(View v) {
-        canvas.addView(v);
-    }
-
 
     public View addSolidIndexButton(SolidIndexList slist) {
         View button = new SolidImageButton(getContext(),slist);

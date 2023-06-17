@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 import ch.bailu.aat.R;
 import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.LabelTextView;
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
 import ch.bailu.aat_lib.gpx.GpxInformation;

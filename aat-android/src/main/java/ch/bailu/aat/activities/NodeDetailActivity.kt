@@ -12,7 +12,7 @@ import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
 import ch.bailu.aat.views.PercentageLayout

@@ -2,7 +2,7 @@ package ch.bailu.aat.views.preferences;
 
 import android.content.Context;
 
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 
 public class SolidIndexListView extends AbsSolidView {

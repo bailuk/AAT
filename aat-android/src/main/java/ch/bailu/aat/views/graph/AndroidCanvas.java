@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 
 import ch.bailu.aat.map.BitmapDraw;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.map.NodeBitmap;

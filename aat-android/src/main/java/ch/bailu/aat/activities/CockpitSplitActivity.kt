@@ -8,7 +8,7 @@ import ch.bailu.aat.map.mapsforge.MapViewLinker
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.util.ui.AppTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.PercentageLayout
 import ch.bailu.aat.views.bar.ControlBar

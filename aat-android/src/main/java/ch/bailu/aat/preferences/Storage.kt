@@ -3,12 +3,11 @@ package ch.bailu.aat.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import ch.bailu.aat.util.ContextWrapperInterface
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 
-class Storage (private val context: Context): ContextWrapperInterface, StorageInterface {
+class Storage (private val context: Context): StorageInterface {
 
     private val preferences: SharedPreferences = context.getSharedPreferences(GLOBAL_NAME, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = preferences.edit()
@@ -90,7 +89,7 @@ class Storage (private val context: Context): ContextWrapperInterface, StorageIn
         return DEF_VALUE
     }
 
-    override fun getContext(): Context {
+    fun getContext(): Context {
         return context
     }
 

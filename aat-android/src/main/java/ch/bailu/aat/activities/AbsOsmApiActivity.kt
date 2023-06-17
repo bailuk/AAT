@@ -6,10 +6,10 @@ import android.widget.LinearLayout
 import ch.bailu.aat.R
 import ch.bailu.aat.menus.ResultFileMenu
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat.util.TextBackup
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.ToolTip
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.fs.TextBackup
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.tooltip.ToolTip
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.BusyViewControl
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup

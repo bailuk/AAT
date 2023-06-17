@@ -5,7 +5,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import ch.bailu.aat.util.ui.AndroidAppDensity;
-import ch.bailu.aat.util.ui.AppTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
 
 public class ImageButtonViewGroup extends FrameLayout  {
 

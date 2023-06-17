@@ -8,8 +8,8 @@ import ch.bailu.aat.dispatcher.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.LabelTextView
 import ch.bailu.aat.views.bar.MainControlBar

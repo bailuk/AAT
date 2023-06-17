@@ -1,28 +1,23 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat.util
 
-import android.util.Log;
+import android.util.Log
+import ch.bailu.aat_lib.logger.Logger
+import ch.bailu.aat_lib.logger.LoggerFactory
 
-import ch.bailu.aat_lib.logger.Logger;
-import ch.bailu.aat_lib.logger.LoggerFactory;
-
-public class AndroidLoggerFactory implements LoggerFactory {
-    @Override
-    public Logger warn() {
-        return Log::w;
+class AndroidLoggerFactory : LoggerFactory {
+    override fun warn(): Logger {
+        return Logger { tag: String, msg: String -> Log.w(tag, msg) }
     }
 
-    @Override
-    public Logger info() {
-        return Log::i;
+    override fun info(): Logger {
+        return Logger { tag: String, msg: String -> Log.i(tag, msg) }
     }
 
-    @Override
-    public Logger debug() {
-        return Log::d;
+    override fun debug(): Logger {
+        return Logger { tag: String, msg: String -> Log.d(tag, msg) }
     }
 
-    @Override
-    public Logger error() {
-        return Log::e;
+    override fun error(): Logger {
+        return Logger { tag: String, msg: String -> Log.e(tag, msg) }
     }
 }

@@ -1,106 +1,87 @@
-package ch.bailu.aat.util.fs;
+package ch.bailu.aat.util.fs
 
-import android.content.Context;
-import android.os.Environment;
+import android.content.Context
+import android.os.Environment
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFile
+import java.io.File
 
-import java.io.File;
+class AndroidVolumes(context: Context) {
+    private var initialized = false
 
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocFile;
-
-public class AndroidVolumes {
-    private static Foc[] volumes, files, caches;
-
-
-    public AndroidVolumes(Context context) {
-        if (files == null)
-            init(context);
-    }
-
-    public Foc[] getVolumes() {
-        return volumes;
-    }
-
-    public Foc[] getCaches() {
-        return caches;
-    }
-
-    public Foc[] getFiles() {
-        return files;
-    }
-
-    public static void init(Context context) {
-        File internal_cache = context.getCacheDir();
-        File internal_file = context.getFilesDir();
-        File external_volume = Environment.getExternalStorageDirectory();
-
-        File[] external_files, external_caches;
-
-        external_files = context.getExternalFilesDirs(null);
-        external_caches = context.getExternalCacheDirs();
-
-        files = getMounted(internal_file, external_files);
-        caches = getMounted(internal_cache, external_caches);
-
-        volumes=volumesFromFiles(external_volume, external_files);
-    }
-
-
-    private static int countMounted(File file, File[] files) {
-        int c=0;
-
-        if (file != null) c++;
-        for(File f: files) {
-            if (f != null) c++;
+    init {
+        if (!initialized) {
+            initList(context)
+            initialized = true
         }
-        return c;
     }
 
+    val volumes: List<Foc>
+        get() = Companion.volumes
 
-    private static Foc[] getMounted(File file, File[] files) {
-        Foc[] mounted = new Foc[countMounted(file, files)];
+    val caches: List<Foc>
+        get() = Companion.caches
 
-        int i=0;
+    val files: List<Foc>
+        get() = Companion.files
 
-        if (file != null) {
-            mounted[i]=toFoc(file);
-            i++;
+    companion object {
+        private const val MAX_DEPTH = 4
+
+        private var volumes = ArrayList<Foc>()
+        private var files = ArrayList<Foc>()
+        private var caches = ArrayList<Foc>()
+
+        fun initList(context: Context) {
+            val internalCache = context.cacheDir
+            val internalFile = context.filesDir
+            val externalVolume = Environment.getExternalStorageDirectory()
+            val externalFiles: Array<File?> = context.getExternalFilesDirs(null)
+            val externalCaches: Array<File?> = context.externalCacheDirs
+
+            files = getMounted(internalFile, externalFiles)
+            caches = getMounted(internalCache, externalCaches)
+            volumes = volumesFromFiles(externalVolume, externalFiles)
         }
 
-        for (File f : files) {
-            if (f!= null) {
-                mounted[i]=toFoc(f);
-                i++;
+        private fun getMounted(file: File?, files: Array<File?>): ArrayList<Foc> {
+            val result = ArrayList<Foc>()
+            if (file != null) {
+                result.add(toFoc(file))
             }
-        }
-        return mounted;
-    }
-
-    private static Foc toFoc(File file) {
-        return new FocFile(file);
-    }
-
-    private static Foc[] volumesFromFiles(File externalVolume, File[] files) {
-        File[] volumes = new File[files.length];
-
-        for (int i=0; i<volumes.length; i++) {
-            volumes[i] = getParent(files[i], 4);
-
-            if (volumes[i] != null && volumes[i].equals(externalVolume)) {
-                externalVolume = null;
+            for (f in files) {
+                if (f != null) {
+                    result.add(toFoc(f))
+                }
             }
+            return result
         }
 
-
-        return getMounted(externalVolume, volumes);
-    }
-
-    private static File getParent(File file, int i) {
-        while (i > 0) {
-            i--;
-            if (file != null) file = file.getParentFile();
+        private fun toFoc(file: File): Foc {
+            return FocFile(file)
         }
-        return file;
-    }
 
+        private fun volumesFromFiles(externalVolume: File, files: Array<File?>): ArrayList<Foc> {
+            var extVolume: File? = externalVolume
+
+            val volumes = arrayOfNulls<File>(files.size)
+            for (i in volumes.indices) {
+                volumes[i] = getParent(files[i])
+                if (volumes[i] != null && volumes[i] == extVolume) {
+                    extVolume = null
+                }
+            }
+            return getMounted(extVolume, volumes)
+        }
+
+        private fun getParent(file: File?): File? {
+            var result = file
+            var i = MAX_DEPTH
+            while (i > 0) {
+                i--
+                if (result != null) result = result.parentFile
+            }
+            return result
+        }
+    }
 }

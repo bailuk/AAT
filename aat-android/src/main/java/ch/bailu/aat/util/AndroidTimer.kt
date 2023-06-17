@@ -1,34 +1,31 @@
-package ch.bailu.aat.util;
+package ch.bailu.aat.util
 
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Handler
+import android.os.Looper
+import ch.bailu.aat_lib.util.Timer
 
-import ch.bailu.aat_lib.util.Timer;
+class AndroidTimer : Timer {
+    private val handler: Handler
+    private var run: Runnable? = null
 
-public class AndroidTimer implements Timer {
-    private final Handler handler;
-    private Runnable run = null;
-
-    public AndroidTimer() {
+    init {
         if (Looper.myLooper() == null) {
-            Looper.prepare();
+            Looper.prepare()
         }
-        handler = new Handler();
+        handler = Handler()
     }
 
-
-    @Override
-    public void kick(long interval, Runnable run) {
-        cancel();
-        handler.postDelayed(run, interval);
-        this.run = run;
+    override fun kick(interval: Long, run: Runnable) {
+        cancel()
+        handler.postDelayed(run, interval)
+        this.run = run
     }
 
-    @Override
-    public void cancel() {
+    override fun cancel() {
+        val run = this.run
         if (run != null) {
-            handler.removeCallbacks(run);
-            run = null;
+            handler.removeCallbacks(run)
+            this.run = null
         }
     }
 }

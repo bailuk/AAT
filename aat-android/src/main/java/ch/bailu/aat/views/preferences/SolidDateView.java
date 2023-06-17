@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import ch.bailu.aat_lib.preferences.SolidDate;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 public class SolidDateView extends AbsSolidView {
     private final SolidDate sdate;

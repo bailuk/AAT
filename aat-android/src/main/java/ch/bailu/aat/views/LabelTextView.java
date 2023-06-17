@@ -4,9 +4,9 @@ import android.content.Context;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ch.bailu.aat.util.ui.AppTheme;
-import ch.bailu.aat.util.ui.ToolTipView;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.AppTheme;
+import ch.bailu.aat.util.ui.tooltip.ToolTipView;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat_lib.util.ui.ToolTipProvider;
 
 public class LabelTextView extends LinearLayout{

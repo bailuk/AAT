@@ -38,11 +38,11 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
     }
 
     init {
-        context = sc.context
-        sensorList = SensorList(sc.context)
+        context = sc.getContext()
+        sensorList = SensorList(sc.getContext())
         bluetoothLE = Sensors.factoryBle(sc, sensorList)
-        internal = Sensors.factoryInternal(sc.context, sensorList)
-        broadcaster = AndroidBroadcaster(sc.context)
+        internal = Sensors.factoryInternal(sc.getContext(), sensorList)
+        broadcaster = AndroidBroadcaster(sc.getContext())
         AndroidBroadcaster.register(
             context,
             onBluetoothStateChanged,

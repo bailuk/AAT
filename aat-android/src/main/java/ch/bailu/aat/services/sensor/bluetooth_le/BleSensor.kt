@@ -22,7 +22,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
 
     private val execute = Executor()
     private val services: Array<ServiceInterface>
-    private val context: Context = c.context
+    private val context: Context = c.getContext()
 
     private var device: BluetoothDevice
     private var sensorList: SensorList

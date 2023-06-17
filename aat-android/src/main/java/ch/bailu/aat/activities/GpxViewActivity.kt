@@ -11,8 +11,8 @@ import ch.bailu.aat.map.To
 import ch.bailu.aat.menus.ContentMenu
 import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.ToolTip
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.BusyViewControlIID
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
@@ -106,8 +106,12 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     }
 
     private fun initButtonBar(bar: MainControlBar) {
-        copyTo = bar.addImageButton(R.drawable.document_save_as_inverse)
-        fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse)
+        val copyTo = bar.addImageButton(R.drawable.document_save_as_inverse)
+        this.copyTo = copyTo
+
+        val fileOperation = bar.addImageButton(R.drawable.edit_select_all_inverse)
+        this.fileOperation = fileOperation
+
         ToolTip.set(copyTo, R.string.file_copy)
         ToolTip.set(fileOperation, R.string.tt_menu_file)
         bar.orientation = LinearLayout.HORIZONTAL

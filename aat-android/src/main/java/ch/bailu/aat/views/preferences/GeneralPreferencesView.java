@@ -7,7 +7,7 @@ import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider;
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix;
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
 import ch.bailu.aat.preferences.system.SolidExternalDirectory;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.SensorListView;
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.StorageInterface;

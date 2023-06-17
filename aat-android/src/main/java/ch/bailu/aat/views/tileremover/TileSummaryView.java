@@ -10,7 +10,7 @@ import android.widget.TextView;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaryInterface;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 public class TileSummaryView implements View.OnClickListener {
     private final RadioButton radioButton;

@@ -1,44 +1,33 @@
-package ch.bailu.aat.util.ui;
+package ch.bailu.aat.util.ui
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+abstract class AppSelectDirectoryDialog(private val context: Context, private val srcFile: Foc) {
+    private val directories: Array<Foc>
 
-public abstract class AppSelectDirectoryDialog  implements  DialogInterface.OnClickListener {
-    private final Foc srcFile;
-    private final Foc[] directories;
+    init {
+        val sdirectory: SolidDataDirectory = AndroidSolidDataDirectory(context)
+        directories = AppDirectory.getGpxDirectories(sdirectory)
+        val names = arrayOfNulls<String>(directories.size)
+        for (i in names.indices) names[i] = directories[i].name
+        val dialog = AlertDialog.Builder(context)
+        dialog.setTitle(srcFile.name + ": " + context.getString(R.string.file_copy))
 
-    private final Context context;
-    public AppSelectDirectoryDialog (Context c, Foc u) {
+        dialog.setItems(names) { dialogInterface: DialogInterface, index: Int ->
+            copyTo(context, srcFile, directories[index])
+            dialogInterface.dismiss()
+        }
 
-        context=c;
-        SolidDataDirectory sdirectory = new AndroidSolidDataDirectory(context);
-        srcFile = u;
-        directories = AppDirectory.getGpxDirectories(sdirectory);
-
-        final String[] names = new String[directories.length];
-
-        for (int i=0; i< names.length; i++) names[i]=directories[i].getName();
-
-
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle(srcFile.getName() + ": " + context.getString(R.string.file_copy));
-        dialog.setItems(names, this);
-        dialog.create();
-        dialog.show();
+        dialog.create()
+        dialog.show()
     }
 
-    @Override
-    public void onClick(DialogInterface dialog, int i) {
-        copyTo(context, srcFile, directories[i]);
-        dialog.dismiss();
-    }
-
-    public abstract void copyTo(Context context, Foc srcFile, Foc destDirectory);
+    abstract fun copyTo(context: Context, srcFile: Foc, destDirectory: Foc)
 }

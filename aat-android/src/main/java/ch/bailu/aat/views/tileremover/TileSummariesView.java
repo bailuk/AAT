@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat.preferences.map.SolidTrimIndex;
 import ch.bailu.aat.services.tileremover.SourceSummaries;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 
 public class TileSummariesView extends RadioGroup  {
 

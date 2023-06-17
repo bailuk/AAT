@@ -1,6 +1,6 @@
 package ch.bailu.aat.map.layer
 
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.map.MapColor
 import ch.bailu.aat_lib.map.MapContext
@@ -10,7 +10,7 @@ class CustomBarLayer(mc: MapContext, b: ControlBar, theme: UiTheme) : ControlBar
     mc,
     b,
     Position.TOP,
-    MapColor.setAlpha(theme.backgroundColor, MapColor.ALPHA_LOW)
+    MapColor.setAlpha(theme.getBackgroundColor(), MapColor.ALPHA_LOW)
 ) {
     init {
         showBar()

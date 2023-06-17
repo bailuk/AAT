@@ -14,7 +14,7 @@ class AndroidBroadcaster(private val context: Context) : Broadcaster {
         HashMap(5)
 
     override fun broadcast(action: String, vararg args: String) {
-        context.sendBroadcast(AppIntent.toIntent(action, args))
+        context.sendBroadcast(AppIntent.toIntent(action, *args))
     }
 
     override fun register(observer: BroadcastReceiver, action: String) {

@@ -7,8 +7,8 @@ import android.widget.LinearLayout
 import ch.bailu.aat.R
 import ch.bailu.aat.menus.FileMenu
 import ch.bailu.aat.util.ui.AppDialog
-import ch.bailu.aat.util.ui.AppTheme
-import ch.bailu.aat.util.ui.UiTheme
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.BusyViewContainer
 import ch.bailu.aat.views.BusyViewControlIID
 import ch.bailu.aat.views.ContentView

@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import ch.bailu.aat.app.ActivitySwitcher;
 import ch.bailu.aat.preferences.Storage;
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages;
-import ch.bailu.aat.util.ui.UiTheme;
+import ch.bailu.aat.util.ui.theme.UiTheme;
 import ch.bailu.aat.views.description.mview.MultiView;
 import ch.bailu.aat.views.description.mview.MultiViewIndicator;
 import ch.bailu.aat.views.msg.AbsMsgView;
