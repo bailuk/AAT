@@ -1,55 +1,46 @@
-package ch.bailu.aat.views.description.mview;
+package ch.bailu.aat.views.description.mview
 
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.View
+import android.view.ViewGroup
+import ch.bailu.aat.util.ui.theme.AppTheme
 
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.util.ui.theme.UiTheme;
+class MultiViewIndicator(private val multiView: MultiView) : ViewGroup(
+    multiView.context
+) {
+    private val indicatorView: View
+    private var width = 0
 
-public class MultiViewIndicator extends ViewGroup {
-    private final static UiTheme THEME = AppTheme.bar;
-
-    private final MultiView multiView;
-    private final View indicatorView;
-
-    private final static int HEIGHT = 5;
-    private int width = 0;
-
-    public MultiViewIndicator(MultiView multiView) {
-        super(multiView.getContext());
-        this.multiView = multiView;
-
-        multiView.addObserver(this::layoutIndicator);
-
-        setBackgroundColor(0);
-        setClickable(false);
-
-        indicatorView = new View(getContext());
-        indicatorView.setBackgroundColor(THEME.getHighlightColor());
-        indicatorView.setClickable(false);
-        addView(indicatorView);
+    init {
+        multiView.addObserver { layoutIndicator() }
+        setBackgroundColor(0)
+        isClickable = false
+        indicatorView = View(context)
+        indicatorView.setBackgroundColor(THEME.getHighlightColor())
+        indicatorView.isClickable = false
+        addView(indicatorView)
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        width = r-l;
-        layoutIndicator();
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        width = r - l
+        layoutIndicator()
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(HEIGHT, MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(HEIGHT, MeasureSpec.EXACTLY))
     }
 
-    private void layoutIndicator() {
-        int active = multiView.getActive();
-        int count = multiView.pageCount();
-
+    private fun layoutIndicator() {
+        val active = multiView.getActive()
+        val count = multiView.pageCount()
         if (count > 0) {
-            int w = width / count;
-            int x = w*active;
-            indicatorView.layout(x, 0, x+w, HEIGHT);
+            val w = width / count
+            val x = w * active
+            indicatorView.layout(x, 0, x + w, HEIGHT)
         }
+    }
+
+    companion object {
+        private val THEME = AppTheme.bar
+        private const val HEIGHT = 5
     }
 }

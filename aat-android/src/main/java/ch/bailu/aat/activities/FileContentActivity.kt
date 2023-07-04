@@ -69,7 +69,7 @@ class FileContentActivity : AbsFileContentActivity() {
     private fun createMultiView(bar: MainControlBar, summary: View, graph: View, contentView: ContentView): ViewGroup {
         val mv = MultiView(this, SOLID_KEY)
         mv.add(summary)
-        mv.add(To.view(map))
+        To.view(map)?.apply { mv.add(this) }
         mv.add(graph)
         bar.addMvNext(mv)
         contentView.addMvIndicator(mv)

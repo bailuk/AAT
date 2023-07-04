@@ -14,7 +14,7 @@ class MultiViewMenu(private val mview: MultiView) : AbsMenu() {
 
     override fun prepare(menu: Menu) {}
     override fun onItemClick(item: MenuItem): Boolean {
-        mview.active = item.itemId
+        mview.setActive(item.itemId)
         return true
     }
 }

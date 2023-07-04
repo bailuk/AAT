@@ -52,7 +52,8 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
 
     private fun createMultiView(theme: UiTheme): MultiView {
         val multiView = MultiView(this, SOLID_KEY)
-        mapTilePreferences = MapPreferencesView(this, serviceContext, theme)
+        val mapTilePreferences = MapPreferencesView(this, serviceContext, theme)
+        this.mapTilePreferences = mapTilePreferences
         multiView.add(
             GeneralPreferencesView(this, theme),
             getString(R.string.p_general) + "/" + getString(R.string.p_system)

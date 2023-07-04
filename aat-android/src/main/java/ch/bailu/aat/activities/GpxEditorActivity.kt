@@ -52,7 +52,7 @@ class GpxEditorActivity : AbsFileContentActivity() {
 
     private fun createMultiView(bar: MainControlBar, summary: View, graph: View, contentView: ContentView): ViewGroup {
         val mv = MultiView(this, SOLID_KEY)
-        mv.add(To.view(map))
+        To.view(map)?.apply { mv.add(this) }
         val p = PercentageLayout(this)
         p.add(summary, 60)
         p.add(graph, 40)

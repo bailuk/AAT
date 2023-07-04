@@ -185,8 +185,8 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
         private fun createMvLayout(map: MapViewInterface, summary: VerticalScrollView, bar: MainControlBar): View {
             val multiView = MultiView(acontext, solidKey)
-            multiView.add(listView, listLabel)
-            multiView.add(To.view(map), mapLabel)
+            listView?.apply { multiView.add(this, listLabel) }
+            To.view(map)?.apply { multiView.add(this, mapLabel) }
             multiView.add(summary, "$summaryLabel/$filterLabel")
             bar.addAll(multiView)
             contentView.addMvIndicator(multiView)

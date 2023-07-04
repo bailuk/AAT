@@ -1,31 +1,29 @@
-package ch.bailu.aat.views.description.mview;
+package ch.bailu.aat.views.description.mview
 
-import android.view.KeyEvent;
+import android.view.KeyEvent
+import ch.bailu.aat.R
+import ch.bailu.aat.activities.AbsHardwareButtons
+import ch.bailu.aat.activities.AbsHardwareButtons.OnHardwareButtonPressed
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.ImageButtonViewGroup
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsHardwareButtons;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-
-public class MultiViewNextButton extends ImageButtonViewGroup implements AbsHardwareButtons.OnHardwareButtonPressed {
-    private final MultiView mv;
-
-
-    public MultiViewNextButton(MultiView mv, UiTheme theme) {
-        super(mv.getContext(), R.drawable.go_next_inverse);
-        this.mv = mv;
-        setOnClickListener(v -> mv.setNext());
-        theme.button(this);
+class MultiViewNextButton(private val mv: MultiView, theme: UiTheme) : ImageButtonViewGroup(
+    mv.context, R.drawable.go_next_inverse
+), OnHardwareButtonPressed {
+    init {
+        setOnClickListener { mv.setNext() }
+        theme.button(this)
     }
 
-    @Override
-    public boolean onHardwareButtonPressed(int code, @Nonnull AbsHardwareButtons.EventType type) {
+    override fun onHardwareButtonPressed(
+        code: Int,
+        @Nonnull type: AbsHardwareButtons.EventType
+    ): Boolean {
         if (code == KeyEvent.KEYCODE_SEARCH) {
-            if (type == AbsHardwareButtons.EventType.DOWN) mv.setNext();
-            return true;
+            if (type === AbsHardwareButtons.EventType.DOWN) mv.setNext()
+            return true
         }
-        return false;
+        return false
     }
 }
