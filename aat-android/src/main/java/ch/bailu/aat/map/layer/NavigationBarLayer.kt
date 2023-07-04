@@ -8,6 +8,7 @@ import ch.bailu.aat.R
 import ch.bailu.aat.activities.AbsHardwareButtons
 import ch.bailu.aat.map.To
 import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
@@ -21,8 +22,8 @@ import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
 
-class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = 4) : ControlBarLayer(
-    mcontext, ControlBar(context, getOrientation(Position.BOTTOM), i, AppTheme.bar), Position.BOTTOM
+class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) : ControlBarLayer(
+    mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
 ), OnContentUpdatedInterface {
 
     private val buttonPlus: View

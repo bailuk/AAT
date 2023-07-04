@@ -126,7 +126,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
 
     private fun createControlBar(): MainControlBar {
         val bar = MainControlBar(this)
-        bar.setOnClickListener1(this)
+        bar.addOnClickListener(this)
         return bar
     }
 

@@ -69,7 +69,9 @@ class OverpassActivity : AbsOsmApiActivity() {
     }
 
     public override fun addCustomButtons(bar: MainControlBar) {
-        if (!AppLayout.isTablet(this)) {
+        val multiView = this.multiView
+
+        if (!AppLayout.isTablet(this) && multiView is View) {
             bar.addMvNext(multiView)
         } else {
             bar.addSpace()

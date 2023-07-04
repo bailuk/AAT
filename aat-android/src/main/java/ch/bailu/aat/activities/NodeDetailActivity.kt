@@ -64,10 +64,11 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
         val bar: ControlBar = MainControlBar(this)
         previousNode = bar.addImageButton(R.drawable.go_up_inverse)
         nextNode = bar.addImageButton(R.drawable.go_down_inverse)
-        icon = SVGAssetView(serviceContext, 0)
+        val icon = SVGAssetView(serviceContext, 0)
+        this.icon = icon
         bar.add(icon)
         bar.orientation = LinearLayout.HORIZONTAL
-        bar.setOnClickListener1(this)
+        bar.addOnClickListener(this)
         return bar
     }
 

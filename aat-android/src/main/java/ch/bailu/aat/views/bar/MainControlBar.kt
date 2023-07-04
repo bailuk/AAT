@@ -1,119 +1,100 @@
-package ch.bailu.aat.views.bar;
+package ch.bailu.aat.views.bar
 
-import android.widget.LinearLayout;
+import ch.bailu.aat.R
+import ch.bailu.aat.activities.AbsDispatcher
+import ch.bailu.aat.activities.ActivityContext
+import ch.bailu.aat.activities.MainActivity
+import ch.bailu.aat.app.ActivitySwitcher
+import ch.bailu.aat.menus.OptionsMenu
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.description.GPSStateButton
+import ch.bailu.aat.views.description.SensorStateButton
+import ch.bailu.aat.views.description.TrackerStateButton
+import ch.bailu.aat.views.description.mview.MultiView
+import ch.bailu.aat.views.description.mview.MultiViewNextButton
+import ch.bailu.aat.views.description.mview.MultiViewSelector
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.util.Objects
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.activities.AbsDispatcher;
-import ch.bailu.aat.activities.ActivityContext;
-import ch.bailu.aat.app.ActivitySwitcher;
-import ch.bailu.aat.activities.MainActivity;
-import ch.bailu.aat.menus.OptionsMenu;
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-import ch.bailu.aat.views.description.GPSStateButton;
-import ch.bailu.aat.views.description.SensorStateButton;
-import ch.bailu.aat.views.description.TrackerStateButton;
-import ch.bailu.aat.views.description.mview.MultiView;
-import ch.bailu.aat.views.description.mview.MultiViewNextButton;
-import ch.bailu.aat.views.description.mview.MultiViewSelector;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.util.Objects;
-
-public class MainControlBar extends ControlBar {
-
-
-    public MainControlBar(final AbsDispatcher acontext) {
-        this(acontext, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT);
+class MainControlBar(acontext: AbsDispatcher, orientation: Int = HORIZONTAL, button: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) :
+    ControlBar(acontext, orientation, AppTheme.bar, button) {
+    constructor(acontext: AbsDispatcher, mv: MultiView) : this(acontext) {
+        addAll(mv)
     }
 
-    public MainControlBar(final AbsDispatcher acontext, final MultiView mv) {
-        this(acontext);
-        addAll(mv);
+    init {
+        if (Objects.equals(
+                acontext.javaClass.simpleName,
+                MainActivity::class.java.simpleName
+            )
+        ) addMenuButton(acontext) else addBackButton(acontext)
     }
 
-    public MainControlBar(final AbsDispatcher acontext, int button) {
-        this(acontext, LinearLayout.HORIZONTAL, button);
+    private fun addBackButton(acontext: AbsDispatcher) {
+        val b = addImageButton(R.drawable.edit_undo_inverse, controlSize)
+        b.setOnClickListener { acontext.onBackPressedMenuBar() }
     }
 
-
-    public MainControlBar(final AbsDispatcher acontext, int orientation, int button) {
-        super(acontext, orientation, button, AppTheme.bar);
-
-        if (Objects.equals(acontext.getClass().getSimpleName(), MainActivity.class.getSimpleName()))
-            addMenuButton(acontext);
-        else
-            addBackButton(acontext);
-
-    }
-
-
-    private void addBackButton(final AbsDispatcher acontext) {
-        ImageButtonViewGroup b = addImageButton(R.drawable.edit_undo_inverse, getControlSize());
-        b.setOnClickListener(v -> acontext.onBackPressedMenuBar());
-    }
-
-
-    private ImageButtonViewGroup addMenuButton(final AbsDispatcher acontext) {
-        final ImageButtonViewGroup menu = addImageButton(ch.bailu.aat.R.drawable.open_menu_inverse);
-
-
-        menu.setOnClickListener(v -> new OptionsMenu(acontext.getServiceContext()).showAsPopup(getContext(), menu));
-        return menu;
-    }
-
-
-    public void addAll(final MultiView mv) {
-        addMvPrevious(mv,getControlSize()/2);
-        add(new MultiViewSelector(mv), getControlSize()*2);
-        addMvNext(mv, getControlSize()/2);
-    }
-
-
-    public void addMvNext(final MultiView mv, int size) {
-        add(new MultiViewNextButton(mv, theme), size);
-    }
-
-
-    public void addMvPrevious(final MultiView mv, int size) {
-        addImageButton(R.drawable.go_previous_inverse, size).setOnClickListener(v -> mv.setPrevious());
-    }
-
-    public MainControlBar addGpsState(AbsDispatcher acontext) {
-        GPSStateButton gps = new GPSStateButton(acontext);
-        add(gps);
-        acontext.addTarget(gps, InfoID.LOCATION);
-
-        return this;
-    }
-
-    public MainControlBar addTrackerState(AbsDispatcher acontext) {
-        TrackerStateButton ts = new TrackerStateButton(acontext.getServiceContext());
-        add(ts);
-        acontext.addTarget(ts, InfoID.TRACKER);
-
-        return this;
-    }
-
-
-    public void addSensorState(ActivityContext acontext) {
-        SensorStateButton s = new SensorStateButton(acontext.getServiceContext());
-        add(s);
-        acontext.addTarget(s, InfoID.SENSORS);
-    }
-
-
-    public void addActivityCycle(final ActivityContext acontext) {
-        if (ActivitySwitcher.DISABLE_ACTIVITY_CYCLING) {
-            addSpace();
-        } else {
-            ImageButtonViewGroup cb = addImageButton(R.drawable.go_down_inverse, getControlSize());
-            cb.setOnClickListener(v -> new ActivitySwitcher(acontext).cycle());
+    private fun addMenuButton(acontext: AbsDispatcher): ImageButtonViewGroup {
+        val menu = addImageButton(R.drawable.open_menu_inverse)
+        menu.setOnClickListener {
+            OptionsMenu(acontext.serviceContext).showAsPopup(
+                context, menu
+            )
         }
+        return menu
     }
 
+    fun addAll(mv: MultiView) {
+        addMvPrevious(mv, controlSize / 2)
+        add(MultiViewSelector(mv), controlSize * 2)
+        addMvNext(mv, controlSize / 2)
+    }
 
-    public void addMvNext(MultiView mv) {
-        addMvNext(mv, getControlSize());
+    @JvmOverloads
+    fun addMvNext(mv: MultiView, size: Int = controlSize) {
+        add(MultiViewNextButton(mv, theme), size)
+    }
+
+    private fun addMvPrevious(mv: MultiView, size: Int) {
+        addImageButton(
+            R.drawable.go_previous_inverse,
+            size
+        ).setOnClickListener { mv.setPrevious() }
+    }
+
+    fun addGpsState(acontext: AbsDispatcher): MainControlBar {
+        val gps = GPSStateButton(acontext)
+        add(gps)
+        acontext.addTarget(gps, InfoID.LOCATION)
+        return this
+    }
+
+    fun addTrackerState(acontext: AbsDispatcher): MainControlBar {
+        val ts = TrackerStateButton(acontext.serviceContext)
+        add(ts)
+        acontext.addTarget(ts, InfoID.TRACKER)
+        return this
+    }
+
+    fun addSensorState(acontext: ActivityContext) {
+        val s = SensorStateButton(acontext.serviceContext)
+        add(s)
+        acontext.addTarget(s, InfoID.SENSORS)
+    }
+
+    fun addActivityCycle(acontext: ActivityContext) {
+        if (ActivitySwitcher.DISABLE_ACTIVITY_CYCLING) {
+            addSpace()
+        } else {
+            val cb = addImageButton(R.drawable.go_down_inverse, controlSize)
+            cb.setOnClickListener {
+                ActivitySwitcher(
+                    acontext
+                ).cycle()
+            }
+        }
     }
 }

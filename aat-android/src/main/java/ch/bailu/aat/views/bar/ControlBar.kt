@@ -1,150 +1,104 @@
-package ch.bailu.aat.views.bar;
+package ch.bailu.aat.views.bar
 
-import android.content.Context;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.content.Context
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import ch.bailu.aat.util.ui.AppLayout
+import ch.bailu.aat.util.ui.AppLayout.getBigButtonSize
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.preferences.SolidImageButton
+import ch.bailu.aat_lib.preferences.SolidIndexList
 
-import ch.bailu.aat.util.ui.AppLayout;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-import ch.bailu.aat.views.preferences.SolidImageButton;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
+open class ControlBar(context: Context, orient: Int, theme: UiTheme, visibleButtonCount: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) :
+    LinearLayout(context) {
+    private val canvas: LinearLayout
+    private val orientation: Int
+    val controlSize: Int
 
+    private val onClickListeners = ArrayList<OnClickListener>()
 
-public class ControlBar extends LinearLayout {
-
-    private final LinearLayout canvas;
-
-    private final int orientation;
-    private final int controlSize;
-
-    private OnClickListener listener1, listener2;
-
-    protected final UiTheme theme;
-
-    public ControlBar(Context context, int orientation, UiTheme theme) {
-        this(context, orientation, AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT, theme);
+    private val onClickListener = OnClickListener { v ->
+        onClickListeners.forEach { it.onClick(v) }
     }
 
+    @JvmField
+    protected val theme: UiTheme
 
-    public ControlBar(Context context, int orient, int visibleButtonCount, UiTheme theme) {
-        super(context);
-
-        final FrameLayout scroller;
-        this.theme = theme;
-        theme.background(this);
-        orientation = orient;
-        controlSize = AppLayout.getBigButtonSize(context, visibleButtonCount);
-
-        canvas = new LinearLayout(context);
-        canvas.setOrientation(orientation);
-        this.setOrientation(orientation);
-
-
-
-        if (orientation == HORIZONTAL) {
-            scroller = new HorizontalScrollView(context);
+    init {
+        this.theme = theme
+        theme.background(this)
+        orientation = orient
+        controlSize = getBigButtonSize(context, visibleButtonCount)
+        canvas = LinearLayout(context)
+        canvas.orientation = orientation
+        setOrientation(orientation)
+        val scroller: FrameLayout = if (orientation == HORIZONTAL) {
+            HorizontalScrollView(context)
         } else {
-            scroller = new ScrollView(context);
+            ScrollView(context)
         }
-
-        scroller.addView(canvas);
-        super.addView(scroller);
+        scroller.addView(canvas)
+        super.addView(scroller)
     }
 
-
-    public int getControlSize() {
-        return controlSize;
-    }
-
-
-    public void place(int x, int y, int length) {
-        int small = controlSize;
-
-        int large_spec = MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY);
-        int small_spec = MeasureSpec.makeMeasureSpec(small, MeasureSpec.EXACTLY);
-
+    fun place(x: Int, y: Int, length: Int) {
+        val small = controlSize
+        val largeSpec = MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY)
+        val smallSpec = MeasureSpec.makeMeasureSpec(small, MeasureSpec.EXACTLY)
         if (orientation == HORIZONTAL) {
-            measure(large_spec, small_spec);
-            layout(x, y, x+ length, y+small);
+            measure(largeSpec, smallSpec)
+            layout(x, y, x + length, y + small)
         } else {
-            measure(small_spec, large_spec);
-            layout(x, y, x+small, y+ length);
+            measure(smallSpec, largeSpec)
+            layout(x, y, x + small, y + length)
         }
     }
 
-
-
-    public ImageButtonViewGroup addImageButton(int res) {
-        return addImageButton(res, getControlSize());
+    @JvmOverloads
+    fun addImageButton(res: Int, size: Int = controlSize): ImageButtonViewGroup {
+        val button = ImageButtonViewGroup(context, res)
+        button.setOnClickListener(onClickListener)
+        theme.button(button)
+        add(button, size)
+        return button
     }
 
-    public ImageButtonViewGroup addImageButton(int res, int size) {
-        ImageButtonViewGroup button = new ImageButtonViewGroup(getContext(), res);
-        button.setOnClickListener(onClickListener);
-        theme.button(button);
-        add(button, size);
-
-        return button;
+    fun add(v: View): View {
+        add(v, controlSize)
+        return v
     }
 
-
-
-    public View add(View v) {
-        add(v, controlSize);
-        return v;
+    fun add(v: View, size: Int): View {
+        canvas.addView(v, size, controlSize)
+        return v
     }
 
-
-    public View add(View v, int size) {
-        canvas.addView(v, size, controlSize);
-        return v;
+    override fun addView(v: View) {
+        add(v)
     }
 
-    @Override
-    public void addView(View v) {
-        AppLog.w(this, "Wrong call! use 'add(View)'");
-        canvas.addView(v, controlSize, controlSize);
+    fun addSpace() {
+        add(View(context))
     }
 
-    public void addSpace() {
-        add(new View(getContext()));
+    fun addButton(button: View): View {
+        canvas.addView(button, controlSize, controlSize)
+        button.setOnClickListener(onClickListener)
+        return button
     }
 
-
-    public View addButton(View button) {
-        canvas.addView(button, controlSize, controlSize);
-        button.setOnClickListener(onClickListener);
-        return button;
-
+    fun addSolidIndexButton(slist: SolidIndexList?): View {
+        val button: View = SolidImageButton(context, slist)
+        theme.button(button)
+        return add(button)
     }
 
-    public View addSolidIndexButton(SolidIndexList slist) {
-        View button = new SolidImageButton(getContext(),slist);
-        theme.button(button);
-        return add(button);
+    fun addOnClickListener(l: OnClickListener) {
+        onClickListeners.add(l)
     }
-
-    public void setOnClickListener1(OnClickListener l) {
-        listener1 = l;
-    }
-
-    public void setOnClickListener2(OnClickListener l) {
-        listener2 = l;
-    }
-
-
-    private final OnClickListener onClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (listener1 != null) listener1.onClick(v);
-            if (listener2 != null) listener2.onClick(v);
-        }
-    };
-
-
 }

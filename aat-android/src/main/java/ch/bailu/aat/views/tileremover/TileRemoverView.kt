@@ -1,192 +1,145 @@
-package ch.bailu.aat.views.tileremover;
+package ch.bailu.aat.views.tileremover
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.widget.LinearLayout;
+import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.view.View
+import android.widget.LinearLayout
+import ch.bailu.aat.R
+import ch.bailu.aat.dispatcher.AndroidBroadcaster.Companion.register
+import ch.bailu.aat.menus.RemoveTilesMenu
+import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.BusyViewControl
+import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+class TileRemoverView(sc: ServiceContext, activity: Activity, theme: UiTheme) :
+    LinearLayout(sc.getContext()), View.OnClickListener, OnPreferencesChanged {
+    private val summaryView: TileSummariesView = TileSummariesView(activity, theme)
+    private val scan: ImageButtonViewGroup = ImageButtonViewGroup(context, R.drawable.view_refresh_inverse)
+    private val remove: ImageButtonViewGroup = ImageButtonViewGroup(context, R.drawable.user_trash_inverse)
+    private val busyScan: BusyViewControl = BusyViewControl(scan)
+    private val busyRemove: BusyViewControl =  BusyViewControl(remove)
+    private val sdirectory: SolidTileCacheDirectory
+    private val scontext: ServiceContext
+    private val acontext: Activity
 
-import ch.bailu.aat.R;
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.menus.RemoveTilesMenu;
-import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.tileremover.TileRemoverService;
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.BusyViewControl;
-import ch.bailu.aat.views.ImageButtonViewGroup;
-import ch.bailu.aat.views.bar.ControlBar;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory;
-
-
-public class TileRemoverView
-        extends LinearLayout
-        implements View.OnClickListener, OnPreferencesChanged {
-
-
-    private TileSummariesView summaryView;
-    private ImageButtonViewGroup scan, remove;
-    private BusyViewControl bscan, bremove;
-
-    private final SolidTileCacheDirectory sdirectory;
-
-    private final ServiceContext scontext;
-    private final Activity acontext;
-
-
-    public TileRemoverView(ServiceContext sc, Activity ac, UiTheme theme) {
-        super(sc.getContext());
-
-        setOrientation(HORIZONTAL);
-        scontext = sc;
-        acontext = ac;
-
-        sdirectory = new AndroidSolidTileCacheDirectory(getContext());
-
-        addW(createFilterLayout(ac, theme));
-        addView(createControlBar(getContext(), theme));
-
-
+    private fun addW(view: View) {
+        addView(view)
+        val l = view.layoutParams as LayoutParams
+        l.weight = 1f
+        view.layoutParams = l
     }
 
-    public void addW(View v) {
-        addView(v);
-
-        LinearLayout.LayoutParams l = (LinearLayout.LayoutParams) v.getLayoutParams();
-        l.weight = 1;
-        v.setLayoutParams(l);
+      private fun createControlBar(context: Context, theme: UiTheme): View {
+        val bar = ControlBar(context, VERTICAL, AppTheme.bar)
+        bar.addButton(scan)
+        bar.addButton(remove)
+        bar.addOnClickListener(this)
+        theme.button(scan)
+        theme.button(remove)
+        theme.background(bar)
+        return bar
     }
 
-    private View createFilterLayout(Activity acontext, UiTheme theme) {
-        summaryView = new TileSummariesView(acontext, theme);
-        return summaryView;
+    public override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        sdirectory.register(this)
+        register(
+            context,
+            onTileRemoverStopped,
+            AppBroadcaster.TILE_REMOVER_STOPPED
+        )
+        register(
+            context,
+            onTileRemoverScan,
+            AppBroadcaster.TILE_REMOVER_SCAN
+        )
+        register(
+            context,
+            onTileRemoverRemove,
+            AppBroadcaster.TILE_REMOVER_REMOVE
+        )
     }
 
-
-    private View createControlBar(Context context, UiTheme theme) {
-        final ControlBar bar = new ControlBar(context, LinearLayout.VERTICAL, AppTheme.bar);
-
-        scan = new ImageButtonViewGroup(context, R.drawable.view_refresh_inverse);
-        bscan = new BusyViewControl(scan);
-        bar.addButton(scan);
-
-        remove = new ImageButtonViewGroup(context, R.drawable.user_trash_inverse);
-        bremove = new BusyViewControl(remove);
-        bar.addButton(remove);
-
-        bar.setOnClickListener1(this);
-
-        theme.button(scan);
-        theme.button(remove);
-        theme.background(bar);
-
-        return bar;
-    }
-
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        sdirectory.register(this);
-
-        AndroidBroadcaster.register(getContext(),
-                onTileRemoverStopped,
-                AppBroadcaster.TILE_REMOVER_STOPPED);
-
-
-        AndroidBroadcaster.register(getContext(),
-                onTileRemoverScan,
-                AppBroadcaster.TILE_REMOVER_SCAN);
-
-        AndroidBroadcaster.register(getContext(),
-                onTileRemoverRemove,
-                AppBroadcaster.TILE_REMOVER_REMOVE);
-
-    }
-
-
-    private final BroadcastReceiver onTileRemoverStopped = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            bscan.stopWaiting();
-            bremove.stopWaiting();
-            updateText();
+    private val onTileRemoverStopped: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            busyScan.stopWaiting()
+            busyRemove.stopWaiting()
+            updateText()
         }
-    };
-
-
-    private final BroadcastReceiver onTileRemoverRemove = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            bremove.startWaiting();
-            bscan.stopWaiting();
-            updateText();
+    }
+    private val onTileRemoverRemove: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            busyRemove.startWaiting()
+            busyScan.stopWaiting()
+            updateText()
         }
-    };
-
-    private final BroadcastReceiver onTileRemoverScan = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            bscan.startWaiting();
-            bremove.stopWaiting();
-            updateText();
+    }
+    private val onTileRemoverScan: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            busyScan.startWaiting()
+            busyRemove.stopWaiting()
+            updateText()
         }
-    };
-
-
-    public void updateText() {
-        scontext.insideContext(() -> {
-            final TileRemoverService tr = scontext.getTileRemoverService();
-            summaryView.updateInfo(tr.getSummaries());
-        });
     }
 
-    @Override
-    public void onClick(final View v) {
-        scontext.insideContext(() -> {
+    init {
+        orientation = HORIZONTAL
+        scontext = sc
+        acontext = activity
+        sdirectory = AndroidSolidTileCacheDirectory(context)
+        addW(summaryView)
+        addView(createControlBar(context, theme))
+    }
 
-            final TileRemoverService tr = scontext.getTileRemoverService();
-            if (v == scan && bscan.isWaiting()) {
-                tr.getState().stop();
-            } else if (v == scan) {
-                tr.getState().scan();
-            } else if (v == remove && bremove.isWaiting()) {
-                tr.getState().stop();
-            } else if (v == remove) { // show menu
-                new RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext());
+    fun updateText() {
+        scontext.insideContext {
+            val tr = scontext.getTileRemoverService()
+            summaryView.updateInfo(tr.summaries)
+        }
+    }
+
+    override fun onClick(v: View) {
+        scontext.insideContext {
+            val tr = scontext.getTileRemoverService()
+            if (v === scan && busyScan.isWaiting) {
+                tr.state.stop()
+            } else if (v === scan) {
+                tr.state.scan()
+            } else if (v === remove && busyRemove.isWaiting) {
+                tr.state.stop()
+            } else if (v === remove) { // show menu
+                RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext())
             }
-
-        });
+        }
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-        scontext.insideContext(() -> {
-            final TileRemoverService tr = scontext.getTileRemoverService();
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+        scontext.insideContext {
+            val tr = scontext.getTileRemoverService()
             if (sdirectory.hasKey(key)) {
-                tr.getState().reset();
+                tr.state.reset()
             } else if (key.contains("SolidTrim")) {
-                tr.getState().rescan();
+                tr.state.rescan()
             }
-
-        });
+        }
     }
 
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        sdirectory.unregister(this);
-
-        getContext().unregisterReceiver(onTileRemoverStopped);
-        getContext().unregisterReceiver(onTileRemoverScan);
-        getContext().unregisterReceiver(onTileRemoverRemove);
+    public override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        sdirectory.unregister(this)
+        context.unregisterReceiver(onTileRemoverStopped)
+        context.unregisterReceiver(onTileRemoverScan)
+        context.unregisterReceiver(onTileRemoverRemove)
     }
 }

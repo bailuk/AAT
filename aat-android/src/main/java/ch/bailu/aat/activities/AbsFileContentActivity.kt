@@ -85,10 +85,12 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     private fun initButtonBar(bar: MainControlBar) {
         previousFile = bar.addImageButton(R.drawable.go_up_inverse)
         nextFile = bar.addImageButton(R.drawable.go_down_inverse)
-        fileOperation = PreviewView(serviceContext, appContext.summaryConfig)
+
+        val fileOperation = PreviewView(serviceContext, appContext.summaryConfig)
+        this.fileOperation = fileOperation
         bar.addButton(fileOperation)
-        bar.orientation = LinearLayout.HORIZONTAL
-        bar.setOnClickListener1(this)
+        bar.setOrientation(LinearLayout.HORIZONTAL)
+        bar.addOnClickListener(this)
     }
 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup

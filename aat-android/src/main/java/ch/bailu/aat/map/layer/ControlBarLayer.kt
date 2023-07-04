@@ -23,7 +23,7 @@ abstract class ControlBarLayer(mc: MapContext, val bar: ControlBar, private val 
     init {
         val map = mc.mapView
         bar.setBackgroundColor(color)
-        bar.setOnClickListener2(this)
+        bar.addOnClickListener(this)
         bar.visibility = View.GONE
         To.view(map)?.addView(bar)
         To.view(map)?.addView(object : AbsBackButton.OnBackPressedListener(bar.context) {

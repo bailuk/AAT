@@ -23,7 +23,7 @@ public class EditTextTool extends LinearLayout implements View.OnClickListener {
     public EditTextTool(EditText e, int orientation, UiTheme theme) {
         super(e.getContext());
         edit = e;
-        bar = new ControlBar(getContext(),orientation,6, theme);
+        bar = new ControlBar(getContext(),orientation,theme, 6);
 
         clearText = bar.addImageButton(R.drawable.edit_clear_all_inverse);
         clearText.setOnClickListener(this);

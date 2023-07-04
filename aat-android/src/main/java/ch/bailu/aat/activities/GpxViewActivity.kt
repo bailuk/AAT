@@ -114,8 +114,8 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
 
         ToolTip.set(copyTo, R.string.file_copy)
         ToolTip.set(fileOperation, R.string.tt_menu_file)
-        bar.orientation = LinearLayout.HORIZONTAL
-        bar.setOnClickListener1(this)
+        bar.setOrientation(LinearLayout.HORIZONTAL)
+        bar.addOnClickListener(this)
     }
 
     private fun createDispatcher() {
