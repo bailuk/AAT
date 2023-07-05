@@ -1,73 +1,62 @@
-package ch.bailu.aat.views.graph;
+package ch.bailu.aat.views.graph
 
-import android.content.Context;
-import android.graphics.Color;
-import android.util.SparseArray;
-import android.util.TypedValue;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.content.Context
+import android.graphics.Color
+import android.util.TypedValue
+import android.widget.LinearLayout
+import android.widget.TextView
+import ch.bailu.aat_lib.map.MapColor
+import ch.bailu.aat_lib.util.IndexedMap
+import ch.bailu.aat_lib.view.graph.LabelInterface
 
-import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat_lib.view.graph.LabelInterface;
+class LabelOverlay(context: Context, gravity: Int) : LinearLayout(context), LabelInterface {
+    private val labels = IndexedMap<Int, TextView>()
+    private val defaultTextSize: Float
 
-public class LabelOverlay extends LinearLayout implements LabelInterface {
-    private final static int BACKGROUND_COLOR  = MapColor.setAlpha(Color.BLACK, 100);
-
-    private final SparseArray<TextView> labels = new SparseArray<>(4);
-
-    private final float defualtTextSize;
-
-    public LabelOverlay(Context context, int gravity) {
-        super(context);
-        setOrientation(VERTICAL);
-        setGravity(gravity);
-
-        defualtTextSize = new TextView(context).getTextSize();
-
+    init {
+        orientation = VERTICAL
+        setGravity(gravity)
+        defaultTextSize = TextView(context).textSize
     }
 
-    public void setTextSizeFromHeight(int height) {
+    fun setTextSizeFromHeight(height: Int) {
         if (labels.size() > 0) {
-            float size = height / labels.size();
-            size -= (size/3f);
-            size = Math.min(defualtTextSize, size);
-
-            for (int i =0; i<labels.size(); i++) {
-                labels.valueAt(i).setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+            var size = (height / labels.size()).toFloat()
+            size -= size / 3f
+            size = Math.min(defaultTextSize, size)
+            for (i in 0 until labels.size()) {
+                labels.getValueAt(i)?.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
             }
         }
     }
 
-    public void setText(int color, String label, String unit) {
-        setText(color, label + " [" + unit + "]");
+    override fun setText(color: Int, label: String, unit: String) {
+        setText(color, "$label [$unit]")
     }
 
-
-    public void setText(int color, int label, String unit) {
-        setText(color, getContext().getString(label), unit);
+    fun setText(color: Int, label: Int, unit: String) {
+        setText(color, context.getString(label), unit)
     }
 
-
-    public void setText(int color, String text) {
-        final TextView v = labels.get(color);
-
-        if (v == null) {
-            labels.put(color, addLabel(color, text));
+    override fun setText(color: Int, text: String) {
+        val view = labels.getValue(color)
+        if (view == null) {
+            labels.put(color, addLabel(color, text))
         } else {
-            v.setText(text);
+            view.text = text
         }
     }
 
+    private fun addLabel(color: Int, text: String): TextView {
+        val v = TextView(context)
+        v.text = text
+        v.setTextColor(color)
+        v.setBackgroundColor(BACKGROUND_COLOR)
+        addView(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        return v
+    }
 
-    private TextView addLabel(int color, String text) {
-        final TextView v = new TextView(getContext());
-
-        v.setText(text);
-        v.setTextColor(color);
-        v.setBackgroundColor(BACKGROUND_COLOR);
-
-        addView(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-        return v;
+    companion object {
+        private val BACKGROUND_COLOR = MapColor.setAlpha(Color.BLACK, 100)
     }
 }

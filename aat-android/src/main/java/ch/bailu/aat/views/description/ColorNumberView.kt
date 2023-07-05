@@ -1,32 +1,23 @@
-package ch.bailu.aat.views.description;
+package ch.bailu.aat.views.description
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat_lib.description.ContentDescription
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+open class ColorNumberView(context: Context, c: ContentDescription, theme: UiTheme) : NumberView(context, c, theme) {
+    private var state = StateID.OFF
 
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat_lib.description.ContentDescription;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-
-public class ColorNumberView extends NumberView {
-    private int state = StateID.OFF;
-
-    public ColorNumberView(Context context, ContentDescription c, UiTheme theme) {
-        super(context, c, theme);
-    }
-
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        super.onContentUpdated(iid, info);
-
-        if (state != info.getState()) {
-            state = info.getState();
-
+    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+        super.onContentUpdated(iid, info)
+        if (state != info.state) {
+            state = info.state
             if (state == StateID.ON) {
-                setHighlightUnitLabelColor();
+                setHighlightUnitLabelColor()
             } else {
-                setDefaultUnitLabelColor();
+                setDefaultUnitLabelColor()
             }
         }
     }

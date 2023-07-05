@@ -10,7 +10,6 @@ import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.html.HtmlScrollTextView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.MapColor
 
 class NodeInfoView(appContext: AppContext, context: Context) : PercentageLayout(context, 0) {
@@ -70,11 +69,11 @@ class NodeInfoView(appContext: AppContext, context: Context) : PercentageLayout(
         return MapColor.toDarkTransparent(color)
     }
 
-    fun setGraph(info: GpxInformation?, index: Int, firstPoint: Int, lastPoint: Int) {
+    fun setGraph(info: GpxInformation, index: Int, firstPoint: Int, lastPoint: Int) {
         graphView.setVisibility(info)
-        graphView.onContentUpdated(InfoID.ALL, info, index)
+        graphView.onContentUpdated(info, index)
         limitGraphView.setVisibility(info)
         limitGraphView.setLimit(firstPoint, lastPoint)
-        limitGraphView.onContentUpdated(InfoID.ALL, info, index)
+        limitGraphView.onContentUpdated(info, index)
     }
 }

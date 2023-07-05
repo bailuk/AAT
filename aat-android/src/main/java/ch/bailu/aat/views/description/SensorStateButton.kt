@@ -1,13 +1,13 @@
-package ch.bailu.aat.views.description;
+package ch.bailu.aat.views.description
 
-import ch.bailu.aat_lib.description.SensorStateDescription;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.theme.AppTheme;
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat_lib.description.SensorStateDescription
 
-public class SensorStateButton extends NumberView {
+class SensorStateButton(context: ServiceContext) :
+    NumberView(context.getContext(), SensorStateDescription(), AppTheme.bar) {
 
-    public SensorStateButton(ServiceContext c) {
-        super(c.getContext(),new SensorStateDescription(), AppTheme.bar);
-        requestOnClickSensorReconnect();
+    init {
+        requestOnClickSensorReconnect()
     }
 }
