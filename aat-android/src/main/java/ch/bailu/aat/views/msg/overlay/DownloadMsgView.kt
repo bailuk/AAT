@@ -1,28 +1,24 @@
-package ch.bailu.aat.views.msg.overlay;
+package ch.bailu.aat.views.msg.overlay
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.text.TextUtils;
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.text.TextUtils
+import ch.bailu.aat.util.AppIntent.getUrl
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-
-public class DownloadMsgView extends AbsBroadcastMsgView {
-
-    public DownloadMsgView(Context context) {
-        super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
-        setTextColor(Color.WHITE);
-        setSingleLine();
-        setEllipsize(TextUtils.TruncateAt.MIDDLE);
+class DownloadMsgView(context: Context) :
+    AbsBroadcastMsgView(context, AppBroadcaster.FILE_CHANGED_ONDISK) {
+    init {
+        setTextColor(Color.WHITE)
+        setSingleLine()
+        ellipsize = TextUtils.TruncateAt.MIDDLE
     }
 
-    @Override
-    public void set(Intent intent) {
-        String url = AppIntent.getUrl(intent);
-
+    override fun set(intent: Intent) {
+        val url = getUrl(intent)
         if (url != null && url.startsWith("http")) {
-            set(url);
+            set(url)
         }
     }
 }

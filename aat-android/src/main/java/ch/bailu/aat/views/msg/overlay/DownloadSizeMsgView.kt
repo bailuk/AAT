@@ -1,33 +1,29 @@
-package ch.bailu.aat.views.msg.overlay;
+package ch.bailu.aat.views.msg.overlay
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.service.background.DownloaderThread
+import ch.bailu.aat_lib.util.MemSize
 
-import ch.bailu.aat_lib.service.background.DownloaderThread;
-import ch.bailu.aat_lib.util.MemSize;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+class DownloadSizeMsgView(context: Context) : AbsBroadcastMsgView(
+    context, AppBroadcaster.FILE_CHANGED_ONDISK
+) {
+    private var size: Long = 0
+    val builder = StringBuilder()
 
-public class DownloadSizeMsgView extends AbsBroadcastMsgView {
-    private long size = 0;
-    final StringBuilder builder = new StringBuilder();
-
-
-    public DownloadSizeMsgView(Context context) {
-        super(context, AppBroadcaster.FILE_CHANGED_ONDISK);
-        setTextColor(Color.WHITE);
+    init {
+        setTextColor(Color.WHITE)
     }
 
-    @Override
-    public void set(Intent intent) {
-        long newSize = DownloaderThread.getTotalSize();
-
+    override fun set(intent: Intent) {
+        val newSize = DownloaderThread.getTotalSize()
         if (size != newSize) {
-            size = newSize;
-            builder.setLength(0);
-            MemSize.describe(builder, (double)size);
-
-            set(builder.toString());
+            size = newSize
+            builder.setLength(0)
+            MemSize.describe(builder, size.toDouble())
+            set(builder.toString())
         }
     }
 }

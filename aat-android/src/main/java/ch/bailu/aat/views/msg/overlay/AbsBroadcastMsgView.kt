@@ -1,38 +1,26 @@
-package ch.bailu.aat.views.msg.overlay;
+package ch.bailu.aat.views.msg.overlay
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import ch.bailu.aat.dispatcher.AndroidBroadcaster.Companion.register
+import ch.bailu.aat.views.msg.AbsMsgView
 
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.views.msg.AbsMsgView;
+abstract class AbsBroadcastMsgView internal constructor(context: Context, private val broadcastMessage: String) : AbsMsgView(context) {
 
-public abstract class AbsBroadcastMsgView extends AbsMsgView {
-
-    private final static int DISPLAY_FOR_MILLIS = 6000;
-    private final String broadcastMessage;
-
-    private final BroadcastReceiver onMessage = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            AbsBroadcastMsgView.this.set(intent);
+    private val onMessage: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            this@AbsBroadcastMsgView.set(intent)
         }
-    };
-
-    AbsBroadcastMsgView(Context context, String bMsg) {
-        super(context, DISPLAY_FOR_MILLIS);
-        broadcastMessage = bMsg;
     }
 
-    @Override
-    public void attach() {
-        AndroidBroadcaster.register(getContext(), onMessage, broadcastMessage);
+    override fun attach() {
+        register(context, onMessage, broadcastMessage)
     }
 
-    @Override
-    public void detach() {
-        getContext().unregisterReceiver(onMessage);
+    override fun detach() {
+        context.unregisterReceiver(onMessage)
     }
 
-    public abstract void set(Intent intent);
+    abstract fun set(intent: Intent)
 }

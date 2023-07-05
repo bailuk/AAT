@@ -1,79 +1,75 @@
-package ch.bailu.aat.views.msg.overlay;
+package ch.bailu.aat.views.msg.overlay
 
-import android.content.Context;
-import android.graphics.Color;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.graphics.Color
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import ch.bailu.aat.views.msg.AbsMsgView
 
-import androidx.annotation.NonNull;
+class MessageOverlay(context: Context) : LinearLayout(context) {
+    private val messageViews = ArrayList<AbsMsgView>(5)
 
-import java.util.ArrayList;
-
-import ch.bailu.aat.views.msg.AbsMsgView;
-
-public class MessageOverlay extends LinearLayout {
-    private final ArrayList<AbsMsgView> messageViews =
-            new ArrayList<>(5);
-
-    public MessageOverlay(@NonNull Context context) {
-        super(context);
-        setOrientation(LinearLayout.VERTICAL);
+    init {
+        orientation = VERTICAL
     }
 
-    public void addSpace() {
-        addSpace(this);
+    fun addSpace() {
+        addSpace(this)
     }
 
-    private static void addSpace(@NonNull LinearLayout v) {
-        LinearLayout space = new LinearLayout(v.getContext());
-        space.setOrientation(v.getOrientation());
-        space.setBackgroundColor(Color.TRANSPARENT);
-        v.addView(space, new LinearLayout.LayoutParams(0, 0, 1));
+    fun add(v: AbsMsgView): AbsMsgView {
+        add(this, v)
+        return v
     }
 
-    public AbsMsgView add(@NonNull AbsMsgView v) {
-        add(this, v);
-        return v;
+    fun addR(v: AbsMsgView): AbsMsgView {
+        val wrapper = LinearLayout(context)
+        wrapper.orientation = HORIZONTAL
+        wrapper.setBackgroundColor(Color.TRANSPARENT)
+        addSpace(wrapper)
+        add(wrapper, v)
+        addView(
+            wrapper,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
+        return v
     }
 
-    public AbsMsgView addR(@NonNull AbsMsgView v) {
-        LinearLayout wrapper = new LinearLayout(getContext());
-        wrapper.setOrientation(LinearLayout.HORIZONTAL);
-        wrapper.setBackgroundColor(Color.TRANSPARENT);
-
-        addSpace(wrapper);
-        add(wrapper, v);
-
-        addView(wrapper,
-                new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT));
-        return v;
+    private fun add(parent: ViewGroup, view: AbsMsgView) {
+        parent.addView(
+            view,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+        )
+        messageViews.add(view)
     }
 
-    private void add(ViewGroup parent, AbsMsgView view) {
-        parent.addView(view,
-                new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT,
-                        FrameLayout.LayoutParams.WRAP_CONTENT));
-        messageViews.add(view);
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        for (AbsMsgView v : messageViews) {
-            v.attach();
+    public override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        for (v in messageViews) {
+            v.attach()
         }
     }
 
-    @Override
-    public void onDetachedFromWindow() {
-        for (AbsMsgView v : messageViews) {
-            v.detach();
+    public override fun onDetachedFromWindow() {
+        for (v in messageViews) {
+            v.detach()
         }
+        super.onDetachedFromWindow()
+    }
 
-        super.onDetachedFromWindow();
+    companion object {
+        private fun addSpace(v: LinearLayout) {
+            val space = LinearLayout(v.context)
+            space.orientation = v.orientation
+            space.setBackgroundColor(Color.TRANSPARENT)
+            v.addView(space, LayoutParams(0, 0, 1f))
+        }
     }
 }
