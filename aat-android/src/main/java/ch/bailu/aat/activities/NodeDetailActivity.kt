@@ -135,7 +135,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
             markupBuilder?.appendAttributes(arrayCache[index].attributes)
             htmlView?.setHtmlText(markupBuilder.toString())
             markupBuilder?.clear()
-            graph?.onContentUpdated(InfoID.ALL, infoCache, index)
+            graph?.onContentUpdated(infoCache, index)
             seekBar?.progress = index
             icon?.setImageObject(arrayCache[index])
         }

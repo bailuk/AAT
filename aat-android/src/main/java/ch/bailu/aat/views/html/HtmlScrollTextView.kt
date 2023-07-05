@@ -1,47 +1,35 @@
-package ch.bailu.aat.views.html;
+package ch.bailu.aat.views.html
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.preferences.VerticalScrollView
 
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.preferences.VerticalScrollView;
+class HtmlScrollTextView(context: Context) : VerticalScrollView(context) {
+    val textView: HtmlTextView
 
-
-public class HtmlScrollTextView extends VerticalScrollView {
-    private final HtmlTextView textView;
-
-    public HtmlScrollTextView(Context context) {
-        super(context);
-
-        textView = new HtmlTextView(context);
-        add(textView);
+    init {
+        textView = HtmlTextView(context)
+        add(textView)
     }
 
-    public HtmlScrollTextView(Context context, String text) {
-        this(context);
-        setHtmlText(text);
+    constructor(context: Context, text: String) : this(context) {
+        setHtmlText(text)
     }
 
-
-    public void setHtmlText(String text) {
-        textView.setHtmlText(text);
+    fun setHtmlText(text: String) {
+        textView.setHtmlText(text)
     }
 
-
-    public void enableAutoLink() {
-        textView.enableAutoLink();
+    fun enableAutoLink() {
+        textView.enableAutoLink()
     }
 
-    public HtmlTextView getTextView() {
-        return textView;
+    override fun setOnClickListener(listener: OnClickListener?) {
+        textView.setOnClickListener(listener)
+        super.setOnClickListener(listener)
     }
 
-    @Override
-    public void setOnClickListener(OnClickListener l) {
-        textView.setOnClickListener(l);
-        super.setOnClickListener(l);
-    }
-
-    public void themify(UiTheme theme) {
-        theme.content(textView);
+    fun themify(theme: UiTheme) {
+        theme.content(textView)
     }
 }

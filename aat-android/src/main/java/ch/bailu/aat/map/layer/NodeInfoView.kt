@@ -57,7 +57,7 @@ class NodeInfoView(appContext: AppContext, context: Context) : PercentageLayout(
         }
     }
 
-    fun setHtmlText(htmlText: String?) {
+    fun setHtmlText(htmlText: String) {
         htmlView.setHtmlText(htmlText)
     }
 
