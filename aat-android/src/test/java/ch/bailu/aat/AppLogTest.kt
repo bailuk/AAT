@@ -1,55 +1,47 @@
-package ch.bailu.aat;
+package ch.bailu.aat
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import ch.bailu.aat.app.AndroidAppConfig
+import ch.bailu.aat.util.AndroidLoggerFactory
+import ch.bailu.aat_lib.app.AppConfig
+import ch.bailu.aat_lib.logger.AppLog
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.testng.annotations.BeforeClass
 
-import org.junit.jupiter.api.Test;
-import org.testng.annotations.BeforeClass;
-
-import ch.bailu.aat.app.AndroidAppConfig;
-import ch.bailu.aat.util.AndroidLoggerFactory;
-import ch.bailu.aat_lib.app.AppConfig;
-import ch.bailu.aat_lib.logger.AppLog;
-
-public class AppLogTest {
-
-    public static String logged = "";
-    private static boolean initialized = false;
-
-    @BeforeClass
-    public static void init() {
-        if (!initialized) {
-            AppConfig.setInstance(new AndroidAppConfig());
-            AppLog.set(new AndroidLoggerFactory());
-            initialized = true;
-        }
-    }
-
-
+class AppLogTest {
     @Test
-    public void testDebug() {
-        logged = "";
-        AppLog.d(null, null);
-
-
-        if (AppConfig.getInstance().isRelease()) {
-            assertEquals("" , logged);
+    fun testDebug() {
+        logged = ""
+        AppLog.d(null, null)
+        if (AppConfig.getInstance().isRelease) {
+            Assertions.assertEquals("", logged)
         } else {
-            assertEquals("DEBUG: AppLog: ", logged);
+            Assertions.assertEquals("DEBUG: AppLog: ", logged)
         }
     }
 
     @Test
-    public void testWarning() {
-        AppLog.w(this, new Throwable("message"));
-        assertEquals("WARN: AppLogTest: [Throwable] message", logged);
+    fun testWarning() {
+        AppLog.w(this, Throwable("message"))
+        Assertions.assertEquals("WARN: AppLogTest: [Throwable] message", logged)
+        AppLog.w(this, "message")
+        Assertions.assertEquals("WARN: AppLogTest: message", logged)
+        AppLog.w(this, null as String?)
+        Assertions.assertEquals("WARN: AppLogTest: ", logged)
+        AppLog.w(this, null as Throwable?)
+        Assertions.assertEquals("WARN: AppLogTest: ", logged)
+    }
 
-        AppLog.w(this, "message");
-        assertEquals("WARN: AppLogTest: message", logged);
-
-        AppLog.w(this, (String)null);
-        assertEquals("WARN: AppLogTest: ", logged);
-
-        AppLog.w(this, (Throwable) null);
-        assertEquals("WARN: AppLogTest: ", logged);
+    companion object {
+        var logged = ""
+        private var initialized = false
+        @BeforeClass
+        fun init() {
+            if (!initialized) {
+                AppConfig.setInstance(AndroidAppConfig())
+                AppLog.set(AndroidLoggerFactory())
+                initialized = true
+            }
+        }
     }
 }

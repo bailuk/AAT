@@ -1,29 +1,24 @@
-package ch.bailu.aat;
+package ch.bailu.aat
 
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-
-public class TestTest {
-
-    boolean initValue = false;
-
+class TestTest {
+    var initValue = false
     @Before
-    public void init() {
-        initValue = true;
+    fun init() {
+        initValue = true
     }
 
     @Test
-    public void testTest() {
-        assertEquals("This test failed", true, initValue);
+    fun testTest() {
+        Assert.assertEquals("This test failed", true, initValue)
     }
 
     @After
-    public void reset() {
-        initValue = false;
+    fun reset() {
+        initValue = false
     }
 }
