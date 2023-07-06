@@ -1,27 +1,26 @@
-package ch.bailu.aat_lib.app;
+package ch.bailu.aat_lib.app
 
-public class AppColor {
-    public static final int HL_ORANGE = 0xffff6600;
-    public static final int HL_GREEN = 0xffccff00;
-    public static final int HL_BLUE = 0xff00d8ff;
+object AppColor {
+    const val HL_ORANGE = -0x9a00
+    const val HL_GREEN = -0x330100
+    const val HL_BLUE = -0xff2701
 
     /**
-     *  0xAARRGGBB
-     *  A = Alpha
-     *  R = Red
-     *  G = Green
-     *  B = Blue
+     * 0xAARRGGBB
+     * A = Alpha
+     * R = Red
+     * G = Green
+     * B = Blue
      */
-    public static final int[] OVERLAY_COLOR = {
-            0xffff939f,
-            0xffff94fd,
-            0xff94ffb7,
-            0xfffdff94,
-
-            0x99ff3f54,
-            0x99ff3ffc,
-            0x993fff7d,
-            0x99fcff3f,
-    };
-
+    @JvmField
+    val OVERLAY_COLOR = intArrayOf(
+        -0x6c61,
+        -0x6b03,
+        -0x6b0049,
+        -0x2006c,
+        -0x6600c0ac,
+        -0x6600c004,
+        -0x66c00083,
+        -0x660300c1
+    )
 }

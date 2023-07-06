@@ -26,7 +26,7 @@ import kotlin.system.exitProcess
 fun main() {
     App.setup()
 
-    val app = Application(GtkAppConfig.applicationId, ApplicationFlags.FLAGS_NONE)
+    val app = Application(GtkAppConfig.appId, ApplicationFlags.FLAGS_NONE)
 
     app.onActivate {
         MainWindow(app, App.dispatcher).window.show()

@@ -9,11 +9,12 @@ object About {
     fun show(window: Window) {
         AboutWindow().apply {
             val config = AppConfig.getInstance()
-            setApplicationIcon(config.applicationId)
-            setApplicationName(config.longName)
-            setVersion(config.versionName)
-            setWebsite(config.website)
-            setCopyright(config.copyright)
+
+            setApplicationIcon(config.appId)
+            setApplicationName(config.appLongName)
+            setVersion(config.appVersionName)
+            setWebsite(config.appWebsite)
+            setCopyright(config.appCopyright)
             licenseType = License.GPL_3_0
             transientFor = window
             modal = true

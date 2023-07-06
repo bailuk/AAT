@@ -64,7 +64,7 @@ class AboutActivity : ActivityContext() {
     private val infoText: String
         get() {
             val config = AppConfig.getInstance()
-            return "<h1>${config.longName}</h1><p>${config.versionName}</p><p><a href=\"${config.website}\">Website</a></p><p>${config.copyright}</p>"
+            return "<h1>${config.appLongName}</h1><p>${config.appVersionName}</p><p><a href=\"${config.appWebsite}\">Website</a></p><p>${config.appCopyright}</p>"
         }
 
     private fun assetToStr(asset: String): String {

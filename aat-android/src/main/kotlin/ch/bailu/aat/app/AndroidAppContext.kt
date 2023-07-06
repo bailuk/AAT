@@ -14,7 +14,6 @@ import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
 import ch.bailu.aat.util.sql.AndroidDbConnection
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
@@ -30,41 +29,27 @@ import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Timer
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
-import ch.bailu.foc.FocFactory
 import ch.bailu.foc_android.FocAndroidFactory
 import ch.bailu.foc_android.FocAssetFactory
 import org.mapsforge.poi.android.storage.AndroidPoiPersistenceManagerFactory
 import org.mapsforge.poi.storage.PoiPersistenceManager
-import javax.annotation.Nonnull
 
-class AndroidAppContext(private val context: Context, private val services: ServicesInterface) : AppContext {
-    private val broadcaster = AndroidBroadcaster(context)
-    private val assets = FocAssetFactory(context)
+class AndroidAppContext(private val context: Context, override val services: ServicesInterface) : AppContext {
+    override val broadcaster = AndroidBroadcaster(context)
+    override val assets = FocAssetFactory(context)
 
-    override fun getBroadcaster(): Broadcaster {
-        return broadcaster
-    }
 
-    override fun getServices(): ServicesInterface {
-        return services
-    }
+    override val storage: StorageInterface
+        get() = Storage(context)
 
-    override fun getStorage(): StorageInterface {
-        return Storage(context)
-    }
-
-    override fun getSummaryConfig(): SummaryConfig {
-        return AndroidSummaryConfig(context)
-    }
+    override val summaryConfig: SummaryConfig
+        get() =  AndroidSummaryConfig(context)
 
     override fun createDataBase(): DbConnection {
         return AndroidDbConnection(context)
     }
 
-    override fun createMapPreview(
-        @Nonnull info: GpxInformation,
-        @Nonnull previewImageFile: Foc
-    ): MapPreviewInterface {
+    override fun createMapPreview(info: GpxInformation, previewImageFile: Foc): MapPreviewInterface {
         return MapsForgePreview(context, this, info, previewImageFile)
     }
 
@@ -72,39 +57,33 @@ class AndroidAppContext(private val context: Context, private val services: Serv
         return AndroidSyncTileBitmap()
     }
 
-    override fun getDem3Directory(): SolidDem3Directory {
-        return AndroidSolidDem3Directory(context)
-    }
+    override val dem3Directory: SolidDem3Directory
+        get() = AndroidSolidDem3Directory(context)
 
-    override fun getDownloadConfig(): DownloadConfig {
-        return DownloadConfig(AndroidAppConfig())
-    }
+    override val downloadConfig: DownloadConfig
+    get() = DownloadConfig(AndroidAppConfig())
 
-    override fun getDataDirectory(): SolidDataDirectory {
-        return AndroidSolidDataDirectory(context)
-    }
 
-    override fun getAssets(): FocFactory {
-        return assets
-    }
+    override val dataDirectory: SolidDataDirectory
+        get() =  AndroidSolidDataDirectory(context)
 
-    override fun getMapDirectory(): SolidMapsForgeDirectory {
-        return AndroidMapDirectories(context).createSolidDirectory()
-    }
 
-    override fun getTileCacheDirectory(): SolidTileCacheDirectory {
-        return AndroidSolidTileCacheDirectory(context)
-    }
+    override val mapDirectory: SolidMapsForgeDirectory
+        get() =  AndroidMapDirectories(context).createSolidDirectory()
+
+
+    override val tileCacheDirectory: SolidTileCacheDirectory
+        get() =  AndroidSolidTileCacheDirectory(context)
 
     override fun createTimer(): Timer {
         return AndroidTimer()
     }
 
-    override fun getTilePainter(): TilePainter {
-        return AndroidTilePainter()
-    }
+    override val tilePainter: TilePainter
+        get() = AndroidTilePainter()
 
-    override fun getPoiPersistenceManager(@Nonnull poiDatabase: String): PoiPersistenceManager {
+
+    override fun getPoiPersistenceManager(poiDatabase: String): PoiPersistenceManager {
         return AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase)
     }
 

@@ -49,7 +49,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
 
 
     private val headerBar = HeaderBar().apply {
-        titleWidget = WindowTitle(GtkAppConfig.shortName, GtkAppConfig.longName)
+        titleWidget = WindowTitle(GtkAppConfig.appName, GtkAppConfig.appLongName)
     }
 
     private val stackPage = StackView(headerBar)
@@ -72,7 +72,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
             SolidWindowSize.readWidth(GtkAppContext.storage),
             SolidWindowSize.readHeight(GtkAppContext.storage)
         )
-        setIconName(GtkAppConfig.applicationId)
+        setIconName(GtkAppConfig.appId)
         content = overlay
 
         overlay.addOverlay(messageOverlay.box)

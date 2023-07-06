@@ -53,14 +53,14 @@ class App : Application() {
             .setReportFormat(StringFormat.KEY_VALUE_LIST)
 
         builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder::class.java)
-            .setMailTo(AppConfig.getInstance().contact)
+            .setMailTo(AppConfig.getInstance().appContact)
             .setEnabled(true)
 
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            .setTitle(AppConfig.getInstance().shortName + " crashed")
+            .setTitle(AppConfig.getInstance().appName + " crashed")
             .setText(
                 """
-                This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().contact}".
+                This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().appContact}".
                 This will help the author to fix and improve this app.
                 """.trimIndent()
             )

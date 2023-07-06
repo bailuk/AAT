@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.dispatcher;
 
-import ch.bailu.aat_lib.app.AppConfig;
+import ch.bailu.aat_lib.Configuration;
 
 public class AppBroadcaster {
-    public static final String NAME_SPACE = AppConfig.getInstance().getApplicationId() + ".";
+    public static final String NAME_SPACE = Configuration.appId + ".";
 
 
     public static final String TILE_REMOVER_SCAN = NAME_SPACE+"TR_SCAN";

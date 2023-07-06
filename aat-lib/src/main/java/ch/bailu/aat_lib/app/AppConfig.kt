@@ -1,86 +1,78 @@
-package ch.bailu.aat_lib.app;
+package ch.bailu.aat_lib.app
 
-import ch.bailu.aat_lib.Configuration;
-import ch.bailu.aat_lib.util.WithStatusText;
+import ch.bailu.aat_lib.Configuration
+import ch.bailu.aat_lib.util.WithStatusText
 
-public abstract class AppConfig implements WithStatusText {
-    public String getLongName() {
-        return Configuration.appLongName;
-    }
-    public String getShortName() {
-        return Configuration.appName;
-    }
-    public String getContact() {
-        return Configuration.appContact;
-    }
+abstract class AppConfig : WithStatusText {
+    val appLongName: String
+        get() = Configuration.appLongName
+    val appName: String
+        get() = Configuration.appName
+    val appContact: String
+        get() = Configuration.appContact
+    open val appId: String
+        get() = Configuration.appId
+    open val appVersionName: String
+        get() = Configuration.appVersionName
+    open val appVersionCode: Int
+        get() = Configuration.appVersionCode.toInt()
+    val appWebsite: String
+        get() = Configuration.appWebsite
+    val appCopyright: String
+        get() = Configuration.appCopyright
+    abstract val isRelease: Boolean
 
-    public String getApplicationId() {
-        return Configuration.appId;
-    }
-
-    public String getVersionName() {
-        return Configuration.appVersionName;
-    }
-
-    public int getVersionCode() {
-        return Integer.parseInt(Configuration.appVersionCode);
-    }
-
-    public String getWebsite() {
-        return Configuration.appWebsite;
-    }
-
-    public String getCopyright() {
-        return Configuration.appCopyright;
-    }
-
-    public abstract boolean isRelease();
-
-    private static AppConfig instance = null;
-
-    public static void setInstance(AppConfig instance) {
-        if (AppConfig.instance == null) {
-            AppConfig.instance = instance;
+    private val buildType: String
+        get() = if (isRelease) {
+            "Release"
         } else {
-            throw new RuntimeException("Instance was already set");
+            "Debug"
         }
+
+    val userAgent: String
+        get() = appName + "/" +
+                appLongName + "/" +
+                appVersionName + " (" + appContact + ")"
+
+    override fun appendStatusText(builder: StringBuilder) {
+        builder.append("<p>")
+            .append(appLongName)
+            .append(" (")
+            .append(appName)
+            .append(")<br>")
+            .append(appId)
+            .append("<br>")
+            .append(appVersionName)
+            .append(" (")
+            .append(appVersionCode)
+            .append("), ")
+            .append(buildType)
+            .append("</p>")
     }
 
-    public static AppConfig getInstance() {
-        if (AppConfig.instance == null) {
-            throw new RuntimeException("Instance is not set");
+
+    companion object {
+        private var instance: AppConfig? = null
+
+        @JvmStatic
+        fun getInstance(): AppConfig {
+            val result = instance
+
+            if (result == null) {
+                throw RuntimeException("Instance is not set")
+            } else {
+                return result
+            }
+
         }
-        return AppConfig.instance;
-    }
 
-    public String getBuildType() {
-        if (isRelease()) {
-            return "Release";
-        } else {
-            return "Debug";
+        @JvmStatic
+        fun setInstance(appConfig: AppConfig) {
+            if (instance == null) {
+                instance = appConfig
+            } else {
+                throw RuntimeException("Instance was already set")
+            }
         }
-    }
-
-    public String getUserAgent() {
-        return getShortName() + "/" +
-                getLongName() + "/" +
-                getVersionName() + " (" + getContact() + ")";
-    }
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-        builder .append("<p>")
-                .append(getLongName())
-                .append(" (")
-                .append(getShortName())
-                .append(")<br>")
-                .append(getApplicationId())
-                .append("<br>")
-                .append(getVersionName())
-                .append(" (")
-                .append(getVersionCode())
-                .append("), ")
-                .append(getBuildType())
-                .append("</p>");
     }
 }

@@ -24,7 +24,7 @@ object PoiDialog {
                 application = app
                 content = Box(Orientation.VERTICAL, 0).apply {
                     append(HeaderBar().apply {
-                        titleWidget = (WindowTitle(GtkAppConfig.shortName, Res.str().p_mapsforge_poi()))
+                        titleWidget = (WindowTitle(GtkAppConfig.appName, Res.str().p_mapsforge_poi()))
 
                         packStart(Button.newWithLabelButton(Res.str().load()).apply {
                             onClicked { poiView.loadList() }

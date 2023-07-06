@@ -1,8 +1,12 @@
 package ch.bailu.aat_lib;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
@@ -10,8 +14,6 @@ import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.coordinates.UTMCoordinates;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CoordinatesTest {
@@ -22,18 +24,20 @@ public class CoordinatesTest {
     public static void init() {
         if (!initialized) {
             AppConfig.setInstance(new AppConfig() {
+                @Nonnull
                 @Override
-                public String getApplicationId() {
+                public String getAppId() {
+                    return "";
+                }
+
+                @Nonnull
+                @Override
+                public String getAppVersionName() {
                     return "";
                 }
 
                 @Override
-                public String getVersionName() {
-                    return "";
-                }
-
-                @Override
-                public int getVersionCode() {
+                public int getAppVersionCode() {
                     return 0;
                 }
 
@@ -95,7 +99,7 @@ public class CoordinatesTest {
         assertEquals(49.80, slo.getSecond(),0.005);
 
         assertEquals(46, sla.getDegree());
-        assertEquals(02, sla.getMinute());
+        assertEquals(2, sla.getMinute());
         assertEquals(38.86, sla.getSecond(),0.005);
 
     }
