@@ -3,6 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.app.Activity;
 
 import ch.bailu.aat.util.ui.theme.UiTheme;
+import ch.bailu.aat.views.preferences.dialog.SolidDirectoryDialog;
 import ch.bailu.aat_lib.preferences.SolidFile;
 
 public class SolidDirectoryViewSAF extends SolidDirectoryView {

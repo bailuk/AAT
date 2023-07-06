@@ -8,8 +8,8 @@ import ch.bailu.aat.app.ActivitySwitcher.Companion.start
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.views.description.mview.MultiView
-import ch.bailu.aat.views.preferences.SolidCheckListDialog
-import ch.bailu.aat.views.preferences.SolidStringDialog
+import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
+import ch.bailu.aat.views.preferences.dialog.SolidStringDialog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
@@ -28,12 +28,32 @@ class MapMenu(private val context: Context, private val mcontext: MapContext) : 
         val stheme = SolidRenderTheme(sdir, foc)
         val smapFile = AndroidMapDirectories(context).createSolidFile()
 
-        add(menu, R.string.p_map) { SolidCheckListDialog(context, SolidMapTileStack(stheme))}
-        add(menu, R.string.p_overlay) {SolidCheckListDialog(context, SolidCustomOverlayList(storage, foc))}.apply {
+        add(menu, R.string.p_map) {
+            SolidCheckListDialog(
+                context,
+                SolidMapTileStack(stheme)
+            )
+        }
+        add(menu, R.string.p_overlay) {
+            SolidCheckListDialog(
+                context,
+                SolidCustomOverlayList(storage, foc)
+            )
+        }.apply {
             setIcon(R.drawable.view_paged_inverse)
         }
-        add(menu, smapFile.label) { SolidStringDialog(context, AndroidMapDirectories(context).createSolidFile()) }
-        add(menu,SolidRenderTheme(smapFile, FocAndroidFactory(context)).label) {SolidStringDialog(context, stheme)}
+        add(menu, smapFile.label) {
+            SolidStringDialog(
+                context,
+                AndroidMapDirectories(context).createSolidFile()
+            )
+        }
+        add(menu,SolidRenderTheme(smapFile, FocAndroidFactory(context)).label) {
+            SolidStringDialog(
+                context,
+                stheme
+            )
+        }
         add(menu, R.string.intro_settings) {
             MultiView.storeActive(context, PreferencesActivity.SOLID_KEY, 1)
             start(context, PreferencesActivity::class.java)

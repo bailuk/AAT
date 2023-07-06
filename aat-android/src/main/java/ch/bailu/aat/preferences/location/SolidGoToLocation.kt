@@ -2,7 +2,7 @@ package ch.bailu.aat.preferences.location
 
 import android.content.Context
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.views.preferences.SolidTextInputDialog
+import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates
 import ch.bailu.aat_lib.coordinates.Coordinates
 import ch.bailu.aat_lib.coordinates.OlcCoordinates
@@ -31,7 +31,11 @@ class SolidGoToLocation(val context: Context) : SolidString(
 
     fun goToLocationFromUser(map: MapViewInterface) {
         reference = map.mapViewPosition.center
-        SolidTextInputDialog(context, this, SolidTextInputDialog.TEXT) {
+        SolidTextInputDialog(
+            context,
+            this,
+            SolidTextInputDialog.TEXT
+        ) {
             goToLocation(
                 map,
                 valueAsString

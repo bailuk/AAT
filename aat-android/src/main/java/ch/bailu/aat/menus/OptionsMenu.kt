@@ -10,8 +10,8 @@ import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.preferences.presets.SolidBacklight
 import ch.bailu.aat.resource.Images
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat.views.preferences.SolidCheckListDialog
-import ch.bailu.aat.views.preferences.SolidIndexListDialog
+import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
+import ch.bailu.aat.views.preferences.dialog.SolidIndexListDialog
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
@@ -28,13 +28,22 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
         start = add(menu,R.string.tracker_start) { scontext.insideContext { scontext.trackerService.onStartStop() }}.apply { setIcon(R.drawable.media_playback_start_inverse) }
         pause = add(menu, R.string.tracker_pause) {scontext.insideContext { scontext.trackerService.onPauseResume() }}.apply { setIcon(R.drawable.media_playback_pause_inverse) }
 
-        add(menu, R.string.p_backlight_title) { SolidIndexListDialog(scontext.getContext(), SolidBacklight(c, SolidPreset(Storage(c)).index))}
+        add(menu, R.string.p_backlight_title) {
+            SolidIndexListDialog(
+                scontext.getContext(),
+                SolidBacklight(c, SolidPreset(Storage(c)).index)
+            )
+        }
         add(menu, R.string.intro_settings) {start(c, PreferencesActivity::class.java)}
         add(menu, R.string.p_map) { val stheme = SolidRenderTheme(
             AndroidMapDirectories(c).createSolidDirectory(),
             FocAndroidFactory(c)
         )
-            SolidCheckListDialog(c, SolidMapTileStack(stheme))}
+            SolidCheckListDialog(
+                c,
+                SolidMapTileStack(stheme)
+            )
+        }
     }
 
     override val title: String

@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.FileIntent.send
 import ch.bailu.aat.util.fs.FileIntent.view
 import ch.bailu.aat.util.ui.AppDialog
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
-import ch.bailu.aat.views.preferences.AddOverlayDialog
+import ch.bailu.aat.views.preferences.dialog.AddOverlayDialog
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
@@ -49,7 +49,7 @@ object AndroidFileAction {
         if (label != null && content != null) Clipboard(context).setText(label, content)
     }
 
-    fun useAsOverlay(context: Context?, file: Foc?) {
+    fun useAsOverlay(context: Context, file: Foc) {
         AddOverlayDialog(context, file)
     }
 

@@ -7,7 +7,7 @@ import android.view.Menu
 import ch.bailu.aat.R
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
-import ch.bailu.aat.views.preferences.AbsSelectOverlayDialog
+import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.ServicesInterface

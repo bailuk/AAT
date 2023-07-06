@@ -3,6 +3,7 @@ package ch.bailu.aat.views.preferences;
 import android.content.Context;
 
 import ch.bailu.aat.util.ui.theme.UiTheme;
+import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog;
 import ch.bailu.aat_lib.preferences.AbsSolidType;
 
 public class SolidTextInputView extends AbsSolidView {
