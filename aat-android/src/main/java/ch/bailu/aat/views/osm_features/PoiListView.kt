@@ -1,123 +1,94 @@
-package ch.bailu.aat.views.osm_features;
+package ch.bailu.aat.views.osm_features
 
-import android.content.Context;
-import android.database.DataSetObserver;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.content.Context
+import android.database.DataSetObserver
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListAdapter
+import android.widget.ListView
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat_lib.lib.filter_list.FilterList
+import ch.bailu.aat_lib.search.poi.PoiListItem
 
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat_lib.lib.filter_list.FilterList;
-import ch.bailu.aat_lib.search.poi.PoiListItem;
+class PoiListView(context: Context, private val list: FilterList, private val theme: UiTheme) :
+    ListView(context) {
+    private var observers = ArrayList<DataSetObserver>()
+    private var onSelected = OnSelected.NULL
 
-public class PoiListView extends ListView {
-
-    private DataSetObserver observer=null;
-    private final FilterList list;
-
-    private OnSelected onSelected = OnSelected.NULL;
-
-    private final UiTheme theme;
-
-    public PoiListView(Context context, FilterList l, UiTheme theme) {
-        super(context);
-
-        this.theme = theme;
-
-        list = l;
-        final PoiListView.Adapter listAdapter = new PoiListView.Adapter();
-
-        AppTheme.search.list(this);
-
-        setAdapter(listAdapter);
-        setOnItemClickListener(listAdapter);
+    init {
+        val listAdapter = Adapter()
+        AppTheme.search.list(this)
+        adapter = listAdapter
+        onItemClickListener = listAdapter
     }
 
-
-    public void onChanged() {
-        if (observer != null) observer.onChanged();
+    fun onChanged() {
+        observers.forEach { it.onChanged() }
     }
 
-    public void setOnTextSelected(OnSelected s) {
-        onSelected = s;
+    fun setOnTextSelected(s: OnSelected) {
+        onSelected = s
     }
 
-    private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener{
-
-        @Override
-        public int getCount() {
-            return list.sizeVisible();
+    private inner class Adapter : ListAdapter, OnItemClickListener {
+        override fun getCount(): Int {
+            return list.sizeVisible()
         }
 
-        @Override
-        public View getView(int index, View v, ViewGroup p) {
-            PoiListEntryView view;
-            if (v instanceof PoiListEntryView) {
-                view = (PoiListEntryView) v;
+        override fun getView(index: Int, view: View, p: ViewGroup): View {
+            val entryView: PoiListEntryView = if (view is PoiListEntryView) {
+                view
             } else {
-                view = new PoiListEntryView(PoiListView.this.getContext(), onSelected, theme);
+                PoiListEntryView(this@PoiListView.context, onSelected, theme)
             }
-
-            view.set((PoiListItem) list.getFromVisible(index));
-            return view;
+            entryView.set((list.getFromVisible(index) as PoiListItem))
+            return entryView
         }
 
-        @Override
-        public void registerDataSetObserver(DataSetObserver o) {
-            observer=o;
+        override fun registerDataSetObserver(observer: DataSetObserver) {
+            observers.add(observer)
         }
 
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver o) {
-            observer = null;
+        override fun unregisterDataSetObserver(observer: DataSetObserver) {
+            observers.remove(observer)
         }
 
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
-            onSelected.onSelected(list.getFromVisible(index), 0,null);
+        override fun onItemClick(arg0: AdapterView<*>?, view: View, index: Int, arg3: Long) {
+            onSelected.onSelected(list.getFromVisible(index), OnSelected.Action.Edit, "")
         }
 
-        @Override
-        public Object getItem(int position) {
-            return list.getFromVisible(position);
+        override fun getItem(position: Int): Any {
+            return list.getFromVisible(position)
         }
 
-        @Override
-        public long getItemId(int position) {
-            return list.getFromVisible(position).getID();
+        override fun getItemId(position: Int): Long {
+            return list.getFromVisible(position).id.toLong()
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            return 0;
+        override fun getItemViewType(position: Int): Int {
+            return 0
         }
 
-        @Override
-        public int getViewTypeCount() {
-            return 1;
+        override fun getViewTypeCount(): Int {
+            return 1
         }
 
-        @Override
-        public boolean hasStableIds() {
-            return true;
+        override fun hasStableIds(): Boolean {
+            return true
         }
 
-        @Override
-        public boolean isEmpty() {
-            return getCount()==0;
+        override fun isEmpty(): Boolean {
+            return count == 0
         }
 
-        @Override
-        public boolean areAllItemsEnabled() {
-            return true;
+        override fun areAllItemsEnabled(): Boolean {
+            return true
         }
 
-        @Override
-        public boolean isEnabled(int index) {
-            return true;
+        override fun isEnabled(index: Int): Boolean {
+            return true
         }
     }
 }

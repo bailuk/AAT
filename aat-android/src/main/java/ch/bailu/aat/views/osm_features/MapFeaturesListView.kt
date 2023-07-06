@@ -1,138 +1,109 @@
-package ch.bailu.aat.views.osm_features;
+package ch.bailu.aat.views.osm_features
 
-import android.database.DataSetObserver;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.database.DataSetObserver
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListAdapter
+import android.widget.ListView
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListItem
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat_lib.lib.filter_list.AbsFilterList
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry;
-import ch.bailu.aat_lib.lib.filter_list.AbsFilterList;
-import ch.bailu.aat_lib.lib.filter_list.ListEntry;
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.util.ui.theme.UiTheme;
+class MapFeaturesListView(private val scontext: ServiceContext, private val list: AbsFilterList<AbsListItem>) : ListView(
+    scontext.getContext()
+) {
 
+    private val observers = ArrayList<DataSetObserver>()
+    private var onSelected = OnSelected.NULL
 
-public class MapFeaturesListView extends ListView  {
-
-    private DataSetObserver observer=null;
-    private final AbsFilterList<ListEntry> list;
-    private final ServiceContext scontext;
-
-    private OnSelected onSelected = OnSelected.NULL;
-
-    private final static UiTheme theme = AppTheme.search;
-
-
-    public MapFeaturesListView(ServiceContext sc, AbsFilterList<ListEntry> l) {
-        super(sc.getContext());
-
-        scontext = sc;
-        list = l;
-        final Adapter listAdapter = new Adapter();
-
-        theme.list(this);
-
-        setAdapter(listAdapter);
-        setOnItemClickListener(listAdapter);
+    init {
+        val listAdapter = Adapter()
+        theme.list(this)
+        adapter = listAdapter
+        onItemClickListener = listAdapter
     }
 
-
-    public void onChanged() {
-        if (observer != null) observer.onChanged();
+    fun onChanged() {
+        observers.forEach { it.onChanged() }
     }
 
-
-    public void setOnTextSelected(OnSelected s) {
-        onSelected = s;
+    fun setOnTextSelected(s: OnSelected) {
+        onSelected = s
     }
 
-
-    private class Adapter implements ListAdapter, android.widget.AdapterView.OnItemClickListener{
-
-        @Override
-        public int getCount() {
-            return list.sizeVisible();
+    private inner class Adapter : ListAdapter, OnItemClickListener {
+        override fun getCount(): Int {
+            return list.sizeVisible()
         }
 
-
-        @Override
-        public View getView(int index, View v, ViewGroup p) {
-            MapFeaturesEntryView view;
-            if (v instanceof  MapFeaturesEntryView) {
-                view = (MapFeaturesEntryView) v;
-            } else {
-                view = new MapFeaturesEntryView(scontext, onSelected, theme);
+        override fun getView(index: Int, v: View, p: ViewGroup): View {
+            return toEntryView(v).apply {
+                set((list.getFromVisible(index) as MapFeaturesListItem))
             }
-
-            view.set((MapFeaturesListEntry) list.getFromVisible(index));
-            return view;
         }
 
-        @Override
-        public void registerDataSetObserver(DataSetObserver o) {
-            observer=o;
+        private fun toEntryView(view: View): MapFeaturesEntryView {
+            return if (view is MapFeaturesEntryView) {
+                view
+            } else {
+                MapFeaturesEntryView(scontext, onSelected, theme)
+            }
         }
 
-        @Override
-        public void unregisterDataSetObserver(DataSetObserver o) {
-            observer = null;
+        override fun registerDataSetObserver(observer: DataSetObserver) {
+            observers.add(observer)
         }
 
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
-            final MapFeaturesListEntry d = (MapFeaturesListEntry) list.getFromVisible(index);
-
-            if (d.isSummary())
-                onSelected.onSelected(d,OnSelected.FILTER, d.getSummaryKey());
-            else
-                onSelected.onSelected(d,OnSelected.EDIT, d.getDefaultQuery());
+        override fun unregisterDataSetObserver(observer: DataSetObserver) {
+            observers.remove(observer)
         }
 
-        @Override
-        public Object getItem(int position) {
-            return list.getFromVisible(position);
+        override fun onItemClick(arg0: AdapterView<*>?, view: View, index: Int, arg3: Long) {
+            val listEntry = list.getFromVisible(index)
+            if (listEntry is  MapFeaturesListItem) {
+                if (listEntry.isSummary) {
+                    onSelected.onSelected(listEntry, OnSelected.Action.Filter, listEntry.summaryKey)
+                } else onSelected.onSelected(listEntry, OnSelected.Action.Edit, listEntry.defaultQuery)
+            }
         }
 
-
-        @Override
-        public long getItemId(int position) {
-            return list.getFromVisible(position).getID();
+        override fun getItem(position: Int): Any {
+            return list.getFromVisible(position)
         }
 
-
-        @Override
-        public int getItemViewType(int position) {
-            return 0;
+        override fun getItemId(position: Int): Long {
+            return list.getFromVisible(position).id.toLong()
         }
 
-
-        @Override
-        public int getViewTypeCount() {
-            return 1;
+        override fun getItemViewType(position: Int): Int {
+            return 0
         }
 
-        @Override
-        public boolean hasStableIds() {
-            return true;
+        override fun getViewTypeCount(): Int {
+            return 1
         }
 
-        @Override
-        public boolean isEmpty() {
-            return getCount()==0;
+        override fun hasStableIds(): Boolean {
+            return true
         }
 
-        @Override
-        public boolean areAllItemsEnabled() {
-            return true;
+        override fun isEmpty(): Boolean {
+            return count == 0
         }
 
-        @Override
-        public boolean isEnabled(int index) {
-            return true;
+        override fun areAllItemsEnabled(): Boolean {
+            return true
         }
 
+        override fun isEnabled(index: Int): Boolean {
+            return true
+        }
+    }
+
+    companion object {
+        private val theme = AppTheme.search
     }
 }

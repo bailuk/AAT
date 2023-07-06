@@ -1,14 +1,15 @@
-package ch.bailu.aat.views.osm_features;
+package ch.bailu.aat.views.osm_features
 
-import ch.bailu.aat_lib.lib.filter_list.ListEntry;
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 
-public interface OnSelected {
-    int EDIT = 0;
-    int SHOW = 1;
-    int FILTER = 2;
-    int SELECT = 3;
+fun interface OnSelected {
+    enum class Action { Edit, Filter }
 
-    OnSelected NULL = (e, action, variant) -> {};
+    fun onSelected(e: AbsListItem, action: Action, variant: String)
 
-    void onSelected(ListEntry e, int action, String variant);
+    companion object {
+
+        @JvmField
+        val NULL = OnSelected { _: AbsListItem, _: Action, _: String -> }
+    }
 }

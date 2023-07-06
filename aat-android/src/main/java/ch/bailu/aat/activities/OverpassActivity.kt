@@ -11,7 +11,7 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.osm_features.OnSelected
 import ch.bailu.aat.views.osm_features.OsmFeaturesView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.lib.filter_list.ListEntry
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
 class OverpassActivity : AbsOsmApiActivity() {
@@ -38,10 +38,10 @@ class OverpassActivity : AbsOsmApiActivity() {
 
     private fun createOsmFeaturesView(): View {
         val osmFeatures = OsmFeaturesView(serviceContext)
-        osmFeatures.setOnTextSelected { e: ListEntry, action: Int, variant: String ->
-            if (action == OnSelected.FILTER) {
+        osmFeatures.setOnTextSelected { e: AbsListItem, action: OnSelected.Action, variant: String ->
+            if (action == OnSelected.Action.Filter) {
                 osmFeatures.setFilterText(e.summaryKey)
-            } else if (action == OnSelected.EDIT) {
+            } else if (action == OnSelected.Action.Edit) {
                 insertLine(variant)
             }
         }

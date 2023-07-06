@@ -2,21 +2,21 @@ package ch.bailu.aat.menus
 
 import android.view.Menu
 import android.view.MenuItem
-import ch.bailu.aat.services.cache.osm_features.MapFeaturesListEntry
+import ch.bailu.aat.services.cache.osm_features.MapFeaturesListItem
 import ch.bailu.aat.views.osm_features.OnSelected
 
 class MapFeaturesMenu(
-    private val element: MapFeaturesListEntry,
+    private val element: MapFeaturesListItem,
     private val onSelected: OnSelected
 ) : AbsMenu() {
 
     private val variants: ArrayList<String> = element.variants
 
     override fun inflate(menu: Menu) {
-        val g = OnSelected.EDIT
+        val groupId = OnSelected.Action.Edit.ordinal
 
-        for ((i, v) in variants.withIndex()) {
-            menu.add(g, i, Menu.NONE, v)
+        for ((itemId, variantTitle) in variants.withIndex()) {
+            menu.add(groupId, itemId, Menu.NONE, variantTitle)
         }
     }
 
@@ -26,7 +26,7 @@ class MapFeaturesMenu(
     override fun prepare(menu: Menu) {}
 
     override fun onItemClick(item: MenuItem): Boolean {
-        onSelected.onSelected(element, OnSelected.EDIT, variants[item.itemId])
+        onSelected.onSelected(element, OnSelected.Action.Edit, variants[item.itemId])
         return true
     }
 }

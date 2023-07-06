@@ -4,7 +4,7 @@ import ch.bailu.aat.preferences.map.SolidOsmFeaturesList.Companion.getKeyList
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.AbsFilterList
-import ch.bailu.aat_lib.lib.filter_list.ListEntry
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.OnObject
@@ -14,17 +14,17 @@ class ObjMapFeatures(id: String) : Obj(id) {
     private var size: Long = 0
 
     private inner class List {
-        private val list = ArrayList<MapFeaturesListEntry>(50)
+        private val list = ArrayList<MapFeaturesListItem>(50)
 
         @Synchronized
-        fun sync(f: AbsFilterList<ListEntry>) {
+        fun sync(f: AbsFilterList<AbsListItem>) {
             for (i in f.sizeAll() until list.size) {
                 f.add(list[i])
             }
         }
 
         @Synchronized
-        fun add(d: MapFeaturesListEntry) {
+        fun add(d: MapFeaturesListItem) {
             list.add(d)
         }
     }
@@ -42,7 +42,7 @@ class ObjMapFeatures(id: String) : Obj(id) {
         return size
     }
 
-    fun syncList(filterList: AbsFilterList<ListEntry>) {
+    fun syncList(filterList: AbsFilterList<AbsListItem>) {
         list.sync(filterList)
     }
 
@@ -76,7 +76,7 @@ class ObjMapFeatures(id: String) : Obj(id) {
                     keyList.isEmpty || keyList.hasKey(file.lowercase())
                 },
                 { parser ->
-                    val d = MapFeaturesListEntry(parser)
+                    val d = MapFeaturesListItem(parser)
                     handle.size += d.length() * 2L
                     handle.list.add(d)
                     doBroadcast++

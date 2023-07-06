@@ -3,9 +3,9 @@ package ch.bailu.aat_lib.search.poi;
 import org.mapsforge.poi.storage.PoiCategory;
 
 import ch.bailu.aat_lib.lib.filter_list.KeyList;
-import ch.bailu.aat_lib.lib.filter_list.ListEntry;
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem;
 
-public class PoiListItem extends ListEntry {
+public class PoiListItem extends AbsListItem {
     private final PoiCategory self;
 
     private final boolean isSummary;

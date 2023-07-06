@@ -1,164 +1,126 @@
-package ch.bailu.aat.views.osm_features;
+package ch.bailu.aat.views.osm_features
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.LinearLayout
+import ch.bailu.aat.dispatcher.AndroidBroadcaster.Companion.register
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.map.SolidOsmFeaturesList
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures
+import ch.bailu.aat.util.AppIntent.hasFile
+import ch.bailu.aat.util.ui.theme.AppTheme
+import ch.bailu.aat.views.BusyIndicator
+import ch.bailu.aat.views.EditTextTool
+import ch.bailu.aat.views.preferences.SolidCheckBox
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.lib.filter_list.FilterList
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.SolidString
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-import javax.annotation.Nonnull;
+class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
+    scontext.getContext()
+), OnPreferencesChanged {
+    private val filterView: EditText
 
-import ch.bailu.aat.dispatcher.AndroidBroadcaster;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidOsmFeaturesList;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures;
-import ch.bailu.aat.util.AppIntent;
-import ch.bailu.aat.util.ui.theme.AppTheme;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.BusyIndicator;
-import ch.bailu.aat.views.EditTextTool;
-import ch.bailu.aat.views.preferences.SolidCheckBox;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.lib.filter_list.FilterList;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.SolidString;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+    private var listHandle: ObjMapFeatures? = null
 
-public class OsmFeaturesView extends LinearLayout implements OnPreferencesChanged {
+    private val busy: BusyIndicator = BusyIndicator(context)
+    private val slist: SolidOsmFeaturesList = SolidOsmFeaturesList(context)
+    private val list = FilterList()
+    private val listView: MapFeaturesListView = MapFeaturesListView(scontext, list)
 
-    private final static String FILTER_KEY="FilterView";
-
-    private EditText filterView;
-    private MapFeaturesListView listView;
-    private ObjMapFeatures listHandle = null;
-
-    private final BusyIndicator busy;
-
-    private final SolidOsmFeaturesList slist;
-    private final ServiceContext scontext;
-
-    private final FilterList list = new FilterList();
-
-    private final UiTheme theme = AppTheme.search;
-
-    private final BroadcastReceiver onListLoaded = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, final Intent intent) {
-            if (listHandle != null && AppIntent.hasFile(intent, listHandle.getID())) {
-                updateList();
+    private val theme = AppTheme.search
+    private val onListLoaded: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val handle = listHandle
+            if (handle != null && hasFile(intent, handle.id)) {
+                updateList()
             }
         }
-    };
-
-    public OsmFeaturesView(ServiceContext sc) {
-        super(sc.getContext());
-        scontext = sc;
-
-        busy = new BusyIndicator(getContext());
-        slist = new SolidOsmFeaturesList(getContext());
-
-        setOrientation(VERTICAL);
-        //addView(createHeader());
-        addView(createFilterView());
-        addView(createFeatureList());
     }
 
-    private void updateList() {
-        if (listHandle == null) {
-            list.clear();
-            busy.stopWaiting();
+    companion object {
+        private const val FILTER_KEY = "FilterView"
+    }
+
+    init {
+        orientation = VERTICAL
+        filterView = EditText(context)
+        filterView.isSingleLine = true
+        filterView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                list.filter(charSequence.toString())
+                updateList()
+            }
+
+            override fun afterTextChanged(editable: Editable) {}
+        })
+        val layout = EditTextTool(filterView, VERTICAL, theme)
+        layout.add(SolidCheckBox(context, slist, theme))
+
+        addView(layout)
+    }
+
+    private fun updateList() {
+        val handle = this.listHandle
+
+        if (handle == null) {
+            list.clear()
+            busy.stopWaiting()
         } else {
-            listHandle.syncList(list);
-            if (listHandle.isReadyAndLoaded())
-                busy.stopWaiting();
-            else busy.startWaiting();
+            handle.syncList(list)
+            if (handle.isReadyAndLoaded) busy.stopWaiting() else busy.startWaiting()
         }
-        listView.onChanged();
+        listView.onChanged()
     }
 
-    public void setOnTextSelected(OnSelected s) {
-        listView.setOnTextSelected(s);
+    fun setOnTextSelected(s: OnSelected) {
+        listView.setOnTextSelected(s)
     }
 
-    private View createFeatureList() {
-        listView = new MapFeaturesListView(scontext, list);
-        return listView;
+
+    fun onResume(sc: ServiceContext) {
+        register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE)
+        filterView.setText(SolidString(Storage(context), FILTER_KEY).valueAsStringNonDef)
+        getListHandle()
+        slist.register(this)
     }
 
-    private View createFilterView() {
-        filterView = new EditText(getContext());
-        filterView.setSingleLine(true);
-        filterView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                list.filter(charSequence.toString());
-                updateList();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        EditTextTool layout = new EditTextTool(filterView, LinearLayout.VERTICAL, theme);
-        layout.add(new SolidCheckBox(getContext(),slist, theme));
-        return layout;
+    fun onPause(sc: ServiceContext) {
+        slist.unregister(this)
+        sc.getContext().unregisterReceiver(onListLoaded)
+        freeListHandle()
+        SolidString(Storage(sc.getContext()), FILTER_KEY).setValue(filterView.text.toString())
     }
 
-    public void onResume(final ServiceContext sc) {
-        AndroidBroadcaster.register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE);
-
-        filterView.setText(new SolidString(new Storage(getContext()), FILTER_KEY ).getValueAsStringNonDef());
-
-        getListHandle();
-
-        slist.register(this);
-    }
-
-    public void onPause(ServiceContext sc) {
-        slist.unregister(this);
-
-        sc.getContext().unregisterReceiver(onListLoaded);
-
-        freeListHandle();
-
-        new SolidString(new Storage(sc.getContext()), FILTER_KEY).setValue(filterView.getText().toString());
-    }
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (slist.hasKey(key)) {
-            freeListHandle();
-            getListHandle();
+            freeListHandle()
+            getListHandle()
         }
     }
 
-    private void getListHandle() {
-        scontext.insideContext(()-> listHandle = slist.getList(scontext.getCacheService()));
-        updateList();
+    private fun getListHandle() {
+        scontext.insideContext { listHandle = slist.getList(scontext.cacheService) }
+        updateList()
     }
 
-    private void freeListHandle() {
-        if (listHandle != null) {
-            listHandle.free();
-            listHandle = null;
-        }
-
-        updateList();
+    private fun freeListHandle() {
+        listHandle?.free()
+        listHandle = null
+        updateList()
     }
 
-    public void setFilterText(String summaryKey) {
-        filterView.setText(summaryKey);
+    fun setFilterText(summaryKey: String) {
+        filterView.setText(summaryKey)
     }
+
+
 }

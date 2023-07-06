@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.lib.filter_list;
 
-public abstract class ListEntry {
+public abstract class AbsListItem {
     public abstract boolean isSelected();
     public abstract void setSelected(boolean selected);
     public abstract boolean isSummary();

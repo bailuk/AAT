@@ -70,7 +70,7 @@ class PoiActivity : AbsOsmApiActivity() {
     private fun createPoiListView(): View {
         val poiView = PoiView(
             this, appContext,
-            configuration?.baseDirectory?.child(AppDirectory.FILE_SELECTION), theme
+            configuration!!.baseDirectory.child(AppDirectory.FILE_SELECTION), theme
         )
         this.poiView = poiView
 

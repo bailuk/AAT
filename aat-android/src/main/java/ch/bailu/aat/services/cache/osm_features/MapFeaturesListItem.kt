@@ -2,9 +2,9 @@ package ch.bailu.aat.services.cache.osm_features
 
 import ch.bailu.aat_lib.gpx.attributes.Keys
 import ch.bailu.aat_lib.lib.filter_list.KeyList
-import ch.bailu.aat_lib.lib.filter_list.ListEntry
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 
-class MapFeaturesListEntry(parser: MapFeaturesParser) : ListEntry() {
+class MapFeaturesListItem(parser: MapFeaturesParser) : AbsListItem() {
     private val isSummary: Boolean
     private val name: String
     private var key: String
