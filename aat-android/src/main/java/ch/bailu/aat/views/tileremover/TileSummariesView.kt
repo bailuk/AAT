@@ -1,65 +1,53 @@
-package ch.bailu.aat.views.tileremover;
+package ch.bailu.aat.views.tileremover
 
-import android.app.Activity;
-import android.widget.RadioGroup;
+import android.app.Activity
+import android.widget.RadioGroup
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.preferences.map.SolidTrimIndex
+import ch.bailu.aat.services.tileremover.SourceSummaries
+import ch.bailu.aat.util.ui.theme.UiTheme
 
-import java.util.ArrayList;
+class TileSummariesView(activity: Activity, theme: UiTheme) : RadioGroup(activity) {
+    private val views = ArrayList<TileSummaryView>(SourceSummaries.SUMMARY_SIZE)
+    private val builder = StringBuilder(100)
+    private val theme: UiTheme
 
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.map.SolidTrimIndex;
-import ch.bailu.aat.services.tileremover.SourceSummaries;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-
-public class TileSummariesView extends RadioGroup  {
-
-    private final ArrayList<TileSummaryView> views = new ArrayList<>(SourceSummaries.SUMMARY_SIZE);
-    private final StringBuilder builder = new StringBuilder(100);
-
-
-    private final UiTheme theme;
-
-    public TileSummariesView(Activity a, UiTheme theme) {
-        super(a);
-        setOrientation(VERTICAL);
-        this.theme = theme;
+    init {
+        orientation = VERTICAL
+        this.theme = theme
     }
 
-
-    public void updateInfo(final SourceSummaries summaries) {
-
-        if (summaries.size() != views.size()) {
-            int selected = new SolidTrimIndex(new Storage(getContext())).getValue();
-
+    fun updateInfo(summaries: SourceSummaries) {
+        if (summaries.size() != views.size) {
+            val selected = SolidTrimIndex(Storage(context)).value
 
             // remove views
-            for (int i = views.size() - 1; i >= summaries.size(); i--) {
-                views.get(i).destroy();
-                views.remove(i);
+            for (i in views.size - 1 downTo summaries.size()) {
+                views[i].destroy()
+                views.removeAt(i)
             }
-
 
             // addLayer views
-            for (int i = views.size(); i < summaries.size(); i++) {
-                views.add(new TileSummaryView(this, i, theme));
-                views.get(i).select(selected);
+            for (i in views.size until summaries.size()) {
+                views.add(TileSummaryView(this, i, theme))
+                views[i].select(selected)
             }
-
 
             // update title
-            for (int i = 0; i< summaries.size() && i < views.size(); i++) {
-                views.get(i).setTitle(summaries.get(i).getName());
+            var i = 0
+            while (i < summaries.size() && i < views.size) {
+                views[i].setTitle(summaries[i].name)
+                i++
             }
-
             if (selected >= summaries.size()) {
-                views.get(0).select();
-                new SolidTrimIndex(new Storage(getContext())).setValue(0);
+                views[0].select()
+                SolidTrimIndex(Storage(context)).value = 0
             }
         }
-
-        if (summaries.size() == views.size()) {
+        if (summaries.size() == views.size) {
             // update text
-            for (int i = 0; i < views.size(); i++) {
-                views.get(i).displaySummaryReport(builder, summaries.get(i));
+            for (i in views.indices) {
+                views[i].displaySummaryReport(builder, summaries[i])
             }
         }
     }
