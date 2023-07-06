@@ -113,7 +113,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                 ListBox().apply {
                     selectionMode = 1
 
-                    solid.enabledArray.forEachIndexed { index, it ->
+                    solid.enabledArray.forEachIndexed { index, _ ->
                         val layout = Box(Orientation.HORIZONTAL, 5)
                         val check = CheckButton()
                         val label = Label(Str.NULL)

@@ -34,8 +34,12 @@ task<Exec>("generateStrings") {
 }
 
 
-task<Exec>("generateImageMapping") {
+task<JavaExec>("generateImageMapping") {
     dependsOn(":aat-android:processReleaseResources")
-    workingDir("util")
-    commandLine("./generate_image_mapping.py")
+
+    description = "Generate image mapping from R.txt"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("generate_image_mapping.MainKt")
+    workingDir(project.rootDir)
+
 }
