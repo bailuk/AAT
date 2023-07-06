@@ -14,9 +14,9 @@ import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.busy.BusyViewControlIID
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.ImageButtonViewGroup
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
@@ -56,10 +56,11 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
         if (uri is Uri) {
             try {
                 file = FocAndroid.factory(this, uri.toString())
-                val contentView = ContentView(this, theme)
+                val contentView =
+                    ContentView(this, theme)
                 val bar = MainControlBar(this)
                 contentView.add(bar)
-                contentView.add(errorView)
+                contentView.add(errorView!!)
                 val view = createLayout(bar, contentView)
                 initButtonBar(bar)
                 contentView.add(view)
@@ -97,7 +98,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     private fun createPercentageLayout(summary: View, graph: View): View {
         val a = PercentageLayout(this)
         a.setOrientation(AppLayout.getOrientationAlongLargeSide(this))
-        a.add(To.view(map), 60)
+        a.add(To.view(map)!!, 60)
         a.add(summary, 40)
         val b = PercentageLayout(this)
         b.add(a, 80)
@@ -114,7 +115,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
 
         ToolTip.set(copyTo, R.string.file_copy)
         ToolTip.set(fileOperation, R.string.tt_menu_file)
-        bar.setOrientation(LinearLayout.HORIZONTAL)
+        bar.orientation = LinearLayout.HORIZONTAL
         bar.addOnClickListener(this)
     }
 

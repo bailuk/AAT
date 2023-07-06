@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.poi
 
 import android.content.Context
 import android.database.DataSetObserver
@@ -9,6 +9,7 @@ import android.widget.ListAdapter
 import android.widget.ListView
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.search.poi.PoiListItem
 

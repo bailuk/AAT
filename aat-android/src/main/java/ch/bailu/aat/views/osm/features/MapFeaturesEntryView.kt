@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.features
 
 import android.view.View
 import android.widget.LinearLayout
@@ -7,10 +7,10 @@ import ch.bailu.aat.R
 import ch.bailu.aat.menus.MapFeaturesMenu
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListItem
-import ch.bailu.aat.util.AppHtml.fromHtml
+import ch.bailu.aat.util.AppHtml
 import ch.bailu.aat.util.ui.AndroidAppDensity
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.SVGAssetView
+import ch.bailu.aat.views.image.SVGAssetView
 import ch.bailu.aat_lib.service.icons.IconMapService
 
 class MapFeaturesEntryView(scontext: ServiceContext, private val onSelected: OnSelected, theme: UiTheme) :
@@ -35,7 +35,7 @@ class MapFeaturesEntryView(scontext: ServiceContext, private val onSelected: OnS
         mapFeaturesListEntry = listEntry
 
         icon.setImageObject(listEntry.osmKey, listEntry.osmValue)
-        text.text = fromHtml(listEntry.html)
+        text.text = AppHtml.fromHtml(listEntry.html)
     }
 
     override fun onClick(view: View) {

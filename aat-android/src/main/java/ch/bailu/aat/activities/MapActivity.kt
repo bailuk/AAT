@@ -8,7 +8,7 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
@@ -28,10 +28,11 @@ class MapActivity : AbsKeepScreenOnActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val edit = EditorSource(appContext)
-        val contentView = ContentView(this, AppTheme.cockpit)
+        val contentView =
+            ContentView(this, AppTheme.cockpit)
         val map = createMap(edit)
-        contentView.add(errorView)
-        contentView.add(To.view(map))
+        contentView.add(errorView!!)
+        contentView.add(To.view(map)!!)
         setContentView(contentView)
         createDispatcher(edit)
         contentView.showTip(getString(R.string.tt_map_edges))

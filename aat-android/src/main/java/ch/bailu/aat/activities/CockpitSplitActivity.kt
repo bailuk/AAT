@@ -9,8 +9,8 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.CockpitView
@@ -111,7 +111,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         MapViewLinker(mapMaster, mapSlave)
         val contentView = ContentView(this, THEME)
         contentView.addMvIndicator(mv)
-        contentView.add(errorView)
+        contentView.add(errorView!!)
         contentView.add(
             PercentageLayout(this)
                 .add(mapMaster, 70)

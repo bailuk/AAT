@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.widget.LinearLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.graph.GraphView
 import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.html.HtmlScrollTextView

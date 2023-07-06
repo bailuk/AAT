@@ -2,7 +2,7 @@ package ch.bailu.aat.views.preferences
 
 import android.content.Context
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.LabelTextView
+import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat_lib.preferences.AbsSolidType
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface

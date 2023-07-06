@@ -5,7 +5,7 @@ import ch.bailu.aat.R
 import ch.bailu.aat.activities.AbsHardwareButtons
 import ch.bailu.aat.activities.AbsHardwareButtons.OnHardwareButtonPressed
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.image.ImageButtonViewGroup
 import javax.annotation.Nonnull
 
 class MultiViewNextButton(private val mv: MultiView, theme: UiTheme) : ImageButtonViewGroup(

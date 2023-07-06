@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.features
 
 import android.database.DataSetObserver
 import android.view.View
@@ -63,7 +63,7 @@ class MapFeaturesListView(private val scontext: ServiceContext, private val list
 
         override fun onItemClick(arg0: AdapterView<*>?, view: View, index: Int, arg3: Long) {
             val listEntry = list.getFromVisible(index)
-            if (listEntry is  MapFeaturesListItem) {
+            if (listEntry is MapFeaturesListItem) {
                 if (listEntry.isSummary) {
                     onSelected.onSelected(listEntry, OnSelected.Action.Filter, listEntry.summaryKey)
                 } else onSelected.onSelected(listEntry, OnSelected.Action.Edit, listEntry.defaultQuery)

@@ -6,7 +6,7 @@ import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.app.AndroidAppConfig
 import ch.bailu.aat.app.AppThread
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.html.HtmlScrollTextView
@@ -28,7 +28,7 @@ class AboutActivity : ActivityContext() {
         val contentView = ContentView(this, THEME)
         contentView.addMvIndicator(multiView)
         contentView.add(createButtonBar(multiView))
-        contentView.add(errorView)
+        contentView.add(errorView!!)
         contentView.add(multiView)
         setContentView(contentView)
     }

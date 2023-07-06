@@ -9,7 +9,7 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
-import ch.bailu.aat.views.PreviewView
+import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
@@ -44,7 +44,8 @@ class FileControlBarLayer(
         getOrientation(Position.LEFT), AppTheme.bar
     ), Position.LEFT
 ) {
-    private val preview = PreviewView(acontext.serviceContext, config)
+    private val preview =
+        PreviewView(acontext.serviceContext, config)
     private val selector = FileViewLayer(appContext, acontext, mc)
     private val overlay: View = bar.addImageButton(R.drawable.view_paged)
     private val reloadPreview: View = bar.addImageButton(R.drawable.view_refresh)

@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.features
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,15 +7,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.LinearLayout
-import ch.bailu.aat.dispatcher.AndroidBroadcaster.Companion.register
+import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures
-import ch.bailu.aat.util.AppIntent.hasFile
+import ch.bailu.aat.util.AppIntent
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.busy.BusyIndicator
-import ch.bailu.aat.views.EditTextTool
+import ch.bailu.aat.views.osm.EditTextTool
 import ch.bailu.aat.views.preferences.SolidCheckBox
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.FilterList
@@ -39,7 +39,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     private val onListLoaded: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val handle = listHandle
-            if (handle != null && hasFile(intent, handle.id)) {
+            if (handle != null && AppIntent.hasFile(intent, handle.id)) {
                 updateList()
             }
         }
@@ -87,7 +87,11 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
 
 
     fun onResume(sc: ServiceContext) {
-        register(sc.getContext(), onListLoaded, AppBroadcaster.FILE_CHANGED_INCACHE)
+        AndroidBroadcaster.register(
+            sc.getContext(),
+            onListLoaded,
+            AppBroadcaster.FILE_CHANGED_INCACHE
+        )
         filterView.setText(SolidString(Storage(context), FILTER_KEY).valueAsStringNonDef)
         getListHandle()
         slist.register(this)

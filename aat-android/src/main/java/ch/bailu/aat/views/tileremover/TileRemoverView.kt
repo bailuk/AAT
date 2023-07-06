@@ -14,7 +14,7 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControl
-import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged

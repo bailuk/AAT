@@ -15,9 +15,9 @@ import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControlDbSync
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.GpxListView
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.list.GpxListView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.preferences.TitleView
@@ -150,7 +150,10 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         val contentView = ContentView(acontext, theme)
 
         init {
-            listView = GpxListView(acontext, gpxListItemData).apply { onItemClickListener = acontext }
+            listView = GpxListView(
+                acontext,
+                gpxListItemData
+            ).apply { onItemClickListener = acontext }
 
             registerForContextMenu(listView)
             busyControl = BusyViewControlDbSync(contentView)
@@ -172,7 +175,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             val bar = MainControlBar(acontext)
             val layout = createLayout(map, summary, bar)
             contentView.add(bar)
-            contentView.add(errorView)
+            contentView.add(errorView!!)
             contentView.add(layout)
         }
 
@@ -198,18 +201,18 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             return if (AppLayout.getOrientation(acontext) == Configuration.ORIENTATION_LANDSCAPE) {
                 val a = PercentageLayout(acontext)
                 a.setOrientation(LinearLayout.HORIZONTAL)
-                a.add(listView, 30)
+                a.add(listView!!, 30)
                 a.add(summary, 30)
-                a.add(To.view(map), 40)
+                a.add(To.view(map)!!, 40)
                 a
             } else {
                 val a = PercentageLayout(acontext)
                 a.setOrientation(LinearLayout.HORIZONTAL)
-                a.add(listView, 50)
+                a.add(listView!!, 50)
                 a.add(summary, 50)
                 val b = PercentageLayout(acontext)
                 b.add(a, 60)
-                b.add(To.view(map), 40)
+                b.add(To.view(map)!!, 40)
                 b
             }
         }

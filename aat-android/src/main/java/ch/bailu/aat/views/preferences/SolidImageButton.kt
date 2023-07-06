@@ -2,7 +2,7 @@ package ch.bailu.aat.views.preferences
 
 import android.content.Context
 import ch.bailu.aat.resource.Images
-import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.preferences.dialog.SolidIndexListDialog
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged

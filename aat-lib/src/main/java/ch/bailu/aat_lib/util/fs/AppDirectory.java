@@ -36,6 +36,7 @@ public class AppDirectory  {
     public static final String FILE_CACHE_MVDB ="summary.mv.db";
 
     private static final String DIR_EDIT = "overlay/draft";
+    public static final String FILE_EDIT_BACKUP = "edit.txt";
     private static final String FILE_DRAFT = "draft.gpx";
 
     public static final String FILE_SELECTION = "selection.txt";

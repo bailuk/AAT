@@ -3,11 +3,11 @@ package ch.bailu.aat.activities
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
-import ch.bailu.aat.views.osm_features.PoiView
+import ch.bailu.aat.views.osm.poi.PoiView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration

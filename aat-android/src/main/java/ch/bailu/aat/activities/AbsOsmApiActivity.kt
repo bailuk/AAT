@@ -11,10 +11,10 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControl
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.ImageButtonViewGroup
-import ch.bailu.aat.views.NodeListView
-import ch.bailu.aat.views.OsmApiEditorView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.list.NodeListView
+import ch.bailu.aat.views.osm.OsmApiEditorView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -60,7 +60,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         contentView.add(bar)
         contentView.add(downloadErrorView())
         contentView.add(fileErrorView())
-        contentView.add(errorView)
+        contentView.add(errorView!!)
         contentView.add(createMainContentView(contentView))
         addDownloadButton(bar)
         addCustomButtons(bar)
@@ -119,7 +119,11 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     }
 
     private fun createEditorView(): View {
-        val editorView = OsmApiEditorView(this, configuration, theme)
+        val editorView = OsmApiEditorView(
+            this,
+            configuration!!,
+            theme
+        )
         this.editorView = editorView
         return editorView
     }

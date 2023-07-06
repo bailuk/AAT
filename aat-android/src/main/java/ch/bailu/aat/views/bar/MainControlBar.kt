@@ -8,7 +8,7 @@ import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.menus.OptionsMenu
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.description.GPSStateButton
 import ch.bailu.aat.views.description.SensorStateButton
 import ch.bailu.aat.views.description.TrackerStateButton

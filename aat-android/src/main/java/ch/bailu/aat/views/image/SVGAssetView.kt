@@ -1,4 +1,4 @@
-package ch.bailu.aat.views
+package ch.bailu.aat.views.image
 
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.AndroidAppDensity
@@ -14,11 +14,11 @@ class SVGAssetView(private val scontext: ServiceContext, rid: Int) : ImageObject
         size = AndroidAppDensity(scontext.getContext()).toPixel_i(IconMapService.BIG_ICON_SIZE)
     }
 
-    fun setImageObject(key: Int, value: String?) {
+    fun setImageObject(key: Int, value: String) {
         scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(key, value)) }
     }
 
-    fun setImageObject(gpxPointNode: GpxPointNode?) {
+    fun setImageObject(gpxPointNode: GpxPointNode) {
         scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(gpxPointNode)) }
     }
 

@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.poi
 
 import android.content.Context
 import android.text.Editable
@@ -9,7 +9,8 @@ import android.widget.LinearLayout
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.EditTextTool
+import ch.bailu.aat.views.osm.EditTextTool
+import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat.views.preferences.SolidStringView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem

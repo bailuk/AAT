@@ -1,4 +1,4 @@
-package ch.bailu.aat.views
+package ch.bailu.aat.views.image
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -36,14 +36,16 @@ open class ImageObjectView(
     }
 
     private fun loadAndDisplayImage() {
+        val idToLoad = idToLoad
+
         if (idToLoad != null && isAttached) {
             freeImageHandle()
-            if (loadImage(idToLoad!!, factoryToLoad)) {
+            if (loadImage(idToLoad, factoryToLoad)) {
                 displayImage()
             } else {
                 resetImage()
             }
-            idToLoad = null
+            this.idToLoad = null
             factoryToLoad = null
         }
     }

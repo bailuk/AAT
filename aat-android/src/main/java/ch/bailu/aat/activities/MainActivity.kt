@@ -10,8 +10,8 @@ import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.LabelTextView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
@@ -42,7 +42,7 @@ class MainActivity : ActivityContext() {
     private fun createViews() {
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
-        contentView.add(errorView)
+        contentView.add(errorView!!)
         contentView.addW(createActionList())
         setContentView(contentView)
     }

@@ -8,8 +8,8 @@ import ch.bailu.aat.map.To
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
@@ -79,7 +79,7 @@ class FileContentActivity : AbsFileContentActivity() {
     private fun createPercentageLayout(summary: View, graph: View): ViewGroup {
         val a = PercentageLayout(this)
         a.setOrientation(AppLayout.getOrientationAlongLargeSide(this))
-        a.add(To.view(map), 60)
+        a.add(To.view(map)!!, 60)
         a.add(summary, 40)
 
         val b = PercentageLayout(this)

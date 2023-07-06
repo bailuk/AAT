@@ -1,12 +1,13 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.poi
 
 import android.content.Context
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import ch.bailu.aat.util.ui.theme.AppTheme.padding
+import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat_lib.search.poi.PoiListItem
 
 class PoiListEntryView(context: Context, onSelected: OnSelected, theme: UiTheme) :
@@ -26,7 +27,7 @@ class PoiListEntryView(context: Context, onSelected: OnSelected, theme: UiTheme)
         checkBox.setOnCheckedChangeListener { _: CompoundButton?, _: Boolean -> }
         checkBox.isClickable = false
         textView = TextView(getContext())
-        padding(textView, 10)
+        AppTheme.padding(textView, 10)
         theme.content(checkBox)
         theme.header(textView)
         theme.button(textView)

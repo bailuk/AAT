@@ -3,7 +3,7 @@ package ch.bailu.aat.menus
 import android.view.Menu
 import android.view.MenuItem
 import ch.bailu.aat.services.cache.osm_features.MapFeaturesListItem
-import ch.bailu.aat.views.osm_features.OnSelected
+import ch.bailu.aat.views.osm.features.OnSelected
 
 class MapFeaturesMenu(
     private val element: MapFeaturesListItem,

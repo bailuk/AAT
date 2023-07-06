@@ -1,4 +1,4 @@
-package ch.bailu.aat.views.osm_features
+package ch.bailu.aat.views.osm.features
 
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 

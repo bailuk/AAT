@@ -11,9 +11,9 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewContainer
 import ch.bailu.aat.views.busy.BusyViewControlIID
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.ImageButtonViewGroup
-import ch.bailu.aat.views.PreviewView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.msg.ErrorMsgView
@@ -66,8 +66,8 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
         contentView.add(bar)
         fileError = ErrorMsgView(this)
-        contentView.add(fileError)
-        contentView.add(errorView)
+        contentView.add(fileError!!)
+        contentView.add(errorView!!)
         busyControl = BusyViewControlIID(contentView).apply {
             busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT)
         }
@@ -86,7 +86,10 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         previousFile = bar.addImageButton(R.drawable.go_up_inverse)
         nextFile = bar.addImageButton(R.drawable.go_down_inverse)
 
-        val fileOperation = PreviewView(serviceContext, appContext.summaryConfig)
+        val fileOperation = PreviewView(
+            serviceContext,
+            appContext.summaryConfig
+        )
         this.fileOperation = fileOperation
         bar.addButton(fileOperation)
         bar.setOrientation(LinearLayout.HORIZONTAL)

@@ -13,10 +13,10 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.ImageButtonViewGroup
-import ch.bailu.aat.views.PercentageLayout
-import ch.bailu.aat.views.SVGAssetView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.layout.PercentageLayout
+import ch.bailu.aat.views.image.SVGAssetView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.graph.GraphView
@@ -53,7 +53,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
         file = appContext.toFoc(intent.getStringExtra("ID"))
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
-        contentView.add(errorView)
+        contentView.add(errorView!!)
         contentView.add(createSeekBar())
         contentView.add(createVerticalView())
         createDispatcher()
@@ -84,11 +84,11 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
         }
 
         mapView = MapFactory.DEF(this, SOLID_KEY).node().apply {
-            viewB.add(To.view(this), 60)
+            viewB.add(To.view(this)!!, 60)
         }
 
         graph = GraphViewFactory.createAltitudeGraph(appContext, this, theme)
-        viewA.add(graph, 20)
+        viewA.add(graph!!, 20)
         viewA.add(viewB, 80)
         return viewA
     }

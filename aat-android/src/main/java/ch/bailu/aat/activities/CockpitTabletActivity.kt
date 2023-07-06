@@ -8,8 +8,8 @@ import ch.bailu.aat.map.mapsforge.MapViewLinker
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.ContentView
-import ch.bailu.aat.views.PercentageLayout
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.CockpitView
@@ -65,7 +65,7 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
         allComponents.add(cockpitAndBigMap, 80)
         allComponents.add(GraphViewFactory.all(appContext, this, this, theme, InfoID.TRACKER), 20)
 
-        result.add(errorView)
+        result.add(errorView!!)
         result.add(allComponents)
         return result
     }

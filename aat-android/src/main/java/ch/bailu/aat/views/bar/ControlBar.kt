@@ -10,7 +10,7 @@ import android.widget.ScrollView
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.AppLayout.getBigButtonSize
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.ImageButtonViewGroup
+import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.preferences.SolidImageButton
 import ch.bailu.aat_lib.preferences.SolidIndexList
 

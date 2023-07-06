@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.SolidSAF
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.ContentView
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
@@ -41,10 +41,13 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
 
     private fun createViews() {
         multiView = createMultiView(theme).apply {
-            val contentView = ContentView(this@PreferencesActivity, theme)
+            val contentView = ContentView(
+                this@PreferencesActivity,
+                theme
+            )
             contentView.addMvIndicator(this)
             contentView.add(MainControlBar(this@PreferencesActivity, this))
-            contentView.add(errorView)
+            contentView.add(errorView!!)
             contentView.add(this)
             setContentView(contentView)
         }
