@@ -1,83 +1,80 @@
-package ch.bailu.aat.providers;
+package ch.bailu.aat.providers
 
-import android.content.ContentProvider;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.net.Uri;
-import android.os.ParcelFileDescriptor;
-import android.provider.OpenableColumns;
-import androidx.annotation.NonNull;
+import android.content.ContentProvider
+import android.content.ContentValues
+import android.database.Cursor
+import android.database.MatrixCursor
+import android.net.Uri
+import android.os.ParcelFileDescriptor
+import android.provider.OpenableColumns
+import java.io.File
+import java.io.FileNotFoundException
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-
-public class GpxProvider extends ContentProvider {
-    private static final UnsupportedOperationException UNSUPORTED=
-            new UnsupportedOperationException("Not supported by this provider");
-
-
-    @Override
-    public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
-
-        final String path = uri.getPath();
-
+class GpxProvider : ContentProvider() {
+    @Throws(FileNotFoundException::class)
+    override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
+        val path = uri.path
         if (path != null) {
-            final File file = new File(uri.getPath());
-
+            val file = File(path)
             if (file.exists()) {
-                return (ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
+                return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
             }
         }
-        throw UNSUPORTED;
+        throw UNSUPPORTED
     }
 
-
-    @Override
-    public boolean onCreate() {
-
-
-        return true;
+    override fun onCreate(): Boolean {
+        return true
     }
 
-    @Override
-    public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings2, String s2) {
+    override fun query(
+        uri: Uri,
+        strings: Array<String>?,
+        s: String?,
+        strings2: Array<String>?,
+        s2: String?
+    ): Cursor {
+        val cursor = MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE))
+        val path = uri.path
 
-        MatrixCursor cursor = new MatrixCursor(new String[]{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE});
-
-
-        final File file =  new File(uri.getPath());
-
-        cursor.addRow(new Object[]{file.getName(), file.length()});
-        return cursor;
+        if (path != null) {
+            val file = File(path)
+            cursor.addRow(arrayOf<Any>(file.name, file.length()))
+        }
+        return cursor
     }
 
-    @Override
-    public String getType(@NonNull Uri uri) {
-        final File file =  new File(uri.getPath());
-        return mimeTypeFromFileName(file.getName());
+    override fun getType(uri: Uri): String? {
+        val path = uri.path
+        return if (path != null) {
+            mimeTypeFromFileName(File(path).name)
+        } else {
+            null
+        }
     }
 
-    public static String mimeTypeFromFileName(String name) {
-        if (name.endsWith(".gpx")) return "application/gpx+xml";
-        else if (name.endsWith(".osm")) return "application/xml";
-        return null;
+    override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
+        throw UNSUPPORTED
     }
 
-    @Override
-    public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
-        throw UNSUPORTED;
+    override fun delete(uri: Uri, s: String?, strings: Array<String>?): Int {
+        throw UNSUPPORTED
     }
 
-    @Override
-    public int delete(@NonNull Uri uri, String s, String[] strings) {
-        throw UNSUPORTED;
+    override fun update(
+        uri: Uri,
+        contentValues: ContentValues?,
+        s: String?,
+        strings: Array<String>?
+    ): Int {
+        throw UNSUPPORTED
     }
 
-    @Override
-    public int update(@NonNull Uri uri, ContentValues contentValues, String s, String[] strings) {
-        throw UNSUPORTED;
+    companion object {
+        private val UNSUPPORTED = UnsupportedOperationException("Not supported by this provider")
+        fun mimeTypeFromFileName(name: String): String? {
+            if (name.endsWith(".gpx")) return "application/gpx+xml" else if (name.endsWith(".osm")) return "application/xml"
+            return null
+        }
     }
-
 }

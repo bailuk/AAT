@@ -1,176 +1,214 @@
-package ch.bailu.aat.providers;
+package ch.bailu.aat.providers
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.MatrixCursor;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
-import android.provider.DocumentsContract.Document;
-import android.provider.DocumentsContract.Root;
-import android.provider.DocumentsProvider;
+import android.content.Context
+import android.database.Cursor
+import android.database.MatrixCursor
+import android.os.CancellationSignal
+import android.os.ParcelFileDescriptor
+import android.provider.DocumentsContract
+import android.provider.DocumentsProvider
+import ch.bailu.aat.R
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat_lib.preferences.general.SolidPresetCount
+import ch.bailu.aat_lib.preferences.presets.SolidMET
+import ch.bailu.aat_lib.util.Objects
+import ch.bailu.foc.Foc
+import java.io.File
+import java.io.FileNotFoundException
+import java.util.Date
 
-import androidx.annotation.Nullable;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.preferences.Storage;
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory;
-import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
-import ch.bailu.aat_lib.preferences.presets.SolidMET;
-import ch.bailu.aat_lib.util.Objects;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-
-public class GpxDocumentProvider extends DocumentsProvider {
-
-    private static final String[] DEFAULT_ROOT_PROJECTION =
-            new String[]{Root.COLUMN_ROOT_ID, Root.COLUMN_MIME_TYPES,
-                    Root.COLUMN_FLAGS, Root.COLUMN_ICON, Root.COLUMN_TITLE,
-                    Root.COLUMN_SUMMARY, Root.COLUMN_DOCUMENT_ID,
-                    Root.COLUMN_AVAILABLE_BYTES,};
-    private static final String[] DEFAULT_DOCUMENT_PROJECTION = new
-            String[]{Document.COLUMN_DOCUMENT_ID, Document.COLUMN_MIME_TYPE,
-            Document.COLUMN_DISPLAY_NAME, Document.COLUMN_LAST_MODIFIED,
-            Document.COLUMN_FLAGS, Document.COLUMN_SIZE,};
-    private static final String ROOT = "root";
-    private static final String DIR_PREFIX = "dir";
-    private static final String GPX_PREFIX = "gpx";
-    private static final String GPX_INFIX = "_";
-
-
-    @Override
-    public Cursor queryRoots(String[] projection) {
-        final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_ROOT_PROJECTION : projection);
+class GpxDocumentProvider : DocumentsProvider() {
+    override fun queryRoots(projection: Array<String>?): Cursor {
+        val result = MatrixCursor(projection ?: DEFAULT_ROOT_PROJECTION)
         result.newRow()
-                .add(Root.COLUMN_ROOT_ID, ROOT)
-                .add(Root.COLUMN_ICON, R.mipmap.ic_launcher)
-                .add(Root.COLUMN_FLAGS, Root.FLAG_SUPPORTS_RECENTS)
-                .add(Root.COLUMN_TITLE, "AAT GPX")
-                .add(Root.COLUMN_DOCUMENT_ID, ROOT)
-                .add(Root.COLUMN_MIME_TYPES, new HashSet<>(List.of("application/gpx+xml")));
-        return result;
+            .add(DocumentsContract.Root.COLUMN_ROOT_ID, ROOT)
+            .add(DocumentsContract.Root.COLUMN_ICON, R.mipmap.ic_launcher)
+            .add(DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.FLAG_SUPPORTS_RECENTS)
+            .add(DocumentsContract.Root.COLUMN_TITLE, "AAT GPX")
+            .add(DocumentsContract.Root.COLUMN_DOCUMENT_ID, ROOT)
+            .add(DocumentsContract.Root.COLUMN_MIME_TYPES, HashSet(listOf("application/gpx+xml")))
+        return result
     }
 
-    private void includeFile(MatrixCursor result, int preset, File file) {
+    private fun includeFile(result: MatrixCursor, preset: Int, file: File) {
         result.newRow()
-                .add(Document.COLUMN_DOCUMENT_ID, GPX_PREFIX + preset + GPX_INFIX + file.getName())
-                .add(Document.COLUMN_DISPLAY_NAME, file.getName())
-                .add(Document.COLUMN_MIME_TYPE, "application/gpx+xml")
-                .add(Document.COLUMN_FLAGS, 0)
-                .add(Document.COLUMN_LAST_MODIFIED, file.lastModified())
-                .add(Document.COLUMN_SIZE, file.length());
+            .add(
+                DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                GPX_PREFIX + preset + GPX_INFIX + file.name
+            )
+            .add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, file.name)
+            .add(DocumentsContract.Document.COLUMN_MIME_TYPE, "application/gpx+xml")
+            .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
+            .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
+            .add(DocumentsContract.Document.COLUMN_SIZE, file.length())
     }
 
-    private void includeDirectory(MatrixCursor result, int preset) {
-        final Context context = getContext();
-        final String presetLabel = context.getString(R.string.p_preset);
-        final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
-        final String met = new SolidMET(new Storage(context), preset).getValueAsString();
+    private fun includeDirectory(result: MatrixCursor, preset: Int) {
+        val presetLabel = context!!.getString(R.string.p_preset)
+        val file = File(getTrackListDirectory(context, preset).path)
+        val presetName = getPresetName(context, preset)
         result.newRow()
-                .add(Document.COLUMN_DOCUMENT_ID, DIR_PREFIX + preset)
-                .add(Document.COLUMN_DISPLAY_NAME, presetLabel + " " + (preset + 1) + ": " + met)
-                .add(Document.COLUMN_MIME_TYPE, Document.MIME_TYPE_DIR)
-                .add(Document.COLUMN_FLAGS, 0)
-                .add(Document.COLUMN_LAST_MODIFIED, file.lastModified())
-                .add(Document.COLUMN_SIZE, file.length());
+            .add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DIR_PREFIX + preset)
+            .add(
+                DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                presetLabel + " " + (preset + 1) + ": " + presetName
+            )
+            .add(
+                DocumentsContract.Document.COLUMN_MIME_TYPE,
+                DocumentsContract.Document.MIME_TYPE_DIR
+            )
+            .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
+            .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
+            .add(DocumentsContract.Document.COLUMN_SIZE, file.length())
     }
 
-    @Override
-    public Cursor queryDocument(String documentId, String[] projection) {
-        final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_DOCUMENT_PROJECTION : projection);
-        if (documentId.equals(ROOT)) {
+    private fun getPresetName(context: Context?, preset: Int): String {
+        return if (context != null) {
+            SolidMET(Storage(context), preset).valueAsString
+        } else ""
+    }
+
+    override fun queryDocument(documentId: String, projection: Array<String>?): Cursor {
+        val result = MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION)
+        if (documentId == ROOT) {
             result.newRow()
-                    .add(Document.COLUMN_DOCUMENT_ID, ROOT)
-                    .add(Document.COLUMN_DISPLAY_NAME, "AAT GPX")
-                    .add(Document.COLUMN_MIME_TYPE, Document.MIME_TYPE_DIR)
-                    .add(Document.COLUMN_FLAGS, 0);
+                .add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, ROOT)
+                .add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, "AAT GPX")
+                .add(
+                    DocumentsContract.Document.COLUMN_MIME_TYPE,
+                    DocumentsContract.Document.MIME_TYPE_DIR
+                )
+                .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
         }
         if (documentId.startsWith(DIR_PREFIX)) {
-            final int preset = Integer.parseInt(documentId.substring(DIR_PREFIX.length()));
-            includeDirectory(result, preset);
+            val preset = documentId.substring(DIR_PREFIX.length).toInt()
+            includeDirectory(result, preset)
         }
         if (documentId.startsWith(GPX_PREFIX)) {
-            final int sep = documentId.indexOf(GPX_INFIX);
-            final int preset = Integer.parseInt(documentId.substring(GPX_PREFIX.length(), sep));
-            final String gpx = documentId.substring(sep + GPX_INFIX.length());
-            final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(getContext()), preset).descendant(gpx).getPath());
-            includeFile(result, preset, file);
+            val sep = documentId.indexOf(GPX_INFIX)
+            val preset = documentId.substring(GPX_PREFIX.length, sep).toInt()
+            val gpx = documentId.substring(sep + GPX_INFIX.length)
+            val file = File(getTrackListDirectory(context, preset).descendant(gpx).path)
+            includeFile(result, preset, file)
         }
-        return result;
+        return result
     }
 
-    @Override
-    public Cursor queryChildDocuments(String parentDocumentId, String[] projection, String sortOrder) {
-        final Context context = getContext();
-        final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_DOCUMENT_PROJECTION : projection);
-        if (parentDocumentId.equals(ROOT)) {
-            final int length = new SolidPresetCount(new Storage(context)).getValue();
-            for (int i = 0; i < length; ++i) {
-                includeDirectory(result, i);
+    override fun queryChildDocuments(
+        parentDocumentId: String,
+        projection: Array<String>?,
+        sortOrder: String
+    ): Cursor {
+        val result = MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION)
+        if (parentDocumentId == ROOT) {
+            val length = getPresetCount(context)
+            for (i in 0 until length) {
+                includeDirectory(result, i)
             }
-            addRecentDocuments(result, length);
-            return result;
+            addRecentDocuments(result, length)
+            return result
         }
-        final int preset = Integer.parseInt(parentDocumentId.substring(DIR_PREFIX.length()));
-        final File dir = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
-
-        for (File file : dir.listFiles()) {
-            if (file.isFile() && file.getName().endsWith(".gpx")) {
-                includeFile(result, preset, file);
+        val preset = parentDocumentId.substring(DIR_PREFIX.length).toInt()
+        val dir = File(getTrackListDirectory(context, preset).path)
+        for (file in listFiles(dir)) {
+            if (file.isFile && file.name.endsWith(".gpx")) {
+                includeFile(result, preset, file)
             }
         }
-        return result;
+        return result
     }
 
-    @Override
-    public ParcelFileDescriptor openDocument(String documentId, String mode, @Nullable CancellationSignal signal) throws FileNotFoundException {
-        if (!documentId.startsWith(GPX_PREFIX) || mode.contains("w"))
-            throw new FileNotFoundException(documentId);
-        final int sep = documentId.indexOf(GPX_INFIX);
-        final int preset = Integer.parseInt(documentId.substring(GPX_PREFIX.length(), sep));
-        final String gpx = documentId.substring(sep + GPX_INFIX.length());
-        final Context context = getContext();
-        final File file = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).descendant(gpx).getPath());
-        if (!file.isFile() || !file.getName().endsWith(".gpx"))
-            throw new FileNotFoundException(documentId);
-        if (!Objects.equals(file.getParentFile(),
-                new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath()))) {
-            throw new FileNotFoundException(documentId);
+    private fun getPresetCount(context: Context?): Int {
+        return if (context != null) {
+            SolidPresetCount(Storage(context)).value
+        } else {
+            0
         }
-        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode));
     }
 
-    @Override
-    public Cursor queryRecentDocuments(String rootId, String[] projection) {
-        final Context context = getContext();
-        final MatrixCursor result = new MatrixCursor(projection == null ? DEFAULT_DOCUMENT_PROJECTION : projection);
-        final int length = new SolidPresetCount(new Storage(context)).getValue();
-        addRecentDocuments(result, length);
-        return result;
+    @Throws(FileNotFoundException::class)
+    override fun openDocument(
+        documentId: String,
+        mode: String,
+        signal: CancellationSignal?
+    ): ParcelFileDescriptor {
+        if (!documentId.startsWith(GPX_PREFIX) || mode.contains("w")) throw FileNotFoundException(
+            documentId
+        )
+        val sep = documentId.indexOf(GPX_INFIX)
+        val preset = documentId.substring(GPX_PREFIX.length, sep).toInt()
+        val gpx = documentId.substring(sep + GPX_INFIX.length)
+        val context = context
+        val file = File(getTrackListDirectory(context, preset).descendant(gpx).path)
+        if (!file.isFile || !file.name.endsWith(".gpx")) throw FileNotFoundException(documentId)
+        if (!Objects.equals(
+                file.parentFile,
+                File(getTrackListDirectory(context, preset).path)
+            )
+        ) {
+            throw FileNotFoundException(documentId)
+        }
+        return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode))
     }
 
-    private void addRecentDocuments(MatrixCursor result, int numPresets) {
+    override fun queryRecentDocuments(rootId: String, projection: Array<String>?): Cursor {
+        val context = context
+        val result = MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION)
+        val length = SolidPresetCount(Storage(context!!)).value
+        addRecentDocuments(result, length)
+        return result
+    }
+
+    private fun addRecentDocuments(result: MatrixCursor, numPresets: Int) {
         // Add gpx files from the last 24 hours
-        final Context context = getContext();
-        final long yesterday = new Date().getTime() - 86400000;
-        for (int preset = 0; preset < numPresets; ++preset) {
-            final File dir = new File(AppDirectory.getTrackListDirectory(new AndroidSolidDataDirectory(context), preset).getPath());
-            if (dir.exists() && dir.isDirectory()) {
-                for (File file : dir.listFiles()) {
-                    if (file.isFile() && file.getName().endsWith(".gpx") && file.lastModified() > yesterday) {
-                        includeFile(result, preset, file);
+        val context = context
+        val yesterday = Date().time - 86400000
+        for (preset in 0 until numPresets) {
+            val dir = File(getTrackListDirectory(context, preset).path)
+            if (dir.exists() && dir.isDirectory) {
+                for (file in listFiles(dir)) {
+                    if (file.isFile && file.name.endsWith(".gpx") && file.lastModified() > yesterday) {
+                        includeFile(result, preset, file)
                     }
                 }
             }
         }
     }
 
-    @Override
-    public boolean onCreate() {
-        return true;
+    private fun listFiles(dir: File): Array<File> {
+        return dir.listFiles() ?: return arrayOf()
+    }
+
+    private fun getTrackListDirectory(context: Context?, preset: Int): Foc {
+        return context?.let { getTrackListDirectory(it, preset) } ?: Foc.FOC_NULL
+    }
+
+    override fun onCreate(): Boolean {
+        return true
+    }
+
+    companion object {
+        private val DEFAULT_ROOT_PROJECTION = arrayOf(
+            DocumentsContract.Root.COLUMN_ROOT_ID,
+            DocumentsContract.Root.COLUMN_MIME_TYPES,
+            DocumentsContract.Root.COLUMN_FLAGS,
+            DocumentsContract.Root.COLUMN_ICON,
+            DocumentsContract.Root.COLUMN_TITLE,
+            DocumentsContract.Root.COLUMN_SUMMARY,
+            DocumentsContract.Root.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Root.COLUMN_AVAILABLE_BYTES
+        )
+        private val DEFAULT_DOCUMENT_PROJECTION = arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED,
+            DocumentsContract.Document.COLUMN_FLAGS,
+            DocumentsContract.Document.COLUMN_SIZE
+        )
+        private const val ROOT = "root"
+        private const val DIR_PREFIX = "dir"
+        private const val GPX_PREFIX = "gpx"
+        private const val GPX_INFIX = "_"
     }
 }
