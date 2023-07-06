@@ -10,7 +10,7 @@ import ch.bailu.aat.util.fs.TextBackup
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.BusyViewControl
+import ch.bailu.aat.views.busy.BusyViewControl
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
 import ch.bailu.aat.views.NodeListView

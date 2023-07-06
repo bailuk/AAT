@@ -14,7 +14,7 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.BusyViewControlDbSync
+import ch.bailu.aat.views.busy.BusyViewControlDbSync
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.GpxListView
 import ch.bailu.aat.views.PercentageLayout

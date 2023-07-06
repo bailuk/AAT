@@ -13,7 +13,7 @@ import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
-import ch.bailu.aat.views.BusyViewControlIID
+import ch.bailu.aat.views.busy.BusyViewControlIID
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
 import ch.bailu.aat.views.PercentageLayout

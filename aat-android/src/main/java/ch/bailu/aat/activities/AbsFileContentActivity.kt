@@ -9,8 +9,8 @@ import ch.bailu.aat.menus.FileMenu
 import ch.bailu.aat.util.ui.AppDialog
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.BusyViewContainer
-import ch.bailu.aat.views.BusyViewControlIID
+import ch.bailu.aat.views.busy.BusyViewContainer
+import ch.bailu.aat.views.busy.BusyViewControlIID
 import ch.bailu.aat.views.ContentView
 import ch.bailu.aat.views.ImageButtonViewGroup
 import ch.bailu.aat.views.PreviewView

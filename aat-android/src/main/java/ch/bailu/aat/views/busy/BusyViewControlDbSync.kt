@@ -1,4 +1,4 @@
-package ch.bailu.aat.views
+package ch.bailu.aat.views.busy
 
 import android.content.BroadcastReceiver
 import android.content.Context

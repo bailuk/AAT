@@ -13,22 +13,23 @@ import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.BusyViewControl
+import ch.bailu.aat.views.busy.BusyViewControl
 import ch.bailu.aat.views.ImageButtonViewGroup
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
-import javax.annotation.Nonnull
 
 class TileRemoverView(sc: ServiceContext, activity: Activity, theme: UiTheme) :
     LinearLayout(sc.getContext()), View.OnClickListener, OnPreferencesChanged {
     private val summaryView: TileSummariesView = TileSummariesView(activity, theme)
     private val scan: ImageButtonViewGroup = ImageButtonViewGroup(context, R.drawable.view_refresh_inverse)
     private val remove: ImageButtonViewGroup = ImageButtonViewGroup(context, R.drawable.user_trash_inverse)
-    private val busyScan: BusyViewControl = BusyViewControl(scan)
-    private val busyRemove: BusyViewControl =  BusyViewControl(remove)
+    private val busyScan: BusyViewControl =
+        BusyViewControl(scan)
+    private val busyRemove: BusyViewControl =
+        BusyViewControl(remove)
     private val sdirectory: SolidTileCacheDirectory
     private val scontext: ServiceContext
     private val acontext: Activity
@@ -112,11 +113,11 @@ class TileRemoverView(sc: ServiceContext, activity: Activity, theme: UiTheme) :
     override fun onClick(v: View) {
         scontext.insideContext {
             val tr = scontext.getTileRemoverService()
-            if (v === scan && busyScan.isWaiting) {
+            if (v === scan && busyScan.isWaiting()) {
                 tr.state.stop()
             } else if (v === scan) {
                 tr.state.scan()
-            } else if (v === remove && busyRemove.isWaiting) {
+            } else if (v === remove && busyRemove.isWaiting()) {
                 tr.state.stop()
             } else if (v === remove) { // show menu
                 RemoveTilesMenu(scontext, acontext).showAsDialog(scontext.getContext())
@@ -124,7 +125,7 @@ class TileRemoverView(sc: ServiceContext, activity: Activity, theme: UiTheme) :
         }
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         scontext.insideContext {
             val tr = scontext.getTileRemoverService()
             if (sdirectory.hasKey(key)) {

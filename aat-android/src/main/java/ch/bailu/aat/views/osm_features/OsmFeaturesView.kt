@@ -14,7 +14,7 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.cache.osm_features.ObjMapFeatures
 import ch.bailu.aat.util.AppIntent.hasFile
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.BusyIndicator
+import ch.bailu.aat.views.busy.BusyIndicator
 import ch.bailu.aat.views.EditTextTool
 import ch.bailu.aat.views.preferences.SolidCheckBox
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
