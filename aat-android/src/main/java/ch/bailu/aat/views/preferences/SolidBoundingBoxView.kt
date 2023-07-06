@@ -1,51 +1,39 @@
-package ch.bailu.aat.views.preferences;
+package ch.bailu.aat.views.preferences
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.LabelTextView
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.SolidBoundingBox
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.LabelTextView;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.SolidBoundingBox;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-
-
-public class SolidBoundingBoxView extends LabelTextView implements OnPreferencesChanged {
-    private final SolidBoundingBox sbounding;
-
-
-    public SolidBoundingBoxView(Context context, SolidBoundingBox bounding, final MapContext mc, UiTheme theme) {
-        super(context, bounding.getLabel(), theme);
-
-        sbounding = bounding;
-        setText(bounding.getValueAsString());
-
-        theme.button(this);
-        this.setOnClickListener(v -> sbounding.setValue(new BoundingBoxE6(mc.getMetrics().getBoundingBox())));
+class SolidBoundingBoxView(
+    context: Context,
+    private val sbounding: SolidBoundingBox,
+    mc: MapContext,
+    theme: UiTheme
+) : LabelTextView(context, sbounding.label, theme), OnPreferencesChanged {
+    init {
+        setText(sbounding.valueAsString)
+        theme.button(this)
+        setOnClickListener { sbounding.value = BoundingBoxE6(mc.metrics.boundingBox) }
     }
 
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        sbounding.register(this);
-
+    public override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        sbounding.register(this)
     }
 
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sbounding.hasKey(key)) {
-            setText(sbounding.getValueAsString());
+            setText(sbounding.valueAsString)
         }
     }
 
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        sbounding.unregister(this);
+    public override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        sbounding.unregister(this)
     }
 }

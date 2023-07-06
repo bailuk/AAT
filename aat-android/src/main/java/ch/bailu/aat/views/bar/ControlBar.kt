@@ -92,7 +92,7 @@ open class ControlBar(context: Context, orient: Int, theme: UiTheme, visibleButt
         return button
     }
 
-    fun addSolidIndexButton(slist: SolidIndexList?): View {
+    fun addSolidIndexButton(slist: SolidIndexList): View {
         val button: View = SolidImageButton(context, slist)
         theme.button(button)
         return add(button)

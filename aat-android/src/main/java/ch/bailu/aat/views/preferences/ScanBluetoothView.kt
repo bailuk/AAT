@@ -1,42 +1,34 @@
-package ch.bailu.aat.views.preferences;
+package ch.bailu.aat.views.preferences
 
-import android.view.View;
+import android.view.View
+import ch.bailu.aat.R
+import ch.bailu.aat.services.ServiceContext
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.LabelTextView
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat.R;
-import ch.bailu.aat.services.ServiceContext;
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.LabelTextView;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-
-public class ScanBluetoothView extends LabelTextView implements View.OnClickListener, OnContentUpdatedInterface {
-    private final ServiceContext scontext;
-
-    public ScanBluetoothView(ServiceContext s, UiTheme theme) {
-        super(s.getContext(), s.getContext().getString(R.string.sensor_scan), theme);
-        scontext = s;
-        setText();
-        setOnClickListener(this);
-        theme.button(this);
+class ScanBluetoothView(private val scontext: ServiceContext, theme: UiTheme) : LabelTextView(
+    scontext.getContext(), scontext.getContext().getString(R.string.sensor_scan), theme
+), View.OnClickListener, OnContentUpdatedInterface {
+    init {
+        setText()
+        setOnClickListener(this)
+        theme.button(this)
     }
 
-    private void setText() {
-        scontext.insideContext(() -> setText(scontext.getSensorService().toString()));
+    private fun setText() {
+        scontext.insideContext { setText(scontext.sensorService.toString()) }
     }
 
-    @Override
-    public void onClick(View v) {
-        scontext.insideContext(() -> scontext.getSensorService().scan());
+    override fun onClick(view: View) {
+        scontext.insideContext { scontext.sensorService.scan() }
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
         if (iid == InfoID.SENSORS) {
-            setText();
+            setText()
         }
-
     }
 }

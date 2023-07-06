@@ -52,8 +52,9 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
     abstract fun displayFile()
 
+    abstract val label: String
+
     abstract val directory: Foc
-    abstract val label: String?
     abstract val gpxListItemData: Array<ContentDescription>
     abstract val summaryData: Array<ContentDescription>
 

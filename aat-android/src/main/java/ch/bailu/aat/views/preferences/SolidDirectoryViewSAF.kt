@@ -1,22 +1,14 @@
-package ch.bailu.aat.views.preferences;
+package ch.bailu.aat.views.preferences
 
-import android.app.Activity;
+import android.app.Activity
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.preferences.dialog.SolidDirectoryDialog
+import ch.bailu.aat_lib.preferences.SolidFile
 
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.preferences.dialog.SolidDirectoryDialog;
-import ch.bailu.aat_lib.preferences.SolidFile;
-
-public class SolidDirectoryViewSAF extends SolidDirectoryView {
-    private final Activity acontext;
-
-    public SolidDirectoryViewSAF(Activity ac, SolidFile s, UiTheme theme) {
-        super(ac,s, theme);
-        acontext = ac;
-
-    }
-
-    @Override
-    public void onRequestNewValue() {
-        new SolidDirectoryDialog(acontext, solid);
+class SolidDirectoryViewSAF(private val acontext: Activity, solidFile: SolidFile, theme: UiTheme) :
+    SolidDirectoryView(acontext, solidFile, theme
+    ) {
+    override fun onRequestNewValue() {
+        SolidDirectoryDialog(acontext, solid)
     }
 }

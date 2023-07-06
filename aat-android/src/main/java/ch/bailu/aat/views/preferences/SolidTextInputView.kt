@@ -1,26 +1,17 @@
-package ch.bailu.aat.views.preferences;
+package ch.bailu.aat.views.preferences
 
-import android.content.Context;
+import android.content.Context
+import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
+import ch.bailu.aat_lib.preferences.AbsSolidType
 
-import ch.bailu.aat.util.ui.theme.UiTheme;
-import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog;
-import ch.bailu.aat_lib.preferences.AbsSolidType;
-
-public class SolidTextInputView extends AbsSolidView {
-    private final AbsSolidType solid;
-    private final int inputType;
-
-
-    public SolidTextInputView(Context c, AbsSolidType s, int input_type, UiTheme theme) {
-        super(c,s, theme);
-
-        solid = s;
-        inputType = input_type;
+class SolidTextInputView(
+    context: Context,
+    private val solid: AbsSolidType,
+    private val inputType: Int,
+    theme: UiTheme
+) : AbsSolidView(context, solid, theme) {
+    override fun onRequestNewValue() {
+        SolidTextInputDialog(context, solid, inputType)
     }
-
-        @Override
-        public void onRequestNewValue() {
-            new SolidTextInputDialog(getContext(),solid, inputType);
-        }
-
 }

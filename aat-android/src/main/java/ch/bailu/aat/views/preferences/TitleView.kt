@@ -1,20 +1,14 @@
-package ch.bailu.aat.views.preferences;
+package ch.bailu.aat.views.preferences
 
-import android.content.Context;
-import android.widget.TextView;
+import android.content.Context
+import android.widget.TextView
+import ch.bailu.aat.util.ui.theme.UiTheme
 
-import ch.bailu.aat.util.ui.theme.UiTheme;
+class TitleView(context: Context, text: CharSequence, theme: UiTheme) : TextView(context) {
+    constructor(context: Context, res: Int, theme: UiTheme) : this(context, context.getText(res), theme)
 
-public class TitleView extends TextView {
-    public TitleView(Context context, int res, UiTheme theme) {
-        this(context, context.getText(res), theme);
-    }
-
-
-    public TitleView(Context context, CharSequence text, UiTheme theme) {
-        super(context);
-
-        setText(text);
-        theme.topic(this);
+    init {
+        setText(text)
+        theme.topic(this)
     }
 }
