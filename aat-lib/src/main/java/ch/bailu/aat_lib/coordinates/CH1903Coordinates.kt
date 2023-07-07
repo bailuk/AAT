@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.coordinates
 
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates.Sexagesimal
 import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.exception.IllegalCodeException
 import ch.bailu.aat_lib.logger.AppLog
 import org.mapsforge.core.model.LatLong
 import kotlin.math.roundToInt
@@ -32,7 +33,7 @@ class CH1903Coordinates : MeterCoordinates {
             }
         }
         if (n == 0 || e == 0) {
-            throw createIllegalCodeException(code)
+            throw IllegalCodeException(code)
         }
         easting = e
         northing = n

@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.coordinates
 
 import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.exception.IllegalCodeException
 import org.mapsforge.core.model.LatLong
 import javax.annotation.Nonnull
 import kotlin.math.abs
@@ -88,7 +89,7 @@ class UTMCoordinates : MeterCoordinates {
     constructor(code: String) {
         val parts = code.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         if (parts.size != 3 || parts[0].length < 2 || parts[1].length < 6 || parts[2].length < 6) {
-            throw createIllegalCodeException(code)
+            throw IllegalCodeException(code)
         }
         try {
             northingZone = parts[0][parts[0].length - 1]
@@ -97,10 +98,10 @@ class UTMCoordinates : MeterCoordinates {
                 eastingDouble = Integer.valueOf(parts[1]).toDouble()
                 northingDouble = Integer.valueOf(parts[2]).toDouble()
             } else {
-                throw createIllegalCodeException(code)
+                throw IllegalCodeException(code)
             }
         } catch (e: NumberFormatException) {
-            throw createIllegalCodeException(code)
+            throw IllegalCodeException(code)
         }
     }
 

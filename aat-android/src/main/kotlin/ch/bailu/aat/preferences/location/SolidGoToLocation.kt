@@ -4,10 +4,10 @@ import android.content.Context
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates
-import ch.bailu.aat_lib.coordinates.Coordinates
 import ch.bailu.aat_lib.coordinates.OlcCoordinates
 import ch.bailu.aat_lib.coordinates.UTMCoordinates
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
+import ch.bailu.aat_lib.exception.IllegalCodeException
 import ch.bailu.aat_lib.exception.ValidationException
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -71,7 +71,7 @@ class SolidGoToLocation(val context: Context) : SolidString(
                     try {
                         UTMCoordinates(code).toLatLong()
                     } catch (eUTM: Exception) {
-                        throw Coordinates.createIllegalCodeException(code)
+                        throw IllegalCodeException(code)
                     }
                 }
             }

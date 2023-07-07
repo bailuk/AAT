@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.coordinates
 
+import ch.bailu.aat_lib.exception.IllegalCodeException
 import ch.bailu.aat_lib.logger.AppLog
 import org.mapsforge.core.model.LatLong
 import java.text.DecimalFormat
@@ -86,7 +87,7 @@ class WGS84Coordinates : Coordinates {
             latitude = Sexagesimal(la)
             longitude = Sexagesimal(lo)
         } else {
-            throw createIllegalCodeException(code)
+            throw IllegalCodeException(code)
         }
     }
 
