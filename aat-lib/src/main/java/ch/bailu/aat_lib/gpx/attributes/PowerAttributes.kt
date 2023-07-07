@@ -1,58 +1,52 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-public class PowerAttributes  extends CadenceSpeedAttributes {
-    public static final Keys KEYS = new Keys();
+open class PowerAttributes(location: String, cadence: Boolean, speed: Boolean) : CadenceSpeedAttributes(location, cadence, speed
+) {
+    var power = 0
+    override fun get(keyIndex: Int): String {
+        return if (keyIndex == KEY_INDEX_POWER) power.toString() else super.get(
+            keyIndex
+        )
+    }
 
-    static {
-        /* copy all from CadenceSpeedAttributes.KEYS which this class
+    override fun getAsBoolean(keyIndex: Int): Boolean {
+        return if (keyIndex == KEY_INDEX_CONTACT && power > 0) true else super.getAsBoolean(
+            keyIndex
+        )
+    }
+
+    override fun hasKey(keyIndex: Int): Boolean {
+        return KEYS.hasKey(keyIndex)
+    }
+
+    override fun size(): Int {
+        return KEYS.size()
+    }
+
+    override fun getAt(index: Int): String {
+        return get(KEYS.getKeyIndex(index))
+    }
+
+    override fun getKeyAt(index: Int): Int {
+        return KEYS.getKeyIndex(index)
+    }
+
+    companion object {
+        val KEYS = Keys()
+
+        init {
+            /* copy all from CadenceSpeedAttributes.KEYS which this class
           supports as well (but we need a distinct Keys instance
           because adding "Power" to CadenceSpeedAttributes.KEYS would
           make that class appear to support "Power") */
-        for (int i = 0; i < CadenceSpeedAttributes.KEYS.size(); ++i)
-            KEYS.add(CadenceSpeedAttributes.KEYS.getKeyIndex(i));
-    }
+            for (i in 0 until CadenceSpeedAttributes.KEYS.size()) KEYS.add(
+                CadenceSpeedAttributes.KEYS.getKeyIndex(
+                    i
+                )
+            )
+        }
 
-    public static final int KEY_INDEX_POWER = KEYS.add("Power");
-
-    public int power = 0;
-
-    public PowerAttributes(String l, boolean cadence, boolean speed) {
-        super(l, cadence, speed);
-    }
-
-    @Override
-    public String get(int keyIndex) {
-        if (keyIndex == KEY_INDEX_POWER)
-            return String.valueOf(power);
-        else
-            return super.get(keyIndex);
-    }
-
-    @Override
-    public boolean getAsBoolean(int keyIndex) {
-        if (keyIndex == KEY_INDEX_CONTACT && power > 0)
-            return true;
-
-        return super.getAsBoolean(keyIndex);
-    }
-
-    @Override
-    public boolean hasKey(int keyIndex) {
-        return KEYS.hasKey(keyIndex);
-    }
-
-    @Override
-    public int size() {
-        return KEYS.size();
-    }
-
-    @Override
-    public String getAt(int i) {
-        return get(KEYS.getKeyIndex(i));
-    }
-
-    @Override
-    public int getKeyAt(int i) {
-        return KEYS.getKeyIndex(i);
+        @JvmField
+        val KEY_INDEX_POWER = KEYS.add("Power")
     }
 }

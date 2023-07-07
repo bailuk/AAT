@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
@@ -32,7 +33,7 @@ class PowerDescription : ContentDescription() {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val haveSensor = SensorState.isConnected(InfoID.POWER_SENSOR)
         if (iid == InfoID.POWER_SENSOR && haveSensor) {
-            val hasContact = info.attributes.getAsBoolean(PowerAttributes.KEY_INDEX_CONTACT)
+            val hasContact = info.attributes.getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT)
             label = if (hasContact) {
                 labelDefault
             } else {

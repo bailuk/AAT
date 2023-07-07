@@ -1,122 +1,85 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import kotlin.math.roundToInt
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-
-public abstract class AltitudeDelta extends GpxSubAttributes {
-
-    private static final Keys KEYS = new Keys();
-
-    public static final int INDEX_SLOPE = KEYS.add("Slope");
-    public static final int INDEX_DESCEND = KEYS.add("Descend");
-    public static final int INDEX_ASCEND = KEYS.add("Ascend");
-
-
-    public AltitudeDelta() {
-        super(KEYS);
+abstract class AltitudeDelta : GpxSubAttributes(KEYS) {
+    abstract fun add(alt: Float, dist: Float)
+    abstract fun getDescend(): Short
+    abstract fun getAscend(): Short
+    abstract fun getSlope(): Short
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
+        if (!autoPause) add(point.altitude.toFloat(), point.distance)
+        return autoPause
     }
 
-    public abstract void add(float alt, float dist);
-    public abstract short getDescend();
-    public abstract short getAscend();
-    public abstract short getSlope();
-
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
-        if (!autoPause)
-            add((float) p.getAltitude(), p.getDistance());
-        return autoPause;
-    }
-
-
-
-    @Override
-    public String get(int key) {
-        if (key == INDEX_SLOPE) {
-            return String.valueOf(getSlope());
-
-        } else if (key == INDEX_DESCEND) {
-            return String.valueOf(getDescend());
-
-        } else if (key == INDEX_ASCEND) {
-            return String.valueOf(getAscend());
-
+    override fun get(keyIndex: Int): String {
+        if (keyIndex == INDEX_SLOPE) {
+            return getSlope().toString()
+        } else if (keyIndex == INDEX_DESCEND) {
+            return getDescend().toString()
+        } else if (keyIndex == INDEX_ASCEND) {
+            return getAscend().toString()
         }
-
-        return NULL_VALUE;
+        return NULL_VALUE
     }
 
-
-
-    @Override
-    public float getAsFloat(int key) {
-        if (key == INDEX_ASCEND)
-            return getAscend();
-        else if (key == INDEX_DESCEND)
-            return getDescend();
-
-        return super.getAsFloat(key);
+    override fun getAsFloat(keyIndex: Int): Float {
+        if (keyIndex == INDEX_ASCEND) return getAscend().toFloat() else if (keyIndex == INDEX_DESCEND) return getDescend().toFloat()
+        return super.getAsFloat(keyIndex)
     }
 
-
-    @Override
-    public int getAsInteger(int key) {
-        if (key == INDEX_SLOPE) {
-            return getSlope();
-
-        } else if (key == INDEX_DESCEND) {
-            return getDescend();
-
-        } else if (key == INDEX_ASCEND) {
-            return getAscend();
-
+    override fun getAsInteger(keyIndex: Int): Int {
+        if (keyIndex == INDEX_SLOPE) {
+            return getSlope().toInt()
+        } else if (keyIndex == INDEX_DESCEND) {
+            return getDescend().toInt()
+        } else if (keyIndex == INDEX_ASCEND) {
+            return getAscend().toInt()
         }
-        return super.getAsInteger(key);
+        return super.getAsInteger(keyIndex)
     }
 
-
-    public static class LastAverage extends AltitudeDelta {
-        private float ascend, descend;
-
-        private final AverageAltitude average = new AverageAltitude();
-        private float average_b;
-        private float distance;
-        private float delta;
-
-        private int samples;
-
-        public void add(float alt, float dist) {
-
+    class LastAverage : AltitudeDelta() {
+        private var ascend = 0f
+        private var descend = 0f
+        private val average = AverageAltitude()
+        private var averageB = 0f
+        private var distance = 0f
+        private var delta = 0f
+        private var samples = 0
+        override fun add(alt: Float, dist: Float) {
             if (average.add(alt, dist)) {
-                float average_a = average_b;
-                average_b = average.getAltitude();
-                distance = average.getDistance();
-
+                val averageA = averageB
+                averageB = average.getAltitude()
+                distance = average.getDistance()
                 if (samples > 0) {
-                    delta = average_b - average_a;
-                    if (delta < 0) descend -= delta;
-                    else ascend += delta;
+                    delta = averageB - averageA
+                    if (delta < 0) descend -= delta else ascend += delta
                 }
-                samples++;
+                samples++
             }
-
         }
 
-        public short getAscend() {
-            return (short) ascend;
+        override fun getAscend(): Short {
+            return ascend.toInt().toShort()
         }
 
-        public short getDescend() {
-            return (short) descend;
+        override fun getDescend(): Short {
+            return descend.toInt().toShort()
         }
 
-        public short getSlope() {
-            if (distance > 1) {
-                return (short) Math.round(100 * delta / distance);
-            }
-            return 0;
+        override fun getSlope(): Short {
+            return if (distance > 1) {
+                (100 * delta / distance).roundToInt().toShort()
+            } else 0
         }
+    }
 
+    companion object {
+        private val KEYS = Keys()
+        val INDEX_SLOPE = KEYS.add("Slope")
+        val INDEX_DESCEND = KEYS.add("Descend")
+        val INDEX_ASCEND = KEYS.add("Ascend")
     }
 }

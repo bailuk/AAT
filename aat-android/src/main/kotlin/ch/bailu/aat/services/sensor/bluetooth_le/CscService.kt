@@ -172,8 +172,8 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
 
         private fun broadcastCadence(broadcasterCadence: Broadcaster, rpm: Int) {
             if (rpm != 0 || broadcasterCadence.timeout()) {
-                cadence_rpm = rpm
-                cadence_rpm_average = rpm
+                cadenceRpm = rpm
+                cadenceRpmAverage = rpm
                 broadcasterCadence.broadcast()
             }
         }

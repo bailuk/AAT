@@ -89,8 +89,8 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
     }
 
     class Attributes(private val pressure: Float) : GpxAttributes() {
-        override fun get(index: Int): String {
-            return if (index == KEY_INDEX_PRESSURE) pressure.toString() else NULL_VALUE
+        override fun get(keyIndex: Int): String {
+            return if (keyIndex == KEY_INDEX_PRESSURE) pressure.toString() else NULL_VALUE
         }
 
         override fun hasKey(keyIndex: Int): Boolean {
@@ -101,11 +101,11 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
             return 1
         }
 
-        override fun getAt(i: Int): String {
+        override fun getAt(index: Int): String {
             return get(KEY_INDEX_PRESSURE)
         }
 
-        override fun getKeyAt(i: Int): Int {
+        override fun getKeyAt(index: Int): Int {
             return KEY_INDEX_PRESSURE
         }
 

@@ -115,9 +115,9 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
                 offset += 2
             }
             if (haveRrInterval) {
-                rrIntervall = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
-                if (!haveBpm() && rrIntervall > 0) {
-                    setBpm((MINUTE / rrIntervall.toFloat()).roundToInt())
+                rrInterval = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
+                if (!haveBpm() && rrInterval > 0) {
+                    setBpm((MINUTE / rrInterval.toFloat()).roundToInt())
                 }
             }
             if (haveBpm()) {

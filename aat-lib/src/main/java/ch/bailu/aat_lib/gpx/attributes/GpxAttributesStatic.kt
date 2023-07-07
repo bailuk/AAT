@@ -1,92 +1,51 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nonnull
 
-public class GpxAttributesStatic extends GpxAttributes {
-
-
-    public static class Tag implements Comparable<Tag> {
-        public Tag(Tag keyValue) {
-            this(keyValue.key, keyValue.value);
-        }
-
-        public Tag(int k, String v) {
-            key=k;
-            value=v;
-        }
-
-        public final int key;
-        public final String value;
-
-
-        @Override
-        public int compareTo(@Nonnull Tag another) {
-            return Integer.compare(key, another.key);
+class GpxAttributesStatic(private var tagList: Array<Tag> = arrayOf()) :
+    GpxAttributes() {
+    class Tag(val key: Int, val value: String) : Comparable<Tag> {
+        override fun compareTo(@Nonnull other: Tag): Int {
+            return key.compareTo(other.key)
         }
     }
 
-    private Tag[] tagList;
-
-
-    public GpxAttributesStatic() {
-        this(new Tag[]{});
+    override fun get(keyIndex: Int): String {
+        val index = getIndex(keyIndex)
+        return if (index == size()) NULL_VALUE else tagList[index].value
     }
 
-    public GpxAttributesStatic(Tag[] attr) {
-        tagList=attr;
+    override fun hasKey(keyIndex: Int): Boolean {
+        return getIndex(keyIndex) < size()
     }
 
-
-    @Override
-    public String get(int key) {
-        int index = getIndex(key);
-
-        if (index==size()) return NULL_VALUE;
-
-        return tagList[index].value;
-    }
-
-
-    @Override
-    public boolean hasKey(int key) {
-        return getIndex(key) < size();
-    }
-
-    @Override
-    public void put(int key, String value) {
-        int index = getIndex(key);
+    override fun put(keyIndex: Int, value: String) {
+        val index = getIndex(keyIndex)
+        val tag = Tag(keyIndex, value)
 
         if (index == size()) {
-            Tag[] newTagList = new Tag[size()+1];
-
-            System.arraycopy(tagList, 0, newTagList, 0, tagList.length);
-            tagList=newTagList;
+            tagList = arrayOf(*tagList, tag)
+        } else {
+            tagList[index] = tag
         }
-
-        tagList[index] = new Tag(key, value);
     }
 
-
-    private int getIndex(int key) {
-        for (int i=0; i<size(); i++) {
-            if (tagList[i].key == key) return i;
+    private fun getIndex(key: Int): Int {
+        for (i in 0 until size()) {
+            if (tagList[i].key == key) return i
         }
-        return size();
+        return size()
     }
 
-
-    @Override
-    public int size() {
-        return tagList.length;
+    override fun size(): Int {
+        return tagList.size
     }
 
-    @Override
-    public String getAt(int i) {
-        return tagList[i].value;
+    override fun getAt(index: Int): String {
+        return tagList[index].value
     }
 
-    @Override
-    public int getKeyAt(int i) {
-        return tagList[i].key;
+    override fun getKeyAt(index: Int): Int {
+        return tagList[index].key
     }
 }

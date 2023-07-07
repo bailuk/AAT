@@ -50,7 +50,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
 
         appContext.broadcaster.register(
             onFileTaskChanged,
-            AppBroadcaster.FILE_BACKGROND_TASK_CHANGED
+            AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED
         )
     }
 

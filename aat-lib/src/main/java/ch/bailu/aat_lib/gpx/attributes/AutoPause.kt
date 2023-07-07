@@ -1,125 +1,83 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
-
-public abstract class AutoPause extends GpxSubAttributes {
-
-    private static final Keys KEYS = new Keys();
-
-    public static final int INDEX_AUTO_PAUSE_TIME = KEYS.add("AutoPause");
-    public static final int INDEX_AUTO_PAUSE_DISTANCE = KEYS.add("AutoPauseDistance");
-
-
-    public static final AutoPause NULL = new AutoPause() {
-        @Override
-        public long getPauseTime() {return 0;}
-
-        @Override
-        public float getPauseDistance() {return 0f;}
-
-        @Override
-        public boolean update(GpxDeltaInterface delta) {
-            return true;
-        }
-    };
-
-    public AutoPause() {
-        super(KEYS);
+abstract class AutoPause : GpxSubAttributes(KEYS) {
+    abstract fun getPauseTime(): Long
+    abstract fun getPauseDistance(): Float
+    abstract fun update(delta: GpxDeltaInterface): Boolean
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
+        return !update(point)
     }
 
-
-    public abstract long getPauseTime();
-    public abstract float getPauseDistance();
-
-    public abstract boolean update(GpxDeltaInterface delta);
-
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
-        return update(p) == false;
+    override fun get(keyIndex: Int): String {
+        if (keyIndex == INDEX_AUTO_PAUSE_TIME) {
+            return getPauseTime().toString()
+        } else if (keyIndex == INDEX_AUTO_PAUSE_DISTANCE) {
+            return getPauseDistance().toString()
+        }
+        return NULL_VALUE
     }
 
-
-    @Override
-    public String get(int key) {
-        if (key == INDEX_AUTO_PAUSE_TIME) {
-            return String.valueOf(getPauseTime());
-
-        } else if (key == INDEX_AUTO_PAUSE_DISTANCE) {
-            return String.valueOf(getPauseDistance());
-        }
-        return NULL_VALUE;
+    override fun getAsFloat(keyIndex: Int): Float {
+        return if (keyIndex == INDEX_AUTO_PAUSE_DISTANCE) {
+            getPauseDistance()
+        } else super.getAsFloat(keyIndex)
     }
 
-
-    @Override
-    public float getAsFloat(int key) {
-        if (key == INDEX_AUTO_PAUSE_DISTANCE) {
-            return getPauseDistance();
-        }
-        return super.getAsFloat(key);
+    override fun getAsLong(keyIndex: Int): Long {
+        return if (keyIndex == INDEX_AUTO_PAUSE_TIME) {
+            getPauseTime()
+        } else super.getAsLong(keyIndex)
     }
 
-
-    @Override
-    public long getAsLong(int key) {
-        if (key == INDEX_AUTO_PAUSE_TIME) {
-            return getPauseTime();
-        }
-        return super.getAsLong(key);
-    }
-
-
-
-
-    public static class Time extends AutoPause {
-
-        private final float minSpeed;
-        private final int minTime;
-
-        private long addTime;
-        private float addDistance;
-
-        private long pauseTime;
-        private float pauseDistance;
-
-        public Time(float minSpeed, int time) {
-            this.minSpeed = minSpeed;
-            this.minTime = time;
+    class Time(private val minSpeed: Float, private val minTime: Int) : AutoPause() {
+        private var addTime: Long = 0
+        private var addDistance = 0f
+        private var pauseTime: Long = 0
+        private var pauseDistance = 0f
+        override fun getPauseDistance(): Float {
+            return if (addTime < minTime) pauseDistance else pauseDistance + addDistance
         }
 
-
-        @Override
-        public float getPauseDistance() {
-            if (addTime < minTime) return pauseDistance;
-            return pauseDistance + addDistance;
+        override fun getPauseTime(): Long {
+            return if (addTime < minTime) pauseTime else pauseTime + addTime
         }
 
-        @Override
-        public long getPauseTime() {
-            if (addTime < minTime) return pauseTime;
-            return pauseTime + addTime;
-        }
-
-        @Override
-        public boolean update(GpxDeltaInterface delta) {
-            if (delta.getSpeed() < minSpeed) {
-                addTime += delta.getTimeDelta();
-                addDistance += delta.getDistance();
-
+        override fun update(delta: GpxDeltaInterface): Boolean {
+            if (delta.speed < minSpeed) {
+                addTime += delta.timeDelta
+                addDistance += delta.distance
             } else {
                 if (addTime > minTime) {
-                    pauseTime += addTime;
-                    pauseDistance += addDistance;
-
+                    pauseTime += addTime
+                    pauseDistance += addDistance
                 }
-                addTime = 0;
-                addDistance = 0f;
+                addTime = 0
+                addDistance = 0f
+            }
+            return addTime <= minTime // not paused
+        }
+    }
+
+    companion object {
+        private val KEYS = Keys()
+        val INDEX_AUTO_PAUSE_TIME = KEYS.add("AutoPause")
+        val INDEX_AUTO_PAUSE_DISTANCE = KEYS.add("AutoPauseDistance")
+        @JvmField
+        val NULL: AutoPause = object : AutoPause() {
+            override fun getPauseTime(): Long {
+                return 0
             }
 
-            return addTime <= minTime; // not paused
+            override fun getPauseDistance(): Float {
+                return 0f
+            }
+
+            override fun update(delta: GpxDeltaInterface): Boolean {
+                return true
+            }
         }
     }
 }

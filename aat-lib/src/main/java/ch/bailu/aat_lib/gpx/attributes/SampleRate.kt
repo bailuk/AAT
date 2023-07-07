@@ -1,185 +1,128 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.Keys.Companion.toIndex
+import kotlin.math.roundToInt
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+open class SampleRate private constructor(keys: Keys, private vararg val KEY: Int) :
+    GpxSubAttributes(keys) {
+    private var sampleTimeMillis = 0L
+    private var totalTimeMillis = 0L
+    private var totalSamples60KM: Long = 0
+    var maxSpm = 0
+        private set
 
-public class SampleRate extends GpxSubAttributes {
-
-    private final int[] KEY;
-
-    private long sampleTimeMillis = 0L;
-    private long totalTimeMillis = 0L;
-
-
-    private long totalSamples60KM = 0;
-
-    private int maxSamplesPM = 0;
-
-
-    private SampleRate( Keys keys, int... key) {
-        super(keys);
-        KEY = key;
+    override fun get(keyIndex: Int): String {
+        return getAsInteger(keyIndex).toString()
     }
 
-
-    @Override
-    public String get(int key) {
-        return String.valueOf(getAsInteger(key));
-    }
-
-
-    public static class StepsRate extends SampleRate {
-        public final static int[] GPX_KEYS = {
-                StepCounterAttributes.KEY_INDEX_STEPS_RATE,
-        };
-
-        private static final Keys KEYS = new Keys();
-
-        public static final int INDEX_MAX_SPM = KEYS.add("MaxStepsRate");
-
-        public StepsRate() {
-            super(KEYS, GPX_KEYS);
+    class StepsRate : SampleRate(KEYS, *GPX_KEYS) {
+        override fun getAsInteger(keyIndex: Int): Int {
+            return if (keyIndex == INDEX_MAX_SPM) {
+                maxSpm
+            } else super.getAsInteger(keyIndex)
         }
 
-        @Override
-        public int getAsInteger(int key) {
+        companion object {
+            @JvmField
+            val GPX_KEYS = intArrayOf(
+                StepCounterAttributes.KEY_INDEX_STEPS_RATE
+            )
+            private val KEYS = Keys()
+            @JvmField
+            val INDEX_MAX_SPM = KEYS.add("MaxStepsRate")
+        }
+    }
 
-            if (key == INDEX_MAX_SPM) {
-                return getMaxSpm();
+    class HeartRate : SampleRate(KEYS, *GPX_KEYS) {
+        override fun getAsInteger(keyIndex: Int): Int {
+            if (keyIndex == INDEX_HEART_BEATS) {
+                return totalSamples
+            } else if (keyIndex == INDEX_AVERAGE_HR) {
+                return averageSpm
+            } else if (keyIndex == INDEX_MAX_HR) {
+                return maxSpm
             }
-            return super.getAsInteger(key);
+            return super.getAsInteger(keyIndex)
         }
-    }
 
-
-    public static class HeartRate extends SampleRate {
-        public final static int[] GPX_KEYS = {
+        companion object {
+            @JvmField
+            val GPX_KEYS = intArrayOf(
                 HeartRateAttributes.KEY_INDEX_BPM,
-                Keys.toIndex("bpm"),
-                Keys.toIndex("HR")
-        };
-
-
-        private static final Keys KEYS = new Keys();
-
-        public static final int INDEX_AVERAGE_HR = KEYS.add("HeartRate");
-        public static final int INDEX_MAX_HR = KEYS.add("MaxHeartRate");
-        public static final int INDEX_HEART_BEATS = KEYS.add("HeartBeats");
-
-        public HeartRate() {
-            super(KEYS, GPX_KEYS);
+                toIndex("bpm"),
+                toIndex("HR")
+            )
+            private val KEYS = Keys()
+            val INDEX_AVERAGE_HR = KEYS.add("HeartRate")
+            @JvmField
+            val INDEX_MAX_HR = KEYS.add("MaxHeartRate")
+            val INDEX_HEART_BEATS = KEYS.add("HeartBeats")
         }
-
-
-        @Override
-        public int getAsInteger(int key) {
-
-            if (key == INDEX_HEART_BEATS) {
-                return getTotalSamples();
-
-            } else if (key == INDEX_AVERAGE_HR) {
-                return getAverageSpm();
-
-            } else if (key == INDEX_MAX_HR) {
-                return getMaxSpm();
-            }
-            return super.getAsInteger(key);
-        }
-
     }
 
+    class Cadence : SampleRate(KEYS, *GPX_KEYS) {
+        override fun getAsInteger(keyIndex: Int): Int {
+            if (keyIndex == INDEX_CADENCE) {
+                return averageSpm
+            } else if (keyIndex == INDEX_TOTAL_CADENCE) {
+                return totalSamples
+            } else if (keyIndex == INDEX_MAX_CADENCE) {
+                return maxSpm
+            }
+            return super.getAsInteger(keyIndex)
+        }
 
-    public static class Cadence extends SampleRate {
-        public final static int[] GPX_KEYS = {
+        companion object {
+            @JvmField
+            val GPX_KEYS = intArrayOf(
                 CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
-                Keys.toIndex("rpm"),
-        };
-
-        private static final Keys KEYS = new Keys();
-
-        public static final int INDEX_CADENCE = KEYS.add("Cadence");
-        public static final int INDEX_MAX_CADENCE = KEYS.add("MaxCadence");
-        public static final int INDEX_TOTAL_CADENCE = KEYS.add("TotalCadence");
-
-        public Cadence() {
-            super (KEYS, GPX_KEYS);
+                toIndex("rpm")
+            )
+            private val KEYS = Keys()
+            val INDEX_CADENCE = KEYS.add("Cadence")
+            @JvmField
+            val INDEX_MAX_CADENCE = KEYS.add("MaxCadence")
+            val INDEX_TOTAL_CADENCE = KEYS.add("TotalCadence")
         }
-
-        @Override
-        public int getAsInteger(int key) {
-            if (key == INDEX_CADENCE) {
-                return getAverageSpm();
-
-            } else if (key == INDEX_TOTAL_CADENCE) {
-                return getTotalSamples();
-
-            } else if (key == INDEX_MAX_CADENCE) {
-                return getMaxSpm();
-
-            }
-            return super.getAsInteger(key);
-        }
-
     }
 
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
         if (!autoPause) {
-            GpxAttributes attr = p.getAttributes();
-
-            sampleTimeMillis += p.getTimeDelta();
-            totalTimeMillis += p.getTimeDelta();
-
-            final int spm = getValue(attr, KEY);
-
+            val attr = point.attributes
+            sampleTimeMillis += point.timeDelta
+            totalTimeMillis += point.timeDelta
+            val spm = getValue(attr, *KEY)
             if (spm > 0) {
-                long bpSample60KM = sampleTimeMillis * spm;
-
-                totalSamples60KM += bpSample60KM;
-
-                sampleTimeMillis = 0L;
-
-                if (spm > maxSamplesPM) {
-                    maxSamplesPM = spm;
-                }
-
-            }
-        }
-
-        return autoPause;
-    }
-
-
-
-
-
-    public static int getValue(GpxAttributes attr, int... keys) {
-        int r  = 0;
-
-        for (int k : keys) {
-            if (attr.hasKey(k)) {
-                r = attr.getAsInteger(k);
-                if (r > 0) {
-                    break;
+                val bpSample60KM = sampleTimeMillis * spm
+                totalSamples60KM += bpSample60KM
+                sampleTimeMillis = 0L
+                if (spm > maxSpm) {
+                    maxSpm = spm
                 }
             }
         }
-        return r;
+        return autoPause
     }
 
-    public int getTotalSamples() {
-        return Math.round(totalSamples60KM / 60000f);
-    }
+    val totalSamples: Int
+        get() = (totalSamples60KM / 60000f).roundToInt()
+    val averageSpm: Int
+        get() = if (totalTimeMillis > 0) (totalSamples60KM / totalTimeMillis.toDouble()).roundToInt() else 0
 
-
-    public int getAverageSpm() {
-        if (totalTimeMillis > 0)
-            return (int) Math.round(totalSamples60KM / (double)totalTimeMillis);
-        return 0;
-    }
-
-    public int getMaxSpm() {
-        return maxSamplesPM;
+    companion object {
+        @JvmStatic
+        fun getValue(attr: GpxAttributes, vararg keys: Int): Int {
+            var r = 0
+            for (k in keys) {
+                if (attr.hasKey(k)) {
+                    r = attr.getAsInteger(k)
+                    if (r > 0) {
+                        break
+                    }
+                }
+            }
+            return r
+        }
     }
 }

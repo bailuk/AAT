@@ -1,115 +1,76 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
 
-public abstract class MaxSpeed  extends GpxSubAttributes {
-
-
-    private static final Keys KEYS = new Keys();
-    public static final int INDEX_MAX_SPEED = KEYS.add("MaxSpeed");
-
-
-    public MaxSpeed() {
-        super(KEYS);
+abstract class MaxSpeed : GpxSubAttributes(KEYS) {
+    abstract fun get(): Float
+    abstract fun add(speed: Float)
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
+        if (!autoPause) add(point.speed)
+        return autoPause
     }
 
-
-    public abstract float get();
-    public abstract void add(float speed);
-
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
-        if (!autoPause) add(p.getSpeed());
-        return autoPause;
+    override fun get(keyIndex: Int): String {
+        return if (keyIndex == INDEX_MAX_SPEED) {
+            get().toString()
+        } else NULL_VALUE
     }
 
-
-
-    @Override
-    public String get(int key) {
-        if (key == INDEX_MAX_SPEED) {
-            return String.valueOf(get());
-        }
-        return NULL_VALUE;
+    override fun getAsFloat(keyIndex: Int): Float {
+        return if (keyIndex == INDEX_MAX_SPEED) get() else super.getAsFloat(keyIndex)
     }
 
+    class Raw2 : MaxSpeed() {
+        private var maximum = 0f
+        override fun get(): Float {
+            return maximum
+        }
 
-    @Override
-    public float getAsFloat(int key) {
-        if (key == INDEX_MAX_SPEED)
-            return get();
-
-        return super.getAsFloat(key);
+        override fun add(speed: Float) {
+            maximum = Math.max(speed, maximum)
+        }
     }
 
+    class Samples @JvmOverloads constructor(samples: Int = 5) : MaxSpeed() {
+        private val speeds: FloatArray
+        private var i = 0
+        private var maximum = 0f
 
-
-    public static class Raw2 extends MaxSpeed {
-
-        private float maximum=0f;
-
-        @Override
-        public float get() {
-            return maximum;
+        init {
+            speeds = FloatArray(Math.max(samples, 1))
         }
 
-        @Override
-        public void add(float speed) {
-            maximum=Math.max(speed, maximum);
+        override fun get(): Float {
+            return maximum
         }
 
-    }
-
-
-    public static class Samples extends MaxSpeed {
-        private final float[] speeds;
-        private int i = 0;
-
-        private float maximum = 0f;
-
-
-        public Samples() {
-            this(5);
+        override fun add(speed: Float) {
+            insert(speed)
+            set()
         }
 
-
-        public Samples(int samples) {
-            samples = Math.max(samples, 1);
-            speeds = new float[samples];
+        private fun set() {
+            maximum = Math.max(maximum, smallest)
         }
 
-        @Override
-        public float get() {
-            return maximum;
+        private fun insert(speed: Float) {
+            speeds[i] = speed
+            i = ++i % speeds.size
         }
 
-        @Override
-        public void add(float speed) {
-            insert(speed);
-            set();
-        }
-
-
-        private void set() {
-            float s = getSmallest();
-            maximum = Math.max(maximum, s);
-        }
-
-
-        private void insert(float speed) {
-            speeds[i] = speed;
-            i = (++i) % speeds.length;
-        }
-
-
-        private float getSmallest() {
-            float r = speeds[0];
-
-            for (int i = 1; i < speeds.length; i++) {
-                r = Math.min(r, speeds[i]);
+        private val smallest: Float
+            get() {
+                var r = speeds[0]
+                for (i in 1 until speeds.size) {
+                    r = Math.min(r, speeds[i])
+                }
+                return r
             }
-            return r;
-        }
+    }
+
+    companion object {
+        private val KEYS = Keys()
+        @JvmField
+        val INDEX_MAX_SPEED = KEYS.add("MaxSpeed")
     }
 }

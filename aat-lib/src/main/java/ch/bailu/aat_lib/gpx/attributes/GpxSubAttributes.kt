@@ -1,38 +1,22 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
 
-public abstract class GpxSubAttributes extends GpxAttributes {
-
-    private final Keys keys;
-
-    public GpxSubAttributes(Keys keys) {
-        this.keys = keys;
+abstract class GpxSubAttributes(private val keys: Keys) : GpxAttributes() {
+    abstract fun update(point: GpxPointNode, autoPause: Boolean): Boolean
+    override fun size(): Int {
+        return keys.size()
     }
 
-    public abstract boolean update(GpxPointNode p, boolean autoPause);
-
-
-
-    @Override
-    public int size() {
-        return keys.size();
+    override fun getAt(index: Int): String {
+        return get(keys.getKeyIndex(index))
     }
 
-    @Override
-    public String getAt(int i) {
-        return get(keys.getKeyIndex(i));
+    override fun getKeyAt(index: Int): Int {
+        return keys.getKeyIndex(index)
     }
 
-    @Override
-    public int getKeyAt(int i) {
-        return keys.getKeyIndex(i);
+    override fun hasKey(keyIndex: Int): Boolean {
+        return keys.hasKey(keyIndex)
     }
-
-
-    @Override
-    public boolean hasKey(int keyIndex) {
-        return keys.hasKey(keyIndex);
-    }
-
 }

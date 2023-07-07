@@ -6,11 +6,12 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.Connector
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
 
 class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
-    private var location = PowerAttributes.SENSOR_LOCATION[0]
+    private var location = CadenceSpeedAttributes.SENSOR_LOCATION[0]
     private var isSpeedSensor = false
     private var isCadenceSensor = false
     private val cadence = Revolution()
@@ -86,8 +87,8 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
                 isCadenceSensor = flags != null && isFlagSet(flags, FEATURE_BIT_CRANK_REVOLUTIONS)
             } else if (SENSOR_LOCATION == c.uuid) {
                 val i = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
-                if (i != null && i < PowerAttributes.SENSOR_LOCATION.size) location =
-                    PowerAttributes.SENSOR_LOCATION[i]
+                if (i != null && i < CadenceSpeedAttributes.SENSOR_LOCATION.size) location =
+                    CadenceSpeedAttributes.SENSOR_LOCATION[i]
             }
         }
     }
@@ -177,8 +178,8 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
 
         private fun broadcastCadence(rpm: Int) {
             if (rpm != 0 || broadcasterCadence.timeout()) {
-                cadence_rpm = rpm
-                cadence_rpm_average = rpm
+                cadenceRpm = rpm
+                cadenceRpmAverage = rpm
                 broadcasterCadence.broadcast()
             }
         }

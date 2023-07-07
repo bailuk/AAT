@@ -1,109 +1,105 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.AltitudeDelta.LastAverage
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed.Raw2
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed.Samples
+import ch.bailu.aat_lib.gpx.attributes.SampleRate.StepsRate
+import ch.bailu.aat_lib.preferences.SolidAutopause
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.preferences.SolidAutopause;
+class GpxListAttributes(vararg attr: GpxSubAttributes) :
+    GpxSubAttributes(keysFromSubAttributes(attr)) {
+    private val attributes: Array<out GpxSubAttributes>
 
-public class GpxListAttributes extends GpxSubAttributes {
-
-    public static final GpxListAttributes NULL = new GpxListAttributes();
-
-    private final GpxSubAttributes[] attributes;
-
-
-    public GpxListAttributes(GpxSubAttributes... attr) {
-        super(keysFromSubAttributes(attr));
-        attributes = attr;
+    init {
+        attributes = attr
     }
 
+    override fun get(keyIndex: Int): String {
+        for (attr in attributes) {
+            if (attr.hasKey(keyIndex)) return attr[keyIndex]
+        }
+        return NULL_VALUE
+    }
 
-    private static Keys keysFromSubAttributes(GpxSubAttributes[] attr) {
-        final Keys keys = new Keys();
+    override fun getAsFloat(keyIndex: Int): Float {
+        for (attr in attributes) {
+            if (attr.hasKey(keyIndex)) return attr.getAsFloat(keyIndex)
+        }
+        return super.getAsFloat(keyIndex)
+    }
 
-        for (GpxSubAttributes a : attr) {
-            for (int i = 0; i< a.size(); i++) {
-                keys.add(a.getKeyAt(i));
+    override fun getAsLong(keyIndex: Int): Long {
+        for (attr in attributes) {
+            if (attr.hasKey(keyIndex)) return attr.getAsLong(keyIndex)
+        }
+        return super.getAsLong(keyIndex)
+    }
+
+    override fun getAsInteger(keyIndex: Int): Int {
+        for (attr in attributes) {
+            if (attr.hasKey(keyIndex)) return attr.getAsInteger(keyIndex)
+        }
+        return super.getAsInteger(keyIndex)
+    }
+
+    fun update(p: GpxPointNode) {
+        update(p, false)
+    }
+
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
+        var result = autoPause
+        for (attr in attributes) {
+            result = result || attr.update(point, result)
+        }
+        return result
+    }
+
+    companion object {
+        @JvmField
+        val NULL = GpxListAttributes()
+        private fun keysFromSubAttributes(attr: Array<out GpxSubAttributes>): Keys {
+            val keys = Keys()
+            for (a in attr) {
+                for (i in 0 until a.size()) {
+                    keys.add(a.getKeyAt(i))
+                }
             }
-        }
-        return keys;
-    }
-
-
-    public static GpxListAttributes factoryTrackList() {
-        return new GpxListAttributes(new MaxSpeed.Raw2());
-    }
-
-    public static GpxListAttributes factoryTrack(SolidAutopause spause) {
-        return factoryTrack(new AutoPause.Time(
-                spause.getTriggerSpeed(),
-                spause.getTriggerLevelMillis()));
-    }
-
-    public static GpxListAttributes factoryTrack(AutoPause apause) {
-        return new GpxListAttributes(new MaxSpeed.Samples(),
-                apause,
-                new AltitudeDelta.LastAverage(),
-                new SampleRate.Cadence(),
-                new SampleRate.HeartRate(),
-                new SampleRate.StepsRate(),
-                new Steps()
-        );
-    }
-
-    public static GpxListAttributes factoryRoute() {
-        return new GpxListAttributes(new AltitudeDelta.LastAverage());
-    }
-
-
-    @Override
-    public String get(int key) {
-        for (GpxSubAttributes attr : attributes) {
-            if (attr.hasKey(key)) return attr.get(key);
-        }
-        return NULL_VALUE;
-    }
-
-
-    @Override
-    public float getAsFloat(int key) {
-        for (GpxSubAttributes attr : attributes) {
-            if (attr.hasKey(key)) return attr.getAsFloat(key);
-        }
-        return super.getAsFloat(key);
-    }
-
-
-    @Override
-    public long getAsLong(int key) {
-        for (GpxSubAttributes attr : attributes) {
-            if (attr.hasKey(key)) return attr.getAsLong(key);
-        }
-        return super.getAsLong(key);
-    }
-
-
-    @Override
-    public int getAsInteger(int key) {
-        for (GpxSubAttributes attr : attributes) {
-            if (attr.hasKey(key)) return attr.getAsInteger(key);
+            return keys
         }
 
-        return super.getAsInteger(key);
-    }
-
-
-    public void update(GpxPointNode p) {
-        update(p, false);
-    }
-
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
-
-        for (GpxSubAttributes attr : attributes) {
-            autoPause = autoPause || attr.update(p, autoPause);
+        @JvmStatic
+        fun factoryTrackList(): GpxListAttributes {
+            return GpxListAttributes(Raw2())
         }
 
-        return autoPause;
+        @JvmStatic
+        fun factoryTrack(spause: SolidAutopause): GpxListAttributes {
+            return factoryTrack(
+                AutoPause.Time(
+                    spause.triggerSpeed,
+                    spause.triggerLevelMillis
+                )
+            )
+        }
+
+
+        @JvmStatic
+        fun factoryTrack(autoPause: AutoPause): GpxListAttributes {
+            return GpxListAttributes(
+                Samples(),
+                autoPause,
+                LastAverage(),
+                SampleRate.Cadence(),
+                SampleRate.HeartRate(),
+                StepsRate(),
+                Steps()
+            )
+        }
+
+        @JvmStatic
+        fun factoryRoute(): GpxListAttributes {
+            return GpxListAttributes(LastAverage())
+        }
     }
 }

@@ -1,49 +1,37 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
 
-public class Steps extends GpxSubAttributes {
-    private int total = 0;
-    private int counting = 0;
-
-
-    public Steps() {
-        super(new Keys(StepCounterAttributes.KEY_INDEX_STEPS_RATE,
-                StepCounterAttributes.KEY_INDEX_STEPS_TOTAL));
-    }
-
-    @Override
-    public boolean update(GpxPointNode p, boolean autoPause) {
-        final GpxAttributes attr = p.getAttributes();
-
-
+class Steps : GpxSubAttributes(
+    Keys(
+        StepCounterAttributes.KEY_INDEX_STEPS_RATE,
+        StepCounterAttributes.KEY_INDEX_STEPS_TOTAL
+    )
+) {
+    private var total = 0
+    private var counting = 0
+    override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
+        val attr = point.attributes
         if (attr.hasKey(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)) {
-            final int value = attr.getAsInteger(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL);
-
+            val value = attr.getAsInteger(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)
             if (value < counting) {
-                total += counting;
+                total += counting
             }
-
-            counting = value;
+            counting = value
         }
-
-        return autoPause;
+        return autoPause
     }
 
-    @Override
-    public String get(int keyIndex) {
-        return String.valueOf(getAsInteger(keyIndex));
+    override fun get(keyIndex: Int): String {
+        return getAsInteger(keyIndex).toString()
     }
 
-
-    @Override
-    public int getAsInteger(int keyIndex) {
+    override fun getAsInteger(keyIndex: Int): Int {
         if (keyIndex == StepCounterAttributes.KEY_INDEX_STEPS_TOTAL) {
-            return counting + total;
-
+            return counting + total
         } else if (keyIndex == StepCounterAttributes.KEY_INDEX_STEPS_RATE) {
-            return 0;
+            return 0
         }
-        return 0;
+        return 0
     }
 }

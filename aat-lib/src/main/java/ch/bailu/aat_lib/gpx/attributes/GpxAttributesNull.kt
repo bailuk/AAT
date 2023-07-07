@@ -1,31 +1,28 @@
-package ch.bailu.aat_lib.gpx.attributes;
+package ch.bailu.aat_lib.gpx.attributes
 
-public class GpxAttributesNull extends GpxAttributes {
-
-    public final static GpxAttributes NULL = new GpxAttributesNull();
-
-    @Override
-    public String get(int keyIndex) {
-        return NULL_VALUE;
+class GpxAttributesNull : GpxAttributes() {
+    override fun get(keyIndex: Int): String {
+        return NULL_VALUE
     }
 
-    @Override
-    public boolean hasKey(int keyIndex) {
-        return false;
+    override fun hasKey(keyIndex: Int): Boolean {
+        return false
     }
 
-    @Override
-    public int size() {
-        return 0;
+    override fun size(): Int {
+        return 0
     }
 
-    @Override
-    public String getAt(int i) {
-        return NULL_VALUE;
+    override fun getAt(index: Int): String {
+        return NULL_VALUE
     }
 
-    @Override
-    public int getKeyAt(int i) {
-        return 0;
+    override fun getKeyAt(index: Int): Int {
+        return 0
+    }
+
+    companion object {
+        @JvmField
+        val NULL: GpxAttributes = GpxAttributesNull()
     }
 }
