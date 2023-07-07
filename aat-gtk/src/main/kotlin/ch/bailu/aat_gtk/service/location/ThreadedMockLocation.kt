@@ -34,14 +34,14 @@ class ThreadedMockLocation(
     private var waiting = false
     private var running = true
 
-    private var file = foc.toFoc(smock.valueAsString)
+    private var file = foc.toFoc(smock.getValueAsString())
 
     init {
         passState(StateID.WAIT)
         innerThread.start()
         storage.register { _, key ->
             if (smock.hasKey(key)) {
-                file = foc.toFoc(smock.valueAsString)
+                file = foc.toFoc(smock.getValueAsString())
                 reload = true
                 synchronized(innerThread) {
                     (innerThread as Object).notifyAll()

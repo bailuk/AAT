@@ -42,13 +42,13 @@ class MapMenu(private val context: Context, private val mcontext: MapContext) : 
         }.apply {
             setIcon(R.drawable.view_paged_inverse)
         }
-        add(menu, smapFile.label) {
+        add(menu, smapFile.getLabel()) {
             SolidStringDialog(
                 context,
                 AndroidMapDirectories(context).createSolidFile()
             )
         }
-        add(menu,SolidRenderTheme(smapFile, FocAndroidFactory(context)).label) {
+        add(menu,SolidRenderTheme(smapFile, FocAndroidFactory(context)).getLabel()) {
             SolidStringDialog(
                 context,
                 stheme

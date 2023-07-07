@@ -38,7 +38,7 @@ class SolidGoToLocation(val context: Context) : SolidString(
         ) {
             goToLocation(
                 map,
-                valueAsString
+                getValueAsString()
             )
         }
     }

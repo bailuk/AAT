@@ -49,9 +49,9 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
         descriptions.forEachIndexed { i, d ->
             d.onContentUpdated(InfoID.ALL, info)
             if (i == 0) {
-                title = "<b>${d.valueAsString}</b>"
+                title = "<b>${d.getValueAsString()}</b>"
             } else {
-                infoText = d.valueAsString
+                infoText = d.getValueAsString()
             }
         }
 

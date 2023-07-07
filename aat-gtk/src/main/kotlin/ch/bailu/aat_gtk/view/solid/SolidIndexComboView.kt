@@ -17,7 +17,7 @@ class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChan
     private val combo = ComboBoxText()
 
     init {
-        label.setText(solid.label)
+        label.setText(solid.getLabel())
         label.xalign = 0f
 
         layout.append(label)

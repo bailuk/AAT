@@ -37,7 +37,7 @@ class PoiView(
 
     private val filterView: EditText = EditText(context).apply {
         isSingleLine = true
-        setText(SolidString(Storage(context), FILTER_KEY).valueAsStringNonDef)
+        setText(SolidString(Storage(context), FILTER_KEY).getValueAsStringNonDef())
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -75,7 +75,7 @@ class PoiView(
     }
 
     private fun readList(appContext: AppContext) {
-        FilterListUtil.readList(filterList, appContext, sdatabase.valueAsString, selected)
+        FilterListUtil.readList(filterList, appContext, sdatabase.getValueAsString(), selected)
         listView.onChanged()
     }
 

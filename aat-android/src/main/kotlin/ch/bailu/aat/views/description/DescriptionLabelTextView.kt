@@ -12,7 +12,7 @@ class DescriptionLabelTextView(
     context: Context,
     private val description: ContentDescription,
     theme: UiTheme
-) : LabelTextView(true, context, description.label, theme), OnContentUpdatedInterface {
+) : LabelTextView(true, context, description.getLabel(), theme), OnContentUpdatedInterface {
     init {
         setText()
     }
@@ -23,6 +23,6 @@ class DescriptionLabelTextView(
     }
 
     fun setText() {
-        setText(description.valueAsString)
+        setText(description.getValueAsString())
     }
 }

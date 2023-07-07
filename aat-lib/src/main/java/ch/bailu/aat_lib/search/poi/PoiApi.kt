@@ -40,7 +40,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override val fileExtension = AppDirectory.GPX_EXTENSION
 
     override val apiName: String
-        get() = poiOverlay.label
+        get() = poiOverlay.getLabel()
 
     override fun getUrl(query: String): String {
         return ""
@@ -57,7 +57,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
 
     override fun startTask(appContext: AppContext) {
         val categories = selectedCategories
-        val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).valueAsString
+        val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).getValueAsString()
         appContext.services.insideContext {
             task.stopProcessing()
             task = PoiToGpxTask(

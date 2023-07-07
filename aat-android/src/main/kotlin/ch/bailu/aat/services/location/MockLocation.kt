@@ -34,7 +34,7 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
     }
 
     init {
-        file = FocAndroid.factory(c, SolidMockLocationFile(Storage(c)).valueAsString)
+        file = FocAndroid.factory(c, SolidMockLocationFile(Storage(c)).getValueAsString())
         list = GpxListReader(file, AutoPause.NULL).gpxList
         timer.kick(INTERVAL, this)
         passState(StateID.WAIT)

@@ -21,7 +21,7 @@ class SolidCheckBox(context: Context?, sboolean: SolidBoolean, theme: UiTheme) :
         toolTip.setToolTip(sboolean)
         addView(toolTip)
         checkBox.isChecked = sboolean.value
-        checkBox.text = sboolean.label
+        checkBox.text = sboolean.getLabel()
         checkBox.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             sboolean.value = isChecked
             toolTip.setToolTip(sboolean)

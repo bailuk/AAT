@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.gpx.GpxInformation
-import javax.annotation.Nonnull
 
 class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
     private val descriptions = arrayOf(*d)
@@ -23,7 +22,7 @@ class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
         val label = StringBuilder()
         var del = ""
         for (d in descriptions) {
-            label.append(del).append(d.label)
+            label.append(del).append(d.getLabel())
             del = ", "
         }
         return label.toString()

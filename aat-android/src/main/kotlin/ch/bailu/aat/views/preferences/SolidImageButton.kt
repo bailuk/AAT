@@ -33,7 +33,7 @@ class SolidImageButton(context: Context, private val solid: SolidIndexList) : Im
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
             setImageResource(Images.get(solid.iconResource))
-            AppLog.i(this, solid.valueAsString)
+            AppLog.i(this, solid.getValueAsString())
         }
     }
 

@@ -92,7 +92,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
             onListLoaded,
             AppBroadcaster.FILE_CHANGED_INCACHE
         )
-        filterView.setText(SolidString(Storage(context), FILTER_KEY).valueAsStringNonDef)
+        filterView.setText(SolidString(Storage(context), FILTER_KEY).getValueAsStringNonDef())
         getListHandle()
         slist.register(this)
     }

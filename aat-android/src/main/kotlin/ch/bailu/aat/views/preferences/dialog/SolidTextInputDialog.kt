@@ -20,7 +20,7 @@ class SolidTextInputDialog(context: Context, solid: AbsSolidType, inputType: Int
         val input = EditText(context)
         input.inputType = inputType
         dialog.setView(input)
-        input.setText(solid.valueAsString)
+        input.setText(solid.getValueAsString())
         dialog.show()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener { view: View? ->
             try {

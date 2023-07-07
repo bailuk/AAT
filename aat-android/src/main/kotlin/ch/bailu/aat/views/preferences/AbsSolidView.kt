@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 abstract class AbsSolidView(context: Context, private val solid: AbsSolidType, theme: UiTheme) :
-    LabelTextView(context, solid.label, theme), OnPreferencesChanged {
+    LabelTextView(context, solid.getLabel(), theme), OnPreferencesChanged {
     init {
         theme.button(this)
         setOnClickListener { onRequestNewValue() }

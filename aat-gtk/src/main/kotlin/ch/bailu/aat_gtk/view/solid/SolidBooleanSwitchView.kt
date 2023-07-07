@@ -23,7 +23,7 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
     private val toggle = Switch()
 
     init {
-        label.setText(solid.label)
+        label.setText(solid.getLabel())
         label.xalign = 0f
         layout.append(label)
         layout.append(toggleBox)

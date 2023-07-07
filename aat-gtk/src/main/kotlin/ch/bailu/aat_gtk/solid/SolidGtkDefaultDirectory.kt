@@ -17,7 +17,7 @@ class SolidGtkDefaultDirectory (storage: StorageInterface, focFactory: FocFactor
     }
 
     fun buildSubDirectorySelection(result: ArrayList<String>, subDirectory: String): ArrayList<String> {
-        addDistinct(result, "${valueAsString}/${subDirectory}")
+        addDistinct(result, "${getValueAsString()}/${subDirectory}")
         buildSelection(ArrayList()).forEach {
             addDistinct(result, "${it}/${subDirectory}")
         }

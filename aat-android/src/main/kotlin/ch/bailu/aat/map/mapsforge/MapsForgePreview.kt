@@ -155,7 +155,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
             val tiles = SolidMapTileStack(stheme)
             val enabled = tiles.enabledArray
             if (enabled[0]) {
-                val theme = stheme.valueAsString
+                val theme = stheme.getValueAsString()
                 val mfs = MapsForgeSource(theme)
                 return CacheOnlySource(mfs)
             }

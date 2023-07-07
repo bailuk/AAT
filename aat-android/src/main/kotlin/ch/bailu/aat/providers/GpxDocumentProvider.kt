@@ -64,7 +64,7 @@ class GpxDocumentProvider : DocumentsProvider() {
 
     private fun getPresetName(context: Context?, preset: Int): String {
         return if (context != null) {
-            SolidMET(Storage(context), preset).valueAsString
+            SolidMET(Storage(context), preset).getValueAsString()
         } else ""
     }
 

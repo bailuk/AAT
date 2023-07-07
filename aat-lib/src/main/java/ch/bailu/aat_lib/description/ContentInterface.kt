@@ -1,6 +1,6 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-public interface ContentInterface {
-    String getLabel();
-    String getValueAsString();
+interface ContentInterface {
+    fun getLabel(): String
+    fun getValueAsString(): String
 }

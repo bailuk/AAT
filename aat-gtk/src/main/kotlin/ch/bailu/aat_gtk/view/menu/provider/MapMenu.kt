@@ -29,9 +29,9 @@ class MapMenu(
 
     override fun createMenu(): Menu {
         return Menu().apply {
-            appendSubmenu(stiles.label, tilesMenu.createMenu())
-            appendSubmenu(soffline.label, offlineMenu.createMenu())
-            appendSubmenu(srender.label, renderMenu.createMenu())
+            appendSubmenu(stiles.getLabel(), tilesMenu.createMenu())
+            appendSubmenu(soffline.getLabel(), offlineMenu.createMenu())
+            appendSubmenu(srender.getLabel(), renderMenu.createMenu())
             append(Res.str().intro_settings(), "app.showMapSettings")
             append(Res.str().tt_info_reload(), "app.reloadMapTiles")
         }

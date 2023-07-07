@@ -10,7 +10,7 @@ class GtkSolidTileCacheDirectory(storage: StorageInterface,
 ) : SolidTileCacheDirectory(storage, focFactory) {
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        list.add("${SolidGtkDefaultDirectory(storage, focFactory).valueAsString}/tile_cache")
+        list.add("${SolidGtkDefaultDirectory(storage, focFactory).getValueAsString()}/tile_cache")
         return list
     }
 }

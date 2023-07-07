@@ -24,7 +24,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
             button.setIconName(solid.iconResource)
-            AppLog.i(this, solid.valueAsString)
+            AppLog.i(this, solid.getValueAsString())
         }
     }
 

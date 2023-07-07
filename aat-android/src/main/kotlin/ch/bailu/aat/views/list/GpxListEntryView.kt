@@ -70,10 +70,10 @@ class GpxListEntryView(
         builder.setLength(0)
         for (i in descriptions.indices) {
             if (i == 0) {
-                labelTextView.setLabel(descriptions[i].valueAsString)
+                labelTextView.setLabel(descriptions[i].getValueAsString())
             } else {
                 if (i > 1) builder.append(" - ")
-                builder.append(descriptions[i].valueAsString)
+                builder.append(descriptions[i].getValueAsString())
             }
         }
         labelTextView.setText(builder)

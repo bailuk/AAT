@@ -14,9 +14,9 @@ class SolidBoundingBoxView(
     private val sbounding: SolidBoundingBox,
     mc: MapContext,
     theme: UiTheme
-) : LabelTextView(context, sbounding.label, theme), OnPreferencesChanged {
+) : LabelTextView(context, sbounding.getLabel(), theme), OnPreferencesChanged {
     init {
-        setText(sbounding.valueAsString)
+        setText(sbounding.getValueAsString())
         theme.button(this)
         setOnClickListener { sbounding.value = BoundingBoxE6(mc.metrics.boundingBox) }
     }
@@ -28,7 +28,7 @@ class SolidBoundingBoxView(
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sbounding.hasKey(key)) {
-            setText(sbounding.valueAsString)
+            setText(sbounding.getValueAsString())
         }
     }
 

@@ -63,7 +63,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
         sdirectory = SolidDirectoryQuery(Storage(this), FocAndroidFactory(this)).apply {
             setValue(directory.path)
-            solidKey = "${AbsGpxListActivity::class.java.simpleName}_${this.valueAsString}"
+            solidKey = "${AbsGpxListActivity::class.java.simpleName}_${this.getValueAsString()}"
         }
 
         setContentView(Layouter().contentView)

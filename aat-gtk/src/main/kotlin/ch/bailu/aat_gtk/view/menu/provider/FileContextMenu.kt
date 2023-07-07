@@ -173,7 +173,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
     private fun updateLabels(labels: List<Label>) {
         labels.forEachIndexed { index, it ->
-            it.setText(solid[index].valueAsString.ellipsizeStart(30))
+            it.setText(solid[index].getValueAsString().ellipsizeStart(30))
         }
     }
 }

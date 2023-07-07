@@ -42,7 +42,7 @@ class StackView(headerBar: HeaderBar) {
     }
 
     fun restore(storageInterface: StorageInterface) {
-        showPage(Str(SolidString(storageInterface, solidKey).valueAsString))
+        showPage(Str(SolidString(storageInterface, solidKey).getValueAsString()))
     }
 
     fun save(storageInterface: StorageInterface) {

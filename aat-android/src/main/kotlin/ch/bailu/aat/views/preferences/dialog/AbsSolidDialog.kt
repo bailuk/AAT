@@ -10,7 +10,7 @@ abstract class AbsSolidDialog {
         @JvmStatic
         fun createDefaultDialog(context: Context?, s: AbsSolidType): AlertDialog.Builder {
             val dialog = AlertDialog.Builder(context)
-            dialog.setTitle(s.label)
+            dialog.setTitle(s.getLabel())
             if ("" != s.iconResource) {
                 dialog.setIcon(Images.get(s.iconResource))
             }

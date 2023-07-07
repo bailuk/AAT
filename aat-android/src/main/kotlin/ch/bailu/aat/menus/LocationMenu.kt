@@ -26,7 +26,7 @@ class LocationMenu(private val context: Context, private val map: MapViewInterfa
 
         paste = add(menu, R.string.clipboard_paste) { paste() }
 
-        add(menu, SolidGoToLocation(context).label) { SolidGoToLocation(context).goToLocationFromUser(map) }
+        add(menu, SolidGoToLocation(context).getLabel()) { SolidGoToLocation(context).goToLocationFromUser(map) }
     }
 
     override val title: String
