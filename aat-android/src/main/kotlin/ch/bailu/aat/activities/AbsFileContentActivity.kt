@@ -21,10 +21,8 @@ import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.IteratorSource
 import ch.bailu.aat_lib.dispatcher.IteratorSource.FollowFile
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.dispatcher.OverlaysSource
 import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -115,27 +113,17 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         )
         addTarget(fileOperation!!, InfoID.FILEVIEW)
 
-        val doFrame = object: OnContentUpdatedInterface {
-
-            override fun onContentUpdated(iid: Int, info: GpxInformation) {
-                val newFileID = info.file.toString()
-                if (!Objects.equals(currentFileID, newFileID)) {
-                    currentFileID = newFileID
-                    map?.frameBounding(info.boundingBox)
-                    AppLog.i(this@AbsFileContentActivity, info.file.name)
-                }
+        addTarget({ _, info ->
+            val newFileID = info.file.toString()
+            if (!Objects.equals(currentFileID, newFileID)) {
+                currentFileID = newFileID
+                map?.frameBounding(info.getBoundingBox())
+                AppLog.i(this@AbsFileContentActivity, info.file.name)
             }
-        }
-        addTarget(doFrame, InfoID.FILEVIEW)
+        }, InfoID.FILEVIEW)
 
 
-        val doDisplayError = object : OnContentUpdatedInterface {
-            override fun onContentUpdated(iid: Int, info: GpxInformation) {
-                fileError?.displayError(serviceContext, info.file)
-            }
-
-        }
-        addTarget(doDisplayError, InfoID.FILEVIEW)
+        addTarget({ _, info -> fileError?.displayError(serviceContext, info.file) }, InfoID.FILEVIEW)
     }
 
     override fun onClick(v: View) {

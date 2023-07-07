@@ -6,8 +6,8 @@ import ch.bailu.aat_lib.resources.Res
 
 class PauseApDescription : PauseDescription() {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val autoPause = info.attributes.getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)
-        setCache(info.pause + autoPause)
+        val autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)
+        setCache(info.getPause() + autoPause)
     }
 
     override fun getLabel(): String {

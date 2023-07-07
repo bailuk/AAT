@@ -16,9 +16,6 @@ class SensorStateDescription : StateDescription() {
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         super.onContentUpdated(iid, info)
-        val attributes = info.attributes
-        if (attributes != null) {
-            unit = info.attributes[SensorStateAttributes.KEY_SENSOR_OVERVIEW]
-        }
+        unit = info.getAttributes()[SensorStateAttributes.KEY_SENSOR_OVERVIEW]
     }
 }

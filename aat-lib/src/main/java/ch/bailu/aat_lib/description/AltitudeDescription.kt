@@ -31,7 +31,7 @@ open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescri
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.altitude.toFloat())
+        setCache(info.getAltitude().toFloat())
     }
 
     companion object {

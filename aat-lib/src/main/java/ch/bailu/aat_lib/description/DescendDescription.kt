@@ -11,6 +11,6 @@ class DescendDescription(storage: StorageInterface) : AltitudeDescription(storag
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.attributes.getAsFloat(AltitudeDelta.INDEX_DESCEND))
+        setCache(info.getAttributes().getAsFloat(AltitudeDelta.INDEX_DESCEND))
     }
 }

@@ -46,9 +46,9 @@ abstract class AutoPause : GpxSubAttributes(KEYS) {
         }
 
         override fun update(delta: GpxDeltaInterface): Boolean {
-            if (delta.speed < minSpeed) {
-                addTime += delta.timeDelta
-                addDistance += delta.distance
+            if (delta.getSpeed() < minSpeed) {
+                addTime += delta.getTimeDelta()
+                addDistance += delta.getDistance()
             } else {
                 if (addTime > minTime) {
                     pauseTime += addTime

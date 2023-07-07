@@ -57,7 +57,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         add(gpxLayer)
         attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILEVIEW, info)
-        frameBounding(info.gpxList.delta.boundingBox)
+        frameBounding(info.gpxList.delta.getBoundingBox())
         mapPosition = model.mapViewPosition.mapPosition
 
         val tileSize = model.displayModel.tileSize

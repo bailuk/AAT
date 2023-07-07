@@ -49,10 +49,10 @@ class NodeEntryView(activityContext: ActivityContext) : LinearLayout(activityCon
 
     fun update(iid: Int, info: GpxInformation, node: GpxPointNode) {
         markupBuilder.appendNode(node, info)
-        markupBuilder.appendAttributes(node.attributes)
+        markupBuilder.appendAttributes(node.getAttributes())
         text.text = fromHtml(markupBuilder.toString())
         markupBuilder.clear()
-        val bounding = node.boundingBox
+        val bounding = node.getBoundingBox()
         map.frameBounding(bounding)
         gpxOverlay.onContentUpdated(iid, info)
     }

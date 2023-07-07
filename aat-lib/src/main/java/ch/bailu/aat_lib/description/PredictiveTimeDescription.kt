@@ -19,8 +19,8 @@ class PredictiveTimeDescription : TimeDescription() {
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         super.onContentUpdated(iid, info)
-        val endTime = info.endTime
-        time = info.timeDelta
+        val endTime = info.getEndTime()
+        time = info.getTimeDelta()
         if (info.state != StateID.ON) {
             timePaused = time
         } else if (timePaused != time && endTime > 0) {

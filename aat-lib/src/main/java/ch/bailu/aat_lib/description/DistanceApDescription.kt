@@ -7,8 +7,8 @@ import ch.bailu.aat_lib.resources.Res
 
 class DistanceApDescription(storage: StorageInterface) : DistanceDescription(storage) {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val apDistance = info.attributes.getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE)
-        setCache(info.distance - apDistance)
+        val apDistance = info.getAttributes().getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE)
+        setCache(info.getDistance() - apDistance)
     }
 
     override fun getLabel(): String {

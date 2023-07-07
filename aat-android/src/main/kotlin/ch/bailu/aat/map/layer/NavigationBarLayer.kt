@@ -60,7 +60,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
                 val info = infoCache.getValueAt(boundingCycle)
 
                 if (info is GpxInformation) {
-                    mcontext.mapView.frameBounding(info.boundingBox)
+                    mcontext.mapView.frameBounding(info.getBoundingBox())
                     AppLog.i(v.context, info.file.name)
                 }
             }
@@ -76,7 +76,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
 
             val info = infoCache.getValueAt(boundingCycle)
             if (info is GpxInformation) {
-                if (info.boundingBox.hasBounding()
+                if (info.getBoundingBox().hasBounding()
                     || info.gpxList.pointList.size() > 0
                 ) return true
             }

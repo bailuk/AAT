@@ -27,7 +27,7 @@ class CaloriesDescription(private val storage: StorageInterface) : LongDescripti
 
     private fun calculateCalories(track: GpxInformation): Float {
         val preset = SolidPreset(storage).index
-        val hours = track.timeDelta.toFloat() / (1000f * 60f * 60f)
+        val hours = track.getTimeDelta().toFloat() / (1000f * 60f * 60f)
         val met = SolidMET(storage, preset).metValue
         val weight = SolidWeight(storage).value.toFloat()
         return hours * met * weight

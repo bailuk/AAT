@@ -30,10 +30,10 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
                 val info = infoCache.getValueAt(boundingCycle)
 
                 if (info is GpxInformation) {
-                    val bounding = info.boundingBox
+                    val bounding = info.getBoundingBox()
                     val fileName = info.file.name
 
-                    if (bounding != null && fileName != null) {
+                    if (fileName != null) {
                         mcontext.mapView.frameBounding(bounding)
                         AppLog.i(fileName)
                     }
@@ -51,7 +51,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
             if (boundingCycle >= infoCache.size()) boundingCycle = 0
 
             val info = infoCache.getValueAt(boundingCycle)
-            val boundingBox = info?.boundingBox
+            val boundingBox = info?.getBoundingBox()
             val pointList = info?.gpxList?.pointList
 
             if (boundingBox != null && pointList != null && boundingBox.hasBounding() && pointList.size() > 0) {

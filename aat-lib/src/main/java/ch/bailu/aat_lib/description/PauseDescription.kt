@@ -9,6 +9,6 @@ open class PauseDescription : TimeDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.pause)
+        setCache(info.getPause())
     }
 }

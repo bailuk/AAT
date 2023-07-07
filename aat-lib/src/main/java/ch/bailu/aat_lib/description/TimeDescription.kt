@@ -17,7 +17,7 @@ open class TimeDescription : LongDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.timeDelta)
+        setCache(info.getTimeDelta())
     }
 
     companion object {

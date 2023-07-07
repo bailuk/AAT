@@ -138,7 +138,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        map?.frameBounding(info.boundingBox)
+        map?.frameBounding(info.getBoundingBox())
     }
 
     override fun onClick(v: View) {

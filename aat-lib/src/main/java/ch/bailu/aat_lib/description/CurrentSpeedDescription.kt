@@ -31,9 +31,9 @@ class CurrentSpeedDescription(storage: StorageInterface) : SpeedDescription(stor
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (configure(iid, info.attributes)) {
+        if (configure(iid, info.getAttributes())) {
             if (!setSpeedFromLastPoint(info)) {
-                setCache(info.speed)
+                setCache(info.getSpeed())
             }
         }
     }
@@ -72,7 +72,7 @@ class CurrentSpeedDescription(storage: StorageInterface) : SpeedDescription(stor
             if (track.pointList.size() > 0) {
                 val delta = info.gpxList.pointList.last
                 if (delta is GpxDeltaInterface) {
-                    setCache(delta.speed)
+                    setCache(delta.getSpeed())
                     return true
                 }
             }

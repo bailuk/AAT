@@ -130,14 +130,14 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     }
 
     override fun frameInMap(info: GpxInformation) {
-        if (info.boundingBox.hasBounding()) {
-            mapView.map.frameBounding(info.boundingBox)
+        if (info.getBoundingBox().hasBounding()) {
+            mapView.map.frameBounding(info.getBoundingBox())
         }
     }
 
     override fun centerInMap(info: GpxInformation) {
-        if (info.boundingBox.hasBounding()) {
-            mapView.map.setCenter(info.boundingBox.center.toLatLong())
+        if (info.getBoundingBox().hasBounding()) {
+            mapView.map.setCenter(info.getBoundingBox().center.toLatLong())
         }
     }
 

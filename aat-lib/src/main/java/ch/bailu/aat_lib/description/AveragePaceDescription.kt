@@ -10,6 +10,6 @@ open class AveragePaceDescription(s: StorageInterface) : PaceDescription(s) {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(speedToPace(info.speed))
+        setCache(speedToPace(info.getSpeed()))
     }
 }

@@ -20,7 +20,7 @@ class AttributesView(context: Context, storage: StorageInterface) : HtmlTextView
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         setBackgroundColor(MapColor.toLightTransparent(MapColor.getColorFromIID(iid)))
         setTextColor(Color.BLACK)
-        markupBuilder.appendAttributes(info.attributes)
+        markupBuilder.appendAttributes(info.getAttributes())
         setHtmlText(markupBuilder.toString())
         markupBuilder.clear()
     }

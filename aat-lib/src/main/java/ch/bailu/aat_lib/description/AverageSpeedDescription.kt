@@ -10,6 +10,6 @@ open class AverageSpeedDescription(storage: StorageInterface) : SpeedDescription
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.speed)
+        setCache(info.getSpeed())
     }
 }

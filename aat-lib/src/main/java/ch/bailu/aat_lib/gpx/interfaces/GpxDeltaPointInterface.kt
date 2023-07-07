@@ -1,6 +1,3 @@
-package ch.bailu.aat_lib.gpx.interfaces;
+package ch.bailu.aat_lib.gpx.interfaces
 
-public interface GpxDeltaPointInterface
-        extends GpxDeltaInterface, GpxPointInterface
-{}
-
+interface GpxDeltaPointInterface : GpxDeltaInterface, GpxPointInterface

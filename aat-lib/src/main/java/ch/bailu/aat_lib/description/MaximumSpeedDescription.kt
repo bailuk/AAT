@@ -11,6 +11,6 @@ class MaximumSpeedDescription(storage: StorageInterface) : SpeedDescription(stor
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.attributes.getAsFloat(MaxSpeed.INDEX_MAX_SPEED))
+        setCache(info.getAttributes().getAsFloat(MaxSpeed.INDEX_MAX_SPEED))
     }
 }

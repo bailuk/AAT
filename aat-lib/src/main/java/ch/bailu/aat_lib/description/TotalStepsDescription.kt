@@ -22,9 +22,9 @@ class TotalStepsDescription : ContentDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val attr = info.attributes
+        val attr = info.getAttributes()
         value = if (attr.hasKey(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)) {
-            info.attributes[StepCounterAttributes.KEY_INDEX_STEPS_TOTAL]
+            info.getAttributes()[StepCounterAttributes.KEY_INDEX_STEPS_TOTAL]
         } else {
             VALUE_DISABLED
         }

@@ -129,10 +129,10 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
                 newIndex
             }
 
-            mapView?.setCenter(arrayCache[index].boundingBox.center.toLatLong())
+            mapView?.setCenter(arrayCache[index].getBoundingBox().center.toLatLong())
             markupBuilder?.appendInfo(infoCache, index)
             markupBuilder?.appendNode(arrayCache[index], infoCache)
-            markupBuilder?.appendAttributes(arrayCache[index].attributes)
+            markupBuilder?.appendAttributes(arrayCache[index].getAttributes())
             htmlView?.setHtmlText(markupBuilder.toString())
             markupBuilder?.clear()
             graph?.onContentUpdated(infoCache, index)

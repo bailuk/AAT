@@ -1,40 +1,31 @@
-package ch.bailu.aat_lib.gpx.interfaces;
+package ch.bailu.aat_lib.gpx.interfaces
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nonnull
 
-public enum GpxType {
-    WAY,
-    ROUTE,
-    TRACK,
-    NONE;
-
-
+enum class GpxType {
+    WAY, ROUTE, TRACK, NONE;
 
     @Nonnull
-    @Override
-    public String toString() {
-        return name();
+    override fun toString(): String {
+        return name
     }
 
-
-    public static String[] toStrings() {
-        String[] strings = new String[values().length-1];
-
-        for (int i = 0; i < strings.length; i++)
-            strings[i] = values()[i].toString();
-
-        return strings;
+    fun toInteger(): Int {
+        return ordinal
     }
 
+    companion object {
+        fun toStrings(): Array<String> {
+            val result = ArrayList<String>()
+            values().forEach { result.add(it.toString()) }
+            return result.toTypedArray()
+        }
 
-    public int toInteger() {
-        return ordinal();
-    }
-
-
-    public static GpxType fromInteger(int id) {
-        if (id < 0 || id >= values().length)
-            id = values().length-1;
-        return values()[id];
+        @JvmStatic
+        fun fromInteger(id: Int): GpxType {
+            var checkedId = id
+            if (checkedId < 0 || checkedId >= values().size) checkedId = values().size - 1
+            return values()[checkedId]
+        }
     }
 }

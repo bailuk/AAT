@@ -89,9 +89,9 @@ open class SampleRate private constructor(keys: Keys, private vararg val KEY: In
 
     override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
         if (!autoPause) {
-            val attr = point.attributes
-            sampleTimeMillis += point.timeDelta
-            totalTimeMillis += point.timeDelta
+            val attr = point.getAttributes()
+            sampleTimeMillis += point.getTimeDelta()
+            totalTimeMillis += point.getTimeDelta()
             val spm = getValue(attr, *KEY)
             if (spm > 0) {
                 val bpSample60KM = sampleTimeMillis * spm

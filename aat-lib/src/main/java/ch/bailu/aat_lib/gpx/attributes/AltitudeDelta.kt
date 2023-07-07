@@ -9,7 +9,7 @@ abstract class AltitudeDelta : GpxSubAttributes(KEYS) {
     abstract fun getAscend(): Short
     abstract fun getSlope(): Short
     override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
-        if (!autoPause) add(point.altitude.toFloat(), point.distance)
+        if (!autoPause) add(point.getAltitude().toFloat(), point.getDistance())
         return autoPause
     }
 

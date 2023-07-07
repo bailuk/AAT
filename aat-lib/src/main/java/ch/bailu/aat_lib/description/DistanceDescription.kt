@@ -36,7 +36,7 @@ open class DistanceDescription(storage: StorageInterface) : FloatDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.distance)
+        setCache(info.getDistance())
     }
 
     fun getDistanceDescription(distance: Float): String {

@@ -115,7 +115,7 @@ class GraphView(
 
     fun setVisibility(info: GpxInformation) {
         visibility =
-            if (info.isLoaded && info.type == GpxType.ROUTE || info.type == GpxType.TRACK) {
+            if (info.isLoaded && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
                 VISIBLE
             } else {
                 GONE

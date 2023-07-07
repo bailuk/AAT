@@ -69,7 +69,7 @@ open class RealLocationInformation(private val location: Location, private val s
     }
 
     override fun getCreationTime(): Long {
-        return timeStamp
+        return getTimeStamp()
     }
 
     override fun setAltitude(altitude: Double) {

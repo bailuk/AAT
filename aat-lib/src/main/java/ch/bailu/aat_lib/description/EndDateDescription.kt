@@ -9,6 +9,6 @@ class EndDateDescription : DateDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.endTime)
+        setCache(info.getEndTime())
     }
 }

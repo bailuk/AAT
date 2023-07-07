@@ -65,7 +65,7 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
 
             val nextNode = currentNode.next
             if (nextNode is GpxPointNode) {
-                interval = nextNode.timeDelta
+                interval = nextNode.getTimeDelta()
                 node = nextNode
             } else {
                 node = null

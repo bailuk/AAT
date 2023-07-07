@@ -11,7 +11,7 @@ class Steps : GpxSubAttributes(
     private var total = 0
     private var counting = 0
     override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
-        val attr = point.attributes
+        val attr = point.getAttributes()
         if (attr.hasKey(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)) {
             val value = attr.getAsInteger(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)
             if (value < counting) {

@@ -6,7 +6,7 @@ abstract class MaxSpeed : GpxSubAttributes(KEYS) {
     abstract fun get(): Float
     abstract fun add(speed: Float)
     override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
-        if (!autoPause) add(point.speed)
+        if (!autoPause) add(point.getSpeed())
         return autoPause
     }
 

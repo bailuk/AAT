@@ -37,7 +37,7 @@ open class NodeViewLayer(appContext: AppContext, private val context: Context, m
         file = info.file
         markupBuilder.appendInfo(info, this.index)
         markupBuilder.appendNode(node, info)
-        markupBuilder.appendAttributes(node.attributes)
+        markupBuilder.appendAttributes(node.getAttributes())
         setHtmlText(markupBuilder)
     }
 

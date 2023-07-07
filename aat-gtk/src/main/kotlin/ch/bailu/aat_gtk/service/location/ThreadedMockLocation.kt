@@ -73,7 +73,7 @@ class ThreadedMockLocation(
                     node = node.next
                     if (node is GpxPointNode) {
                         try {
-                            sleep(node.timeDelta)
+                            sleep(node.getTimeDelta())
                         } catch (e: InterruptedException) {
                             waiting = true
                             AppLog.e(this, e)

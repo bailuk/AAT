@@ -25,7 +25,7 @@ open class IndexedAttributeDescription(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        value = info.attributes[keyIndex]
+        value = info.getAttributes()[keyIndex]
     }
 
     class Cadence : IndexedAttributeDescription(

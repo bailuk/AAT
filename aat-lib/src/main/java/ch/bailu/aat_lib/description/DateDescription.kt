@@ -14,6 +14,6 @@ open class DateDescription : LongDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.startTime)
+        setCache(info.getStartTime())
     }
 }

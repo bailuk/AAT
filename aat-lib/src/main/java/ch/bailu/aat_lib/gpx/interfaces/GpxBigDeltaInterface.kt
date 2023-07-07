@@ -1,16 +1,11 @@
-package ch.bailu.aat_lib.gpx.interfaces;
+package ch.bailu.aat_lib.gpx.interfaces
 
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-
-public interface GpxBigDeltaInterface extends GpxDeltaInterface  {
-
-
-    long getPause();
-    long getStartTime();
-    long getEndTime();
-
-    GpxType getType();
-
-    GpxAttributes getAttributes();
+interface GpxBigDeltaInterface : GpxDeltaInterface {
+    fun getPause(): Long
+    fun getStartTime(): Long
+    fun getEndTime(): Long
+    fun getType(): GpxType
+    fun getAttributes(): GpxAttributes
 }

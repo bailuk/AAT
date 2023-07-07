@@ -15,10 +15,10 @@ class AveragePaceDescriptionAP(s: StorageInterface) : AveragePaceDescription(s) 
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val apTime = info.attributes.getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)
-        val apDistance = info.attributes.getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE)
-        val distance = info.distance - apDistance
-        val sTime = (info.timeDelta - apTime) / 1000
+        val apTime = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)
+        val apDistance = info.getAttributes().getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE)
+        val distance = info.getDistance() - apDistance
+        val sTime = (info.getTimeDelta() - apTime) / 1000
         val fTime = sTime.toFloat()
         if (distance > 0f) setCache(fTime / distance) else setCache(0f)
     }

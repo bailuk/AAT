@@ -33,13 +33,13 @@ class PowerDescription : ContentDescription() {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val haveSensor = SensorState.isConnected(InfoID.POWER_SENSOR)
         if (iid == InfoID.POWER_SENSOR && haveSensor) {
-            val hasContact = info.attributes.getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT)
+            val hasContact = info.getAttributes().getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT)
             label = if (hasContact) {
                 labelDefault
             } else {
                 labelWait
             }
-            value = info.attributes[PowerAttributes.KEY_INDEX_POWER]
+            value = info.getAttributes()[PowerAttributes.KEY_INDEX_POWER]
         } else {
             label = labelDefault
             value = VALUE_DISABLED
