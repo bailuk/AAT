@@ -1,33 +1,24 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.attributes.SensorStateAttributes
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.SensorStateAttributes;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SensorStateDescription extends StateDescription {
-    private String unit = "";
-
-    @Override
-    public String getLabel() {
-        return Res.str().sensors();
+class SensorStateDescription : StateDescription() {
+    private var unit = ""
+    override fun getLabel(): String {
+        return Res.str().sensors()
     }
 
-    @Override
-    public String getUnit() {
-        return unit;
+    override fun getUnit(): String {
+        return unit
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        super.onContentUpdated(iid, info);
-
-        GpxAttributes attributes = info.getAttributes();
-
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        super.onContentUpdated(iid, info)
+        val attributes = info.attributes
         if (attributes != null) {
-            unit = info.getAttributes().get(SensorStateAttributes.KEY_SENSOR_OVERVIEW);
+            unit = info.attributes[SensorStateAttributes.KEY_SENSOR_OVERVIEW]
         }
     }
 }

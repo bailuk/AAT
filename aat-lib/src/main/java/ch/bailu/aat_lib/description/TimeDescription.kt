@@ -1,65 +1,62 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.resources.Res
 
-public class TimeDescription extends LongDescription {
-
-    @Override
-    public String getLabel() {
-        return Res.str().time();
+open class TimeDescription : LongDescription() {
+    override fun getLabel(): String {
+        return Res.str().time()
     }
 
-    @Override
-    public String getUnit() {
-        return "";
+    override fun getUnit(): String {
+        return ""
     }
 
-    public String getValue() {
-        return format(getCache());
+    override fun getValue(): String {
+        return format(cache)
     }
 
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getTimeDelta());
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        setCache(info.timeDelta)
     }
 
-    private static final StringBuilder builder = new StringBuilder(10);
-
-    public static String format(long time) {
-        synchronized (builder) {
-            builder.setLength(0);
-            return format(builder, time).toString();
+    companion object {
+        private val builder = StringBuilder(10)
+        fun format(time: Long): String {
+            synchronized(builder) {
+                builder.setLength(0)
+                return format(builder, time).toString()
+            }
         }
-    }
 
-    public static StringBuilder format(StringBuilder out, long time) {
-        int seconds, hours, minutes;
+        fun format(out: StringBuilder, time: Long): StringBuilder {
+            val hours: Int
+            var minutes: Int
 
-        // 1. calculate milliseconds to unit
-        seconds = (int) (time / 1000);
-        minutes = seconds / 60;
-        hours = minutes / 60;
+            // 1. calculate milliseconds to unit
+            var seconds: Int = (time / 1000).toInt()
+            minutes = seconds / 60
+            hours = minutes / 60
 
-        // 2. cut away values that belong to a higher unit
-        seconds -= minutes * 60;
-        minutes -= hours * 60;
-
-        appendValueAndDelimiter(out, hours);
-        appendValueAndDelimiter(out, minutes);
-        appendValue(out, seconds);
-        return out;
-    }
-
-    private static void appendValueAndDelimiter(StringBuilder builder, int value) {
-        appendValue(builder,value);
-        builder.append(":");
-    }
-
-    private static void appendValue(StringBuilder builder, int value) {
-        if (value < 10) {
-            builder.append("0");
+            // 2. cut away values that belong to a higher unit
+            seconds -= minutes * 60
+            minutes -= hours * 60
+            appendValueAndDelimiter(out, hours)
+            appendValueAndDelimiter(out, minutes)
+            appendValue(out, seconds)
+            return out
         }
-        builder.append(value);
+
+        private fun appendValueAndDelimiter(builder: StringBuilder, value: Int) {
+            appendValue(builder, value)
+            builder.append(":")
+        }
+
+        private fun appendValue(builder: StringBuilder, value: Int) {
+            if (value < 10) {
+                builder.append("0")
+            }
+            builder.append(value)
+        }
     }
 }

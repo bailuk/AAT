@@ -1,39 +1,29 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.resources.Res;
-
-public abstract class StateDescription extends ContentDescription {
-
-
-
-
-    private int state = StateID.OFF;
-
-    @Override
-    public String getLabel() {
-        return "R.string.d_state";
+abstract class StateDescription : ContentDescription() {
+    private var state = StateID.OFF
+    override fun getLabel(): String {
+        return "R.string.d_state"
     }
 
-    public String getValue() {
-        String result;
-
-        switch (state) {
-            case StateID.NOACCESS: result = Res.str().gps_noaccess(); break;
-            case StateID.NOSERVICE: result = Res.str().gps_nogps(); break;
-            case StateID.ON: result = Res.str().on(); break;
-            case StateID.OFF: result = Res.str().off(); break;
-            case StateID.PAUSE: result = Res.str().status_paused(); break;
-            case StateID.AUTOPAUSED: result = Res.str().status_autopaused(); break;
-            default: result = Res.str().gps_wait(); break;
+    override fun getValue(): String {
+        val result: String = when (state) {
+            StateID.NOACCESS -> Res.str().gps_noaccess()
+            StateID.NOSERVICE -> Res.str().gps_nogps()
+            StateID.ON -> Res.str().on()
+            StateID.OFF -> Res.str().off()
+            StateID.PAUSE -> Res.str().status_paused()
+            StateID.AUTOPAUSED -> Res.str().status_autopaused()
+            else -> Res.str().gps_wait()
         }
-        return result;
+        return result
     }
 
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        state=info.getState();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        state = info.state
     }
 }

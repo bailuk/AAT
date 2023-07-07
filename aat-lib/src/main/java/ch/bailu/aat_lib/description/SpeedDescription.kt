@@ -1,34 +1,27 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
 
+abstract class SpeedDescription(storage: StorageInterface) : FloatDescription() {
+    private val sunit: SolidUnit
 
-public abstract class SpeedDescription extends FloatDescription {
-
-    private final SolidUnit sunit;
-
-    public SpeedDescription(StorageInterface storage) {
-        sunit = new SolidUnit(storage);
+    init {
+        sunit = SolidUnit(storage)
     }
 
-    @Override
-    public String getUnit() {
-        return sunit.getSpeedUnit();
+    override fun getUnit(): String {
+        return sunit.speedUnit
     }
 
-
-    @Override
-    public String getValue() {
-        float speed = getCache();
-        float speedFactor = sunit.getSpeedFactor();
-        speed = speed * speedFactor;
-        return FF.f().N1.format(speed);
+    override fun getValue(): String {
+        val speedFactor = sunit.speedFactor
+        val speed = cache* speedFactor
+        return FF.f().N1.format(speed.toDouble())
     }
 
-
-    public String getSpeedDescription(float value) {
-        setCache(value);
-        return getValue() + getUnit();
+    fun getSpeedDescription(value: Float): String {
+        cache = value
+        return getValue() + unit
     }
 }

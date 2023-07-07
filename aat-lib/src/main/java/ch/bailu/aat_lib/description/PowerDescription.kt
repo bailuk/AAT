@@ -1,58 +1,51 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.sensor.SensorState
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.PowerAttributes;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.sensor.SensorState;
+class PowerDescription : ContentDescription() {
+    private val labelDefault: String = Res.str().sensor_power()
+    private val labelWait: String = "$labelDefault…"
 
-public class PowerDescription  extends ContentDescription {
-    public static final String UNIT = "W";
-    private final String LABEL, LABEL_WAIT;
+    private var value = VALUE_DISABLED
+    private var label: String
 
-    private String value = VALUE_DISABLED;
-    private String label;
-
-    public PowerDescription() {
-        LABEL = Res.str().sensor_power();
-        LABEL_WAIT = LABEL + "...";
-        label = LABEL;
+    init {
+        label = labelDefault
     }
 
-    @Override
-    public String getValue() {
-        return value;
+    override fun getValue(): String {
+        return value
     }
 
-    @Override
-    public String getLabel() {
-        return label;
+    override fun getLabel(): String {
+        return label
     }
 
-    @Override
-    public String getUnit() {
-        return UNIT;
+    override fun getUnit(): String {
+        return UNIT
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        final boolean haveSensor = SensorState.isConnected(InfoID.POWER_SENSOR);
-
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val haveSensor = SensorState.isConnected(InfoID.POWER_SENSOR)
         if (iid == InfoID.POWER_SENSOR && haveSensor) {
-            final boolean hasContact = info.getAttributes().getAsBoolean(PowerAttributes.KEY_INDEX_CONTACT);
-
-            if (hasContact) {
-                label = LABEL;
+            val hasContact = info.attributes.getAsBoolean(PowerAttributes.KEY_INDEX_CONTACT)
+            label = if (hasContact) {
+                labelDefault
             } else {
-                label = LABEL_WAIT;
+                labelWait
             }
-
-            value = info.getAttributes().get(PowerAttributes.KEY_INDEX_POWER);
+            value = info.attributes[PowerAttributes.KEY_INDEX_POWER]
         } else {
-            label = LABEL;
-            value = VALUE_DISABLED;
+            label = labelDefault
+            value = VALUE_DISABLED
         }
+    }
+
+    companion object {
+        const val UNIT = "W"
     }
 }

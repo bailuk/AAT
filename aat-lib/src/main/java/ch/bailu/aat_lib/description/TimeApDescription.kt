@@ -1,21 +1,16 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.resources.Res
 
-public class TimeApDescription extends TimeDescription {
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        final long autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME);
-        setCache(info.getTimeDelta() - autoPause);
+class TimeApDescription : TimeDescription() {
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val autoPause = info.attributes.getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)
+        setCache(info.timeDelta - autoPause)
     }
 
-
-    @Override
-    public String getLabel() {
-        return Res.str().time_ap();
+    override fun getLabel(): String {
+        return Res.str().time_ap()
     }
-
 }

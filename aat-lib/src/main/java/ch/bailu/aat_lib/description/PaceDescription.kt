@@ -1,83 +1,69 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import kotlin.math.roundToInt
 
-public abstract class PaceDescription extends FloatDescription {
-    private final SolidUnit sunit;
-
-    @Override
-    public String getUnit() {
-        return sunit.getPaceUnit();
+abstract class PaceDescription(s: StorageInterface) : FloatDescription() {
+    private val sunit = SolidUnit(s)
+    override fun getUnit(): String {
+        return sunit.paceUnit
     }
 
-
-    @Override
-    public String getValue() {
-        final float pace = getCache() * sunit.getPaceFactor();
-
-        return getPaceTimeString(pace);
+    override fun getValue(): String {
+        val pace = cache * sunit.paceFactor
+        return getPaceTimeString(pace)
     }
 
+    private fun getPaceTimeString(pace: Float): String {
+        return if (sunit.index == SolidUnit.SI) {
+            FF.f().N1.format(pace.toDouble())
+        } else format(pace)
+    }
 
-    private String getPaceTimeString(float pace) {
+    fun speedToPace(speed: Float): Float {
+        var pace = 0f
+        if (speed != 0f) pace = 1f / speed
+        return pace
+    }
 
-        if (sunit.getIndex() == SolidUnit.SI) {
-            return FF.f().N1.format(pace);
+    companion object {
+        private val builder = StringBuilder(6)
+        fun format(pace: Float): String {
+            synchronized(builder) {
+                builder.setLength(0)
+                return format(builder, pace).toString()
+            }
         }
-        return format(pace);
-    }
 
-    public PaceDescription(StorageInterface s) {
-        sunit = new SolidUnit(s);
-    }
+        fun format(out: StringBuilder, pace: Float): StringBuilder {
+            val hours: Int
+            var minutes: Int
 
-    public float speedToPace(float speed) {
-        float pace = 0f;
+            // 1. calculate milliseconds to unit
+            var seconds: Int = pace.roundToInt()
+            minutes = seconds / 60
+            hours = minutes / 60
 
-        if (speed != 0f)
-            pace = 1f / speed;
+            // 2. cut away values that belong to a higher unit
+            seconds -= minutes * 60
+            minutes -= hours * 60
 
-        return pace;
-    }
-
-
-    private static final StringBuilder builder = new StringBuilder(6);
-
-    public static String format(float pace) {
-        synchronized (builder) {
-            builder.setLength(0);
-            return format(builder, pace).toString();
+            appendValueAndDelimiter(out, minutes)
+            appendValue(out, seconds)
+            return out
         }
-    }
 
-    public static StringBuilder format(StringBuilder out, float pace) {
-        int seconds, hours, minutes;
-
-        // 1. calculate milliseconds to unit
-        seconds = Math.round(pace);
-        minutes = seconds / 60;
-        hours = minutes / 60;
-
-        // 2. cut away values that belong to a higher unit
-        seconds -= minutes * 60;
-        minutes -= hours * 60;
-
-        //appendValueAndDelimer(out, hours);
-        appendValueAndDelimer(out, minutes);
-        appendValue(out, seconds);
-        return out;
-    }
-
-    private static void appendValueAndDelimer(StringBuilder builder, int value) {
-        appendValue(builder,value);
-        builder.append(":");
-    }
-
-    private static void appendValue(StringBuilder builder, int value) {
-        if (value < 10) {
-            builder.append("0");
+        private fun appendValueAndDelimiter(builder: StringBuilder, value: Int) {
+            appendValue(builder, value)
+            builder.append(":")
         }
-        builder.append(value);
+
+        private fun appendValue(builder: StringBuilder, value: Int) {
+            if (value < 10) {
+                builder.append("0")
+            }
+            builder.append(value)
+        }
     }
 }

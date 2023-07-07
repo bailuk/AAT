@@ -1,35 +1,29 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.resources.Res;
-
-public class NameDescription extends ContentDescription {
-    private String name = "";
-
-    @Override
-    public String getLabel() {
-        return Res.str().d_name();
+open class NameDescription : ContentDescription() {
+    private var name = ""
+    override fun getLabel(): String {
+        return Res.str().d_name()
     }
 
-    @Override
-    public String getUnit() {
-        return "";
+    override fun getUnit(): String {
+        return ""
     }
 
-    public String getValue() {
-        return name;
+    override fun getValue(): String {
+        return name
     }
 
-    public boolean updateName(String s) {
-        boolean r = !name.equals(s);
-        name=s;
-        return r;
+    fun updateName(s: String): Boolean {
+        val r = name != s
+        name = s
+        return r
     }
 
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        updateName(info.getFile().getName());
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        updateName(info.file.name)
     }
-
 }

@@ -1,32 +1,26 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.resources.Res
 
-public class TrackSizeDescription extends ContentDescription {
-    private String value="";
-    private int size=-1;
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-
-        GpxList track =  info.getGpxList();
-        if (track != null && size != track.getPointList().size()) {
-            size = track.getPointList().size();
-
-            value =   "P: " + track.getPointList().size() +
-                    ", M: " + track.getMarkerList().size() +
-                    ", S: " + track.getSegmentList().size();
+class TrackSizeDescription : ContentDescription() {
+    private var value = ""
+    private var size = -1
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val track = info.gpxList
+        if (track != null && size != track.pointList.size()) {
+            size = track.pointList.size()
+            value = "P: " + track.pointList.size() +
+                    ", M: " + track.markerList.size() +
+                    ", S: " + track.segmentList.size()
         }
     }
 
-    public String getValue() {
-        return value;
+    override fun getValue(): String {
+        return value
     }
 
-    @Override
-    public String getLabel() {
-        return Res.str().d_size();
+    override fun getLabel(): String {
+        return Res.str().d_size()
     }
 }

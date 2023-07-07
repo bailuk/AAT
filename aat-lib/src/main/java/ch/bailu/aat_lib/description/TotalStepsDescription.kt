@@ -1,49 +1,32 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
+import ch.bailu.aat_lib.resources.Res
 
-public class TotalStepsDescription extends ContentDescription {
+class TotalStepsDescription : ContentDescription() {
+    private var value = VALUE_DISABLED
+    private val unit: String = Res.str().sensor_step_total_unit()
+    private val label: String = Res.str().sensor_step_total()
 
-    private String value = VALUE_DISABLED;
-    private final String unit;
-    private final String label;
-
-
-    public TotalStepsDescription() {
-        unit = Res.str().sensor_step_total_unit();
-        label = Res.str().sensor_step_total();
+    override fun getValue(): String {
+        return value
     }
 
-    @Override
-    public String getValue() {
-        return value;
+    override fun getLabel(): String {
+        return label
     }
 
-    @Override
-    public String getLabel() {
-        return label;
+    override fun getUnit(): String {
+        return unit
     }
 
-    @Override
-    public String getUnit() {
-        return unit;
-    }
-
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-
-        GpxAttributes attr = info.getAttributes();
-
-        if (attr.hasKey(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)) {
-            value = info.getAttributes().get(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL);
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val attr = info.attributes
+        value = if (attr.hasKey(StepCounterAttributes.KEY_INDEX_STEPS_TOTAL)) {
+            info.attributes[StepCounterAttributes.KEY_INDEX_STEPS_TOTAL]
         } else {
-            value = VALUE_DISABLED;
-
-
+            VALUE_DISABLED
         }
     }
 }

@@ -1,26 +1,16 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class MaximumSpeedDescription  extends SpeedDescription {
-
-    public MaximumSpeedDescription(StorageInterface storage) {
-        super(storage);
+class MaximumSpeedDescription(storage: StorageInterface) : SpeedDescription(storage) {
+    override fun getLabel(): String {
+        return Res.str().maximum()
     }
 
-    @Override
-    public String getLabel() {
-        return Res.str().maximum();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        cache = info.attributes.getAsFloat(MaxSpeed.INDEX_MAX_SPEED)
     }
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getAttributes().getAsFloat(MaxSpeed.INDEX_MAX_SPEED));
-    }
-
 }
-
