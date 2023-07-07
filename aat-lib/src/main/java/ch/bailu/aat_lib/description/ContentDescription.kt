@@ -1,28 +1,23 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 
-public abstract class ContentDescription
-        implements ContentInterface, OnContentUpdatedInterface {
+abstract class ContentDescription : ContentInterface, OnContentUpdatedInterface {
+    abstract fun getValue(): String
 
-    public static final String VALUE_DISABLED = "--";
-
-    protected static final String NULL_STRING="";
-
-    public abstract String getValue();
-    public abstract String getLabel();
-    public String getLabelShort() {
-        return getLabel();
+    open fun getLabelShort(): String {
+        return getLabel()
     }
 
-    public String getUnit() {
-        return NULL_STRING;
+    override fun getValueAsString(): String {
+        return "${getValue()} ${getUnit()}"
     }
 
-
-    @Override
-    public String getValueAsString() {
-        return getValue() + " " + getUnit();
+    open fun getUnit(): String {
+        return ""
     }
 
+    companion object {
+        const val VALUE_DISABLED = "--"
+    }
 }

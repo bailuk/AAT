@@ -10,8 +10,8 @@ class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
         val value = StringBuilder()
         var del = ""
         for (d in descriptions) {
-            value.append(del).append(d.value)
-            val unit = d.unit
+            value.append(del).append(d.getValue())
+            val unit = d.getUnit()
             if (unit.isNotEmpty()) value.append(" ").append(unit)
             del = ", "
         }

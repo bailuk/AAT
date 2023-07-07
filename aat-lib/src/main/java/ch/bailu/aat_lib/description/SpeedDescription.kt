@@ -22,6 +22,6 @@ abstract class SpeedDescription(storage: StorageInterface) : FloatDescription() 
 
     fun getSpeedDescription(value: Float): String {
         setCache(value)
-        return getValue() + unit
+        return getValue() + getUnit()
     }
 }

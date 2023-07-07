@@ -142,9 +142,9 @@ open class NumberView(context: Context, data: ContentDescription, private val th
     }
 
     fun updateAllText() {
-        number.text = description.value
-        label.text = description.labelShort
-        unit.text = description.unit
+        number.text = description.getValue()
+        label.text = description.getLabelShort()
+        unit.text = description.getUnit()
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {

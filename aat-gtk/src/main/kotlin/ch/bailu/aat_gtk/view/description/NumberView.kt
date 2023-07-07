@@ -41,8 +41,8 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     }
 
     private fun updateAllText() {
-        number.setLabel("<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.value}</span>")
-        label.setText(description.labelShort)
-        unit.setText(description.unit)
+        number.setLabel("<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.getValue()}</span>")
+        label.setText(description.getLabelShort())
+        unit.setText(description.getUnit())
     }
 }
