@@ -1,18 +1,14 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.resources.Res;
-
-public class EndDateDescription extends DateDescription {
-
-    @Override
-    public String getLabel() {
-        return Res.str().d_enddate();
+class EndDateDescription : DateDescription() {
+    override fun getLabel(): String {
+        return Res.str().d_enddate()
     }
 
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getEndTime());
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        setCache(info.endTime)
     }
 }

@@ -1,25 +1,17 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-public class DistanceApDescription extends DistanceDescription {
-    public DistanceApDescription(StorageInterface storage) {
-        super(storage);
+class DistanceApDescription(storage: StorageInterface) : DistanceDescription(storage) {
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val apDistance = info.attributes.getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE)
+        setCache(info.distance - apDistance)
     }
 
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        float apDistance = info.getAttributes().getAsFloat(AutoPause.INDEX_AUTO_PAUSE_DISTANCE);
-        setCache(info.getDistance() - apDistance);
+    override fun getLabel(): String {
+        return Res.str().distance_ap()
     }
-
-    @Override
-    public String getLabel() {
-        return Res.str().distance_ap();
-    }
-
 }

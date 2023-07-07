@@ -1,52 +1,40 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import java.text.DecimalFormat;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.resources.Res
+import java.text.DecimalFormat
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.resources.Res;
+open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescription() {
+    private val unit = SolidUnit(storageInterface)
+    override fun getLabel(): String {
+        return Res.str().altitude()
+    }
 
-public class AltitudeDescription extends FloatDescription {
+    override fun getUnit(): String {
+        return unit.altitudeUnit
+    }
 
-    private final SolidUnit unit;
-
-
-    public AltitudeDescription(StorageInterface storageInterface) {
-        unit = new SolidUnit(storageInterface);
+    override fun getValue(): String {
+        return getValue(cache)
     }
 
 
-
-    @Override
-    public String getLabel() {
-        return Res.str().altitude();
+    fun getValue(v: Float): String {
+        val f = unit.altitudeFactor
+        return f0.format((v * f).toDouble())
     }
 
-    @Override
-    public String getUnit() {
-        return unit.getAltitudeUnit();
+    fun getValueUnit(v: Float): String {
+        return getValue(v) + " " + getUnit()
     }
 
-    public String getValue() {
-        return getValue(getCache());
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        setCache(info.altitude.toFloat())
     }
 
-    private static final DecimalFormat f0 = new DecimalFormat("0");
-
-    public String getValue(float v) {
-        float f = unit.getAltitudeFactor();
-        return f0.format(v *f);
+    companion object {
+        private val f0 = DecimalFormat("0")
     }
-
-
-    public String getValueUnit(float v) {
-        return getValue(v) + " " + getUnit();
-    }
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache( ((float)info.getAltitude()) );
-    }
-
 }

@@ -1,40 +1,37 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.util.Date;
+import java.text.DateFormat
+import java.text.DecimalFormat
 
-public class FF {
+class FF private constructor() {
+    @JvmField
+    val LOCAL_DATE_TIME = DateFormat.getDateTimeInstance(
+        DateFormat.LONG, DateFormat.LONG
+    )
+    @JvmField
+    val LOCAL_DATE = DateFormat.getDateInstance()
+    @JvmField
+    val N = DecimalFormat("0")
+    @JvmField
+    val N1 = DecimalFormat("0.0")
+    @JvmField
+    val N2 = DecimalFormat("0.00")
+    @JvmField
+    val N3 = DecimalFormat("0.000")
+    @JvmField
+    val N6 = DecimalFormat("0.000000")
+    val N3_3 = DecimalFormat("000.000")
 
-
-    public final DateFormat LOCAL_DATE_TIME = DateFormat.getDateTimeInstance(
-            DateFormat.LONG, DateFormat.LONG);
-
-    public final DateFormat LOCAL_TIME = DateFormat.getTimeInstance();
-
-    public final DateFormat LOCAL_DATE = DateFormat.getDateInstance();
-
-
-    public final DecimalFormat N = new DecimalFormat("0");
-    public final DecimalFormat N1 = new DecimalFormat("0.0");
-    public final DecimalFormat N2 = new DecimalFormat("0.00");
-    public final DecimalFormat N3 = new DecimalFormat("0.000");
-    public final DecimalFormat N6 = new DecimalFormat("0.000000");
-
-
-    public final DecimalFormat N3_3 = new DecimalFormat("000.000");
-
-    private FF() {}
-
-    private static final ThreadLocal<FF> F = new ThreadLocal<FF>() {
-        @Override
-        public FF initialValue() {
-            return new FF();
+    companion object {
+        private val F: ThreadLocal<FF> = object : ThreadLocal<FF>() {
+            public override fun initialValue(): FF {
+                return FF()
+            }
         }
-    };
 
-    public static FF f() {
-        return F.get();
+        @JvmStatic
+        fun f(): FF {
+            return F.get()
+        }
     }
-
 }

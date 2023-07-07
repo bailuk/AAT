@@ -1,57 +1,51 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.sensor.SensorState
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.sensor.SensorState;
+class CadenceDescription : ContentDescription() {
+    private val labelDefault: String = Res.str().sensor_cadence()
+    private val labelWait: String = "$labelDefault…"
+    private var value = VALUE_DISABLED
+    private var label: String
 
-public class CadenceDescription  extends ContentDescription {
-    public static final String UNIT = "rpm";
-    private final String LABEL, LABEL_WAIT;
-
-    private String value = VALUE_DISABLED;
-    private String label;
-
-    public CadenceDescription() {
-        LABEL = Res.str().sensor_cadence();
-        LABEL_WAIT = LABEL + "…";
-        label = LABEL;
+    init {
+        label = labelDefault
     }
 
-    @Override
-    public String getValue() {
-        return value;
+    override fun getValue(): String {
+        return value
     }
 
-    @Override
-    public String getLabel() {
-        return label;
+    override fun getLabel(): String {
+        return label
     }
 
-    @Override
-    public String getUnit() {
-        return UNIT;
+    override fun getUnit(): String {
+        return UNIT
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        final boolean haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR);
-
+    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+        val haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR)
         if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
-            final boolean hasContact = info.getAttributes().getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT);
-
-            if (hasContact) {
-                label = LABEL;
+            val hasContact = info.attributes.getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT)
+            label = if (hasContact) {
+                labelDefault
             } else {
-                label = LABEL_WAIT;
+                labelWait
             }
-            value = info.getAttributes().get(CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM);
+            value = info.attributes[CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM]
         } else {
-            label = LABEL;
-            value = VALUE_DISABLED;
+            label = labelDefault
+            value = VALUE_DISABLED
         }
+    }
+
+    companion object {
+        const val UNIT = "rpm"
     }
 }

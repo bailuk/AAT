@@ -1,79 +1,58 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import java.text.DecimalFormat;
-import java.util.Objects;
+import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.resources.Res
+import java.util.Objects
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.resources.Res;
+open class DistanceDescription(storage: StorageInterface) : FloatDescription() {
+    private val format = arrayOf(f().N3, f().N2, f().N1, f().N)
+    private val unit: SolidUnit
 
-public class DistanceDescription extends FloatDescription {
-    private final DecimalFormat[] FORMAT =
-            {FF.f().N3, FF.f().N2, FF.f().N1, FF.f().N};
-    private final SolidUnit unit;
-
-    public DistanceDescription(StorageInterface storage) {
-        Objects.requireNonNull(storage);
-        unit = new SolidUnit(storage);
+    init {
+        Objects.requireNonNull(storage)
+        unit = SolidUnit(storage)
     }
 
-
-    @Override
-    public String getLabel() {
-        return Res.str().distance();
+    override fun getLabel(): String {
+        return Res.str().distance()
     }
 
-
-    @Override
-    public String getUnit() {
-        return unit.getDistanceUnit();
+    override fun getUnit(): String {
+        return unit.distanceUnit
     }
 
-
-    public String getValue() {
-        float dist = unit.getDistanceFactor() * getCache();
-
-        int format=0;
-        for (int x=10; dist >= x && format < FORMAT.length-1; x*=10) format++;
-        return FORMAT[format].format(dist);
+    override fun getValue(): String {
+        val dist = unit.distanceFactor * cache
+        var format = 0
+        var x = 10
+        while (dist >= x && format < this.format.size - 1) {
+            format++
+            x *= 10
+        }
+        return this.format[format].format(dist.toDouble())
     }
 
-
-
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setCache(info.getDistance());
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        setCache(info.distance)
     }
 
-
-    public String getDistanceDescription(float distance) {
-        float nonSI=distance * unit.getDistanceFactor();
-
-        if (nonSI < 1)
-            return getAltitudeDescription(distance);
-
-
-        return FF.f().N.format(nonSI) + " " + unit.getDistanceUnit();
+    fun getDistanceDescription(distance: Float): String {
+        val nonSI = distance * unit.distanceFactor
+        return if (nonSI < 1) getAltitudeDescription(distance.toDouble()) else f().N.format(nonSI.toDouble()) + " " + unit.distanceUnit
     }
 
-
-    public String getDistanceDescriptionN1(float distance) {
-        float nonSI=distance * unit.getDistanceFactor();
-
-        if (nonSI < 1)
-            return getAltitudeDescription(distance);
-
-
-        return FF.f().N1.format(nonSI) + " " + unit.getDistanceUnit();
+    fun getDistanceDescriptionN1(distance: Float): String {
+        val nonSI = distance * unit.distanceFactor
+        return if (nonSI < 1) getAltitudeDescription(distance.toDouble()) else f().N1.format(nonSI.toDouble()) + " " + unit.distanceUnit
     }
 
-
-    public String getAltitudeDescription(double value) {
-        return FF.f().N.format(
-                value*unit.getAltitudeFactor()) +
-                unit.getAltitudeUnit();
+    fun getAltitudeDescription(value: Double): String {
+        return f().N.format(
+            value * unit.altitudeFactor
+        ) +
+                unit.altitudeUnit
     }
-
 }

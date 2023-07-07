@@ -1,46 +1,37 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
+class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
+    private val descriptions = arrayOf(*d)
 
-public class ContentDescriptions extends ContentDescription {
 
-    private final ContentDescription[] descriptions;
-
-    public ContentDescriptions(ContentDescription... d) {
-        descriptions = d;
-    }
-
-    @Override
-    public String getValue() {
-        final StringBuilder value = new StringBuilder();
-        String del = "";
-
-        for (ContentDescription d: descriptions) {
-            value.append(del).append(d.getValue());
-            final String unit = d.getUnit();
-            if (unit.length() > 0) value.append(" ").append(unit);
-            del = ", ";
+    override fun getValue(): String {
+        val value = StringBuilder()
+        var del = ""
+        for (d in descriptions) {
+            value.append(del).append(d.value)
+            val unit = d.unit
+            if (unit.isNotEmpty()) value.append(" ").append(unit)
+            del = ", "
         }
-        return value.toString();
+        return value.toString()
     }
 
-    @Override
-    public String getLabel() {
-        final StringBuilder label = new StringBuilder();
-        String del = "";
-        for (ContentDescription d: descriptions) {
-            label.append(del).append(d.getLabel());
-            del = ", ";
+    override fun getLabel(): String {
+        val label = StringBuilder()
+        var del = ""
+        for (d in descriptions) {
+            label.append(del).append(d.label)
+            del = ", "
         }
-        return label.toString();
+        return label.toString()
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        for (ContentDescription d: descriptions) {
-            d.onContentUpdated(iid, info);
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        for (d in descriptions) {
+            d.onContentUpdated(iid, info)
         }
     }
 }

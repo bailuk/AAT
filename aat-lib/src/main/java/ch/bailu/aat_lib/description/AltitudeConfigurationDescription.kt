@@ -1,51 +1,43 @@
-package ch.bailu.aat_lib.description;
+package ch.bailu.aat_lib.description
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.sensor.SensorState
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.sensor.SensorState;
+class AltitudeConfigurationDescription(storage: StorageInterface) : AltitudeDescription(
+    storage
+) {
+    private var configuration: String = ""
+    private var haveSensor = SensorState.isConnected(InfoID.BAROMETER_SENSOR)
+    private val sadjustAltitude = SolidAdjustGpsAltitude(storage)
 
-public class AltitudeConfigurationDescription extends AltitudeDescription {
-
-    private String configuration;
-
-    private boolean haveSensor = SensorState.isConnected(InfoID.BAROMETER_SENSOR);
-
-    private final SolidAdjustGpsAltitude sadjustAltitude;
-
-    public AltitudeConfigurationDescription(StorageInterface storage) {
-        super(storage);
-        sadjustAltitude = new SolidAdjustGpsAltitude(storage);
-        setLabel();
+    init {
+        setLabel()
     }
 
-    private void setLabel() {
-        if (haveSensor) {
-            configuration  = " " + Res.str().sensor_barometer();
-        } else if (sadjustAltitude.isEnabled()) {
-            configuration = " GPS+-";
+    private fun setLabel() {
+        configuration = if (haveSensor) {
+            " " + Res.str().sensor_barometer()
+        } else if (sadjustAltitude.isEnabled) {
+            " GPS+-"
         } else {
-            configuration = " GPS";
+            " GPS"
         }
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation information) {
-        final boolean state = SensorState.isConnected(InfoID.BAROMETER_SENSOR);
-
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        val state = SensorState.isConnected(InfoID.BAROMETER_SENSOR)
         if (haveSensor != state) {
-            haveSensor = state;
-            setLabel();
+            haveSensor = state
+            setLabel()
         }
-        super.onContentUpdated(iid, information);
+        super.onContentUpdated(iid, info)
     }
 
-    @Override
-    public String getLabel() {
-        return super.getLabel() + configuration;
+    override fun getLabel(): String {
+        return super.getLabel() + configuration
     }
 }
