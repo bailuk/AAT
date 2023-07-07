@@ -1,226 +1,173 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.util.LatLongUtils;
+import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.xml.parser.util.DoubleScanner
+import ch.bailu.aat_lib.xml.parser.util.Stream
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.LatLong
+import org.mapsforge.core.util.LatLongUtils
+import java.io.IOException
+import javax.annotation.Nonnull
 
-import java.io.IOException;
+class BoundingBoxE6 {
+    var latNorthE6 = MIN_LA
+        private set
+    var lonEastE6 = MIN_LO
+        private set
+    var latSouthE6 = MAX_LA
+        private set
+    var lonWestE6 = MAX_LO
+        private set
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.description.FF;
-import ch.bailu.aat_lib.xml.parser.util.DoubleScanner;
-import ch.bailu.aat_lib.xml.parser.util.Stream;
-
-public class BoundingBoxE6 {
-
-
-    private static final int MIN_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MIN);
-    private static final int MAX_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MAX);
-    private static final int MAX_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MAX);
-    private static final int MIN_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MIN);
-
-
-    public final static BoundingBoxE6 NULL_BOX = new BoundingBoxE6(0,0);
-
-
-    private int north = MIN_LA,
-            east  = MIN_LO,
-            south = MAX_LA,
-            west  = MAX_LO;
-
-
-
-
-    public BoundingBoxE6() {}
-
-    public BoundingBoxE6(int n, int e, int s, int w) {
-        add(n,e,s,w);
+    constructor()
+    constructor(n: Int, e: Int, s: Int, w: Int) {
+        add(n, e, s, w)
     }
 
-
-    public BoundingBoxE6(int la, int lo) {
-        add(la, lo);
+    constructor(la: Int, lo: Int) {
+        add(la, lo)
     }
 
-    public BoundingBoxE6(BoundingBox b) {
-        north = LatLongE6.toE6(b.maxLatitude);
-        south = LatLongE6.toE6(b.minLatitude);
-        west = LatLongE6.toE6(b.minLongitude);
-        east = LatLongE6.toE6(b.maxLongitude);
-
+    constructor(b: BoundingBox) {
+        latNorthE6 = LatLongE6.toE6(b.maxLatitude)
+        latSouthE6 = LatLongE6.toE6(b.minLatitude)
+        lonWestE6 = LatLongE6.toE6(b.minLongitude)
+        lonEastE6 = LatLongE6.toE6(b.maxLongitude)
     }
 
-
-    public BoundingBoxE6(BoundingBoxE6 b) {
-        add(b);
+    constructor(b: BoundingBoxE6) {
+        add(b)
     }
 
-
-
-    public void add(String bounding) {
-        final Stream stream = new Stream(bounding);
-        final DoubleScanner parser = new DoubleScanner(6);
-
+    fun add(bounding: String) {
+        val stream = Stream(bounding)
+        val parser = DoubleScanner(6)
         try {
-            parser.scan(stream);
-            final int s=parser.getInt();
-
-
-            parser.scan(stream);
-            final int n=parser.getInt();
-
-
-            parser.scan(stream);
-            final int w=parser.getInt();
-
-            parser.scan(stream);
-            final int e=parser.getInt();
-
-            add(n,e,s,w);
-        } catch (IOException e) {
-            e.printStackTrace();
+            parser.scan(stream)
+            val s = parser.int
+            parser.scan(stream)
+            val n = parser.int
+            parser.scan(stream)
+            val w = parser.int
+            parser.scan(stream)
+            val e = parser.int
+            add(n, e, s, w)
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 
-
-    public void add(BoundingBoxE6 b) {
-        add(b.north, b.east,
-                b.south, b.west);
+    fun add(b: BoundingBoxE6) {
+        add(
+            b.latNorthE6, b.lonEastE6,
+            b.latSouthE6, b.lonWestE6
+        )
     }
 
-
-
-    public void add(LatLong latLong) {
-        add(latLong.getLatitudeE6(), latLong.getLongitudeE6());
+    fun add(latLong: LatLong) {
+        add(latLong.latitudeE6, latLong.longitudeE6)
     }
 
-    public void add(LatLongInterface point) {
-        add(point.getLatitudeE6(), point.getLongitudeE6());
+    fun add(point: LatLongInterface) {
+        add(point.getLatitudeE6(), point.getLongitudeE6())
     }
 
-
-
-    public void add(int la, int lo) {
-        add(la, lo, la, lo);
+    fun add(la: Int, lo: Int) {
+        add(la, lo, la, lo)
     }
 
-    public void add(int n, int e, int s, int w) {
-        north = Math.max(n,north);
-        east  = Math.max(e,east);
-        south = Math.min(s,south);
-        west  = Math.min(w,west);
+    fun add(n: Int, e: Int, s: Int, w: Int) {
+        latNorthE6 = maxOf(n, latNorthE6)
+        lonEastE6 = maxOf(e, lonEastE6)
+        latSouthE6 = minOf(s, latSouthE6)
+        lonWestE6 = minOf(w, lonWestE6)
     }
 
-
-    public boolean contains(LatLong p) {
-        return contains(p.getLatitudeE6(), p.getLongitudeE6());
+    operator fun contains(p: LatLong): Boolean {
+        return contains(p.latitudeE6, p.longitudeE6)
     }
 
-    public boolean contains(LatLongInterface p) {
-        return contains(p.getLatitudeE6(), p.getLongitudeE6());
+    operator fun contains(p: LatLongInterface): Boolean {
+        return contains(p.getLatitudeE6(), p.getLongitudeE6())
     }
 
-
-    public boolean contains(int la, int lo) {
-        return la < north && la > south && lo < east && lo > west;
+    fun contains(la: Int, lo: Int): Boolean {
+        return la < latNorthE6 && la > latSouthE6 && lo < lonEastE6 && lo > lonWestE6
     }
 
-    public static boolean doOverlap(BoundingBoxE6 b1, BoundingBoxE6 b2) {
-        return
-                (b1.containsLatitude(b2) || b2.containsLatitude(b1)) &&
-                        (b2.containsLongitude(b1) || b1.containsLongitude(b2));
+    fun containsLongitude(b: BoundingBoxE6): Boolean {
+        return containsLongitude(b.lonEastE6) || containsLongitude(b.lonWestE6)
     }
 
-
-    public boolean containsLongitude(BoundingBoxE6 b) {
-        return containsLongitude(b.east) || containsLongitude(b.west);
+    fun containsLongitude(lo: Int): Boolean {
+        return lo > lonWestE6 && lo < lonEastE6
     }
 
-    public boolean containsLongitude(int lo) {
-        return lo > west && lo < east;
+    fun containsLatitude(b: BoundingBoxE6): Boolean {
+        return containsLatitude(b.latNorthE6) || containsLatitude(b.latSouthE6)
     }
 
-    public boolean containsLatitude(BoundingBoxE6 b) {
-        return containsLatitude(b.north) || containsLatitude(b.south);
+    fun containsLatitude(la: Int): Boolean {
+        return la < latNorthE6 && la > latSouthE6
     }
 
-    public boolean containsLatitude(int la) {
-        return la < north && la > south;
+    fun toBoundingBox(): BoundingBox {
+        validate()
+        val b = BoundingBoxE6(this)
+        b.validate()
+        return BoundingBox(
+            LatLongE6.toD(minOf(b.latSouthE6, b.latNorthE6)),
+            LatLongE6.toD(minOf(b.lonWestE6, b.lonEastE6)),
+            LatLongE6.toD(maxOf(b.latSouthE6, b.latNorthE6)),
+            LatLongE6.toD(maxOf(b.lonWestE6, b.lonEastE6))
+        )
     }
 
-    public BoundingBox toBoundingBox() {
-        validate();
-        BoundingBoxE6 b = new BoundingBoxE6(this);
-        b.validate();
-
-        return new BoundingBox(
-                LatLongE6.toD(Math.min(b.south, b.north)),
-                LatLongE6.toD(Math.min(b.west, b.east)),
-                LatLongE6.toD(Math.max(b.south, b.north)),
-                LatLongE6.toD(Math.max(b.west, b.east)));
+    fun hasBounding(): Boolean {
+        return latNorthE6 > latSouthE6 && lonEastE6 > lonWestE6
     }
-
-
-
-    public int getLatNorthE6() {
-        return north;
-    }
-
-    public int getLonWestE6() {
-        return west;
-    }
-
-    public int getLonEastE6() {
-        return east;
-    }
-
-    public int getLatSouthE6() {
-        return south;
-    }
-
-    public boolean hasBounding() {
-        return (north > south && east > west);
-    }
-
 
     @Nonnull
-    @Override
-    public String toString() {
-        final FF f = FF.f();
-        return  f.N2.format(north/1e6f) + "," +
-                f.N2.format(west/1e6f)     + "," +
-                f.N2.format(south/1e6f)    + "," +
-                f.N2.format(east/1e6f);
+    override fun toString(): String {
+        val f = FF.f()
+        return f.N2.format((latNorthE6 / 1e6f).toDouble()) + "," +
+                f.N2.format((lonWestE6 / 1e6f).toDouble()) + "," +
+                f.N2.format((latSouthE6 / 1e6f).toDouble()) + "," +
+                f.N2.format((lonEastE6 / 1e6f).toDouble())
     }
 
+    val latitudeSpanE6: Int
+        get() = Math.abs(latNorthE6 - latSouthE6)
+    val longitudeSpanE6: Int
+        get() = Math.abs(lonWestE6 - lonEastE6)
+    val center: LatLongE6
+        get() = LatLongE6(latSouthE6 + latitudeSpanE6 / 2, lonWestE6 + longitudeSpanE6 / 2)
 
-    public int getLatitudeSpanE6() {
-        return Math.abs(north - south);
+    private fun validate() {
+        latNorthE6 = validate(latNorthE6, MIN_LA, MAX_LA)
+        latSouthE6 = validate(latSouthE6, MIN_LA, MAX_LA)
+        lonEastE6 = validate(lonEastE6, MIN_LO, MAX_LO)
+        lonWestE6 = validate(lonWestE6, MIN_LO, MAX_LO)
     }
 
-    public int getLongitudeSpanE6() {
-        return Math.abs(west - east);
+    companion object {
+        private val MIN_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MIN)
+        private val MAX_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MAX)
+        private val MAX_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MAX)
+        private val MIN_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MIN)
+        @JvmField
+        val NULL_BOX = BoundingBoxE6(0, 0)
+        @JvmStatic
+        fun doOverlap(b1: BoundingBoxE6, b2: BoundingBoxE6): Boolean {
+            return (b1.containsLatitude(b2) || b2.containsLatitude(b1)) &&
+                    (b2.containsLongitude(b1) || b1.containsLongitude(b2))
+        }
+
+        private fun validate(toValidate: Int, min: Int, max: Int): Int {
+            var result = toValidate
+            result = minOf(result, max)
+            result = maxOf(result, min)
+            return result
+        }
     }
-
-    public LatLongE6 getCenter() {
-        return new LatLongE6(south + getLatitudeSpanE6()/2, west + getLongitudeSpanE6()/2);
-    }
-
-
-    private void validate() {
-        north = validate(north, MIN_LA, MAX_LA);
-        south = validate(south, MIN_LA, MAX_LA);
-        east = validate(east, MIN_LO, MAX_LO);
-        west = validate(west, MIN_LO, MAX_LO);
-
-    }
-
-    private static int validate(int val, int min, int max) {
-        val = Math.min(val, max);
-        val = Math.max(val, min);
-        return val;
-    }
-
 }
-

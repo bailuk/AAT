@@ -1,547 +1,425 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
-import org.mapsforge.core.model.LatLong;
+import ch.bailu.aat_lib.description.FF
+import org.mapsforge.core.model.LatLong
+import javax.annotation.Nonnull
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.sin
+import kotlin.math.sqrt
+import kotlin.math.tan
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.description.FF;
-
-public class UTMCoordinates extends MeterCoordinates {
-
-
-    private static class EastingZones {
-        private final static double WIDTH_DEG=6d;
-
-        public static int getZone(double lo) {
-            lo = lo + 180d;
-            lo /= WIDTH_DEG;
-
-            int x=(int)lo;
-            return x+1;
-
+class UTMCoordinates : MeterCoordinates {
+    private object EastingZones {
+        private const val WIDTH_DEG = 6.0
+        fun getZone(lon: Double): Int {
+            val lo  = (lon + 180.0) / WIDTH_DEG
+            return lo.toInt() + 1
         }
     }
 
+    private object NorthingZones {
+        private const val WIDTH_DEG = 8.0
+        private val zonesSouth = charArrayOf('M', 'L', 'K', 'J', 'H', 'G', 'F', 'E', 'D', 'C')
+        private val zonesNorth = charArrayOf('N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X')
+        fun getZone(la: Double): Char {
+            return if (la < 0) {
+                getZone(abs(la), zonesSouth)
+            } else getZone(la, zonesNorth)
+        }
 
-    private static class NorthingZones {
-        private final static double WIDTH_DEG=8d;
-
-        private static final char[] zonesSouth = {'M', 'L', 'K', 'J', 'H', 'G', 'F', 'E', 'D', 'C'};
-
-        private static final char[] zonesNorth =
-                new char[] {'N','P','Q','R','S','T','U','V','W','X'};
-
-        public static char getZone(double la) {
-            if (la < 0) {
-                return getZone(Math.abs(la), zonesSouth);
+        private fun getZone(la: Double, zones: CharArray): Char {
+            var i = (la / WIDTH_DEG).toInt()
+            if (i >= zones.size) {
+                i = zones.size - 1
             }
-            return getZone(la, zonesNorth);
+            return zones[i]
         }
 
-        private static char getZone(double la, char[] zones) {
-            int i = (int) (la / WIDTH_DEG);
+        fun isValid(nZone: Char): Boolean {
+            return findZone(nZone, zonesNorth) || findZone(nZone, zonesSouth)
+        }
 
-            if (i >= zones.length) {
-                i = zones.length -1;
+        fun isInSouthernHemisphere(nZone: Char): Boolean {
+            return findZone(nZone, zonesSouth)
+        }
+
+        private fun findZone(nZone: Char, zones: CharArray): Boolean {
+            for (x in zones) {
+                if (nZone == x) return true
             }
-            return zones[i];
+            return false
         }
-
-        public static boolean isValid(char nzone) {
-            return  (findZone(nzone, zonesNorth) || findZone(nzone, zonesSouth));
-        }
-
-        public static boolean isInSouthernHemnisphere(char nzone) {
-            return findZone(nzone, zonesSouth);
-        }
-
-        private static boolean findZone(char nzone, char[] zones) {
-            for (char x: zones) {
-                if (nzone == x) return true;
-            }
-            return false;
-        }
-
     }
 
+    /**
+     *
+     * @return character representation of northing zone by this coordinate
+     */
+    val northingZone: Char
+    val eastingZone: Int
+    private var eastingDouble: Double = 0.0
+    private var northingDouble: Double = 0.0
 
-    /* Ellipsoid model constants (actual values here are for WGS84) */
-    private final static double EQUATOR_RADIUS_M = 6378137.0;
-    private final static double POLAR_RADIUS_M = 6356752.314;
-
-    private final static double UTM_SCALE_FACTOR = 0.9996;
-
-
-    private final char nzone;
-    private final int ezone;
-
-    private double easting, northing;
-
-
-    public UTMCoordinates(LatLong p) {
-        this(p.getLatitude(), p.getLongitude());
+    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude()) {}
+    constructor(la: Double, lo: Double) {
+        eastingZone = EastingZones.getZone(lo)
+        northingZone = NorthingZones.getZone(la)
+        toUTM(Math.toRadians(la), Math.toRadians(lo), eastingZone)
     }
 
-    public UTMCoordinates(double la, double lo) {
-        ezone=EastingZones.getZone(lo);
-        nzone=NorthingZones.getZone(la);
-
-        toUTM(Math.toRadians(la), Math.toRadians(lo), ezone);
-    }
-
-
-
-    public UTMCoordinates(int e, int n, int ezone, char nzone) {
-        northing=n;
-        easting=e;
-        this.ezone=ezone;
-        this.nzone = nzone;
-    }
-
-
-    public UTMCoordinates(LatLongInterface point) {
-        this(((double)point.getLatitudeE6())/1e6d, ((double)point.getLongitudeE6())/1e6d);
+    constructor(e: Int, n: Int, eZone: Int, nZone: Char) {
+        northingDouble = n.toDouble()
+        eastingDouble = e.toDouble()
+        eastingZone = eZone
+        northingZone = nZone
     }
 
 
     /**
      * Parse string for a valid UTM coordinate to initialize this object
      * @param code string of the format "18T 612284 5040357"
-     *             (easting zone as number, northing zone as letter, easting in meters, northing in meters)
+     * (easting zone as number, northing zone as letter, easting in meters, northing in meters)
      *
      * @throws IllegalArgumentException if string can't be parsed
      */
-    public UTMCoordinates(String code) throws IllegalArgumentException {
-
-        String[] parts = code.split(" ");
-
-        if (parts.length != 3 || parts[0].length() < 2 || parts[1].length() < 6 || parts[2].length() < 6) {
-            throw getCodeNotValidException(code);
+    constructor(code: String) {
+        val parts = code.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (parts.size != 3 || parts[0].length < 2 || parts[1].length < 6 || parts[2].length < 6) {
+            throw createIllegalCodeException(code)
         }
-
-        try  {
-            nzone = parts[0].charAt(parts[0].length()-1);
-            if (NorthingZones.isValid(nzone)) {
-                ezone = Integer.valueOf(parts[0].substring(0, parts[0].length() - 1));
-                easting = Integer.valueOf(parts[1]);
-                northing = Integer.valueOf(parts[2]);
+        try {
+            northingZone = parts[0][parts[0].length - 1]
+            if (NorthingZones.isValid(northingZone)) {
+                eastingZone = Integer.valueOf(parts[0].substring(0, parts[0].length - 1))
+                eastingDouble = Integer.valueOf(parts[1]).toDouble()
+                northingDouble = Integer.valueOf(parts[2]).toDouble()
             } else {
-                throw getCodeNotValidException(code);
+                throw createIllegalCodeException(code)
             }
-
-
-        } catch (NumberFormatException e){
-            throw getCodeNotValidException(code);
+        } catch (e: NumberFormatException) {
+            throw createIllegalCodeException(code)
         }
     }
 
-
-    public void round(int c) {
-        easting=round((int)easting,c);
-        northing=round((int)northing,c);
+    override fun round(dec: Int) {
+        eastingDouble = round(eastingDouble.toInt(), dec).toDouble()
+        northingDouble = round(northingDouble.toInt(), dec).toDouble()
     }
 
-    public int getEastingZone() {
-        return ezone;
-    }
+    val isInSouthernHemisphere: Boolean
+        get() = NorthingZones.isInSouthernHemisphere(northingZone)
 
-    public boolean isInSouthernHemnisphere() {
-        return NorthingZones.isInSouthernHemnisphere(nzone);
-    }
+    override val northing: Int
+        get() =  northingDouble.roundToInt()
 
-    /**
-     *
-     * @return character representating northing zone of this coordinate
-     */
-    public char getNorthingZone() {
-        return nzone;
-    }
+    override val easting: Int
+        get() =  eastingDouble.roundToInt()
 
-    @Override
-    public int getNorthing() {
-        return (int)Math.round(northing);
-    }
-
-    @Override
-    public int getEasting() {
-        return (int)Math.round(easting);
-    }
-
-
-    public LatLongE6 toLatLongE6() {
-        return new LatLongE6(toLatLong());
-    }
-
-    @Override
-    public LatLong toLatLong() {
-        return toLatLong(easting, northing, ezone, isInSouthernHemnisphere());
+    override fun toLatLong(): LatLong {
+        return toLatLong(eastingDouble, northingDouble, eastingZone, isInSouthernHemisphere)
     }
 
     @Nonnull
-    @Override
-    public String toString() {
-
-        return "Z " + ezone + getNorthingZone()
-                + ", E " + FF.f().N3_3.format(((float)easting)/1000f)
-                + ", N " + FF.f().N3_3.format(((float)northing)/1000f);
+    override fun toString(): String {
+        return ("Z " + eastingZone + northingZone
+                + ", E " + FF.f().N3_3.format((eastingDouble.toFloat() / 1000f).toDouble())
+                + ", N " + FF.f().N3_3.format((northingDouble.toFloat() / 1000f).toDouble()))
     }
 
-    /*
+    private fun arcLengthOfMeridian(la: Double): Double {
+        return M_ALPHA * (la + M_BETA * sin(2.0 * la) + M_GAMMA * sin(
+            4.0 * la
+        ) + M_DELTA * sin(6.0 * la) + M_EPSILON * sin(8.0 * la))
+    }
+
+    /**
+     * MapLatLonToXY
      *
-     * UTM converting functions adapted from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html
-     * Copyright 1997-1998 by Charles L. Taylor
+     * Converts a latitude/longitude pair to x and y coordinates in the
+     * Transverse Mercator projection.  Note that Transverse Mercator is not
+     * the same as UTM; a scale factor is required to convert between them.
+     *
+     * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
+     * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
+     *
+     * Inputs:
+     * phi - Latitude of the point, in radians.
+     * lambda - Longitude of the point, in radians.
+     * lambda0 - Longitude of the central meridian to be used, in radians.
+     *
+     * Outputs:
+     * xy - A 2-element array containing the x and y coordinates
+     * of the computed point.
      *
      */
+    private fun mapLatLonToXY(la: Double, lo: Double, lambda0: Double) {
 
-    /**
-    * ArcLengthOfMeridian
-    *
-    * Computes the ellipsoidal distance from the equator to a point at a
-    * given latitude.
-    *
-    * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
-    * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
-    *
-    * Returns:
-    *     The ellipsoidal distance of the point from the equator, in meters.
-    *
-    */
-    private final static double N = (EQUATOR_RADIUS_M - POLAR_RADIUS_M) / (EQUATOR_RADIUS_M + POLAR_RADIUS_M);
-
-    private final static double M_ALPHA = ((EQUATOR_RADIUS_M + POLAR_RADIUS_M) / 2.0)
-    * (1.0 + (Math.pow (N, 2.0) / 4.0) + (Math.pow (N, 4.0) / 64.0));
-
-    private final static double M_BETA = (-3.0 * N / 2.0) + (9.0 * Math.pow (N, 3.0) / 16.0)
-    + (-3.0 * Math.pow (N, 5.0) / 32.0);
-
-    private final static double M_GAMMA = (15.0 * Math.pow (N, 2.0) / 16.0)
-     + (-15.0 * Math.pow (N, 4.0) / 32.0);
-
-    private final static double M_DELTA = (-35.0 * Math.pow (N, 3.0) / 48.0)
-     + (105.0 * Math.pow (N, 5.0) / 256.0);
-
-    private final static double M_EPSILON = (315.0 * Math.pow (N, 4.0) / 512.0);
-
-
-    private double ArcLengthOfMeridian (double la)
-    {
-        return   M_ALPHA * (la
-              + (M_BETA * Math.sin (2.0 * la))
-              + (M_GAMMA * Math.sin (4.0 * la))
-              + (M_DELTA * Math.sin (6.0 * la))
-              + (M_EPSILON * Math.sin (8.0 * la)));
-    }
-
-
-
-    /**
-    * UTMCentralMeridian
-    *
-    * Determines the central meridian for the given UTM zone.
-    *
-    * Inputs:
-    *     zone - An integer value designating the UTM zone, range [1,60].
-    *
-    * Returns:
-    *   The central meridian for the given UTM zone, in radians, or zero
-    *   if the UTM zone parameter is outside the range [1,60].
-    *   Range of the central meridian is the radian equivalent of [-177,+177].
-    *
-    */
-    private static double UTMCentralMeridian (double zone)
-    {
-        return Math.toRadians((-183.0 + (zone * 6.0)));
-    }
-
-
-
-    /**
-    * FootpointLatitude
-    *
-    * Computes the footpoint latitude for use in converting transverse
-    * Mercator coordinates to ellipsoidal coordinates.
-    *
-    * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
-    *   GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
-    *
-    * Inputs:
-    *   The UTM northing coordinate, in meters.
-    *
-    * Returns:
-    *   The footpoint latitude, in radians.
-    *
-    */
-
-
-
-    private final static double F_ALPHA = ((EQUATOR_RADIUS_M + POLAR_RADIUS_M) / 2.0)
-    * (1 + (Math.pow (N, 2.0) / 4) + (Math.pow (N, 4.0) / 64));
-
-
-    private final static double F_BETA = (3.0 * N / 2.0) + (-27.0 * Math.pow (N, 3.0) / 32.0)
-    + (269.0 * Math.pow (N, 5.0) / 512.0);
-
-    private final static double F_GAMMA = (21.0 * Math.pow (N, 2.0) / 16.0)
-    + (-55.0 * Math.pow (N, 4.0) / 32.0);
-
-    private final static double F_DELTA = (151.0 * Math.pow (N, 3.0) / 96.0)
-    + (-417.0 * Math.pow (N, 5.0) / 128.0);
-
-    private final static double F_EPSILON = (1097.0 * Math.pow (N, 4.0) / 512.0);
-
-    private static double FootpointLatitude (double n)
-    {
-        double n1 = n / F_ALPHA;
-
-        return n1 + (F_BETA * Math.sin (2.0 * n1))
-            + (F_GAMMA * Math.sin (4.0 * n1))
-            + (F_DELTA * Math.sin (6.0 * n1))
-            + (F_EPSILON * Math.sin (8.0 * n1));
-
-    }
-
-
-
-    /**
-    * MapLatLonToXY
-    *
-    * Converts a latitude/longitude pair to x and y coordinates in the
-    * Transverse Mercator projection.  Note that Transverse Mercator is not
-    * the same as UTM; a scale factor is required to convert between them.
-    *
-    * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
-    * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
-    *
-    * Inputs:
-    *    phi - Latitude of the point, in radians.
-    *    lambda - Longitude of the point, in radians.
-    *    lambda0 - Longitude of the central meridian to be used, in radians.
-    *
-    * Outputs:
-    *    xy - A 2-element array containing the x and y coordinates
-    *         of the computed point.
-    *
-    */
-    private void MapLatLonToXY (double la, double lo, double lambda0)
-    {
-        double N, nu2, ep2, t, t2, l;
-        double l3coef, l4coef, l5coef, l6coef, l7coef, l8coef;
-
-        ep2 = (Math.pow (EQUATOR_RADIUS_M, 2.0) - Math.pow (POLAR_RADIUS_M, 2.0)) / Math.pow (POLAR_RADIUS_M, 2.0);
-        nu2 = ep2 * Math.pow (Math.cos (la), 2.0);
-
-        N = Math.pow (EQUATOR_RADIUS_M, 2.0) / (POLAR_RADIUS_M * Math.sqrt (1 + nu2));
-
-        t = Math.tan (la);
-        t2 = t * t;
-
-        l = lo - lambda0;
+        val nu2: Double
+        val ep2: Double = (EQUATOR_RADIUS_M.pow(2.0) - POLAR_RADIUS_M.pow(2.0)) / POLAR_RADIUS_M.pow(
+            2.0
+        )
+        nu2 = ep2 * cos(la).pow(2.0)
+        val n: Double = EQUATOR_RADIUS_M.pow(2.0) / (POLAR_RADIUS_M * sqrt(1 + nu2))
+        val t: Double = tan(la)
+        val t2: Double = t * t
+        val l: Double = lo - lambda0
 
         /* Precalculate coefficients for l**n in the equations below
            so a normal human being can read the expressions for easting
            and northing
            -- l**1 and l**2 have coefficients of 1.0 */
-        l3coef = 1.0 - t2 + nu2;
+        val l3coef: Double = 1.0 - t2 + nu2
+        val l4coef: Double = 5.0 - t2 + 9 * nu2 + 4.0 * (nu2 * nu2)
+        val l5coef: Double = (5.0 - 18.0 * t2 + t2 * t2 + 14.0 * nu2
+                - 58.0 * t2 * nu2)
+        val l6coef: Double = (61.0 - 58.0 * t2 + t2 * t2 + 270.0 * nu2
+                - 330.0 * t2 * nu2)
+        val l7coef: Double = 61.0 - 479.0 * t2 + 179.0 * (t2 * t2) - t2 * t2 * t2
+        val l8coef: Double = 1385.0 - 3111.0 * t2 + 543.0 * (t2 * t2) - t2 * t2 * t2
 
-        l4coef = 5.0 - t2 + 9 * nu2 + 4.0 * (nu2 * nu2);
+        /* Calculate easting (x) */eastingDouble =
+            n * cos(la) * l + n / 6.0 * cos(la).pow(3.0) * l3coef * l.pow(3.0) + n / 120.0 * Math.pow(
+                cos(la),
+                5.0
+            ) * l5coef * l.pow(5.0) + n / 5040.0 * cos(la).pow(7.0) * l7coef * l.pow(7.0)
 
-        l5coef = 5.0 - 18.0 * t2 + (t2 * t2) + 14.0 * nu2
-            - 58.0 * t2 * nu2;
-
-        l6coef = 61.0 - 58.0 * t2 + (t2 * t2) + 270.0 * nu2
-            - 330.0 * t2 * nu2;
-
-        l7coef = 61.0 - 479.0 * t2 + 179.0 * (t2 * t2) - (t2 * t2 * t2);
-
-        l8coef = 1385.0 - 3111.0 * t2 + 543.0 * (t2 * t2) - (t2 * t2 * t2);
-
-        /* Calculate easting (x) */
-        easting = (N * Math.cos (la) * l
-            + (N / 6.0 * Math.pow (Math.cos (la), 3.0) * l3coef * Math.pow (l, 3.0))
-            + (N / 120.0 * Math.pow (Math.cos (la), 5.0) * l5coef * Math.pow (l, 5.0))
-            + (N / 5040.0 * Math.pow (Math.cos (la), 7.0) * l7coef * Math.pow (l, 7.0)));
-
-        /* Calculate northing (y) */
-        northing = (ArcLengthOfMeridian (la)
-            + (t / 2.0 * N * Math.pow (Math.cos (la), 2.0) * Math.pow (l, 2.0))
-            + (t / 24.0 * N * Math.pow (Math.cos (la), 4.0) * l4coef * Math.pow (l, 4.0))
-            + (t / 720.0 * N * Math.pow (Math.cos (la), 6.0) * l6coef * Math.pow (l, 6.0))
-            + (t / 40320.0 * N * Math.pow (Math.cos (la), 8.0) * l8coef * Math.pow (l, 8.0)));
-
+        /* Calculate northing (y) */northingDouble =
+            arcLengthOfMeridian(la) + t / 2.0 * n * cos(la).pow(2.0) * l.pow(2.0) + t / 24.0 * n * cos(
+                la
+            ).pow(4.0) * l4coef * l.pow(4.0) + t / 720.0 * n * cos(la).pow(6.0) * l6coef * l.pow(6.0) + t / 40320.0 * n * cos(la).pow(8.0) * l8coef * l.pow(8.0)
     }
 
-
-
     /**
-    * MapXYToLatLon
-    *
-    * Converts x and y coordinates in the Transverse Mercator projection to
-    * a latitude/longitude pair.  Note that Transverse Mercator is not
-    * the same as UTM; a scale factor is required to convert between them.
-    *
-    * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
-    *   GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
-    *
-    * Inputs:
-    *   x - The easting of the point, in meters.
-    *   y - The northing of the point, in meters.
-    *   lambda0 - Longitude of the central meridian to be used, in radians.
-    *
-    * Outputs:
-    *   philambda - A 2-element containing the latitude and longitude
-    *               in radians.
-    *
-    * Remarks:
-    *   The local variables Nf, nuf2, tf, and tf2 serve the same purpose as
-    *   N, nu2, t, and t2 in MapLatLonToXY, but they are computed with respect
-    *   to the footpoint latitude phif.
-    *
-    *   x1frac, x2frac, x2poly, x3poly, etc. are to enhance readability and
-    *   to optimize computations.
-    *
-    */
-
-
-    private static LatLong MapXYToLatLon (double e, double n, double lambda0)
-    {
-        double phif, Nf, Nfpow, nuf2, ep2, tf, tf2, tf4, cf;
-        double x1frac, x2frac, x3frac, x4frac, x5frac, x6frac, x7frac, x8frac;
-        double x2poly, x3poly, x4poly, x5poly, x6poly, x7poly, x8poly;
-
-        phif = FootpointLatitude (n);
-
-        ep2 = (Math.pow (EQUATOR_RADIUS_M, 2.0) - Math.pow (POLAR_RADIUS_M, 2.0))
-              / Math.pow (POLAR_RADIUS_M, 2.0);
-
-        cf = Math.cos (phif);
-
-        nuf2 = ep2 * Math.pow (cf, 2.0);
-
-        Nf = Math.pow (EQUATOR_RADIUS_M, 2.0) / (POLAR_RADIUS_M * Math.sqrt (1 + nuf2));
-        Nfpow = Nf;
-
-        tf = Math.tan (phif);
-        tf2 = tf * tf;
-        tf4 = tf2 * tf2;
-
-        /* Precalculate fractional coefficients for x**n in the equations
-           below to simplify the expressions for latitude and longitude. */
-        x1frac = 1.0 / (Nfpow * cf);
-
-        Nfpow *= Nf;   /* now equals Nf**2) */
-        x2frac = tf / (2.0 * Nfpow);
-
-        Nfpow *= Nf;   /* now equals Nf**3) */
-        x3frac = 1.0 / (6.0 * Nfpow * cf);
-
-        Nfpow *= Nf;   /* now equals Nf**4) */
-        x4frac = tf / (24.0 * Nfpow);
-
-        Nfpow *= Nf;   /* now equals Nf**5) */
-        x5frac = 1.0 / (120.0 * Nfpow * cf);
-
-        Nfpow *= Nf;   /* now equals Nf**6) */
-        x6frac = tf / (720.0 * Nfpow);
-
-        Nfpow *= Nf;   /* now equals Nf**7) */
-        x7frac = 1.0 / (5040.0 * Nfpow * cf);
-
-        Nfpow *= Nf;   /* now equals Nf**8) */
-        x8frac = tf / (40320.0 * Nfpow);
-
-        /* Precalculate polynomial coefficients for x**n.
-           -- x**1 does not have a polynomial coefficient. */
-        x2poly = -1.0 - nuf2;
-
-        x3poly = -1.0 - 2 * tf2 - nuf2;
-
-        x4poly = 5.0 + 3.0 * tf2 + 6.0 * nuf2 - 6.0 * tf2 * nuf2
-        - 3.0 * (nuf2 *nuf2) - 9.0 * tf2 * (nuf2 * nuf2);
-
-        x5poly = 5.0 + 28.0 * tf2 + 24.0 * tf4 + 6.0 * nuf2 + 8.0 * tf2 * nuf2;
-
-        x6poly = -61.0 - 90.0 * tf2 - 45.0 * tf4 - 107.0 * nuf2
-        + 162.0 * tf2 * nuf2;
-
-        x7poly = -61.0 - 662.0 * tf2 - 1320.0 * tf4 - 720.0 * (tf4 * tf2);
-
-        x8poly = 1385.0 + 3633.0 * tf2 + 4095.0 * tf4 + 1575 * (tf4 * tf2);
-
-
-        /* Calculate latitude */
-
-        return new LatLong( Math.toDegrees( phif + x2frac * x2poly * (e * e)
-        + x4frac * x4poly * Math.pow (e, 4.0)
-        + x6frac * x6poly * Math.pow (e, 6.0)
-        + x8frac * x8poly * Math.pow (e, 8.0) ),
-
-        /* Calculate longitude */
-        Math.toDegrees( lambda0 + x1frac * e
-        + x3frac * x3poly * Math.pow (e, 3.0)
-        + x5frac * x5poly * Math.pow (e, 5.0)
-        + x7frac * x7poly * Math.pow (e, 7.0)));
-
-    }
-
-
-
-    /**
-    * LatLonToUTMXY
-    *
-    * Converts a latitude/longitude pair to x and y coordinates in the
-    * Universal Transverse Mercator projection.
-    *
-    * Inputs:
-    *   lat - Latitude of the point, in radians.
-    *   lon - Longitude of the point, in radians.
-    *   zone - UTM zone to be used for calculating values for x and y.
-    *          If zone is less than 1 or greater than 60, the routine
-    *          will determine the appropriate zone from the value of lon.
-    *
-    * Outputs:
-    *   xy - A 2-element array where the UTM x and y values will be stored.
-    *
-    * Returns:
-    *   The UTM zone used for calculating the values of x and y.
-    *
-    */
-    private void toUTM (double lat, double lon, int zone)
-    {
-        MapLatLonToXY (lat, lon, UTMCentralMeridian(zone));
+     * LatLonToUTMXY
+     *
+     * Converts a latitude/longitude pair to x and y coordinates in the
+     * Universal Transverse Mercator projection.
+     *
+     * Inputs:
+     * lat - Latitude of the point, in radians.
+     * lon - Longitude of the point, in radians.
+     * zone - UTM zone to be used for calculating values for x and y.
+     * If zone is less than 1 or greater than 60, the routine
+     * will determine the appropriate zone from the value of lon.
+     *
+     * Outputs:
+     * xy - A 2-element array where the UTM x and y values will be stored.
+     *
+     * Returns:
+     * The UTM zone used for calculating the values of x and y.
+     *
+     */
+    private fun toUTM(lat: Double, lon: Double, zone: Int) {
+        mapLatLonToXY(lat, lon, getUTMCentralMeridian(zone.toDouble()))
 
         /* Adjust easting and northing for UTM system. */
-        easting = (easting * UTM_SCALE_FACTOR) + 500000.0d;
-        northing = northing * UTM_SCALE_FACTOR;
-        if (northing < 0d)
-            northing = northing + 10000000d;
+        eastingDouble = eastingDouble * UTM_SCALE_FACTOR + 500000.0
+        northingDouble *= UTM_SCALE_FACTOR
+        if (northingDouble < 0.0) northingDouble += 10000000.0
     }
 
+    companion object {
+        /* Ellipsoid model constants (actual values here are for WGS84) */
+        private const val EQUATOR_RADIUS_M = 6378137.0
+        private const val POLAR_RADIUS_M = 6356752.314
+        private const val UTM_SCALE_FACTOR = 0.9996
+        /*
+     *
+     * UTM converting functions adapted from http://home.hiwaay.net/~taylorc/toolbox/geography/geoutm.html
+     * Copyright 1997-1998 by Charles L. Taylor
+     *
+     */
+        /**
+         * ArcLengthOfMeridian
+         *
+         * Computes the ellipsoidal distance from the equator to a point at a
+         * given latitude.
+         *
+         * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
+         * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
+         *
+         * Returns:
+         * The ellipsoidal distance of the point from the equator, in meters.
+         *
+         */
+        private const val N =
+            (EQUATOR_RADIUS_M - POLAR_RADIUS_M) / (EQUATOR_RADIUS_M + POLAR_RADIUS_M)
+        private val M_ALPHA = ((EQUATOR_RADIUS_M + POLAR_RADIUS_M) / 2.0
+                * (1.0 + N.pow(2.0) / 4.0 + N.pow(4.0) / 64.0))
+        private val M_BETA = -3.0 * N / 2.0 + 9.0 * N.pow(3.0) / 16.0 + -3.0 * N.pow(5.0) / 32.0
+        private val M_GAMMA = 15.0 * N.pow(2.0) / 16.0 + -15.0 * N.pow(4.0) / 32.0
+        private val M_DELTA = -35.0 * N.pow(3.0) / 48.0 + 105.0 * N.pow(5.0) / 256.0
+        private val M_EPSILON = 315.0 * N.pow(4.0) / 512.0
 
-
-    /**
-    * UTMXYToLatLon
-    *
-    * Converts x and y coordinates in the Universal Transverse Mercator
-    * projection to a latitude/longitude pair.
-    *
-    */
-
-    private static LatLong toLatLong(double easting, double northing, int zone, boolean southhemi)
-    {
-        double cmeridian;
-
-        easting -= 500000.0;
-        easting /= UTM_SCALE_FACTOR;
-
-        /* If in southern hemisphere, adjust y accordingly. */
-        if (southhemi) {
-            northing -= 10000000.0;
+        /**
+         * getUTMCentralMeridian
+         *
+         * Determines the central meridian for the given UTM zone.
+         *
+         * Inputs:
+         * zone - An integer value designating the UTM zone, range [1,60].
+         *
+         * Returns:
+         * The central meridian for the given UTM zone, in radians, or zero
+         * if the UTM zone parameter is outside the range [1,60].
+         * Range of the central meridian is the radian equivalent of [-177,+177].
+         *
+         */
+        private fun getUTMCentralMeridian(zone: Double): Double {
+            return Math.toRadians(-183.0 + zone * 6.0)
         }
 
-        northing /= UTM_SCALE_FACTOR;
+        /**
+         * getFootpointLatitude
+         *
+         * Computes the footpoint latitude for use in converting transverse
+         * Mercator coordinates to ellipsoidal coordinates.
+         *
+         * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
+         * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
+         *
+         * Inputs:
+         * The UTM northing coordinate, in meters.
+         *
+         * Returns:
+         * The footpoint latitude, in radians.
+         *
+         */
+        private val F_ALPHA = ((EQUATOR_RADIUS_M + POLAR_RADIUS_M) / 2.0
+                * (1 + N.pow(2.0) / 4 + N.pow(4.0) / 64))
+        private val F_BETA = 3.0 * N / 2.0 + -27.0 * N.pow(3.0) / 32.0 + 269.0 * N.pow(5.0) / 512.0
+        private val F_GAMMA = 21.0 * N.pow(2.0) / 16.0 + -55.0 * N.pow(4.0) / 32.0
+        private val F_DELTA = 151.0 * N.pow(3.0) / 96.0 + -417.0 * N.pow(5.0) / 128.0
+        private val F_EPSILON = 1097.0 * N.pow(4.0) / 512.0
+        private fun getFootpointLatitude(n: Double): Double {
+            val n1 = n / F_ALPHA
+            return n1 + F_BETA * sin(2.0 * n1) + F_GAMMA * sin(
+                4.0 * n1
+            ) + F_DELTA * sin(6.0 * n1) + F_EPSILON * sin(8.0 * n1)
+        }
 
-        cmeridian = UTMCentralMeridian (zone);
-        return MapXYToLatLon(easting, northing, cmeridian);
+        /**
+         * mapXYToLatLon
+         *
+         * Converts x and y coordinates in the Transverse Mercator projection to
+         * a latitude/longitude pair.  Note that Transverse Mercator is not
+         * the same as UTM; a scale factor is required to convert between them.
+         *
+         * Reference: Hoffmann-Wellenhof, B., Lichtenegger, H., and Collins, J.,
+         * GPS: Theory and Practice, 3rd ed.  New York: Springer-Verlag Wien, 1994.
+         *
+         * Inputs:
+         * x - The easting of the point, in meters.
+         * y - The northing of the point, in meters.
+         * lambda0 - Longitude of the central meridian to be used, in radians.
+         *
+         * Outputs:
+         * philambda - A 2-element containing the latitude and longitude
+         * in radians.
+         *
+         * Remarks:
+         * The local variables Nf, nuf2, tf, and tf2 serve the same purpose as
+         * N, nu2, t, and t2 in MapLatLonToXY, but they are computed with respect
+         * to the footpoint latitude phif.
+         *
+         * x1frac, x2frac, x2poly, x3poly, etc. are to enhance readability and
+         * to optimize computations.
+         *
+         */
+        private fun mapXYToLatLon(e: Double, n: Double, lambda0: Double): LatLong {
+            val nf: Double
+            val nuf2: Double
+            val tf: Double
+            val tf4: Double
+            val cf: Double
+            val x2Fractional: Double
+            val x3Fractional: Double
+            val x4Fractional: Double
+            val x5Fractional: Double
+            val x6Fractional: Double
+            val x7Fractional: Double
+            val x6poly: Double
+            val x7poly: Double
+            val phif: Double = getFootpointLatitude(n)
+            val ep2: Double = ((EQUATOR_RADIUS_M.pow(2.0) - POLAR_RADIUS_M.pow(2.0))
+                    / POLAR_RADIUS_M.pow(2.0))
+            cf = cos(phif)
+            nuf2 = ep2 * cf.pow(2.0)
+            nf = EQUATOR_RADIUS_M.pow(2.0) / (POLAR_RADIUS_M * sqrt(1 + nuf2))
+            var nfPow: Double = nf
+            tf = tan(phif)
+            val tf2: Double = tf * tf
+            tf4 = tf2 * tf2
+
+            /* Precalculate fractional coefficients for x**n in the equations
+           below to simplify the expressions for latitude and longitude. */
+            val x1Fractional: Double = 1.0 / (nfPow * cf)
+            nfPow *= nf /* now equals Nf**2) */
+            x2Fractional = tf / (2.0 * nfPow)
+            nfPow *= nf /* now equals Nf**3) */
+            x3Fractional = 1.0 / (6.0 * nfPow * cf)
+            nfPow *= nf /* now equals Nf**4) */
+            x4Fractional = tf / (24.0 * nfPow)
+            nfPow *= nf /* now equals Nf**5) */
+            x5Fractional = 1.0 / (120.0 * nfPow * cf)
+            nfPow *= nf /* now equals Nf**6) */
+            x6Fractional = tf / (720.0 * nfPow)
+            nfPow *= nf /* now equals Nf**7) */
+            x7Fractional = 1.0 / (5040.0 * nfPow * cf)
+            nfPow *= nf /* now equals Nf**8) */
+            val x8Fractional: Double = tf / (40320.0 * nfPow)
+
+            /* Precalculate polynomial coefficients for x**n.
+           -- x**1 does not have a polynomial coefficient. */
+            val x2poly: Double = -1.0 - nuf2
+            val x3poly: Double = -1.0 - 2 * tf2 - nuf2
+            val x4poly: Double = 5.0 + 3.0 * tf2 + 6.0 * nuf2 - 6.0 * tf2 * nuf2 - 3.0 * (nuf2 * nuf2) - 9.0 * tf2 * (nuf2 * nuf2)
+            val x5poly: Double = 5.0 + 28.0 * tf2 + 24.0 * tf4 + 6.0 * nuf2 + 8.0 * tf2 * nuf2
+            x6poly = (-61.0 - 90.0 * tf2 - 45.0 * tf4 - 107.0 * nuf2
+                    + 162.0 * tf2 * nuf2)
+            x7poly = -61.0 - 662.0 * tf2 - 1320.0 * tf4 - 720.0 * (tf4 * tf2)
+            val x8poly: Double = 1385.0 + 3633.0 * tf2 + 4095.0 * tf4 + 1575 * (tf4 * tf2)
+
+
+            /* Calculate latitude */return LatLong(
+                Math.toDegrees(
+                    phif + x2Fractional * x2poly * (e * e) + x4Fractional * x4poly * e.pow(4.0) + x6Fractional * x6poly * e.pow(6.0) + x8Fractional * x8poly * e.pow(8.0)
+                ),  /* Calculate longitude */
+                Math.toDegrees(
+                    lambda0 + x1Fractional * e + x3Fractional * x3poly * e.pow(3.0) + x5Fractional * x5poly * e.pow(5.0) + x7Fractional * x7poly * e.pow(7.0)
+                )
+            )
+        }
+
+        /**
+         * UTMXYToLatLon
+         *
+         * Converts x and y coordinates in the Universal Transverse Mercator
+         * projection to a latitude/longitude pair.
+         *
+         */
+        private fun toLatLong(
+            eastingIn: Double,
+            northingIn: Double,
+            zone: Int,
+            southhemi: Boolean
+        ): LatLong {
+            var easting = eastingIn
+            var northing = northingIn
+
+            easting -= 500000.0
+            easting /= UTM_SCALE_FACTOR
+
+            /* If in southern hemisphere, adjust y accordingly. */
+            if (southhemi) {
+                northing -= 10000000.0
+            }
+            northing /= UTM_SCALE_FACTOR
+            val cMeridian: Double = getUTMCentralMeridian(zone.toDouble())
+            return mapXYToLatLon(easting, northing, cMeridian)
+        }
     }
-
 }

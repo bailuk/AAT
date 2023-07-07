@@ -1,12 +1,10 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
-import com.google.openlocationcode.OpenLocationCode;
+import com.google.openlocationcode.OpenLocationCode
+import org.mapsforge.core.model.LatLong
+import javax.annotation.Nonnull
 
-import org.mapsforge.core.model.LatLong;
-
-import javax.annotation.Nonnull;
-
-public class OlcCoordinates extends Coordinates {
+class OlcCoordinates : Coordinates {
     /**
      * The Open Location Code (OLC) is a geocode system for identifying
      * an area anywhere on the Earth.[1] It was developed at Google's Zürich
@@ -19,49 +17,39 @@ public class OlcCoordinates extends Coordinates {
      * com.google.openlocationcode.OpenLocationCode
      *
      */
+    private val olc: OpenLocationCode
 
-
-    private final OpenLocationCode olc;
-
-
-    public OlcCoordinates(String code, LatLong reference) {
-        this (code, reference.getLatitude(), reference.getLongitude());
+    constructor(code: String, reference: LatLong) : this(
+        code,
+        reference.getLatitude(),
+        reference.getLongitude()
+    ) {
     }
 
-
-    public OlcCoordinates(String code, double la, double lo) {
-        OpenLocationCode olc = new OpenLocationCode(code);
-
-        if (olc.isShort()) {
-            this.olc = olc.recover(la, lo);
+    constructor(code: String, la: Double, lo: Double) {
+        val olc = OpenLocationCode(code)
+        if (olc.isShort) {
+            this.olc = olc.recover(la, lo)
         } else {
-            this.olc = olc;
+            this.olc = olc
         }
     }
 
-    public OlcCoordinates(String code) {
-        olc = new OpenLocationCode(code);
+    constructor(code: String) {
+        olc = OpenLocationCode(code)
     }
 
-
-    public OlcCoordinates(double la, double lo) {
-        olc = new OpenLocationCode(la, lo);
+    constructor(c: LatLong) {
+        olc = OpenLocationCode(c.getLatitude(), c.getLongitude())
     }
-
-    public OlcCoordinates(LatLong c) {
-        olc = new OpenLocationCode(c.getLatitude(), c.getLongitude());
-    }
-
 
     @Nonnull
-    @Override
-    public String toString() {
-        return olc.getCode();
+    override fun toString(): String {
+        return olc.code
     }
 
-    @Override
-    public LatLong toLatLong() {
-        OpenLocationCode.CodeArea area = olc.decode();
-        return new LatLong(area.getCenterLatitude(), area.getCenterLongitude());
+    override fun toLatLong(): LatLong {
+        val area = olc.decode()
+        return LatLong(area.centerLatitude, area.centerLongitude)
     }
 }

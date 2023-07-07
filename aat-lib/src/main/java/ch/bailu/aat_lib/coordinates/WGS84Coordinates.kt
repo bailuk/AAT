@@ -1,189 +1,135 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
+import ch.bailu.aat_lib.logger.AppLog
+import org.mapsforge.core.model.LatLong
+import java.text.DecimalFormat
+import javax.annotation.Nonnull
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
-import org.mapsforge.core.model.LatLong;
-
-import java.text.DecimalFormat;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.logger.AppLog;
-
-public class WGS84Coordinates extends Coordinates {
-
-
+class WGS84Coordinates : Coordinates {
     /**
      * WGS84 Sexagesimal and decimal operations
      */
+    class Sexagesimal {
+        val degree: Int
+        val minute: Int
+        val second: Double
+        val decimal: Double
 
-
-    public static class Sexagesimal {
-        private final int deg, min;
-        private final double sec;
-        private final double coordinate;
-
-        public Sexagesimal(int deg, int min, double sec) {
-                this.deg = deg;
-                this.min = min;
-                this.sec = sec;
-
-                double coord=deg;
-                coord += ((double)min)/60d;
-                coord += sec / 60d / 60d;
-                coordinate = coord;
+        constructor(deg: Int, min: Int, sec: Double) {
+            degree = deg
+            minute = min
+            second = sec
+            var coord = deg.toDouble()
+            coord += min.toDouble() / 60.0
+            coord += sec / 60.0 / 60.0
+            decimal = coord
         }
 
-
-        public Sexagesimal(double c) {
-            coordinate = c;
-            deg = (int)c;
-
-            c = (Math.abs(c)-Math.abs(deg))*60d;
-            min = (int)c;
-
-            sec = (c-min)*60d;
+        constructor(coordinate: Double) {
+            var c = coordinate
+            decimal = c
+            degree = c.toInt()
+            c = (abs(c) - abs(degree)) * 60.0
+            minute = c.toInt()
+            second = (c - minute) * 60.0
         }
 
-        public int toE6() {
-            return (int) Math.round(coordinate * 1e6);
+        fun toE6(): Int {
+            return (decimal * 1e6).roundToInt()
         }
-
-
-
-        public int getDegree() {return deg;}
-        public int getMinute() {return min;}
-        public double getSecond() {return sec;}
-
-        public double getDecimal() {
-            return coordinate;
-        }
-
-        private final static DecimalFormat fX = new DecimalFormat("#");
-        private final static DecimalFormat f00 = new DecimalFormat("00");
 
         @Nonnull
-        public String toString() {
-            return fX.format(Math.abs(deg)) + "\u00B0 "
-                    + f00.format(min) + "\u0027 "
-                    + f00.format(sec) + "\u0027\u0027";
+        override fun toString(): String {
+            return (fX.format(abs(degree).toLong()) + "\u00B0 "
+                    + f00.format(minute.toLong()) + "\u0027 "
+                    + f00.format(second) + "\u0027\u0027")
+        }
+
+        companion object {
+            private val fX = DecimalFormat("#")
+            private val f00 = DecimalFormat("00")
         }
     }
 
+    val longitude: Sexagesimal
+    val latitude: Sexagesimal
 
-    private final Sexagesimal longitude;
-    private final Sexagesimal latitude;
-
-
-    public WGS84Coordinates(LatLong point) {
-        this(point.getLatitude(), point.getLongitude());
+    constructor(point: LatLong) : this(point.getLatitude(), point.getLongitude())
+    constructor(la: Double, lo: Double) {
+        latitude = Sexagesimal(la)
+        longitude = Sexagesimal(lo)
     }
 
-    public WGS84Coordinates(double la, double lo) {
-        latitude=new Sexagesimal(la);
-        longitude=new Sexagesimal(lo);
-    }
-
-
-    public WGS84Coordinates(String code) {
-        String[] parts = code.split("[:,?#]");
-
-        boolean scanLa=true;
-        boolean scanned=false;
-
-
-        double la=0d;
-        double lo=0d;
-
-        for (String p : parts) {
-            try  {
-                final double d = Double.parseDouble(p.trim());
+    constructor(code: String) {
+        val parts = code.split("[:,?#]".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        var scanLa = true
+        var scanned = false
+        var la = 0.0
+        var lo = 0.0
+        for (p in parts) {
+            try {
+                val d = p.trim { it <= ' ' }.toDouble()
                 if (scanLa) {
-                    la = d;
-                    scanLa=false;
+                    la = d
+                    scanLa = false
                 } else {
-                    lo = d;
-                    scanned = true;
+                    lo = d
+                    scanned = true
                 }
-
-            } catch (NumberFormatException e){
-                AppLog.d(this, code + ": " + p);
+            } catch (e: NumberFormatException) {
+                AppLog.d(this, "$code: $p")
             }
         }
-
         if (scanned) {
-            latitude = new Sexagesimal(la);
-            longitude = new Sexagesimal(lo);
+            latitude = Sexagesimal(la)
+            longitude = Sexagesimal(lo)
         } else {
-            throw getCodeNotValidException(code);
+            throw createIllegalCodeException(code)
         }
-
     }
-
-
-
-    public Sexagesimal getLongitude() {
-        return longitude;
-    }
-
-    public Sexagesimal getLatitude() {
-        return latitude;
-    }
-
 
     @Nonnull
-    @Override
-    public String toString() {
-        return latitude.toString() + " "
-                + getLatitudeChar() + " "
+    override fun toString(): String {
+        return (latitude.toString() + " "
+                + latitudeChar + " "
                 + longitude.toString() + " "
-                + getLongitudeChar();
+                + longitudeChar)
+    }
+
+    private val latitudeChar: Char
+        get() = getLatitudeChar(latitude.decimal)
+    private val longitudeChar: Char
+        get() = getLongitudeChar(longitude.decimal)
+
+    override fun toLatLong(): LatLong {
+        return LatLong(latitude.decimal, longitude.decimal)
     }
 
 
+    companion object {
+        fun getLatitudeChar(la: Double): Char {
+            return if (la < 0) 'S' else 'N'
+        }
 
+        fun getLongitudeChar(lo: Double): Char {
+            return if (lo < 0) 'W' else 'E'
+        }
 
-    public static char getLatitudeChar(double la) {
-        if (la<0) return 'S';
-        else return 'N';
+        @JvmStatic
+        fun getGeoUri(src: LatLong): String {
+            return "geo:" +
+                    src.getLatitude() +
+                    ',' +
+                    src.getLongitude()
+        }
 
+        fun getGeoPointDescription(src: LatLong): String {
+            return """
+                   Coordinates:
+                   Latitude:${src.getLatitude()}Longitude:${src.getLongitude()}
+                   """.trimIndent()
+        }
     }
-
-    public char getLatitudeChar() {
-        return getLatitudeChar(latitude.coordinate);
-    }
-
-    public static char getLongitudeChar(double lo) {
-        if (lo<0) return 'W';
-        else return 'E';
-    }
-
-    public char getLongitudeChar() {
-        return getLongitudeChar(longitude.coordinate);
-    }
-
-
-    public LatLong toLatLong() {
-        return new LatLong(latitude.coordinate, longitude.coordinate);
-    }
-
-    public String getGeoUri() {
-        return getGeoUri(toLatLong());
-    }
-
-
-    public static String getGeoUri(LatLong src) {
-        return  "geo:" +
-                src.getLatitude() +
-                ',' +
-                src.getLongitude();
-    }
-
-
-    public static String getGeoPointDescription(LatLong src) {
-        return "Coordinates:\nLatitude:" +
-                src.getLatitude() +
-                "Longitude:" +
-                src.getLongitude();
-    }
-
 }

@@ -41,11 +41,11 @@ open class RealLocationInformation(private val location: Location, private val s
     }
 
     override fun getLatitudeE6(): Int {
-        return (latitude * 1e6).toInt()
+        return (getLatitude() * 1e6).toInt()
     }
 
     override fun getLongitudeE6(): Int {
-        return (longitude * 1e6).toInt()
+        return (getLongitude() * 1e6).toInt()
     }
 
     override fun hasAccuracy(): Boolean {

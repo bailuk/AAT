@@ -1,37 +1,37 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
-import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.LatLong
+import kotlin.math.roundToInt
 
-public abstract class MeterCoordinates extends Coordinates {
+abstract class MeterCoordinates : Coordinates() {
     /**
      *
      * @return northing part of coordinate in meters
      */
-    public abstract int getNorthing();
-
+    abstract val northing: Int
 
     /**
      *
      * @return easting part of coordinate in meters
      */
-    public abstract int getEasting();
+    abstract val easting: Int
 
     /**
      *
      * @return WGS84 Latitude / Longitude representation of coordinate
      */
-    public abstract LatLong toLatLong();
+    abstract override fun toLatLong(): LatLong
 
     /**
      * round northing and easting to decimal place
      * @param dec decimal place to round to
      */
-    public abstract void round(int dec);
+    abstract fun round(dec: Int)
 
-    public static int round(int v, int dec) {
-        return dec * Math.round(((float)v)/((float)dec));
+    companion object {
+        @JvmStatic
+        fun round(value: Int, dec: Int): Int {
+            return dec * (value.toFloat() / dec.toFloat()).roundToInt()
+        }
     }
-
-
-
 }

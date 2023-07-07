@@ -48,11 +48,11 @@ class GeoClue2LocationInformation(location: Location, private val _state: Int): 
     }
 
     override fun getLatitudeE6(): Int {
-        return (latitude * 1e6).toInt()
+        return (getLatitude() * 1e6).toInt()
     }
 
     override fun getLongitudeE6(): Int {
-        return (longitude * 1e6).toInt()
+        return (getLongitude() * 1e6).toInt()
     }
 
     override fun hasAccuracy(): Boolean {

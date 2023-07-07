@@ -1,226 +1,154 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
-import org.mapsforge.core.model.LatLong;
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates.Sexagesimal
+import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.logger.AppLog
+import org.mapsforge.core.model.LatLong
+import kotlin.math.roundToInt
 
-import javax.annotation.Nonnull;
+class CH1903Coordinates : MeterCoordinates {
+    override var easting = 0
+        private set
 
-import ch.bailu.aat_lib.description.FF;
-import ch.bailu.aat_lib.logger.AppLog;
+    override var northing = 0
+        private set
 
-
-public class CH1903Coordinates extends MeterCoordinates {
-    /**
-     *
-     * formula taken from the Document "Naeherungsloesungen fuer die direkte Transformation
-     * CH1903 <=> WGS84" by the Bundesamt fuer Landestopografie swisstopo (http://www.swisstopo.ch)
-     *
-     */
-
-    public final static double SECONDS=3600d;
-
-    private final static double BERNE_LA=169028.66d/SECONDS;
-    private final static double BERNE_LO=26782.5d/SECONDS;
-
-    // x corespondents to northing and latitude
-    public final static int BERNE_SIY=600000;
-
-    // y corespondents to easting and longitude
-    public final static int BERNE_SIX=200000;
-
-
-    public final static WGS84Coordinates.Sexagesimal LA_PRECISSION = new WGS84Coordinates.Sexagesimal(0,0,0.12);
-    public final static WGS84Coordinates.Sexagesimal LO_PRECISSION = new WGS84Coordinates.Sexagesimal(0,0,0.08);
-
-    private int easting, northing;
-
-
-    @Override
-    public int getEasting() {
-        return easting;
+    constructor(e: Int, n: Int) {
+        easting = e
+        northing = n
     }
 
-
-    @Override
-    public int getNorthing() {
-        return northing;
-    }
-
-
-    public CH1903Coordinates(int e, int n) {
-        easting=e;
-        northing=n;
-    }
-
-
-
-    public CH1903Coordinates(String code) {
-        code = code.trim();
-
-        String[] parts = code.split("[,/ ]");
-
-
-
-
-        int n=0;
-        int e=0;
-
-        for (String p : parts) {
+    constructor(code: String) {
+        val parts = code.trim { it <= ' ' }.split("[,/ ]".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        var n = 0
+        var e = 0
+        for (p in parts) {
             try {
-                final double d = Double.parseDouble(p.trim());
-                final int i;
-
-                if (d < 1000d) i = (int) (d*1000d);
-                else i = (int) d;
-
-                if (i > 100000 && i < 300000) n = i;
-                else if (i > 400000 && i < 800000) e = i;
-
-
-            } catch (Exception ex) {
-                AppLog.d(this, code + ": " + p);
+                val d = p.trim { it <= ' ' }.toDouble()
+                val i: Int = if (d < 1000.0) (d * 1000.0).toInt() else d.toInt()
+                if (i > 100000 && i < 300000) n = i else if (i > 400000 && i < 800000) e = i
+            } catch (ex: Exception) {
+                AppLog.d(this, "$code: $p")
             }
         }
-
         if (n == 0 || e == 0) {
-            throw getCodeNotValidException(code);
+            throw createIllegalCodeException(code)
         }
-
-        easting = e;
-        northing = n;
+        easting = e
+        northing = n
     }
 
-
-    public CH1903Coordinates(double la, double lo) {
-        toCH1903(la, lo);
+    constructor(la: Double, lo: Double) {
+        toCH1903(la, lo)
     }
 
-    public CH1903Coordinates(LatLong p) {
-        this(p.getLatitude(), p.getLongitude());
+    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude()) {}
+    constructor(point: LatLongInterface) {
+        toCH1903(
+            point.getLatitudeE6().toDouble() / 1e6,
+            point.getLongitudeE6().toDouble() / 1e6
+        )
     }
 
-    public CH1903Coordinates(LatLongInterface point) {
-        toCH1903(((double)point.getLatitudeE6())/1e6d,
-        		((double)point.getLongitudeE6())/1e6d);
+    private fun toCH1903(lat: Double, lon: Double) {
+        val la = getRelativeLatitude(lat)
+        val lo = getRelativeLongitude(lon)
+        val la2 = la * la
+        val la3 = la2 * la
+        val lo2 = lo * lo
+        val lo3 = lo2 * lo
+        northing = (200147.07 + 308807.95 * la + 3745.25 * lo2 + 76.63 * la2
+                - 194.56 * lo2 * la
+                + 119.79 * la3).roundToInt()
+        easting = ((600072.37
+                + 211455.93 * lo) - 10938.51 * lo * la - 0.36 * lo * la2 - 44.54 * lo3).roundToInt()
     }
 
-
-    private void toCH1903(double la, double lo) {
-        la = getRelativeLatitude(la);
-        lo = getRelativeLongitude(lo);
-
-        double la2=la*la;
-        double la3=la2*la;
-        double lo2=lo*lo;
-        double lo3=lo2*lo;
-
-        northing = (int) Math.round
-        (
-              200147.07d
-            + 308807.95d *       la
-            + 3745.25d   * lo2
-            + 76.63d     *       la2
-            - 194.56d    * lo2 * la
-            + 119.79d    *       la3
-        );
-
-        easting = (int) Math.round
-        (
-              600072.37d
-            + 211455.93d * lo
-            - 10938.51d  * lo * la
-            - 0.36d      * lo * la2
-            - 44.54d     * lo3
-         );
+    override fun round(dec: Int) {
+        easting = round(easting, dec)
+        northing = round(northing, dec)
     }
 
-
-
-    private static double getRelativeLatitude(double la) {
-        return ((la - BERNE_LA) *SECONDS) / 10000d;
+    override fun toLatLong(): LatLong {
+        return toLatLongE6().toLatLong()
     }
 
-    private static double getRelativeLongitude(double lo) {
-        return ((lo - BERNE_LO) *SECONDS) / 10000d;
-    }
-
-
-    public void round(int c) {
-        easting=round(easting,c);
-        northing=round(northing,c);
-    }
-
-
-    @Override
-    public LatLong toLatLong() {
-        return toLatLongE6().toLatLong();
-
-    }
-
-    public LatLongE6 toLatLongE6() {
-        double x = getRelativeX(northing);
-        double y = getRelativeY(easting);
-
-        double x2=x*x;
-        double x3=x2*x;
-        double y2=y*y;
-        double y3=y2*y;
+    fun toLatLongE6(): LatLongE6 {
+        val x = getRelativeX(northing)
+        val y = getRelativeY(easting)
+        val x2 = x * x
+        val x3 = x2 * x
+        val y2 = y * y
+        val y3 = y2 * y
 
         // latitude phi (φ) => x northing
-        double la1 = 16.9023892d
-                +  3.238272d  *x
-                -  0.270978d  *y2
-                -  0.002528d  *x2
-                -  0.0447d    *y2 *x
-                -  0.0140d    *x3;
-        int la =  toE6Degree(la1);
+        val la1 = (16.9023892
+                + 3.238272 * x) - 0.270978 * y2 - 0.002528 * x2 - 0.0447 * y2 * x - 0.0140 * x3
+        val la = toE6Degree(la1)
 
 
         // longitude lambda (λ) => y easting
-        double lo1 = 2.6779094d
-                   + 4.728982d * y
-                   + 0.791484d * y * x
-                   + 0.1306d   * y * x2
-                   - 0.0436d   * y3;
-        int lo = toE6Degree(lo1);
-
-        return new LatLongE6(la,lo);
+        val lo1 = (2.6779094 + 4.728982 * y + 0.791484 * y * x + 0.1306 * y * x2
+                - 0.0436 * y3)
+        val lo = toE6Degree(lo1)
+        return LatLongE6(la, lo)
     }
 
-
-    private static final double TOE6DEGREE = (1e6d / 36d) *100d;
-    private static int toE6Degree(double c) {
-        double result = c * TOE6DEGREE;
-        long int_result = Math.round(result);
-        return (int) int_result;
+    override fun toString(): String {
+        return (FF.f().N3_3.format((northing.toFloat() / 1000f).toDouble()) + "/"
+                + FF.f().N3_3.format((easting.toFloat() / 1000f).toDouble()))
     }
 
+    companion object {
+        /**
+         *
+         * formula taken from the Document "Naeherungsloesungen fuer die direkte Transformation
+         * CH1903 <=> WGS84" by the Bundesamt fuer Landestopografie swisstopo (http://www.swisstopo.ch)
+         *
+         */
+        private const val SECONDS = 3600.0
+        private const val BERNE_LA = 169028.66 / SECONDS
+        private const val BERNE_LO = 26782.5 / SECONDS
 
-    private static double getRelativeY(int si) {
-        double rel = si - BERNE_SIY;
-        return rel / 1e6d;
+        // x corespondents to northing and latitude
+        private const val BERNE_SIY = 600000
+
+        // y corespondents to easting and longitude
+        private const val BERNE_SIX = 200000
+
+        @JvmField
+        val LA_PRECISION = Sexagesimal(0, 0, 0.12)
+        @JvmField
+        val LO_PRECISION = Sexagesimal(0, 0, 0.08)
+        private fun getRelativeLatitude(la: Double): Double {
+            return (la - BERNE_LA) * SECONDS / 10000.0
+        }
+
+        private fun getRelativeLongitude(lo: Double): Double {
+            return (lo - BERNE_LO) * SECONDS / 10000.0
+        }
+
+        private const val TOE6DEGREE = 1e6 / 36.0 * 100.0
+        private fun toE6Degree(c: Double): Int {
+            val result = c * TOE6DEGREE
+            return result.roundToInt()
+        }
+
+        private fun getRelativeY(si: Int): Double {
+            val rel = (si - BERNE_SIY).toDouble()
+            return rel / 1e6
+        }
+
+        private fun getRelativeX(si: Int): Double {
+            val rel = (si - BERNE_SIX).toDouble()
+            return rel / 1e6
+        }
+
+        private val SWISS_AREA = BoundingBoxE6(48300000, 11200000, 45600000, 5000000)
+
+        @JvmStatic
+        fun inSwitzerland(point: LatLong): Boolean {
+            return SWISS_AREA.contains(point)
+        }
     }
-
-    private static double getRelativeX(int si) {
-        double rel = si - BERNE_SIX;
-        return rel / 1e6d;
-    }
-
-
-
-    @Nonnull
-    @Override
-    public String toString() {
-        return FF.f().N3_3.format(((float)northing)/1000f) + "/"
-                + FF.f().N3_3.format(((float)easting)/1000f);
-    }
-
-
-
-
-    private static final BoundingBoxE6 SWISS_AREA = new BoundingBoxE6(48300000,11200000,45600000,5000000);
-
-    public static boolean inSwitzerland(LatLong point) {
-        return SWISS_AREA.contains(point);
-    }
-
 }

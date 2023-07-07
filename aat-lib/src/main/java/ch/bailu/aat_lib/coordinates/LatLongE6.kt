@@ -1,73 +1,66 @@
-package ch.bailu.aat_lib.coordinates;
+package ch.bailu.aat_lib.coordinates
 
+import org.mapsforge.core.model.LatLong
+import org.mapsforge.core.util.LatLongUtils
+import javax.annotation.Nonnull
 
+class LatLongE6 : LatLongInterface {
+    private val latitudeE6: Int
+    private val longitudeE6: Int
 
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.util.LatLongUtils;
-
-import javax.annotation.Nonnull;
-
-
-public class LatLongE6 implements LatLongInterface {
-    private final int la, lo;
-
-
-    public LatLongE6(int latitude, int longitude) {
-        la = latitude;
-        lo = longitude;
+    constructor(latitude: Int, longitude: Int) {
+        latitudeE6 = latitude
+        longitudeE6 = longitude
     }
 
-
-    public LatLongE6(double latitude, double longitude) {
-        la = toE6(latitude);
-        lo = toE6(longitude);
+    constructor(latitude: Double, longitude: Double) {
+        latitudeE6 = toE6(latitude)
+        longitudeE6 = toE6(longitude)
     }
 
-
-    public LatLongE6(LatLong p) {
-        la = toE6(p.latitude);
-        lo = toE6(p.longitude);
+    constructor(p: LatLong) {
+        latitudeE6 = toE6(p.latitude)
+        longitudeE6 = toE6(p.longitude)
     }
 
-
-    public LatLong toLatLong() {
-        return new LatLong(toD(la),toD(lo));
+    fun toLatLong(): LatLong {
+        return LatLong(toD(latitudeE6), toD(longitudeE6))
     }
 
-    public static double toD(int in) {
-        return LatLongUtils.microdegreesToDegrees(in);
+    override fun getLatitudeE6(): Int {
+        return latitudeE6
     }
 
-    public static int toE6(double in) {
-        return LatLongUtils.degreesToMicrodegrees(in);
+    override fun getLongitudeE6(): Int {
+        return longitudeE6
     }
 
-    @Override
-    public int getLatitudeE6() {
-        return la;
+    override fun getLatitude(): Double {
+        return toD(latitudeE6)
     }
 
-    @Override
-    public int getLongitudeE6() {
-        return lo;
-    }
-
-    public static LatLong toLatLong(LatLongInterface tp) {
-        return new LatLong(toD(tp.getLatitudeE6()), toD(tp.getLongitudeE6()));
-
+    override fun getLongitude(): Double {
+        return toD(longitudeE6)
     }
 
     @Nonnull
-    @Override
-    public String toString() {
-        return toLatLong().toString();
+    override fun toString(): String {
+        return toLatLong().toString()
     }
 
-    public double getLatitude() {
-        return toD(la);
-    }
+    companion object {
+        @JvmStatic
+        fun toD(value: Int): Double {
+            return LatLongUtils.microdegreesToDegrees(value)
+        }
 
-    public double getLongitude() {
-        return toD(lo);
+        fun toE6(value: Double): Int {
+            return LatLongUtils.degreesToMicrodegrees(value)
+        }
+
+        @JvmStatic
+        fun toLatLong(latLong: LatLongInterface): LatLong {
+            return LatLong(toD(latLong.getLatitudeE6()), toD(latLong.getLongitudeE6()))
+        }
     }
 }

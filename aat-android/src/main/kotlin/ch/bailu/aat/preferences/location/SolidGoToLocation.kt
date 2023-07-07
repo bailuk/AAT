@@ -55,9 +55,12 @@ class SolidGoToLocation(val context: Context) : SolidString(
     @Throws(IllegalArgumentException::class, IllegalStateException::class)
     private fun latLongFromString(code: String): LatLong {
         return try {
-            if (reference != null) OlcCoordinates(code, reference).toLatLong() else OlcCoordinates(
-                code
-            ).toLatLong()
+            val ref = reference
+            if (ref != null) {
+                OlcCoordinates(code, ref).toLatLong()
+            } else {
+                OlcCoordinates(code).toLatLong()
+            }
         } catch (eOLC: Exception) {
             try {
                 CH1903Coordinates(code).toLatLong()
@@ -68,7 +71,7 @@ class SolidGoToLocation(val context: Context) : SolidString(
                     try {
                         UTMCoordinates(code).toLatLong()
                     } catch (eUTM: Exception) {
-                        throw Coordinates.getCodeNotValidException(code)
+                        throw Coordinates.createIllegalCodeException(code)
                     }
                 }
             }

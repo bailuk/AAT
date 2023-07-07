@@ -82,7 +82,8 @@ abstract class AbsNodeSelectorLayer(
     }
 
     private fun findNodeAndNotify(centerBounding: BoundingBoxE6) {
-        if (selectedNode == null || !centerBounding.contains(selectedNode)) {
+        val node = selectedNode
+        if (node == null || !centerBounding.contains(node)) {
             findNode(centerBounding)
         }
     }

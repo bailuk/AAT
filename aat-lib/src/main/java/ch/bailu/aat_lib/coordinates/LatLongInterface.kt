@@ -1,14 +1,11 @@
-package ch.bailu.aat_lib.coordinates;
-
+package ch.bailu.aat_lib.coordinates
 
 /**
  * Interface to an object that stores geo location
  */
-public interface LatLongInterface {
-
-    int getLatitudeE6();
-    int getLongitudeE6();
-
-    double getLatitude();
-    double getLongitude();
+interface LatLongInterface {
+    fun getLatitudeE6(): Int
+    fun getLongitudeE6(): Int
+    fun getLatitude(): Double
+    fun getLongitude(): Double
 }
