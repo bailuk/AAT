@@ -1,56 +1,31 @@
- package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.service.ServicesInterface
 
-import javax.annotation.Nonnull;
+class TrackerSource(private val services: ServicesInterface, private val broadcaster: Broadcaster) :
+    ContentSource() {
+    private val onTrackChanged =
+        BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.trackerService.info) }
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public class TrackerSource extends ContentSource {
-
-    private final Broadcaster broadcaster;
-    private final ServicesInterface services;
-
-    public TrackerSource (ServicesInterface services, Broadcaster broadcaster) {
-        this.broadcaster = broadcaster;
-        this.services = services;
-
+    override fun requestUpdate() {
+        sendUpdate(InfoID.TRACKER, services.trackerService.info)
     }
 
-    private final BroadcastReceiver onTrackChanged = new BroadcastReceiver() {
-        @Override
-        public void onReceive(@Nonnull String... args) {
-            sendUpdate(InfoID.TRACKER, services.getTrackerService().getInfo());
-        }
-    };
-
-
-
-    @Override
-    public void requestUpdate() {
-        sendUpdate(InfoID.TRACKER, services.getTrackerService().getInfo());
+    override fun onPause() {
+        broadcaster.unregister(onTrackChanged)
     }
 
-
-    @Override
-    public void onPause() {
-        broadcaster.unregister(onTrackChanged);
+    override fun onResume() {
+        broadcaster.register(onTrackChanged, AppBroadcaster.TRACKER)
     }
 
-
-    @Override
-    public void onResume() {
-        broadcaster.register(onTrackChanged, AppBroadcaster.TRACKER);
+    override fun getIID(): Int {
+        return InfoID.TRACKER
     }
 
-    @Override
-    public int getIID() {
-        return InfoID.TRACKER;
-    }
-
-    @Override
-    public GpxInformation getInfo() {
-        return services.getTrackerService().getInfo();
+    override fun getInfo(): GpxInformation {
+        return services.trackerService.info
     }
 }

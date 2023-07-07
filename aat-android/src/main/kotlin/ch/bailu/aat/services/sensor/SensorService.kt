@@ -31,8 +31,8 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
                 }
             }
         }
-    private val onSensorDisconnected =  BroadcastReceiver { _: Array<String?>? -> updateConnections() }
-    private val onSensorReconnect = ch.bailu.aat_lib.dispatcher.BroadcastReceiver { _: Array<String?>? ->
+    private val onSensorDisconnected =  BroadcastReceiver { _: Array<out String> -> updateConnections() }
+    private val onSensorReconnect = BroadcastReceiver { _: Array<out String> ->
         updateConnections()
         scan() // rescan to get them in cache if they were not
     }

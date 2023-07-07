@@ -1,11 +1,11 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
+fun interface OnContentUpdatedInterface {
+    fun onContentUpdated(iid: Int, info: GpxInformation)
 
-public interface OnContentUpdatedInterface {
-    OnContentUpdatedInterface NULL = (iid, info) -> {};
-
-    void onContentUpdated(int iid, @Nonnull GpxInformation info);
+    companion object {
+        val NULL = OnContentUpdatedInterface { _, _ -> }
+    }
 }

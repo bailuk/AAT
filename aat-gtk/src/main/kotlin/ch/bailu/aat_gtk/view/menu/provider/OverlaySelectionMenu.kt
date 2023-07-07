@@ -33,7 +33,7 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
 
                             val checkButton = CheckButton().apply {
                                 onToggled {
-                                    it.isEnabled = active
+                                    it.setEnabled(active)
                                 }
                             }
                             checkButtons.add(checkButton)
@@ -59,7 +59,7 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
             , "overlay") {
                 overlays.forEachIndexed { index, fileSource ->
                     checkButtons[index].setLabel(fileSource.info.file.name)
-                    checkButtons[index].active = fileSource.isEnabled
+                    checkButtons[index].active = fileSource.isEnabled()
                 }
             }
         )

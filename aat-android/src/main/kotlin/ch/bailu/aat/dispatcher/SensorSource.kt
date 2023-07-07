@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 class SensorSource(private val services: ServicesInterface, private val broadcaster: Broadcaster, private val iid: Int) : ContentSource() {
 
     private val changedAction: String = AppBroadcaster.SENSOR_CHANGED + iid
-    private val onSensorUpdated = BroadcastReceiver { _: Array<String?>? -> sendUpdate(getIID(), info) }
+    private val onSensorUpdated = BroadcastReceiver { _: Array<out String> -> sendUpdate(getIID(), info) }
 
     override fun requestUpdate() {
         sendUpdate(getIID(), info)

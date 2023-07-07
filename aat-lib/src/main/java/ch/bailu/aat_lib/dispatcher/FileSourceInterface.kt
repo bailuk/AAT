@@ -1,9 +1,9 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import ch.bailu.foc.Foc;
+import ch.bailu.foc.Foc
 
-public interface FileSourceInterface extends ContentSourceInterface {
-    void setFile(Foc file);
-    boolean isEnabled();
-    void setEnabled(boolean lifeCycleEnabled);
+interface FileSourceInterface : ContentSourceInterface {
+    fun setFile(file: Foc)
+    fun setEnabled(enabled: Boolean)
+    fun isEnabled(): Boolean
 }

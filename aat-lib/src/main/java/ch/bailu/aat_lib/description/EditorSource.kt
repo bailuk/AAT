@@ -35,13 +35,10 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
         edit.onResume()
     }
 
-    override fun isEditing(): Boolean {
-        return true
-    }
+    override val isEditing = true
 
-    override fun getEditor(): EditorInterface {
-        return edit.editor
-    }
+    override val editor: EditorInterface
+        get() =  edit.editor
 
     override fun getIID(): Int {
         return edit.infoID
@@ -51,13 +48,13 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
         return edit.info
     }
 
-    override fun getFile(): Foc {
-        return edit.file
-    }
+    override val file: Foc
+        get() = edit.file
+
 
     override fun edit() {}
-    fun edit(file: Foc?) {
-        sendUpdate(edit.infoID, GpxFileWrapper(getFile(), GpxList.NULL_ROUTE))
+    fun edit(file: Foc) {
+        sendUpdate(edit.infoID, GpxFileWrapper(file, GpxList.NULL_ROUTE))
         edit.edit(file)
         requestUpdate()
     }

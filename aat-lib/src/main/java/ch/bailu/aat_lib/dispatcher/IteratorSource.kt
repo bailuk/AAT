@@ -1,160 +1,115 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.service.cache.ObjNull
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
+import ch.bailu.aat_lib.service.directory.Iterator
+import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener
+import ch.bailu.aat_lib.service.directory.IteratorFollowFile
+import ch.bailu.aat_lib.service.directory.IteratorSummary
 
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic;
-import ch.bailu.aat_lib.service.directory.Iterator;
-import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener;
-import ch.bailu.aat_lib.service.directory.IteratorFollowFile;
-import ch.bailu.aat_lib.service.directory.IteratorSummary;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjNull;
-
-public abstract class IteratorSource extends ContentSource implements OnCursorChangedListener {
-
-    private final AppContext appContext;
-    private final SolidDirectoryQuery sdirectory;
-
-    private Iterator iterator = Iterator.NULL;
-
-
-    @Override
-    public void onCursorChanged() {
-        requestUpdate();
+abstract class IteratorSource(private val appContext: AppContext) : ContentSource(),
+    OnCursorChangedListener {
+    private val sdirectory: SolidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
+    private var iterator = Iterator.NULL
+    override fun onCursorChanged() {
+        requestUpdate()
     }
 
-    public IteratorSource(AppContext appContext) {
-        this.appContext = appContext;
-        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
+    override fun requestUpdate() {
+        sendUpdate(iterator.infoID, info)
     }
 
-    @Override
-    public void requestUpdate() {
-        sendUpdate(iterator.getInfoID(), getInfo());
+    override fun getIID(): Int {
+        return iterator.infoID
     }
 
-    @Override
-    public int getIID() {
-        return iterator.getInfoID();
+    override fun onPause() {
+        iterator.close()
+        iterator = Iterator.NULL
     }
 
-    @Override
-    public void onPause() {
-        iterator.close();
-        iterator = Iterator.NULL;
+    override fun onResume() {
+        iterator = factoryIterator(appContext)
+        iterator.moveToPosition(sdirectory.position.value)
+        iterator.setOnCursorChangedListener(this)
     }
 
-    @Override
-    public void onResume() {
-        iterator = factoryIterator(appContext);
-        iterator.moveToPosition(sdirectory.getPosition().getValue());
-        iterator.setOnCursorChangedListener(this);
+    abstract fun factoryIterator(appContext: AppContext?): Iterator
+    override fun getInfo(): GpxInformation {
+        return iterator.info
     }
 
-    public abstract Iterator factoryIterator(AppContext appContext);
-
-    @Override
-    public GpxInformation getInfo() {
-        return iterator.getInfo();
+    fun moveToPrevious() {
+        if (!iterator.moveToPrevious()) iterator.moveToPosition(iterator.count - 1)
+        sdirectory.position.value = iterator.position
+        requestUpdate()
     }
 
-    public void moveToPrevious() {
-        if (!iterator.moveToPrevious())
-            iterator.moveToPosition(iterator.getCount() - 1);
-
-        sdirectory.getPosition().setValue(iterator.getPosition());
-        requestUpdate();
+    fun moveToNext() {
+        if (!iterator.moveToNext()) iterator.moveToPosition(0)
+        sdirectory.position.value = iterator.position
+        requestUpdate()
     }
 
-    public void moveToNext() {
-        if (!iterator.moveToNext())
-            iterator.moveToPosition(0);
-
-        sdirectory.getPosition().setValue(iterator.getPosition());
-        requestUpdate();
-    }
-
-
-    public static class FollowFile extends IteratorSource {
-        private final AppContext appContext;
-        private Obj handle = ObjNull.NULL;
-
-        public FollowFile(AppContext appContext) {
-            super(appContext);
-            this.appContext = appContext;
+    class FollowFile(private val appContext: AppContext) : IteratorSource(
+        appContext
+    ) {
+        private var handle = ObjNull.NULL
+        override fun factoryIterator(appContext: AppContext?): Iterator {
+            return IteratorFollowFile(appContext)
         }
 
-        @Override
-        public Iterator factoryIterator(AppContext appContext) {
-            return new IteratorFollowFile(appContext);
-        }
-
-
-        private final BroadcastReceiver onChangedInCache = objs -> {
-            if (getID().equals(objs[0])) {
-                requestUpdate();
+        private val onChangedInCache = BroadcastReceiver { objs: Array<out String> ->
+            if (iD == objs[0]) {
+                requestUpdate()
             }
-
-        };
-
-        @Override
-        public void onPause() {
-            appContext.getBroadcaster().unregister(onChangedInCache);
-
-            handle.free();
-            handle = ObjNull.NULL;
-            super.onPause();
         }
 
-
-        @Override
-        public void onResume() {
-            appContext.getBroadcaster().register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE);
-            super.onResume();
+        override fun onPause() {
+            appContext.broadcaster.unregister(onChangedInCache)
+            handle.free()
+            handle = ObjNull.NULL
+            super.onPause()
         }
 
-        @Override
-        public GpxInformation getInfo() {
-            final GpxInformation[] info = {super.getInfo()};
+        override fun onResume() {
+            appContext.broadcaster.register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE)
+            super.onResume()
+        }
 
-            appContext.getServices().insideContext(() -> {
-                Obj h = appContext.getServices().getCacheService().getObject(getID(),
-                        new ObjGpxStatic.Factory());
-
-                if (h instanceof ObjGpx) {
-                    handle.free();
-                    handle = h;
-
-                    if (handle.isReadyAndLoaded())
-                        info[0] = new GpxFileWrapper(handle.getFile(),
-                                ((ObjGpx) handle).getGpxList());
+        override fun getInfo(): GpxInformation {
+            val info = arrayOf(super.getInfo())
+            appContext.services.insideContext {
+                val h = appContext.services.cacheService.getObject(
+                    iD,
+                    ObjGpxStatic.Factory()
+                )
+                if (h is ObjGpx) {
+                    handle.free()
+                    handle = h
+                    if (handle.isReadyAndLoaded) info[0] = GpxFileWrapper(
+                        handle.file,
+                        (handle as ObjGpx).gpxList
+                    )
                 } else {
-
-                    h.free();
+                    h.free()
                 }
-
-            });
-            return info[0];
+            }
+            return info[0]
         }
 
-        private String getID() {
-            return super.getInfo().getFile().toString();
-        }
-
+        private val iD: String
+            get() = super.getInfo().file.toString()
     }
 
-    public static class Summary extends IteratorSource {
-        public Summary(AppContext appContext) {
-            super(appContext);
-        }
-
-        @Override
-        public Iterator factoryIterator(AppContext appContext) {
-            return new IteratorSummary(appContext);
+    class Summary(appContext: AppContext) : IteratorSource(appContext) {
+        override fun factoryIterator(appContext: AppContext?): Iterator {
+            return IteratorSummary(appContext)
         }
     }
 }

@@ -1,45 +1,36 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import ch.bailu.aat_lib.Configuration;
+import ch.bailu.aat_lib.Configuration
 
-public class AppBroadcaster {
-    public static final String NAME_SPACE = Configuration.appId + ".";
-
-
-    public static final String TILE_REMOVER_SCAN = NAME_SPACE+"TR_SCAN";
-    public static final String TILE_REMOVER_STOPPED = NAME_SPACE+"TR_STOPED";
-    public static final String TILE_REMOVER_REMOVE = NAME_SPACE +"TR_REMOVE";
-
-    public static final String DBSYNC_START=NAME_SPACE+"SYNC_START";
-    public static final String DBSYNC_DONE=NAME_SPACE+"SYNC_DONE";
-    public static final String DB_SYNC_CHANGED=NAME_SPACE+"SYNC_CHANGED";
-
-    public static final String SENSOR_CHANGED = NAME_SPACE + "SENSOR_CHANGED";
-    public static final String SENSOR_DISCONNECTED = NAME_SPACE + "SENSOR_DISCONNECTED";
-    public static final String SENSOR_RECONNECT = NAME_SPACE + "SENSOR_RECONNECT";
+object AppBroadcaster {
+    private const val NAME_SPACE = Configuration.appId + "."
+    const val TILE_REMOVER_SCAN = NAME_SPACE + "TR_SCAN"
+    const val TILE_REMOVER_STOPPED = NAME_SPACE + "TR_STOPED"
+    const val TILE_REMOVER_REMOVE = NAME_SPACE + "TR_REMOVE"
+    const val DBSYNC_START = NAME_SPACE + "SYNC_START"
+    const val DBSYNC_DONE = NAME_SPACE + "SYNC_DONE"
+    const val DB_SYNC_CHANGED = NAME_SPACE + "SYNC_CHANGED"
+    const val SENSOR_CHANGED = NAME_SPACE + "SENSOR_CHANGED"
+    const val SENSOR_DISCONNECTED = NAME_SPACE + "SENSOR_DISCONNECTED"
+    const val SENSOR_RECONNECT = NAME_SPACE + "SENSOR_RECONNECT"
 
     /**
-     *   Information about state changes of files (in cache and on disk)
+     * Information about state changes of files (in cache and on disk)
      *
      */
-    public static final String FILE_CHANGED_ONDISK  = NAME_SPACE + "ONDISK";
-    public static final String FILE_CHANGED_INCACHE = NAME_SPACE + "INCACHE";
-    public static final String FILE_BACKGROND_TASK_CHANGED = NAME_SPACE + "BACKGROUND_TASK";
-
-
-
-    public static final String LOCATION_CHANGED = NAME_SPACE + "LOCATION";
-    public static final String TRACKER = NAME_SPACE + "TRACKER";
-
+    const val FILE_CHANGED_ONDISK = NAME_SPACE + "ONDISK"
+    const val FILE_CHANGED_INCACHE = NAME_SPACE + "INCACHE"
+    const val FILE_BACKGROND_TASK_CHANGED = NAME_SPACE + "BACKGROUND_TASK"
+    const val LOCATION_CHANGED = NAME_SPACE + "LOCATION"
+    const val TRACKER = NAME_SPACE + "TRACKER"
 
     /**
      * Info level namespace for message broadcaster
      */
-    public final static String LOG_INFO = NAME_SPACE + "LOG_INFO";
+    const val LOG_INFO = NAME_SPACE + "LOG_INFO"
 
     /**
      * Error level namespace for message broadcaster
      */
-    public final static String LOG_ERROR = NAME_SPACE + "LOG_ERROR";
-
+    const val LOG_ERROR = NAME_SPACE + "LOG_ERROR"
 }

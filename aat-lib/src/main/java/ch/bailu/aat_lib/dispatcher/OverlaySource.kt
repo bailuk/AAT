@@ -1,62 +1,57 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay
+import ch.bailu.aat_lib.preferences.map.SolidOverlayInterface
+import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay;
-import ch.bailu.aat_lib.preferences.map.SolidOverlayInterface;
-import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay;
-
-public class OverlaySource extends FileSource {
-    private final SolidOverlayInterface soverlay;
-
-    private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
-        @Override
-        public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-            if (soverlay.hasKey(key)) {
-                initAndUpdateOverlay();
-            }
+class OverlaySource private constructor(
+    context: AppContext,
+    private val soverlay: SolidOverlayInterface
+) : FileSource(context, soverlay.iid) {
+    private val onPreferencesChanged = OnPreferencesChanged { _, key ->
+        if (soverlay.hasKey(key)) {
+            initAndUpdateOverlay()
         }
-    };
-
-    public static OverlaySource factoryPoiOverlaySource(AppContext context) {
-        return new OverlaySource(context, new SolidPoiOverlay(context.getDataDirectory()));
     }
 
-    public static OverlaySource factoryCustomOverlaySource(AppContext context, int index) {
-        return new OverlaySource(context, new SolidCustomOverlay(context.getStorage(), context, InfoID.OVERLAY + index));
+    init {
+        initAndUpdateOverlay()
     }
 
-    private OverlaySource(AppContext context, SolidOverlayInterface soverlay) {
-        super(context, soverlay.getIID());
-        this.soverlay = soverlay;
-        initAndUpdateOverlay();
+    private fun initAndUpdateOverlay() {
+        setFile(soverlay.valueAsFile)
+        super.setEnabled(soverlay.isEnabled)
     }
 
-    public void initAndUpdateOverlay() {
-        setFile(soverlay.getValueAsFile());
-        super.setEnabled(soverlay.isEnabled());
+    override fun setEnabled(enabled: Boolean) {
+        soverlay.isEnabled = enabled
+        super.setEnabled(soverlay.isEnabled)
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        soverlay.setEnabled(enabled);
-        super.setEnabled(soverlay.isEnabled());
+    override fun onPause() {
+        super.onPause()
+        soverlay.unregister(onPreferencesChanged)
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        soverlay.unregister(onPreferencesChanged);
+    override fun onResume() {
+        super.onResume()
+        soverlay.register(onPreferencesChanged)
+        initAndUpdateOverlay()
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        soverlay.register(onPreferencesChanged);
-        initAndUpdateOverlay();
+    companion object {
+        fun factoryPoiOverlaySource(context: AppContext): OverlaySource {
+            return OverlaySource(context, SolidPoiOverlay(context.dataDirectory))
+        }
+
+        fun factoryCustomOverlaySource(context: AppContext, index: Int): OverlaySource {
+            return OverlaySource(
+                context,
+                SolidCustomOverlay(context.storage, context, InfoID.OVERLAY + index)
+            )
+        }
     }
 }

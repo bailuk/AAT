@@ -1,10 +1,10 @@
 package ch.bailu.aat_lib.service.directory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 import java.io.File;
 import java.util.ArrayList;
-
-import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
@@ -59,7 +59,7 @@ public final class DirectorySynchronizer  implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
         @Override
-        public void onReceive(@Nonnull String... args) {
+        public void onReceive(@NotNull String... args) {
             state.ping();
         }
     };

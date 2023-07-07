@@ -1,58 +1,41 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
+class OverlaysSource(context: AppContext) : ContentSourceInterface {
+    private val overlays = ArrayList<OverlaySource>()
 
-
-public class OverlaysSource implements ContentSourceInterface {
-
-    private final OverlaySource[] overlays = new OverlaySource[SolidCustomOverlayList.MAX_OVERLAYS];
-
-    public OverlaysSource(AppContext context) {
-        for (int i = 0; i < SolidCustomOverlayList.MAX_OVERLAYS; i++) {
-            overlays[i] = OverlaySource.factoryCustomOverlaySource(context, i);
+    init {
+        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+            overlays.add(OverlaySource.factoryCustomOverlaySource(context, i))
         }
     }
 
-    @Override
-    public void onPause() {
-        for (OverlaySource overlaySource : overlays) {
-            overlaySource.onPause();
-        }
+    override fun onPause() {
+        overlays.forEach {it.onPause()}
     }
 
-    @Override
-    public void onResume() {
-        for (OverlaySource overlaySource : overlays) {
-            overlaySource.onResume();
-        }
+    override fun onResume() {
+        overlays.forEach{ it.onResume() }
     }
 
-    @Override
-    public int getIID() {
-        return InfoID.OVERLAY;
+    override fun getIID(): Int {
+        return InfoID.OVERLAY
     }
 
-    @Override
-    public GpxInformation getInfo() {
-        return GpxInformation.NULL;
+    override fun getInfo(): GpxInformation {
+        return GpxInformation.NULL
     }
 
-    @Override
-    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
-        for (OverlaySource overlaySource : overlays) {
-            overlaySource.setTarget(target);
-        }
+    override fun setTarget(@Nonnull target: OnContentUpdatedInterface) {
+        overlays.forEach {it.setTarget(target)}
     }
 
-    @Override
-    public void requestUpdate() {
-        for (OverlaySource overlaySource : overlays) {
-            overlaySource.requestUpdate();
-        }
+    override fun requestUpdate() {
+        overlays.forEach {it.requestUpdate()}
     }
 }

@@ -38,7 +38,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
 
     protected val theme: UiTheme = AppTheme.search
 
-    private val onFileTaskChanged = BroadcastReceiver { _: Array<String> -> setDownloadStatus() }
+    private val onFileTaskChanged = BroadcastReceiver { setDownloadStatus() }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

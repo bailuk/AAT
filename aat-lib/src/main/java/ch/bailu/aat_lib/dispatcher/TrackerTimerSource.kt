@@ -1,46 +1,37 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Timer
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.util.Timer;
-
-public class TrackerTimerSource extends ContentSource {
-    private static final int INTERVAL=500;
-
-    private final ServicesInterface scontext;
-    private final Timer timer;
-
-    public TrackerTimerSource(ServicesInterface sc, Timer timer) {
-        this.timer = timer;
-        scontext = sc;
+class TrackerTimerSource(private val scontext: ServicesInterface, private val timer: Timer) :
+    ContentSource() {
+    override fun requestUpdate() {
+        sendUpdate(
+            InfoID.TRACKER_TIMER,
+            scontext.trackerService.info
+        )
+        timer.kick(INTERVAL.toLong()) { requestUpdate() }
     }
 
-    @Override
-    public void requestUpdate() {
-        sendUpdate(InfoID.TRACKER_TIMER,
-                scontext.getTrackerService().getInfo());
-        timer.kick(INTERVAL, this::requestUpdate);
+    override fun onPause() {
+        timer.cancel()
     }
 
-    @Override
-    public void onPause() {
-        timer.cancel();
+    override fun onResume() {
+        timer.kick(INTERVAL.toLong()) { requestUpdate() }
     }
 
-    @Override
-    public void onResume() {
-        timer.kick(INTERVAL, this::requestUpdate);
+    override fun getIID(): Int {
+        return InfoID.TRACKER_TIMER
     }
 
-    @Override
-    public int getIID() {
-        return InfoID.TRACKER_TIMER;
+    override fun getInfo(): GpxInformation {
+        return scontext.trackerService.info
     }
 
-    @Override
-    public GpxInformation getInfo() {
-        return scontext.getTrackerService().getInfo();
+    companion object {
+        private const val INTERVAL = 500
     }
 }

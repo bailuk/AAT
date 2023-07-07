@@ -1,8 +1,7 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-public interface Broadcaster {
-    void broadcast(String action, String ...args);
-
-    void register(BroadcastReceiver broadcastReceiver, String action);
-    void unregister(BroadcastReceiver broadcastReceiver);
+interface Broadcaster {
+    fun broadcast(action: String, vararg args: String)
+    fun register(broadcastReceiver: BroadcastReceiver, action: String)
+    fun unregister(broadcastReceiver: BroadcastReceiver)
 }

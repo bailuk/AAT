@@ -17,15 +17,15 @@ class AndroidBroadcaster(private val context: Context) : Broadcaster {
         context.sendBroadcast(AppIntent.toIntent(action, *args))
     }
 
-    override fun register(observer: BroadcastReceiver, action: String) {
-        if (!observers.containsKey(observer)) {
+    override fun register(broadcastReceiver: BroadcastReceiver, action: String) {
+        if (!observers.containsKey(broadcastReceiver)) {
             val receiver = object : android.content.BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
-                    observer.onReceive(*AppIntent.toArgs(intent))
+                    broadcastReceiver.onReceive(*AppIntent.toArgs(intent))
                 }
             }
 
-            observers[observer] = receiver
+            observers[broadcastReceiver] = receiver
             register(context, receiver, action)
 
         } else {
@@ -33,8 +33,8 @@ class AndroidBroadcaster(private val context: Context) : Broadcaster {
         }
     }
 
-    override fun unregister(observer: BroadcastReceiver) {
-        val receiver = observers.remove(observer)
+    override fun unregister(broadcastReceiver: BroadcastReceiver) {
+        val receiver = observers.remove(broadcastReceiver)
         if (receiver != null) {
             context.unregisterReceiver(receiver)
         } else {

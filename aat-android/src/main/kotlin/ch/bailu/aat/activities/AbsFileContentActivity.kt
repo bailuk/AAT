@@ -9,18 +9,19 @@ import ch.bailu.aat.menus.FileMenu
 import ch.bailu.aat.util.ui.AppDialog
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.busy.BusyViewContainer
 import ch.bailu.aat.views.busy.BusyViewControlIID
-import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
-import ch.bailu.aat.views.bar.MainControlBar
-import ch.bailu.aat.views.html.AttributesView
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.IteratorSource
 import ch.bailu.aat_lib.dispatcher.IteratorSource.FollowFile
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.dispatcher.OverlaysSource
 import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -53,7 +54,8 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        currentFile = FollowFile(appContext)
+        val currentFile = FollowFile(appContext)
+        this.currentFile = currentFile
         editorSourcePrivate = EditorOrBackupSource(appContext, currentFile)
         createViews()
         createDispatcher()
@@ -112,16 +114,28 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
             InfoID.OVERLAY + 3
         )
         addTarget(fileOperation!!, InfoID.FILEVIEW)
-        addTarget({ _: Int, info: GpxInformation ->
-            val newFileID = info.file.toString()
-            if (!Objects.equals(currentFileID, newFileID)) {
-                currentFileID = newFileID
-                map?.frameBounding(info.boundingBox)
-                AppLog.i(this@AbsFileContentActivity, info.file.name)
+
+        val doFrame = object: OnContentUpdatedInterface {
+
+            override fun onContentUpdated(iid: Int, info: GpxInformation) {
+                val newFileID = info.file.toString()
+                if (!Objects.equals(currentFileID, newFileID)) {
+                    currentFileID = newFileID
+                    map?.frameBounding(info.boundingBox)
+                    AppLog.i(this@AbsFileContentActivity, info.file.name)
+                }
             }
-        }, InfoID.FILEVIEW)
-        addTarget({ _: Int, info: GpxInformation -> fileError?.displayError(serviceContext, info.file)
-        }, InfoID.FILEVIEW)
+        }
+        addTarget(doFrame, InfoID.FILEVIEW)
+
+
+        val doDisplayError = object : OnContentUpdatedInterface {
+            override fun onContentUpdated(iid: Int, info: GpxInformation) {
+                fileError?.displayError(serviceContext, info.file)
+            }
+
+        }
+        addTarget(doDisplayError, InfoID.FILEVIEW)
     }
 
     override fun onClick(v: View) {

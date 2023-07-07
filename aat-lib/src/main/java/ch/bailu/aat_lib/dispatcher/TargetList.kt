@@ -1,23 +1,17 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.gpx.GpxInformation;
-
-public class TargetList implements OnContentUpdatedInterface{
-    private final ArrayList<OnContentUpdatedInterface> targets =
-            new ArrayList<>(10);
-
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        for (OnContentUpdatedInterface target: targets) {
-            target.onContentUpdated(iid, info);
+class TargetList : OnContentUpdatedInterface {
+    private val targets = ArrayList<OnContentUpdatedInterface>(10)
+    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+        for (target in targets) {
+            target.onContentUpdated(iid, info)
         }
     }
 
-    public void add(@Nonnull OnContentUpdatedInterface t) {
-        targets.add(t);
+    fun add(@Nonnull t: OnContentUpdatedInterface) {
+        targets.add(t)
     }
 }

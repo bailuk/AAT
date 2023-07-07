@@ -1,18 +1,15 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxInformation
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
+abstract class ContentSource : ContentSourceInterface {
+    private var target = OnContentUpdatedInterface.NULL
 
-public abstract class ContentSource implements ContentSourceInterface {
-    private OnContentUpdatedInterface target = OnContentUpdatedInterface.NULL;
-
-    @Override
-    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
-        this.target = target;
+    override fun setTarget(target: OnContentUpdatedInterface) {
+        this.target = target
     }
 
-    public void sendUpdate(int iid, @Nonnull GpxInformation info) {
-        target.onContentUpdated(iid, info);
+    fun sendUpdate(iid: Int, info: GpxInformation) {
+        target.onContentUpdated(iid, info)
     }
 }

@@ -1,121 +1,101 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.description.EditorSource
+import ch.bailu.aat_lib.gpx.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.service.editor.EditorInterface
+import ch.bailu.foc.Foc
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.description.EditorSource;
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
-import ch.bailu.foc.Foc;
+class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterface) :
+    EditorSourceInterface, ContentSourceInterface {
+    private val editorSource: EditorSource
+    private val backupSource: ContentSourceInterface
+    override var isEditing = false
+        private set
 
-public class EditorOrBackupSource implements EditorSourceInterface, ContentSourceInterface {
-
-    private final EditorSource editorSource;
-    private final ContentSourceInterface backupSource;
-    private boolean isEditing = false;
-
-    public EditorOrBackupSource(AppContext appContext, ContentSourceInterface source) {
-        editorSource = new EditorSource(appContext);
-        backupSource = source;
+    init {
+        editorSource = EditorSource(appContext)
+        backupSource = source
     }
 
-    public boolean isModified() {
-        return isEditing && getEditor().isModified();
-    }
+    val isModified: Boolean
+        get() = isEditing && editor.isModified
 
-    public void releaseEditorSave() {
+    fun releaseEditorSave() {
         if (isEditing) {
-            getEditor().save();
-            releaseEditorDiscard();
+            editor.save()
+            releaseEditorDiscard()
         }
     }
 
-    public void releaseEditorDiscard() {
+    fun releaseEditorDiscard() {
         if (isEditing) {
-            isEditing = false;
-
-            editorSource.onPause();
-            backupSource.onResume();
-            requestUpdate();
+            isEditing = false
+            editorSource.onPause()
+            backupSource.onResume()
+            requestUpdate()
         }
     }
 
-    @Override
-    public void setTarget(@Nonnull OnContentUpdatedInterface target) {
-        editorSource.setTarget(target);
-        backupSource.setTarget(target);
+    override fun setTarget(@Nonnull target: OnContentUpdatedInterface) {
+        editorSource.setTarget(target)
+        backupSource.setTarget(target)
     }
 
-    public void edit() {
-        Foc file = backupSource.getInfo().getFile();
+    override fun edit() {
+        val file = backupSource.info.file
         if (file != null && !isEditing) {
-            isEditing = true;
-
-            editorSource.edit(file);
-            editorSource.onResume();
-            backupSource.onPause();
-
-            requestUpdate();
+            isEditing = true
+            editorSource.edit(file)
+            editorSource.onResume()
+            backupSource.onPause()
+            requestUpdate()
         }
     }
 
-    public boolean isEditing() {
-        return isEditing;
+
+    override val editor: EditorInterface
+        get() =  editorSource.editor
+
+    override fun getIID(): Int {
+        return editorSource.getIID()
     }
 
-    @Override
-    public EditorInterface getEditor() {
-        return editorSource.getEditor();
+    override fun getInfo(): GpxInformation {
+        return if (isEditing) editorSource.info else backupSource.info
     }
 
-    @Override
-    public int getIID() {
-        return editorSource.getIID();
-    }
-
-    @Override
-    public GpxInformation getInfo() {
-        if (isEditing) return editorSource.getInfo();
-        return backupSource.getInfo();
-    }
-
-    @Override
-    public void requestUpdate() {
+    override fun requestUpdate() {
         if (isEditing) {
-            requestNullUpdate(backupSource);
-            editorSource.requestUpdate();
-        }  else {
-            requestNullUpdate(editorSource);
-            backupSource.requestUpdate();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        if (isEditing) editorSource.onPause();
-        else backupSource.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        if (isEditing) {
-            requestNullUpdate(backupSource);
-            editorSource.onResume();
+            requestNullUpdate(backupSource)
+            editorSource.requestUpdate()
         } else {
-            requestNullUpdate(editorSource);
-            backupSource.onResume();
+            requestNullUpdate(editorSource)
+            backupSource.requestUpdate()
         }
     }
 
-    @Override
-    public Foc getFile() {
-        if (isEditing) return editorSource.getFile();
-        return backupSource.getInfo().getFile();
+    override fun onPause() {
+        if (isEditing) editorSource.onPause() else backupSource.onPause()
     }
 
-    private void requestNullUpdate(ContentSourceInterface source) {
-        editorSource.sendUpdate(source.getIID(), new GpxFileWrapper(getFile(), GpxList.NULL_ROUTE));
+    override fun onResume() {
+        if (isEditing) {
+            requestNullUpdate(backupSource)
+            editorSource.onResume()
+        } else {
+            requestNullUpdate(editorSource)
+            backupSource.onResume()
+        }
+    }
+
+    override val file: Foc
+        get() =  if (isEditing) editorSource.file else backupSource.info.file
+
+    private fun requestNullUpdate(source: ContentSourceInterface) {
+        editorSource.sendUpdate(source.getIID(), GpxFileWrapper(file, GpxList.NULL_ROUTE))
     }
 }

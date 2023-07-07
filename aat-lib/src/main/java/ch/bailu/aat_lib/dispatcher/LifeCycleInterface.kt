@@ -1,8 +1,7 @@
-package ch.bailu.aat_lib.dispatcher;
+package ch.bailu.aat_lib.dispatcher
 
-public interface LifeCycleInterface {
-
-    void onResumeWithService();
-    void onPauseWithService();
-    void onDestroy();
+interface LifeCycleInterface {
+    fun onResumeWithService()
+    fun onPauseWithService()
+    fun onDestroy()
 }

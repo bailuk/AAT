@@ -60,13 +60,13 @@ object AppIntent {
         return result
     }
 
-    fun toArgs(intent: Intent): Array<String?> {
+    fun toArgs(intent: Intent): Array<out String> {
         val size = Math.min(intent.getIntExtra("size", 0), KEYS.size)
-        val result = arrayOfNulls<String>(size)
+        val result = ArrayList<String>()
         for (i in 0 until size) {
-            result[i] = toSaveString(intent.getStringExtra(KEYS[i]))
+            result.add(toSaveString(intent.getStringExtra(KEYS[i])))
         }
-        return result
+        return result.toTypedArray()
     }
 
     private fun toSaveString(stringExtra: String?): String {
