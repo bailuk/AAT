@@ -31,11 +31,11 @@ open class RealLocation(i: LocationStackItem?,
             requestLocationUpdates(lm, interval.toLong())
             passState(StateID.WAIT)
         } catch (ex: NoServiceException) {
-            passState(StateID.NOSERVICE)
+            passState(StateID.NO_SERVICE)
         } catch (ex: SecurityException) {
-            passState(StateID.NOACCESS)
+            passState(StateID.NO_ACCESS)
         } catch (ex: IllegalArgumentException) {
-            passState(StateID.NOACCESS)
+            passState(StateID.NO_ACCESS)
         }
     }
 
@@ -71,7 +71,7 @@ open class RealLocation(i: LocationStackItem?,
         try {
             locationManager.removeUpdates(this)
         } catch (e: Exception) {
-            state = StateID.NOSERVICE
+            state = StateID.NO_SERVICE
         }
     }
 
@@ -132,12 +132,12 @@ open class RealLocation(i: LocationStackItem?,
         builder.append(provider)
         builder.append("<br>")
         when (state) {
-            StateID.NOACCESS -> builder.append("STATE_NOACCESS")
-            StateID.NOSERVICE -> builder.append("STATE_NOSERVICE")
+            StateID.NO_ACCESS -> builder.append("STATE_NOACCESS")
+            StateID.NO_SERVICE -> builder.append("STATE_NOSERVICE")
             StateID.ON -> builder.append("STATE_ON")
             StateID.OFF -> builder.append("STATE_OFF")
             StateID.PAUSE -> builder.append("STATE_PAUSE")
-            StateID.AUTOPAUSED -> builder.append("STATE_AUTOPAUSED")
+            StateID.AUTO_PAUSED -> builder.append("STATE_AUTOPAUSED")
             else -> builder.append("STATE_WAIT")
         }
         builder.append("<br>")

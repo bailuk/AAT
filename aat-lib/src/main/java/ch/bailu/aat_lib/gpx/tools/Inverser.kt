@@ -1,61 +1,45 @@
-package ch.bailu.aat_lib.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools
 
-import ch.bailu.aat_lib.gpx.GpxListArray;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListArray
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 
-public class Inverser {
+class Inverser(track: GpxList) {
+    val newList: GpxList
 
-
-    private final GpxList newList;
-
-
-    public Inverser(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(),
-                GpxListAttributes.NULL);
-
-
-        GpxListArray list = new GpxListArray(track);
-        GpxListArray listInverse = new GpxListArray(track);
-
+    init {
+        newList = GpxList(
+            track.getDelta().getType(),
+            GpxListAttributes.NULL
+        )
+        val list = GpxListArray(track)
+        val listInverse = GpxListArray(track)
         if (list.size() > 0) {
-
-            int indexInverse = list.size() -1;
-            int index = 0;
-
-            while (indexInverse >=0) {
-                listInverse.setIndex(indexInverse);
-                list.setIndex(index);
-
-                final GpxPointNode point = list.get();
-                final GpxPointNode pointInverse = listInverse.get();
-
-                final GpxPoint pointNew = new GpxPoint(pointInverse, (float) pointInverse.getAltitude(),
-                        point.getTimeStamp());
-
-
-                if (isLastInSegment(pointInverse))
-                    newList.appendToNewSegment(pointNew, pointInverse.getAttributes());
-                else
-                    newList.appendToCurrentSegment(pointNew, pointInverse.getAttributes());
-
-
-                index++;
-                indexInverse--;
+            var indexInverse = list.size() - 1
+            var index = 0
+            while (indexInverse >= 0) {
+                listInverse.index = indexInverse
+                list.index = index
+                val point = list.get()
+                val pointInverse = listInverse.get()
+                val pointNew = GpxPoint(
+                    pointInverse, pointInverse.getAltitude().toFloat(),
+                    point.getTimeStamp()
+                )
+                if (isLastInSegment(pointInverse)) newList.appendToNewSegment(
+                    pointNew,
+                    pointInverse.getAttributes()
+                ) else newList.appendToCurrentSegment(pointNew, pointInverse.getAttributes())
+                index++
+                indexInverse--
             }
         }
-
     }
 
-
-    private boolean isLastInSegment(GpxPointNode point) {
-        return point.getNext() == null || point.getNext() instanceof GpxPointFirstNode;
-    }
-
-    public GpxList getNewList() {
-        return newList;
+    private fun isLastInSegment(point: GpxPointNode): Boolean {
+        return point.next == null || point.next is GpxPointFirstNode
     }
 }

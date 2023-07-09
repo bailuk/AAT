@@ -20,7 +20,7 @@ public final class AutoPauseState extends State {
 
     @Override
     public int getStateID() {
-        return StateID.AUTOPAUSED;
+        return StateID.AUTO_PAUSED;
     }
 
     @Override

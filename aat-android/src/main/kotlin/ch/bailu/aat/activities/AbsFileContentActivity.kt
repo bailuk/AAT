@@ -78,7 +78,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     protected fun createAttributesView(): View {
         val v = AttributesView(this, appContext.storage)
-        addTarget(v, InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY)
+        addTarget(v, InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY)
         return v
     }
 
@@ -105,13 +105,13 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         addSource(editorSource)
         addTarget(
             busyControl!!,
-            InfoID.FILEVIEW,
+            InfoID.FILE_VIEW,
             InfoID.OVERLAY,
             InfoID.OVERLAY + 1,
             InfoID.OVERLAY + 2,
             InfoID.OVERLAY + 3
         )
-        addTarget(fileOperation!!, InfoID.FILEVIEW)
+        addTarget(fileOperation!!, InfoID.FILE_VIEW)
 
         addTarget({ _, info ->
             val newFileID = info.file.toString()
@@ -120,10 +120,10 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
                 map?.frameBounding(info.getBoundingBox())
                 AppLog.i(this@AbsFileContentActivity, info.file.name)
             }
-        }, InfoID.FILEVIEW)
+        }, InfoID.FILE_VIEW)
 
 
-        addTarget({ _, info -> fileError?.displayError(serviceContext, info.file) }, InfoID.FILEVIEW)
+        addTarget({ _, info -> fileError?.displayError(serviceContext, info.file) }, InfoID.FILE_VIEW)
     }
 
     override fun onClick(v: View) {

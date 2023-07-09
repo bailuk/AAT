@@ -20,7 +20,7 @@ class LogOnContentUpdate(dispatcher: DispatcherInterface): OnContentUpdatedInter
         log[InfoID.TRACKER_TIMER] = Data(TimeOutLog(10000), "TRACKER_TIMER")
         log[InfoID.LOCATION] = Data(TimeOutLog(10000), "LOCATION")
         log[InfoID.TRACKER] = Data(TimeOutLog(10000),"TRACKER")
-        log[InfoID.FILEVIEW]= Data(TimeOutLog(), "FILEVIEW")
+        log[InfoID.FILE_VIEW]= Data(TimeOutLog(), "FILEVIEW")
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

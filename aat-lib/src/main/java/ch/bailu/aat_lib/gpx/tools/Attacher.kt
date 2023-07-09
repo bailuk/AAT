@@ -1,51 +1,33 @@
-package ch.bailu.aat_lib.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
 
-public class Attacher extends GpxListWalker {
-    private final GpxList newList;
+class Attacher(val newList: GpxList) : GpxListWalker() {
+    private var newSegment = true
 
-    private boolean newSegment = true;
-
-    public Attacher(GpxList base) {
-        newList = base;
+    override fun doList(toAttach: GpxList): Boolean {
+        newSegment = true
+        return true
     }
 
-
-    @Override
-    public boolean doList(GpxList toAttach) {
-        newSegment = true;
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        newSegment = true
+        return true
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        newSegment = true;
-        return true;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return true
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return true;
-    }
-
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (newSegment) {
-            newList.appendToNewSegment(point.getPoint(), point.getAttributes());
-
-            newSegment = false;
+            newList.appendToNewSegment(point.point, point.getAttributes())
+            newSegment = false
         } else {
-            newList.appendToCurrentSegment(point.getPoint(), point.getAttributes());
+            newList.appendToCurrentSegment(point.point, point.getAttributes())
         }
     }
-
-
-    public GpxList getNewList() {
-        return newList;
-    }
-
 }

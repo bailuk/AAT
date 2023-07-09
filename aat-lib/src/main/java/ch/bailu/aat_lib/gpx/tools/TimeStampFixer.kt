@@ -1,96 +1,72 @@
-package ch.bailu.aat_lib.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 
-public class TimeStampFixer extends GpxListWalker {
-
-
-    private GpxList newList;
-    private boolean newSegment = true;
-
-
-    private long previousTimeStamp =0;
-
-
-    @Override
-    public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(), GpxListAttributes.NULL);
-        return true;
+class TimeStampFixer : GpxListWalker() {
+    var newList: GpxList? = null
+        private set
+    private var newSegment = true
+    private var previousTimeStamp: Long = 0
+    override fun doList(track: GpxList): Boolean {
+        newList = GpxList(track.getDelta().getType(), GpxListAttributes.NULL)
+        return true
     }
 
-
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        previousTimeStamp = 0;
-        newSegment = true;
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        previousTimeStamp = 0
+        newSegment = true
+        return true
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return true;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return true
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (hasNoErrors(point)) {
             if (newSegment) {
-                newSegment = false;
-                newList.appendToNewSegment(new GpxPoint(point), point.getAttributes());
-
+                newSegment = false
+                newList?.appendToNewSegment(GpxPoint(point), point.getAttributes())
             } else {
-                newList.appendToCurrentSegment(new GpxPoint(point), point.getAttributes());
+                newList?.appendToCurrentSegment(GpxPoint(point), point.getAttributes())
             }
-
-            previousTimeStamp = point.getTimeStamp();
+            previousTimeStamp = point.getTimeStamp()
         }
     }
 
-
-    private final static long FIVE_MINUTES = 1000 * 60 * 5;
-
-    private boolean hasNoErrors(GpxPointNode point) {
-
-        if (timeMoreThanPrevious(point)) {
+    private fun hasNoErrors(point: GpxPointNode): Boolean {
+        return if (timeMoreThanPrevious(point)) {
             if (isLastInSegment(point)) {
-                return timeNoSkip(point, FIVE_MINUTES);
+                timeNoSkip(point, FIVE_MINUTES)
             } else {
-                return timeLessThanNext(point, (GpxPointNode) point.getNext());
+                timeLessThanNext(point, point.next as GpxPointNode?)
             }
-
-        }
-
-        return false;
+        } else false
     }
 
-
-
-
-    private boolean timeMoreThanPrevious(GpxPointNode point) {
-        return previousTimeStamp < point.getTimeStamp();
+    private fun timeMoreThanPrevious(point: GpxPointNode): Boolean {
+        return previousTimeStamp < point.getTimeStamp()
     }
 
-
-    private boolean timeLessThanNext(GpxPointNode point, GpxPointNode next) {
-         return point.getTimeStamp() < next.getTimeStamp();
+    private fun timeLessThanNext(point: GpxPointNode, next: GpxPointNode?): Boolean {
+        return point.getTimeStamp() < next!!.getTimeStamp()
     }
 
-
-    private boolean timeNoSkip(GpxPointNode point, long time) {
-        return (previousTimeStamp + time) > point.getTimeStamp();
+    private fun timeNoSkip(point: GpxPointNode, time: Long): Boolean {
+        return previousTimeStamp + time > point.getTimeStamp()
     }
 
-    private boolean isLastInSegment(GpxPointNode point) {
-        return point.getNext() == null || point.getNext() instanceof GpxPointFirstNode;
+    private fun isLastInSegment(point: GpxPointNode): Boolean {
+        return point.next == null || point.next is GpxPointFirstNode
     }
 
-    public GpxList getNewList() {
-        return newList;
+    companion object {
+        private const val FIVE_MINUTES = (1000 * 60 * 5).toLong()
     }
 }

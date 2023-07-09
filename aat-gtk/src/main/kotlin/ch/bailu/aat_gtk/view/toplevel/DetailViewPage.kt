@@ -16,7 +16,7 @@ import ch.bailu.gtk.gtk.Orientation
 class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
     private val selectedSource = SelectedSource()
 
-    private val detailView = DetailView(selectedSource.getIntermediateDispatcher(dispatcher, InfoID.FILEVIEW, InfoID.TRACKER), GtkAppContext.storage).scrolled
+    private val detailView = DetailView(selectedSource.getIntermediateDispatcher(dispatcher, InfoID.FILE_VIEW, InfoID.TRACKER), GtkAppContext.storage).scrolled
 
     val box = Box(Orientation.VERTICAL, 0).apply {
         append(Box(Orientation.HORIZONTAL, 0).apply {

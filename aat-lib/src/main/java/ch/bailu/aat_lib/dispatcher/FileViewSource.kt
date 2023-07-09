@@ -8,8 +8,8 @@ import ch.bailu.foc.Foc
  * Display a file. Usually selected from track/overlay list
  */
 class FileViewSource : FileSource {
-    constructor(appContext: AppContext) : super(appContext, InfoID.FILEVIEW)
-    constructor(appContext: AppContext, file: Foc) : super(appContext, InfoID.FILEVIEW) {
+    constructor(appContext: AppContext) : super(appContext, InfoID.FILE_VIEW)
+    constructor(appContext: AppContext, file: Foc) : super(appContext, InfoID.FILE_VIEW) {
         setFile(file)
     }
 

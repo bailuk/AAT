@@ -46,7 +46,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         configuration = createApiConfiguration(AppIntent.getBoundingBox(intent))
         setContentView(createContentView())
         addSource(FileViewSource(appContext, configuration!!.resultFile))
-        addTarget(list!!, InfoID.FILEVIEW)
+        addTarget(list!!, InfoID.FILE_VIEW)
 
         appContext.broadcaster.register(
             onFileTaskChanged,
@@ -77,7 +77,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         val fileError = ErrorMsgView(this)
         addTarget(
             { _: Int, info: GpxInformation -> fileError.displayError(serviceContext, info.file) },
-            InfoID.FILEVIEW
+            InfoID.FILE_VIEW
         )
         return fileError
     }

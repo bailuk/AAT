@@ -23,7 +23,7 @@ import ch.bailu.foc_android.FocAndroid
 class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem(i), Runnable {
     private var list: GpxList = GpxList(GpxType.TRACK, GpxListAttributes.NULL)
     private var node: GpxPointNode? = null
-    private var state = StateID.NOSERVICE
+    private var state = StateID.NO_SERVICE
     private var interval = INTERVAL
     private val file: Foc
 

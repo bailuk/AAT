@@ -22,7 +22,7 @@ class GPSdLocationProvider(item: LocationStackItem?): LocationStackChainedItem(i
             passState(StateID.ON)
 
         } catch (e: Exception) {
-            passState(StateID.NOACCESS)
+            passState(StateID.NO_ACCESS)
             AppLog.e(this, e)
         }
     }
@@ -70,7 +70,7 @@ class GPSdLocationProvider(item: LocationStackItem?): LocationStackChainedItem(i
             AppLog.d(this, "stopped")
             passState(StateID.OFF)
         } catch (e: Exception) {
-            passState(StateID.NOACCESS)
+            passState(StateID.NO_ACCESS)
             AppLog.e(this, e)
         }
     }

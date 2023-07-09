@@ -12,12 +12,12 @@ abstract class StateDescription : ContentDescription() {
 
     override fun getValue(): String {
         val result: String = when (state) {
-            StateID.NOACCESS -> Res.str().gps_noaccess()
-            StateID.NOSERVICE -> Res.str().gps_nogps()
+            StateID.NO_ACCESS -> Res.str().gps_noaccess()
+            StateID.NO_SERVICE -> Res.str().gps_nogps()
             StateID.ON -> Res.str().on()
             StateID.OFF -> Res.str().off()
             StateID.PAUSE -> Res.str().status_paused()
-            StateID.AUTOPAUSED -> Res.str().status_autopaused()
+            StateID.AUTO_PAUSED -> Res.str().status_autopaused()
             else -> Res.str().gps_wait()
         }
         return result

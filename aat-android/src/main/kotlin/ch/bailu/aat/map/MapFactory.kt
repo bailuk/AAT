@@ -57,7 +57,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         base()
         m.add(GpxOverlayListLayer(s, mc, ser, d))
         m.add(EditorBarLayer(appContext, c, mc, d, iid, e))
-        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
         m.add(GridDynLayer(ser, s, mc))
         m.add(InformationBarLayer(appContext, c, mc, d))
@@ -90,14 +90,14 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
     fun node(): MapsForgeViewBase {
         base()
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
-        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(GridDynLayer(ser, s, mc))
         return m
     }
 
     fun externalContent(): MapsForgeViewBase {
         m.add(GpxOverlayListLayer(s, mc, ser, d))
-        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILEVIEW))
+        m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(CurrentLocationLayer(mc, d))
         m.add(GridDynLayer(ser, s, mc))
         m.add(NavigationBarLayer(c, mc, d))

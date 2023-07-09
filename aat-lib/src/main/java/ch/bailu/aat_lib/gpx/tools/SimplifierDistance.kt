@@ -1,72 +1,56 @@
-package ch.bailu.aat_lib.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxDeltaHelper;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
+import ch.bailu.aat_lib.gpx.GpxDeltaHelper
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 
-public class SimplifierDistance extends GpxListWalker {
+class SimplifierDistance : GpxListWalker() {
+    var newList: GpxList? = null
+        private set
+    private var newSegment = true
+    private var lastPoint: GpxPointNode? = null
 
-    private final static float MIN_DISTANCE=25f;
-
-    private GpxList newList;
-    private boolean newSegment = true;
-
-    private GpxPointNode lastPoint=null;
-
-
-    @Override
-    public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(), GpxListAttributes.NULL);
-
-        return true;
+    override fun doList(track: GpxList): Boolean {
+        newList = GpxList(track.getDelta().getType(), GpxListAttributes.NULL)
+        return true
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        newSegment = true;
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        newSegment = true
+        return true
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return true;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return true
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (newSegment) {
-            newSegment = false;
-
-            newList.appendToNewSegment(new GpxPoint(point), point.getAttributes());
-            lastPoint = point;
-
+            newSegment = false
+            newList?.appendToNewSegment(GpxPoint(point), point.getAttributes())
+            lastPoint = point
         } else {
-
             if (isLastInSegment(point) || hasDistance(point)) {
-                newList.appendToCurrentSegment(new GpxPoint(point), point.getAttributes());
-                lastPoint = point;
+                newList?.appendToCurrentSegment(GpxPoint(point), point.getAttributes())
+                lastPoint = point
             }
-
         }
     }
 
-
-    private boolean hasDistance(GpxPointNode point) {
-        return GpxDeltaHelper.getDistance(lastPoint, point) >= MIN_DISTANCE;
+    private fun hasDistance(point: GpxPointNode): Boolean {
+        return GpxDeltaHelper.getDistance(lastPoint, point) >= MIN_DISTANCE
     }
 
-
-    private boolean isLastInSegment(GpxPointNode point) {
-        return point.getNext() == null || point.getNext() instanceof GpxPointFirstNode;
+    private fun isLastInSegment(point: GpxPointNode): Boolean {
+        return point.next == null || point.next is GpxPointFirstNode
     }
 
-
-    public GpxList getNewList() {
-        return newList;
+    companion object {
+        private const val MIN_DISTANCE = 25f
     }
 }

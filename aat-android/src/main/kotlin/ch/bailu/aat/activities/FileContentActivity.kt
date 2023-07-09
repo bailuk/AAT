@@ -48,14 +48,14 @@ class FileContentActivity : AbsFileContentActivity() {
         val summary = VerticalScrollView(this)
         summary.addAllContent(
             this, getSummaryData(this), AppTheme.trackContent,
-            InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY
+            InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 
         summary.add(createAttributesView())
 
         val graph: View = GraphViewFactory.all(
             appContext, this, this, THEME,
-            InfoID.FILEVIEW, InfoID.EDITOR_OVERLAY
+            InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 
         return if (AppLayout.isTablet(this)) {

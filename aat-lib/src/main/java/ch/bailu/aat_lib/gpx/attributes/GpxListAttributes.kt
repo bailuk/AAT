@@ -58,6 +58,7 @@ class GpxListAttributes(vararg attr: GpxSubAttributes) :
     companion object {
         @JvmField
         val NULL = GpxListAttributes()
+
         private fun keysFromSubAttributes(attr: Array<out GpxSubAttributes>): Keys {
             val keys = Keys()
             for (a in attr) {

@@ -24,7 +24,7 @@ class ThreadedMockLocation(
 ) :
 
     LocationStackChainedItem(item) {
-    private var serviceState = StateID.NOSERVICE
+    private var serviceState = StateID.NO_SERVICE
 
     private val innerThread = InnerThread()
 
@@ -97,7 +97,7 @@ class ThreadedMockLocation(
 
         }
 
-        private fun loadTrack(foc: Foc) : Node {
+        private fun loadTrack(foc: Foc) : Node? {
             val list = GpxListReader(foc , AutoPause.NULL).gpxList
             return list.pointList.first
         }

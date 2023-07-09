@@ -101,7 +101,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
     }
 
     private fun createDispatcher() {
-        addTarget(this, InfoID.FILEVIEW)
+        addTarget(this, InfoID.FILE_VIEW)
         addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         addSource(FileViewSource(appContext, file))
     }

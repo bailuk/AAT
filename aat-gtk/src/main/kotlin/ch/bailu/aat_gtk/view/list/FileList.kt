@@ -243,7 +243,7 @@ class FileList(app: Application,
         if (isIndexValid(indexOfSelected)) {
             uiController.load(iteratorSimple.info)
             uiController.showDetail()
-            uiController.showInDetail(InfoID.FILEVIEW)
+            uiController.showInDetail(InfoID.FILE_VIEW)
         }
     }
 

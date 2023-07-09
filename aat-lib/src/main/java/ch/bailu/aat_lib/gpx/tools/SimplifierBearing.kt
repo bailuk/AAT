@@ -1,114 +1,92 @@
-package ch.bailu.aat_lib.gpx.tools;
+package ch.bailu.aat_lib.gpx.tools
 
-import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+import ch.bailu.aat_lib.coordinates.LatLongInterface
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
-public class SimplifierBearing extends GpxListWalker {
+class SimplifierBearing : GpxListWalker() {
+    var newList: GpxList? = null
+        private set
 
-    private final static double MIN_BEARING_DELTA = 10d;
-
-
-    private GpxList newList;
-    private boolean newSegment = true;
-
-    private double lastBearing;
-    private double currentBearing;
-
-
-    @Override
-    public boolean doList(GpxList track) {
-        newList = new GpxList(track.getDelta().getType(),
-                GpxListAttributes.NULL);
-        return true;
+    private var newSegment = true
+    private var lastBearing = 0.0
+    private var currentBearing = 0.0
+    override fun doList(track: GpxList): Boolean {
+        newList = GpxList(
+            track.getDelta().getType(),
+            GpxListAttributes.NULL
+        )
+        return true
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        newSegment = true;
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        newSegment = true
+        return true
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return true;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return true
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
-        GpxPointNode lastPoint = null;
+    override fun doPoint(point: GpxPointNode) {
         if (newSegment) {
-            newSegment = false;
-
-            newList.appendToNewSegment(new GpxPoint(point), point.getAttributes());
-            lastPoint = point;
-
-
+            newSegment = false
+            newList?.appendToNewSegment(GpxPoint(point), point.getAttributes())
             if (!isLastInSegment(point)) {
-                lastBearing = getBearing(lastPoint, (GpxPointInterface) lastPoint.getNext());
+                lastBearing = getBearing(point, point.next as GpxPointInterface).toDouble()
             }
-
         } else {
-
             if (isLastInSegment(point) || hasBearingChanged(point)) {
-
-                newList.appendToCurrentSegment(new GpxPoint(point), point.getAttributes());
-                lastPoint = point;
-                lastBearing = currentBearing;
-
+                newList?.appendToCurrentSegment(GpxPoint(point), point.getAttributes())
+                lastBearing = currentBearing
             }
-
         }
     }
 
-    /**
-     * Initial bearing (azimuth) from point a to point b
-     * https://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
-     * http://www.movable-type.co.uk/scripts/latlong.html
-     *
-     * @param p1 from this point
-     * @param p2 to this point
-     * @return bearing in degrees east of true north
-     */
-    public static float getBearing(LatLongInterface p1, LatLongInterface p2) {
-        final double la1 = Math.toRadians(p1.getLatitude());
-        final double la2 = Math.toRadians(p2.getLatitude());
-        final double lo1 = Math.toRadians(p1.getLongitude());
-        final double lo2 = Math.toRadians(p2.getLongitude());
-
-        final double deltaLo = lo2 - lo1;
-
-        final double y = Math.cos(la2) * Math.sin(deltaLo);
-        final double x = Math.cos(la1) * Math.sin(la2) - Math.sin(la1) * Math.cos(la2) * Math.cos(deltaLo);
-
-        final double radians = Math.atan2(y, x);
-        final float degrees = (float) Math.toDegrees(radians);
-
-        return (degrees + 360f) % 360f;
+    private fun hasBearingChanged(point: GpxPointNode): Boolean {
+        currentBearing = getBearing(point, point.next as GpxPointInterface).toDouble()
+        val delta = Math.abs(currentBearing - lastBearing)
+        return delta >= MIN_BEARING_DELTA
     }
 
-
-    private boolean hasBearingChanged(GpxPointNode point) {
-        currentBearing = getBearing(point, (GpxPointInterface) point.getNext());
-
-        double delta = Math.abs(currentBearing - lastBearing);
-
-        return delta >= MIN_BEARING_DELTA;
+    private fun isLastInSegment(point: GpxPointNode): Boolean {
+        return point.next == null || point.next is GpxPointFirstNode
     }
 
+    companion object {
+        private const val MIN_BEARING_DELTA = 10.0
 
-    private boolean isLastInSegment(GpxPointNode point) {
-        return point.getNext() == null || point.getNext() instanceof GpxPointFirstNode;
-    }
-
-
-    public GpxList getNewList() {
-        return newList;
+        /**
+         * Initial bearing (azimuth) from point a to point b
+         * https://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
+         * http://www.movable-type.co.uk/scripts/latlong.html
+         *
+         * @param p1 from this point
+         * @param p2 to this point
+         * @return bearing in degrees east of true north
+         */
+        @JvmStatic
+        fun getBearing(p1: LatLongInterface, p2: LatLongInterface): Float {
+            val la1 = Math.toRadians(p1.getLatitude())
+            val la2 = Math.toRadians(p2.getLatitude())
+            val lo1 = Math.toRadians(p1.getLongitude())
+            val lo2 = Math.toRadians(p2.getLongitude())
+            val deltaLo = lo2 - lo1
+            val y = cos(la2) * sin(deltaLo)
+            val x =
+                cos(la1) * sin(la2) - sin(la1) * cos(la2) * cos(deltaLo)
+            val radians = atan2(y, x)
+            val degrees = Math.toDegrees(radians).toFloat()
+            return (degrees + 360f) % 360f
+        }
     }
 }

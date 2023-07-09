@@ -76,8 +76,8 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     private fun createLayout(bar: MainControlBar, contentView: ContentView): View {
         map = MapFactory.DEF(this, SOLID_KEY).externalContent()
         val summary = VerticalScrollView(this)
-        summary.addAllContent(this, FileContentActivity.getSummaryData(this), theme, InfoID.FILEVIEW)
-        val graph: View = GraphViewFactory.all(appContext, this, this, theme, InfoID.FILEVIEW)
+        summary.addAllContent(this, FileContentActivity.getSummaryData(this), theme, InfoID.FILE_VIEW)
+        val graph: View = GraphViewFactory.all(appContext, this, this, theme, InfoID.FILE_VIEW)
         return if (AppLayout.isTablet(this)) {
             createPercentageLayout(summary, graph)
         } else {
@@ -124,11 +124,11 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
         addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         addSource(OverlaysSource(appContext))
         addSource(FileViewSource(appContext, file))
-        addTarget(this, InfoID.FILEVIEW)
+        addTarget(this, InfoID.FILE_VIEW)
 
         busyControl?.apply {
             addTarget(
-                this, InfoID.FILEVIEW,
+                this, InfoID.FILE_VIEW,
                 InfoID.OVERLAY,
                 InfoID.OVERLAY + 1,
                 InfoID.OVERLAY + 2,
