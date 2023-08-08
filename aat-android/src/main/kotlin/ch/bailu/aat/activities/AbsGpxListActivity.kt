@@ -175,7 +175,6 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             val bar = MainControlBar(acontext)
             val layout = createLayout(map, summary, bar)
             contentView.add(bar)
-            contentView.add(errorView!!)
             contentView.add(layout)
         }
 

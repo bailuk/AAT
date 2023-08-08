@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.search.poi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 import ch.bailu.aat_lib.service.background.BackgroundTask
@@ -26,9 +27,6 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     init {
         poiOverlay = SolidPoiOverlay(context.dataDirectory)
     }
-
-    override val exception: Exception?
-        get() = task.exception
 
     override val resultFile: Foc
         get() = poiOverlay.valueAsFile
@@ -74,15 +72,15 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     protected abstract val selectedCategories: ArrayList<PoiCategory>
 
     private class PoiToGpxTask(result: Foc, private val bounding: BoundingBox, private val categories: ArrayList<PoiCategory>, private val poiDatabase: String) : FileTask(result) {
-        override fun bgOnProcess(sc: AppContext): Long {
-            val persistenceManager = sc.getPoiPersistenceManager(poiDatabase)
+        override fun bgOnProcess(appContext: AppContext): Long {
+            val persistenceManager = appContext.getPoiPersistenceManager(poiDatabase)
             try {
                 queryPois(persistenceManager, bounding)
             } catch (e: Exception) {
-                exception = e
+                AppLog.e(e) // TODO friendly message
             }
             persistenceManager.close()
-            sc.broadcaster.broadcast(
+            appContext.broadcaster.broadcast(
                 AppBroadcaster.FILE_CHANGED_ONDISK,
                 file.toString(), poiDatabase
             )

@@ -42,7 +42,6 @@ class MainActivity : ActivityContext() {
     private fun createViews() {
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
-        contentView.add(errorView!!)
         contentView.addW(createActionList())
         setContentView(contentView)
     }

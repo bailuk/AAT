@@ -28,7 +28,6 @@ class AboutActivity : ActivityContext() {
         val contentView = ContentView(this, THEME)
         contentView.addMvIndicator(multiView)
         contentView.add(createButtonBar(multiView))
-        contentView.add(errorView!!)
         contentView.add(multiView)
         setContentView(contentView)
     }

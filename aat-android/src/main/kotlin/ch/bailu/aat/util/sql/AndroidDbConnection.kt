@@ -4,20 +4,22 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.CursorFactory
 import android.database.sqlite.SQLiteOpenHelper
+import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.aat_lib.util.sql.SaveDbResultSet
 import ch.bailu.aat_lib.util.sql.Sql
+import java.lang.IllegalArgumentException
 
 class AndroidDbConnection(private val context: Context) : DbConnection {
     private var database: SQLiteDatabase? = null
     private var needsUpdate = false
-    override fun open(path: String, version: Int) {
+    override fun open(name: String, version: Int) {
         try {
             close()
-            database = OpenHelper(context, path, null, version).readableDatabase
+            database = OpenHelper(context, name, null, version).readableDatabase
             if (needsUpdate) {
                 createTable()
                 needsUpdate = false
@@ -38,12 +40,12 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
         )
     }
 
-    override fun execSQL(sql: String, vararg bindArgs: Any) {
+    override fun execSQL(sql: String, vararg params: Any) {
         try {
             val database = this.database
             if (database != null) {
-                if (bindArgs.isNotEmpty()) {
-                    database.execSQL(sql, toStringArgs(bindArgs))
+                if (params.isNotEmpty()) {
+                    database.execSQL(sql, toStringArgs(params))
                 } else {
                     database.execSQL(sql)
                 }
@@ -53,15 +55,18 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
         }
     }
 
-    override fun query(sql: String, vararg bindArgs: Any): DbResultSet? {
-        return try {
+    override fun query(sqlStatement: String, vararg params: Any): DbResultSet {
+        try {
             val database = this.database
 
             if (database != null ) {
-                val cursor = database.rawQuery(sql, toStringArgs(bindArgs))
+                val cursor = database.rawQuery(sqlStatement, toStringArgs(params))
                 return SaveDbResultSet(AndroidDbResultSet(cursor))
+            } else {
+                throw DbException(ToDo.translate("No database"))
             }
-            null
+        } catch (e1: IllegalArgumentException) {
+            throw DbException(ToDo.translate("No files"))
         } catch (e: Exception) {
             throw DbException(e)
         }

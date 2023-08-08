@@ -15,22 +15,18 @@ abstract class DownloadApi : OsmApiConfiguration() {
 
     private class ApiQueryTask(c: AppContext, source: String, target: Foc, private val queryString: String, private val queryFile: Foc) : DownloadTask(source, target, c.downloadConfig) {
 
-        override fun bgOnProcess(sc: AppContext): Long {
+        override fun bgOnProcess(appContext: AppContext): Long {
             return try {
                 val size = bgDownload()
                 TextBackup.write(queryFile, queryString)
-                sc.broadcaster.broadcast(
+                appContext.broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
                 )
                 size
             } catch (e: Exception) {
-                exception = e
+                AppLog.e(e) // TODO user friendly message
                 1
             }
-        }
-
-        override fun logError(e: Exception) {
-            AppLog.e(e)
         }
     }
 
@@ -49,13 +45,10 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 )
                 background.process(task)
             } catch (e: UnsupportedEncodingException) {
-                e.printStackTrace()
+                AppLog.e(e) // TODO user friendly message
             }
         }
     }
 
     protected abstract val queryString: String
-
-    override val exception: Exception?
-        get() = task.exception
 }

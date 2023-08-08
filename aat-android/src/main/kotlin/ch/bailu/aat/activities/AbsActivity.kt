@@ -5,21 +5,15 @@ import android.os.Bundle
 import ch.bailu.aat.preferences.PreferenceLoadDefaults
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AppPermission
-import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.preferences.system.SolidStartCount
 
 abstract class AbsActivity : Activity() {
-    protected var errorView: ErrorMsgView? = null
-        private set
-
     init {
         instantiated++
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        errorView = ErrorMsgView(this)
-        errorView?.registerReceiver()
 
         PreferenceLoadDefaults(this)
         created++
@@ -34,7 +28,6 @@ abstract class AbsActivity : Activity() {
     }
 
     public override fun onDestroy() {
-        errorView?.unregisterReceiver()
         created--
         super.onDestroy()
     }

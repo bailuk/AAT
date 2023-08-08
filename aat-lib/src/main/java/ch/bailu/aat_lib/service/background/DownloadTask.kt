@@ -1,98 +1,79 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.util.net.URX
+import ch.bailu.foc.Foc
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.util.net.URX;
-import ch.bailu.foc.Foc;
-
-public class DownloadTask extends FileTask {
-
-    private final URX urx;
-    private final DownloadConfig downloadConnection;
-
-    public DownloadTask(String source, Foc target, DownloadConfig downloadConnection) {
-        this(new URX(source), target, downloadConnection);
+open class DownloadTask(
+    val source: URX,
+    target: Foc,
+    private val downloadConnection: DownloadConfig
+) : FileTask(target) {
+    constructor(
+        source: String,
+        target: Foc,
+        downloadConnection: DownloadConfig
+    ) : this(URX(source), target, downloadConnection) {
     }
 
-    public DownloadTask(URX source, Foc target, DownloadConfig downloadConnection) {
-        super(target);
-        this.downloadConnection = downloadConnection;
-        urx = source;
-    }
-
-    @Override
-    public long bgOnProcess(AppContext sc) {
-        long size = 0;
-
+    override fun bgOnProcess(appContext: AppContext): Long {
+        var size: Long = 0
         try {
-            size = bgDownload();
-            sc.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), urx.toString());
-
-        } catch (Exception e) {
-            logError(e);
-            setException(e);
-            getFile().rm();
-
+            size = bgDownload()
+            appContext.broadcaster.broadcast(
+                AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
+            )
+        } catch (e: Exception) {
+            logError(e)
+            file.rm()
         }
-        return size;
+        return size
     }
 
-    protected long bgDownload() throws IOException {
-        return download(urx.toURL(), getFile());
+    @Throws(IOException::class)
+    protected fun bgDownload(): Long {
+        return download(source.toURL(), file)
     }
 
-    protected void logError(Exception e) {
-        AppLog.w(this, getFile().getPathName());
-        AppLog.w(this, e);
+    protected open fun logError(e: Exception?) {
+        AppLog.w(this, file.pathName)
+        AppLog.w(this, e)
     }
 
     @Nonnull
-    @Override
-    public String toString() {
-        return urx.toString();
+    override fun toString(): String {
+        return source.toString()
     }
 
-    private long download(URL url, Foc file) {
-        int count;
-        long total=0;
-        InputStream input = null;
-        OutputStream output = null;
-        HttpURLConnection connection;
-        byte[] buffer = downloadConnection.createBuffer();
-
+    private fun download(url: URL, file: Foc): Long {
+        var count: Int
+        var total: Long = 0
+        var input: InputStream? = null
+        var output: OutputStream? = null
+        val connection: HttpURLConnection
+        val buffer = downloadConnection.createBuffer()
         try {
-            output = file.openW();
-
-            connection = downloadConnection.openConnection(url);
-            input = downloadConnection.openInput(connection);
-
-            while ((count = input.read(buffer)) != -1) {
-                total += count;
-                output.write(buffer, 0, count);
+            output = file.openW()
+            connection = downloadConnection.openConnection(url)
+            input = downloadConnection.openInput(connection)
+            while (input.read(buffer).also { count = it } != -1) {
+                total += count.toLong()
+                output.write(buffer, 0, count)
             }
-
-        } catch (Exception e) {
-            AppLog.e("Download " + url + " -> " + file + ": " + e.getMessage());
-
+        } catch (e: Exception) {
+            AppLog.e("Download " + url + " -> " + file + ": " + e.message)
         } finally {
-            Foc.close(output);
-            Foc.close(input);
+            Foc.close(output)
+            Foc.close(input)
         }
-
-        return total;
+        return total
     }
-
-    public URX getSource() {
-        return urx;
-    }
- }
+}

@@ -41,7 +41,6 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         val multiView = createMultiView(edit)
         contentView.addMvIndicator(multiView)
         contentView.add(createButtonBar(multiView))
-        contentView.add(errorView!!)
         contentView.add(multiView)
         setContentView(contentView)
         createDispatcher(edit)

@@ -10,6 +10,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.description.mview.MultiViewIndicator
 import ch.bailu.aat.views.msg.AbsMsgView
+import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat.views.msg.overlay.DownloadMsgView
 import ch.bailu.aat.views.msg.overlay.DownloadSizeMsgView
 import ch.bailu.aat.views.msg.overlay.FileChangeMsgView
@@ -23,6 +24,7 @@ class ContentView(context: Context, theme: UiTheme) : FrameLayout(context) {
     private val messages: MessageOverlay
     private val ttBottom: AbsMsgView
     private val ttTop: AbsMsgView
+    private val errorMsgView: AbsMsgView = ErrorMsgView(context)
 
     init {
         theme.background(this)
@@ -46,6 +48,7 @@ class ContentView(context: Context, theme: UiTheme) : FrameLayout(context) {
             messages.add(DownloadSizeMsgView(context))
         }
         ttTop = messages.add(InfoLogMsgView(context))
+        messages.add(errorMsgView)
         messages.addSpace()
         ttBottom = messages.addR(TipMsgView(context))
         logActivityLabel()

@@ -8,20 +8,18 @@ import ch.bailu.aat.menus.ResultFileMenu
 import ch.bailu.aat.util.AppIntent
 import ch.bailu.aat.util.fs.TextBackup
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.util.ui.tooltip.ToolTip
+import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.busy.BusyViewControl
-import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.list.NodeListView
 import ch.bailu.aat.views.osm.OsmApiEditorView
-import ch.bailu.aat.views.bar.MainControlBar
-import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.FileViewSource
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
@@ -34,7 +32,6 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         private set
 
     protected var editorView: OsmApiEditorView? = null
-    private var downloadError: ErrorMsgView? = null
 
     protected val theme: UiTheme = AppTheme.search
 
@@ -58,9 +55,6 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         val bar = createControlBar()
         val contentView = ContentView(this, theme)
         contentView.add(bar)
-        contentView.add(downloadErrorView())
-        contentView.add(fileErrorView())
-        contentView.add(errorView!!)
         contentView.add(createMainContentView(contentView))
         addDownloadButton(bar)
         addCustomButtons(bar)
@@ -68,19 +62,6 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         return contentView
     }
 
-    private fun downloadErrorView(): View {
-        downloadError = ErrorMsgView(this)
-        return downloadError!!
-    }
-
-    private fun fileErrorView(): View {
-        val fileError = ErrorMsgView(this)
-        addTarget(
-            { _: Int, info: GpxInformation -> fileError.displayError(serviceContext, info.file) },
-            InfoID.FILE_VIEW
-        )
-        return fileError
-    }
 
     private fun addDownloadButton(bar: MainControlBar) {
         download = bar.addImageButton(R.drawable.go_bottom_inverse).apply {
@@ -97,7 +78,6 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         } else {
             downloadBusy!!.stopWaiting()
         }
-        downloadError!!.displayError(configuration!!.exception)
     }
 
     private fun addButtons(bar: MainControlBar) {

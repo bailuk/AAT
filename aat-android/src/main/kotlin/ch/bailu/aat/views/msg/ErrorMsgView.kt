@@ -24,8 +24,8 @@ class ErrorMsgView(context: Context) : AbsMsgView(context, DISPLAY_FOR_MILLIS) {
         setPadding(PADDING, PADDING, PADDING, PADDING)
     }
 
-    override fun attach() {}
-    override fun detach() {}
+    override fun attach() { registerReceiver() }
+    override fun detach() { unregisterReceiver() }
     private fun displayError(intent: Intent) {
         val message = intent.getStringExtra(AppIntent.EXTRA_MESSAGE)
         displayError(message)
@@ -71,14 +71,14 @@ class ErrorMsgView(context: Context) : AbsMsgView(context, DISPLAY_FOR_MILLIS) {
     /**
      * Receive and display error logs sent from [ch.bailu.aat_lib.logger.AppLog]
      */
-    fun registerReceiver() {
+    private fun registerReceiver() {
         AndroidBroadcaster.register(context, onMessage, AppBroadcaster.LOG_ERROR)
     }
 
     /**
      * Stop displaying error logs sent from [ch.bailu.aat_lib.logger.AppLog]
      */
-    fun unregisterReceiver() {
+    private fun unregisterReceiver() {
         context.unregisterReceiver(onMessage)
     }
 

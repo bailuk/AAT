@@ -65,7 +65,6 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
         allComponents.add(cockpitAndBigMap, 80)
         allComponents.add(GraphViewFactory.all(appContext, this, this, theme, InfoID.TRACKER), 20)
 
-        result.add(errorView!!)
         result.add(allComponents)
         return result
     }

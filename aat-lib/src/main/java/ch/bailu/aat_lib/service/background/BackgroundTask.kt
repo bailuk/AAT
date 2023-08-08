@@ -1,64 +1,44 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.app.AppContext
 
-public abstract class BackgroundTask implements ThreadControl {
+abstract class BackgroundTask : ThreadControl {
 
-    public static final BackgroundTask NULL = new BackgroundTask() {
+    private var processing = true
 
-        @Override
-        public long bgOnProcess(AppContext appContext) {
-            return 0;
+    override fun canContinue(): Boolean {
+        return processing
+    }
+
+    abstract fun bgOnProcess(appContext: AppContext): Long
+
+    @Synchronized
+    fun stopProcessing() {
+        processing = false
+    }
+
+    val threadControl: ThreadControl
+        get() = this
+
+    open fun onInsert() {}
+    open fun onRemove() {}
+
+    companion object {
+        @JvmField
+        val NULL: BackgroundTask = object : BackgroundTask() {
+            override fun bgOnProcess(appContext: AppContext): Long {
+                return 0
+            }
         }
-    };
+        @JvmField
+        val STOP: BackgroundTask = object : BackgroundTask() {
+            override fun bgOnProcess(appContext: AppContext): Long {
+                return 0
+            }
 
-
-    public static final BackgroundTask STOP = new BackgroundTask() {
-        @Override
-        public long bgOnProcess(AppContext appContext) {
-            return 0;
+            override fun canContinue(): Boolean {
+                return false
+            }
         }
-
-        @Override
-        public boolean canContinue() {
-            return false;
-        }
-    };
-
-
-    private Exception exception;
-
-    private boolean processing = true;
-
-
-    @Override
-    public boolean canContinue() {
-        return processing;
-    }
-
-
-
-    public abstract long bgOnProcess(AppContext appContext);
-
-
-    public synchronized void stopProcessing() {
-        processing =false;
-    }
-
-
-
-    public ThreadControl getThreadControl() {
-        return this;
-    }
-
-    public void onInsert() {}
-    public void onRemove() {}
-
-    protected void setException(Exception e) {
-        exception = e;
-    }
-
-    public  Exception getException() {
-        return exception;
     }
 }

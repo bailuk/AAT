@@ -161,7 +161,6 @@ public class AppLog  {
         if (e != null) {
             e.printStackTrace();
 
-            result = "[" + e.getClass().getSimpleName() + "] ";
             if (e.getLocalizedMessage() != null) {
                 result += e.getLocalizedMessage();
             } else  if (e.getMessage() != null) {

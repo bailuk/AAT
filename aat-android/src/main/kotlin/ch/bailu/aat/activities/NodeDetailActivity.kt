@@ -53,7 +53,6 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
         file = appContext.toFoc(intent.getStringExtra("ID"))
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
-        contentView.add(errorView!!)
         contentView.add(createSeekBar())
         contentView.add(createVerticalView())
         createDispatcher()

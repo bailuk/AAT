@@ -56,7 +56,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(load(file, defaultTileSize, transparent)!!)
+        set(load(file, defaultTileSize, transparent))
     }
 
     @Throws(IOException::class)
@@ -74,7 +74,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun set(b: Bitmap) {
+    override fun set(b: Bitmap?) {
         if (bitmap === b) return
         free()
         bitmap = b

@@ -60,7 +60,6 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
                     ContentView(this, theme)
                 val bar = MainControlBar(this)
                 contentView.add(bar)
-                contentView.add(errorView!!)
                 val view = createLayout(bar, contentView)
                 initButtonBar(bar)
                 contentView.add(view)

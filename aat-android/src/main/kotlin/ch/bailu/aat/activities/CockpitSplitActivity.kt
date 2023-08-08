@@ -111,7 +111,6 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         MapViewLinker(mapMaster, mapSlave)
         val contentView = ContentView(this, THEME)
         contentView.addMvIndicator(mv)
-        contentView.add(errorView!!)
         contentView.add(
             PercentageLayout(this)
                 .add(mapMaster, 70)

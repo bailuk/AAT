@@ -31,7 +31,6 @@ class MapActivity : AbsKeepScreenOnActivity() {
         val contentView =
             ContentView(this, AppTheme.cockpit)
         val map = createMap(edit)
-        contentView.add(errorView!!)
         contentView.add(To.view(map)!!)
         setContentView(contentView)
         createDispatcher(edit)

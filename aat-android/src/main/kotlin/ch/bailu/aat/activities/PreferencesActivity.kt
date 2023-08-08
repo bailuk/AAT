@@ -47,7 +47,6 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
             )
             contentView.addMvIndicator(this)
             contentView.add(MainControlBar(this@PreferencesActivity, this))
-            contentView.add(errorView!!)
             contentView.add(this)
             setContentView(contentView)
         }

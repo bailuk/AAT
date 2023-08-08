@@ -16,7 +16,6 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.msg.ErrorMsgView
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.IteratorSource
@@ -33,7 +32,6 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     private var nextFile: ImageButtonViewGroup? = null
     private var previousFile: ImageButtonViewGroup? = null
     private var fileOperation: PreviewView? = null
-    private var fileError: ErrorMsgView? = null
     private var busyControl: BusyViewControlIID? = null
 
     private var currentFileID: String? = null
@@ -65,10 +63,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         val layout = createLayout(bar, contentView)
 
         contentView.add(bar)
-        fileError = ErrorMsgView(this)
-        contentView.add(fileError!!)
-        contentView.add(errorView!!)
-        busyControl = BusyViewControlIID(contentView).apply {
+         busyControl = BusyViewControlIID(contentView).apply {
             busy.setOrientation(BusyViewContainer.BOTTOM_RIGHT)
         }
         contentView.add(layout)
@@ -121,9 +116,6 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
                 AppLog.i(this@AbsFileContentActivity, info.file.name)
             }
         }, InfoID.FILE_VIEW)
-
-
-        addTarget({ _, info -> fileError?.displayError(serviceContext, info.file) }, InfoID.FILE_VIEW)
     }
 
     override fun onClick(v: View) {

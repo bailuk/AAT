@@ -16,7 +16,6 @@ abstract class OsmApiConfiguration {
     abstract val urlStart: String
     abstract val baseDirectory: Foc
     abstract val fileExtension: String
-    abstract val exception: Exception?
     abstract fun getUrlPreview(query: String): String
 
     abstract fun startTask(appContext: AppContext)
