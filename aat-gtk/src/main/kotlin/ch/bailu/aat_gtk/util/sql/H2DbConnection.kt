@@ -63,9 +63,9 @@ class H2DbConnection : DbConnection {
         execSQL("INSERT INTO version (version) VALUES (${version})")
     }
 
-    override fun execSQL(sqlStatement: String, vararg params: Any?) {
+    override fun execSQL(sql: String, vararg params: Any) {
         try {
-            val stmt = getPreparedStatement(sqlStatement, params)
+            val stmt = getPreparedStatement(sql, params)
             stmt.execute()
             stmt.close()
         } catch (e: Exception) {
@@ -73,7 +73,7 @@ class H2DbConnection : DbConnection {
         }
     }
 
-    override fun query(sqlStatement: String, vararg params: Any?): DbResultSet {
+    override fun query(sqlStatement: String, vararg params: Any): DbResultSet {
         try {
             val stmt = getPreparedStatement(sqlStatement, params)
             val res = stmt.executeQuery()

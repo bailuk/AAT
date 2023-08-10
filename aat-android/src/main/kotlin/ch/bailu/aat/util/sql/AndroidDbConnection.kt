@@ -43,7 +43,7 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
             val database = this.database
             if (database != null) {
                 if (params.isNotEmpty()) {
-                    database.execSQL(sql, toStringArgs(params))
+                    database.execSQL(sql, toStringArgs(*params))
                 } else {
                     database.execSQL(sql)
                 }
@@ -58,13 +58,12 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
             val database = this.database
 
             if (database != null ) {
-                val cursor = database.rawQuery(sqlStatement, toStringArgs(params))
+                val cursor = database.rawQuery(sqlStatement, toStringArgs(*params))
                 return SaveDbResultSet(AndroidDbResultSet(cursor))
             } else {
                 throw DbException(ToDo.translate("No database"))
             }
-        } catch (e1: IllegalArgumentException) {
-            throw DbException(ToDo.translate("No files"))
+
         } catch (e: Exception) {
             throw DbException(e)
         }
