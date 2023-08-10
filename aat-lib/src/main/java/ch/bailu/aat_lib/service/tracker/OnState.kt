@@ -1,89 +1,68 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import java.io.IOException;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.resources.Res
+import java.io.IOException
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.location.LocationServiceInterface;
+class OnState(tracker: TrackerInternals) : State(tracker) {
+    private val attributes = AttributesCollector()
+    private var location = GpxInformation.NULL
 
-public final class OnState extends State {
-
-    private final AttributesCollector attributes = new AttributesCollector();
-
-    private GpxInformation location = GpxInformation.NULL;
-
-    public OnState(TrackerInternals tracker) {
-        super(tracker);
-
-        if (tracker.isReadyForAutoPause()) {
-            tracker.setState(new AutoPauseState(tracker));
-
+    init {
+        if (tracker.isReadyForAutoPause) {
+            tracker.setState(AutoPauseState(tracker))
         } else {
-            tracker.statusIcon.showOn();
+            tracker.statusIcon.showOn()
         }
-
     }
 
-    @Override
-    public int getStateID() {
-        return StateID.ON;
+    override fun getStateID(): Int {
+        return StateID.ON
     }
 
-    @Override
-    public void preferencesChanged() {}
-
-    @Override
-    public void updateTrack() {
-        if (internal.isReadyForAutoPause()) {
-            internal.setState(new AutoPauseState(internal));
-
-        } else  {
-            final LocationServiceInterface l = internal.services.getLocationService();
-
+    override fun preferencesChanged() {}
+    override fun updateTrack() {
+        if (internal.isReadyForAutoPause) {
+            internal.setState(AutoPauseState(internal))
+        } else {
+            val l = internal.services.locationService
             try {
-                GpxInformation newLocation = l.getLoggableLocationOrNull(location);
-
+                val newLocation = l.getLoggableLocationOrNull(location)
                 if (newLocation != null) {
-                    location = newLocation;
-                    final GpxAttributes attr = attributes.collect(internal.services.getSensorService());
-                    internal.logger.log(location, attr);
+                    location = newLocation
+                    val attr = attributes.collect(internal.services.sensorService)
+                    internal.logger.log(location, attr)
                 }
-            } catch (IOException e) {
-                internal.emergencyOff(e);
+            } catch (e: IOException) {
+                internal.emergencyOff(e)
             }
-            internal.broadcaster.broadcast(AppBroadcaster.TRACKER);
+            internal.broadcaster.broadcast(AppBroadcaster.TRACKER)
         }
     }
 
-    @Override
-    public void onStartPauseResume() {
-        onPauseResume();
+    override fun onStartPauseResume() {
+        onPauseResume()
     }
 
-    @Override
-    public void onStartStop() {
-        internal.setState(new OffState(internal));
+    override fun onStartStop() {
+        internal.setState(OffState(internal))
     }
 
-    @Override
-    public void onPauseResume() {
-        internal.setState(new PauseState(internal));
+    override fun onPauseResume() {
+        internal.setState(PauseState(internal))
     }
 
-    @Override
-    public String getStartStopText() {
-        return Res.str().tracker_stop();
+    override fun getStartStopText(): String {
+        return Res.str().tracker_stop()
     }
 
-    @Override
-    public String getPauseResumeText() {
-        return Res.str().tracker_pause();  }
+    override fun getPauseResumeText(): String {
+        return Res.str().tracker_pause()
+    }
 
-    @Override
-    public String getStartStopIcon() {
-        return "media_playback_stop_inverse";
+    override fun getStartStopIcon(): String {
+        return "media_playback_stop_inverse"
     }
 }

@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.search.poi
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
@@ -38,8 +38,8 @@ abstract class OsmApiConfiguration {
     fun stopTask(scontext: ServicesInterface) {
         scontext.insideContext {
             val background = scontext.backgroundService
-            val task: BackgroundTask = background.findTask(resultFile)
-            task.stopProcessing()
+            val task: FileTask? = background.findTask(resultFile)
+            task?.stopProcessing()
         }
     }
 

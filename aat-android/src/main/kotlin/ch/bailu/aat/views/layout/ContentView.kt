@@ -80,4 +80,6 @@ class ContentView(context: Context, theme: UiTheme) : FrameLayout(context) {
     fun showTip(string: String) {
         ttBottom.set(string)
     }
+
+
 }

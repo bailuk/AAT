@@ -1,12 +1,10 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import ch.bailu.aat_lib.util.WithStatusText;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.util.WithStatusText
+import ch.bailu.foc.Foc
 
-public interface BackgroundServiceInterface extends WithStatusText {
-    void close();
-
-    void process(BackgroundTask backgroundTask);
-
-    FileTask findTask(Foc resultFile);
+interface BackgroundServiceInterface : WithStatusText {
+    fun close()
+    fun process(backgroundTask: BackgroundTask)
+    fun findTask(file: Foc): FileTask?
 }

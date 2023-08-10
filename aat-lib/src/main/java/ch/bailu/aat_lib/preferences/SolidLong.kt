@@ -1,63 +1,50 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.exception.ValidationException
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.resources.Res
 
-public class SolidLong extends AbsSolidType {
+open class SolidLong(private val storage: StorageInterface, private val key: String) :
+    AbsSolidType() {
+    open var value: Long
+        get() = getStorage().readLong(getKey())
+        set(v) {
+            getStorage().writeLong(getKey(), v)
+        }
 
+    @Throws(ValidationException::class)
+    override fun setValueFromString(string: String) {
+        val s = string.trim { it <= ' ' }
 
-    private final String key;
-    private final StorageInterface storage;
-
-
-    public SolidLong(StorageInterface s, String k) {
-        storage=s;
-        key=k;
-    }
-
-    public long getValue() {
-        return getStorage().readLong(getKey());
-    }
-
-    public void setValue(long v) {
-        getStorage().writeLong(getKey(),v);
-    }
-
-    @Override
-    public void setValueFromString(String s) throws ValidationException {
-            s = s.trim();
-
-            if (! validate(s)) {
-                throw new ValidationException(String.format(Res.str().error_long(),s));
-            } else {
-                try {
-                    setValue(Long.parseLong(s));
-                } catch (NumberFormatException e) {
-                    AppLog.e(this, e);
-                }
+        if (!validate(s)) {
+            throw ValidationException(String.format(Res.str().error_long(), s))
+        } else {
+            try {
+                value = s.toLong()
+            } catch (e: NumberFormatException) {
+                e(this, e)
             }
+        }
     }
 
-
-    @Override
-    public String getKey() {
-        return key;
+    override fun getKey(): String {
+        return key
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return storage;
+    override fun getStorage(): StorageInterface {
+        return storage
     }
 
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(getValue());
+    override fun getValueAsString(): String {
+        return value.toString()
     }
 
-    @Override
-    public boolean validate(String s) {
+    override fun validate(s: String): Boolean {
         // regex long, not 100% correct
-        return s.matches("^-?\\d{1,19}$");
+        return s.matches(VALIDATE)
+    }
+
+    companion object {
+        private val VALIDATE = Regex("^-?\\d{1,19}$")
     }
 }

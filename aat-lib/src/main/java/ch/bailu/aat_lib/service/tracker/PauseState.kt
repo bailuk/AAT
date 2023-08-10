@@ -1,54 +1,44 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.resources.Res
 
-public final class PauseState extends State {
-    public PauseState(TrackerInternals ti) {
-        super(ti);
+class PauseState(trackerInternals: TrackerInternals) : State(trackerInternals) {
+    init {
         try {
-            internal.logger.logPause();
-            internal.statusIcon.showPause();
-        } catch (Exception e) {
-            internal.emergencyOff(e);
+            internal.logger.logPause()
+            internal.statusIcon.showPause()
+        } catch (e: Exception) {
+            internal.emergencyOff(e)
         }
     }
 
-    @Override
-    public void updateTrack() {}
-
-    @Override
-    public int getStateID() {
-        return StateID.PAUSE;
+    override fun updateTrack() {}
+    override fun getStateID(): Int {
+        return StateID.PAUSE
     }
 
-    @Override
-    public void onStartPauseResume() {
-        onPauseResume();
+    override fun onStartPauseResume() {
+        onPauseResume()
     }
 
-    @Override
-    public void onStartStop() {
-        internal.setState(new OffState(internal));
+    override fun onStartStop() {
+        internal.setState(OffState(internal))
     }
 
-    @Override
-    public void onPauseResume() {
-        internal.setState(new OnState(internal));
+    override fun onPauseResume() {
+        internal.setState(OnState(internal))
     }
 
-    @Override
-    public String getStartStopText() {
-        return Res.str().tracker_stop();
+    override fun getStartStopText(): String {
+        return Res.str().tracker_stop()
     }
 
-    @Override
-    public String getPauseResumeText() {
-        return Res.str().tracker_resume();
+    override fun getPauseResumeText(): String {
+        return Res.str().tracker_resume()
     }
 
-    @Override
-    public String getStartStopIcon() {
-        return "media_playback_stop_inverse";
+    override fun getStartStopIcon(): String {
+        return "media_playback_stop_inverse"
     }
 }

@@ -1,97 +1,77 @@
-package ch.bailu.aat_lib.service.editor;
+package ch.bailu.aat_lib.service.editor
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxInformationProvider;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjNull;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxInformationProvider
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.service.cache.ObjNull
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
 
-public final class EditorHelper implements GpxInformationProvider {
-    private final AppContext appContext;
+class EditorHelper(private val appContext: AppContext) : GpxInformationProvider {
+    private var handle = ObjNull.NULL
+    var infoID = 0
+        private set
+    var file: Foc = Foc.FOC_NULL
+        private set
+    var vID: String = ""
+        private set
 
-    private Obj handle = ObjNull.NULL;
-
-    private int IID;
-    private Foc file;
-    private String vid;
-
-
-    public EditorHelper(AppContext context) {
-        appContext = context;
-        edit(getDraft(), InfoID.EDITOR_DRAFT);
+    init {
+        edit(draft, InfoID.EDITOR_DRAFT)
     }
 
-    public void editDraft() {
-        edit(getDraft(), InfoID.EDITOR_DRAFT);
-        onResume();
+    fun editDraft() {
+        edit(draft, InfoID.EDITOR_DRAFT)
+        onResume()
     }
 
-    public void edit(Foc file) {
-        edit(file, InfoID.EDITOR_OVERLAY);
-        onResume();
+    fun edit(file: Foc) {
+        edit(file, InfoID.EDITOR_OVERLAY)
+        onResume()
     }
 
-    private void edit(Foc file, int iid) {
-        this.IID = iid;
-        this.file = file;
-        this.vid = ObjGpxEditable.getVirtualID(file);
+    private fun edit(file: Foc, iid: Int) {
+        infoID = iid
+        this.file = file
+        vID = ObjGpxEditable.getVirtualID(file)
     }
 
-    public void onResume() {
-        Obj newHandle = appContext.getServices().getCacheService().getObject(
-                vid,
-                new ObjGpxEditable.Factory(file));
-
-        handle.free();
-        handle = newHandle;
+    fun onResume() {
+        val newHandle = appContext.services.cacheService.getObject(
+            vID,
+            ObjGpxEditable.Factory(file)
+        )
+        handle.free()
+        handle = newHandle
     }
 
-    public void onPause() {
-        if (IID == InfoID.EDITOR_DRAFT) save();
-
-        handle.free();
-        handle = ObjGpx.NULL;
+    fun onPause() {
+        if (infoID == InfoID.EDITOR_DRAFT) save()
+        handle.free()
+        handle = ObjGpx.NULL
     }
 
-    public int getInfoID() {
-        return IID;
+    override fun getInfo(): GpxInformation {
+        return if (handle is ObjGpxEditable) {
+            (handle as ObjGpxEditable).editor
+        } else GpxInformation.NULL
     }
 
-    public String getVID() { return vid; }
+    val editor: EditorInterface
+        get() = if (handle is ObjGpxEditable) {
+            (handle as ObjGpxEditable).editor
+        } else EditorInterface.NULL
 
-    @Override
-    public GpxInformation getInfo() {
-        if (handle instanceof ObjGpxEditable) {
-            return ((ObjGpxEditable)handle).getEditor();
-        }
-        return GpxInformation.NULL;
-    }
-
-    public EditorInterface getEditor() {
-        if (handle instanceof ObjGpxEditable) {
-            return ((ObjGpxEditable)handle).getEditor();
-        }
-        return EditorInterface.NULL;
-    }
-
-    public void save() {
-        EditorInterface editor = getEditor();
-        if (editor.isModified()) {
-            editor.save();
+    fun save() {
+        val editor = editor
+        if (editor.isModified) {
+            editor.save()
         }
     }
 
-    public Foc getFile() {
-        return file;
-    }
-
-    private Foc getDraft() {
-        return AppDirectory.getEditorDraft(appContext.getDataDirectory());
-    }
-
+    private val draft: Foc
+        get() = AppDirectory.getEditorDraft(appContext.dataDirectory)
 }

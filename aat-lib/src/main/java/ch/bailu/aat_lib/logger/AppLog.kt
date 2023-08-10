@@ -1,172 +1,151 @@
-package ch.bailu.aat_lib.logger;
+package ch.bailu.aat_lib.logger
 
-import java.util.regex.Pattern;
-
-import ch.bailu.aat_lib.app.AppConfig;
-
+import java.util.regex.Pattern
 
 /**
  * Logging facade for application scope
  */
-public class AppLog  {
-    private final static String UNKNOWN = "";
+object AppLog {
+    private const val UNKNOWN = ""
+    private val DEFAULT_TAG = AppLog::class.java.simpleName
 
-    private final static String DEFAULT_TAG=AppLog.class.getSimpleName();
+    private var warn = PrintLnLoggerFactory().warn()
+    private var info = PrintLnLoggerFactory().info()
+    private var debug = PrintLnLoggerFactory().debug()
+    private var error = PrintLnLoggerFactory().error()
 
-    private static Logger warn = new PrintLnLoggerFactory().warn();
-    private static Logger info = new PrintLnLoggerFactory().info();
-    private static Logger debug = new PrintLnLoggerFactory().debug();
-    private static Logger error = new PrintLnLoggerFactory().error();
-
-
-    public static void set(LoggerFactory loggerFactory) {
-        warn = loggerFactory.warn();
-        info = loggerFactory.info();
-        debug = loggerFactory.debug();
-        error = loggerFactory.error();
+    fun set(loggerFactory: LoggerFactory) {
+        warn = loggerFactory.warn()
+        info = loggerFactory.info()
+        debug = loggerFactory.debug()
+        error = loggerFactory.error()
     }
-
 
     /**
      * Log a message with log level info
      * @param message the message that will be logged. Can be null
      */
-    public static void i(String message) {
-        info.log(DEFAULT_TAG, toSaveString(message));
+    fun i(message: String?) {
+        info.log(DEFAULT_TAG, toSaveString(message))
     }
 
-    public static void i(Object tag, String message) {
-        info.log(toSaveClassName(tag), toSaveString(message));
+    @JvmStatic
+    fun i(source: Any?, message: String?) {
+        info.log(toSaveSourceName(source), toSaveString(message))
     }
-
 
     /**
      * Log a message with log level error
      * @param throwable error that will be logged. Can be null
      */
-    public static void e(Throwable throwable) {
-        e(throwable, throwable);
+    @JvmStatic
+    fun e(throwable: Throwable?) {
+        e(throwable, throwable)
     }
-
 
     /**
      * Log a message with log level error
-     * @param object to log the class name of this object
+     * @param source to log the source: content of String or class name of Any
      * @param throwable this error will be logged. Can be null
      */
-    public static void e(Object object, Throwable throwable) {
-        e(toSaveClassName(object), toStringAndPrintStackTrace(throwable));
+    @JvmStatic
+    fun e(source: Any?, throwable: Throwable?) {
+        e(toSaveSourceName(source), toStringAndPrintStackTrace(throwable))
     }
 
+    /**
+     * Log a message with log level error
+     * @param source to log the source: content of String or class name of Any
+     * @param throwable to print stack trace
+     * @param message message to log
+     */
+    fun e(source: Any, throwable: Throwable, message: String) {
+        e(source, message)
+        throwable.printStackTrace()
+    }
 
     /**
      * Log a message with log level warning
-     * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
+     * @param source The class name of this object will be displayed in the log as a tag to identify the source of this message.
      * @param throwable this error will be logged. Can be null
      */
-    public static void w(Object object, Throwable throwable) {
-        w(object, toStringAndPrintStackTrace(throwable));
+    fun w(source: Any?, throwable: Throwable?) {
+        w(source, toStringAndPrintStackTrace(throwable))
     }
-
 
     /**
      *
      * Log a message with log level warning.
      * Message gets logged to Android's internal logger
      * and is not visible to the user.
-     * @param object The class name of this object will be displayed in the log as a tag to identify the source of this message.
-     * @param msg The message that gets logged. This parameter is null save.
+     * @param source The class name of this object will be displayed in the log as a tag to identify the source of this message.
+     * @param message The message that gets logged. This parameter is null save.
      */
-    public static void w(Object object, String msg) {
-        warn.log(toSaveClassName(object), toSaveString(msg));
+    @JvmStatic
+    fun w(source: Any?, message: String?) {
+        warn.log(toSaveSourceName(source), toSaveString(message))
     }
 
-
-    public static void e(String m) {
-        e(DEFAULT_TAG, m);
+    fun e(message: String?) {
+        e(DEFAULT_TAG, message)
     }
-
 
     /**
      * Log a message with log level error
-     * @param tag that gets logged to identify the source of this message. Can be null
-     * @param msg the message that gets logged. Can be null
+     * @param source that gets logged to identify the source of this message. Can be null
+     * @param message the message that gets logged. Can be null
      */
-    public static void e(Object tag, String msg) {
-        error.log(toSaveClassName(tag), toSaveString(msg));
+    @JvmStatic
+    fun e(source: Any?, message: String?) {
+        error.log(toSaveSourceName(source), toSaveString(message))
     }
-
 
     /**
      * Log a message with log level debug
-     * @param o classname of object is used as a tag to identify the source of this message.
-     * @param m the message to log. Can be null.
+     * @param source classname of object is used as a tag to identify the source of this message.
+     * @param message the message to log. Can be null.
      */
-    public static void d(Object o, String m) {
-        d(toSaveClassName(o), m);
+    fun d(source: Any?, message: String?) {
+        d(toSaveSourceName(source), message)
     }
 
-
-    private static String toSaveClassName(Object o) {
-        String result = DEFAULT_TAG;
-
-        if (o instanceof String) {
-          result = (String) o;
-        } else if (o != null) {
-            result = o.getClass().getSimpleName();
-            if (result.length() == 0) {
-                result = classNameInnerClass(o);
+    private fun toSaveSourceName(source: Any?): String {
+        var result = DEFAULT_TAG
+        if (source is String) {
+            result = source
+        } else if (source != null) {
+            result = source.javaClass.simpleName
+            if (result.isEmpty()) {
+                result = classNameInnerClass(source)
             }
         }
-        return result;
+        return result
     }
 
-    private static String classNameInnerClass(Object o) {
-        String result = o.getClass().getName();
-
+    private fun classNameInnerClass(source: Any): String {
+        var result = source.javaClass.name
         if (result.contains(".")) {
-            String[] parts = result.split(Pattern.quote("."));
-            result = parts[parts.length - 1];
+            val parts = result.split(Pattern.quote(".").toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            result = parts[parts.size - 1]
         }
-        return result;
+        return result
     }
 
-    /**
-     * Log a message with log level debug
-     * @param tag to identify the source of this message. Can be null.
-     * @param msg the message to log. Can be null.
-     */
-    public static void d(String tag, String msg) {
-        if (!AppConfig.getInstance().isRelease()) {
-            debug.log(toSaveTag(tag), toSaveString(msg));
-        }
+     private fun toSaveString(string: String?): String {
+        return string ?: UNKNOWN
     }
 
-
-    private static String toSaveTag(String result) {
-        if (result== null || result.length()==0) {
-            result = DEFAULT_TAG;
-        }
-        return result;
-    }
-
-    private static String toSaveString(String s) {
-        if (s == null) return UNKNOWN;
-        return s;
-    }
-
-    private static String toStringAndPrintStackTrace(Throwable e) {
-        String result = UNKNOWN;
-
-        if (e != null) {
-            e.printStackTrace();
-
-            if (e.getLocalizedMessage() != null) {
-                result += e.getLocalizedMessage();
-            } else  if (e.getMessage() != null) {
-                result += e.getMessage();
+    private fun toStringAndPrintStackTrace(throwable: Throwable?): String {
+        var result: String = UNKNOWN
+        if (throwable != null) {
+            throwable.printStackTrace()
+            if (throwable.localizedMessage != null) {
+                result += throwable.localizedMessage
+            } else if (throwable.message != null) {
+                result += throwable.message
             }
         }
-        return result;
+        return result
     }
 }

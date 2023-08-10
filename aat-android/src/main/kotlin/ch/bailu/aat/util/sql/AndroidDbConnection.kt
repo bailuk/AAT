@@ -2,7 +2,6 @@ package ch.bailu.aat.util.sql
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteDatabase.CursorFactory
 import android.database.sqlite.SQLiteOpenHelper
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
@@ -11,7 +10,6 @@ import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.aat_lib.util.sql.SaveDbResultSet
 import ch.bailu.aat_lib.util.sql.Sql
-import java.lang.IllegalArgumentException
 
 class AndroidDbConnection(private val context: Context) : DbConnection {
     private var database: SQLiteDatabase? = null
@@ -19,7 +17,7 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
     override fun open(name: String, version: Int) {
         try {
             close()
-            database = OpenHelper(context, name, null, version).readableDatabase
+            database = OpenHelper(context, name, version).readableDatabase
             if (needsUpdate) {
                 createTable()
                 needsUpdate = false
@@ -94,11 +92,10 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
     }
 
     private inner class OpenHelper(
-        context: Context?,
-        name: String?,
-        factory: CursorFactory?,
+        context: Context,
+        name: String,
         version: Int
-    ) : SQLiteOpenHelper(context, name, factory, version) {
+    ) : SQLiteOpenHelper(context, name, null, version) {
         override fun onCreate(db: SQLiteDatabase) {
             needsUpdate = true
         }

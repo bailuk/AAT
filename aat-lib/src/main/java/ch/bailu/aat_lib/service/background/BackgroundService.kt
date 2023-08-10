@@ -1,139 +1,100 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import java.net.URL;
-import java.util.HashMap;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.util.WithStatusText
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.util.WithStatusText;
-import ch.bailu.foc.Foc;
+class BackgroundService(
+    private val appContext: AppContext,
+    broadcaster: Broadcaster?,
+    threads: Int
+) : VirtualService(), BackgroundServiceInterface, WithStatusText {
+    private val tasks: Tasks
+    private val downloaders = HashMap<String, DownloaderThread>(5)
+    private val loaders = HashMap<String, LoaderThread>(5)
+    private val queue: HandleStack
+    private val workers = ArrayList<WorkerThread>()
 
-public final class BackgroundService extends VirtualService implements BackgroundServiceInterface, WithStatusText {
+    init {
+        tasks = Tasks(broadcaster)
+        queue = HandleStack()
 
-    final static int FILE_LOADER_BASE_DIRECTORY_DEPTH = 4;
-
-    private final Tasks tasks;
-
-    private final HashMap<String, DownloaderThread> downloaders = new HashMap<>(5);
-    private final HashMap<String, LoaderThread> loaders = new HashMap<>(5);
-
-
-    private final HandleStack queue;
-    private final WorkerThread[] workers;
-    private final AppContext appContext;
-
-
-    public BackgroundService(final AppContext sc, Broadcaster broadcaster, int threads) {
-        appContext = sc;
-        tasks = new Tasks(broadcaster);
-        queue = new HandleStack();
-        workers = new WorkerThread[threads];
-        for (int i=0; i< workers.length; i++) {
-            workers[i] = new WorkerThread("WT_" + i, sc, queue);
+        for (i in 0 until threads) {
+            workers.add(WorkerThread("WT_$i", appContext, queue))
         }
     }
 
-
-    public void process(BackgroundTask handle) {
-        if (handle instanceof DownloadTask) {
-            download((DownloadTask) handle);
-
-        } else if (handle instanceof FileTask) {
-            load((FileTask) handle);
-
+    override fun process(backgroundTask: BackgroundTask) {
+        if (backgroundTask is DownloadTask) {
+            download(backgroundTask)
+        } else if (backgroundTask is FileTask) {
+            load(backgroundTask)
         } else {
-            workers[0].process(handle);
-
+            workers[0].process(backgroundTask)
         }
     }
 
-
-
-
-    private void download(DownloadTask handle) {
+    private fun download(handle: DownloadTask) {
         try {
-            final URL url = handle.getSource().toURL();
-
-            String host = url.getHost();
-            DownloaderThread downloader = downloaders.get(host);
-
+            val url = handle.source.toURL()
+            val host = url.host
+            var downloader = downloaders[host]
             if (downloader == null) {
-                downloader = new DownloaderThread(appContext, host);
-                downloaders.put(host, downloader);
+                downloader = DownloaderThread(appContext, host)
+                downloaders[host] = downloader
             }
-
-            handle.register(tasks);
-            downloader.process(handle);
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            handle.register(tasks)
+            downloader.process(handle)
+        } catch (e: Exception) {
+            e(this, e)
         }
     }
 
-
-
-
-    private void load(FileTask handle) {
-        final String base = getBaseDirectory(handle.getFile());
-
-        LoaderThread loader = loaders.get(base);
-
+    private fun load(handle: FileTask) {
+        val base = getBaseDirectory(handle.file)
+        var loader = loaders[base]
         if (loader == null) {
-            loader = new LoaderThread(appContext, base);
-            loaders.put(base, loader);
+            loader = LoaderThread(appContext, base)
+            loaders[base] = loader
         }
-
-        handle.register(tasks);
-        loader.process(handle);
+        handle.register(tasks)
+        loader.process(handle)
     }
 
-
-    public void close() {
-        for(ProcessThread p: loaders.values())
-            p.close();
-        loaders.clear();
-
-        for (DownloaderThread downloader: downloaders.values())
-            downloader.close();
-        downloaders.clear();
-
-        for (WorkerThread w: workers)
-            w.close();
-
-        queue.close(workers.length);
+    override fun close() {
+        for (p in loaders.values) p.close()
+        loaders.clear()
+        for (downloader in downloaders.values) downloader.close()
+        downloaders.clear()
+        for (w in workers) w.close()
+        queue.close(workers.size)
     }
 
-
-    private String getBaseDirectory(Foc r) {
-        Foc p = r.parent();
-        int depth = 0;
-
+    private fun getBaseDirectory(file: Foc): String {
+        var f = file
+        var p = f.parent()
+        var depth = 0
         while (p != null && depth < FILE_LOADER_BASE_DIRECTORY_DEPTH) {
-            r = p;
-            p = p.parent();
-
-            depth++;
+            f = p
+            p = p.parent()
+            depth++
         }
-
-        return r.getPathName();
+        return f.pathName
     }
 
-
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-
-        for (LoaderThread p: loaders.values())
-            p.appendStatusText(builder);
-
-        for (DownloaderThread p: downloaders.values())
-            p.appendStatusText(builder);
+    override fun appendStatusText(builder: StringBuilder) {
+        for (p in loaders.values) p.appendStatusText(builder)
+        for (p in downloaders.values) p.appendStatusText(builder)
     }
 
+    override fun findTask(file: Foc): FileTask? {
+        return tasks[file]
+    }
 
-    public FileTask findTask(Foc file) {
-        return tasks.get(file);
+    companion object {
+        const val FILE_LOADER_BASE_DIRECTORY_DEPTH = 4
     }
 }
-

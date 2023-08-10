@@ -1,68 +1,51 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.resources.Res
 
-public final class OffState extends State {
-
-    public OffState(TrackerInternals ti) {
-        super(ti);
-
-        internal.logger.close();
-        internal.statusIcon.hide();
-        internal.unlockService();
-        internal.rereadPreferences();
+class OffState(ti: TrackerInternals?) : State(ti!!) {
+    init {
+        internal.logger.close()
+        internal.statusIcon.hide()
+        internal.unlockService()
+        internal.rereadPreferences()
     }
 
-    @Override
-    public void updateTrack() {}
-
-    @Override
-    public int getStateID() {
-        return StateID.OFF;
+    override fun updateTrack() {}
+    override fun getStateID(): Int {
+        return StateID.OFF
     }
 
-    @Override
-    public void onStartPauseResume() {
-        onStartStop();
-
+    override fun onStartPauseResume() {
+        onStartStop()
     }
 
-    @Override
-    public void onStartStop() {
+    override fun onStartStop() {
         try {
-            internal.logger = internal.createLogger();
-            internal.lockService();
-            internal.setState(new OnState(internal));
-
-        } catch (Exception e) {
-            AppLog.e(this, e);
-            internal.logger = Logger.NULL_LOGGER;
+            internal.logger = internal.createLogger()
+            internal.lockService()
+            internal.setState(OnState(internal))
+        } catch (e: Exception) {
+            AppLog.e(this, e)
+            internal.logger = Logger.NULL_LOGGER
         }
     }
 
-    @Override
-    public void onPauseResume() {
+    override fun onPauseResume() {}
+    override fun getStartStopText(): String {
+        return Res.str().tracker_start()
     }
 
-    @Override
-    public String getStartStopText() {
-        return Res.str().tracker_start();
+    override fun getPauseResumeText(): String {
+        return Res.str().tracker_start()
     }
 
-    @Override
-    public String getPauseResumeText() {
-        return Res.str().tracker_start();
+    override fun getStartStopIcon(): String {
+        return "playback_start_inverse"
     }
 
-    @Override
-    public String getStartStopIcon() {
-        return "playback_start_inverse";
-    }
-
-    @Override
-    public void preferencesChanged() {
-        internal.rereadPreferences();
+    override fun preferencesChanged() {
+        internal.rereadPreferences()
     }
 }

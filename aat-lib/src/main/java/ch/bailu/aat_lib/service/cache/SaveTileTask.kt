@@ -1,71 +1,45 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import org.mapsforge.core.graphics.TileBitmap;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog.w
+import ch.bailu.aat_lib.service.background.FileTask
+import ch.bailu.foc.Foc
+import java.io.OutputStream
 
-import java.io.OutputStream;
-
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.foc.Foc;
-
-public final class SaveTileTask extends FileTask {
-
-    private final String sourceID;
-
-    public SaveTileTask(String source, Foc target) {
-        super(target);
-        sourceID = source;
-    }
-
-
-    @Override
-    public long bgOnProcess(final AppContext sc) {
-        final long[] size = {0};
-
-
-        new OnObject(sc, sourceID, ObjTile.class) {
-            @Override
-            public void run(Obj handle) {
-                size[0] = save(sc, (ObjTile) handle);
-            }
-        };
-
-        return size[0];
-    }
-
-
-    private long save(AppContext sc, ObjTile self) {
-        long size = 0;
-        OutputStream out = null;
-        Foc file = getFile();
-
-        if (!file.exists()) {
-            try {
-
-                out = file.openW();
-
-                TileBitmap bitmap = self.getTileBitmap();
-                if (bitmap != null && out != null) {
-                    bitmap.compress(out);
-                }
-
-                sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
-                        getFile().toString(), sourceID);
-
-                size = self.getSize();
-
-            } catch (Exception e) {
-                AppLog.w(this, e);
-
-
-            } finally {
-                Foc.close(out);
-
+class SaveTileTask(private val sourceID: String, target: Foc) : FileTask(target) {
+    override fun bgOnProcess(appContext: AppContext): Long {
+        val size = longArrayOf(0)
+        object : OnObject(appContext, sourceID, ObjTile::class.java) {
+            override fun run(handle: Obj) {
+                size[0] = save(appContext, handle as ObjTile)
             }
         }
+        return size[0]
+    }
 
-        return size;
+    private fun save(sc: AppContext, self: ObjTile): Long {
+        var size: Long = 0
+        var out: OutputStream? = null
+        val file = file
+        if (!file.exists()) {
+            try {
+                out = file.openW()
+                val bitmap = self.tileBitmap
+                if (bitmap != null && out != null) {
+                    bitmap.compress(out)
+                }
+                sc.broadcaster.broadcast(
+                    AppBroadcaster.FILE_CHANGED_ONDISK,
+                    getFile().toString(), sourceID
+                )
+                size = self.size
+            } catch (e: Exception) {
+                w(this, e)
+            } finally {
+                Foc.close(out)
+            }
+        }
+        return size
     }
 }

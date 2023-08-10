@@ -16,7 +16,7 @@ import ch.bailu.foc.Foc
 class EditorSource(private val appContext: AppContext) : ContentSource(), EditorSourceInterface {
     private val edit: EditorHelper = EditorHelper(appContext)
     private val onFileEdited = BroadcastReceiver { args ->
-        if (BroadcastData.has(args, edit.vid)) {
+        if (BroadcastData.has(args, edit.vID)) {
             requestUpdate()
         }
     }

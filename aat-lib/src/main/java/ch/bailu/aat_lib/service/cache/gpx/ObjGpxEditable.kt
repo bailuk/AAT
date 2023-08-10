@@ -1,303 +1,221 @@
-package ch.bailu.aat_lib.service.cache.gpx;
+package ch.bailu.aat_lib.service.cache.gpx
 
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.editor.EditorInterface;
-import ch.bailu.aat_lib.service.editor.GpxEditor;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.aat_lib.xml.writer.GpxListWriter;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.editor.EditorInterface
+import ch.bailu.aat_lib.service.editor.GpxEditor
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.xml.writer.GpxListWriter
+import ch.bailu.foc.Foc
 
-public final class ObjGpxEditable extends ObjGpx {
+class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjGpx(_id) {
+    private var currentHandle = NULL
+    val editor: GpxListEditor
 
-    private ObjGpx currentHandle=NULL;
-    private final Foc file;
-
-    private final GpxListEditor editor;
-
-
-    public ObjGpxEditable(String _id, Foc _file, AppContext sc) {
-        super(_id);
-        file = _file;
-
-        editor = new GpxListEditor(sc.getBroadcaster());
-        sc.getServices().getCacheService().addToBroadcaster(this);
+    init {
+        editor = GpxListEditor(sc.broadcaster)
+        sc.services.cacheService.addToBroadcaster(this)
     }
 
-    public GpxListEditor getEditor() {
-        return editor;
-    }
-
-    @Override
-    public void onInsert(AppContext sc) {
-        Obj handle = sc.getServices().getCacheService().getObject(file.getPath(), new ObjGpxStatic.Factory());
-
-        if (handle instanceof ObjGpx) {
-            currentHandle = (ObjGpx) handle;
+    override fun onInsert(sc: AppContext) {
+        val handle = sc.services.cacheService.getObject(_file.path, ObjGpxStatic.Factory())
+        currentHandle = if (handle is ObjGpx) {
+            handle
         } else {
-            currentHandle = ObjGpx.NULL;
+            NULL
         }
-        editor.loadIntoEditor(currentHandle.getGpxList());
+        editor.loadIntoEditor(currentHandle.gpxList)
     }
 
-
-    @Override
-    public void onRemove(AppContext sc) {
-        currentHandle.free();
-        currentHandle=NULL;
+    override fun onRemove(sc: AppContext) {
+        currentHandle.free()
+        currentHandle = NULL
     }
 
-
-    public boolean isReadyAndLoaded() {
-        return currentHandle.isReadyAndLoaded();
+    override fun isReadyAndLoaded(): Boolean {
+        return currentHandle.isReadyAndLoaded
     }
 
-    @Override
-    public long getSize() {
-        return MIN_SIZE;
+    override fun getSize(): Long {
+        return MIN_SIZE.toLong()
     }
 
-
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
-
-
-    @Override
-    public void onChanged(String id, AppContext sc) {
-        if (id.equals(file.getPath())) {
-            editor.loadIntoEditor(currentHandle.getGpxList());
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onChanged(id: String, sc: AppContext) {
+        if (id == _file.path) {
+            editor.loadIntoEditor(currentHandle.gpxList)
         }
     }
 
-    public class GpxListEditor extends GpxInformation implements EditorInterface {
-        private GpxEditor editor = new GpxEditor(GpxList.NULL_ROUTE);
-
-        private boolean modified = false;
-
-        private final Broadcaster broadcaster;
-        public GpxListEditor(Broadcaster broadcaster) {
-            this.broadcaster = broadcaster;
+    inner class GpxListEditor(private val broadcaster: Broadcaster) : GpxInformation(),
+        EditorInterface {
+        private var editor = GpxEditor(GpxList.NULL_ROUTE)
+        private var modified = false
+        fun loadIntoEditor(list: GpxList?) {
+            editor = GpxEditor(list)
+            modified = false
+            modified(false)
         }
 
-
-        public void loadIntoEditor(GpxList list) {
-            editor = new GpxEditor(list);
-            modified = false;
-            modified(false);
+        override fun setType(type: GpxType) {
+            editor.setType(type)
+            modified(true)
         }
 
-        @Override
-        public void setType(GpxType type) {
-            editor.setType(type);
-            modified(true);
+        override fun remove() {
+            editor.unlinkSelectedNode()
+            modified(true)
         }
 
-
-        @Override
-        public void remove() {
-            editor.unlinkSelectedNode();
-            modified(true);
+        override fun add(point: GpxPoint) {
+            editor.insertNode(point)
+            modified(true)
         }
 
-
-        @Override
-        public void add(GpxPoint point) {
-            editor.insertNode(point);
-            modified(true);
+        override fun up() {
+            editor.moveSelectedUp()
+            modified(true)
         }
 
-
-
-        @Override
-        public void up() {
-            editor.moveSelectedUp();
-            modified(true);
+        override fun down() {
+            editor.moveSelectedDown()
+            modified(true)
         }
 
-
-        @Override
-        public void down() {
-            editor.moveSelectedDown();
-            modified(true);
+        override fun clear() {
+            editor.clear()
+            modified(true)
         }
 
-        @Override
-        public void clear() {
-            editor.clear();
-            modified(true);
+        override fun undo() {
+            if (editor.undo()) modified(true)
         }
 
-
-        @Override
-        public void undo() {
-            if (editor.undo()) modified(true);
-        }
-        @Override
-        public void redo() {
-            if (editor.redo()) modified(true);
+        override fun redo() {
+            if (editor.redo()) modified(true)
         }
 
-        private void modified(boolean m) {
-            modified = modified || m;
-
-            setVisibleTrackPoint(editor.getSelectedPoint());
-            setVisibleTrackSegment(editor.getList().getDelta());
-
-            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID());
+        private fun modified(m: Boolean) {
+            modified = modified || m
+            setVisibleTrackPoint(editor.selectedPoint)
+            setVisibleTrackSegment(editor.list.getDelta())
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, id)
         }
 
-        @Override
-        public boolean isModified() {
-            return modified;
+        override fun isModified(): Boolean {
+            return modified
         }
 
-
-
-        @Override
-        public void select(GpxPointNode point) {
-            editor.select(point, editor.getList());
-            modified(false);
+        override fun select(point: GpxPointNode) {
+            editor.select(point, editor.list)
+            modified(false)
         }
 
-
-        @Override
-        public void save() {
+        override fun save() {
             try {
-                new GpxListWriter(editor.getList(),file).close();
-                modified=false;
-
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), getID());
-            } catch (Exception e) {
-                AppLog.e(this, e);
+                GpxListWriter(editor.list, file).close()
+                modified = false
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), id)
+            } catch (e: Exception) {
+                e(this, e)
             }
         }
 
-
-        @Override
-        public void inverse() {
-            editor.inverse();
-            modified(true);
+        override fun inverse() {
+            editor.inverse()
+            modified(true)
         }
 
-        @Override
-        public void attach(GpxList toAttach) {
-            editor.attach(toAttach);
-            modified(true);
-
+        override fun attach(toAttach: GpxList) {
+            editor.attach(toAttach)
+            modified(true)
         }
 
-        @Override
-        public void fix() {
-            editor.fix();
-            modified(true);
-
+        override fun fix() {
+            editor.fix()
+            modified(true)
         }
 
-        @Override
-        public void simplify() {
-            editor.simplify();
-            modified(true);
+        override fun simplify() {
+            editor.simplify()
+            modified(true)
         }
 
-        @Override
-        public void cutPreceding() {
-            editor.cutPreceding();
-            modified(true);
+        override fun cutPreceding() {
+            editor.cutPreceding()
+            modified(true)
         }
 
-        @Override
-        public void cutRemaining() {
-            editor.cutRemaining();
-            modified(true);
+        override fun cutRemaining() {
+            editor.cutRemaining()
+            modified(true)
         }
 
-
-        @Override
-        public void saveTo(Foc destDir) {
-            String prefix = AppDirectory.parsePrefix(file);
-
+        override fun saveTo(destDir: Foc) {
+            val prefix = AppDirectory.parsePrefix(file)
             try {
-                final Foc file =
-                        AppDirectory.generateUniqueFilePath(
-                                destDir,
-                                prefix,
-                                AppDirectory.GPX_EXTENSION);
-
-                new GpxListWriter(editor.getList(),file).close();
-
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK,
-                        file.getPath(), getID());
-
-            } catch (Exception e) {
-                AppLog.e( this, e);
+                val file = AppDirectory.generateUniqueFilePath(
+                    destDir,
+                    prefix,
+                    AppDirectory.GPX_EXTENSION
+                )
+                GpxListWriter(editor.list, file).close()
+                broadcaster.broadcast(
+                    AppBroadcaster.FILE_CHANGED_ONDISK,
+                    file.path, id
+                )
+            } catch (e: Exception) {
+                e(this, e)
             }
         }
 
-
-        @Override
-        public GpxPointNode getSelected() {
-            return editor.getSelectedPoint();
+        override fun getSelected(): GpxPointNode {
+            return editor.selectedPoint
         }
 
-
-        @Override
-        public GpxList getGpxList() {
-            return editor.getList();
+        override fun getGpxList(): GpxList {
+            return editor.list
         }
 
-        @Override
-        public Foc getFile() {
-            return file;
+        override fun getFile(): Foc {
+            return _file
         }
 
-        @Override
-        public boolean isLoaded() {
-            return true;
+        override fun isLoaded(): Boolean {
+            return true
         }
 
-
-        @Override
-        public BoundingBoxE6 getBoundingBox() {
-            return editor.getList().getDelta().getBoundingBox();
-        }
-
-    }
-
-
-    public static class Factory extends Obj.Factory {
-        private final Foc file;
-
-        public Factory(Foc f) {
-            file=f;
-        }
-
-        @Override
-        public Obj factory(String id, AppContext sc) {
-            return new ObjGpxEditable(id, file, sc);
+        override fun getBoundingBox(): BoundingBoxE6 {
+            return editor.list.getDelta().getBoundingBox()
         }
     }
 
-
-    public static String getVirtualID(Foc file) {
-        return getVirtualID(file.getPath());
+    class Factory(private val file: Foc) : Obj.Factory() {
+        override fun factory(id: String, sc: AppContext): Obj {
+            return ObjGpxEditable(id, file, sc)
+        }
     }
 
-    private static String getVirtualID(String cID) {
-        return ObjGpxEditable.class.getSimpleName()+cID;
+    override fun getGpxList(): GpxList {
+        return editor.gpxList
     }
 
+    companion object {
+        fun getVirtualID(file: Foc): String {
+            return getVirtualID(file.path)
+        }
 
-    @Override
-    public GpxList getGpxList() {
-        return editor.getGpxList();
+        private fun getVirtualID(cID: String): String {
+            return ObjGpxEditable::class.java.simpleName + cID
+        }
     }
 }

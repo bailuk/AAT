@@ -54,8 +54,8 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
     }
 
     private fun updateMenuText(state: StateInterface) {
-        start?.title = state.startStopText
-        start?.setIcon(Images.get(state.startStopIcon))
-        pause?.title = state.pauseResumeText
+        start?.title = state.getStartStopText()
+        start?.setIcon(Images.get(state.getStartStopIcon()))
+        pause?.title = state.getPauseResumeText()
     }
 }

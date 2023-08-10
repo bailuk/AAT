@@ -1,66 +1,53 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.exception.ValidationException
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.resources.Res;
+open class SolidInteger(
+    @param:Nonnull private val storage: StorageInterface,
+    @param:Nonnull private val key: String
+) : AbsSolidType() {
+    open var value: Int
+        get() = getStorage().readInteger(getKey())
+        set(v) {
+            getStorage().writeInteger(getKey(), v)
+        }
 
-public class SolidInteger extends AbsSolidType {
-    private final String key;
-    private final StorageInterface storage;
-
-
-    public SolidInteger(@Nonnull StorageInterface storage, @Nonnull String key) {
-        this.storage = storage;
-        this.key = key;
+    override fun getKey(): String {
+        return key
     }
 
-
-    public int getValue() {
-        return getStorage().readInteger(getKey());
+    override fun getStorage(): StorageInterface {
+        return storage
     }
 
-
-    public void setValue(int v) {
-        getStorage().writeInteger(getKey(), v);
+    override fun getValueAsString(): String {
+        return value.toString()
     }
 
-
-    @Override
-    public String getKey() {
-        return key;
-    }
-
-    @Override
-    public StorageInterface getStorage() {
-        return storage;
-    }
-
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(getValue());
-    }
-
-
-    @Override
-    public void setValueFromString(String s) throws ValidationException {
-        s = s.trim();
-
+    @Throws(ValidationException::class)
+    override fun setValueFromString(string: String) {
+        var s = string
+        s = s.trim { it <= ' ' }
         if (!validate(s)) {
-            throw new ValidationException(String.format(Res.str().error_integer(),s));
+            throw ValidationException(String.format(Res.str().error_integer(), s))
         } else {
             try {
-                setValue(Integer.parseInt(s));
-            } catch (NumberFormatException e) {
-                AppLog.e(this, e);
+                value = s.toInt()
+            } catch (e: NumberFormatException) {
+                e(this, e)
             }
         }
     }
 
-    @Override
-    public boolean validate(String s) {
+    override fun validate(s: String): Boolean {
+        return s.matches(VALIDATE)
+    }
+
+    companion object {
         // only positive/negative Integers, any size allowed
-        return s.matches("-?[1-9]\\d*");
+        private val VALIDATE = Regex("-?[1-9]\\d*")
     }
 }

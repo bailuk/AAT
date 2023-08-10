@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.service.background
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.net.URX
 import ch.bailu.foc.Foc
 import java.io.IOException
@@ -60,6 +61,7 @@ open class DownloadTask(
         var output: OutputStream? = null
         val connection: HttpURLConnection
         val buffer = downloadConnection.createBuffer()
+
         try {
             output = file.openW()
             connection = downloadConnection.openConnection(url)
@@ -68,8 +70,10 @@ open class DownloadTask(
                 total += count.toLong()
                 output.write(buffer, 0, count)
             }
+
         } catch (e: Exception) {
-            AppLog.e("Download " + url + " -> " + file + ": " + e.message)
+            AppLog.e(this, ToDo.translate("GET '$url': failed" ))
+
         } finally {
             Foc.close(output)
             Foc.close(input)

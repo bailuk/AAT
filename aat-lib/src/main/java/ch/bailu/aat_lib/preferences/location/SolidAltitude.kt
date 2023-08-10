@@ -1,40 +1,25 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.SolidInteger;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.preferences.SolidInteger
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import kotlin.math.roundToInt
 
-public class SolidAltitude extends SolidInteger {
-
-    private final int unit;
-
-
-    public SolidAltitude(StorageInterface s, String k, int u) {
-        super(s, k);
-        unit = u;
+open class SolidAltitude(storage: StorageInterface, key: String, private val unit: Int) : SolidInteger(storage, key) {
+    fun addUnit(s: String): String {
+        return s + " [" + SolidUnit.ALT_UNIT[unit] + "]"
     }
 
-
-    public String addUnit(String s) {
-        return s + " [" + SolidUnit.ALT_UNIT[unit] + "]";
+    override fun getValueAsString(): String {
+        return (value * SolidUnit.ALT_FACTOR[unit]).roundToInt().toString()
     }
 
-
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(Math.round(getValue() * SolidUnit.ALT_FACTOR[unit]));
-    }
-
-
-    @Override
-    public void setValueFromString(String s) {
+    override fun setValueFromString(string: String) {
         try {
-            setValue(Math.round(Float.parseFloat(s) / SolidUnit.ALT_FACTOR[unit]));
-        } catch (NumberFormatException e) {
-            AppLog.e(this, e);
+            value = (string.toFloat() / SolidUnit.ALT_FACTOR[unit]).roundToInt()
+        } catch (e: NumberFormatException) {
+            e(this, e)
         }
     }
-
-
 }

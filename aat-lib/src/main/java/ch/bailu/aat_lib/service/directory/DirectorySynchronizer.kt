@@ -1,425 +1,322 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import org.jetbrains.annotations.NotNull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.gpx.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
+import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
+import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
+import ch.bailu.aat_lib.service.directory.database.GpxDatabase
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
+import ch.bailu.aat_lib.util.Objects
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
+import java.io.Closeable
+import java.io.File
 
-import java.io.Closeable;
-import java.io.File;
-import java.util.ArrayList;
+class DirectorySynchronizer(private val appContext: AppContext, private val directory: Foc) :
+    Closeable {
+    private var pendingHandle: ObjGpx? = null
+    private var pendingPreviewGenerator: MapPreviewInterface? = null
+    private var filesToAdd: FilesInDirectory? = null
+    private val filesToRemove = ArrayList<String>()
+    private var database: GpxDatabase? = null
+    private var dbAccessTime: Long = 0
+    private var canContinue = true
+    private var state: State? = null
+    private val onFileChanged = BroadcastReceiver { state!!.ping() }
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
-import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.resources.ToDo;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpx;
-import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic;
-import ch.bailu.aat_lib.service.directory.database.GpxDatabase;
-import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
-import ch.bailu.aat_lib.util.Objects;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
-
-
-public final class DirectorySynchronizer  implements Closeable {
-
-    private ObjGpx pendingHandle=null;
-    private MapPreviewInterface pendingPreviewGenerator=null;
-
-    private FilesInDirectory filesToAdd=null;
-    private final ArrayList<String> filesToRemove = new ArrayList<>();
-
-    private GpxDatabase database;
-
-    private long dbAccessTime;
-
-    private final Foc directory;
-    private final AppContext appContext;
-
-    private boolean canContinue=true;
-    private State state;
-
-    public DirectorySynchronizer(AppContext appContext, Foc d) {
-        this.appContext = appContext;
-        directory=d;
-
-        if (appContext.getServices().lock()) {
-            setState(new StateInit());
+    init {
+        if (appContext.services.lock()) {
+            setState(StateInit())
         }
     }
-
-
-
-    private final BroadcastReceiver onFileChanged = new BroadcastReceiver () {
-        @Override
-        public void onReceive(@NotNull String... args) {
-            state.ping();
-        }
-    };
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private abstract static class State {
-        public State() {}
-        public abstract void start();
-        public abstract void ping();
+    private abstract class State {
+        abstract fun start()
+        abstract fun ping()
     }
 
-
-    private void setState(State s) {
+    private fun setState(s: State) {
         if (canContinue) {
-            state = s;
-            state.start();
+            state = s
+            state?.start()
         } else {
-            terminate();
+            terminate()
         }
-
     }
 
-    private void terminate(Exception e) {
-        state = new StateTerminate(e);
-        state.start();
+    private fun terminate(e: Exception) {
+        state = StateTerminate(e)
+        state?.start()
     }
 
-    private void terminate() {
-        state = new StateTerminate();
-        state.start();
+    private fun terminate() {
+        state = StateTerminate()
+        state?.start()
     }
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private final class StateInit extends State {
+    private inner class StateInit : State() {
         /**
-         *  TODO: move db open into background
+         * TODO: move db open into background
          */
-        @Override
-        public void start() {
-            appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        override fun start() {
+            appContext.broadcaster.register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE)
             try {
-                database = openDatabase();
-                setState(new StatePrepareSync());
-            } catch (Exception e) {
-                terminate(e);
+                database = openDatabase()
+                setState(StatePrepareSync())
+            } catch (e: Exception) {
+                terminate(e)
             }
         }
 
-        private GpxDatabase openDatabase() {
-            final String dbPath = appContext.getSummaryConfig().getDBPath(directory);
-            final String[] query = {GpxDbConfiguration.KEY_FILENAME};
-
-            dbAccessTime = new File(dbPath).lastModified();
-            return new GpxDatabase(appContext.createDataBase(), dbPath, query);
+        private fun openDatabase(): GpxDatabase {
+            val dbPath = appContext.summaryConfig.getDBPath(directory)
+            val query = arrayOf(GpxDbConfiguration.KEY_FILENAME)
+            dbAccessTime = File(dbPath).lastModified()
+            return GpxDatabase(appContext.createDataBase(), dbPath, query)
         }
 
-        @Override
-        public void ping() {}
+        override fun ping() {}
     }
 
-
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private final class StatePrepareSync extends State {
-        private Exception exception=null;
-
-        private BackgroundTask backgroundTask = new BackgroundTask() {
-
-            @Override
-            public long bgOnProcess(AppContext sc) {
+    private inner class StatePrepareSync : State() {
+        private var exception: Exception? = null
+        private var backgroundTask: BackgroundTask? = object : BackgroundTask() {
+            override fun bgOnProcess(appContext: AppContext): Long {
                 try {
-                    filesToAdd = new FilesInDirectory(directory);
-                    compareFileSystemWithDatabase();
-                    removeFilesFromDatabase();
-
-                } catch (Exception e) {
-                    exception = e;
-
+                    filesToAdd = FilesInDirectory(directory)
+                    compareFileSystemWithDatabase()
+                    removeFilesFromDatabase()
+                } catch (e: Exception) {
+                    exception = e
                 } finally {
-                    backgroundTask = null;
-
-                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory.getPath());
+                    backgroundTask = null
+                    appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, directory.path)
                 }
-
-                return 100;
-
+                return 100
             }
-        };
-
-
-        @Override
-        public void start() {
-            appContext.getBroadcaster().broadcast(AppBroadcaster.DBSYNC_START);
-            appContext.getServices().getBackgroundService().process(backgroundTask);
         }
 
+        override fun start() {
+            backgroundTask?.apply {
+                appContext.broadcaster.broadcast(AppBroadcaster.DBSYNC_START)
+                appContext.services.backgroundService.process(this)
+            }
+        }
 
-        @Override
-        public void ping() {
+        override fun ping() {
             if (backgroundTask == null) {
-                if (exception == null) {
-                    setState(new StateLoadNextGpx());
+                val e = exception
+                if (e == null) {
+                    setState(StateLoadNextGpx())
                 } else {
-                    if (exception.getMessage().contains(
-                        "SELECT filename FROM summary")) {
-                        exception = new Exception(
-                                ToDo.translate("No tracks found in ") + directory.toString());
-                    }
-                    terminate(exception);
+                    terminate(e)
                 }
             }
         }
 
-
-
-        private void removeFilesFromDatabase() {
-            if (canContinue && filesToRemove.size()>0) {
-                for (int i=0; canContinue && i<filesToRemove.size(); i++) {
-
-                    removeFileFromDatabase(filesToRemove.get(i));
+        private fun removeFilesFromDatabase() {
+            if (canContinue && filesToRemove.size > 0) {
+                var i = 0
+                while (canContinue && i < filesToRemove.size) {
+                    removeFileFromDatabase(filesToRemove[i])
+                    i++
                 }
-                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
+                appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
             }
         }
 
-
-        private void removeFileFromDatabase(String name) {
-            final Foc file = directory.child(name);
-
-            appContext.getSummaryConfig().getPreviewFile(file).rm();
-            database.deleteEntry(file);
+        private fun removeFileFromDatabase(name: String) {
+            val file = directory.child(name)
+            appContext.summaryConfig.getPreviewFile(file).rm()
+            database?.deleteEntry(file)
         }
 
-
-
-        private void compareFileSystemWithDatabase() {
-            final DbResultSet resultSet = database.query(null);
-
-            for (boolean r=resultSet.moveToFirst(); canContinue && r; r=resultSet.moveToNext()) {
-                final String name = getFileName(resultSet);
-                final Foc file = filesToAdd.findItem(name);
-
+        private fun compareFileSystemWithDatabase() {
+            val resultSet = database!!.query(null)
+            var r = resultSet.moveToFirst()
+            while (canContinue && r) {
+                val name = getFileName(resultSet)
+                val file = filesToAdd?.findItem(name)
                 if (file == null) {
-                    filesToRemove.add(name);
-
+                    filesToRemove.add(name)
                 } else if (isFileInSync(file)) {
-                    filesToAdd.pollItem(file);
-
+                    filesToAdd?.pollItem(file)
                 } else {
-                    filesToRemove.add(name);
+                    filesToRemove.add(name)
                 }
+                r = resultSet.moveToNext()
             }
-            resultSet.close();
+            resultSet.close()
         }
 
-        private String getFileName(DbResultSet resultSet) {
-            return resultSet.getString(GpxDbConfiguration.KEY_FILENAME);
+        private fun getFileName(resultSet: DbResultSet): String {
+            return resultSet.getString(GpxDbConfiguration.KEY_FILENAME)
         }
 
-
-        private boolean isFileInSync(Foc file) {
-            if (file.lastModified() < System.currentTimeMillis()) {
-                return file.lastModified() < dbAccessTime;
-            }
-            return true;
+        private fun isFileInSync(file: Foc): Boolean {
+            return if (file.lastModified() < System.currentTimeMillis()) {
+                file.lastModified() < dbAccessTime
+            } else true
         }
-
     }
 
-
-
-
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private final class StateLoadNextGpx extends State {
-
-        public void start() {
-
-            Foc file = filesToAdd.pollItem();
-
-
-            if (file==null) {
-                terminate();
-
-
+    private inner class StateLoadNextGpx : State() {
+        override fun start() {
+            val file = filesToAdd!!.pollItem()
+            if (file == null) {
+                terminate()
             } else {
-                Obj h = appContext.getServices().getCacheService().getObject(
-                        file.getPath(), new ObjGpxStatic.Factory());
-                if (h instanceof ObjGpx) {
-
-                    setPendingGpxHandle((ObjGpx)h);
-                    state.ping();
-
+                val h = appContext.services.cacheService.getObject(
+                    file.path, ObjGpxStatic.Factory()
+                )
+                if (h is ObjGpx) {
+                    setPendingGpxHandle(h)
+                    state?.ping()
                 } else {
-                    h.free();
-                    state.start();
+                    h.free()
+                    state?.start()
                 }
             }
         }
 
-        @Override
-        public void ping() {
-            if (!canContinue) {
-                terminate();
+        override fun ping() {
+            val handle = pendingHandle
 
-            } else if (pendingHandle.isReadyAndLoaded()) {
+            if (!canContinue) {
+                terminate()
+            } else if (handle != null && handle.isReadyAndLoaded) {
                 try {
-                    addGpxSummaryToDatabase(pendingHandle.getID(), pendingHandle.getGpxList());
-                    setState(new StateLoadPreview());
-                } catch (Exception e) {
-                    terminate(e);
+                    addGpxSummaryToDatabase(handle.id, handle.gpxList)
+                    setState(StateLoadPreview())
+                } catch (e: Exception) {
+                    terminate(e)
                 }
-
-            }  else if (pendingHandle.hasException()) {
-                state.start();
+            } else if (handle != null && handle.hasException()) {
+                state?.start()
             }
         }
 
-
-        private void addGpxSummaryToDatabase(String id, GpxList list) {
-            final Foc file = appContext.toFoc(id);
-
-            ArrayList<String> keys = new ArrayList<>();
-            ArrayList<String> values = new ArrayList<>();
-
-            createContentValues(file.getName(), list.getDelta(), keys, values);
-            database.insert(Objects.toArray(keys), (Object[]) Objects.toArray(values));
+        private fun addGpxSummaryToDatabase(id: String, list: GpxList) {
+            val file = appContext.toFoc(id)
+            val keys = ArrayList<String>()
+            val values = ArrayList<String>()
+            createContentValues(file.name, list.getDelta(), keys, values)
+            database?.insert(Objects.toArray(keys), *Objects.toArray(values))
         }
 
-        private void createContentValues(String filename,
-                GpxBigDeltaInterface summary, ArrayList<String> keys, ArrayList<String> values) {
-
-            BoundingBoxE6 bounding = summary.getBoundingBox();
-
-
-            keys.add(GpxDbConfiguration.KEY_FILENAME);   values.add(filename);
-            keys.add(GpxDbConfiguration.KEY_AVG_SPEED);  values.add(String.valueOf(summary.getSpeed()));
-
-            keys.add(GpxDbConfiguration.KEY_MAX_SPEED);  values.add(toNumber(summary.getAttributes().get(MaxSpeed.INDEX_MAX_SPEED)));
-
-            keys.add(GpxDbConfiguration.KEY_DISTANCE);   values.add(String.valueOf(summary.getDistance()));
-            keys.add(GpxDbConfiguration.KEY_START_TIME); values.add(String.valueOf(summary.getStartTime()));
-            keys.add(GpxDbConfiguration.KEY_TOTAL_TIME); values.add(String.valueOf(summary.getTimeDelta()));
-            keys.add(GpxDbConfiguration.KEY_END_TIME);   values.add(String.valueOf(summary.getEndTime()));
-            keys.add(GpxDbConfiguration.KEY_PAUSE);      values.add(String.valueOf(summary.getPause()));
-            keys.add(GpxDbConfiguration.KEY_TYPE_ID);    values.add(String.valueOf(summary.getType().toInteger()));
-            keys.add(GpxDbConfiguration.KEY_EAST_BOUNDING); values.add(String.valueOf(bounding.getLonEastE6()));
-            keys.add(GpxDbConfiguration.KEY_WEST_BOUNDING); values.add(String.valueOf(bounding.getLonWestE6()));
-            keys.add(GpxDbConfiguration.KEY_NORTH_BOUNDING); values.add(String.valueOf(bounding.getLatNorthE6()));
-            keys.add(GpxDbConfiguration.KEY_SOUTH_BOUNDING); values.add(String.valueOf(bounding.getLatSouthE6()));
+        private fun createContentValues(
+            filename: String,
+            summary: GpxBigDeltaInterface, keys: ArrayList<String>, values: ArrayList<String>
+        ) {
+            val bounding = summary.getBoundingBox()
+            keys.add(GpxDbConfiguration.KEY_FILENAME)
+            values.add(filename)
+            keys.add(GpxDbConfiguration.KEY_AVG_SPEED)
+            values.add(summary.getSpeed().toString())
+            keys.add(GpxDbConfiguration.KEY_MAX_SPEED)
+            values.add(toNumber(summary.getAttributes()[MaxSpeed.INDEX_MAX_SPEED]))
+            keys.add(GpxDbConfiguration.KEY_DISTANCE)
+            values.add(summary.getDistance().toString())
+            keys.add(GpxDbConfiguration.KEY_START_TIME)
+            values.add(summary.getStartTime().toString())
+            keys.add(GpxDbConfiguration.KEY_TOTAL_TIME)
+            values.add(summary.getTimeDelta().toString())
+            keys.add(GpxDbConfiguration.KEY_END_TIME)
+            values.add(summary.getEndTime().toString())
+            keys.add(GpxDbConfiguration.KEY_PAUSE)
+            values.add(summary.getPause().toString())
+            keys.add(GpxDbConfiguration.KEY_TYPE_ID)
+            values.add(summary.getType().toInteger().toString())
+            keys.add(GpxDbConfiguration.KEY_EAST_BOUNDING)
+            values.add(bounding.lonEastE6.toString())
+            keys.add(GpxDbConfiguration.KEY_WEST_BOUNDING)
+            values.add(bounding.lonWestE6.toString())
+            keys.add(GpxDbConfiguration.KEY_NORTH_BOUNDING)
+            values.add(bounding.latNorthE6.toString())
+            keys.add(GpxDbConfiguration.KEY_SOUTH_BOUNDING)
+            values.add(bounding.latSouthE6.toString())
         }
-
     }
 
-    private String toNumber(String s) {
-        if (s.equals("")) return "0";
-        return s;
+    private fun toNumber(s: String): String {
+        return if (s == "") "0" else s
     }
 
-
-    private void setPendingGpxHandle(ObjGpx h) {
-        if (pendingHandle != null) {
-            pendingHandle.free();
-        }
-        pendingHandle = h;
+    private fun setPendingGpxHandle(h: ObjGpx?) {
+        pendingHandle?.free()
+        pendingHandle = h
     }
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private final class StateLoadPreview extends State {
-
-        public void start() {
-            Foc gpxFile = appContext.toFoc(pendingHandle.getID());
-
-            Foc previewImageFile = appContext.getSummaryConfig().getPreviewFile(gpxFile);
-
-            GpxInformation info =
-                    new GpxFileWrapper(gpxFile, pendingHandle.getGpxList());
-
-
+    private inner class StateLoadPreview : State() {
+        override fun start() {
+            val gpxFile = appContext.toFoc(pendingHandle!!.id)
+            val previewImageFile = appContext.summaryConfig.getPreviewFile(gpxFile)
+            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.gpxList)
             try {
-                MapPreviewInterface p = appContext.createMapPreview(info, previewImageFile);
-
-                setPendingPreviewGenerator(p);
-                state.ping();
-
-            } catch (Exception e) {
-                AppLog.w(this, e);
-
-                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
-                setState(new StateLoadNextGpx());
+                val p = appContext.createMapPreview(info, previewImageFile)
+                setPendingPreviewGenerator(p)
+                state!!.ping()
+            } catch (e: Exception) {
+                AppLog.w(this, e)
+                appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
+                setState(StateLoadNextGpx())
             }
-
-
-
         }
 
-        @Override
-        public void ping() {
+        override fun ping() {
             if (!canContinue) {
-                terminate();
-            } else if (pendingPreviewGenerator.isReady()) {
-
-                pendingPreviewGenerator.generateBitmapFile();
-
-                appContext.getBroadcaster().broadcast(AppBroadcaster.DB_SYNC_CHANGED);
-                setState(new StateLoadNextGpx());
+                terminate()
+            } else if (pendingPreviewGenerator!!.isReady) {
+                pendingPreviewGenerator!!.generateBitmapFile()
+                appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
+                setState(StateLoadNextGpx())
             }
         }
     }
 
-
-    private void setPendingPreviewGenerator(MapPreviewInterface g) {
+    private fun setPendingPreviewGenerator(g: MapPreviewInterface?) {
         if (pendingPreviewGenerator != null) {
-            pendingPreviewGenerator.onDestroy();
+            pendingPreviewGenerator!!.onDestroy()
         }
-        pendingPreviewGenerator=g;
+        pendingPreviewGenerator = g
     }
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private final class StateTerminate extends State {
-
-        public StateTerminate(Exception e) {
-            e.printStackTrace();
-            AppLog.e(e);
+    private inner class StateTerminate : State {
+        constructor(e: Exception) {
+            AppLog.e(e)
         }
 
-        public StateTerminate() {}
+        constructor() {}
 
-        @Override
-        public void ping() {}
-
-        @Override
-        public void start() {
-            AppLog.d(this, "state terminate");
-            appContext.getBroadcaster().unregister(onFileChanged);
-
-            if (database != null) {
-                database.close();
-            }
-
-            setPendingGpxHandle(null);
-            setPendingPreviewGenerator(null);
-
-            appContext.getBroadcaster().broadcast(AppBroadcaster.DBSYNC_DONE);
-
-
-            appContext.getServices().free();
+        override fun ping() {}
+        override fun start() {
+            AppLog.d(this, "state terminate")
+            appContext.broadcaster.unregister(onFileChanged)
+            database?.close()
+            setPendingGpxHandle(null)
+            setPendingPreviewGenerator(null)
+            appContext.broadcaster.broadcast(AppBroadcaster.DBSYNC_DONE)
+            appContext.services.free()
         }
     }
 
-
-    @Override
-    public synchronized void close() {
-        canContinue=false;
-        state.ping();
+    @Synchronized
+    override fun close() {
+        canContinue = false
+        state?.ping()
     }
 }

@@ -1,122 +1,91 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import java.io.Closeable;
-import java.io.IOException;
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.SolidAutopause
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.service.ServicesInterface
+import java.io.Closeable
+import java.io.IOException
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+class TrackerInternals(
+    private val sdirectory: SolidDataDirectory,
+    val statusIcon: StatusIconInterface,
+    val broadcaster: Broadcaster,
+    val services: ServicesInterface
+) : OnPreferencesChanged, Closeable {
+    private var state: State
+    @JvmField
+    var logger: Logger
+    var sautopause: SolidAutopause? = null
+    @JvmField
+    var presetIndex = 0
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.SolidAutopause;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause;
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public final class TrackerInternals
-        implements OnPreferencesChanged, Closeable {
-
-    private State state;
-
-    public Logger logger;
-
-    public final StatusIconInterface statusIcon;
-
-    public final ServicesInterface services;
-
-    public SolidAutopause sautopause;
-
-    public int presetIndex;
-
-    public final Broadcaster broadcaster;
-
-    private final SolidDataDirectory sdirectory;
-
-    public TrackerInternals(SolidDataDirectory sdirectory, StatusIconInterface statusIconInterface, Broadcaster broadcastInterface, ServicesInterface services) {
-
-        this.sdirectory = sdirectory;
-        this.services = services;
-        broadcaster = broadcastInterface;
-        statusIcon = statusIconInterface;
-
-        rereadPreferences();
-
-
+    init {
+        rereadPreferences()
         try {
-            logger = createLogger();
-            logger.close();
-        } catch (Exception e) {
-            AppLog.e(e);
+            logger = createLogger()
+            logger.close()
+        } catch (e: Exception) {
+            AppLog.e(e)
         }
-        logger = Logger.NULL_LOGGER;
-
-        state = new OffState(this);
-        sdirectory.getStorage().register(this);
-
+        logger = Logger.NULL_LOGGER
+        state = OffState(this)
+        sdirectory.storage.register(this)
     }
 
-
-    public void setState(State state) {
-        this.state = state;
-        broadcaster.broadcast(AppBroadcaster.TRACKER);
+    fun setState(state: State) {
+        this.state = state
+        broadcaster.broadcast(AppBroadcaster.TRACKER)
     }
 
-    public State getState() {
-        return state;
+    fun getState(): State {
+        return state
     }
 
-
-    public void rereadPreferences() {
-        presetIndex = new SolidPreset(sdirectory.getStorage()).getIndex();
-        sautopause = new SolidTrackerAutopause(sdirectory.getStorage(), presetIndex);
-
-        services.getLocationService().setPresetIndex(presetIndex);
+    fun rereadPreferences() {
+        presetIndex = SolidPreset(sdirectory.storage).index
+        sautopause = SolidTrackerAutopause(sdirectory.storage, presetIndex)
+        services.locationService.setPresetIndex(presetIndex)
     }
 
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
-        state.preferencesChanged();
+    override fun onPreferencesChanged(@Nonnull storage: StorageInterface, @Nonnull key: String) {
+        state.preferencesChanged()
     }
 
-    public void lockService() {
-        services.lock(this.getClass().getSimpleName());
+    fun lockService() {
+        services.lock(this.javaClass.simpleName)
     }
 
-    public void unlockService() {
-        services.free(this.getClass().getSimpleName());
+    fun unlockService() {
+        services.free(this.javaClass.simpleName)
     }
 
-    public  TrackLogger createLogger() throws IOException, SecurityException {
-        return new TrackLogger(sdirectory, new SolidPreset(sdirectory.getStorage()).getIndex());
+    @Throws(IOException::class, SecurityException::class)
+    fun createLogger(): TrackLogger {
+        return TrackLogger(sdirectory, SolidPreset(sdirectory.storage).index)
     }
 
+    val isReadyForAutoPause: Boolean
+        get() = (services.locationService.isMissingUpdates ||
+                services.locationService.isAutopaused) &&
+                sautopause!!.isEnabled
 
-
-
-    public boolean isReadyForAutoPause() {
-        return ((
-                services.getLocationService().isMissingUpdates() ||
-                        services.getLocationService().isAutopaused())    &&
-                sautopause.isEnabled());
+    fun emergencyOff(e: Exception?) {
+        AppLog.e(this, e)
+        logger.close()
+        logger = Logger.NULL_LOGGER
+        state = OffState(this)
     }
 
-
-    public void emergencyOff(Exception e) {
-        AppLog.e(this,e);
-        logger.close();
-        logger = Logger.NULL_LOGGER;
-        state = new OffState(this);
-    }
-
-
-    @Override
-    public void close() {
-        logger.close();
-
-        sdirectory.getStorage().unregister(this);
+    override fun close() {
+        logger.close()
+        sdirectory.storage.unregister(this)
     }
 }

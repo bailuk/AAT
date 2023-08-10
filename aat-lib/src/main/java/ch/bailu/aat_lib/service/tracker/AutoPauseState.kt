@@ -1,74 +1,55 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.resources.Res
 
-public final class AutoPauseState extends State {
-
-    public AutoPauseState(TrackerInternals ti) {
-        super(ti);
-
+class AutoPauseState(ti: TrackerInternals) : State(ti) {
+    init {
         try {
-            internal.logger.logPause();
-            internal.statusIcon.showAutoPause();
-
-        } catch (Exception e) {
-            internal.emergencyOff(e);
-        }
-
-    }
-
-    @Override
-    public int getStateID() {
-        return StateID.AUTO_PAUSED;
-    }
-
-    @Override
-    public void preferencesChanged() {
-        if (!internal.isReadyForAutoPause()) {
-            internal.setState(new OnState(internal));
+            internal.logger.logPause()
+            internal.statusIcon.showAutoPause()
+        } catch (e: Exception) {
+            internal.emergencyOff(e)
         }
     }
 
-    @Override
-    public void updateTrack() {
-        if (! internal.isReadyForAutoPause() ) {
-            internal.setState(new OnState(internal));
+    override fun getStateID(): Int {
+        return StateID.AUTO_PAUSED
+    }
+
+    override fun preferencesChanged() {
+        if (!internal.isReadyForAutoPause) {
+            internal.setState(OnState(internal))
         }
     }
 
-
-
-    @Override
-    public void onStartPauseResume() {
-        onPauseResume();
-
+    override fun updateTrack() {
+        if (!internal.isReadyForAutoPause) {
+            internal.setState(OnState(internal))
+        }
     }
 
-    @Override
-    public void onStartStop() {
-        internal.setState(new OffState(internal));
-
+    override fun onStartPauseResume() {
+        onPauseResume()
     }
 
-    @Override
-    public void onPauseResume() {
-        internal.setState(new PauseState(internal));
-
+    override fun onStartStop() {
+        internal.setState(OffState(internal))
     }
 
-    @Override
-    public String getStartStopText() {
-        return Res.str().tracker_stop();
+    override fun onPauseResume() {
+        internal.setState(PauseState(internal))
     }
 
-    @Override
-    public String getPauseResumeText() {
-        return Res.str().tracker_pause();
+    override fun getStartStopText(): String {
+        return Res.str().tracker_stop()
     }
 
-    @Override
-    public String getStartStopIcon() {
-        return "playback_stop_inverse";
+    override fun getPauseResumeText(): String {
+        return Res.str().tracker_pause()
+    }
+
+    override fun getStartStopIcon(): String {
+        return "playback_stop_inverse"
     }
 }

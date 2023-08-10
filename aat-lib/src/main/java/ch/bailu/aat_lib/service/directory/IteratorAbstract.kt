@@ -1,134 +1,106 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+abstract class IteratorAbstract(private val appContext: AppContext) : Iterator(),
+    OnPreferencesChanged {
+    private var onCursorChangedListener = NULL_LISTENER
+    private var resultSet: DbResultSet? = null
+    private val sdirectory: SolidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
+    private var selection = ""
+    private val onSyncChanged = BroadcastReceiver { _: Array<out String> -> query() }
 
-public abstract class IteratorAbstract extends Iterator implements OnPreferencesChanged {
-
-    private OnCursorChangedListener onCursorChangedListener = NULL_LISTENER;
-    private DbResultSet resultSet = null;
-    private final SolidDirectoryQuery sdirectory;
-    private String selection="";
-    private final BroadcastReceiver onSyncChanged = objs -> query();
-
-    private final AppContext appContext;
-
-    public IteratorAbstract (AppContext appContext) {
-        this.appContext = appContext;
-        sdirectory = new SolidDirectoryQuery(appContext.getStorage(), appContext);
-        sdirectory.register(this);
-        appContext.getBroadcaster().register(onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED);
-        openAndQuery();
+    init {
+        sdirectory.register(this)
+        appContext.broadcaster.register(onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED)
+        openAndQuery()
     }
 
-    @Override
-    public void setOnCursorChangedListener(OnCursorChangedListener l) {
-        onCursorChangedListener = l;
+    override fun setOnCursorChangedListener(l: OnCursorChangedListener) {
+        onCursorChangedListener = l
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
         if (sdirectory.hasKey(key)) {
-            openAndQuery();
-
-        } else if (sdirectory.containsKey(key) && !selection.equals(sdirectory.createSelectionString())) {
-            query();
+            openAndQuery()
+        } else if (sdirectory.containsKey(key) && selection != sdirectory.createSelectionString()) {
+            query()
         }
     }
 
-    @Override
-    public boolean moveToPrevious() {
-        if (resultSet!=null) return resultSet.moveToPrevious();
-        return false;
+    override fun moveToPrevious(): Boolean {
+        return if (resultSet != null) resultSet!!.moveToPrevious() else false
     }
 
-    @Override
-    public boolean moveToNext() {
-        if (resultSet != null) return resultSet.moveToNext();
-        return false;
+    override fun moveToNext(): Boolean {
+        return if (resultSet != null) resultSet!!.moveToNext() else false
     }
 
-    @Override
-    public boolean moveToPosition(int pos) {
-        if (resultSet != null) return resultSet.moveToPosition(pos);
-        return false;
+    override fun moveToPosition(pos: Int): Boolean {
+        return if (resultSet != null) resultSet!!.moveToPosition(pos) else false
     }
 
-    @Override
-    public int getCount() {
-        if (resultSet != null) return resultSet.getCount();
-        return 0;
+    override fun getCount(): Int {
+        return if (resultSet != null) resultSet!!.count else 0
     }
 
-    @Override
-    public int getPosition() {
-        if (resultSet != null) return resultSet.getPosition();
-        return -1;
+    override fun getPosition(): Int {
+        return if (resultSet != null) resultSet!!.position else -1
     }
 
-    @Override
-    public abstract GpxInformation getInfo();
-
-    public abstract void onCursorChanged(DbResultSet resultSet, Foc directory, String fid);
-
-    private void openAndQuery() {
-        String fileOnOldPosition = "";
-        int oldPosition=0;
-
-        appContext.getServices().getDirectoryService().openDir(sdirectory.getValueAsFile());
-
-        updateResultFromSelection();
-        moveToOldPosition(oldPosition, fileOnOldPosition);
+    abstract override fun getInfo(): GpxInformation
+    abstract fun onCursorChanged(resultSet: DbResultSet?, directory: Foc?, fid: String?)
+    private fun openAndQuery() {
+        val fileOnOldPosition = ""
+        val oldPosition = 0
+        appContext.services.directoryService.openDir(sdirectory.valueAsFile)
+        updateResultFromSelection()
+        moveToOldPosition(oldPosition, fileOnOldPosition)
     }
 
-    @Override
-    public void query() {
-        String fileOnOldPosition = "";
-        int oldPosition=0;
-
+    override fun query() {
+        var fileOnOldPosition = ""
+        var oldPosition = 0
         if (resultSet != null) {
-            oldPosition = resultSet.getPosition();
-            fileOnOldPosition = getInfo().getFile().getPath();
-            resultSet.close();
+            oldPosition = resultSet!!.position
+            fileOnOldPosition = info.file.path
+            resultSet!!.close()
         }
-
-        updateResultFromSelection();
-        moveToOldPosition(oldPosition, fileOnOldPosition);
+        updateResultFromSelection()
+        moveToOldPosition(oldPosition, fileOnOldPosition)
     }
 
-    private void updateResultFromSelection() {
+    private fun updateResultFromSelection() {
         try {
-            selection = sdirectory.createSelectionString();
-            resultSet = appContext.getServices().getDirectoryService().query(selection);
-        } catch (Exception e) {
-            AppLog.e(e.getClass().getSimpleName());
+            selection = sdirectory.createSelectionString()
+            resultSet = appContext.services.directoryService.query(selection)
+        } catch (e: Exception) {
+            e(e.javaClass.simpleName)
         }
     }
 
-    private void moveToOldPosition(int oldPosition, String fileOnOldPosition) {
+    private fun moveToOldPosition(oldPosition: Int, fileOnOldPosition: String) {
         if (resultSet != null) {
-            resultSet.moveToPosition(oldPosition);
-
-            onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition);
-            onCursorChangedListener.onCursorChanged();
+            resultSet!!.moveToPosition(oldPosition)
+            onCursorChanged(resultSet, sdirectory.valueAsFile, fileOnOldPosition)
+            onCursorChangedListener.onCursorChanged()
         }
     }
 
-    @Override
-    public void close() {
-        if (resultSet!= null) resultSet.close();
-        sdirectory.unregister(this);
-        appContext.getBroadcaster().unregister(onSyncChanged);
-        onCursorChangedListener = NULL_LISTENER;
+    override fun close() {
+        if (resultSet != null) resultSet!!.close()
+        sdirectory.unregister(this)
+        appContext.broadcaster.unregister(onSyncChanged)
+        onCursorChangedListener = NULL_LISTENER
     }
 }

@@ -10,9 +10,9 @@ import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
+import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.LabelTextView
-import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
@@ -153,9 +153,7 @@ class MainActivity : ActivityContext() {
             spreset.unregister(this)
         }
 
-        override fun onPreferencesChanged(
-            @Nonnull storage: StorageInterface,
-            @Nonnull key: String
+        override fun onPreferencesChanged(storage: StorageInterface, key: String
         ) {
             if (spreset.hasKey(key) || sdirectory.hasKey(key)) {
                 setText()
@@ -187,10 +185,7 @@ class MainActivity : ActivityContext() {
             sdirectory.unregister(this)
         }
 
-        override fun onPreferencesChanged(
-            @Nonnull storage: StorageInterface,
-            @Nonnull key: String
-        ) {
+        override fun onPreferencesChanged(storage: StorageInterface, key: String) {
             if (sdirectory.hasKey(key)) {
                 setText()
             }

@@ -1,40 +1,34 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.SolidInteger;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.preferences.SolidInteger
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-public class SolidPressureAtSeaLevel extends SolidInteger {
-    private final static String KEY = "PressureAtSeaLevel";
-    public SolidPressureAtSeaLevel(StorageInterface storage) {
-        super(storage, KEY);
+class SolidPressureAtSeaLevel(storage: StorageInterface) : SolidInteger(storage, KEY) {
+    override fun getLabel(): String {
+        return Res.str().p_pressure_sealevel()
     }
 
-    @Override
-    public String getLabel() {
-        return Res.str().p_pressure_sealevel();
-    }
+    var pressure: Float
+        get() = value / 100f
+        set(pressure) {
+            value = (pressure * 100f).toInt()
+        }
 
-    public void setPressure(float pressure) {
-        setValue((int) (pressure * 100f));
-    }
-
-    public float getPressure() {
-        return getValue() / 100f;
-    }
-
-    @Override
-    public void setValueFromString(String s) {
+    override fun setValueFromString(string: String) {
         try {
-            setPressure(Float.parseFloat(s));
-        } catch (NumberFormatException e) {
-            AppLog.e(this, e);
+            pressure = string.toFloat()
+        } catch (e: NumberFormatException) {
+            e(this, e)
         }
     }
 
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(getPressure());
+    override fun getValueAsString(): String {
+        return pressure.toString()
+    }
+
+    companion object {
+        private const val KEY = "PressureAtSeaLevel"
     }
 }
