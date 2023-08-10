@@ -21,26 +21,10 @@ object AppLog {
         error = loggerFactory.error()
     }
 
-    /**
-     * Log a message with log level info
-     * @param message the message that will be logged. Can be null
-     */
-    fun i(message: String?) {
-        info.log(DEFAULT_TAG, toSaveString(message))
-    }
 
     @JvmStatic
     fun i(source: Any?, message: String?) {
         info.log(toSaveSourceName(source), toSaveString(message))
-    }
-
-    /**
-     * Log a message with log level error
-     * @param throwable error that will be logged. Can be null
-     */
-    @JvmStatic
-    fun e(throwable: Throwable?) {
-        e(throwable, throwable)
     }
 
     /**
@@ -62,6 +46,17 @@ object AppLog {
     fun e(source: Any, throwable: Throwable, message: String) {
         e(source, message)
         throwable.printStackTrace()
+    }
+
+
+    /**
+     * Log a message with log level error
+     * @param source that gets logged to identify the source of this message. Can be null
+     * @param message the message that gets logged. Can be null
+     */
+    @JvmStatic
+    fun e(source: Any?, message: String?) {
+        error.log(toSaveSourceName(source), toSaveString(message))
     }
 
     /**
@@ -86,27 +81,13 @@ object AppLog {
         warn.log(toSaveSourceName(source), toSaveString(message))
     }
 
-    fun e(message: String?) {
-        e(DEFAULT_TAG, message)
-    }
-
-    /**
-     * Log a message with log level error
-     * @param source that gets logged to identify the source of this message. Can be null
-     * @param message the message that gets logged. Can be null
-     */
-    @JvmStatic
-    fun e(source: Any?, message: String?) {
-        error.log(toSaveSourceName(source), toSaveString(message))
-    }
-
     /**
      * Log a message with log level debug
      * @param source classname of object is used as a tag to identify the source of this message.
      * @param message the message to log. Can be null.
      */
     fun d(source: Any?, message: String?) {
-        d(toSaveSourceName(source), message)
+        debug.log(toSaveSourceName(source), toSaveString(message))
     }
 
     private fun toSaveSourceName(source: Any?): String {

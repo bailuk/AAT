@@ -24,7 +24,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 )
                 size
             } catch (e: Exception) {
-                AppLog.e(e) // TODO user friendly message
+                AppLog.e(this, e) // TODO user friendly message
                 1
             }
         }
@@ -45,7 +45,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 )
                 background.process(task)
             } catch (e: UnsupportedEncodingException) {
-                AppLog.e(e) // TODO user friendly message
+                AppLog.e(this, e) // TODO user friendly message
             }
         }
     }

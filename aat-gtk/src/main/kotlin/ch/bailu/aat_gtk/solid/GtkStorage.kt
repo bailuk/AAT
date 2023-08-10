@@ -17,7 +17,7 @@ class GtkStorage : StorageInterface {
                 NODE.sync()
                 NODE.flush()
             } catch (e: BackingStoreException) {
-                AppLog.e(e)
+                AppLog.e(this, e)
             }
         }
     }

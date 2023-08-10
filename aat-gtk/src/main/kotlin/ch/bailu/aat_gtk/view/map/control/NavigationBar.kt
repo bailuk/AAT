@@ -35,7 +35,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
 
                     if (fileName != null) {
                         mcontext.mapView.frameBounding(bounding)
-                        AppLog.i(fileName)
+                        AppLog.i(this, fileName)
                     }
                 }
             }

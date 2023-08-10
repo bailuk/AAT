@@ -77,7 +77,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             try {
                 queryPois(persistenceManager, bounding)
             } catch (e: Exception) {
-                AppLog.e(e) // TODO friendly message
+                AppLog.e(this, e) // TODO friendly message
             }
             persistenceManager.close()
             appContext.broadcaster.broadcast(

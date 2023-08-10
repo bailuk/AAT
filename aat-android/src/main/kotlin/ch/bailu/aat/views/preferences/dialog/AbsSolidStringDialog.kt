@@ -30,7 +30,7 @@ abstract class AbsSolidStringDialog(context: Context, private val solid: SolidSt
             try {
                 solid.setValueFromString(selection[index])
             } catch (e: ValidationException) {
-                AppLog.e(e)
+                AppLog.e(this, e)
             }
         } else {
             onExtraItemClick(index - baseSelectionSize)

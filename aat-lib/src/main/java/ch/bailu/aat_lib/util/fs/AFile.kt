@@ -8,15 +8,15 @@ import javax.annotation.Nonnull
 object AFile {
     @JvmStatic
     fun logErrorExists(@Nonnull f: Foc) {
-        AppLog.e(f.pathName + ": " + Res.str().file_exists())
+        AppLog.e(this, f.pathName + ": " + Res.str().file_exists())
     }
 
     fun logErrorReadOnly(@Nonnull f: Foc) {
-        AppLog.e(f.pathName + ": " + Res.str().file_is_readonly())
+        AppLog.e(this, f.pathName + ": " + Res.str().file_is_readonly())
     }
 
     @JvmStatic
     fun logErrorNoAccess(@Nonnull f: Foc) {
-        AppLog.e(f.pathName + ": " + Res.str().gps_noaccess())
+        AppLog.e(this, f.pathName + ": " + Res.str().gps_noaccess())
     }
 }

@@ -85,7 +85,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
             selection = sdirectory.createSelectionString()
             resultSet = appContext.services.directoryService.query(selection)
         } catch (e: Exception) {
-            e(e.javaClass.simpleName)
+            e(this, e.javaClass.simpleName)
         }
     }
 

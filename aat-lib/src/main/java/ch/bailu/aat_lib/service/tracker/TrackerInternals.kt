@@ -33,7 +33,7 @@ class TrackerInternals(
             logger = createLogger()
             logger.close()
         } catch (e: Exception) {
-            AppLog.e(e)
+            AppLog.e(this, e)
         }
         logger = Logger.NULL_LOGGER
         state = OffState(this)

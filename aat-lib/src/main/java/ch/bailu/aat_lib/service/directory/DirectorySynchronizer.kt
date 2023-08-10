@@ -297,7 +297,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     /////////////////////////////////////////////////////////////////////////////////////////////
     private inner class StateTerminate : State {
         constructor(e: Exception) {
-            AppLog.e(e)
+            AppLog.e(this, e)
         }
 
         constructor() {}

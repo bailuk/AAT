@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryTrack
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
-import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidAutopause
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause
@@ -69,7 +69,7 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
                 logFile.remove()
             }
         } catch (e: IOException) {
-            e(e)
+            AppLog.e(this, e)
         }
     }
 
