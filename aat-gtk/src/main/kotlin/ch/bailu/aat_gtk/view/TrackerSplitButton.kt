@@ -13,7 +13,7 @@ import ch.bailu.gtk.type.Str
 
 class TrackerSplitButton(private val services: ServicesInterface, dispatcher: Dispatcher) : OnContentUpdatedInterface{
     val button = SplitButton()
-    private var text = services.trackerService.pauseResumeText
+    private var text = services.trackerService.getPauseResumeText()
 
     init {
         val menu = TrackerMenu(GtkAppContext.services, dispatcher)
@@ -33,7 +33,7 @@ class TrackerSplitButton(private val services: ServicesInterface, dispatcher: Di
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val newText = services.trackerService.pauseResumeText
+        val newText = services.trackerService.getPauseResumeText()
 
         if (text != newText) {
             text = newText
