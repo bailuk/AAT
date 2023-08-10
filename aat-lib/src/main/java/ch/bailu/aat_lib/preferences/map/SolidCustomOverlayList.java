@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.gpx.InfoID;
 import ch.bailu.aat_lib.preferences.SolidCheckList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -62,6 +64,7 @@ public class SolidCustomOverlayList extends SolidCheckList {
         return false;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().file_overlay();

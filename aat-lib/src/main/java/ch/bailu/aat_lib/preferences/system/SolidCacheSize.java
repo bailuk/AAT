@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.system;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.util.MemSize;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -35,6 +37,7 @@ public class SolidCacheSize extends SolidIndexList {
         return sizes.length;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_cache_size();

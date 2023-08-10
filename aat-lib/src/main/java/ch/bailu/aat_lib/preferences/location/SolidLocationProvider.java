@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -18,6 +20,7 @@ public abstract class SolidLocationProvider extends SolidStaticIndexList {
     public abstract LocationStackItem createProvider(LocationServiceInterface locationService, LocationStackItem last);
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_location_provider();

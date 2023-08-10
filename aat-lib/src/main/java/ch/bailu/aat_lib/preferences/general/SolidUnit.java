@@ -37,6 +37,7 @@ public class SolidUnit extends SolidStaticIndexList {
     public String getAltitudeUnit() {return ALT_UNIT[getIndex()];}
     public String getSpeedUnit() {return SPEED_UNIT[getIndex()];}
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_unit_title();

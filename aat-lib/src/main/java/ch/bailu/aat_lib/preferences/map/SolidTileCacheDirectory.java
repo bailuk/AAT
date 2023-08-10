@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences.map;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -16,12 +18,14 @@ public abstract class SolidTileCacheDirectory extends SolidFile {
 
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_directory_tiles();
     }
 
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         String r = super.getValueAsString();
@@ -38,9 +42,7 @@ public abstract class SolidTileCacheDirectory extends SolidFile {
 
         ArrayList<String> list = new ArrayList<>(5);
 
-        if (list.size()==0)
-            list = buildSelection(list);
-
+        list = buildSelection(list);
         list.add(getStorage().getDefaultString());
 
         return list.get(0);

@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.resources.Res;
 import ch.bailu.foc.Foc;
@@ -17,6 +19,7 @@ public class SolidPoiDatabase extends SolidFile {
         this.smapDirectory = smapDirectory;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_mapsforge_poi_db();

@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -29,6 +31,7 @@ public class SolidScaleFactor extends SolidIndexList {
         return VALUE_LIST[getIndex()];
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_mapsforge_scale_factor();

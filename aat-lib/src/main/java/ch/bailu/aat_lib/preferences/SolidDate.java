@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.description.FF;
 
 public class SolidDate extends SolidLong {
@@ -22,12 +24,14 @@ public class SolidDate extends SolidLong {
     }
 
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         return FF.f().LOCAL_DATE.format(getValue());
     }
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return label;

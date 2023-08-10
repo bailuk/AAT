@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.presets;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
@@ -48,6 +50,7 @@ public class SolidPreset extends SolidIndexList {
         return smet(i).getValueAsString();
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         return smet().getValueAsString();
@@ -68,6 +71,7 @@ public class SolidPreset extends SolidIndexList {
         return super.hasKey(key) || smet().hasKey(key);
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_preset();

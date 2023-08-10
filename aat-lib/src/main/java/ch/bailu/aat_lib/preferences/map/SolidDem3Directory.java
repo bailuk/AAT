@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences.map;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -18,11 +20,13 @@ public abstract class SolidDem3Directory extends SolidFile {
     }
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_dem_location();
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         String r = super.getValueAsString();

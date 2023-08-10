@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences.map;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SelectionList;
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -24,11 +26,13 @@ public class SolidMapsForgeDirectory extends SolidFile {
         this.directories = directories;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_mapsforge_directory();
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         String r = super.getValueAsString();

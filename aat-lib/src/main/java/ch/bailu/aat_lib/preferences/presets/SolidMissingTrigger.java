@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.presets;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -48,6 +50,7 @@ public class SolidMissingTrigger extends SolidStaticIndexList {
         return getTriggerSeconds() * 1000;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_missing_trigger();

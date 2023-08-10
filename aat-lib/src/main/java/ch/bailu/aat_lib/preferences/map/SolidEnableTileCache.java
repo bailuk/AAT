@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidBoolean;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -12,6 +14,7 @@ public abstract class SolidEnableTileCache extends SolidBoolean {
 
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_enable_cache();

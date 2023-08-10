@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences.map;
 
 import org.mapsforge.core.util.Parameters;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -47,6 +49,7 @@ public class SolidRendererThreads extends SolidIndexList {
         return toDefaultString(String.valueOf(values[i]), i);
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_render_threads();
