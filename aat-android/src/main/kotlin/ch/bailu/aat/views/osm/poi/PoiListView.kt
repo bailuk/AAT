@@ -38,7 +38,7 @@ class PoiListView(context: Context, private val list: FilterList, private val th
             return list.sizeVisible()
         }
 
-        override fun getView(index: Int, view: View, p: ViewGroup): View {
+        override fun getView(index: Int, view: View?, parent: ViewGroup?): View {
             val entryView: PoiListEntryView = if (view is PoiListEntryView) {
                 view
             } else {
