@@ -54,9 +54,9 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
     }
 
     private fun getIconEntryNominatimType(attr: GpxAttributes): IconMap.Icon? {
-        if (attr.hasKey(NKEY_KEY) && attr.hasKey(NKEY_VALUE)) {
-            val key = toIndex(attr[NKEY_KEY])
-            val value = attr[NKEY_VALUE]
+        if (attr.hasKey(N_KEY_KEY) && attr.hasKey(N_KEY_VALUE)) {
+            val key = toIndex(attr[N_KEY_KEY])
+            val value = attr[N_KEY_VALUE]
             return map[key, value]
         }
         return null
@@ -77,8 +77,8 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
 
     companion object {
         const val BIG_ICON_SIZE = 48f
-        private val NKEY_KEY = toIndex("class")
-        private val NKEY_VALUE = toIndex("type")
+        private val N_KEY_KEY = toIndex("class")
+        private val N_KEY_VALUE = toIndex("type")
         const val SVG_SUFFIX = ".svg"
         const val SVG_DIRECTORY = "icons/"
         private const val SVG_MAP_FILE = SVG_DIRECTORY + "iconmap.txt"

@@ -72,7 +72,7 @@ open class DownloadTask(
             }
 
         } catch (e: Exception) {
-            AppLog.e(this, ToDo.translate("GET '$url': failed" ))
+            AppLog.e(this, e, ToDo.translate("GET '$url': failed" ))
 
         } finally {
             Foc.close(output)

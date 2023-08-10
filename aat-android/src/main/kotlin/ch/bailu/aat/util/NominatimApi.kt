@@ -12,7 +12,7 @@ abstract class NominatimApi(context: Context, boundingBox: BoundingBoxE6) : Down
     final override val baseDirectory: Foc
     private val bounding: String
     override val apiName = API_NAME
-    override val urlStart = "https://nominatim.openstreetmap.org/search/"
+    override val urlStart = "https://nominatim.openstreetmap.org/search?q="
     override val fileExtension = ".xml"
 
     init {
@@ -46,7 +46,7 @@ abstract class NominatimApi(context: Context, boundingBox: BoundingBoxE6) : Down
 
     companion object {
         const val API_NAME = "Nominatim"
-        const val POST = "?format=xml"
+        const val POST = "&format=xml"
         private fun toString(b: BoundingBoxE6): String {
             return if (b.latitudeSpanE6 > 0 && b.longitudeSpanE6 > 0) {
                 "&bounded=1&viewbox=" +
