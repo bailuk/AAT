@@ -1,5 +1,6 @@
 package ch.bailu.aat.views.list
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
@@ -18,16 +19,15 @@ import ch.bailu.foc_android.FocAndroid
 class GpxListEntryView(
     acontext: ActivityContext,
     private val descriptions: Array<ContentDescription>,
-    theme: UiTheme?
+    theme: UiTheme
 ) : LinearLayout(acontext), OnContentUpdatedInterface {
     private val preview: PreviewView
     private val labelTextView: LabelTextView
     private var file = FocAndroid.NULL
     private fun addViewWeight(v: View) {
+        v.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f)
+        v.setBackgroundColor(Color.RED)
         addView(v)
-        val l = v.layoutParams as LayoutParams
-        l.weight = 1f
-        v.layoutParams = l
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
@@ -53,7 +53,7 @@ class GpxListEntryView(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         layoutParams = p
-        labelTextView = LabelTextView(context, "", theme!!)
+        labelTextView = LabelTextView(context, "", theme)
         addViewWeight(labelTextView)
         val previewSize = getBigButtonSize(acontext)
         preview = PreviewView(acontext.serviceContext, acontext.appContext.summaryConfig)

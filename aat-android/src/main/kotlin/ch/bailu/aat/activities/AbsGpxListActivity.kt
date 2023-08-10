@@ -18,7 +18,6 @@ import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.busy.BusyViewControlDbSync
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.list.GpxListView
 import ch.bailu.aat.views.preferences.TitleView
@@ -34,7 +33,6 @@ import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.foc.Foc
@@ -148,7 +146,6 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         private val filterLabel = getString(R.string.label_filter)
         private val mapLabel = getString(R.string.intro_map)
         private val listLabel = getString(R.string.label_list)
-        private val listLayout = LinearLayout(this@AbsGpxListActivity)
 
         val contentView = ContentView(acontext, theme)
 
@@ -157,11 +154,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
                 acontext,
                 gpxListItemData
             ).apply {
-                val emptyView = LabelTextView(this@AbsGpxListActivity, ToDo.translate("No files found"), theme)
                 onItemClickListener = acontext
-                this.emptyView = emptyView
-                listLayout.addView(this)
-                listLayout.addView(emptyView)
             }
 
             registerForContextMenu(listView)
@@ -198,7 +191,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         private fun createMvLayout(map: MapViewInterface, summary: VerticalScrollView, bar: MainControlBar): View {
             val multiView = MultiView(acontext, solidKey)
 
-            multiView.add(listLayout, listLabel)
+            multiView.add(listView!!, listLabel)
             To.view(map)?.apply { multiView.add(this, mapLabel) }
             multiView.add(summary, "$summaryLabel/$filterLabel")
             bar.addAll(multiView)
@@ -210,14 +203,14 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
              return if (AppLayout.getOrientation(acontext) == Configuration.ORIENTATION_LANDSCAPE) {
                 val a = PercentageLayout(acontext)
                 a.setOrientation(LinearLayout.HORIZONTAL)
-                a.add(listLayout, 30)
+                a.add(listView!!, 30)
                 a.add(summary, 30)
                 a.add(To.view(map)!!, 40)
                 a
             } else {
                 val a = PercentageLayout(acontext)
                 a.setOrientation(LinearLayout.HORIZONTAL)
-                a.add(listLayout, 50)
+                a.add(listView!!, 50)
                 a.add(summary, 50)
                 val b = PercentageLayout(acontext)
                 b.add(a, 60)

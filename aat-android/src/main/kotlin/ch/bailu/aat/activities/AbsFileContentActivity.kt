@@ -59,7 +59,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     private fun createViews() {
         val contentView = ContentView(this, THEME)
-        val bar = MainControlBar(this, 5)
+        val bar = MainControlBar(this, button = 5)
         val layout = createLayout(bar, contentView)
 
         contentView.add(bar)

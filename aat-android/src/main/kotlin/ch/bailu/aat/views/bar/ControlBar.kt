@@ -3,7 +3,7 @@ package ch.bailu.aat.views.bar
 import android.content.Context
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -14,11 +14,10 @@ import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.preferences.SolidImageButton
 import ch.bailu.aat_lib.preferences.SolidIndexList
 
-open class ControlBar(context: Context, orient: Int, theme: UiTheme, visibleButtonCount: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) :
+open class ControlBar(context: Context, private val _orientation: Int, val theme: UiTheme, visibleButtonCount: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) :
     LinearLayout(context) {
-    private val canvas: LinearLayout
-    private val orientation: Int
-    val controlSize: Int
+    private val canvas = LinearLayout(context)
+    val controlSize = getBigButtonSize(context, visibleButtonCount)
 
     private val onClickListeners = ArrayList<OnClickListener>()
 
@@ -26,22 +25,18 @@ open class ControlBar(context: Context, orient: Int, theme: UiTheme, visibleButt
         onClickListeners.forEach { it.onClick(v) }
     }
 
-    @JvmField
-    protected val theme: UiTheme
-
     init {
-        this.theme = theme
         theme.background(this)
-        orientation = orient
-        controlSize = getBigButtonSize(context, visibleButtonCount)
-        canvas = LinearLayout(context)
-        canvas.orientation = orientation
-        setOrientation(orientation)
-        val scroller: FrameLayout = if (orientation == HORIZONTAL) {
+
+        canvas.orientation = _orientation
+        orientation = _orientation
+
+        val scroller: ViewGroup = if (orientation == HORIZONTAL) {
             HorizontalScrollView(context)
         } else {
             ScrollView(context)
         }
+
         scroller.addView(canvas)
         super.addView(scroller)
     }
@@ -50,7 +45,7 @@ open class ControlBar(context: Context, orient: Int, theme: UiTheme, visibleButt
         val small = controlSize
         val largeSpec = MeasureSpec.makeMeasureSpec(length, MeasureSpec.EXACTLY)
         val smallSpec = MeasureSpec.makeMeasureSpec(small, MeasureSpec.EXACTLY)
-        if (orientation == HORIZONTAL) {
+        if (_orientation == HORIZONTAL) {
             measure(largeSpec, smallSpec)
             layout(x, y, x + length, y + small)
         } else {

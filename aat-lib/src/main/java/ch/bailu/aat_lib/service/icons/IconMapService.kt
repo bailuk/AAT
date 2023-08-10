@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.util.WithStatusText
 import ch.bailu.foc.FocFactory
 import java.io.IOException
 
-class IconMapService(sc: ServicesInterface?, focFactory: FocFactory) : VirtualService(),
+class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualService(),
     WithStatusText, IconMapServiceInterface {
     private val map: IconMap
     private val cache: IconCache
@@ -29,10 +29,10 @@ class IconMapService(sc: ServicesInterface?, focFactory: FocFactory) : VirtualSe
         }
     }
 
-    override fun getIconSVG(point: GpxPointInterface, size: Int): ObjImageAbstract {
+    override fun getIconSVG(point: GpxPointInterface, icon_size: Int): ObjImageAbstract? {
         val attr = point.getAttributes()
         val path = toAssetPath(attr)
-        return cache.getIcon(path, size)
+        return cache.getIcon(path, icon_size)
     }
 
     override fun toAssetPath(key: Int, value: String): String {
