@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences;
 
+import javax.annotation.Nonnull;
+
 public abstract class SolidIndexList extends AbsSolidType {
 
     private final SolidInteger sindex;
@@ -13,6 +15,7 @@ public abstract class SolidIndexList extends AbsSolidType {
     public abstract int length();
     protected abstract String getValueAsString(int i);
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         return getValueAsString(getIndex());
@@ -22,7 +25,7 @@ public abstract class SolidIndexList extends AbsSolidType {
     }
 
     @Override
-    public void setValueFromString(String s) {}
+    public void setValueFromString(String string) {}
 
     protected int validate(int index) {
         if (index < 0) index = length()-1;

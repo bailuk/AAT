@@ -1,6 +1,8 @@
 package ch.bailu.aat_lib.preferences;
 
 
+import javax.annotation.Nonnull;
+
 public abstract class SolidCheckList extends AbsSolidType {
 
     public abstract String[] getStringArray();
@@ -11,12 +13,12 @@ public abstract class SolidCheckList extends AbsSolidType {
 
 
     @Override
-    public void setValueFromString(String s) {}
+    public void setValueFromString(String string) {}
 
+    @Nonnull
     @Override
     public String getValueAsString() {
-        return null;
+        return "";
     }
 
 }
-

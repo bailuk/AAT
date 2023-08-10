@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.exception.ValidationException;
 
 public class SolidString extends AbsSolidType {
@@ -14,14 +16,15 @@ public class SolidString extends AbsSolidType {
         this.key = key;
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         return getStorage().readString(getKey());
     }
 
     @Override
-    public void setValueFromString(String s) throws ValidationException {
-        setValue(s);
+    public void setValueFromString(String string) throws ValidationException {
+        setValue(string);
     }
 
     public void setValue(String v) {
@@ -46,7 +49,7 @@ public class SolidString extends AbsSolidType {
 
     public String getValueAsStringNonDef() {
         String s = getValueAsString();
-        if (s == null || storage.isDefaultString(s)) return "";
+        if (storage.isDefaultString(s)) return "";
         return s;
     }
 }
