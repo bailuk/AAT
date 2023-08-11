@@ -1,82 +1,57 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.util.Objects.equals
+import ch.bailu.aat_lib.xml.parser.osm.MemberParser
+import ch.bailu.aat_lib.xml.parser.osm.NdParser
+import ch.bailu.aat_lib.xml.parser.osm.OsmTagParser
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.parseAttributes
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import ch.bailu.aat_lib.xml.parser.wayPointParsed
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
+open class WayParser @JvmOverloads constructor(tag: String = "way") : TagParser(tag) {
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.coordinates.LatLongE6;
-import ch.bailu.aat_lib.xml.parser.osm.Attr;
-import ch.bailu.aat_lib.xml.parser.osm.MemberParser;
-import ch.bailu.aat_lib.xml.parser.osm.NdParser;
-import ch.bailu.aat_lib.xml.parser.osm.OsmTagParser;
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.Util;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.aat_lib.util.Objects;
+    private val tag: TagParser = OsmTagParser()
+    private val member: TagParser = MemberParser()
+    private val nd: TagParser = NdParser()
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
 
-public class WayParser extends TagParser {
+    @Throws(IOException::class)
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
+        scanner.tags.clear()
+        scanner.referencer.clear()
 
-    private final TagParser tag = new OsmTagParser();
-    private final TagParser member = new MemberParser();
-    private final TagParser nd = new NdParser();
-
-
-    public WayParser() {
-        this("way");
-    }
-
-    public WayParser(String tag) {
-        super(tag);
-    }
-
-
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
-
-        scanner.tags.clear();
-        scanner.referencer.clear();
-
-
-        new Attr(parser) {
-            @Override
-            public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "id")) {
-                    scanner.id.scan(value);
-                    scanner.referencer.id = scanner.id.getInt();
-                }
+        parser.parseAttributes { name, value ->
+            if (equals(name, "id")) {
+                scanner.id.scan(value)
+                scanner.referencer.id = scanner.id.int
             }
-        };
-    }
-
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return tag.parse(parser, scanner) ||
-                nd.parse(parser, scanner) ||
-                member.parse(parser, scanner);
-    }
-
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        if (scanner.referencer.resolved > 0) {
-            rememberRelation(scanner);
-            Util.wayPointParsed(scanner);
         }
     }
 
-    private void rememberRelation(Scanner scanner) {
-        BoundingBoxE6 b = scanner.referencer.bounding;
+    @Throws(IOException::class, XmlPullParserException::class)
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return tag.parse(parser, scanner) ||
+                nd.parse(parser, scanner) ||
+                member.parse(parser, scanner)
+    }
 
-        LatLongE6 c = b.getCenter();
+    @Throws(IOException::class)
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {
+        if (scanner.referencer.resolved > 0) {
+            rememberRelation(scanner)
+            scanner.wayPointParsed()
+        }
+    }
 
-        scanner.latitude.setInt(c.getLatitudeE6());
-        scanner.longitude.setInt(c.getLongitudeE6());
-        scanner.referencer.put(scanner.referencer.id, c);
+    private fun rememberRelation(scanner: Scanner) {
+        val b = scanner.referencer.bounding
+        val c = b.center
+        scanner.latitude.int = c.getLatitudeE6()
+        scanner.longitude.int = c.getLongitudeE6()
+        scanner.referencer.put(scanner.referencer.id, c)
     }
 }

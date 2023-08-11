@@ -1,41 +1,27 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.xml.parser.osm.OsmTagParser
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
+class ExtensionParser : TagParser(GpxConstants.QNAME_EXTENSIONS) {
+    private val gpxtpx = GpxTpxExtension()
+    private val tag: TagParser = OsmTagParser()
+    private val gpxTag = GpxExtensionParser()
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {}
 
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.osm.OsmTagParser;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class ExtensionParser extends TagParser {
-    private final GpxTpxExtension gpxtpx = new GpxTpxExtension();
-    private final TagParser tag = new OsmTagParser();
-    private final GpxExtensionParser gpxTag = new GpxExtensionParser();
-
-    public ExtensionParser() {
-        super(GpxConstants.QNAME_EXTENSIONS);
+    @Throws(IOException::class, XmlPullParserException::class)
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return tag.parse(parser, scanner) || gpxtpx.parse(parser, scanner) || gpxTag.parse(
+            parser,
+            scanner
+        )
     }
 
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return tag.parse(parser, scanner) || gpxtpx.parse(parser, scanner) || gpxTag.parse(parser, scanner);
-    }
-
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }

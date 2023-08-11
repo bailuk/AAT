@@ -1,51 +1,35 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
-import org.xmlpull.v1.XmlPullParser;
+import ch.bailu.aat_lib.util.Objects.equals
+import ch.bailu.aat_lib.xml.parser.parseAttributes
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import ch.bailu.aat_lib.xml.parser.wayPointParsed
+import org.xmlpull.v1.XmlPullParser
+import java.io.IOException
 
-import java.io.IOException;
+class PlaceParser : TagParser("place") {
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
+    @Throws(IOException::class)
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
+        scanner.tags.clear()
 
-import ch.bailu.aat_lib.xml.parser.Util;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.aat_lib.util.Objects;
-
-public class PlaceParser extends TagParser {
-    public PlaceParser() {
-        super("place");
-    }
-
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.tags.clear();
-
-        new Attr(parser) {
-            @Override
-            public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "lat")) {
-                    scanner.latitude.scan(value);
-
-                } else if (Objects.equals(name, "lon")) {
-                    scanner.longitude.scan(value);
-
-                } else {
-                    scanner.tags.add(name, value);
-
-                }
+        parser.parseAttributes { name, value ->
+            if (equals(name, "lat")) {
+                scanner.latitude.scan(value)
+            } else if (equals(name, "lon")) {
+                scanner.longitude.scan(value)
+            } else {
+                scanner.tags.add(name, value)
             }
-        };
+        }
     }
 
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
-        return false;
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return false
     }
 
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        Util.wayPointParsed(scanner);
+    @Throws(IOException::class)
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {
+        scanner.wayPointParsed()
     }
 }

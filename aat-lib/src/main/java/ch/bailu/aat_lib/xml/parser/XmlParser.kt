@@ -1,97 +1,77 @@
-package ch.bailu.aat_lib.xml.parser;
+package ch.bailu.aat_lib.xml.parser
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.xml.parser.gpx.GpxBuilderInterface
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface
+import ch.bailu.foc.Foc
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.IOException
+import java.io.Reader
 
-import java.io.IOException;
-import java.io.Reader;
+class XmlParser(file: Foc) : GpxBuilderInterface {
+    private val scanner: Scanner
+    private val reader: Reader
+    private val parser: XmlPullParser
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.xml.parser.gpx.GpxBuilderInterface;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
-import ch.bailu.foc.Foc;
-
-
-public class XmlParser implements GpxBuilderInterface {
-
-
-    private final Scanner scanner;
-    private final Reader reader;
-    private final XmlPullParser parser;
-
-    public XmlParser(Foc file) throws IOException, XmlPullParserException {
-        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-
-        factory.setNamespaceAware(true);
-
-        parser = factory.newPullParser();
-        reader = BOM.open(file);
-        scanner = new Scanner(file.lastModified());
+    init {
+        val factory = XmlPullParserFactory.newInstance()
+        factory.isNamespaceAware = true
+        parser = factory.newPullParser()
+        reader = BOM.open(file)
+        scanner = Scanner(file.lastModified())
     }
 
-
-    @Override
-    public void parse() throws XmlPullParserException, IOException {
-        parser.setInput(reader);
-        new RootParser().parse(parser, scanner);
+    @Throws(XmlPullParserException::class, IOException::class)
+    override fun parse() {
+        parser.setInput(reader)
+        RootParser().parse(parser, scanner)
     }
 
-    @Override
-    public void close() throws IOException {
-        reader.close();
+    @Throws(IOException::class)
+    override fun close() {
+        reader.close()
     }
 
-
-
-    @Override
-    public void setOnRouteParsed(OnParsedInterface route) {
-        scanner.routeParsed = route;
+    override fun setOnRouteParsed(route: OnParsedInterface) {
+        scanner.routeParsed = route
     }
 
-
-    @Override
-    public void setOnTrackParsed(OnParsedInterface track) {
-        scanner.trackParsed = track;
+    override fun setOnTrackParsed(track: OnParsedInterface) {
+        scanner.trackParsed = track
     }
 
-
-    @Override
-    public void setOnWayParsed(OnParsedInterface way) {
-        scanner.wayParsed = way;
+    override fun setOnWayParsed(way: OnParsedInterface) {
+        scanner.wayParsed = way
     }
 
-
-    @Override
-    public int getLatitudeE6() {return scanner.latitude.getInt();}
-
-    @Override
-    public int getLongitudeE6() {return scanner.longitude.getInt();}
-
-    @Override
-    public double getAltitude() {
-        return (double) scanner.altitude.getInt();
+    override fun getLatitudeE6(): Int {
+        return scanner.latitude.int
     }
 
-    @Override
-    public long getTimeStamp() {return scanner.dateTime.getTimeMillis();}
-
-
-    @Override
-    public GpxAttributes getAttributes() {
-        return scanner.tags.get();
+    override fun getLongitudeE6(): Int {
+        return scanner.longitude.int
     }
 
-    @Override
-    public double getLongitude() {
-        return getLongitudeE6() / 1E6;
+    override fun getAltitude(): Double {
+        return scanner.altitude.int.toDouble()
     }
 
-    @Override
-    public double getLatitude() {
-        return getLatitudeE6() / 1E6;
+    override fun getTimeStamp(): Long {
+        return scanner.dateTime.timeMillis
     }
 
+    override fun getAttributes(): GpxAttributes {
+        return scanner.tags.get()
+    }
+
+    override fun getLongitude(): Double {
+        return getLongitudeE6() / 1E6
+    }
+
+    override fun getLatitude(): Double {
+        return getLatitudeE6() / 1E6
+    }
 }
-

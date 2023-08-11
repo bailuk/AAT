@@ -1,34 +1,20 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import java.io.IOException
 
-import java.io.IOException;
-
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class EleParser extends TagParser {
-    public EleParser() {
-        super("ele");
+class EleParser : TagParser("ele") {
+    @Throws(IOException::class)
+    public override fun parseText(parser: XmlPullParser, scanner: Scanner) {
+        scanner.altitude.scan(parser.text)
     }
 
-    @Override
-    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.altitude.scan(parser.getText());
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {}
+    public override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return false
     }
 
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    public boolean parseTags(XmlPullParser parser, Scanner scanner) {
-        return false;
-    }
-
-    @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    public override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }

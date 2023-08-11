@@ -1,61 +1,43 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.coordinates.LatLongE6
+import ch.bailu.aat_lib.util.Objects.equals
+import ch.bailu.aat_lib.xml.parser.parseAttributes
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import ch.bailu.aat_lib.xml.parser.wayPointParsed
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
+class NodeParser : TagParser("node") {
+    private val tag: TagParser = OsmTagParser()
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
+    @Throws(IOException::class)
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
+        scanner.tags.clear()
 
-import ch.bailu.aat_lib.coordinates.LatLongE6;
-import ch.bailu.aat_lib.xml.parser.Util;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.aat_lib.util.Objects;
-
-public class NodeParser extends TagParser {
-    private final TagParser tag = new OsmTagParser();
-
-    public NodeParser() {
-        super("node");
-    }
-
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.tags.clear();
-
-
-        new Attr(parser) {
-            @Override
-            public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "id")) {
-                    scanner.id.scan(value);
-
-                } else if (Objects.equals(name, "lat")) {
-                    scanner.latitude.scan(value);
-
-
-                } else if (Objects.equals(name, "lon")) {
-                    scanner.longitude.scan(value);
-
-                }
+        parser.parseAttributes {name, value ->
+            if (equals(name, "id")) {
+                scanner.id.scan(value)
+            } else if (equals(name, "lat")) {
+                scanner.latitude.scan(value)
+            } else if (equals(name, "lon")) {
+                scanner.longitude.scan(value)
             }
-        };
+        }
     }
 
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return tag.parse(parser, scanner);
+    @Throws(IOException::class, XmlPullParserException::class)
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return tag.parse(parser, scanner)
     }
 
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.referencer.put(scanner.id.getInt(),
-                new LatLongE6(scanner.latitude.getInt(), scanner.longitude.getInt()));
-
-        Util.wayPointParsed(scanner);
-
+    @Throws(IOException::class)
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {
+        scanner.referencer.put(
+            scanner.id.int,
+            LatLongE6(scanner.latitude.int, scanner.longitude.int)
+        )
+        scanner.wayPointParsed()
     }
 }

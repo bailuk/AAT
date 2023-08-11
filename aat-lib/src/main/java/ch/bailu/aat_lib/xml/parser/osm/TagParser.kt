@@ -1,75 +1,63 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.util.Objects
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import ch.bailu.aat_lib.xml.parser.skipTag
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
+abstract class TagParser(private val tag: String = "") {
 
-import ch.bailu.aat_lib.xml.parser.Util;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-import ch.bailu.aat_lib.util.Objects;
-
-public abstract class TagParser {
-
-    private final static int START_MY_TAG = 9999;
-
-    private final String tag;
-
-
-    public TagParser(String t) {
-        tag = t;
-    }
-
-
-    public boolean parse(XmlPullParser parser, Scanner scanner) throws XmlPullParserException, IOException {
-
+    @Throws(XmlPullParserException::class, IOException::class)
+    fun parse(parser: XmlPullParser, scanner: Scanner): Boolean {
         if (begins(parser)) {
-
-            int event = START_MY_TAG;
-
+            var event = START_MY_TAG
             do {
                 if (event == START_MY_TAG) {
-                    parseAttributes(parser, scanner);
-
-                } else if (event == XmlPullParser.TEXT && parser.getText() != null) {
-                    parseText(parser, scanner);
-
+                    parseAttributes(parser, scanner)
+                } else if (event == XmlPullParser.TEXT && parser.text != null) {
+                    parseText(parser, scanner)
                 } else if (event == XmlPullParser.START_TAG) {
-                    if (parseTags(parser, scanner) == false) {
-                        Util.skipTag(parser);
+                    if (!parseTags(parser, scanner)) {
+                        parser.skipTag()
                     }
                 }
-
-                event = parser.next();
-            } while(!ends(parser));
-
-            parsed(parser, scanner);
-            return true;
+                event = parser.next()
+            } while (!ends(parser))
+            parsed(parser, scanner)
+            return true
         }
-        return false;
+        return false
     }
 
+    @Throws(IOException::class)
+    protected abstract fun parseText(parser: XmlPullParser, scanner: Scanner)
 
+    @Throws(IOException::class)
+    protected abstract fun parseAttributes(parser: XmlPullParser, scanner: Scanner)
 
+    @Throws(IOException::class, XmlPullParserException::class)
+    protected abstract fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean
 
-    protected abstract void parseText(XmlPullParser parser, Scanner scanner) throws IOException;
-    protected abstract void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException;
-    protected abstract boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException;
-    protected abstract void parsed(XmlPullParser parser, Scanner scanner) throws IOException;
+    @Throws(IOException::class)
+    protected abstract fun parsed(parser: XmlPullParser, scanner: Scanner)
 
-
-    private boolean begins(XmlPullParser parser) throws XmlPullParserException {
-        return parser.getEventType() == XmlPullParser.START_TAG
-                && (tag == null || Objects.equals(parser.getName(), tag));
+    @Throws(XmlPullParserException::class)
+    private fun begins(parser: XmlPullParser): Boolean {
+        return (parser.eventType == XmlPullParser.START_TAG
+                && (Objects.equals(parser.name, tag)))
     }
 
-    private boolean ends(XmlPullParser parser) throws XmlPullParserException {
-        return parser.getEventType() == XmlPullParser.END_DOCUMENT ||
-
-                (parser.getEventType() == XmlPullParser.END_TAG &&
-                        (tag == null || Objects.equals(parser.getName(), tag)));
+    @Throws(XmlPullParserException::class)
+    private fun ends(parser: XmlPullParser): Boolean {
+        return parser.eventType == XmlPullParser.END_DOCUMENT || parser.eventType == XmlPullParser.END_TAG && (Objects.equals(
+            parser.name,
+            tag
+        ))
     }
 
-
-
+    companion object {
+        private const val START_MY_TAG = 9999
+    }
 }

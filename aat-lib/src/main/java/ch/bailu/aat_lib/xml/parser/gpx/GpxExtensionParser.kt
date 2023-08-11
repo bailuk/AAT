@@ -1,44 +1,26 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
 
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
+class GpxExtensionParser : TagParser() {
+    private var key: String = ""
 
-public class GpxExtensionParser extends TagParser {
-
-
-    private String key = null;
-
-
-    public GpxExtensionParser() {
-        super(null);
-    }
-
-
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-        final String val = parser.getText();
-        if (val != null && key != null && key.length() > 0) {
-            scanner.tags.add(key, val);
-
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {
+        val value = parser.text
+        if (value != null && key.isNotEmpty()) {
+            scanner.tags.add(key, value)
         }
     }
 
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
-        key = parser.getName();
-
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
+        key = parser.name
     }
 
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
-        return false;
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return false
     }
 
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }

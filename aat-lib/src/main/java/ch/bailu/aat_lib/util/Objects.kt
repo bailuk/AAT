@@ -1,68 +1,57 @@
-package ch.bailu.aat_lib.util;
+package ch.bailu.aat_lib.util
 
-import java.util.List;
-
-public class Objects {
-    public static boolean equals(Object a, Object b) {
-        if (a != null && b!= null) {
-            return a.equals(b);
-        }
-        return a == b;
+object Objects {
+    @JvmStatic
+    fun equals(a: Any?, b: Any?): Boolean {
+        return if (a != null && b != null) {
+            a == b
+        } else a === b
     }
 
-
-    public static String toString(Object o) {
+    fun toString(o: Any?): String {
         if (o != null) {
-            final String r = o.toString();
-
-            if (r != null) return r;
+            return o.toString()
         }
-        return "";
+        return ""
     }
 
-
-    public static long toLong(Object o) {
-        try {
-            return Long.parseLong(toString(o));
-        } catch (NumberFormatException e) {
-            return 0L;
+    fun toLong(o: Any?): Long {
+        return try {
+            toString(o).toLong()
+        } catch (e: NumberFormatException) {
+            0L
         }
     }
 
-
-    public static int toInt(Object o) {
-        try {
-            return Integer.parseInt(toString(o));
-        } catch (NumberFormatException e) {
-            return 0;
+    fun toInt(o: Any?): Int {
+        return try {
+            toString(o).toInt()
+        } catch (e: NumberFormatException) {
+            0
         }
-
     }
 
-    public static float toFloat(Object o) {
-        try {
-            return Float.parseFloat(toString(o));
-        } catch (NumberFormatException e) {
-            return 0f;
+    fun toFloat(o: Any?): Float {
+        return try {
+            toString(o).toFloat()
+        } catch (e: NumberFormatException) {
+            0f
         }
-
     }
 
-    public static boolean toBoolean(Object o) {
-        String s = toString(o);
-        char c = 'f';
-        if (s.length() > 0)
-            c = s.charAt(0);
-
-        return c == 't' || c == 'T';
+    fun toBoolean(o: Any?): Boolean {
+        val s = toString(o)
+        var c = 'f'
+        if (s.isNotEmpty()) c = s[0]
+        return c == 't' || c == 'T'
     }
 
-    public static String[] toArray(List<String> list) {
-        String[] result = new String[list.size()];
+    fun toArray(list: List<String?>): Array<String> {
+        val result = arrayOfNulls<String>(list.size)
 
-        for (int i=0; i<result.length; i++) {
-            result[i] = list.get(i);
+        for (i in result.indices) {
+            result[i] = toString(list[i])
         }
-        return result;
+        return result as Array<String>
     }
 }

@@ -1,119 +1,93 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import java.io.IOException;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryRoute
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryTrack
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.service.background.ThreadControl
+import ch.bailu.aat_lib.xml.parser.XmlParser
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface
+import ch.bailu.foc.Foc
+import java.io.IOException
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.service.background.ThreadControl;
-import ch.bailu.aat_lib.xml.parser.XmlParser;
-import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
-import ch.bailu.foc.Foc;
+class GpxListReader private constructor(
+    private val threadControl: ThreadControl,
+    inputFile: Foc,
+    trackAttributes: GpxListAttributes
+) {
+    private val way: OnParsed
+    private val track: OnParsed
+    private val route: OnParsed
 
-public class GpxListReader {
-    private final ThreadControl threadControl;
+    private var parsedPointAccess: GpxPointInterface = GpxPoint.NULL
 
-    private final OnParsed way;
-    private final OnParsed track;
-    private final OnParsed route;
+    var exception: Exception? = null
+        private set
 
-    private GpxBuilderInterface parser = null;
+    constructor(inputFile: Foc, autoPause: AutoPause) : this(ThreadControl.KEEP_ON, inputFile, autoPause)
+    constructor(c: ThreadControl, inputFile: Foc, autoPause: AutoPause) : this(c, inputFile, factoryTrack(autoPause))
 
-    private Exception parserException = null;
-
-
-
-    public GpxListReader(Foc in, AutoPause apause) {
-        this(ThreadControl.KEEP_ON, in, apause);
-    }
-
-
-    public GpxListReader (ThreadControl c, Foc in, AutoPause apause) {
-        this(c, in, GpxListAttributes.factoryTrack(apause));
-    }
-
-
-    private GpxListReader (ThreadControl c, Foc in, GpxListAttributes trackAttributes) {
-
-        track = new OnParsed(GpxType.TRACK, trackAttributes);
-        way   = new OnParsed(GpxType.WAY,   GpxListAttributes.NULL);
-        route = new OnParsed(GpxType.ROUTE, GpxListAttributes.factoryRoute());
-
-        threadControl=c;
-
+    init {
+        track = OnParsed(GpxType.TRACK, trackAttributes)
+        way = OnParsed(GpxType.WAY, GpxListAttributes.NULL)
+        route = OnParsed(GpxType.ROUTE, factoryRoute())
         try {
-            parser = new XmlParser(in);
+            val parser = XmlParser(inputFile)
+            parsedPointAccess = parser
 
-            parser.setOnRouteParsed(route);
-            parser.setOnTrackParsed(track);
-            parser.setOnWayParsed(way);
-
-            parser.parse();
-            parser.close();
-
-        } catch (Exception e) {
-            parserException = e;
+            parser.setOnRouteParsed(route)
+            parser.setOnTrackParsed(track)
+            parser.setOnWayParsed(way)
+            parser.parse()
+            parser.close()
+        } catch (e: Exception) {
+            exception = e
         }
-
     }
 
-
-    public boolean hasParserException() {
-        return parserException != null;
-    }
-
-    public Exception getException() {
-        return parserException;
-    }
-
-
-    public GpxList getGpxList() {
-        if (track.hasContent()) return track.getGpxList();
-        if (route.hasContent()) return route.getGpxList();
-        return way.getGpxList();
-    }
-
-
-
-    private class OnParsed implements OnParsedInterface {
-        private final GpxList gpxList;
-        private boolean  haveNewSegment=true;
-
-        public OnParsed(GpxType type, GpxListAttributes attr) {
-            gpxList = new GpxList(type, attr);
+    val gpxList: GpxList
+        get() {
+            if (track.hasContent()) return track.gpxList
+            return if (route.hasContent()) route.gpxList else way.gpxList
         }
 
+    private inner class OnParsed(type: GpxType, attr: GpxListAttributes) : OnParsedInterface {
+        val gpxList: GpxList
+        private var haveNewSegment = true
 
-        public GpxList getGpxList() {
-            return gpxList;
+        init {
+            gpxList = GpxList(type, attr)
         }
 
-        public boolean hasContent() {
-            return gpxList.getPointList().size()>0;
+        fun hasContent(): Boolean {
+            return gpxList.pointList.size() > 0
         }
 
-        @Override
-        public void onHaveSegment() {
-            haveNewSegment=true;
+        override fun onHaveSegment() {
+            haveNewSegment = true
         }
 
-        @Override
-        public void onHavePoint() throws IOException {
+        @Throws(IOException::class)
+        override fun onHavePoint() {
             if (threadControl.canContinue()) {
                 if (haveNewSegment) {
-                    gpxList.appendToNewSegment(new GpxPoint(parser),
-                            parser.getAttributes());
-                    haveNewSegment=false;
+                    gpxList.appendToNewSegment(
+                        GpxPoint(parsedPointAccess),
+                        parsedPointAccess.getAttributes()
+                    )
+                    haveNewSegment = false
                 } else {
-                    gpxList.appendToCurrentSegment(new GpxPoint(parser),
-                            parser.getAttributes());
-
+                    gpxList.appendToCurrentSegment(
+                        GpxPoint(parsedPointAccess),
+                        parsedPointAccess.getAttributes()
+                    )
                 }
-
             } else {
-                throw new IOException();
+                throw IOException()
             }
         }
     }

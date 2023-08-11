@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.logger
 
+import ch.bailu.aat_lib.util.Objects
 import java.util.regex.Pattern
 
 /**
@@ -24,7 +25,7 @@ object AppLog {
 
     @JvmStatic
     fun i(source: Any?, message: String?) {
-        info.log(toSaveSourceName(source), toSaveString(message))
+        info.log(toSaveSourceName(source), Objects.toString(message))
     }
 
     /**
@@ -56,7 +57,7 @@ object AppLog {
      */
     @JvmStatic
     fun e(source: Any?, message: String?) {
-        error.log(toSaveSourceName(source), toSaveString(message))
+        error.log(toSaveSourceName(source), Objects.toString(message))
     }
 
     /**
@@ -78,7 +79,7 @@ object AppLog {
      */
     @JvmStatic
     fun w(source: Any?, message: String?) {
-        warn.log(toSaveSourceName(source), toSaveString(message))
+        warn.log(toSaveSourceName(source), Objects.toString(message))
     }
 
     /**
@@ -87,7 +88,7 @@ object AppLog {
      * @param message the message to log. Can be null.
      */
     fun d(source: Any?, message: String?) {
-        debug.log(toSaveSourceName(source), toSaveString(message))
+        debug.log(toSaveSourceName(source), Objects.toString(message))
     }
 
     private fun toSaveSourceName(source: Any?): String {
@@ -111,10 +112,6 @@ object AppLog {
             result = parts[parts.size - 1]
         }
         return result
-    }
-
-     private fun toSaveString(string: String?): String {
-        return string ?: UNKNOWN
     }
 
     private fun toStringAndPrintStackTrace(throwable: Throwable?): String {

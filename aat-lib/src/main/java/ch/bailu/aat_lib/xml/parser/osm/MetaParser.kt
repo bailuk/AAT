@@ -1,46 +1,28 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
+import ch.bailu.aat_lib.util.Objects.equals
+import ch.bailu.aat_lib.xml.parser.parseAttributes
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import java.io.IOException
 
-import org.xmlpull.v1.XmlPullParser;
-
-import java.io.IOException;
-
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-
-import ch.bailu.aat_lib.util.Objects;
-
-public class MetaParser extends TagParser {
-    public MetaParser() {
-        super("meta");
+class MetaParser : TagParser("meta") {
+    @Throws(IOException::class)
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {
     }
 
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
-
-    }
-
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
-        new Attr(parser) {
-            @Override
-            public void attribute(String name, String value) throws IOException {
-                if (Objects.equals(name, "osm_base")) {
-                    scanner.dateTime.scan(value);
-                }
+    @Throws(IOException::class)
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
+        parser.parseAttributes{name, value ->
+            if (equals(name, "osm_base")) {
+                scanner.dateTime.scan(value)
             }
-        };
+        }
     }
 
-
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) {
-        return false;
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return false
     }
 
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }
