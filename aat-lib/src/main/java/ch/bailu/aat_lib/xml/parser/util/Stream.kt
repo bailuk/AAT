@@ -1,108 +1,90 @@
-package ch.bailu.aat_lib.xml.parser.util;
+package ch.bailu.aat_lib.xml.parser.util
 
-import java.io.BufferedReader;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
+import ch.bailu.foc.Foc
+import java.io.BufferedReader
+import java.io.Closeable
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.Reader
+import java.io.StringReader
 
-import ch.bailu.foc.Foc;
+class Stream : Closeable {
+    private val reader: Reader
+    private var c = 0
 
-public class Stream implements Closeable {
-    private final static String CHARSET="UTF-8";
-    private final static int BUFFER_BYTES=1024*10;
+    constructor(foc: Foc) {
+        val istream = foc.openR()
+        val ireader: Reader = InputStreamReader(istream, CHARSET)
+        reader = BufferedReader(ireader, BUFFER_BYTES)
+    }
 
+    constructor(r: Reader) {
+        reader = r
+    }
 
-    private final Reader reader;
-    private int c=0;
+    constructor(string: String) {
+        reader = StringReader(string)
+    }
 
-    public Stream(Foc foc) throws IOException, SecurityException {
-        InputStream istream = foc.openR();
-        Reader ireader = new InputStreamReader(istream, CHARSET);
-        reader = new BufferedReader(ireader, BUFFER_BYTES);
+    fun get(): Int {
+        return c
+    }
+
+    @Throws(IOException::class)
+    fun skip(n: Long) {
+        reader.skip(n)
+    }
+
+    @Throws(IOException::class)
+    fun read() {
+        c = reader.read()
+    }
+
+    @Throws(IOException::class)
+    fun read(n: Long) {
+        skip(n)
+        read()
+    }
+
+    fun haveA(x: Int): Boolean {
+        return c == x
     }
 
 
-    public Stream(Reader r) {
-        reader = r;
+    @Throws(IOException::class)
+    fun skipWhitespace() {
+        while (c == ' '.code || c == '\n'.code || c == '\r'.code || c == '\t'.code) read()
     }
 
-    public Stream(String string) {
-        reader = new StringReader(string);
+    fun haveDigit(): Boolean {
+        return c >= '0'.code && c <= '9'.code
     }
 
-
-    public int get() {
-        return c;
+    fun haveCharacter(): Boolean {
+        return c >= 'A'.code && c <= 'z'.code
     }
 
-    public void skip(long n) throws IOException {
-        reader.skip(n);
+    val digit: Int
+        get() = c - '0'.code
+
+    fun haveEOF(): Boolean {
+        return c == -1
     }
 
-    public void read() throws IOException {
-        c=reader.read();
-    }
-
-    public void read(long n) throws IOException {
-        skip(n);
-        read();
-    }
-
-    public boolean haveA(int x) {
-        return c == x;
-    }
-
-
-    public boolean nextIs(int x) throws IOException {
-        read();
-        return haveA(x);
-    }
-
-
-    public boolean nextIs(String string) throws IOException {
-        for (int i =0; i<string.length(); i++) {
-            read();
-            if (!haveA(string.charAt(i))) {
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    public void skipWhitespace() throws IOException {
-        while (c== ' ' || c=='\n' || c=='\r' || c=='\t') read();
-    }
-
-    public boolean haveDigit() {
-        return (c>='0' && c<='9');
-    }
-
-    public boolean haveCharacter() {
-        return (c >= 'A' && c <= 'z');
-    }
-
-    public int getDigit() {
-        return c-'0';
-    }
-
-
-
-    public boolean haveEOF() {
-        return c==-1;
-    }
-
-    public void to(int x) throws IOException {
+    @Throws(IOException::class)
+    fun to(x: Int) {
         do {
-            read();
-        } while (!haveA(x) && !haveEOF());
+            read()
+        } while (!haveA(x) && !haveEOF())
     }
 
-    @Override
-    public void close() throws IOException {
-        reader.close();
+    @Throws(IOException::class)
+    override fun close() {
+        reader.close()
+    }
+
+    companion object {
+        private const val CHARSET = "UTF-8"
+        private const val BUFFER_BYTES = 1024 * 10
     }
 }

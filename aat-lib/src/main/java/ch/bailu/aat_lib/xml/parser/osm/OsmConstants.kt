@@ -1,7 +1,7 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
-public class OsmConstants {
-    public static final String T_TAG = "tag";
-    public static final String A_VALUE = "v";
-    public static final String A_KEY = "k";
+object OsmConstants {
+    const val T_TAG = "tag"
+    const val A_VALUE = "v"
+    const val A_KEY = "k"
 }

@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.xml.parser
 
 import ch.bailu.aat_lib.xml.parser.gpx.GpxParser
 import ch.bailu.aat_lib.xml.parser.osm.OsmParser
-import ch.bailu.aat_lib.xml.parser.osm.SearchresultsParser
+import ch.bailu.aat_lib.xml.parser.osm.SearchResultsParser
 import ch.bailu.aat_lib.xml.parser.osm.TagParser
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner
 import org.xmlpull.v1.XmlPullParser
@@ -12,7 +12,7 @@ import java.io.IOException
 class RootParser {
     val gpx: TagParser = GpxParser()
     val osm: TagParser = OsmParser()
-    val nominatim: TagParser = SearchresultsParser()
+    val nominatim: TagParser = SearchResultsParser()
 
     @Throws(IOException::class, XmlPullParserException::class)
     fun parse(parser: XmlPullParser, scanner: Scanner) {

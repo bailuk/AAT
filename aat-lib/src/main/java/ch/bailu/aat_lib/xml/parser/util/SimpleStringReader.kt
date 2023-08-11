@@ -1,88 +1,65 @@
-package ch.bailu.aat_lib.xml.parser.util;
+package ch.bailu.aat_lib.xml.parser.util
 
+import java.io.IOException
+import java.io.Reader
 
-import java.io.IOException;
-import java.io.Reader;
+class SimpleStringReader : Reader() {
+    private var string = ""
+    private var index = 0
 
-public class SimpleStringReader extends Reader {
-
-    private String string = "";
-    private int index = 0;
-
-    public void setString(String s) throws IOException {
-        string = s;
-        reset();
+    @Throws(IOException::class)
+    fun setString(s: String) {
+        string = s
+        reset()
     }
 
-
-    @Override
-    public int read() {
-        if (index < string.length()) {
-            int c = string.charAt(index);
-            index ++;
-            return c;
+    override fun read(): Int {
+        if (index < string.length) {
+            val c = string[index].code
+            index++
+            return c
         }
-        return -1;
+        return -1
     }
 
-
-    @Override
-    public int read(char[] cbuf) throws IOException {
-        return read(cbuf, 0, cbuf.length);
+    @Throws(IOException::class)
+    override fun read(cbuf: CharArray): Int {
+        return read(cbuf, 0, cbuf.size)
     }
 
-
-
-    @Override
-    public long skip(long n) {
-        if (index + n >= string.length()) {
-            n = string.length()- index;
+    override fun skip(n: Long): Long {
+        var result = n
+        if (index + result >= string.length) {
+            result = (string.length - index).toLong()
         }
-        index += n;
-
-        return n;
+        index += result.toInt()
+        return result
     }
 
-    @Override
-    public boolean ready() {
-        return true;
+    override fun ready(): Boolean {
+        return true
     }
 
-
-    @Override
-    public void reset() {
-        index = 0;
+    override fun reset() {
+        index = 0
     }
 
-
-
-
-
-    @Override
-    public int read(char[] cbuf, int off, int len) {
-        if (index >= string.length()) return -1;
-
-        int c = 0;
-        int out = off;
-
-        while (c < len && out < cbuf.length ) {
-            cbuf[off] = string.charAt(index);
-
-            if (index + 1 < string.length()) {
-                index ++;
-                c++;
-                out++;
+    override fun read(cbuf: CharArray, off: Int, len: Int): Int {
+        if (index >= string.length) return -1
+        var c = 0
+        var out = off
+        while (c < len && out < cbuf.size) {
+            cbuf[off] = string[index]
+            if (index + 1 < string.length) {
+                index++
+                c++
+                out++
             } else {
-                break;
+                break
             }
         }
-        return c;
+        return c
     }
 
-
-    @Override
-    public void close() {
-
-    }
+    override fun close() {}
 }
-

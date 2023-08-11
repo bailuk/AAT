@@ -1,32 +1,27 @@
-package ch.bailu.aat_lib.xml.parser.scanner;
+package ch.bailu.aat_lib.xml.parser.scanner
 
-import java.util.ArrayList;
-import java.util.Collections;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic
+import ch.bailu.aat_lib.gpx.attributes.Keys.Companion.toIndex
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic;
-import ch.bailu.aat_lib.gpx.attributes.Keys;
-
-public class Tags {
-    public final ArrayList<GpxAttributesStatic.Tag> list = new ArrayList<>();
-
-    public void clear() {
-        list.clear();
+class Tags {
+    val list = ArrayList<GpxAttributesStatic.Tag>()
+    fun clear() {
+        list.clear()
     }
 
-    public boolean notEmpty() {
-        return list.size() > 0;
+    fun notEmpty(): Boolean {
+        return list.size > 0
     }
 
-
-    public void sort() {
-        Collections.sort(list);
+    fun sort() {
+        list.sort()
     }
 
-    public void add(String k, String v) {
-        list.add(new GpxAttributesStatic.Tag(Keys.toIndex(k), v));
+    fun add(k: String, v: String) {
+        list.add(GpxAttributesStatic.Tag(toIndex(k), v))
     }
 
-    public GpxAttributesStatic get() {
-        return new GpxAttributesStatic(list.toArray(new GpxAttributesStatic.Tag[]{}));
+    fun get(): GpxAttributesStatic {
+        return GpxAttributesStatic(list.toArray(arrayOf()))
     }
 }

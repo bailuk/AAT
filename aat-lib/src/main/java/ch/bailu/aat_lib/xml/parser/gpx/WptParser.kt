@@ -1,22 +1,13 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import java.io.IOException
 
-import java.io.IOException;
-
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class WptParser extends PntParser {
-
-
-    public WptParser() {
-        super(GpxConstants.QNAME_WAY_POINT);
-    }
-
-
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.wayParsed.onHavePoint();
+class WptParser : PntParser(GpxConstants.QNAME_WAY_POINT) {
+    @Throws(IOException::class)
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {
+        scanner.wayParsed.onHavePoint()
     }
 }

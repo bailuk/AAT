@@ -1,38 +1,24 @@
-package ch.bailu.aat_lib.xml.parser.osm;
+package ch.bailu.aat_lib.xml.parser.osm
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
-
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class SearchresultsParser extends TagParser {
-
-    private final TagParser place = new PlaceParser();
-
-
-    public SearchresultsParser() {
-        super("searchresults");
+class SearchResultsParser : TagParser("searchresults") {
+    private val place: TagParser = PlaceParser()
+    @Throws(IOException::class)
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {
     }
 
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
-
+    @Throws(IOException::class)
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
     }
 
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) throws IOException {
-
+    @Throws(IOException::class, XmlPullParserException::class)
+    override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return place.parse(parser, scanner)
     }
 
-    @Override
-    protected boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return place.parse(parser, scanner);
-    }
-
-    @Override
-    protected void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }

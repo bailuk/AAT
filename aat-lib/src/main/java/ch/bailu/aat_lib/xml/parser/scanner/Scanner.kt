@@ -1,29 +1,26 @@
-package ch.bailu.aat_lib.xml.parser.scanner;
+package ch.bailu.aat_lib.xml.parser.scanner
 
+import ch.bailu.aat_lib.xml.parser.util.DateScanner
+import ch.bailu.aat_lib.xml.parser.util.DoubleScanner
+import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface
 
-import ch.bailu.aat_lib.xml.parser.util.DateScanner;
-import ch.bailu.aat_lib.xml.parser.util.DoubleScanner;
-import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface;
+class Scanner(time: Long) {
+    val latitude: DoubleScanner = DoubleScanner(6)
+    val longitude: DoubleScanner = DoubleScanner(6)
+    val altitude: DoubleScanner = DoubleScanner(0)
+    val id: DoubleScanner = DoubleScanner(0)
 
-public class Scanner {
-    public final DoubleScanner latitude,longitude,altitude,id;
-    public final DateScanner dateTime;
+    @JvmField
+    val dateTime = DateScanner(time)
+    val referencer = References()
+    val tags = Tags()
 
-    public final References referencer = new References();
-    public final Tags tags = new Tags();
+    @JvmField
+    var wayParsed = OnParsedInterface.NULL
 
-    public OnParsedInterface
-            wayParsed	  = OnParsedInterface.NULL,
-            routeParsed	  = OnParsedInterface.NULL,
-            trackParsed	  = OnParsedInterface.NULL;
+    @JvmField
+    var routeParsed = OnParsedInterface.NULL
 
-
-
-    public Scanner(long time) throws SecurityException {
-        latitude = new DoubleScanner(6);
-        longitude = new DoubleScanner(6);
-        altitude = new DoubleScanner(0);
-        id = new DoubleScanner(0);
-        dateTime = new DateScanner(time);
-    }
+    @JvmField
+    var trackParsed = OnParsedInterface.NULL
 }

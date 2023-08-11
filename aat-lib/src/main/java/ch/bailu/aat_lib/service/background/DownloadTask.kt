@@ -17,13 +17,14 @@ open class DownloadTask(
     val source: URX,
     target: Foc,
     private val downloadConnection: DownloadConfig
+
 ) : FileTask(target) {
     constructor(
         source: String,
         target: Foc,
         downloadConnection: DownloadConfig
-    ) : this(URX(source), target, downloadConnection) {
-    }
+
+    ) : this(URX(source), target, downloadConnection)
 
     override fun bgOnProcess(appContext: AppContext): Long {
         var size: Long = 0

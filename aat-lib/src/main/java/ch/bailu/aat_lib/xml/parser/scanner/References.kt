@@ -1,29 +1,25 @@
-package ch.bailu.aat_lib.xml.parser.scanner;
+package ch.bailu.aat_lib.xml.parser.scanner
 
-import java.util.HashMap;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.coordinates.LatLongE6
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.coordinates.LatLongE6;
+class References {
+    var id = 0
+    var resolved = 0
+    var bounding = BoundingBoxE6()
+    private val coordinates = HashMap<Int, LatLongE6>(50)
 
-public class References {
-
-    public int id = 0;
-    public int resolved = 0;
-    public BoundingBoxE6 bounding = new BoundingBoxE6();
-
-    private final HashMap<Integer, LatLongE6> coordinates = new HashMap<>(50);
-
-    public void clear() {
-        bounding = new BoundingBoxE6();
-        id = 0;
-        resolved = 0;
+    fun clear() {
+        bounding = BoundingBoxE6()
+        id = 0
+        resolved = 0
     }
 
-    public void put(int id, LatLongE6 c) {
-        coordinates.put(id, c);
+    fun put(id: Int, c: LatLongE6) {
+        coordinates[id] = c
     }
 
-    public LatLongE6 get(int key) {
-        return coordinates.get(key);
+    operator fun get(key: Int): LatLongE6? {
+        return coordinates[key]
     }
 }

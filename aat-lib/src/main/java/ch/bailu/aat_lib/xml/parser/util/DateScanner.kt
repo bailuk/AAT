@@ -1,102 +1,72 @@
-package ch.bailu.aat_lib.xml.parser.util;
+package ch.bailu.aat_lib.xml.parser.util
+
+import java.io.IOException
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.TimeZone
+
+class DateScanner(var timeMillis: Long) : AbsScanner() {
+    private var localOffsetMillis: Long = 0
+    private val minute: IntegerScanner = IntegerScanner()
+    private val hour: IntegerScanner = IntegerScanner()
+    private val seconds: DoubleScanner = DoubleScanner(3)
+    private var utcDateMillis: Long = 0
+    private val dateBuffer = IntArray(10)
+    private val localTimeZone: TimeZone = TimeZone.getTimeZone(Calendar.getInstance().timeZone.id)
+    private val utcDate: Calendar = GregorianCalendar()
 
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
-public class DateScanner extends AbsScanner {
-    // Localtime to UTC fix
-    private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
-    private final TimeZone localTimeZone;
-    private long localOffsetMillis;
-
-    private final Calendar utcDate;
-    private final IntegerScanner minute;
-    private final IntegerScanner hour;
-    private final DoubleScanner seconds;
-
-    private long millis;
-    private long utcDateMillis;
-    private final int[] dateBuffer = new int[10];
-
-    public DateScanner(long l) {
-
-        millis = l;
-        minute = new IntegerScanner();
-        hour = new IntegerScanner();
-        seconds = new DoubleScanner(3);
-
-        utcDateMillis = 0;
-
-        localTimeZone = TimeZone.getTimeZone(Calendar.getInstance().getTimeZone().getID());
-
-        utcDate = new GregorianCalendar();
-    }
-
-    @Override
-    public void scan(Stream stream) throws IOException {
-        boolean dateNeedsRescan=false;
-
-        stream.read();
-        stream.skipWhitespace();
-
-        for (int i=0; i < dateBuffer.length; i++) {
+    @Throws(IOException::class)
+    override fun scan(stream: Stream) {
+        var dateNeedsRescan = false
+        stream.read()
+        stream.skipWhitespace()
+        for (i in dateBuffer.indices) {
             if (dateBuffer[i] != stream.get()) {
-                dateBuffer[i]=stream.get();
-                dateNeedsRescan=true;
+                dateBuffer[i] = stream.get()
+                dateNeedsRescan = true
             }
-            stream.read();
+            stream.read()
         }
-
-        if (dateNeedsRescan) scanDate();
-        if (stream.haveA('T')) scanTime(stream);
-
-        if (stream.haveA('Z') == false) {
-            millis -= localOffsetMillis;
+        if (dateNeedsRescan) scanDate()
+        if (stream.haveA('T'.code)) scanTime(stream)
+        if (!stream.haveA('Z'.code)) {
+            timeMillis -= localOffsetMillis
         }
     }
 
-    public long getTimeMillis() {
-        return millis;
-    }
-
-    private void scanDate() {
-        int[] list = new int[3];
-        int x=0;
-
-        for (int aDateBuffer : dateBuffer) {
-            if (aDateBuffer == '-') {
-                x++;
+    private fun scanDate() {
+        val list = IntArray(3)
+        var x = 0
+        for (aDateBuffer in dateBuffer) {
+            if (aDateBuffer == '-'.code) {
+                x++
             } else {
-                list[x] *= 10;
-                list[x] += aDateBuffer - '0';
+                list[x] *= 10
+                list[x] += aDateBuffer - '0'.code
             }
         }
-
-        utcDate.clear();
-        utcDate.setTimeZone(UTC);
-        utcDate.set(list[0],list[1]-1,list[2]); // year, month (zero-based), day
-
-        utcDateMillis = utcDate.getTimeInMillis();
-        millis = utcDateMillis;
-
-        localOffsetMillis  = localTimeZone.getOffset(utcDateMillis);
+        utcDate.clear()
+        utcDate.timeZone = UTC
+        utcDate[list[0], list[1] - 1] = list[2] // year, month (zero-based), day
+        utcDateMillis = utcDate.timeInMillis
+        timeMillis = utcDateMillis
+        localOffsetMillis = localTimeZone.getOffset(utcDateMillis).toLong()
     }
 
-
-    private void scanTime(Stream stream) throws IOException {
-        hour.scan(stream);
-        minute.scan(stream);
-        seconds.scan(stream);
-
-
-        millis = seconds.getInt();
-        millis += minute.getInteger()*60*1000;
-        millis += hour.getInteger()*60*60*1000;
-
-        millis += utcDateMillis;
+    @Throws(IOException::class)
+    private fun scanTime(stream: Stream) {
+        hour.scan(stream)
+        minute.scan(stream)
+        seconds.scan(stream)
+        timeMillis = seconds.int.toLong()
+        timeMillis += (minute.integer * 60 * 1000).toLong()
+        timeMillis += (hour.integer * 60 * 60 * 1000).toLong()
+        timeMillis += utcDateMillis
     }
 
+    companion object {
+        // Localtime to UTC fix
+        private val UTC = TimeZone.getTimeZone("UTC")
+    }
 }

@@ -1,37 +1,21 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import java.io.IOException
 
-import java.io.IOException;
-
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class TimeParser extends TagParser {
-
-    public TimeParser() {
-        super(GpxConstants.QNAME_TIME);
+class TimeParser : TagParser(GpxConstants.QNAME_TIME) {
+    @Throws(IOException::class)
+    public override fun parseText(parser: XmlPullParser, scanner: Scanner) {
+        scanner.dateTime.scan(parser.text)
     }
 
-    @Override
-    public void parseText(XmlPullParser parser, Scanner scanner) throws IOException {
-        scanner.dateTime.scan(parser.getText());
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {}
+    public override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return false
     }
 
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    public boolean parseTags(XmlPullParser parser, Scanner scanner) {
-        return false;
-    }
-
-    @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) {
-
-    }
+    public override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
 }

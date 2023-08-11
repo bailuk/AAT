@@ -1,55 +1,54 @@
-package ch.bailu.aat_lib.util.net;
+package ch.bailu.aat_lib.util.net
 
+import java.net.MalformedURLException
+import java.net.URL
+import javax.annotation.Nonnull
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.annotation.Nonnull;
-
-
-public class URX {
-
-    private URL url = null;
-    private String string = null;
-
-    private MalformedURLException urlException = null;
-
-    public URX(URL u) {
-        url = u;
-    }
-    public URX(String s) {
-        string = s;
-    }
+class URX(private val string: String) {
+    private var url: URL? = null
+    private var urlException: MalformedURLException? = null
 
 
     @Nonnull
-    @Override
-    public String toString() {
-        if (string == null) {
-            string = url.toString();
-        }
-
-        if (string == null) {
-            string = "";
-        }
-
-        return string;
+    override fun toString(): String {
+        return string
     }
 
-    public URL toURL() throws MalformedURLException {
-        if (urlException != null) {
-            throw urlException;
-        }
+    @Throws(MalformedURLException::class)
+    fun toURL(): URL {
+        throwIfException()
+        setURL()
 
+        return getUrlOrThrow()
+    }
+
+    private fun getUrlOrThrow(): URL {
+        val result = url
+
+        if (result == null) {
+            val exception = MalformedURLException(string)
+            urlException = exception
+            throw exception
+        } else {
+            return result
+        }
+    }
+
+    private fun throwIfException() {
+        val exception = urlException
+        if (exception != null) {
+            throw exception
+        }
+    }
+
+    private fun setURL() {
         if (url == null) {
             try {
-                url = new URL(toString());
-            } catch (MalformedURLException e) {
-                urlException = e;
-                throw urlException;
+                url = URL(toString())
+            } catch (e: MalformedURLException) {
+                urlException = e
+                throw e
             }
         }
-
-        return url;
     }
 }

@@ -1,18 +1,17 @@
-package ch.bailu.aat_lib.xml.parser.util;
+package ch.bailu.aat_lib.xml.parser.util
 
+import java.io.IOException
 
-import java.io.IOException;
+abstract class AbsScanner {
+    private val stringReader = SimpleStringReader()
+    private val stringStream = Stream(stringReader)
+    @Throws(IOException::class)
 
-public abstract class AbsScanner {
+    abstract fun scan(stream: Stream)
 
-    private final SimpleStringReader stringReader = new SimpleStringReader();
-    private final Stream stringStream = new Stream(stringReader);
-
-    public abstract void scan(Stream stream) throws IOException;
-
-
-    public void scan(String string) throws IOException {
-        stringReader.setString(string);
-        scan(stringStream);
+    @Throws(IOException::class)
+    fun scan(string: String) {
+        stringReader.setString(string)
+        scan(stringStream)
     }
 }

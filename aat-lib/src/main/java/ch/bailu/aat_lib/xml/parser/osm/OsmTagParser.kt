@@ -8,19 +8,20 @@ import java.io.IOException
 
 class OsmTagParser : TagParser(OsmConstants.T_TAG) {
     override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
+
     @Throws(IOException::class)
     override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {
-        val k = arrayOf<String?>("")
-        val v = arrayOf<String?>("")
+        var k = ""
+        var v = ""
 
         parser.parseAttributes { name, value ->
             if (equals(name, OsmConstants.A_KEY)) {
-                k[0] = value
+                k = value
             } else if (equals(name, OsmConstants.A_VALUE)) {
-                v[0] = value
+                v = value
             }
         }
-        scanner.tags.add(k[0], v[0])
+        scanner.tags.add(k, v)
     }
 
     override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {

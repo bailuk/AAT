@@ -1,40 +1,23 @@
-package ch.bailu.aat_lib.xml.parser.gpx;
+package ch.bailu.aat_lib.xml.parser.gpx
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.xml.parser.osm.TagParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserException
+import java.io.IOException
 
-import java.io.IOException;
+class SegParser : TagParser(GpxConstants.QNAME_TRACK_SEGMENT) {
+    private val trkPt: TagParser = TrkPtParser()
+    override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
+    override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {}
 
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.xml.parser.osm.TagParser;
-import ch.bailu.aat_lib.xml.parser.scanner.Scanner;
-
-public class SegParser extends TagParser {
-    private final TagParser trkpt = new TrkptParser();
-
-    public SegParser() {
-        super(GpxConstants.QNAME_TRACK_SEGMENT);
+    @Throws(IOException::class, XmlPullParserException::class)
+    public override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
+        return trkPt.parse(parser, scanner)
     }
 
-    @Override
-    protected void parseText(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-    @Override
-    protected void parseAttributes(XmlPullParser parser, Scanner scanner) {
-
-    }
-
-
-    @Override
-    public boolean parseTags(XmlPullParser parser, Scanner scanner) throws IOException, XmlPullParserException {
-        return trkpt.parse(parser, scanner);
-
-    }
-
-    @Override
-    public void parsed(XmlPullParser parser, Scanner scanner) {
-        scanner.trackParsed.onHaveSegment();
+    public override fun parsed(parser: XmlPullParser, scanner: Scanner) {
+        scanner.trackParsed.onHaveSegment()
     }
 }
