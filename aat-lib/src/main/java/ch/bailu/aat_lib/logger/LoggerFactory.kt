@@ -1,8 +1,8 @@
-package ch.bailu.aat_lib.logger;
+package ch.bailu.aat_lib.logger
 
-public interface LoggerFactory {
-    Logger warn();
-    Logger info();
-    Logger debug();
-    Logger error();
+interface LoggerFactory {
+    fun warn(): Logger
+    fun info(): Logger
+    fun debug(): Logger
+    fun error(): Logger
 }

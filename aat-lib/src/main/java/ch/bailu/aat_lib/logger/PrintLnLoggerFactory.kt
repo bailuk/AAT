@@ -1,23 +1,19 @@
-package ch.bailu.aat_lib.logger;
+package ch.bailu.aat_lib.logger
 
-public class PrintLnLoggerFactory implements LoggerFactory {
-    @Override
-    public Logger warn() {
-        return new PrintLnLogger("WARN");
+class PrintLnLoggerFactory : LoggerFactory {
+    override fun warn(): Logger {
+        return PrintLnLogger("WARN")
     }
 
-    @Override
-    public Logger info() {
-        return new PrintLnLogger("INFO");
+    override fun info(): Logger {
+        return PrintLnLogger("INFO")
     }
 
-    @Override
-    public Logger debug() {
-        return new PrintLnLogger("DEBUG");
+    override fun debug(): Logger {
+        return PrintLnLogger("DEBUG")
     }
 
-    @Override
-    public Logger error() {
-        return new PrintLnLogger("ERROR", System.err);
+    override fun error(): Logger {
+        return PrintLnLogger("ERROR", System.err)
     }
 }
