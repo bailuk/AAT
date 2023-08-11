@@ -95,6 +95,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             override fun bgOnProcess(appContext: AppContext): Long {
                 try {
                     filesToAdd = FilesInDirectory(directory)
+
                     compareFileSystemWithDatabase()
                     removeFilesFromDatabase()
                 } catch (e: Exception) {
