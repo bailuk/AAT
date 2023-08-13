@@ -31,14 +31,15 @@ public class AppDirectory  {
     public static final String DIR_OVERPASS = "query/overpass";
     public static final String DIR_POI = "query/poi";
 
-    public static final String DIR_TEST = "test";
-
     public static final String DIR_CACHE = "cache";
-    public static final String FILE_CACHE_DB="summary.db";
-    public static final String FILE_CACHE_MVDB="summary.mv.db";
+    public static final String FILE_CACHE_DB ="summary.db";
+    public static final String FILE_CACHE_MVDB ="summary.mv.db";
 
     private static final String DIR_EDIT = "overlay/draft";
-    private static final String FILE_DRAFT= "draft.gpx";
+    public static final String FILE_EDIT_BACKUP = "edit.txt";
+    private static final String FILE_DRAFT = "draft.gpx";
+
+    public static final String FILE_SELECTION = "selection.txt";
 
     public static Foc getEditorDraft(SolidDataDirectory sdirectory) {
         return getDataDirectory(sdirectory, DIR_EDIT).child(FILE_DRAFT);

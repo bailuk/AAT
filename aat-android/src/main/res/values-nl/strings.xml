@@ -212,12 +212,12 @@
     <string name="file_send">Verstuur…</string>
     <string name="file_view">Bekijk/Bewerk…</string>
     <string name="file_copy">Kopieer naar…</string>
-    <string name="file_exists">\u0020bestaat al!</string>
-    <string name="file_is_writeable">\u0020is schrijfbaar.</string>
-    <string name="file_is_writeonly">\u0020is enkel schrijfbaar.</string>
-    <string name="file_is_readonly">\u0020is enkel leesbaar.</string>
-    <string name="file_is_missing">\u0020bestaat niet.</string>
-    <string name="file_is_denied">\u0020niet toegankelijk.</string>
+    <string name="file_exists">bestaat al!</string>
+    <string name="file_is_writeable">is schrijfbaar.</string>
+    <string name="file_is_writeonly">is enkel schrijfbaar.</string>
+    <string name="file_is_readonly">is enkel leesbaar.</string>
+    <string name="file_is_missing">bestaat niet.</string>
+    <string name="file_is_denied">niet toegankelijk.</string>
 
 
     <!-- Location menu -->
@@ -302,7 +302,7 @@
     <string name ="tt_p_distance_filter">Enkel een GPS sample loggen indien het zich op een minimale afstand bevindt van de vorige sample.</string>
     <string name ="tt_p_accuracy_filter">Enkel een GPS sample loggen indien het minimale nauwkeurigheid heeft.</string>
     <string name ="tt_p_missing_trigger">Zet tracker op autopauze indien het GPS signaal voor een bepaalde periode onderbroken is.</string>
-    
+
     <!-- Errors -->
     <string name="error_integer">Verkeerde input, enkel gehele getallen zijn toegestaan.\n\"%s\"</string>
     <string name ="error_integer_positive">Gewicht moet tussen 1 en 999 zijn.</string>

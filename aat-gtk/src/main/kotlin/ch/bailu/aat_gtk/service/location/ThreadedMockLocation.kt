@@ -13,29 +13,35 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 
 
+/**
+ * TODO move to lib and merge with MockLocation
+ */
 class ThreadedMockLocation(
     locationService: LocationServiceInterface,
     item: LocationStackItem,
     storage: StorageInterface,
     private val foc: FocFactory
 ) :
+
     LocationStackChainedItem(item) {
-    private var serviceState = StateID.NOSERVICE
+    private var serviceState = StateID.NO_SERVICE
+
     private val innerThread = InnerThread()
+
     private val lock = locationService
     private val smock = SolidMockLocationFile(storage)
     private var reload = true
     private var waiting = false
     private var running = true
 
-    private var file = foc.toFoc(smock.valueAsString)
+    private var file = foc.toFoc(smock.getValueAsString())
 
     init {
         passState(StateID.WAIT)
         innerThread.start()
         storage.register { _, key ->
             if (smock.hasKey(key)) {
-                file = foc.toFoc(smock.valueAsString)
+                file = foc.toFoc(smock.getValueAsString())
                 reload = true
                 synchronized(innerThread) {
                     (innerThread as Object).notifyAll()
@@ -67,7 +73,7 @@ class ThreadedMockLocation(
                     node = node.next
                     if (node is GpxPointNode) {
                         try {
-                            sleep(node.timeDelta)
+                            sleep(node.getTimeDelta())
                         } catch (e: InterruptedException) {
                             waiting = true
                             AppLog.e(this, e)
@@ -91,7 +97,7 @@ class ThreadedMockLocation(
 
         }
 
-        private fun loadTrack(foc: Foc) : Node {
+        private fun loadTrack(foc: Foc) : Node? {
             val list = GpxListReader(foc , AutoPause.NULL).gpxList
             return list.pointList.first
         }

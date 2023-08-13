@@ -31,7 +31,7 @@ class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
                         })
                     }
                 }, solid.key
-            )
+            ) {}
         )
     }
 

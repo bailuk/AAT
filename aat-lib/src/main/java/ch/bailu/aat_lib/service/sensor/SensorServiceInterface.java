@@ -1,11 +1,14 @@
 package ch.bailu.aat_lib.service.sensor;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import ch.bailu.aat_lib.gpx.GpxInformation;
 
 public interface SensorServiceInterface {
-    GpxInformation getInformationOrNull(int infoID);
+    @Nullable GpxInformation getInformationOrNull(int infoID);
 
-    GpxInformation getInformation(int iid);
+    @Nonnull GpxInformation getInfo(int iid);
 
     void updateConnections();
 

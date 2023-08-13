@@ -12,12 +12,13 @@ public abstract class AbsSolidType implements SolidTypeInterface {
 
     public String getIconResource() {return "";}
 
+    @Nonnull
     @Override
     public String getLabel() {
         return NULL_LABEL;
     }
 
-    public abstract void setValueFromString(String s) throws ValidationException;
+    public abstract void setValueFromString(String string) throws ValidationException;
 
     @Override
     public boolean hasKey(String s) {

@@ -4,10 +4,7 @@ package ch.bailu.aat_lib.preferences;
 import ch.bailu.aat_lib.resources.Res;
 
 public class SolidBoolean extends SolidStaticIndexList {
-
-
     private static String[] label;
-
 
     private static String[] generateLabel() {
         if (label == null) {
@@ -23,12 +20,8 @@ public class SolidBoolean extends SolidStaticIndexList {
         super(s, k, generateLabel());
     }
 
-    public boolean isEnabled() {
-        return getValue();
-    }
-
     public boolean getValue() {
-        return getIndex()==1;
+        return getIndex() == 1;
     }
 
     public void setValue(boolean v) {
@@ -36,4 +29,7 @@ public class SolidBoolean extends SolidStaticIndexList {
         else   setIndex(0);
     }
 
+    public boolean isEnabled() {
+        return getValue();
+    }
 }

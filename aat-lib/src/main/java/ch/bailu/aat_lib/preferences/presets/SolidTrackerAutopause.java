@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.presets;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidAutopause;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -11,6 +13,7 @@ public class SolidTrackerAutopause extends SolidAutopause {
         super(s, KEY, i);
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_tracker_autopause();

@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -37,6 +39,7 @@ public class SolidDistanceFilter extends SolidIndexList {
     }
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_distance_filter();

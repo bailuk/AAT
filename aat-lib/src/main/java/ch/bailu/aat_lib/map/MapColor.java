@@ -72,7 +72,7 @@ public final class MapColor {
             return ARGB.MAGENTA; //AppTheme.getHighlightColor3();
 
 
-        if (iid == InfoID.FILEVIEW)
+        if (iid == InfoID.FILE_VIEW)
             return AppColor.HL_BLUE;
 
 

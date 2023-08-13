@@ -36,16 +36,6 @@ class NodeInfo {
         box.visible = true
     }
 
-    fun showLeft() {
-        box.halign = Align.START
-        box.visible = true
-    }
-
-    fun showRight() {
-        box.halign = Align.END
-        box.visible = true
-    }
-
     fun hide() {
         box.visible = false
     }
@@ -53,7 +43,7 @@ class NodeInfo {
     fun displayNode(info: GpxInformation, node: GpxPointNode, index: Int) {
         markupBuilder.appendInfo(info, index)
         markupBuilder.appendNode(node, info)
-        markupBuilder.appendAttributes(node.attributes)
+        markupBuilder.appendAttributes(node.getAttributes())
 
         label.setMarkup(markupBuilder.toString())
         markupBuilder.clear()

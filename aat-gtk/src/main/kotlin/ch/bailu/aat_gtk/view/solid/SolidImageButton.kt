@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -13,7 +12,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
     val button = Button()
 
     init {
-        setIcon(solid.iconResource)
+        button.setIconName(solid.iconResource)
 
         button.onClicked {
             solid.cycle()
@@ -24,8 +23,8 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            setIcon(solid.iconResource)
-            AppLog.i(this, solid.valueAsString)
+            button.setIconName(solid.iconResource)
+            AppLog.i(this, solid.getValueAsString())
         }
     }
 
@@ -35,9 +34,5 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
     override fun onDetached() {
         solid.unregister(this)
-    }
-
-    private fun setIcon(imageResource: String) {
-        button.setIcon(imageResource)
     }
 }

@@ -2,6 +2,8 @@ package ch.bailu.aat_lib.preferences.system;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidFile;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.foc.FocFactory;
@@ -12,6 +14,7 @@ public abstract class SolidDataDirectoryDefault extends SolidFile {
         super(s, SolidDataDirectoryDefault.class.getSimpleName(),focFactory);
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         String r = super.getValueAsString();

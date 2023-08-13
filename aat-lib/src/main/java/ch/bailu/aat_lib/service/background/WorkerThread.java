@@ -1,22 +1,21 @@
 package ch.bailu.aat_lib.service.background;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.InsideContext;
 
 public class WorkerThread extends ProcessThread {
 
     private final AppContext appContext;
 
 
-    public WorkerThread(String name, AppContext sc, int limit) {
+    public WorkerThread(String name, AppContext appContext, int limit) {
         super(name, limit);
-        appContext = sc;
+        this.appContext = appContext;
     }
 
 
-    public WorkerThread(String name, AppContext sc, HandleStack q) {
+    public WorkerThread(String name, AppContext appContext, HandleStack q) {
         super(name, q);
-        appContext = sc;
+        this.appContext = appContext;
     }
 
     @Override
@@ -25,15 +24,10 @@ public class WorkerThread extends ProcessThread {
     @Override
     public void bgProcessHandle(final BackgroundTask handle) {
         if (handle.canContinue()) {
-
-            new InsideContext(appContext.getServices()) {
-                @Override
-                public void run() {
-                    long size = handle.bgOnProcess(appContext);
-                    bgOnHandleProcessed(handle, size);
-
-                }
-            };
+            appContext.getServices().insideContext(()-> {
+                long size = handle.bgOnProcess(appContext);
+                bgOnHandleProcessed(handle, size);
+            });
         }
     }
 }

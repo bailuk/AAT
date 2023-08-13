@@ -32,7 +32,7 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
 
     init {
         try {
-            val appId = AppConfig.getInstance().applicationId
+            val appId = AppConfig.getInstance().appId
             Simple.newWithThresholds(Str(appId), AccuracyLevel.EXACT, 0, 0, null,
                 { self, _ , res: AsyncResult, _ ->
                     try {
@@ -44,14 +44,14 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
                         this.client = client
                         updateStateAndLocation(simple.location)
                     } catch (e: java.lang.Exception) {
-                        passState(StateID.NOSERVICE)
+                        passState(StateID.NO_SERVICE)
                         AppLog.e(this, "Failed to connect to GeoClue2 service")
                     }
                     self.unregister()
                 }, null
             )
         } catch (e: java.lang.Exception) {
-            passState(StateID.NOSERVICE)
+            passState(StateID.NO_SERVICE)
             AppLog.e(this, "Failed to initialize GeoClue2")
         }
     }

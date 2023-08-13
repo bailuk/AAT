@@ -10,6 +10,6 @@ public interface Timer {
      * @param run  function to call
      * @param interval delay before calling function
      */
-    void kick(Runnable run, long interval);
+    void kick(long interval, Runnable run);
     void cancel();
 }

@@ -58,7 +58,7 @@ class TPVLocationInformation(private val tpv: TPVObject) : LocationInformation()
         return 0
     }
 
-    override fun getBoundingBox(): BoundingBoxE6? {
+    override fun getBoundingBox(): BoundingBoxE6 {
         return BoundingBoxE6.NULL_BOX
     }
 
@@ -83,7 +83,7 @@ class TPVLocationInformation(private val tpv: TPVObject) : LocationInformation()
     }
 
     override fun getCreationTime(): Long {
-        return timeStamp
+        return getTimeStamp()
     }
 
     override fun setAltitude(altitude: Double) {}

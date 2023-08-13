@@ -22,8 +22,8 @@ class GtkBroadcaster : Broadcaster {
     }
 
     @Synchronized
-    override fun broadcast(signal: String, vararg args: String) {
-        val observers = signals[signal]?.toTypedArray()
+    override fun broadcast(action: String, vararg args: String) {
+        val observers = signals[action]?.toTypedArray()
 
         if (observers != null) {
             // TODO AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
@@ -36,16 +36,16 @@ class GtkBroadcaster : Broadcaster {
     }
 
     @Synchronized
-    override fun register(observer: BroadcastReceiver, signal: String) {
-        unregister(observer)
-        signals.putIfAbsent(signal, ArrayList())
-        signals[signal]?.add(observer)
+    override fun register(broadcastReceiver: BroadcastReceiver, action: String) {
+        unregister(broadcastReceiver)
+        signals.putIfAbsent(action, ArrayList())
+        signals[action]?.add(broadcastReceiver)
     }
 
     @Synchronized
-    override fun unregister(onLocation: BroadcastReceiver) {
+    override fun unregister(broadcastReceiver: BroadcastReceiver) {
         for (observers in signals.values) {
-            observers.remove(onLocation)
+            observers.remove(broadcastReceiver)
         }
     }
 }

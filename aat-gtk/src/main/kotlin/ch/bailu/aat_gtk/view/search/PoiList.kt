@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.search
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
@@ -25,14 +26,17 @@ class PoiList(
 
     private val list = ListView(listIndex.inSelectionModel(), SignalListItemFactory().apply {
         onSetup {
-            items[it] = PoiListItemView(it)
+            val item = ListItem(it.cast())
+            items[item] = PoiListItemView(item)
         }
 
         onBind {
+            val item = ListItem(it.cast())
+
             val view = items[it]
 
             if (view is PoiListItemView) {
-                val model = filterList.getFromVisible(it.position)
+                val model = filterList.getFromVisible(item.position)
                 if (model is PoiListItem) {
                     view.set(model)
                 }
@@ -65,12 +69,7 @@ class PoiList(
     }
 
     private fun readList() {
-        FilterListUtil.readList(filterList, GtkAppContext, sdatabase.valueAsString, selected)
-        listIndex.size = filterList.sizeVisible()
-    }
-
-    fun updateList() {
-        filterList.filterAll()
+        FilterListUtil.readList(filterList, GtkAppContext, sdatabase.getValueAsString(), selected)
         listIndex.size = filterList.sizeVisible()
     }
 
@@ -88,5 +87,13 @@ class PoiList(
             }
         }
         return export
+    }
+
+    fun writeSelected() {
+        try {
+            FilterListUtil.writeSelected(filterList, selected)
+        } catch (e: Exception) {
+            AppLog.e(this, e)
+        }
     }
 }

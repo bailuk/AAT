@@ -1,11 +1,13 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.FileDialog
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.Directory
+import ch.bailu.aat_gtk.view.dialog.FileDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile
-import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Label
@@ -19,7 +21,8 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.key))
-            append(ToDo.translate("File dialog..."), "app.showSelectFileDialog${solid.key}")
+            append("${Res.str().file_dialog()}…" , "app.get${solid.key}")
+            append("${Res.str().file_directory_open()}…", "app.open${solid.key}")
         }
     }
 
@@ -39,19 +42,31 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                         append(label)
                     }
                 }, solid.key
-            )
+            ) {}
         )
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "showSelectFileDialog${solid.key}") {
+        MenuHelper.setAction(app, "get${solid.key}") {
             FileDialog()
-                .title(solid.label)
+                .title(solid.getLabel())
+                .path(pathFromFile(solid.valueAsFile))
                 .onResponse {
                     if (it.isNotEmpty()) {
                         solid.setValueFromString(it)
                     }
                 }.show(window)
             }
+        MenuHelper.setAction(app, "open${solid.key}") {
+            Directory.openExternal(pathFromFile(solid.valueAsFile))
+        }
+    }
+
+    private fun pathFromFile(file: Foc): String {
+        return if (file.isFile) {
+            file.parent().path
+        } else {
+            file.path
+        }
     }
 }

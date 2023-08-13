@@ -10,26 +10,26 @@ public class SolidMapPosition {
     private static final String LONGITUDE_SUFFIX ="longitude";
     private static final String LATITUDE_SUFFIX ="latitude";
     private static final String ZOOM_SUFFIX ="zoom";
-    
-    public static LatLongE6 loadPosition(StorageInterface storage, String key) {
+
+    public static LatLongE6 readPosition(StorageInterface storage, String key) {
         return new LatLongE6(
                 storage.readInteger(key + LATITUDE_SUFFIX),
                 storage.readInteger(key + LONGITUDE_SUFFIX));
     }
-    
-    public static int loadZoomLevel(StorageInterface storage, String key) {
+
+    public static int readZoomLevel(StorageInterface storage, String key) {
         return storage.readInteger(key + ZOOM_SUFFIX);
     }
 
-    public static void saveZoomLevel(StorageInterface storage, String key, int zoom) {
+    public static void writeZoomLevel(StorageInterface storage, String key, int zoom) {
         storage.writeInteger(key + ZOOM_SUFFIX, zoom);
     }
 
-    public static void savePosition(StorageInterface storage, String key, LatLong latLong) {
-        savePosition(storage, key, new LatLongE6(latLong));
+    public static void writePosition(StorageInterface storage, String key, LatLong latLong) {
+        writePosition(storage, key, new LatLongE6(latLong));
     }
 
-    public static void savePosition(StorageInterface storage, String key, LatLongInterface latLong) {
+    public static void writePosition(StorageInterface storage, String key, LatLongInterface latLong) {
         storage.writeInteger(key + LATITUDE_SUFFIX, latLong.getLatitudeE6());
         storage.writeInteger(key + LONGITUDE_SUFFIX, latLong.getLongitudeE6());
     }

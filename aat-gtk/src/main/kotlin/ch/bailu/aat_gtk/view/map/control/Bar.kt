@@ -3,10 +3,14 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.lib.extensions.setIcon
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
 import ch.bailu.aat_lib.map.edge.Position
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Align
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Widget
+import ch.bailu.gtk.type.Str
 
 open class Bar(private val pos: Position): EdgeViewInterface {
     companion object {
@@ -41,10 +45,10 @@ open class Bar(private val pos: Position): EdgeViewInterface {
         addCssClass(Strings.mapControl)
     }
 
-    fun add(image: String): Button {
+    fun add(iconName: Str): Button {
         val button = Button()
         add(button)
-        button.setIcon(image)
+        button.iconName = iconName
         return button
     }
 

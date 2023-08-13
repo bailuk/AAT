@@ -7,7 +7,6 @@ import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.Layer;
 
 import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class LayerWrapper extends Layer {
@@ -25,12 +24,8 @@ public class LayerWrapper extends Layer {
 
     @Override
     public void draw(BoundingBox bounding, byte zoom, Canvas canvas, Point topLeftPoint) {
-        new InsideContext(services) {
-            @Override
-            public void run() {
-                layer.drawInside(mcontext);
-            }
-        };
+        services.insideContext(()-> layer.drawInside(mcontext));
+
     }
 
     public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {

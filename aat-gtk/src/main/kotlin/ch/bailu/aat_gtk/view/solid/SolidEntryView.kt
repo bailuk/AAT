@@ -14,13 +14,13 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
     private val editable = Editable(entry.cast())
 
     init {
-        label.setText(solid.label)
+        label.setText(solid.getLabel())
         label.xalign = 0f
 
         layout.append(label)
         layout.append(entry)
 
-        entry.buffer.setText(Str(solid.valueAsString),-1)
+        entry.buffer.setText(Str(solid.getValueAsString()),-1)
 
         editable.onChanged {
             solid.setValueFromString(entry.buffer.text.toString())
@@ -29,7 +29,7 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            entry.buffer.setText(Str(solid.valueAsString),-1)
+            entry.buffer.setText(Str(solid.getValueAsString()),-1)
         }
     }
 }

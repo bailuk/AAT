@@ -5,7 +5,11 @@ import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.map.*
+import ch.bailu.aat_lib.map.Attachable
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapViewInterface
+import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.map.NodeBitmap
 import ch.bailu.aat_lib.map.layer.LayerWrapper
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.map.layer.MapPositionLayer
@@ -26,7 +30,6 @@ import org.mapsforge.map.gtk.view.MapView
 import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.model.IMapViewPosition
 import org.mapsforge.map.model.common.Observer
-import java.util.*
 
 class GtkCustomMapView (
     private val appContext: AppContext,
@@ -38,7 +41,9 @@ class GtkCustomMapView (
         private const val SHOW_DEBUG_LAYERS = false
     }
 
-    private val backgroundContext: GtkMapContext = GtkMapContext(this, KEY, NodeBitmap.get(GtkAppDensity, appContext))
+    private val density = GtkAppDensity()
+
+    private val backgroundContext: GtkMapContext = GtkMapContext(this, KEY, NodeBitmap.get(density, appContext), density)
     private val foregroundContext: GtkMapContextForeground
 
     private val layers = ArrayList<MapLayerInterface>(10)
@@ -47,10 +52,10 @@ class GtkCustomMapView (
     private val stack: MapsForgeTileLayerStackConfigured
 
     init {
-        model.displayModel.setFixedTileSize(SolidTileSize(appContext.storage, GtkAppDensity).getTileSize())
+        model.displayModel.setFixedTileSize(SolidTileSize(appContext.storage, density).tileSize)
 
-        foregroundContext = GtkMapContextForeground(appContext,
-            MapsForgeMetrics(this, GtkAppDensity), backgroundContext, layers)
+        foregroundContext = GtkMapContextForeground(appContext, density,
+            MapsForgeMetrics(this, density), backgroundContext, layers)
         addLayer(backgroundContext)
         mapScaleBar.isVisible = false
         if (SHOW_DEBUG_LAYERS) {

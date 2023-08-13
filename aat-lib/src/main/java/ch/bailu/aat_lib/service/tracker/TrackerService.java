@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.tracker;
 
+import org.jetbrains.annotations.NotNull;
+
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.dispatcher.Broadcaster;
@@ -23,7 +25,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
 
 
     @Override
-    public synchronized GpxInformation getLoggerInformation() {
+    public synchronized GpxInformation getInfo() {
         return internal.logger;
     }
 
@@ -31,7 +33,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     private final BroadcastReceiver onLocation = new BroadcastReceiver() {
 
         @Override
-        public void onReceive(String ...args) {
+        public void onReceive(@NotNull String... args) {
             internal.getState().updateTrack();
         }
     };
@@ -91,7 +93,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     }
 
     @Override
-    public synchronized int getStartStopIconID() {
-        return internal.getState().getStartStopIconID();
+    public synchronized String getStartStopIcon() {
+        return internal.getState().getStartStopIcon();
     }
 }

@@ -9,6 +9,11 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Switch
 import ch.bailu.gtk.type.Str
 
+/**
+ * TODO move to
+ * [SwitchRow](https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.SwitchRow.html)
+ * ADW 1.4
+ */
 class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesChanged {
     val layout = Box(Orientation.VERTICAL, 5)
 
@@ -17,9 +22,8 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
     private val toggleBox = Box(Orientation.HORIZONTAL, 0)
     private val toggle = Switch()
 
-
     init {
-        label.setText(solid.label)
+        label.setText(solid.getLabel())
         label.xalign = 0f
         layout.append(label)
         layout.append(toggleBox)

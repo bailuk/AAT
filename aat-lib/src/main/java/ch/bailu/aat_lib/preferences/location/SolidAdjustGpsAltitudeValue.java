@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.general.SolidUnit;
 import ch.bailu.aat_lib.resources.Res;
@@ -18,6 +20,7 @@ public class SolidAdjustGpsAltitudeValue extends SolidAltitude {
     }
 
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_adjust_altitude_by();

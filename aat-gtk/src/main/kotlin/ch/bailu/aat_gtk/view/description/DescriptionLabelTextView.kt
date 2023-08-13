@@ -6,14 +6,14 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 
 class DescriptionLabelTextView(private val description: ContentDescription)
-    : LabelTextView(description.label), OnContentUpdatedInterface {
+    : LabelTextView(description.getLabel()), OnContentUpdatedInterface {
 
     init {
-        text = description.valueAsString
+        text = description.getValueAsString()
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         description.onContentUpdated(iid, info)
-        text = description.valueAsString
+        text = description.getValueAsString()
     }
 }

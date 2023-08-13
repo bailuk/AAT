@@ -4,7 +4,10 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    namespace = "ch.bailu.aat"
+    compileSdk = 33
+
+    buildFeatures.buildConfig = true
 
     /* Set this to whatever version is installed on the GitHub build environment
     and hope it works everywhere.
@@ -16,8 +19,8 @@ android {
     val appId : String by project
 
     defaultConfig {
-        minSdk = 14
-        targetSdk = 29
+        minSdk = 22
+        targetSdk = 33
         versionCode = 37
         versionName = appVersionName
         applicationId = appId
@@ -72,9 +75,6 @@ dependencies {
      */
     val focVersion : String by project
     implementation("com.github.bailuk.foc:foc-android:$focVersion")
-    //implementation("ch.bailu:foc:$focVersion")
-    //implementation("ch.bailu:foc-android:$focVersion")
-
 
 
     /*
@@ -97,19 +97,27 @@ dependencies {
     implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-arm64-v8a")
     implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86")
     implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86_64")
+    testImplementation("org.testng:testng:6.9.6")
 
     // Acra
-    val acraVersion = "5.5.0"
+    val acraVersion = "5.7.0"
     implementation ("ch.acra:acra-mail:$acraVersion")
     implementation ("ch.acra:acra-dialog:$acraVersion")
 
 
     // test
-    // Required -- JUnit 4 framework
-    testImplementation ("junit:junit:4.13.2")
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     // Optional -- Robolectric environment
-    testImplementation("androidx.test:core:1.4.0")
+    testImplementation("androidx.test:core:1.5.0")
     // Optional -- Mockito framework
-    testImplementation ("org.mockito:mockito-core:1.10.19")
+    // testImplementation ("org.mockito:mockito-core:1.10.19")
 
+}
+
+
+tasks {
+    withType(AbstractCompile::class) {
+        dependsOn(":ci:generateImageMapping")
+    }
 }

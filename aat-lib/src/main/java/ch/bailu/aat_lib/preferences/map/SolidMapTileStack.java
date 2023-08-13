@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.map.tile.source.ElevationSource;
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
 import ch.bailu.aat_lib.map.tile.source.Source;
@@ -28,7 +30,6 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.TRAIL_HIKING,
             DownloadSource.TRAIL_MTB,
             DownloadSource.TRAIL_CYCLING,
-            DownloadSource.MAPNIK_NO_TLS
     };
 
 
@@ -80,6 +81,7 @@ public final class SolidMapTileStack extends SolidCheckList {
         enabledArray[i].setValue(isChecked);
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_map();

@@ -33,7 +33,6 @@ dependencies {
     implementation ("org.mapsforge:mapsforge-map-reader:$mapsForgeVersion")
     api ("org.mapsforge:mapsforge-themes:$mapsForgeVersion")
 
-    // MapsForge POI TODO change to implementation after import of android code
     api ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
 
     /**
@@ -57,7 +56,7 @@ dependencies {
      *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 
     /**
      * https://mvnrepository.com/artifact/com.google.openlocationcode/openlocationcode
@@ -67,6 +66,9 @@ dependencies {
 }
 
 
-tasks.compileJava() {
-    dependsOn(":ci:property2config")
+tasks {
+    withType(AbstractCompile::class) {
+        dependsOn(":ci:property2config")
+        dependsOn(":ci:generateStrings")
+    }
 }

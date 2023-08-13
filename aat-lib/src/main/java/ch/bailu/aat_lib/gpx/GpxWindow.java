@@ -1,7 +1,8 @@
 package ch.bailu.aat_lib.gpx;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
 
 public abstract class GpxWindow implements GpxDeltaInterface {
@@ -27,7 +28,7 @@ public abstract class GpxWindow implements GpxDeltaInterface {
     }
 
     private void trim() {
-        while (overLmit() && first != last && first.getNext() instanceof GpxPointNode) {
+        while (overLimit() && first != last && first.getNext() instanceof GpxPointNode) {
             timeDeltaMillis -= first.getTimeDelta();
             distance -= first.getDistance();
 
@@ -35,7 +36,7 @@ public abstract class GpxWindow implements GpxDeltaInterface {
         }
     }
 
-    protected abstract boolean overLmit();
+    protected abstract boolean overLimit();
 
     @Override
     public float getDistance() {
@@ -62,9 +63,10 @@ public abstract class GpxWindow implements GpxDeltaInterface {
         return timeDeltaMillis;
     }
 
+    @Nonnull
     @Override
     public BoundingBoxE6 getBoundingBox() {
-        return null;
+        return BoundingBoxE6.NULL_BOX;
     }
 
 }

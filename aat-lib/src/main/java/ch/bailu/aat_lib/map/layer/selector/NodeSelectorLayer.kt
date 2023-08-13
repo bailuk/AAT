@@ -29,9 +29,9 @@ class NodeSelectorLayer(
     }
 
 
-    override fun setSelectedNode(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
+    override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         for (observer in observers) {
-            observer.onNodeSelected(IID, info, node, index)
+            observer.onNodeSelected(iid, info, node, index)
         }
     }
 }

@@ -14,7 +14,7 @@ public class GpxDistanceWindow extends GpxWindow {
 
 
     @Override
-    protected boolean overLmit() {
+    protected boolean overLimit() {
         return getDistance() > distanceLimit;
     }
 

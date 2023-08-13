@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause;
 
@@ -17,7 +19,7 @@ public final class AutopauseTrigger extends LocationStackChainedItem {
     public void close() {}
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
 
 
         float speed = location.getSpeed();

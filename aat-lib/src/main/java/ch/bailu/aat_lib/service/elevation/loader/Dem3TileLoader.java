@@ -1,6 +1,8 @@
 package ch.bailu.aat_lib.service.elevation.loader;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 
 import javax.annotation.Nonnull;
@@ -49,7 +51,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@NotNull String... args) {
             String id = BroadcastData.getFile(args);
             Dem3Tile tile = tiles.get(id);
 
@@ -116,7 +118,7 @@ public final class Dem3TileLoader implements Closeable {
 
     private void startTimer() {
         timer.cancel();
-        timer.kick(timeout, MILLIS);
+        timer.kick(MILLIS, timeout);
     }
 
     private void stopTimer() {

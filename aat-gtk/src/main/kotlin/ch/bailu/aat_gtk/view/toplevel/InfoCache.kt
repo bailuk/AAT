@@ -17,7 +17,7 @@ class InfoCache : OnContentUpdatedInterface {
         return getValueAt(indexOf(iid))
     }
 
-    fun getValueAt(index: Int): GpxInformation {
+    private fun getValueAt(index: Int): GpxInformation {
         val info = cache.getValueAt(index)
         if (info is GpxInformation) {
             return info
@@ -37,7 +37,7 @@ class InfoCache : OnContentUpdatedInterface {
         }
     }
 
-    fun indexOf(iid: Int): Int {
+    private fun indexOf(iid: Int): Int {
         return cache.indexOfKey(iid)
     }
 

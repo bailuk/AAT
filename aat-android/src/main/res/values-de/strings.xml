@@ -10,6 +10,8 @@
     <string name="pick">Auswählen (SAF)…</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
+    <string name="files">Dateien</string>
+    <string name="load">Laden</string>
 
 
     <!-- GPS / Tracker-->
@@ -173,11 +175,11 @@
     <string name="file_rename">Datei umbenenen</string>
     <string name="file_send">Senden…</string>
     <string name="file_view">Anzeigen/Bearbeiten…</string>
-    <string name="file_is_writeable">: lesen und schreiben.</string>
-    <string name="file_is_writeonly">: nur lesen.</string>
-    <string name="file_is_readonly">: nur lesen.</string>
-    <string name="file_is_missing">\u0020existiert nicht.</string>
-    <string name="file_is_denied">: kein Zugriff.</string>
+    <string name="file_is_writeable">lesen und schreiben.</string>
+    <string name="file_is_writeonly">nur lesen.</string>
+    <string name="file_is_readonly">nur lesen.</string>
+    <string name="file_is_missing">existiert nicht.</string>
+    <string name="file_is_denied">kein Zugriff.</string>
 
 
     <!-- Location menu -->

@@ -6,13 +6,17 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 interface UiController {
     fun showMap()
     fun showPoi()
-    fun showInMap(info: GpxInformation)
+    fun frameInMap(info: GpxInformation)
+    fun centerInMap(info: GpxInformation)
     fun load(info: GpxInformation)
     fun showCockpit()
     fun showDetail()
     fun showInList()
     fun showPreferencesMap()
-    fun back()
-    fun showContextBar()
     fun getMapBounding(): BoundingBoxE6
+    fun showFileList()
+    fun showPreferences()
+    fun showInDetail(infoID: Int)
+    fun loadIntoEditor(info: GpxInformation)
+    fun hideMap()
 }

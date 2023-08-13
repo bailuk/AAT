@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>ch.bailu.aat</id>
+
+    <name>AAT</name>
+    <summary>Activity tracker and map viewer</summary>
+
+    <metadata_license>MIT</metadata_license>
+    <project_license>GPL-3.0-or-later</project_license>
+
+    <supports>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+    </supports>
+
+    <description>
+        <p>
+            Track sportive activities while displaying them on cockpit and map view.
+            Store tracks in standard GPX format for sharing with other application.
+        </p>
+        <p>
+            Display offline as well as tile based maps. Tile based overlays for displaying cycle and hiking routes (Waymarked Trails)
+        </p>
+        <p>
+            Integration of Offline POI and Nominatim map search. Display Offline POIs from Mapsforge compatible Databases.
+        </p>
+        <p>
+            Simple GPX editor for quick route planning.
+            GPS independent altitude information and hill shading.
+        </p>
+    </description>
+
+    <url type="homepage">https://github.com/bailuk/AAT</url>
+
+    <screenshots>
+        <screenshot type="default">https://bailu.ch/aat/screens/screen-gtk.png</screenshot>
+    </screenshots>
+
+    <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
+    <custom>
+        <value key="Purism::form_factor">workstation</value>
+        <value key="Purism::form_factor">mobile</value>
+    </custom>
+
+</component>

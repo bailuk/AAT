@@ -1,6 +1,11 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Icons
+import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
+import ch.bailu.aat_lib.dispatcher.FileSourceInterface
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
@@ -10,31 +15,32 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
 
-class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Position.BOTTOM),
+class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<FileSourceInterface>, uiController: UiController) : Bar(Position.BOTTOM),
     OnContentUpdatedInterface{
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
     private var boundingCycle = 0
 
     init {
-        add("zoom-in-symbolic").onClicked { mcontext.mapView.zoomIn() }
-        add("zoom-out-symbolic").onClicked { mcontext.mapView.zoomOut() }
+        add(Icons.zoomInSymbolic).onClicked { mcontext.mapView.zoomIn() }
+        add(Icons.zoomOutSymbolic).onClicked { mcontext.mapView.zoomOut() }
         add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
-        add("zoom-fit-best-symbolic").onClicked {
+        add(Icons.zoomFitBestSymbolic).onClicked {
             if (nextInBoundingCycle()) {
                 val info = infoCache.getValueAt(boundingCycle)
 
                 if (info is GpxInformation) {
-                    val bounding = info.boundingBox
+                    val bounding = info.getBoundingBox()
                     val fileName = info.file.name
 
-                    if (bounding != null && fileName != null) {
+                    if (fileName != null) {
                         mcontext.mapView.frameBounding(bounding)
-                        AppLog.i(fileName)
+                        AppLog.i(this, fileName)
                     }
                 }
             }
         }
+        add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon(Icons.viewPagedSymbolic) }.overlay)
     }
 
     private fun nextInBoundingCycle(): Boolean {
@@ -45,7 +51,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface) : Bar(Posit
             if (boundingCycle >= infoCache.size()) boundingCycle = 0
 
             val info = infoCache.getValueAt(boundingCycle)
-            val boundingBox = info?.boundingBox
+            val boundingBox = info?.getBoundingBox()
             val pointList = info?.gpxList?.pointList
 
             if (boundingBox != null && pointList != null && boundingBox.hasBounding() && pointList.size() > 0) {

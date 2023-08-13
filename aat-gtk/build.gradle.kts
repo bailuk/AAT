@@ -2,7 +2,7 @@ plugins {
     application
 
     // https://imperceptiblethoughts.com/shadow/getting-started
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow")
 
     // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
     kotlin("jvm")
@@ -20,25 +20,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.guardsquare:proguard-gradle:7.3.1") {
-            exclude("com.android.tools.build")
-        }
-    }
-}
-
-tasks.register<proguard.gradle.ProGuardTask>("proguard") {
-    outputs.upToDateWhen { false }
-    libraryjars("${System.getProperty("java.home")}/jmods/java.base.jmod")
-    configuration("proguard.pro")
-}
-
-tasks.build.get().finalizedBy(tasks.getByName("proguard"))
-
 dependencies {
     implementation(project(":aat-lib"))
 
@@ -47,7 +28,7 @@ dependencies {
      */
     val focVersion : String by project
     implementation("com.github.bailuk.foc:foc:$focVersion")
-    //implementation("ch.bailu:foc:$focVersion")
+    implementation("com.github.bailuk.foc:foc-extended:$focVersion")
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     // same version as in mapsforge-poi-awt
@@ -71,8 +52,8 @@ dependencies {
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
     // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
-    implementation("com.google.code.gson:gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     /**
      *
@@ -80,7 +61,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
@@ -99,8 +80,19 @@ tasks {
     }
 }
 
+
+task<Exec>("generateGResource") {
+    setWorkingDir("gresource")
+    setCommandLine("./generate.sh")
+}
+
+
 tasks {
     build {
         dependsOn(shadowJar)
+    }
+
+    processResources {
+        dependsOn(named("generateGResource"))
     }
 }

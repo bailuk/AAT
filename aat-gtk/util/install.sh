@@ -9,10 +9,10 @@ Options:
 
 # general
 app="aat-gtk"
-app_id="ch.bailu.${app}"
+app_id="ch.bailu.aat"
 app_comment="AAT activity tracker and map viewer"
 app_name="AAT"
-jar="${app}-all-pro.jar"
+jar="${app}-all.jar"
 build="build/libs/"
 
 # arguments
@@ -34,10 +34,10 @@ done
 # source
 if [ -f $jar ]; then
   source_jar=$jar
-  source_icon=app-icon.svg
+  source_icon="${app_id}.svg"
 else
   source_jar="aat-gtk/$build/$jar"
-  source_icon="aat-gtk/src/main/resources/svg/app-icon.svg"
+  source_icon="aat-gtk/gresource/icons/scalable/apps/${app_id}.svg"
   test -d gradle || cd ..
   test -d gradle || cd ..
 fi
@@ -73,7 +73,7 @@ data="${home}/.config/${app}"
 # build
 if [ "$option_build" = "--build" ]; then
     echo ">> build"
-    ./gradlew build || exit 1
+    ./gradlew aat-gtk:build || exit 1
 fi
 
 # install
@@ -85,15 +85,8 @@ if [ "$option_install" = "" ]; then
   $copy $source_icon "${tor}${icon}" || exit 1
 
   echo "create '${desktop}'"
-  $cmd "cat > ${desktop}" << EOF
-[Desktop Entry]
-Type=Application
-Terminal=false
-Exec=java -jar ${data}/${app}.jar
-Name=${app_name}
-Comment=${app_comment}
-Icon=${icon}
-EOF
+  $copy aat-gtk/flatpak/ch.bailu.aat.desktop "${tor}${desktop}"
+  $cmd sed -i "'s+Exec.*+Exec=java -jar ${data}/${app}.jar+'" ${desktop}
 
   $cmd "chmod 700 ${desktop}" || exit 1
 fi

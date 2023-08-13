@@ -213,12 +213,12 @@
     <string name="file_send">Envoyer…</string>
     <string name="file_view">Voir/Editer…</string>
     <string name="file_copy">Copier vers…</string>
-    <string name="file_exists">\u0020existe déjà!</string>
-    <string name="file_is_writeable">\u0020est éditable.</string>
-    <string name="file_is_writeonly">\u0020est uniquement éditable.</string>
-    <string name="file_is_readonly">\u0020est en lecture seule.</string>
-    <string name="file_is_missing">\u0020n\'existe pas.</string>
-    <string name="file_is_denied">\u0020n\'est pas accessible.</string>
+    <string name="file_exists">existe déjà!</string>
+    <string name="file_is_writeable">éditable.</string>
+    <string name="file_is_writeonly">uniquement éditable.</string>
+    <string name="file_is_readonly">est en lecture seule.</string>
+    <string name="file_is_missing">n\'existe pas.</string>
+    <string name="file_is_denied">n\'est pas accessible.</string>
 
 
     <!-- Location menu -->

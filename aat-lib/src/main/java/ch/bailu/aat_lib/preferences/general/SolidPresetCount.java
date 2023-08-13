@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.general;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.resources.Res;
@@ -25,6 +27,7 @@ public class SolidPresetCount extends SolidIndexList {
         return getValue(getIndex());
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_preset_slots();

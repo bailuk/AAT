@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.map;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.map.AppDensity;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -7,12 +9,12 @@ import ch.bailu.aat_lib.resources.Res;
 
 
 public class SolidTileSize extends SolidIndexList {
-    private static final String KEY="tile_size";
+    private static final String KEY = "tile_size";
 
     public static final int DEFAULT_TILESIZE = 256;
     public static final int DEFAULT_TILESIZE_BYTES = DEFAULT_TILESIZE * DEFAULT_TILESIZE * 4;
 
-    private static final int STEP=32;
+    private static final int STEP = 32;
 
     private final int tileSizeDP;
 
@@ -39,9 +41,6 @@ public class SolidTileSize extends SolidIndexList {
         tileSizeDP = density.toPixel_i(DEFAULT_TILESIZE);
     }
 
-
-
-
     public int getTileSize() {
         final int i = getIndex();
         if (i==0) {
@@ -50,6 +49,7 @@ public class SolidTileSize extends SolidIndexList {
         return VALUE_LIST[getIndex()];
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_tile_size();
@@ -61,9 +61,9 @@ public class SolidTileSize extends SolidIndexList {
     }
 
     @Override
-    public String getValueAsString(int i) {
-        if (i==0)  return toDefaultString(String.valueOf(tileSizeDP));
-
+    public String getValueAsString(int index) {
+        int i = validate(index);
+        if (i == 0)  return toDefaultString(String.valueOf(tileSizeDP));
         return String.valueOf(VALUE_LIST[i]);
     }
 }

@@ -4,8 +4,6 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
-import java.io.File
-import java.util.*
 import java.util.prefs.BackingStoreException
 import java.util.prefs.Preferences
 
@@ -19,17 +17,11 @@ class GtkStorage : StorageInterface {
                 NODE.sync()
                 NODE.flush()
             } catch (e: BackingStoreException) {
-                AppLog.e(e)
+                AppLog.e(this, e)
             }
         }
     }
 
-    override fun backup() {}
-    override fun getSharedPrefsDirectory(): File {
-        return File(NODE.absolutePath())
-    }
-
-    override fun restore() {}
     override fun readString(key: String): String {
         return NODE[key, ""].toString()
     }

@@ -20,7 +20,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
     private val fileSelectorMenu = SolidFileSelectorMenu(solid, window)
 
     init {
-        label.setText(solid.label)
+        label.setText(solid.getLabel())
         label.xalign = 0f
 
         entry.hexpand = true
@@ -46,7 +46,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
         entry.overwriteMode = false
         Editable(entry.cast()).apply {
-            text = Str(solid.valueAsString)
+            text = Str(solid.getValueAsString())
 
             onChanged {
                 AppLog.d(this, text.toString())
@@ -58,7 +58,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            Editable(entry.cast()).text = Str(solid.valueAsString)
+            Editable(entry.cast()).text = Str(solid.getValueAsString())
         }
     }
 }

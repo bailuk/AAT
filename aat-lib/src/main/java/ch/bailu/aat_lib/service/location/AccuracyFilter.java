@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.presets.SolidAccuracyFilter;
 
@@ -18,7 +20,7 @@ public final class AccuracyFilter extends LocationStackChainedItem {
     public void close() {}
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
         if (location.getAccuracy() < minAccuracy) {
             super.passLocation(location);
         }

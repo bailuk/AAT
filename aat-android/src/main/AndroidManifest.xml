@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="ch.bailu.aat">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- force min SDK version (if using local MapsForge) -->
     <uses-sdk tools:overrideLibrary = "
@@ -12,6 +11,7 @@
         "/>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <!--Android 12 BLE permission: https://developer.android.com/about/versions/12/features/bluetooth-permissions-->
@@ -188,7 +188,6 @@
         </provider>
 
         <provider
-            android:enabled="@bool/atLeastKitKat"
             android:name="ch.bailu.aat.providers.GpxDocumentProvider"
             android:authorities="${applicationId}.gpxdocs"
             android:grantUriPermissions="true"

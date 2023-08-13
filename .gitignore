@@ -74,3 +74,11 @@ Thumbs.db
 
 # Development
 todo/
+
+# GLib / GTK
+*.gresource
+
+# Flatpak
+.flatpak-builder/
+gradle-sources.json?*
+maven-local

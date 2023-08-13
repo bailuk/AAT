@@ -16,7 +16,6 @@ import ch.bailu.aat_lib.map.MapContext;
 import ch.bailu.aat_lib.map.TilePainter;
 import ch.bailu.aat_lib.map.layer.MapLayerInterface;
 import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 
 public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface {
@@ -69,12 +68,7 @@ public class MapsForgeTileLayerStack extends Layer implements MapLayerInterface 
 
     @Override
     public void draw(final BoundingBox box, final byte zoom, final Canvas c, final Point tlp) {
-        new InsideContext(scontext) {
-            @Override
-            public void run() {
-                layers.draw(box, zoom, c, tlp);
-            }
-        };
+        scontext.insideContext(() -> layers.draw(box, zoom, c, tlp));
 
     }
 

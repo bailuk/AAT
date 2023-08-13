@@ -82,7 +82,8 @@ abstract class AbsNodeSelectorLayer(
     }
 
     private fun findNodeAndNotify(centerBounding: BoundingBoxE6) {
-        if (selectedNode == null || !centerBounding.contains(selectedNode)) {
+        val node = selectedNode
+        if (node == null || !centerBounding.contains(node)) {
             findNode(centerBounding)
         }
     }
@@ -105,7 +106,7 @@ abstract class AbsNodeSelectorLayer(
         }
     }
 
-    abstract fun setSelectedNode(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int)
+    abstract fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int)
 
     private fun drawSelectedNode(mcontext: MapContext) {
         val node = selectedNode

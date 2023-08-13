@@ -1,17 +1,19 @@
 package ch.bailu.aat_lib.service.elevation.updater;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 
 public final class ElevationUpdater implements Closeable {
@@ -35,7 +37,7 @@ public final class ElevationUpdater implements Closeable {
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
-        public void onReceive(String... args) {
+        public void onReceive(@NotNull String... args) {
             String id = args[0];
 
             synchronized(ElevationUpdater.this) {

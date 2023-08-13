@@ -7,7 +7,7 @@ import ch.bailu.gtk.gtk.Button
 
 class TrackerButtonStartStop (private val services: ServicesInterface) : OnContentUpdatedInterface {
     val button = Button()
-    private var text = services.trackerService.startStopText
+    private var text = services.trackerService.getStartStopText()
 
     init {
         button.onClicked {
@@ -17,7 +17,7 @@ class TrackerButtonStartStop (private val services: ServicesInterface) : OnConte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val newText = services.trackerService.startStopText
+        val newText = services.trackerService.getStartStopText()
 
         if (text != newText) {
             text = newText

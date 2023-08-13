@@ -15,7 +15,6 @@ import ch.bailu.aat_lib.dispatcher.BroadcastData;
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver;
 import ch.bailu.aat_lib.map.Attachable;
 import ch.bailu.aat_lib.map.tile.source.Source;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.ObjTile;
 
@@ -25,7 +24,7 @@ public class TileProvider implements Attachable, ObservableInterface {
 
     private TileObjectCache cache = TileObjectCache.NULL;
 
-    private boolean isAttached=false;
+    private boolean isAttached = false;
 
 
     private final Observers observers = new Observers();
@@ -36,7 +35,7 @@ public class TileProvider implements Attachable, ObservableInterface {
     }
 
     private final BroadcastReceiver onFileChanged = args -> {
-        String file =  BroadcastData.getFile(args);
+        String file = BroadcastData.getFile(args);
 
         if (cache.isInCache(file)) observers.notifyChange();
     };
@@ -57,6 +56,7 @@ public class TileProvider implements Attachable, ObservableInterface {
      * Get a tile from cache if it is there.
      * If tile is not already inside the cache it loads the tile and
      * puts it into the tile cache.
+     *
      * @param tile coordinates and zoom level of tile
      * @return the requested tile or null on failure.
      */
@@ -85,6 +85,7 @@ public class TileProvider implements Attachable, ObservableInterface {
     public void addObserver(Observer observer) {
         observers.addObserver(observer);
     }
+
     public void removeObserver(Observer observer) {
         observers.removeObserver(observer);
     }
@@ -149,47 +150,18 @@ public class TileProvider implements Attachable, ObservableInterface {
     private ObjTile getTileHandleLevel2(final Tile mapTile) {
         final ObjTile[] r = {null};
 
-        new InsideContext(appContext.getServices()) {
-            @Override
-            public void run() {
-                String id = source.getID(mapTile, appContext);
+        appContext.getServices().insideContext(() -> {
+            String id = source.getID(mapTile, appContext);
 
-                Obj handle = appContext.getServices().getCacheService().getObject(
-                        id,
-                        source.getFactory(mapTile)
-                );
+            Obj handle = appContext.getServices().getCacheService().getObject(
+                    id,
+                    source.getFactory(mapTile)
+            );
 
-
-                if (handle instanceof ObjTile) {
-                    r[0] = (ObjTile) handle;
-                }
-
+            if (handle instanceof ObjTile) {
+                r[0] = (ObjTile) handle;
             }
-        };
-
-        return r[0];
-    }
-
-    public synchronized TileBitmap getNonCached(final Tile mapTile) {
-        final TileBitmap[] r = {null};
-
-        new InsideContext(appContext.getServices()) {
-            @Override
-            public void run() {
-                String id = source.getID(mapTile, appContext);
-
-                Obj handle = appContext.getServices().getCacheService().getObject(
-                        id
-                );
-
-
-                if (handle instanceof ObjTile) {
-                    r[0] = ((ObjTile) handle).getTileBitmap();
-                    handle.free();
-                }
-
-            }
-        };
+        });
 
         return r[0];
     }

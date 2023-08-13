@@ -1,8 +1,12 @@
 package ch.bailu.aat_lib;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.app.AppConfig;
 import ch.bailu.aat_lib.coordinates.CH1903Coordinates;
@@ -10,8 +14,6 @@ import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.coordinates.LatLongE6;
 import ch.bailu.aat_lib.coordinates.UTMCoordinates;
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CoordinatesTest {
@@ -22,18 +24,20 @@ public class CoordinatesTest {
     public static void init() {
         if (!initialized) {
             AppConfig.setInstance(new AppConfig() {
+                @Nonnull
                 @Override
-                public String getApplicationId() {
+                public String getAppId() {
+                    return "";
+                }
+
+                @Nonnull
+                @Override
+                public String getAppVersionName() {
                     return "";
                 }
 
                 @Override
-                public String getVersionName() {
-                    return "";
-                }
-
-                @Override
-                public int getVersionCode() {
+                public int getAppVersionCode() {
                     return 0;
                 }
 
@@ -95,7 +99,7 @@ public class CoordinatesTest {
         assertEquals(49.80, slo.getSecond(),0.005);
 
         assertEquals(46, sla.getDegree());
-        assertEquals(02, sla.getMinute());
+        assertEquals(2, sla.getMinute());
         assertEquals(38.86, sla.getSecond(),0.005);
 
     }
@@ -124,7 +128,7 @@ public class CoordinatesTest {
         assertEquals(nzone, u1.getNorthingZone());
         assertEquals(ezone, u1.getEastingZone());
 
-        assertEquals(la < 0, u1.isInSouthernHemnisphere());
+        assertEquals(la < 0, u1.isInSouthernHemisphere());
 
         assertEquals(easting, u2.getEasting());
         assertEquals(northing, u2.getNorthing());
@@ -135,7 +139,7 @@ public class CoordinatesTest {
         assertEquals(nzone, u2.getNorthingZone());
         assertEquals(ezone, u2.getEastingZone());
 
-        assertEquals(la < 0, u2.isInSouthernHemnisphere());
+        assertEquals(la < 0, u2.isInSouthernHemisphere());
 
     }
 
@@ -201,20 +205,20 @@ public class CoordinatesTest {
         CH1903Coordinates c2 = new CH1903Coordinates(easting, northing);
         CH1903Coordinates c3 = new CH1903Coordinates(la, lo);
 
-        assertEquals(loE6, c1.toLatLongE6().getLongitudeE6(), CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c1.toLatLongE6().getLatitudeE6(), CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c1.toLatLongE6().getLongitudeE6(), CH1903Coordinates.LO_PRECISION.toE6());
+        assertEquals(laE6, c1.toLatLongE6().getLatitudeE6(), CH1903Coordinates.LA_PRECISION.toE6());
 
-        assertEquals(la, c1.toLatLong().latitude, CH1903Coordinates.LA_PRECISSION.getDecimal());
-        assertEquals(lo, c1.toLatLong().longitude, CH1903Coordinates.LO_PRECISSION.getDecimal());
+        assertEquals(la, c1.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.getDecimal());
+        assertEquals(lo, c1.toLatLong().longitude, CH1903Coordinates.LO_PRECISION.getDecimal());
 
-        assertEquals(loE6, c2.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c2.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c2.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISION.toE6());
+        assertEquals(laE6, c2.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISION.toE6());
 
-        assertEquals(la, c2.toLatLong().latitude, CH1903Coordinates.LA_PRECISSION.getDecimal());
-        assertEquals(lo, c2.toLatLong().longitude, CH1903Coordinates.LO_PRECISSION.getDecimal());
+        assertEquals(la, c2.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.getDecimal());
+        assertEquals(lo, c2.toLatLong().longitude, CH1903Coordinates.LO_PRECISION.getDecimal());
 
-        assertEquals(loE6, c3.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISSION.toE6());
-        assertEquals(laE6, c3.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISSION.toE6());
+        assertEquals(loE6, c3.toLatLongE6().getLongitudeE6(),CH1903Coordinates.LO_PRECISION.toE6());
+        assertEquals(laE6, c3.toLatLongE6().getLatitudeE6(),CH1903Coordinates.LA_PRECISION.toE6());
 
         assertEquals(la, c3.toLatLong().latitude, 0.0001);
         assertEquals(lo, c3.toLatLong().longitude, 0.0001);

@@ -6,10 +6,8 @@ import ch.bailu.aat_lib.preferences.AbsSolidType
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.Application
 
-class SolidMenuButton(app: Application, solid: SolidIndexList) : PopupButton(
-    app,
+class SolidMenuButton(solid: SolidIndexList) : PopupButton(
     SolidIndexMenu(solid)
 ), OnPreferencesChanged {
 
@@ -24,7 +22,7 @@ class SolidMenuButton(app: Application, solid: SolidIndexList) : PopupButton(
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
             setIcon(solid.iconResource)
-            AppLog.i(this, solid.valueAsString)
+            AppLog.i(this, solid.getValueAsString())
         }
     }
 }

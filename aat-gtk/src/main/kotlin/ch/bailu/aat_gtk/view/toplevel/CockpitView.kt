@@ -1,8 +1,15 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.description.NumberView
+import ch.bailu.aat_lib.description.AltitudeDescription
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.ContentDescription
+import ch.bailu.aat_lib.description.CurrentSpeedDescription
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.gtk.FlowBox
 import ch.bailu.gtk.gtk.ScrolledWindow
 
@@ -28,5 +35,14 @@ class CockpitView {
         views.add(v)
 
        return v
+    }
+
+    fun addDefaults(dispatcher: DispatcherInterface) {
+        add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
+        add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
+
+        add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
+        add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
+        add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
     }
 }

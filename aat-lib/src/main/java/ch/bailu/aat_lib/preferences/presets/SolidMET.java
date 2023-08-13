@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.preferences.presets;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.exception.ValidationException;
 import ch.bailu.aat_lib.preferences.SolidString;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -16,11 +18,13 @@ public class SolidMET extends SolidString {
         preset = i;
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_met();
     }
 
+    @Nonnull
     @Override
     public String getValueAsString() {
         var result = super.getValueAsString();
@@ -63,13 +67,13 @@ public class SolidMET extends SolidString {
     }
 
     @Override
-    public void setValueFromString(String s) throws ValidationException {
-        s = s.trim();
+    public void setValueFromString(String string) throws ValidationException {
+        string = string.trim();
 
-        if (! validate(s)) {
+        if (! validate(string)) {
             throw new ValidationException(Res.str().error_met());
         } else {
-            setValue(s);
+            setValue(string);
         }
     }
 

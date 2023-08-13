@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.map.control
 
+import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
@@ -19,32 +20,35 @@ class EditorBar(app: Application,
                 private val edit: EditorSourceInterface
 ) : Bar(Position.LEFT), OnNodeSelectedInterface {
     init {
-        add(PopupButton(app, EditorMenu(edit, app)).apply { setIcon("open-menu-symbolic") }.overlay)
+        add(PopupButton(EditorMenu(edit, app)).apply {
+            createActions(app)
+            setIcon(Icons.openMenuSymbolic)
+        }.overlay)
 
-        add("list-add-symbolic").onClicked {
+        add(Icons.listAddSymbolic).onClicked {
                 val editor = edit.editor
                 val point = mcontext.mapView.mapViewPosition.center
                 val altitude = services.elevationService.getElevation(point.latitudeE6, point.longitudeE6).toFloat()
                 editor.add(GpxPoint(point, altitude, 0))
         }
 
-        add("list-remove-symbolic").onClicked {
+        add(Icons.listRemoveSymbolic).onClicked {
             edit.editor.remove()
         }
 
-        add("go-up-symbolic").onClicked {
+        add(Icons.goUpSymbolic).onClicked {
             edit.editor.up()
         }
 
-        add("go-down-symbolic").onClicked {
+        add(Icons.goDownSymbolic).onClicked {
             edit.editor.down()
         }
 
-        add("edit-undo-symbolic").onClicked {
+        add(Icons.editUndoSymbolic).onClicked {
             edit.editor.undo()
         }
 
-        add("edit-redo-symbolic").onClicked {
+        add(Icons.editRedoSymbolic).onClicked {
             edit.editor.redo()
         }
     }

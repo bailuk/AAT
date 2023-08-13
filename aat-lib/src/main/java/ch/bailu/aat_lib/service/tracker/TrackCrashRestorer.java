@@ -21,7 +21,7 @@ public final class TrackCrashRestorer{
         if (source.exists()) {
 
             GpxList track = readFile(source);
-            if (track.getPointList().size() > TrackLogger.MIN_TRACKPOINTS) {
+            if (track.getPointList().size() > TrackLogger.MIN_TRACK_POINTS) {
                 // TODO message to gui
                 AppLog.i(this, Res.str().tracker_restore());
 

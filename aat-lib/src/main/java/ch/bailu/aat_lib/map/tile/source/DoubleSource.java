@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.map.tile.source;
 import org.mapsforge.core.model.Tile;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.InsideContext;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.Obj;
 
@@ -39,14 +38,10 @@ public class DoubleSource extends Source {
         final Source[] r = {sourceB};
 
         if (isZoomLevelSupportedA(t)) {
-            new InsideContext(scontext) {
-                @Override
-                public void run() {
-                    if (scontext.getRenderService().supportsTile(t))
-                        r[0] = sourceA;
-                }
-            };
-
+            scontext.insideContext(() -> {
+                if (scontext.getRenderService().supportsTile(t))
+                    r[0] = sourceA;
+            });
         }
 
         return r[0];

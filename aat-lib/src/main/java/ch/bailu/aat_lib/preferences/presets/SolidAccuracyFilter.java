@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.preferences.presets;
 
+import javax.annotation.Nonnull;
+
 import ch.bailu.aat_lib.description.FF;
 import ch.bailu.aat_lib.preferences.SolidIndexList;
 import ch.bailu.aat_lib.preferences.StorageInterface;
@@ -38,6 +40,7 @@ public class SolidAccuracyFilter extends SolidIndexList {
         return VALUE_LIST[getIndex()];
     }
 
+    @Nonnull
     @Override
     public String getLabel() {
         return Res.str().p_accuracy_filter();

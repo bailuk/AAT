@@ -38,16 +38,16 @@ public final class Renderer extends Layer {
     private final JobQueue<RendererJob> jobQueue;
 
 
-    public Renderer(XmlRenderTheme t, TileCache cache, ArrayList<Foc> files) throws Exception {
+    public Renderer(XmlRenderTheme renderTheme, TileCache cache, ArrayList<Foc> files, float userScaleFactor) throws Exception {
         // important: call model.mapViewPosition.destroy() to free resources
         final Model model = new Model();
 
         try {
-
             displayModel = model.displayModel;
+            displayModel.setUserScaleFactor(userScaleFactor);
             jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
 
-            renderThemeFuture = createTheme(t);
+            renderThemeFuture = createTheme(renderTheme, displayModel);
             mapDataStore = createMapDataStore(files);
 
             final DatabaseRenderer databaseRenderer = new DatabaseRenderer(
@@ -117,17 +117,14 @@ public final class Renderer extends Layer {
         return result;
     }
 
-
-
-    private static RenderThemeFuture createTheme(XmlRenderTheme t) {
+    private static RenderThemeFuture createTheme(XmlRenderTheme renderTheme, DisplayModel displayModel) {
         RenderThemeFuture theme = new RenderThemeFuture(
                 AppGraphicFactory.instance(),
-                t,
-                new DisplayModel());
+                renderTheme,
+                displayModel);
         new Thread(theme).start();
         return theme;
     }
-
 
     public void destroy() {
         if (mapWorkerPool != null) {

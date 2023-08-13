@@ -17,7 +17,7 @@ public class Iterator implements Closeable {
 
 
     public int getInfoID() {
-        return InfoID.FILEVIEW;
+        return InfoID.FILE_VIEW;
     }
 
 

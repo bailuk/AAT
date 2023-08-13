@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
 import ch.bailu.aat_lib.preferences.map.SolidRendererThreads;
+import ch.bailu.aat_lib.preferences.map.SolidScaleFactor;
 import ch.bailu.aat_lib.service.VirtualService;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 import ch.bailu.foc.FocFactory;
@@ -19,6 +20,7 @@ public final class RenderService  extends VirtualService
 
     private final SolidMapsForgeDirectory sdirectory;
     private final SolidRenderTheme stheme;
+    private final SolidScaleFactor scaleFactor;
 
     private final Configuration configuration = new Configuration();
     private final Caches caches = new Caches();
@@ -28,6 +30,7 @@ public final class RenderService  extends VirtualService
 
         this.sdirectory = sdirectory;
         this.stheme = new SolidRenderTheme(sdirectory, focFactory);
+        this.scaleFactor = new SolidScaleFactor(sdirectory.getStorage());
 
         sdirectory.getStorage().register(this);
         reconfigureRenderer();
@@ -45,7 +48,8 @@ public final class RenderService  extends VirtualService
                 sdirectory.getValueAsFile(),
                 tileCache,
                 stheme.getValueAsRenderTheme(),
-                themeID);
+                themeID,
+                scaleFactor.getScaleFactor());
 
         reSchedule(tileCache);
     }

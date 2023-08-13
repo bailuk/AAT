@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.location;
 
+import javax.annotation.Nonnull;
+
 public final class InformationFilter extends LocationStackChainedItem {
 
     public InformationFilter(LocationStackItem n) {
@@ -7,7 +9,7 @@ public final class InformationFilter extends LocationStackChainedItem {
     }
 
     @Override
-    public void passLocation(LocationInformation location) {
+    public void passLocation(@Nonnull LocationInformation location) {
         if (location.hasAltitude()) {
             super.passLocation(location);
         }
