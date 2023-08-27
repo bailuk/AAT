@@ -9,7 +9,7 @@
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-down-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-previous-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-up-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/inc_cockpit.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/inc_cockpit-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/list-add-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/list-remove-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/location.svg</file>

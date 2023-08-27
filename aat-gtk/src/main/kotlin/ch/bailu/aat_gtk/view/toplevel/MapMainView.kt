@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
@@ -60,6 +61,7 @@ class MapMainView(app: Application, dispatcher: DispatcherInterface, uiControlle
 
     init {
         overlay.addOverlay(Button().apply {
+            addCssClass(Strings.mapControl)
             iconName = Icons.goPreviousSymbolic
             onClicked {
                 uiController.hideMap()

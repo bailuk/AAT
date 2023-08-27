@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.description
 
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -16,13 +17,13 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     val box = Box(Orientation.VERTICAL,5)
 
     private val margin = 6
-    private val ptSize = 30000
 
     init {
         addView(label, margin, 0)
-        addView(number, 0, 0).useMarkup = true
+        addView(number, 0, 0)
         addView(unit, 0, margin)
 
+        number.addCssClass(Strings.numberView)
         updateAllText()
     }
 
@@ -41,7 +42,7 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
     }
 
     private fun updateAllText() {
-        number.setLabel("<span color=\"#51506b\" weight=\"bold\" size=\"${ptSize}\">${description.getValue()}</span>")
+        number.setText(description.getValue())
         label.setText(description.getLabelShort())
         unit.setText(description.getUnit())
     }

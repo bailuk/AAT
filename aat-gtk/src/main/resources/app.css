@@ -1,5 +1,6 @@
 .map-control {
     background: #cccccc80;
+    color: black;
 }
 
 .graph-view {
@@ -28,4 +29,9 @@
     border-style: none;
     font-weight: bold;
     border-radius: 5px;
+}
+
+.number-view {
+    font-weight: bold;
+    font-size: 40px;
 }

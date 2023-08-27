@@ -12,7 +12,7 @@ object Icons {
     val goDownSymbolic = Str("go-down-symbolic")
     val goPreviousSymbolic = Str("go-previous-symbolic")
     val goUpSymbolic = Str("go-up-symbolic")
-    val incCockpit = Str("inc_cockpit")
+    val incCockpit = Str("inc_cockpit-symbolic")
     val listAddSymbolic = Str("list-add-symbolic")
     val listRemoveSymbolic = Str("list-remove-symbolic")
     val location = Str("location")

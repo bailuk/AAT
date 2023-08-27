@@ -8,6 +8,7 @@ object Strings {
     // CSS
     const val linked = "linked"
     const val mapControl = "map-control"
+    const val numberView = "number-view"
 
     // Files
     const val appCss = "/app.css"
