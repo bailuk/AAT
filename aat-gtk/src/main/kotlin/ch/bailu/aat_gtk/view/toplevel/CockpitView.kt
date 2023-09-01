@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.InfoID
@@ -44,5 +45,6 @@ class CockpitView {
         add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
         add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
         add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
+        add(dispatcher, MaximumSpeedDescription(GtkAppContext.storage), InfoID.TRACKER)
     }
 }
