@@ -54,8 +54,9 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
 
     private val stackPage = StackView(headerBar)
 
+    // leaflet containing map and cockpit
     private val leaflet = Leaflet().apply {
-        canNavigateBack = true
+        canNavigateBack = false // Disturbs map scrolling
         canNavigateForward = true
         hexpand = true
         vexpand = true
