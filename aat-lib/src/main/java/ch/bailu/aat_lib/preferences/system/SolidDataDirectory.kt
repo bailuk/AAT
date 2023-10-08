@@ -1,47 +1,32 @@
-package ch.bailu.aat_lib.preferences.system;
+package ch.bailu.aat_lib.preferences.system
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.preferences.SolidFile
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.FocFactory
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.foc.FocFactory;
-
-public class SolidDataDirectory extends SolidFile {
-
-    private final SolidDataDirectoryDefault defaultDirectory;
-
-    public SolidDataDirectory(SolidDataDirectoryDefault defaultDirectory, FocFactory focFactory) {
-        super(defaultDirectory.getStorage(), SolidDataDirectory.class.getSimpleName(), focFactory);
-        this.defaultDirectory = defaultDirectory;
+open class SolidDataDirectory(
+    private val defaultDirectory: SolidDataDirectoryDefault,
+    focFactory: FocFactory?
+) : SolidFile(
+    defaultDirectory.getStorage(), SolidDataDirectory::class.java.simpleName, focFactory!!
+) {
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_directory_data()
     }
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_directory_data();
+    override fun getValueAsString(): String {
+        val r = super.getValueAsString()
+        return if (getStorage().isDefaultString(r)) defaultDirectory.getValueAsString() else r
     }
 
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        String r = super.getValueAsString();
-
-
-        if (getStorage().isDefaultString(r))
-            return defaultDirectory.getValueAsString();
-
-        return r;
+    override fun hasKey(key: String): Boolean {
+        return super.hasKey(key) || defaultDirectory.hasKey(key)
     }
 
-    @Override
-    public boolean hasKey(String s) {
-        return super.hasKey(s) || defaultDirectory.hasKey(s);
-    }
-
-    @Override
-    public ArrayList<String> buildSelection(ArrayList<String> list) {
-        return defaultDirectory.buildSelection(list);
+    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+        return defaultDirectory.buildSelection(list)
     }
 }

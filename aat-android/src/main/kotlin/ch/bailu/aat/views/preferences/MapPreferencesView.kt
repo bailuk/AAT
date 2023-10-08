@@ -18,7 +18,7 @@ import ch.bailu.aat_lib.map.tile.source.MapsForgeSource
 import ch.bailu.aat_lib.preferences.SolidVolumeKeys
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
-import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.Hillshade
+import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.HillShade
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.MapsForge
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
@@ -65,7 +65,7 @@ class MapPreferencesView(acontext: Activity, scontext: ServiceContext, theme: Ui
         add(SolidDirectoryViewSAF(acontext, AndroidSolidDem3Directory(context), theme))
         add(SolidCheckBox(acontext, SolidDem3EnableDownload(storage), theme))
         add(TitleView(context, ElevationSource.ELEVATION_HILLSHADE.name, theme))
-        add(SolidCheckBox(acontext, Hillshade(storage), theme))
+        add(SolidCheckBox(acontext, HillShade(storage), theme))
         add(TitleView(context, context.getString(R.string.p_trim_cache), theme))
         add(SolidIndexListView(context, SolidTrimMode(storage), theme))
         add(SolidIndexListView(context, SolidTrimSize(storage), theme))

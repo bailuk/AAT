@@ -29,7 +29,7 @@ class CaloriesDescription(private val storage: StorageInterface) : LongDescripti
         val preset = SolidPreset(storage).index
         val hours = track.getTimeDelta().toFloat() / (1000f * 60f * 60f)
         val met = SolidMET(storage, preset).metValue
-        val weight = SolidWeight(storage).value.toFloat()
+        val weight = SolidWeight(storage).getValue().toFloat()
         return hours * met * weight
     }
 }

@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.service.cache.DownloadSource;
 public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLayerStack {
 
     private final SolidMapTileStack stiles;
-    private final SolidEnableTileCache.Hillshade scacheHS;
+    private final SolidEnableTileCache.HillShade scacheHS;
     private final SolidEnableTileCache.MapsForge scacheMF;
     private final SolidRenderTheme stheme;
 
@@ -35,7 +35,7 @@ public abstract class MapsForgeTileLayerStackConfigured extends MapsForgeTileLay
         stheme = new SolidRenderTheme(appContext.getMapDirectory(), appContext);
         stiles = new SolidMapTileStack(stheme);
         scacheMF = new SolidEnableTileCache.MapsForge(appContext.getStorage());
-        scacheHS = new SolidEnableTileCache.Hillshade(appContext.getStorage());
+        scacheHS = new SolidEnableTileCache.HillShade(appContext.getStorage());
 
         initLayers();
     }

@@ -31,7 +31,7 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
         toggle.hexpand = false
         toggle.active = solid.value
 
-        solid.storage.register(this)
+        solid.getStorage().register(this)
 
         toggle.onStateSet {
             solid.value = it

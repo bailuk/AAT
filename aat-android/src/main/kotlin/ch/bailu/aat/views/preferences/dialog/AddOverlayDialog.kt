@@ -14,7 +14,7 @@ class AddOverlayDialog(
 ) : AbsSolidDialog(), DialogInterface.OnClickListener {
     init {
         val dialog = createDefaultDialog(context, slist)
-        dialog.setItems(slist.stringArray, this)
+        dialog.setItems(slist.getStringArray(), this)
         dialog.create()
         dialog.show()
     }

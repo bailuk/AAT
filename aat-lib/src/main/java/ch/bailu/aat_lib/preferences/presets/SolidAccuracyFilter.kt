@@ -1,17 +1,41 @@
-package ch.bailu.aat_lib.preferences.presets;
+package ch.bailu.aat_lib.preferences.presets
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.description.FF;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.resources.Res;
+class SolidAccuracyFilter(storage: StorageInterface, index: Int) : SolidIndexList(storage, KEY + index) {
+    private val sunit: SolidUnit = SolidUnit(storage)
 
-public class SolidAccuracyFilter extends SolidIndexList {
-    private static final String KEY = "accuracy_filter_";
+    val minAccuracy: Float
+        get() = VALUE_LIST[index]
 
-    private static final float[] VALUE_LIST = {
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_accuracy_filter()
+    }
+
+    override fun length(): Int {
+        return VALUE_LIST.size
+    }
+
+    public override fun getValueAsString(index: Int): String {
+        return if (index == 0) Res.str().off() else (f().N2.format(
+            (VALUE_LIST[index] * sunit.altitudeFactor).toDouble()
+        )
+                + sunit.altitudeUnit)
+    }
+
+    override fun getToolTip(): String? {
+        return Res.str().tt_p_accuracy_filter()
+    }
+
+    companion object {
+        private const val KEY = "accuracy_filter_"
+        private val VALUE_LIST = floatArrayOf(
             999f,
             1f,
             2f,
@@ -26,42 +50,7 @@ public class SolidAccuracyFilter extends SolidIndexList {
             40f,
             50f,
             100f,
-            200f,
-    };
-
-    private final SolidUnit sunit;
-
-    public SolidAccuracyFilter(StorageInterface s, int i) {
-        super(s, KEY + i);
-        sunit = new SolidUnit(s);
+            200f
+        )
     }
-
-    public float getMinAccuracy() {
-        return VALUE_LIST[getIndex()];
-    }
-
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_accuracy_filter();
-    }
-
-    @Override
-    public int length() {
-        return VALUE_LIST.length;
-    }
-
-    @Override
-    public String getValueAsString(int i) {
-        if (i == 0) return Res.str().off();
-        return FF.f().N2.format(VALUE_LIST[i] * sunit.getAltitudeFactor())
-                + sunit.getAltitudeUnit();
-    }
-
-
-    @Override
-    public String getToolTip() {
-        return Res.str().tt_p_accuracy_filter();
-    }
-
 }

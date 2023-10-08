@@ -1,12 +1,12 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.SolidBoolean
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-public class SolidOverlayFileEnabled extends SolidBoolean {
-    private static final String KEY_ENABLED="overlay_enabled_";
-
-    public SolidOverlayFileEnabled(StorageInterface storage, int iid) {
-        super(storage, KEY_ENABLED + iid);
+class SolidOverlayFileEnabled(storage: StorageInterface, iid: Int) : SolidBoolean(
+    storage, KEY_ENABLED + iid
+) {
+    companion object {
+        private const val KEY_ENABLED = "overlay_enabled_"
     }
 }

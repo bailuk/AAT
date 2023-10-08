@@ -1,41 +1,32 @@
-package ch.bailu.aat_lib.preferences.system;
+package ch.bailu.aat_lib.preferences.system
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.preferences.SolidFile
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.foc.FocFactory
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.foc.FocFactory;
-
-public abstract class SolidDataDirectoryDefault extends SolidFile {
-
-    public SolidDataDirectoryDefault(StorageInterface s, FocFactory focFactory) {
-        super(s, SolidDataDirectoryDefault.class.getSimpleName(),focFactory);
-    }
-
+abstract class SolidDataDirectoryDefault(storage: StorageInterface, focFactory: FocFactory) : SolidFile(
+    storage, SolidDataDirectoryDefault::class.java.simpleName, focFactory
+) {
     @Nonnull
-    @Override
-    public String getValueAsString() {
-        String r = super.getValueAsString();
+    override fun getValueAsString(): String {
+        val r = super.getValueAsString()
+        return if (getStorage().isDefaultString(r)) {
+            setDefaultValue()
+        } else r
+    }
 
-        if (getStorage().isDefaultString(r)) {
-            return setDefaultValue();
+    open fun setDefaultValue(): String {
+        val r = defaultValue
+        setValue(r)
+        return r
+    }
+
+    private val defaultValue: String
+        get() {
+            var list = ArrayList<String>(5)
+            list = buildSelection(list)
+            list.add(getStorage().defaultString) // failsave
+            return list[0]
         }
-
-        return r;
-    }
-
-    public String setDefaultValue() {
-        String r = getDefaultValue();
-        setValue(r);
-        return r;
-    }
-
-    private String getDefaultValue() {
-        ArrayList<String> list = new ArrayList<>(5);
-        list = buildSelection(list);
-        list.add(getStorage().getDefaultString());  // failsave
-        return list.get(0);
-    }
 }

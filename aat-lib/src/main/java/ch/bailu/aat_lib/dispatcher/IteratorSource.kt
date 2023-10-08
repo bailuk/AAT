@@ -35,7 +35,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
 
     override fun onResume() {
         iterator = factoryIterator(appContext)
-        iterator.moveToPosition(sdirectory.position.value)
+        iterator.moveToPosition(sdirectory.position.getValue())
         iterator.setOnCursorChangedListener(this)
     }
 
@@ -46,13 +46,13 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
 
     fun moveToPrevious() {
         if (!iterator.moveToPrevious()) iterator.moveToPosition(iterator.count - 1)
-        sdirectory.position.value = iterator.position
+        sdirectory.position.setValue(iterator.position)
         requestUpdate()
     }
 
     fun moveToNext() {
         if (!iterator.moveToNext()) iterator.moveToPosition(0)
-        sdirectory.position.value = iterator.position
+        sdirectory.position.setValue(iterator.position)
         requestUpdate()
     }
 

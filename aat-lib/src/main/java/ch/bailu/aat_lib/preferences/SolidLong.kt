@@ -6,11 +6,14 @@ import ch.bailu.aat_lib.resources.Res
 
 open class SolidLong(private val storage: StorageInterface, private val key: String) :
     AbsSolidType() {
-    open var value: Long
-        get() = getStorage().readLong(getKey())
-        set(v) {
-            getStorage().writeLong(getKey(), v)
-        }
+
+    open fun getValue(): Long {
+        return getStorage().readLong(getKey())
+    }
+
+    open fun setValue(value: Long) {
+        getStorage().writeLong(getKey(), value)
+    }
 
     @Throws(ValidationException::class)
     override fun setValueFromString(string: String) {
@@ -20,7 +23,7 @@ open class SolidLong(private val storage: StorageInterface, private val key: Str
             throw ValidationException(String.format(Res.str().error_long(), s))
         } else {
             try {
-                value = s.toLong()
+                setValue(s.toLong())
             } catch (e: NumberFormatException) {
                 e(this, e)
             }
@@ -36,7 +39,7 @@ open class SolidLong(private val storage: StorageInterface, private val key: Str
     }
 
     override fun getValueAsString(): String {
-        return value.toString()
+        return getValue().toString()
     }
 
     override fun validate(s: String): Boolean {

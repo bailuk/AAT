@@ -12,7 +12,6 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
 import java.io.Closeable
 import java.io.IOException
-import javax.annotation.Nonnull
 
 class TrackerInternals(
     private val sdirectory: SolidDataDirectory,
@@ -37,7 +36,7 @@ class TrackerInternals(
         }
         logger = Logger.NULL_LOGGER
         state = OffState(this)
-        sdirectory.storage.register(this)
+        sdirectory.getStorage().register(this)
     }
 
     fun setState(state: State) {
@@ -50,12 +49,12 @@ class TrackerInternals(
     }
 
     fun rereadPreferences() {
-        presetIndex = SolidPreset(sdirectory.storage).index
-        sautopause = SolidTrackerAutopause(sdirectory.storage, presetIndex)
+        presetIndex = SolidPreset(sdirectory.getStorage()).index
+        sautopause = SolidTrackerAutopause(sdirectory.getStorage(), presetIndex)
         services.locationService.setPresetIndex(presetIndex)
     }
 
-    override fun onPreferencesChanged(@Nonnull storage: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         state.preferencesChanged()
     }
 
@@ -69,7 +68,7 @@ class TrackerInternals(
 
     @Throws(IOException::class, SecurityException::class)
     fun createLogger(): TrackLogger {
-        return TrackLogger(sdirectory, SolidPreset(sdirectory.storage).index)
+        return TrackLogger(sdirectory, SolidPreset(sdirectory.getStorage()).index)
     }
 
     val isReadyForAutoPause: Boolean
@@ -86,6 +85,6 @@ class TrackerInternals(
 
     override fun close() {
         logger.close()
-        sdirectory.storage.unregister(this)
+        sdirectory.getStorage().unregister(this)
     }
 }

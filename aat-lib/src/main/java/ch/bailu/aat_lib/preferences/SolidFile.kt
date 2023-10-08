@@ -1,76 +1,66 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFactory
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocFactory;
-
-public abstract class SolidFile extends SolidString implements SolidFileInterface {
-
-    private final FocFactory focFactory;
-
-    public SolidFile(StorageInterface s, String k, FocFactory focFactory) {
-        super(s, k);
-        this.focFactory = focFactory;
-    }
-
-    @Override
-    public Foc getValueAsFile() {
-        return focFactory.toFoc(getValueAsString());
+abstract class SolidFile(storage: StorageInterface, key: String, private val focFactory: FocFactory) : SolidString(storage, key), SolidFileInterface {
+    override fun getValueAsFile(): Foc {
+        return focFactory.toFoc(getValueAsString())
     }
 
     @Nonnull
-    @Override
-    public String toString() {
-        return getValueAsFile().getPathName();
+    override fun toString(): String {
+        return getValueAsFile().pathName
     }
 
-    public String getIconResource() {return "folder_inverse";}
-
-    public abstract ArrayList<String> buildSelection(ArrayList<String> list);
-
-
-    @Override
-    public String getToolTip() {
-        return  getPermissionText(getValueAsFile());
+    override fun getIconResource(): String {
+        return "folder_inverse"
     }
 
-    private static String getPermissionText(Foc f) {
+    abstract override fun buildSelection(list: ArrayList<String>): ArrayList<String>
 
-        if (!f.exists()) {
-            if (f.hasParent()) {
-                return getPermissionText(f.parent());
+    override fun getToolTip(): String {
+        return getPermissionText(getValueAsFile())
+    }
+
+    companion object {
+        fun getPermissionText(file: Foc): String {
+            return if (!file.exists()) {
+                if (file.hasParent()) {
+                    getPermissionText(file.parent())
+                } else {
+                    file.pathName + ": " + Res.str().file_is_missing()
+                }
+            } else if (file.canWrite()) {
+                if (file.canRead()) {
+                    file.pathName + ": " + Res.str().file_is_writeable()
+                } else {
+                    file.pathName + ": " + Res.str().file_is_writeonly()
+                }
+            } else if (file.canRead()) {
+                file.pathName + ": " + Res.str().file_is_readonly()
+            } else if (file.hasParent()) {
+                getPermissionText(file.parent())
             } else {
-                return f.getPathName() + ": " + Res.str().file_is_missing();
+                file.pathName + ": " + Res.str().file_is_denied()
             }
-        } else if (f.canWrite()) {
-            if (f.canRead()) {
-                return f.getPathName() + ": " + Res.str().file_is_writeable();
-            } else {
-                return f.getPathName() + ": " + Res.str().file_is_writeonly();
-            }
-        } else if (f.canRead()) {
-            return f.getPathName() + ": " + Res.str().file_is_readonly();
-        } else if (f.hasParent()){
-            return getPermissionText(f.parent());
-        } else  {
-            return f.getPathName() + ": " + Res.str().file_is_denied();
         }
-    }
 
-    public static ArrayList<String> add_extInSubdirectories(final ArrayList<String> list,
-                                                            Foc directory, String ext) {
-        directory.foreachDir(child -> add_ext(list, child, ext));
-        return list;
-    }
+        fun addByExtensionIncludeSubdirectories(list: ArrayList<String>, directory: Foc, ext: String): ArrayList<String> {
+            directory.foreachDir { child: Foc -> addByExtension(list, child, ext) }
+            return list
+        }
 
-    public static ArrayList<String> add_ext(final ArrayList<String> list, Foc directory, String ext) {
-        directory.foreachFile(child -> {
-            if (child.getName().endsWith(ext)) SelectionList.add_r(list, child);
-        });
-        return list;
+        fun addByExtension(list: ArrayList<String>, directory: Foc, ext: String): ArrayList<String> {
+            directory.foreachFile { child: Foc ->
+                if (child.name.endsWith(ext)) SelectionList.add_r(
+                    list,
+                    child
+                )
+            }
+            return list
+        }
     }
 }

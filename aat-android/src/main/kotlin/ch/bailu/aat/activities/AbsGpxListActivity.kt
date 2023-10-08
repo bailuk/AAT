@@ -93,7 +93,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         listView?.setIterator(this, iteratorSimple)
         fileControlBar?.setIterator(iteratorSimple)
         sdirectory?.apply {
-            listView?.setSelection(position.value)
+            listView?.setSelection(position.getValue())
             register(this@AbsGpxListActivity)
             setListBackgroundColor(createSelectionString().isNotEmpty())
         }
@@ -120,7 +120,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     }
 
     private fun displayFileOnPosition(position: Int) {
-        sdirectory?.position?.value = position
+        sdirectory?.position?.setValue(position)
         displayFile()
     }
 

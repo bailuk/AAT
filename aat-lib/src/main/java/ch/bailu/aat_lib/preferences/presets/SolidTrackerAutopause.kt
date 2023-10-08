@@ -1,23 +1,16 @@
-package ch.bailu.aat_lib.preferences.presets;
+package ch.bailu.aat_lib.preferences.presets
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidAutopause
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.preferences.SolidAutopause;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidTrackerAutopause extends SolidAutopause {
-    private final static String KEY="autopause";
-
-    public SolidTrackerAutopause(StorageInterface s, int i) {
-        super(s, KEY, i);
+class SolidTrackerAutopause(storage: StorageInterface, index: Int) : SolidAutopause(
+    storage, KEY, index) {
+    override fun getLabel(): String {
+        return Res.str().p_tracker_autopause()
     }
 
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_tracker_autopause();
+    companion object {
+        private const val KEY = "autopause"
     }
-
-
 }

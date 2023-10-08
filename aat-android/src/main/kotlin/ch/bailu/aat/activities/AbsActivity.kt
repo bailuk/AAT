@@ -54,7 +54,7 @@ abstract class AbsActivity : Activity() {
         builder.append("<br>Created activities: ")
         builder.append(created)
         builder.append("<br>Count of application starts: ")
-        builder.append(SolidStartCount(Storage(this)).value)
+        builder.append(SolidStartCount(Storage(this)).getValue())
         builder.append("</p>")
     }
 

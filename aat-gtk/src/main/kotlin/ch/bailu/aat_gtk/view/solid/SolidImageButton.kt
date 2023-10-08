@@ -12,7 +12,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
     val button = Button()
 
     init {
-        button.setIconName(solid.iconResource)
+        button.setIconName(solid.getIconResource())
 
         button.onClicked {
             solid.cycle()
@@ -23,7 +23,7 @@ class SolidImageButton (val solid: SolidIndexList) : OnPreferencesChanged, Attac
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            button.setIconName(solid.iconResource)
+            button.setIconName(solid.getIconResource())
             AppLog.i(this, solid.getValueAsString())
         }
     }

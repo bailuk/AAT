@@ -1,46 +1,35 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
+import ch.bailu.aat_lib.preferences.SolidBoolean
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidPositionLock extends SolidBoolean {
-    private static final String POSTFIX = "_POSITION_LOCK";
-
-    public SolidPositionLock(StorageInterface s, String k) {
-        super(s, k + POSTFIX);
+class SolidPositionLock(storage: StorageInterface, key: String) : SolidBoolean(storage, key + POSTFIX) {
+    fun setDefaults() {
+        value = true
     }
 
-    public void setDefaults() {
-        setValue(true);
-    }
-
-    @Override
-    public String getIconResource() {
-        if (getValue()) {
-            return "zoom_original_inverse";
+    override fun getIconResource(): String {
+        return if (value) {
+            "zoom_original_inverse"
         } else {
-            return "zoom_original";
+            "zoom_original"
         }
     }
 
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        return Res.str().tt_map_home();
+    override fun getValueAsString(): String {
+        return Res.str().tt_map_home()
     }
 
-    @Override
-    public String getToolTip() {
-        return Res.str().tt_map_home();
+    override fun getToolTip(): String? {
+        return Res.str().tt_map_home()
     }
 
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().location_title();
+    override fun getLabel(): String {
+        return Res.str().location_title()
+    }
+
+    companion object {
+        private const val POSTFIX = "_POSITION_LOCK"
     }
 }

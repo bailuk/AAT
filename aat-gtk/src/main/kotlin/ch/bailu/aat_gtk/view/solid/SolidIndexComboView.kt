@@ -23,7 +23,7 @@ class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChan
         layout.append(label)
         layout.append(combo)
 
-        val list = solid.stringArray
+        val list = solid.getStringArray()
 
         for (index in 0 until solid.length()) {
             combo.insertText(index, Str(list[index]))

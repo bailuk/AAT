@@ -1,24 +1,14 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
+abstract class SolidCheckList : AbsSolidType() {
 
-import javax.annotation.Nonnull;
+    abstract fun getStringArray(): Array<String>
+    abstract fun getEnabledArray(): BooleanArray
 
-public abstract class SolidCheckList extends AbsSolidType {
+    abstract fun setEnabled(i: Int, isChecked: Boolean)
+    override fun setValueFromString(string: String) {}
 
-    public abstract String[] getStringArray();
-    public abstract boolean[] getEnabledArray();
-    public abstract void setEnabled(int i, boolean isChecked);
-
-
-
-
-    @Override
-    public void setValueFromString(String string) {}
-
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        return "";
+    override fun getValueAsString(): String {
+        return ""
     }
-
 }

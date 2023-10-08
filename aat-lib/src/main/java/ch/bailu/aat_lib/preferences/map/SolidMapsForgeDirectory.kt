@@ -1,79 +1,59 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.preferences.SelectionList
+import ch.bailu.aat_lib.preferences.SolidFile
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocFactory
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+open class SolidMapsForgeDirectory(storage: StorageInterface, factory: FocFactory, private val directories: MapDirectories) : SolidFile(
+    storage, KEY, factory) {
 
-import ch.bailu.aat_lib.preferences.SelectionList;
-import ch.bailu.aat_lib.preferences.SolidFile;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocFactory;
-
-public class SolidMapsForgeDirectory extends SolidFile {
-
-    public final static String EXTENSION = ".map";
-    public final static String MAPS_DIR = "maps";
-    public final static String ORUX_MAPS_DIR = "oruxmaps/mapfiles";
-
-    private final static String KEY = SolidMapsForgeDirectory.class.getSimpleName();
-
-    private final MapDirectories directories;
-
-    public SolidMapsForgeDirectory(StorageInterface storage, FocFactory factory, MapDirectories directories) {
-        super(storage, KEY, factory);
-        this.directories = directories;
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_mapsforge_directory()
     }
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_mapsforge_directory();
-    }
-
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        String r = super.getValueAsString();
-
-
+    override fun getValueAsString(): String {
+        var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
-            r = getDefaultValue();
-
-            setValue(r);
+            r = getDefaultValue()
+            setValue(r)
         }
-        return r;
+        return r
     }
 
-    public String getDefaultValue() {
-        ArrayList<String> list = new ArrayList<>(5);
-
-        list = buildSelection(list);
-
-        Foc external = directories.getDefault();
+    private fun getDefaultValue(): String {
+        var list = ArrayList<String>(5)
+        list = buildSelection(list)
+        val external = directories.default
         if (external != null) {
-            SelectionList.add_w(list, external);
+            SelectionList.add_w(list, external)
         }
-
-        if (list.size()>0) {
-            return list.get(0);
-        }
-        return "";
+        return if (list.size > 0) {
+            list[0]
+        } else ""
     }
 
-    @Override
-    public ArrayList<String> buildSelection(ArrayList<String> list) {
-        final ArrayList<Foc> dirs = directories.getWellKnownMapDirs();
-
-        for (Foc dir : dirs) {
-            SelectionList.add_r(list, dir);
-            SelectionList.add_subdirectories_r(list, dir);
+    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+        val dirs = directories.wellKnownMapDirs
+        for (dir in dirs) {
+            SelectionList.add_r(list, dir)
+            SelectionList.add_subdirectories_r(list, dir)
         }
-        return list;
+        return list
     }
 
-    public ArrayList<Foc> getWellKnownMapDirs() {
-        return directories.getWellKnownMapDirs();
+    val wellKnownMapDirs: ArrayList<Foc>
+        get() = directories.wellKnownMapDirs
+
+    companion object {
+        const val EXTENSION = ".map"
+        const val MAPS_DIR = "maps"
+        const val ORUX_MAPS_DIR = "oruxmaps/mapfiles"
+        private val KEY = SolidMapsForgeDirectory::class.java.simpleName
     }
 }

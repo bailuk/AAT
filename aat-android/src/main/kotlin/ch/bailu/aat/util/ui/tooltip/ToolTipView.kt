@@ -12,8 +12,8 @@ class ToolTipView(context: Context, theme: UiTheme) : TextView(context) {
     }
 
     fun setToolTip(tip: ToolTipProvider) {
-        val text = tip.toolTip
-        visibility = if (text == null || text.isEmpty()) {
+        val text = tip.getToolTip()
+        visibility = if (text.isNullOrEmpty()) {
             GONE
         } else {
             setText(text)

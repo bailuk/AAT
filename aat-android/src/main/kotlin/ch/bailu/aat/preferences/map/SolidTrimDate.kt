@@ -52,8 +52,8 @@ class SolidTrimDate(storageInterface: StorageInterface) : SolidIndexList(storage
         return entries.size
     }
 
-    public override fun getValueAsString(i: Int): String {
-        return entries[i].name
+    public override fun getValueAsString(index: Int): String {
+        return entries[index].name
     }
 
     fun getValue(): Long {

@@ -12,7 +12,7 @@ class SolidWeight(s: StorageInterface) : SolidInteger(s, KEY) {
     }
 
     fun setDefaults() {
-        value = 75
+        setValue(75)
     }
 
     @Throws(ValidationException::class)
@@ -23,7 +23,7 @@ class SolidWeight(s: StorageInterface) : SolidInteger(s, KEY) {
             throw ValidationException(Res.str().error_integer_positive())
         } else {
             try {
-                value = s.toInt()
+                setValue(s.toInt())
             } catch (e: NumberFormatException) {
                 e(this, e)
             }

@@ -11,9 +11,9 @@ class SolidPressureAtSeaLevel(storage: StorageInterface) : SolidInteger(storage,
     }
 
     var pressure: Float
-        get() = value / 100f
+        get() = getValue() / 100f
         set(pressure) {
-            value = (pressure * 100f).toInt()
+            setValue((pressure * 100f).toInt())
         }
 
     override fun setValueFromString(string: String) {

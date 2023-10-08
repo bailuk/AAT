@@ -1,15 +1,33 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
+class SolidScaleFactor(storage: StorageInterface) : SolidIndexList(storage, KEY) {
+    val scaleFactor: Float
+        get() = VALUE_LIST[index]
 
-public class SolidScaleFactor extends SolidIndexList {
-    private static final String KEY = "map_scale_factor";
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_mapsforge_scale_factor()
+    }
 
-    private static final float[] VALUE_LIST = {
+    override fun length(): Int {
+        return VALUE_LIST.size
+    }
+
+    public override fun getValueAsString(index: Int): String {
+        val i = validate(index)
+        return if (i == 0) toDefaultString(
+            VALUE_LIST[i].toString()
+        ) else VALUE_LIST[i].toString()
+    }
+
+    companion object {
+        private const val KEY = "map_scale_factor"
+        private val VALUE_LIST = floatArrayOf(
             1.0f,
             1.2f,
             1.4f,
@@ -20,32 +38,7 @@ public class SolidScaleFactor extends SolidIndexList {
             2.4f,
             2.6f,
             0.6f,
-            0.8f,
-    };
-
-    public SolidScaleFactor(StorageInterface storage) {
-        super(storage, KEY);
-    }
-
-    public float getScaleFactor() {
-        return VALUE_LIST[getIndex()];
-    }
-
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_mapsforge_scale_factor();
-    }
-
-    @Override
-    public int length() {
-        return VALUE_LIST.length;
-    }
-
-    @Override
-    public String getValueAsString(int index) {
-        int i = validate(index);
-        if (i == 0) return toDefaultString(String.valueOf(VALUE_LIST[i]));
-        return String.valueOf(VALUE_LIST[i]);
+            0.8f
+        )
     }
 }

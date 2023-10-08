@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.util.ui;
+package ch.bailu.aat_lib.util.ui
 
-public interface ToolTipProvider {
-    String getToolTip();
+interface ToolTipProvider {
+    fun getToolTip(): String?
 }

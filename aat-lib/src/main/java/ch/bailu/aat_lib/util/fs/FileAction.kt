@@ -18,7 +18,7 @@ object FileAction {
     }
 
     private fun isParentActive(context: AppContext, file: Foc): Boolean {
-        val currentDir = SolidDirectoryQuery(context.storage, context).valueAsFile
+        val currentDir = SolidDirectoryQuery(context.storage, context).getValueAsFile()
         val dir = file.parent()
         return dir != null && dir == currentDir
     }

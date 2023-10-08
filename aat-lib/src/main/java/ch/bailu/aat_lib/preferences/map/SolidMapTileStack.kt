@@ -1,24 +1,89 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.map.tile.source.ElevationSource
+import ch.bailu.aat_lib.map.tile.source.MapsForgeSource
+import ch.bailu.aat_lib.preferences.SolidBoolean
+import ch.bailu.aat_lib.preferences.SolidCheckList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.cache.DownloadSource
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.map.tile.source.ElevationSource;
-import ch.bailu.aat_lib.map.tile.source.MapsForgeSource;
-import ch.bailu.aat_lib.map.tile.source.Source;
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.SolidCheckList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.service.cache.DownloadSource;
+class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: Int) :
+    SolidCheckList() {
+    private val enabledArray = arrayOfNulls<SolidBoolean>(SOURCES.size)
+    private val srenderTheme: SolidRenderTheme
 
+    constructor(srender: SolidRenderTheme) : this(srender, 0)
 
-public final class SolidMapTileStack extends SolidCheckList {
+    // FIXME: use preset for tile stack
+    init {
+        for (i in enabledArray.indices) {
+            enabledArray[i] = SolidBoolean(srender.getStorage(), KEY + preset + "_" + i)
+        }
+        srenderTheme = srender
+    }
 
-    private final static String KEY = "tile_overlay_";
+    override fun getStringArray(): Array<String> {
+        val mapsForgeLabel = (MapsForgeSource.NAME
+                + " " + srenderTheme.valueAsThemeName)
 
-    public final static int FIRST_OVERLAY_INDEX = 4;
+        val result = ArrayList<String>(SOURCES.size)
+        result.add(mapsForgeLabel)
 
-    public final static Source[] SOURCES = new Source[] {
+        for (i in 1 until SOURCES.size) result.add(SOURCES[i].name)
+        return result.toTypedArray()
+    }
+
+    override fun getEnabledArray(): BooleanArray {
+        val array = BooleanArray(enabledArray.size)
+        for (i in enabledArray.indices) array[i] = enabledArray[i]!!.isEnabled
+        return array
+    }
+
+    override fun setEnabled(index: Int, isChecked: Boolean) {
+        var i = index
+        i = Math.min(enabledArray.size, i)
+        i = Math.max(0, i)
+        enabledArray[i]!!.value = isChecked
+    }
+
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_map()
+    }
+
+    override fun getKey(): String {
+        return KEY
+    }
+
+    override fun getStorage(): StorageInterface {
+        return enabledArray[0]!!.getStorage()
+    }
+
+    override fun hasKey(key: String): Boolean {
+        for (anEnabledArray in enabledArray) {
+            if (anEnabledArray!!.hasKey(key)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun setDefaults() {
+        for (i in SOURCES.indices) {
+            if (SOURCES[i] === DownloadSource.MAPNIK) {
+                setEnabled(i, true)
+                break
+            }
+        }
+    }
+
+    companion object {
+        private const val KEY = "tile_overlay_"
+        const val FIRST_OVERLAY_INDEX = 4
+        @JvmField
+        val SOURCES = arrayOf(
             MapsForgeSource.MAPSFORGE,
             DownloadSource.MAPNIK,
             DownloadSource.OPEN_TOPO_MAP,
@@ -29,95 +94,7 @@ public final class SolidMapTileStack extends SolidCheckList {
             DownloadSource.TRAIL_SKATING,
             DownloadSource.TRAIL_HIKING,
             DownloadSource.TRAIL_MTB,
-            DownloadSource.TRAIL_CYCLING,
-    };
-
-
-
-    private final SolidBoolean[] enabledArray = new SolidBoolean[SOURCES.length];
-
-    private final SolidRenderTheme srenderTheme;
-
-    public SolidMapTileStack (SolidRenderTheme srender) {
-        this (srender, 0);
-
-    }
-
-    // FIXME: use preset for tile stack
-    private SolidMapTileStack (SolidRenderTheme srender, int preset) {
-
-        for (int i=0; i<enabledArray.length; i++) {
-            enabledArray[i]=new SolidBoolean(srender.getStorage(), KEY+preset+"_"+i);
-        }
-        srenderTheme = srender;
-    }
-
-
-    @Override
-    public String[] getStringArray() {
-        String mapsForgeLabel =
-                MapsForgeSource.NAME
-                        + " " + srenderTheme.getValueAsThemeName();
-        String[] array = new String[SOURCES.length];
-        array[0] = mapsForgeLabel;
-        for (int i=1; i<SOURCES.length; i++)
-            array[i] = SOURCES[i].getName();
-        return array;
-    }
-
-    @Override
-    public boolean[] getEnabledArray() {
-        boolean[] array = new boolean[enabledArray.length];
-        for (int i=0; i<enabledArray.length; i++)
-            array[i] = enabledArray[i].isEnabled();
-        return array;
-    }
-
-
-    @Override
-    public void setEnabled(int i, boolean isChecked) {
-        i=Math.min(enabledArray.length, i);
-        i=Math.max(0, i);
-        enabledArray[i].setValue(isChecked);
-    }
-
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_map();
-    }
-
-
-    @Override
-    public String getKey() {
-        return KEY;
-    }
-
-
-
-    @Override
-    public StorageInterface getStorage() {
-        return enabledArray[0].getStorage();
-    }
-
-
-    @Override
-    public boolean hasKey(String s) {
-        for (SolidBoolean anEnabledArray : enabledArray) {
-            if (anEnabledArray.hasKey(s)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public void setDefaults() {
-        for (int i=0; i < SOURCES.length; i++) {
-            if (SOURCES[i] == DownloadSource.MAPNIK) {
-                setEnabled(i, true);
-                break;
-            }
-        }
+            DownloadSource.TRAIL_CYCLING
+        )
     }
 }

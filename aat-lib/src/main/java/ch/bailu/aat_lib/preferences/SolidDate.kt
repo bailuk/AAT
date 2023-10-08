@@ -1,39 +1,23 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.description.FF.Companion.f
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.description.FF;
+class SolidDate(storage: StorageInterface, key: String, private val label: String) : SolidLong(storage, key) {
 
-public class SolidDate extends SolidLong {
-    private final String label;
-
-    public SolidDate(StorageInterface s, String k, String l) {
-        super(s, k);
-        label = l;
+    override fun getValue(): Long {
+        return if (super.getValue() == 0L) {
+            System.currentTimeMillis()
+        } else super.getValue()
     }
-
-
-
-
-    @Override
-    public long getValue() {
-        if (super.getValue() == 0) {
-            return System.currentTimeMillis();
-        }
-        return super.getValue();
-    }
-
 
     @Nonnull
-    @Override
-    public String getValueAsString() {
-        return FF.f().LOCAL_DATE.format(getValue());
+    override fun getValueAsString(): String {
+        return f().LOCAL_DATE.format(getValue())
     }
 
-
     @Nonnull
-    @Override
-    public String getLabel() {
-        return label;
+    override fun getLabel(): String {
+        return label
     }
 }

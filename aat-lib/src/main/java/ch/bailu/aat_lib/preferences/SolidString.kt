@@ -1,55 +1,40 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import java.util.ArrayList;
+import ch.bailu.aat_lib.exception.ValidationException
 
-import javax.annotation.Nonnull;
+open class SolidString(private val storage: StorageInterface, private val key: String) : AbsSolidType() {
 
-import ch.bailu.aat_lib.exception.ValidationException;
-
-public class SolidString extends AbsSolidType {
-    private final String key;
-    private final StorageInterface storage;
-
-
-    public SolidString(StorageInterface storage, String key) {
-        this.storage = storage;
-        this.key = key;
+    override fun getValueAsString(): String {
+        return getStorage().readString(getKey())
     }
 
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        return getStorage().readString(getKey());
+    @Throws(ValidationException::class)
+    override fun setValueFromString(string: String) {
+        setValue(string)
     }
 
-    @Override
-    public void setValueFromString(String string) throws ValidationException {
-        setValue(string);
+    fun setValue(v: String) {
+        getStorage().writeString(key, v)
     }
 
-    public void setValue(String v) {
-        getStorage().writeString(key, v);
+    override fun getKey(): String {
+        return key
     }
 
-
-    @Override
-    public String getKey() {
-        return key;
+    override fun getStorage(): StorageInterface {
+        return storage
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return storage;
+    /**
+     * List of possible values to select a value from
+     * This is used by selection lists in the settings dialog
+     */
+    open fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+        return list
     }
 
-
-    public ArrayList<String> buildSelection(ArrayList<String> strings) {
-        return strings;
-    }
-
-    public String getValueAsStringNonDef() {
-        String s = getValueAsString();
-        if (storage.isDefaultString(s)) return "";
-        return s;
+    fun getValueAsStringNonDef(): String {
+        val s = getValueAsString()
+        return if (storage.isDefaultString(s)) "" else s
     }
 }

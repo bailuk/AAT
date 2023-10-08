@@ -43,6 +43,6 @@ class MapPreferencesPage(storage: StorageInterface, app: Application, window: Pr
         add(SolidBooleanSwitchView(SolidDem3EnableDownload(storage)).layout)
 
         add(ElevationSource.ELEVATION_HILLSHADE.name)
-        add(SolidBooleanSwitchView(SolidEnableTileCache.Hillshade(storage)).layout)
+        add(SolidBooleanSwitchView(SolidEnableTileCache.HillShade(storage)).layout)
     }
 }

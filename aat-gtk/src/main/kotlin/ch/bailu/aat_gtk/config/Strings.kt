@@ -9,6 +9,7 @@ object Strings {
     const val linked = "linked"
     const val mapControl = "map-control"
     const val numberView = "number-view"
+    const val numberViewWidth = "number-view-width-"
 
     // Files
     const val appCss = "/app.css"

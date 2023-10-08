@@ -1,62 +1,51 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nonnull
 
-public abstract class SolidIndexList extends AbsSolidType {
+abstract class SolidIndexList(storage: StorageInterface, key: String) : AbsSolidType() {
+    private val sindex: SolidInteger
 
-    private final SolidInteger sindex;
-
-
-    public SolidIndexList(StorageInterface s, String k) {
-        sindex = new SolidInteger(s,k);
+    init {
+        sindex = SolidInteger(storage, key)
     }
 
-
-    public abstract int length();
-    protected abstract String getValueAsString(int i);
-
+    abstract fun length(): Int
+    protected abstract fun getValueAsString(index: Int): String
     @Nonnull
-    @Override
-    public String getValueAsString() {
-        return getValueAsString(getIndex());
-    }
-    public void setIndex(int i) {
-        sindex.setValue(validate(i));
+    override fun getValueAsString(): String {
+        return getValueAsString(index)
     }
 
-    @Override
-    public void setValueFromString(String string) {}
-
-    protected int validate(int index) {
-        if (index < 0) index = length()-1;
-        else if (index >= length()) index=0;
-        return index;
+    override fun setValueFromString(string: String) {}
+    protected fun validate(index: Int): Int {
+        var result = index
+        if (index < 0) result = length() - 1 else if (index >= length()) result = 0
+        return result
     }
 
-    public String[] getStringArray() {
-        String[] r = new String[length()];
-
-        for (int index = 0; index < r.length; index++) {
-            r[index] = getValueAsString(index);
+    open fun getStringArray(): Array<String> {
+        val result = ArrayList<String>(length())
+        for (i in 0 until length()) {
+            result.add(getValueAsString(i))
         }
-        return r;
+        return result.toTypedArray()
     }
 
-    public int getIndex() {
-        return validate(sindex.getValue());
+    var index: Int
+        get() = validate(sindex.getValue())
+        set(i) {
+            sindex.setValue(validate(i))
+        }
+
+    override fun getKey(): String {
+        return sindex.getKey()
     }
 
-    @Override
-    public String getKey() {
-        return sindex.getKey();
+    override fun getStorage(): StorageInterface {
+        return sindex.getStorage()
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return sindex.getStorage();
-    }
-
-    public void cycle() {
-        setIndex(getIndex() + 1);
+    fun cycle() {
+        index += 1
     }
 }

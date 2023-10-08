@@ -1,83 +1,69 @@
-package ch.bailu.aat_lib.preferences.presets;
+package ch.bailu.aat_lib.preferences.presets
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidPresetCount
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidPresetCount;
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
-
-public class SolidPreset extends SolidIndexList {
-
-    final public static String KEY="preset";
-
-    public SolidPreset(StorageInterface s) {
-        super(s, KEY);
+class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
+    override fun length(): Int {
+        return SolidPresetCount(getStorage()).value
     }
 
-    public static int getPresetFromFile(Foc file) {
-        int preset = 0;
-        file = file.parent();
+    public override fun getValueAsString(index: Int): String {
+        return smet(index).getValueAsString()
+    }
 
-        if (file != null && file.isDir()) {
-            String name = file.getName();
+    @Nonnull
+    override fun getValueAsString(): String {
+        return smet().getValueAsString()
+    }
 
-            if (name != null) {
-                name = name.replace(AppDirectory.PRESET_PREFIX, "");
+    fun smet(): SolidMET {
+        return smet(index)
+    }
 
-                try {
-                    preset = Integer.parseInt(name);
-                    preset = Math.max(preset, 0);
-                    preset = Math.min(preset, SolidPresetCount.MAX);
-                } catch (Exception e) {
-                    preset = 0;
+    private fun smet(i: Int): SolidMET {
+        return SolidMET(getStorage(), i)
+    }
+
+    override fun hasKey(key: String): Boolean {
+        return super.hasKey(key) || smet().hasKey(key)
+    }
+
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_preset()
+    }
+
+    fun getDirectory(sdirectory: SolidDataDirectory?): Foc {
+        return AppDirectory.getTrackListDirectory(sdirectory, index)
+    }
+
+    companion object {
+        const val KEY = "preset"
+        @JvmStatic
+        fun getPresetFromFile(file: Foc): Int {
+            var preset = 0
+            val parent = file.parent()
+            if (parent != null && parent.isDir) {
+                var name = parent.name
+                if (name != null) {
+                    name = name.replace(AppDirectory.PRESET_PREFIX, "")
+                    try {
+                        preset = name.toInt()
+                        preset = Math.max(preset, 0)
+                        preset = Math.min(preset, SolidPresetCount.MAX)
+                    } catch (e: Exception) {
+                        preset = 0
+                    }
                 }
             }
+            return preset
         }
-        return preset;
-    }
-
-    @Override
-    public int length() {
-        return new SolidPresetCount(getStorage()).getValue();
-    }
-
-    @Override
-    public String getValueAsString(int i) {
-        return smet(i).getValueAsString();
-    }
-
-    @Nonnull
-    @Override
-    public String getValueAsString() {
-        return smet().getValueAsString();
-    }
-
-
-    public SolidMET smet() {
-        return smet(getIndex());
-    }
-
-    private SolidMET smet(int i) {
-        return new SolidMET(getStorage(), i);
-    }
-
-
-    @Override
-    public boolean hasKey(String key) {
-        return super.hasKey(key) || smet().hasKey(key);
-    }
-
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_preset();
-    }
-
-    public Foc getDirectory(SolidDataDirectory sdirectory) {
-        return AppDirectory.getTrackListDirectory(sdirectory,getIndex());
     }
 }

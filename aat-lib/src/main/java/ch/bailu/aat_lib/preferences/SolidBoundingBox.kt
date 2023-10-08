@@ -1,120 +1,91 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 
-public class SolidBoundingBox implements SolidTypeInterface {
-    private final SolidInteger N, W, S, E;
+class SolidBoundingBox(storage: StorageInterface, key: String, private val label: String) :
+    SolidTypeInterface {
+    private val N = SolidInteger(storage, key + "_N")
+    private val W = SolidInteger(storage, key + "_W")
+    private val S = SolidInteger(storage, key + "_S")
+    private val E = SolidInteger(storage, key + "_E")
 
+    var value: BoundingBoxE6
+        get() = BoundingBoxE6(
+            N.getValue(),
+            E.getValue(),
+            S.getValue(),
+            W.getValue()
+        )
+        set(b) {
+            N.setValue(b.latNorthE6)
+            E.setValue(b.lonEastE6)
+            S.setValue(b.latSouthE6)
+            W.setValue(b.lonWestE6)
+        }
 
-    private final String label;
-
-    public SolidBoundingBox(final StorageInterface s, final String key, String l) {
-        label = l;
-
-        N = new SolidInteger(s, key + "_N");
-        E = new SolidInteger(s, key + "_E");
-        S = new SolidInteger(s, key + "_S");
-        W = new SolidInteger(s, key + "_W");
+    override fun hasKey(key: String): Boolean {
+        return N.hasKey(key) || E.hasKey(key) || S.hasKey(key) || W.hasKey(key)
     }
 
-    public BoundingBoxE6 getValue() {
-        return new BoundingBoxE6(
-                N.getValue(),
-                E.getValue(),
-                S.getValue(),
-                W.getValue());
+    override fun register(listener: OnPreferencesChanged) {
+        N.register(listener)
     }
 
-    public void setValue(BoundingBoxE6 b) {
-        N.setValue(b.getLatNorthE6());
-        E.setValue(b.getLonEastE6());
-        S.setValue(b.getLatSouthE6());
-        W.setValue(b.getLonWestE6());
+    override fun unregister(listener: OnPreferencesChanged) {
+        N.unregister(listener)
     }
 
-
-    public boolean hasKey(String k) {
-        return N.hasKey(k) || E.hasKey(k) || S.hasKey(k) || W.hasKey(k);
+    override fun getValueAsString(): String {
+        return value.toString()
     }
 
-    @Override
-    public void register(OnPreferencesChanged listener) {
-        N.register(listener);
+    override fun getKey(): String {
+        return N.getKey().substring(0, N.getKey().length - 3)
     }
 
-    @Override
-    public void unregister(OnPreferencesChanged listener) {
-        N.unregister(listener);
+    override fun getStorage(): StorageInterface {
+        return N.getStorage()
     }
 
-
-    public String getValueAsString() {
-        return getValue().toString();
+    override fun getLabel(): String {
+        return label
     }
 
-
-
-    @Override
-    public String getKey() {
-        return N.getKey().substring(0,N.getKey().length()-3);
+    fun createSelectionStringOverlaps(): String {
+        val n = N.getValue()
+        val e = E.getValue()
+        val s = S.getValue()
+        val w = W.getValue()
+        return ("(("
+                + GpxDbConfiguration.KEY_NORTH_BOUNDING + " < " + n
+                + " AND " + GpxDbConfiguration.KEY_NORTH_BOUNDING + " > " + s
+                + ") OR ("
+                + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " < " + n
+                + " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " > " + s
+                + "))"
+                + " AND "
+                + "(("
+                + " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " > " + w
+                + " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " < " + e
+                + ") OR ("
+                + " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " > " + w
+                + " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " < " + e
+                + "))")
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return N.getStorage();
+    fun createSelectionStringInside(): String {
+        val n = N.getValue()
+        val e = E.getValue()
+        val s = S.getValue()
+        val w = W.getValue()
+        return GpxDbConfiguration.KEY_NORTH_BOUNDING + " < " + n +
+                " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " > " + s +
+                " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " < " + e +
+                " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " > " + w
     }
 
-
-    @Override
-    public String getLabel() {
-        return label;
-    }
-
-
-    public String createSelectionStringOverlaps() {
-
-        final int n = N.getValue(), e = E.getValue(), s = S.getValue(), w = W.getValue();
-
-        return
-         "(("
-        +          GpxDbConfiguration.KEY_NORTH_BOUNDING  + " < " + n
-        +" AND " + GpxDbConfiguration.KEY_NORTH_BOUNDING  + " > " + s
-
-        +") OR ("
-
-        +          GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " < " + n
-        +" AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " > " + s
-        +"))"
-
-
-        + " AND "
-
-
-        +"(("
-        +" AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " > " + w
-        +" AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " < " + e
-
-        +") OR ("
-
-        +" AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " > " + w
-        +" AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " < " + e
-        +"))";
-
-    }
-
-
-    public String createSelectionStringInside() {
-        final int n = N.getValue(), e = E.getValue(), s = S.getValue(), w = W.getValue();
-
-        return    GpxDbConfiguration.KEY_NORTH_BOUNDING  + " < " + n +
-        " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING  + " > " + s +
-        " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING   + " < " + e +
-        " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING   + " > " + w;
-    }
-
-    @Override
-    public String getToolTip() {
-        return null;
+    override fun getToolTip(): String? {
+        return null
     }
 }

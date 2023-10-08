@@ -1,20 +1,18 @@
-package ch.bailu.aat_lib.preferences.system;
+package ch.bailu.aat_lib.preferences.system
 
-import ch.bailu.aat_lib.preferences.SolidLong;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.SolidLong
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-public class SolidStartCount extends SolidLong {
-    private static final String KEY ="start_count";
+class SolidStartCount(s: StorageInterface) : SolidLong(s, KEY) {
 
-    public SolidStartCount(StorageInterface s) {
-        super(s, KEY);
+    val isFirstRun: Boolean
+        get() = getValue() == 0L
+
+    fun increment() {
+        setValue(getValue() + 1)
     }
 
-    public boolean isFirstRun() {
-        return getValue() == 0;
-    }
-
-    public void increment() {
-        setValue(getValue() + 1);
+    companion object {
+        private const val KEY = "start_count"
     }
 }

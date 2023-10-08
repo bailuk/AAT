@@ -12,14 +12,14 @@ class SolidDateView(context: Context, private val sdate: SolidDate, theme: UiThe
     AbsSolidView(context, sdate, theme) {
     override fun onRequestNewValue() {
         val calendar = GregorianCalendar()
-        calendar.timeInMillis = sdate.value
+        calendar.timeInMillis = sdate.getValue()
         val picker = DatePickerDialog(
             context,
             { _: DatePicker, y: Int, m: Int, d: Int ->
                 calendar[Calendar.YEAR] = y
                 calendar[Calendar.MONTH] = m
                 calendar[Calendar.DAY_OF_MONTH] = d
-                sdate.value = calendar.timeInMillis
+                sdate.setValue(calendar.timeInMillis)
             },
             calendar[Calendar.YEAR],
             calendar[Calendar.MONTH],

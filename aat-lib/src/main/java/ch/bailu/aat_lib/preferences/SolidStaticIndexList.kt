@@ -1,30 +1,15 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-public class SolidStaticIndexList extends SolidIndexList {
-
-    private final String[] labelList;
-
-    public SolidStaticIndexList(StorageInterface s, String k, String[] l) {
-        super(s,k);
-        labelList=l;
+open class SolidStaticIndexList(storage: StorageInterface, key: String, private val labelList: Array<String>) : SolidIndexList(storage, key) {
+    override fun length(): Int {
+        return labelList.size
     }
 
-
-    @Override
-    public int length() {
-        return labelList.length;
+    public override fun getValueAsString(index: Int): String {
+        return labelList[index]
     }
 
-    @Override
-    public String getValueAsString(int i) {
-        return labelList[i];
+    override fun getStringArray(): Array<String> {
+        return labelList
     }
-
-
-    @Override
-    public String[] getStringArray() {
-        return labelList;
-    }
-
-
 }

@@ -24,9 +24,7 @@ class GtkSolidLocationProvider (storage: StorageInterface) :
         } else if (index == 1) {
             GPSdLocationProvider(last)
         } else {
-            ThreadedMockLocation(locationService, last,
-                storage
-            ) { string: String? -> FocFile(string) }
+            ThreadedMockLocation(locationService, last,getStorage()) { string: String? -> FocFile(string) }
         }
     }
 }

@@ -12,12 +12,12 @@ open class SolidAltitude(storage: StorageInterface, key: String, private val uni
     }
 
     override fun getValueAsString(): String {
-        return (value * SolidUnit.ALT_FACTOR[unit]).roundToInt().toString()
+        return (getValue() * SolidUnit.ALT_FACTOR[unit]).roundToInt().toString()
     }
 
     override fun setValueFromString(string: String) {
         try {
-            value = (string.toFloat() / SolidUnit.ALT_FACTOR[unit]).roundToInt()
+            setValue((string.toFloat() / SolidUnit.ALT_FACTOR[unit]).roundToInt())
         } catch (e: NumberFormatException) {
             e(this, e)
         }

@@ -1,54 +1,49 @@
-package ch.bailu.aat_lib.preferences.general;
+package ch.bailu.aat_lib.preferences.general
 
-import java.util.Objects;
+import ch.bailu.aat_lib.preferences.SolidStaticIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import java.util.Objects
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.preferences.SolidStaticIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidUnit extends SolidStaticIndexList {
-    private static final String KEY="unit";
-
-    static public final int IMPERIAL = 1;
-    static public final int SI = 3;
-
-
-    static private final float[] DIST_FACTOR = {1f / 1000f, 0.000621371f, 1f, 1f};
-    static public final float[] ALT_FACTOR = {1, 3.28084f, 1f, 1f};
-    static private final float[] SPEED_FACTOR = {3.6f, 2.23694f, 1f, 1f};
-    static private final String[] DIST_UNIT = {"km", "miles", "m", "m"};
-    static private final String[] SPEED_UNIT = {"km/h", "mph", "m/s", "m/s"};
-    static public final String[] ALT_UNIT = {"m", "f", "m", "m"};
-    static public final String[] PACE_UNIT = {"T/km", "T/miles", "T/m", "s/m"};
-
-    public SolidUnit(@Nonnull StorageInterface storage) {
-        super(storage, KEY, Res.str().p_unit_list());
-        Objects.requireNonNull(storage);
+class SolidUnit(storage: StorageInterface) : SolidStaticIndexList(storage, KEY, Res.str().p_unit_list()) {
+    init {
+        Objects.requireNonNull(storage)
     }
 
-
-    public float getDistanceFactor() {return DIST_FACTOR[getIndex()];}
-    public float getAltitudeFactor() {return ALT_FACTOR[getIndex()];}
-    public float getSpeedFactor() {return SPEED_FACTOR[getIndex()];}
-
-    public String getDistanceUnit() {return DIST_UNIT[getIndex()];}
-    public String getAltitudeUnit() {return ALT_UNIT[getIndex()];}
-    public String getSpeedUnit() {return SPEED_UNIT[getIndex()];}
+    val distanceFactor: Float
+        get() = DIST_FACTOR[index]
+    val altitudeFactor: Float
+        get() = ALT_FACTOR[index]
+    val speedFactor: Float
+        get() = SPEED_FACTOR[index]
+    val distanceUnit: String
+        get() = DIST_UNIT[index]
+    val altitudeUnit: String
+        get() = ALT_UNIT[index]
+    val speedUnit: String
+        get() = SPEED_UNIT[index]
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_unit_title();
+    override fun getLabel(): String {
+        return Res.str().p_unit_title()
     }
 
+    val paceUnit: String
+        get() = PACE_UNIT[index]
+    val paceFactor: Float
+        get() = 1f / distanceFactor
 
-    public String getPaceUnit() {
-        return PACE_UNIT[getIndex()];
-    }
-
-    public float getPaceFactor() {
-        return 1f / getDistanceFactor();
+    companion object {
+        private const val KEY = "unit"
+        const val IMPERIAL = 1
+        const val SI = 3
+        private val DIST_FACTOR = floatArrayOf(1f / 1000f, 0.000621371f, 1f, 1f)
+        val ALT_FACTOR = floatArrayOf(1f, 3.28084f, 1f, 1f)
+        private val SPEED_FACTOR = floatArrayOf(3.6f, 2.23694f, 1f, 1f)
+        private val DIST_UNIT = arrayOf("km", "miles", "m", "m")
+        private val SPEED_UNIT = arrayOf("km/h", "mph", "m/s", "m/s")
+        val ALT_UNIT = arrayOf("m", "f", "m", "m")
+        val PACE_UNIT = arrayOf("T/km", "T/miles", "T/m", "s/m")
     }
 }

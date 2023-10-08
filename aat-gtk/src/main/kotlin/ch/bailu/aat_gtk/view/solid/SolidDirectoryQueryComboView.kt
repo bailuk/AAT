@@ -30,7 +30,7 @@ class SolidDirectoryQueryComboView(storage: StorageInterface, focFactory: FocFac
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (key == solid.key) {
+        if (key == solid.getKey()) {
             indexFromSolid()
         }
     }
@@ -38,7 +38,7 @@ class SolidDirectoryQueryComboView(storage: StorageInterface, focFactory: FocFac
     private fun indexFromSolid() {
         var index = 0
         directories.forEach {
-            if (it == solid.valueAsFile) {
+            if (it == solid.getValueAsFile()) {
                 combo.active = index
             }
             index++

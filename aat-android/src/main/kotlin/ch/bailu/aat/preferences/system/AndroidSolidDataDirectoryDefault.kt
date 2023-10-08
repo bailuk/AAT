@@ -16,7 +16,7 @@ class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirector
 
     override fun getValueAsString(): String {
         val r = super.getValueAsString()
-        return if (storage.isDefaultString(r)) setDefaultValue() else r
+        return if (getStorage().isDefaultString(r)) setDefaultValue() else r
     }
 
     override fun setDefaultValue(): String {
@@ -30,7 +30,7 @@ class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirector
         get() {
             var list = ArrayList<String>(5)
             list = buildSelection(list)
-            list.add(storage.defaultString) // failsave
+            list.add(getStorage().defaultString) // failsave
             return list[0]
         }
 

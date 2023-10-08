@@ -18,7 +18,7 @@ class SolidSAF(private val sdirectory: SolidFile) {
      */
     fun setFromPickerActivity(acontext: Activity) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-        browseDirKey = sdirectory.key
+        browseDirKey = sdirectory.getKey()
         try {
             acontext.startActivityForResult(intent, BROWSE_DIR)
         } catch (e: Exception) {

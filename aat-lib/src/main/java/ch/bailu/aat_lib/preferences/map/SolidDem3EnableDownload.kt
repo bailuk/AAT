@@ -1,19 +1,15 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidBoolean
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidDem3EnableDownload extends SolidBoolean {
-    public SolidDem3EnableDownload(StorageInterface storageInterface) {
-        super(storageInterface, SolidDem3EnableDownload.class.getSimpleName());
-    }
-
+class SolidDem3EnableDownload(storage: StorageInterface) : SolidBoolean(
+    storage, SolidDem3EnableDownload::class.java.simpleName
+) {
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_dem_auto_download();
+    override fun getLabel(): String {
+        return Res.str().p_dem_auto_download()
     }
 }

@@ -174,7 +174,7 @@ class FileList(app: Application,
                     append(Button().apply {
                         iconName = Icons.folderSymbolic
                         onClicked {
-                            val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
+                            val path = SolidDirectoryQuery(storage, focFactory).getValueAsFile().path
                             Directory.openExternal(path)
                         }
                     })

@@ -1,88 +1,74 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc.Foc
 
-public abstract class SolidOverlay implements SolidOverlayInterface {
-    private final SolidOverlayFileEnabled enabled;
-    private final SolidDataDirectory baseDirectory;
-    private final String subDir;
-    private final String fileName;
-    private final int iid;
+abstract class SolidOverlay(
+    baseDirectory: SolidDataDirectory,
+    private val iid: Int,
+    private val subDir: String,
+    private val fileName: String
+) : SolidOverlayInterface {
+    private val enabled: SolidOverlayFileEnabled
+    private val baseDirectory: SolidDataDirectory
 
-    public SolidOverlay(SolidDataDirectory baseDirectory, int iid, String subDir, String fileName) {
-        this.iid = iid;
-        this.fileName = fileName;
-        this.subDir = subDir;
-        this.enabled = new SolidOverlayFileEnabled(baseDirectory.getStorage(), iid);
-        this.baseDirectory = baseDirectory;
+    init {
+        enabled = SolidOverlayFileEnabled(baseDirectory.getStorage(), iid)
+        this.baseDirectory = baseDirectory
     }
 
-    @Override
-    public String getLabel() {
-        return Res.str().p_mapsforge_poi();
+    override fun getLabel(): String {
+        return Res.str().p_mapsforge_poi()
     }
 
-    @Override
-    public Foc getValueAsFile() {
-        return getDirectory().child(fileName);
+    override fun getValueAsFile(): Foc {
+        return directory.child(fileName)
     }
 
-    @Override
-    public String getValueAsString() {
-        return getValueAsFile().toString();
+    override fun getValueAsString(): String {
+        return getValueAsFile().toString()
     }
 
-    public Foc getDirectory() {
-        return AppDirectory.getDataDirectory(baseDirectory, subDir);
+    val directory: Foc
+        get() = AppDirectory.getDataDirectory(baseDirectory, subDir)
+
+    override fun getKey(): String {
+        return enabled.getKey()
     }
 
-    @Override
-    public String getKey() {
-        return enabled.getKey();
+    override fun getStorage(): StorageInterface {
+        return enabled.getStorage()
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return enabled.getStorage();
+    override fun hasKey(key: String): Boolean {
+        return enabled.hasKey(key) || baseDirectory.hasKey(key)
     }
 
-    @Override
-    public boolean hasKey(String key) {
-        return enabled.hasKey(key) || baseDirectory.hasKey(key);
+    override fun register(listener: OnPreferencesChanged) {
+        enabled.register(listener)
     }
 
-    @Override
-    public void register(OnPreferencesChanged listener) {
-        enabled.register(listener);
+    override fun unregister(listener: OnPreferencesChanged) {
+        enabled.unregister(listener)
     }
 
-    @Override
-    public void unregister(OnPreferencesChanged listener) {
-        enabled.unregister(listener);
+    override fun isEnabled(): Boolean {
+        return enabled.isEnabled
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled.isEnabled();
+    override fun setEnabled(enabled: Boolean) {
+        this.enabled.value = enabled
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled.setValue(enabled);
+    override fun getToolTip(): String? {
+        return null
     }
 
-    @Override
-    public String getToolTip() {
-        return null;
-    }
-
-    @Override
-    public int getIID() {
-        return iid;
+    override fun getIID(): Int {
+        return iid
     }
 }

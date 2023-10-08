@@ -1,7 +1,7 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import ch.bailu.foc.Foc;
+import ch.bailu.foc.Foc
 
-public interface SolidFileInterface {
-    Foc getValueAsFile();
+interface SolidFileInterface {
+    fun getValueAsFile(): Foc
 }

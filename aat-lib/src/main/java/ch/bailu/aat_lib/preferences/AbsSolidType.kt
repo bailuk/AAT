@@ -1,63 +1,58 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.exception.ValidationException
+import ch.bailu.aat_lib.util.Objects.equals
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.exception.ValidationException;
-import ch.bailu.aat_lib.util.Objects;
-
-public abstract class AbsSolidType implements SolidTypeInterface {
-    public static final String NULL_LABEL="";
-    public static final String DEFAULT_MARKER=" ✓";
-
-
-    public String getIconResource() {return "";}
+abstract class AbsSolidType : SolidTypeInterface {
+    open fun getIconResource(): String {
+        return ""
+    }
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return NULL_LABEL;
+    override fun getLabel(): String {
+        return NULL_LABEL
     }
 
-    public abstract void setValueFromString(String string) throws ValidationException;
-
-    @Override
-    public boolean hasKey(String s) {
-        return Objects.equals(s, getKey());
+    @Throws(ValidationException::class)
+    abstract fun setValueFromString(string: String)
+    override fun hasKey(key: String): Boolean {
+        return equals(key, getKey())
     }
 
-
-
-    @Override
-    public final void register(OnPreferencesChanged listener) {
-        getStorage().register(listener);
+    override fun register(listener: OnPreferencesChanged) {
+        getStorage().register(listener)
     }
 
-
-    @Override
-    public final void unregister(OnPreferencesChanged listener) {
-        getStorage().unregister(listener);
+    override fun unregister(listener: OnPreferencesChanged) {
+        getStorage().unregister(listener)
     }
-
 
     @Nonnull
-    @Override
-    public String toString() {
-        return getValueAsString();
+    override fun toString(): String {
+        return getValueAsString()
     }
 
-    @Override
-    public String getToolTip() {
-        return null;
+    override fun getToolTip(): String? {
+        return null
     }
 
-    protected static String toDefaultString(String s) {
-        return s + DEFAULT_MARKER;
-    }
-    protected static String toDefaultString(String s, int sel) {
-        if (sel == 0) return toDefaultString(s);
-        return s;
+    open fun validate(s: String): Boolean {
+        return true
     }
 
-    public boolean validate(String s) { return true; }
+    companion object {
+        const val NULL_LABEL = ""
+        private const val DEFAULT_MARKER = " ✓"
 
+        @JvmStatic
+        protected fun toDefaultString(s: String): String {
+            return s + DEFAULT_MARKER
+        }
+
+        @JvmStatic
+        protected fun toDefaultString(s: String, sel: Int): String {
+            return if (sel == 0) toDefaultString(s) else s
+        }
+    }
 }

@@ -1,53 +1,41 @@
-package ch.bailu.aat_lib.preferences.general;
+package ch.bailu.aat_lib.preferences.general
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidPresetCount extends SolidIndexList {
-
-    private final static String KEY=SolidPresetCount.class.getSimpleName();
-    public final static int MAX=15;
-    private final static int MIN=3;
-    public final static int DEFAULT=5;
-
-    public SolidPresetCount(StorageInterface s) {
-        super(s, KEY);
+class SolidPresetCount(storage: StorageInterface) : SolidIndexList(storage, KEY) {
+    fun getValue(v: Int): Int {
+        return if (v == 0) DEFAULT else MIN + v - 1
     }
 
-    public int getValue(int v) {
-        if (v==0) return DEFAULT;
-
-        return MIN + v - 1;
-    }
-
-    public int getValue() {
-        return getValue(getIndex());
-    }
+    val value: Int
+        get() = getValue(index)
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_preset_slots();
+    override fun getLabel(): String {
+        return Res.str().p_preset_slots()
     }
 
-    @Override
-    public String getToolTip() {
-        return Res.str().tt_p_preset_slots();
+    override fun getToolTip(): String? {
+        return Res.str().tt_p_preset_slots()
     }
 
-
-    @Override
-    public int length() {
-        return MAX - MIN + 2;
+    override fun length(): Int {
+        return MAX - MIN + 2
     }
 
-    @Override
-    protected String getValueAsString(int i) {
-        String s = String.valueOf(getValue(i));
-        if (i==0) s = toDefaultString(s);
-        return s;
+    override fun getValueAsString(index: Int): String {
+        var s = getValue(index).toString()
+        if (index == 0) s = toDefaultString(s)
+        return s
+    }
+
+    companion object {
+        private val KEY = SolidPresetCount::class.java.simpleName
+        const val MAX = 15
+        private const val MIN = 3
+        const val DEFAULT = 5
     }
 }

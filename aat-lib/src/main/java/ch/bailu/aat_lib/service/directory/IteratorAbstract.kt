@@ -63,7 +63,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private fun openAndQuery() {
         val fileOnOldPosition = ""
         val oldPosition = 0
-        appContext.services.directoryService.openDir(sdirectory.valueAsFile)
+        appContext.services.directoryService.openDir(sdirectory.getValueAsFile())
         updateResultFromSelection()
         moveToOldPosition(oldPosition, fileOnOldPosition)
     }
@@ -92,7 +92,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private fun moveToOldPosition(oldPosition: Int, fileOnOldPosition: String) {
         if (resultSet != null) {
             resultSet!!.moveToPosition(oldPosition)
-            onCursorChanged(resultSet, sdirectory.valueAsFile, fileOnOldPosition)
+            onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition)
             onCursorChangedListener.onCursorChanged()
         }
     }

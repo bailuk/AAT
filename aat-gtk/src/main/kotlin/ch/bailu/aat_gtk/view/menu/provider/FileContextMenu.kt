@@ -27,7 +27,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
     override fun createMenu(): Menu {
         return Menu().apply {
             appendSection(Res.str().file_overlay(), Menu().apply {
-                appendItem(MenuHelper.createCustomItem(solid.key))
+                appendItem(MenuHelper.createCustomItem(solid.getKey()))
             })
 
             appendSection(Str.NULL, Menu().apply {
@@ -39,7 +39,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
         }
     }
 
-    private var file: Foc = FocName(solid.key)
+    private var file: Foc = FocName(solid.getKey())
     private var removedFromList = file
 
     fun setFile(file: Foc) {
@@ -113,7 +113,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                 ListBox().apply {
                     selectionMode = 1
 
-                    solid.enabledArray.forEachIndexed { index, _ ->
+                    solid.getEnabledArray().forEachIndexed { index, _ ->
                         val layout = Box(Orientation.HORIZONTAL, 5)
                         val check = CheckButton()
                         val label = Label(Str.NULL)
@@ -134,11 +134,11 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                         val foundAt = indexOf(file)
 
                         if (foundAt == -1) {
-                            removedFromList = solid[it.index].valueAsFile
+                            removedFromList = solid[it.index].getValueAsFile()
                             solid[it.index].setValueFromFile(file)
                         }
                         else if (foundAt != it.index) {
-                            val tmp = solid[it.index].valueAsFile
+                            val tmp = solid[it.index].getValueAsFile()
                             solid[it.index].setValueFromFile(file)
                             solid[foundAt].setValueFromFile(tmp)
                         } else {
@@ -147,7 +147,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
                         updateLabels(labels)
                     }
-                }, solid.key
+                }, solid.getKey()
             ) {
                 updateLabels(labels)
                 updateCheckButtons(checkButtons)
@@ -157,7 +157,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
     private fun indexOf(file: Foc): Int {
         for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-            if (solid[i].valueAsFile == file) {
+            if (solid[i].getValueAsFile() == file) {
                 return i
             }
         }
@@ -166,7 +166,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
     private fun updateCheckButtons(checkButtons: List<CheckButton>) {
         checkButtons.forEachIndexed { index, it ->
-            it.active = solid[index].isEnabled
+            it.active = solid[index].isEnabled()
         }
 
     }

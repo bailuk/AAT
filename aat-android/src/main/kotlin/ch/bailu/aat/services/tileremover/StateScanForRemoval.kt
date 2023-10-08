@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 class StateScanForRemoval(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateScanned::class.java
     private val trimMode: Int = SolidTrimMode(state.appContext.storage).index
-    private val trimSummaryIndex: Int = SolidTrimIndex(state.appContext.storage).value
+    private val trimSummaryIndex: Int = SolidTrimIndex(state.appContext.storage).getValue()
     private val trimSize: Long = SolidTrimSize(state.appContext.storage).getValue()
     private val trimAge: Long = System.currentTimeMillis() - SolidTrimDate(state.appContext.storage).getValue()
 

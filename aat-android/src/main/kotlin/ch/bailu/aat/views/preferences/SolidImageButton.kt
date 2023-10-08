@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 
 class SolidImageButton(context: Context, private val solid: SolidIndexList) : ImageButtonViewGroup(
     context, Images.get(
-        solid.iconResource
+        solid.getIconResource()
     )
 ), OnPreferencesChanged {
     init {
@@ -26,13 +26,13 @@ class SolidImageButton(context: Context, private val solid: SolidIndexList) : Im
 
     public override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        setImageResource(Images.get(solid.iconResource))
+        setImageResource(Images.get(solid.getIconResource()))
         solid.register(this)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            setImageResource(Images.get(solid.iconResource))
+            setImageResource(Images.get(solid.getIconResource()))
             AppLog.i(this, solid.getValueAsString())
         }
     }

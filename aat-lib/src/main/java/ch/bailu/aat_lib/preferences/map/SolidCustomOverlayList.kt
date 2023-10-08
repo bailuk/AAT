@@ -1,75 +1,71 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.SolidCheckList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.FocFactory
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.preferences.SolidCheckList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.foc.FocFactory;
+class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) :
+    SolidCheckList() {
+    private val list = ArrayList<SolidCustomOverlay>(MAX_OVERLAYS)
 
-public class SolidCustomOverlayList extends SolidCheckList {
-    public static final int MAX_OVERLAYS=4;
-
-    private final SolidCustomOverlay[] list = new SolidCustomOverlay[MAX_OVERLAYS];
-
-    public SolidCustomOverlayList(StorageInterface storage, FocFactory focFactory) {
-        for (int i = 0; i<list.length; i++) {
-            list[i] = new SolidCustomOverlay(storage, focFactory, InfoID.OVERLAY + i);
+    init {
+        for (i in 0 until MAX_OVERLAYS) {
+            list.add(SolidCustomOverlay(storage, focFactory, InfoID.OVERLAY + i))
         }
     }
 
-    public SolidCustomOverlay get(int i) {
-        i=Math.min(MAX_OVERLAYS - 1, i);
-        i=Math.max(0, i);
-
-        return list[i];
+    operator fun get(index: Int): SolidCustomOverlay {
+        var i = index
+        i = Math.min(MAX_OVERLAYS - 1, i)
+        i = Math.max(0, i)
+        return list[i]
     }
 
-    @Override
-    public String[] getStringArray() {
-        String[] array = new String[list.length];
-        for (int i=0; i < list.length; i++) {
-            array[i] = list[i].getLabel();
+    override fun getStringArray(): Array<String> {
+        val result = ArrayList<String>()
+
+        list.forEach {
+            result.add(it.getLabel())
         }
-        return array;
+        return result.toTypedArray()
     }
 
-    @Override
-    public boolean[] getEnabledArray() {
-        boolean[] array = new boolean[MAX_OVERLAYS];
-        for (int i=0; i<list.length; i++)
-            array[i] = list[i].isEnabled();
-        return array;
+    override fun getEnabledArray(): BooleanArray {
+        val array = BooleanArray(MAX_OVERLAYS)
+        for (i in list.indices) array[i] = list[i].isEnabled()
+        return array
     }
 
-    @Override
-    public void setEnabled(int i, boolean isChecked) {
-        get(i).setEnabled(isChecked);
+    override fun setEnabled(i: Int, isChecked: Boolean) {
+        get(i).setEnabled(isChecked)
     }
 
-    @Override
-    public String getKey() {
-        return list[0].getKey();
+    override fun getKey(): String {
+        return list[0].getKey()
     }
 
-    @Override
-    public StorageInterface getStorage() {
-        return list[0].getStorage();
+    override fun getStorage(): StorageInterface {
+        return list[0].getStorage()
     }
 
-    @Override
-    public boolean hasKey(String s) {
-        for (SolidOverlayInterface aList : list) if (aList.hasKey(s)) return true;
-        return false;
+    override fun hasKey(key: String): Boolean {
+        for (aList in list) if (aList.hasKey(key)) return true
+        return false
     }
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().file_overlay();
+    override fun getLabel(): String {
+        return Res.str().file_overlay()
     }
 
-    @Override
-    public String getIconResource() {return "view_paged_inverse";}
+    override fun getIconResource(): String {
+        return "view_paged_inverse"
+    }
+
+    companion object {
+        const val MAX_OVERLAYS = 4
+    }
 }

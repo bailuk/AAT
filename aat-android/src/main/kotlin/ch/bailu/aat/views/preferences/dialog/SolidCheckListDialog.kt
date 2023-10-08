@@ -9,7 +9,7 @@ class SolidCheckListDialog(context: Context?, private val slist: SolidCheckList)
     OnMultiChoiceClickListener {
     init {
         val dialog = createDefaultDialog(context, slist)
-        dialog.setMultiChoiceItems(slist.stringArray, slist.enabledArray, this)
+        dialog.setMultiChoiceItems(slist.getStringArray(), slist.getEnabledArray(), this)
         dialog.create()
         dialog.show()
     }

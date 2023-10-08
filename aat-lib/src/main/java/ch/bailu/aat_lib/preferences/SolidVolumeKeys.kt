@@ -1,20 +1,14 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.resources.Res;
+class SolidVolumeKeys(storage: StorageInterface) : SolidBoolean(storage, KEY) {
 
-public class SolidVolumeKeys extends SolidBoolean {
-
-    private static final String KEY = "USE_VOLUME_KEYS";
-
-    public SolidVolumeKeys (StorageInterface s) {
-        super(s, KEY);
+    override fun getLabel(): String {
+        return Res.str().p_use_volume_keys()
     }
 
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_use_volume_keys();
+    companion object {
+        private const val KEY = "USE_VOLUME_KEYS"
     }
 }

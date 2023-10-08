@@ -29,7 +29,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     }
 
     override val resultFile: Foc
-        get() = poiOverlay.valueAsFile
+        get() = poiOverlay.getValueAsFile()
 
     companion object {
         private const val LIMIT = 10000
@@ -66,7 +66,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             )
             appContext.services.backgroundService.process(task)
         }
-        poiOverlay.isEnabled = true
+        poiOverlay.setEnabled(true)
     }
 
     protected abstract val selectedCategories: ArrayList<PoiCategory>

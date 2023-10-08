@@ -11,7 +11,7 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
-            appendItem(MenuHelper.createCustomItem(solid.key))
+            appendItem(MenuHelper.createCustomItem(solid.getKey()))
         }
     }
 
@@ -22,7 +22,7 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
                     var group: CheckButton? = null
 
                     selectionMode = 0
-                    solid.stringArray.forEachIndexed { index, it ->
+                    solid.getStringArray().forEachIndexed { index, it ->
                         append(CheckButton().apply {
                             setLabel(it)
                             if (group is CheckButton) {
@@ -39,7 +39,7 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
                             }
                         })
                     }
-                }, solid.key
+                }, solid.getKey()
             ) {}
         )
     }

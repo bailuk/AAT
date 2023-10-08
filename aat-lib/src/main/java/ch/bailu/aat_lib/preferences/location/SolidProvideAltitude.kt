@@ -1,24 +1,21 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
+class SolidProvideAltitude(storage: StorageInterface, unit: Int) : SolidAltitude(storage, KEY, unit) {
 
-public class SolidProvideAltitude extends SolidAltitude {
-    private final static String KEY = "ProvideAltitude";
-    public SolidProvideAltitude(StorageInterface s, int unit) {
-        super(s, KEY, unit);
-    }
-
-    @Override
-    public void setValue(int v) {
-        getStorage().writeIntegerForce(getKey(), v);
+    override fun setValue(value: Int) {
+        getStorage().writeIntegerForce(getKey(), value)
     }
 
     @Nonnull
-    @Override
-    public String getLabel() {
-        return addUnit(Res.str().p_set_altitude());
+    override fun getLabel(): String {
+        return addUnit(Res.str().p_set_altitude())
+    }
+
+    companion object {
+        private const val KEY = "ProvideAltitude"
     }
 }

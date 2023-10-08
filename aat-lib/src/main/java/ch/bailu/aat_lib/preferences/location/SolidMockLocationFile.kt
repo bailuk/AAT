@@ -1,14 +1,10 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
-import ch.bailu.aat_lib.preferences.SolidString;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.preferences.SolidString
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-public class SolidMockLocationFile extends SolidString {
-    private final static String KEY="mock_file";
-
-
-    public SolidMockLocationFile(StorageInterface storage) {
-        super(storage, KEY);
+class SolidMockLocationFile(storage: StorageInterface) : SolidString(storage, KEY) {
+    companion object {
+        private const val KEY = "mock_file"
     }
-
 }

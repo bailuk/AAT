@@ -1,69 +1,57 @@
-package ch.bailu.aat_lib.preferences.map;
+package ch.bailu.aat_lib.preferences.map
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.map.AppDensity
+import ch.bailu.aat_lib.preferences.SolidIndexList
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.map.AppDensity;
-import ch.bailu.aat_lib.preferences.SolidIndexList;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
+class SolidTileSize(storage: StorageInterface, density: AppDensity) : SolidIndexList(storage, KEY) {
+    private val tileSizeDP: Int
 
-
-public class SolidTileSize extends SolidIndexList {
-    private static final String KEY = "tile_size";
-
-    public static final int DEFAULT_TILESIZE = 256;
-    public static final int DEFAULT_TILESIZE_BYTES = DEFAULT_TILESIZE * DEFAULT_TILESIZE * 4;
-
-    private static final int STEP = 32;
-
-    private final int tileSizeDP;
-
-
-    private static final int[] VALUE_LIST = {
-            DEFAULT_TILESIZE + STEP *8,
-            DEFAULT_TILESIZE + STEP *7,
-            DEFAULT_TILESIZE + STEP *6,
-            DEFAULT_TILESIZE + STEP *5,
-            DEFAULT_TILESIZE + STEP *4,
-            DEFAULT_TILESIZE + STEP *3,
-            DEFAULT_TILESIZE + STEP *2,
-            DEFAULT_TILESIZE + STEP *1,
-            DEFAULT_TILESIZE + STEP *0,
-            DEFAULT_TILESIZE + STEP *8,
-            DEFAULT_TILESIZE + STEP *16,
-            DEFAULT_TILESIZE + STEP *32,
-            DEFAULT_TILESIZE + STEP *64,
-
-    };
-
-    public SolidTileSize(StorageInterface storage, AppDensity density) {
-        super(storage, KEY);
-        tileSizeDP = density.toPixel_i(DEFAULT_TILESIZE);
+    init {
+        tileSizeDP = density.toPixel_i(DEFAULT_TILESIZE.toFloat())
     }
 
-    public int getTileSize() {
-        final int i = getIndex();
-        if (i==0) {
-            return tileSizeDP;
+    val tileSize: Int
+        get() {
+            val i = index
+            return if (i == 0) {
+                tileSizeDP
+            } else VALUE_LIST[index]
         }
-        return VALUE_LIST[getIndex()];
+
+    override fun getLabel(): String {
+        return Res.str().p_tile_size()
     }
 
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_tile_size();
+    override fun length(): Int {
+        return VALUE_LIST.size
     }
 
-    @Override
-    public int length() {
-        return VALUE_LIST.length;
+    public override fun getValueAsString(index: Int): String {
+        val i = validate(index)
+        return if (i == 0) toDefaultString(tileSizeDP.toString()) else VALUE_LIST[i].toString()
     }
 
-    @Override
-    public String getValueAsString(int index) {
-        int i = validate(index);
-        if (i == 0)  return toDefaultString(String.valueOf(tileSizeDP));
-        return String.valueOf(VALUE_LIST[i]);
+    companion object {
+        private const val KEY = "tile_size"
+        const val DEFAULT_TILESIZE = 256
+        const val DEFAULT_TILESIZE_BYTES = DEFAULT_TILESIZE * DEFAULT_TILESIZE * 4
+        private const val STEP = 32
+        private val VALUE_LIST = intArrayOf(
+            DEFAULT_TILESIZE + STEP * 8,
+            DEFAULT_TILESIZE + STEP * 7,
+            DEFAULT_TILESIZE + STEP * 6,
+            DEFAULT_TILESIZE + STEP * 5,
+            DEFAULT_TILESIZE + STEP * 4,
+            DEFAULT_TILESIZE + STEP * 3,
+            DEFAULT_TILESIZE + STEP * 2,
+            DEFAULT_TILESIZE + STEP * 1,
+            DEFAULT_TILESIZE + STEP * 0,
+            DEFAULT_TILESIZE + STEP * 8,
+            DEFAULT_TILESIZE + STEP * 16,
+            DEFAULT_TILESIZE + STEP * 32,
+            DEFAULT_TILESIZE + STEP * 64
+        )
     }
 }

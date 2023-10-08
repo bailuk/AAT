@@ -1,21 +1,17 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.SolidBoolean
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.SolidBoolean;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidAdjustGpsAltitude extends SolidBoolean {
-    private final static String KEY = "UseGpsAltitudeCorrection";
-
-    public SolidAdjustGpsAltitude(StorageInterface s) {
-        super(s, KEY);
+class SolidAdjustGpsAltitude(storage: StorageInterface) : SolidBoolean(storage, KEY) {
+    @Nonnull
+    override fun getLabel(): String {
+        return Res.str().p_adjust_altitude()
     }
 
-    @Nonnull
-    @Override
-    public String getLabel() {
-        return Res.str().p_adjust_altitude();
+    companion object {
+        private const val KEY = "UseGpsAltitudeCorrection"
     }
 }

@@ -1,35 +1,23 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
+import ch.bailu.aat_lib.resources.Res
 
-import ch.bailu.aat_lib.resources.Res;
-
-public class SolidBoolean extends SolidStaticIndexList {
-    private static String[] label;
-
-    private static String[] generateLabel() {
-        if (label == null) {
-            label = new String[] {
-                    Res.str().off(),
-                    Res.str().on(),
-            };
+open class SolidBoolean(storage: StorageInterface, key: String) : SolidStaticIndexList(
+    storage, key, label
+) {
+    var value: Boolean
+        get() = index == 1
+        set(v) {
+            index = if (v) 1 else 0
         }
-        return label;
-    }
 
-    public SolidBoolean(StorageInterface s, String k) {
-        super(s, k, generateLabel());
-    }
+    val isEnabled: Boolean
+        get() = value
 
-    public boolean getValue() {
-        return getIndex() == 1;
-    }
-
-    public void setValue(boolean v) {
-        if (v) setIndex(1);
-        else   setIndex(0);
-    }
-
-    public boolean isEnabled() {
-        return getValue();
+    companion object {
+        private val label = arrayOf(
+            Res.str().off(),
+            Res.str().on()
+        )
     }
 }

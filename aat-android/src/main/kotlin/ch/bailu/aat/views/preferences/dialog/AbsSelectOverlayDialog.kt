@@ -11,13 +11,13 @@ abstract class AbsSelectOverlayDialog(context: Context, private val slist: Solid
     init {
 
         val dialog = createDefaultDialog(context, slist)
-        dialog.setItems(slist.stringArray, this)
+        dialog.setItems(slist.getStringArray(), this)
         dialog.create()
         dialog.show()
     }
 
     override fun onClick(dialog: DialogInterface, index: Int) {
-        val file = slist[index].valueAsFile
+        val file = slist[index].getValueAsFile()
         onFileSelected(slist, index, file)
         dialog.dismiss()
     }

@@ -103,7 +103,7 @@ class MainActivity : ActivityContext() {
         }
 
         fun setText() {
-            visibility = if (sdirectory.valueAsFile.canRead()) {
+            visibility = if (sdirectory.getValueAsFile().canRead()) {
                 VISIBLE
             } else {
                 GONE
