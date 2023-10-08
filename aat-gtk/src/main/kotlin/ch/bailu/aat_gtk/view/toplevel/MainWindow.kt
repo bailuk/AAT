@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
-import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
+import ch.bailu.aat_gtk.app.exit
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -116,7 +116,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
 
         window.onDestroy {
-            App.exit(0)
+            exit(dispatcher, 0)
         }
 
     }

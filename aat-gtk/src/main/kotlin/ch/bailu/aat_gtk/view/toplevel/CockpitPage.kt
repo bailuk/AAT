@@ -71,6 +71,5 @@ class CockpitPage(appContext: AppContext, uiController: UiController, dispatcher
             append(status)
         })
         append(clamp)
-
     }
 }

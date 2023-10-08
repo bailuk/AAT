@@ -24,43 +24,41 @@ import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
 
 fun main() {
-    App.setup()
+    setup()
 
     val app = Application(GtkAppConfig.appId, ApplicationFlags.FLAGS_NONE)
 
     app.onActivate {
-        MainWindow(app, GtkAppContext, App.dispatcher).window.show()
-        App.setupDispatcher()
-        App.dispatcher.onResume()
+        val dispatcher = Dispatcher()
+        MainWindow(app, GtkAppContext, dispatcher).window.show()
+        setupDispatcher(dispatcher)
     }
 
     app.run(1, Strs(arrayOf(Configuration.appName)))
 }
 
-object App {
-    val dispatcher = Dispatcher()
+private fun setup() {
+    GResource.loadAndRegister(Strings.appGResource)
 
-    fun setup() {
-        GResource.loadAndRegister(Strings.appGResource)
+    AppConfig.setInstance(GtkAppConfig)
+    RuntimeInfo.startLogging()
+    AppLog.set(BroadcastLoggerFactory(GtkAppContext.broadcaster, PrintLnLoggerFactory()))
+    AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
+    PreferenceLoadDefaults(GtkAppContext)
+}
 
-        AppConfig.setInstance(GtkAppConfig)
-        RuntimeInfo.startLogging()
-        AppLog.set(BroadcastLoggerFactory(GtkAppContext.broadcaster, PrintLnLoggerFactory()))
-        AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
-        PreferenceLoadDefaults(GtkAppContext)
-    }
+private fun setupDispatcher(dispatcher: Dispatcher) {
+    dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
+    dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
+    dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
+    dispatcher.onResume()
+}
 
-    fun setupDispatcher() {
-        dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
-        dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
-    }
 
-    fun exit(exitCode: Int) {
-        dispatcher.onPause()
-        GtkAppContext.services.trackerService.onStartStop()
+fun exit(dispatcher: Dispatcher, exitCode: Int) {
+    dispatcher.onPause()
+    GtkAppContext.services.trackerService.onStartStop()
 
-        GtkStorage.save()
-        exitProcess(exitCode)
-    }
+    GtkStorage.save()
+    exitProcess(exitCode)
 }
