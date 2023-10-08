@@ -16,7 +16,7 @@ open class StateUnscanned(private val state: StateMachine) : State {
 
     override fun reset() {
         state.list = TilesList()
-        state.baseDirectory = state.appContext.tileCacheDirectory.valueAsFile
+        state.baseDirectory = state.appContext.tileCacheDirectory.getValueAsFile()
         try {
             state.summaries.rescanKeep(state.baseDirectory)
         } catch (e: IOException) {

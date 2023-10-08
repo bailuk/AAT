@@ -51,6 +51,6 @@ class TileSummaryView(private val parent: RadioGroup, id: Int, theme: UiTheme) :
     }
 
     override fun onClick(v: View) {
-        SolidTrimIndex(Storage(parent.context)).value = v.id
+        SolidTrimIndex(Storage(parent.context)).setValue(v.id)
     }
 }

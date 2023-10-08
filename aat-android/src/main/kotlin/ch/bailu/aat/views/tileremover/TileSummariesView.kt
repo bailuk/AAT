@@ -19,7 +19,7 @@ class TileSummariesView(activity: Activity, theme: UiTheme) : RadioGroup(activit
 
     fun updateInfo(summaries: SourceSummaries) {
         if (summaries.size() != views.size) {
-            val selected = SolidTrimIndex(Storage(context)).value
+            val selected = SolidTrimIndex(Storage(context)).getValue()
 
             // remove views
             for (i in views.size - 1 downTo summaries.size()) {
@@ -41,7 +41,7 @@ class TileSummariesView(activity: Activity, theme: UiTheme) : RadioGroup(activit
             }
             if (selected >= summaries.size()) {
                 views[0].select()
-                SolidTrimIndex(Storage(context)).value = 0
+                SolidTrimIndex(Storage(context)).setValue(0)
             }
         }
         if (summaries.size() == views.size) {

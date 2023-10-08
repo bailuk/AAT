@@ -11,7 +11,7 @@ class StateScan(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateScanForRemoval::class.java
 
     init {
-        state.baseDirectory = state.appContext.tileCacheDirectory.valueAsFile
+        state.baseDirectory = state.appContext.tileCacheDirectory.getValueAsFile()
         state.list = TilesList()
         Thread(this).start()
     }

@@ -73,7 +73,7 @@ class StateMachine(val appContext: AppContext) : State {
 
     val info: SelectedTileDirectoryInfo
         get() {
-            val index = SolidTrimIndex(appContext.storage).value
+            val index = SolidTrimIndex(appContext.storage).getValue()
             val name = summaries[index].name
             var subDirectory = baseDirectory
             if (index > 0) subDirectory = baseDirectory.child(name)
