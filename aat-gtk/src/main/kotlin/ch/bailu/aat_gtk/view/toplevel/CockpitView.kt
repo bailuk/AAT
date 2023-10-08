@@ -19,6 +19,7 @@ class CockpitView {
     private val flow = FlowBox().apply {
         vexpand = true
         hexpand = true
+        homogeneous = false
     }
     val scrolledWindow = ScrolledWindow().apply {
         child = flow

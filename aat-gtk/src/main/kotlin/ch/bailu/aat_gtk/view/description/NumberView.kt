@@ -24,6 +24,8 @@ class NumberView(private val description: ContentDescription) : OnContentUpdated
         addView(unit, 0, margin)
 
         number.addCssClass(Strings.numberView)
+        val cssWidth = "${Strings.numberViewWidth}${description.getValue().length}"
+        number.addCssClass(cssWidth)
         updateAllText()
     }
 
