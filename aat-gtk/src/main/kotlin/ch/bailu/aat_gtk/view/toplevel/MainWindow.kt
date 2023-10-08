@@ -78,7 +78,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         overlay.addOverlay(messageOverlay.box)
     }
 
-    private val mapView = MapMainView(app, dispatcher, this, appContext, window).apply {
+    private val mapView = MapMainView(app, appContext, dispatcher, this, window).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
@@ -96,7 +96,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
         dispatcher.addSource(customFileSource)
 
-        stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
+        stackPage.addView(CockpitPage(appContext,this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
         stackPage.addView(FileList(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
         stackPage.addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
 

@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.list
 
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -44,8 +43,8 @@ class FileList(app: Application,
 ) {
     private val descriptions = arrayOf(
         DateDescription(),
-        DistanceDescription(GtkAppContext.storage),
-        AverageSpeedDescription(GtkAppContext.storage),
+        DistanceDescription(appContext.storage),
+        AverageSpeedDescription(appContext.storage),
         TimeDescription())
 
 
@@ -74,7 +73,7 @@ class FileList(app: Application,
     private var listIsDirty = false
     private val updateTimer = GtkTimer()
 
-    private val iteratorSimple = IteratorSimple(GtkAppContext).apply {
+    private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
             if (listIndex.size != count) {
                 if (!listIsDirty) {

@@ -1,42 +1,29 @@
-package ch.bailu.aat_lib.util.fs;
+package ch.bailu.aat_lib.util.fs
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import ch.bailu.foc.Foc
+import java.io.BufferedInputStream
+import java.io.IOException
 
-import ch.bailu.foc.Foc;
-
-
-public class FocUtil {
-
-    public static String toStr(Foc file) {
-        try {
-            return toString(file);
-        } catch (IOException e) {
-            return "";
+object FocUtil {
+    fun toStr(file: Foc): String {
+        return try {
+            toString(file)
+        } catch (e: IOException) {
+            ""
         }
     }
 
+    @Throws(IOException::class)
+    fun toString(file: Foc): String {
+        val builder = StringBuilder(file.length().toInt() + 1)
 
-    public static String toString(Foc file) throws IOException {
-
-        StringBuilder builder = new StringBuilder((int) file.length()+1);
-        InputStream in = null;
-
-        try {
-            in = new BufferedInputStream(file.openR());
-
-            int b;
-
-            while ((b = in.read()) > -1) {
-                char c = (char) b;
-                builder.append(c);
+        BufferedInputStream(file.openR()).use { inputStream ->
+            var b: Int
+            while (inputStream.read().also { b = it } > -1) {
+                val c = b.toChar()
+                builder.append(c)
             }
-
-        } finally {
-            Foc.close(in);
         }
-
-        return builder.toString();
+        return builder.toString()
     }
 }

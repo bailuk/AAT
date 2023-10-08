@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.description.NumberView
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AltitudeDescription
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.ContentDescription
@@ -14,7 +14,7 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.gtk.gtk.FlowBox
 import ch.bailu.gtk.gtk.ScrolledWindow
 
-class CockpitView {
+class CockpitView(private val appContext: AppContext) {
 
     private val flow = FlowBox().apply {
         vexpand = true
@@ -40,12 +40,12 @@ class CockpitView {
     }
 
     fun addDefaults(dispatcher: DispatcherInterface) {
-        add(dispatcher, CurrentSpeedDescription(GtkAppContext.storage), InfoID.LOCATION)
-        add(dispatcher, AltitudeDescription(GtkAppContext.storage), InfoID.LOCATION)
+        add(dispatcher, CurrentSpeedDescription(appContext.storage), InfoID.LOCATION)
+        add(dispatcher, AltitudeDescription(appContext.storage), InfoID.LOCATION)
 
         add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
-        add(dispatcher, DistanceDescription(GtkAppContext.storage), InfoID.TRACKER)
-        add(dispatcher, AverageSpeedDescriptionAP(GtkAppContext.storage), InfoID.TRACKER)
-        add(dispatcher, MaximumSpeedDescription(GtkAppContext.storage), InfoID.TRACKER)
+        add(dispatcher, DistanceDescription(appContext.storage), InfoID.TRACKER)
+        add(dispatcher, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
+        add(dispatcher, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
     }
 }

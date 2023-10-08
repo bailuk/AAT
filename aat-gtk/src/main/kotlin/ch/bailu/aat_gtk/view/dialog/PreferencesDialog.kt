@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.dialog
 
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.view.solid.ActivityPreferencesPage
 import ch.bailu.aat_gtk.view.solid.GeneralPreferencesPage
@@ -21,12 +20,12 @@ object PreferencesDialog {
                 modal = false
 
                 add(GeneralPreferencesPage(app, this, appContext).page)
-                add(MapPreferencesPage(GtkAppContext.storage, app, this).page)
+                add(MapPreferencesPage(appContext, app, this).page)
 
-                val presetCount = SolidPresetCount(GtkAppContext.storage)
+                val presetCount = SolidPresetCount(appContext.storage)
 
                 for(i in 0 until  presetCount.value) {
-                    add(ActivityPreferencesPage(GtkAppContext.storage, i).page)
+                    add(ActivityPreferencesPage(appContext.storage, i).page)
                 }
 
                 setDefaultSize(Layout.windowWidth, Layout.windowHeight)

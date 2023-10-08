@@ -40,7 +40,7 @@ class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return Res.str().p_preset()
     }
 
-    fun getDirectory(sdirectory: SolidDataDirectory?): Foc {
+    fun getDirectory(sdirectory: SolidDataDirectory): Foc {
         return AppDirectory.getTrackListDirectory(sdirectory, index)
     }
 
