@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.logger
 
 import ch.bailu.aat_lib.dispatcher.Broadcaster
-import javax.annotation.Nonnull
 
 class BroadcastLogger(
     private val broadcaster: Broadcaster,
@@ -9,7 +8,7 @@ class BroadcastLogger(
     private val console: Logger
 ) : Logger {
 
-    override fun log(@Nonnull tag: String, @Nonnull msg: String) {
+    override fun log(tag: String, msg: String) {
         console.log(tag, msg)
         broadcaster.broadcast(id, tag, msg)
     }

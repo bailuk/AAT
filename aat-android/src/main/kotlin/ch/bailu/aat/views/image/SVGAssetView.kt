@@ -11,7 +11,7 @@ class SVGAssetView(private val scontext: ServiceContext, rid: Int) : ImageObject
 
     init {
         scaleType = ScaleType.CENTER
-        size = AndroidAppDensity(scontext.getContext()).toPixel_i(IconMapService.BIG_ICON_SIZE)
+        size = AndroidAppDensity(scontext.getContext()).toPixelInt(IconMapService.BIG_ICON_SIZE)
     }
 
     fun setImageObject(key: Int, value: String) {

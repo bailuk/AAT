@@ -22,9 +22,9 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
     private var boundingCycle = 0
 
     init {
-        add(Icons.zoomInSymbolic).onClicked { mcontext.mapView.zoomIn() }
-        add(Icons.zoomOutSymbolic).onClicked { mcontext.mapView.zoomOut() }
-        add(SolidImageButton(SolidPositionLock(storage, mcontext.solidKey)).button)
+        add(Icons.zoomInSymbolic).onClicked { mcontext.getMapView().zoomIn() }
+        add(Icons.zoomOutSymbolic).onClicked { mcontext.getMapView().zoomOut() }
+        add(SolidImageButton(SolidPositionLock(storage, mcontext.getSolidKey())).button)
         add(Icons.zoomFitBestSymbolic).onClicked {
             if (nextInBoundingCycle()) {
                 val info = infoCache.getValueAt(boundingCycle)
@@ -34,7 +34,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
                     val fileName = info.file.name
 
                     if (fileName != null) {
-                        mcontext.mapView.frameBounding(bounding)
+                        mcontext.getMapView().frameBounding(bounding)
                         AppLog.i(this, fileName)
                     }
                 }

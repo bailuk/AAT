@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
-import javax.annotation.Nonnull
+
 
 abstract class IteratorAbstract(private val appContext: AppContext) : Iterator(),
     OnPreferencesChanged {
@@ -30,7 +30,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         onCursorChangedListener = l
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key)) {
             openAndQuery()
         } else if (sdirectory.containsKey(key) && selection != sdirectory.createSelectionString()) {

@@ -1,135 +1,78 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import org.mapsforge.core.graphics.Paint;
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable
+import ch.bailu.aat_lib.lib.color.ColorInterface
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapPaint.createEdgePaintBlur
+import ch.bailu.aat_lib.map.MapPaint.createEdgePaintLine
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.map.TwoNodes.PixelNode
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.graphics.Paint
 
-import javax.annotation.Nonnull;
+class RouteLayer(private val mcontext: MapContext) : GpxLayer() {
+    private var paint: Paint
+    private var shadow: Paint
+    private var color: Int
+    private var zoom = 0
 
-import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
-import ch.bailu.aat_lib.lib.color.ColorInterface;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.aat_lib.util.Point;
-
-public final class RouteLayer extends GpxLayer {
-
-    private final int MIN_PIXEL_SPACE = 30;
-
-    private final MapContext mcontext;
-
-    private Paint paint, shadow;
-    private int color;
-    private int zoom;
-
-    public RouteLayer(MapContext o) {
-        mcontext = o;
-        color = getColor();
-        paint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
-        shadow = MapPaint.createEdgePaintBlur(mcontext.draw(),color,zoom);
-
+    init {
+        color = getColor()
+        paint = createEdgePaintLine(mcontext.getMetrics().density)
+        shadow = createEdgePaintBlur(mcontext.draw(), color, zoom)
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-
-    @Override
-    public void drawInside(MapContext mcontext) {
-        if (zoom != mcontext.getMetrics().getZoomLevel() || color != getColor()) {
-            zoom = mcontext.getMetrics().getZoomLevel();
-            color = getColor();
-
-
-            paint = MapPaint.createEdgePaintLine(mcontext.getMetrics().getDensity());
-            shadow = MapPaint.createEdgePaintBlur(mcontext.draw(), ColorInterface.BLACK, zoom);
-
-            paint.setColor(color);
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun drawInside(mcontext: MapContext) {
+        if (zoom != mcontext.getMetrics().zoomLevel || color != getColor()) {
+            zoom = mcontext.getMetrics().zoomLevel
+            color = getColor()
+            paint = createEdgePaintLine(mcontext.getMetrics().density)
+            shadow = createEdgePaintBlur(mcontext.draw(), ColorInterface.BLACK, zoom)
+            paint.color = color
         }
-
-
-        new RouteShadowPainter().walkTrack(getGpxList());
-        new RoutePainterEdge().walkTrack(getGpxList());
-        new RoutePainterNode().walkTrack(getGpxList());
+        RouteShadowPainter().walkTrack(gpxList)
+        RoutePainterEdge().walkTrack(gpxList)
+        RoutePainterNode().walkTrack(gpxList)
     }
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
-
-    private class RouteShadowPainter extends GpxListPainter {
-        public RouteShadowPainter() {
-
-            super(mcontext,MIN_PIXEL_SPACE);
+    override fun onAttached() {}
+    override fun onDetached() {}
+    private inner class RouteShadowPainter : GpxListPainter(mcontext, MIN_PIXEL_SPACE) {
+        override fun drawEdge(nodes: TwoNodes) {
+            mcontext.draw().edge(nodes, shadow)
         }
 
+        override fun drawNode(node: PixelNode) {}
+    }
 
-        @Override
-        public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes, shadow);
-        }
-
-
-        @Override
-        public void drawNode(TwoNodes.PixelNode node) {
-
+    private inner class RoutePainterNode : GpxListPainter(mcontext, MIN_PIXEL_SPACE) {
+        override fun drawEdge(nodes: TwoNodes) {}
+        override fun drawNode(node: PixelNode) {
+            val c: Int
+            val altitude = node.point.getAltitude().toInt()
+            c =
+                if (altitude == ElevationProvider.NULL_ALTITUDE) getColor() else AltitudeColorTable.instance()
+                    .getColor(altitude)
+            mcontext.draw().bitmap(mcontext.draw().nodeBitmap, node.pixel, c)
         }
     }
 
-    private class RoutePainterNode extends GpxListPainter {
-
-
-
-        public RoutePainterNode() {
-
-            super(mcontext,MIN_PIXEL_SPACE);
+    private inner class RoutePainterEdge : GpxListPainter(mcontext, MIN_PIXEL_SPACE) {
+        override fun drawEdge(nodes: TwoNodes) {
+            mcontext.draw().edge(nodes, paint)
         }
 
-
-        @Override
-        public void drawEdge(TwoNodes nodes) {
-
-        }
-
-
-        @Override
-        public void drawNode(TwoNodes.PixelNode node) {
-            int c;
-            int altitude= (int) node.point.getAltitude();
-
-            if (altitude == ElevationProvider.NULL_ALTITUDE) c=getColor();
-            else c= AltitudeColorTable.instance().getColor(altitude);
-
-            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c);
-        }
+        override fun drawNode(node: PixelNode) {}
     }
 
-
-    private class RoutePainterEdge extends GpxListPainter {
-        public RoutePainterEdge() {
-
-            super(mcontext,MIN_PIXEL_SPACE);
-        }
-
-
-        @Override
-        public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes, paint);
-        }
-
-
-        @Override
-        public void drawNode(TwoNodes.PixelNode node) {
-        }
+    companion object {
+        private const val MIN_PIXEL_SPACE = 30
     }
-
 }

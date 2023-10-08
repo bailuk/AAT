@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences.system
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidStatusMessages(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     override fun length(): Int {
@@ -14,7 +14,7 @@ class SolidStatusMessages(storage: StorageInterface) : SolidIndexList(storage, K
         return VAL[index]
     }
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_messages()
     }

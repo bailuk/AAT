@@ -15,7 +15,7 @@ import org.mapsforge.core.graphics.TileBitmap
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 import java.io.IOException
 import java.io.InputStream
-import javax.annotation.Nonnull
+
 
 class AndroidSyncTileBitmap : MapTileInterface {
     private var bitmap: Bitmap? = null
@@ -110,7 +110,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun setBuffer(@Nonnull buffer: IntArray, @Nonnull r: Rect) {
+    override fun setBuffer( buffer: IntArray,  r: Rect) {
         initBitmap()
         val b = androidBitmap
         b?.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height())

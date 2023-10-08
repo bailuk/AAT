@@ -26,7 +26,7 @@ class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirector
         get() {
             var list = ArrayList<String>(5)
             list = buildSelection(list)
-            list.add(getStorage().defaultString) // failsave
+            list.add(getStorage().getDefaultString()) // failsave
             return list[0]
         }
 

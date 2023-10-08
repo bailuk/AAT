@@ -53,10 +53,10 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
-    private val navigationBar = NavigationBar(map.mContext, appContext.storage, overlayList, uiController)
-    private val infoBar = InfoBar(app, nodeInfo, uiController, map.mContext, appContext.storage, appContext, window)
-    private val editorBar = EditorBar(app, nodeInfo, map.mContext, appContext.services, editorSource)
-    private val edgeControl = EdgeControlLayer(map.mContext, Layout.barSize)
+    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList, uiController)
+    private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
+    private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editorSource)
+    private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
     init {
         overlay.addOverlay(Button().apply {
@@ -73,23 +73,23 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
-        map.add(CurrentLocationLayer(map.mContext, dispatcher))
-        map.add(GridDynLayer(appContext.services, appContext.storage, map.mContext))
-        map.add(GpxDynLayer(appContext.storage, map.mContext, appContext.services, dispatcher, InfoID.TRACKER))
-        map.add(GpxDynLayer(appContext.storage, map.mContext, appContext.services, dispatcher, InfoID.FILE_VIEW))
-        map.add(GpxDynLayer(appContext.storage, map.mContext, appContext.services, dispatcher, InfoID.EDITOR_DRAFT))
-        map.add(GpxDynLayer(appContext.storage, map.mContext, appContext.services, dispatcher, InfoID.EDITOR_OVERLAY))
-        map.add(GpxDynLayer(appContext.storage, map.mContext, appContext.services, dispatcher, InfoID.POI))
+        map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
+        map.add(GridDynLayer(appContext.services, appContext.storage, map.getMContext()))
+        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.TRACKER))
+        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.FILE_VIEW))
+        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.EDITOR_DRAFT))
+        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.EDITOR_OVERLAY))
+        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.POI))
 
-        map.add(GpxOverlayListLayer(appContext.storage, map.mContext, appContext.services, dispatcher))
+        map.add(GpxOverlayListLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher))
         map.add(edgeControl)
-        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.mContext, Position.LEFT).apply {
+        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.LEFT).apply {
             observe(editorBar)
             dispatcher.addTarget(this, InfoID.ALL)
             edgeControl.add(this)
         })
 
-        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.mContext, Position.RIGHT).apply {
+        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.RIGHT).apply {
             observe(infoBar)
             dispatcher.addTarget(this, InfoID.ALL)
             edgeControl.add(this)

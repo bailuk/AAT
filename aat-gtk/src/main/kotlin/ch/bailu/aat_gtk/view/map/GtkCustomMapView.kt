@@ -65,7 +65,7 @@ class GtkCustomMapView (
         stack = MapsForgeTileLayerStackConfigured.All(this, GtkAppContext)
         add(stack)
 
-        pos = MapPositionLayer(mContext, appContext.storage, dispatcher)
+        pos = MapPositionLayer(getMContext(), appContext.storage, dispatcher)
         add(pos)
         model.mapViewPosition.addObserver(object : Observer {
             private var center: LatLong = model.mapViewPosition.center
@@ -144,7 +144,7 @@ class GtkCustomMapView (
         val wrapper = if (layer is Layer) {
             layer
         } else {
-            LayerWrapper(GtkAppContext.services, mContext, layer)
+            LayerWrapper(GtkAppContext.services, getMContext(), layer)
         }
         addLayer(wrapper)
         layers.add(layer)

@@ -45,7 +45,7 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
             hide()
             result = false
         }
-        mcontext.mapView.requestRedraw()
+        mcontext.getMapView().requestRedraw()
         return result
     }
 

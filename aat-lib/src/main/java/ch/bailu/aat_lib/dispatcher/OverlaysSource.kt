@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
-import javax.annotation.Nonnull
+
 
 class OverlaysSource(context: AppContext) : ContentSourceInterface {
     private val overlays = ArrayList<OverlaySource>()
@@ -31,7 +31,7 @@ class OverlaysSource(context: AppContext) : ContentSourceInterface {
         return GpxInformation.NULL
     }
 
-    override fun setTarget(@Nonnull target: OnContentUpdatedInterface) {
+    override fun setTarget( target: OnContentUpdatedInterface) {
         overlays.forEach {it.setTarget(target)}
     }
 

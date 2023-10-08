@@ -1,10 +1,9 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
-
-public interface MapContext {
-    MapMetrics getMetrics();
-    MapDraw draw();
-    String getSolidKey();
-    TwoNodes getTwoNodes();
-    MapViewInterface getMapView();
+interface MapContext {
+    fun getMetrics(): MapMetrics
+    fun draw(): MapDraw
+    fun getSolidKey(): String
+    fun getTwoNodes(): TwoNodes
+    fun getMapView(): MapViewInterface
 }

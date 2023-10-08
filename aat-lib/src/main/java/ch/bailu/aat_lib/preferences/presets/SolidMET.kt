@@ -5,17 +5,17 @@ import ch.bailu.aat_lib.preferences.SolidString
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import java.util.Collections
-import javax.annotation.Nonnull
+
 
 class SolidMET(storage: StorageInterface, private val preset: Int) : SolidString(
     storage, SolidMET::class.java.simpleName + "_" + preset
 ) {
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_met()
     }
 
-    @Nonnull
+    
     override fun getValueAsString(): String {
         var result = super.getValueAsString()
         if (getStorage().isDefaultString(result)) {

@@ -1,71 +1,50 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import org.mapsforge.core.graphics.Cap;
-import org.mapsforge.core.graphics.Join;
-import org.mapsforge.core.graphics.Paint;
+import ch.bailu.aat_lib.app.AppGraphicFactory.instance
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.map.TwoNodes.PixelNode
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.graphics.Cap
+import org.mapsforge.core.graphics.Join
+import org.mapsforge.core.graphics.Paint
 
-import javax.annotation.Nonnull;
+class TrackLayer(private val mcontext: MapContext) : GpxLayer() {
+    private val paint: Paint = instance().createPaint()
 
-import ch.bailu.aat_lib.app.AppGraphicFactory;
-import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.Point;
-
-public final class TrackLayer  extends GpxLayer {
-    private static final int STROKE_WIDTH=3;
-    private final Paint paint;
-
-    private final MapContext mcontext;
-
-    public TrackLayer(MapContext mc) {
-        mcontext = mc;
-        paint = AppGraphicFactory.instance().createPaint();
-
-        paint.setStrokeWidth(mcontext.getMetrics().getDensity().toPixel_f(STROKE_WIDTH));
-        paint.setStrokeCap(Cap.ROUND);
-        paint.setStrokeJoin(Join.ROUND);
+    init {
+        paint.strokeWidth =
+            mcontext.getMetrics().density.toPixelFloat(STROKE_WIDTH.toFloat())
+        paint.setStrokeCap(Cap.ROUND)
+        paint.setStrokeJoin(Join.ROUND)
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-    @Override
-    public void drawInside(MapContext mcontext) {
-        new TrackPainter().walkTrack(getGpxList());
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun drawInside(mcontext: MapContext) {
+        TrackPainter().walkTrack(gpxList)
     }
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
-
-
-    private class TrackPainter extends GpxListPainter {
-        public TrackPainter() {
-            super(mcontext);
-
+    override fun onAttached() {}
+    override fun onDetached() {}
+    private inner class TrackPainter : GpxListPainter(mcontext) {
+        override fun drawEdge(nodes: TwoNodes) {
+            mcontext.draw().edge(nodes, paint)
         }
 
-
-        @Override
-        public void drawEdge(TwoNodes nodes) {
-            mcontext.draw().edge(nodes, paint);
+        override fun drawNode(node: PixelNode) {
+            val altitude = node.point.getAltitude().toInt()
+            val color = AltitudeColorTable.instance().getColor(altitude)
+            paint.color = color
         }
+    }
 
-
-        @Override
-        public void drawNode(TwoNodes.PixelNode node) {
-            int altitude= (int) node.point.getAltitude();
-            int color= AltitudeColorTable.instance().getColor(altitude);
-            paint.setColor(color);
-        }
+    companion object {
+        private const val STROKE_WIDTH = 3
     }
 }

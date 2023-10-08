@@ -3,14 +3,14 @@ package ch.bailu.aat_lib.preferences
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
-import javax.annotation.Nonnull
+
 
 abstract class SolidFile(storage: StorageInterface, key: String, private val focFactory: FocFactory) : SolidString(storage, key), SolidFileInterface {
     override fun getValueAsFile(): Foc {
         return focFactory.toFoc(getValueAsString())
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         return getValueAsFile().pathName
     }

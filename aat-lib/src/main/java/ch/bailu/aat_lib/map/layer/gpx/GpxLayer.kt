@@ -1,39 +1,31 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.map.MapColor.getColorFromIID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
 
-public abstract class GpxLayer implements MapLayerInterface, OnContentUpdatedInterface {
-    private int color;
-    private GpxList gpxList= GpxList.NULL_ROUTE;
+abstract class GpxLayer : MapLayerInterface, OnContentUpdatedInterface {
+    private var color = 0
 
-
-    @Override
-    public void drawForeground(MapContext mcontext) {}
-
-    @Override
-    public void onContentUpdated(int iid, GpxInformation info) {
-        setTrack(info.getGpxList());
-        color = MapColor.getColorFromIID(iid);
+    fun getColor(): Int {
+        return color
     }
 
-    private void setTrack(GpxList gpx) {
-        if (gpx == null) gpxList = GpxList.NULL_ROUTE;
-        else gpxList = gpx;
+    var gpxList = GpxList.NULL_ROUTE
+        private set
+
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        setTrack(info.gpxList)
+        color = getColorFromIID(iid)
     }
 
-    public GpxList getGpxList() {
-        return gpxList;
+    private fun setTrack(gpx: GpxList?) {
+        gpxList = gpx ?: GpxList.NULL_ROUTE
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 }

@@ -1,31 +1,25 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import org.mapsforge.core.graphics.Paint;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.map.MapContext
+import org.mapsforge.core.graphics.Paint
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+abstract class LegendWalker : GpxListWalker() {
+    @JvmField
+    var c: LegendContext? = null
 
-public abstract class LegendWalker extends GpxListWalker {
-
-    public LegendContext c;
-
-    public void init(MapContext mc, Paint backgroundPaint, Paint framePaint) {
-        c=new LegendContext(mc, backgroundPaint, framePaint);
+    fun init(mcontext: MapContext, backgroundPaint: Paint, framePaint: Paint) {
+        c = LegendContext(mcontext, backgroundPaint, framePaint)
     }
 
-
-    @Override
-    public boolean doList(GpxList track) {
-        return
-                track.getPointList().size() > 0 &&
-                        c.isVisible(track.getDelta().getBoundingBox());
+    override fun doList(track: GpxList): Boolean {
+        return track.pointList.size() > 0 &&
+                c!!.isVisible(track.getDelta().getBoundingBox())
     }
 
-
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        return true
     }
 }

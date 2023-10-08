@@ -20,7 +20,7 @@ public final class NodeBitmap {
     private static final HashMap<Integer, NodeBitmap> nodes = new HashMap<>(10);
 
     public static NodeBitmap get(AppDensity res, AppContext context) {
-        int radius = res.toPixel_i(RADIUS);
+        int radius = res.toPixelInt(RADIUS);
 
         NodeBitmap node = nodes.get(radius);
 
@@ -38,7 +38,7 @@ public final class NodeBitmap {
 
         bitmap = context.createMapTile();
 
-        int stroke_width = res.toPixel_i(STROKE_WIDTH);
+        int stroke_width = res.toPixelInt(STROKE_WIDTH);
         int hsize = (radius+ stroke_width);
         int size = hsize * 2;
 

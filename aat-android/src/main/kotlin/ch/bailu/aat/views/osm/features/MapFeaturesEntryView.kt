@@ -22,7 +22,7 @@ class MapFeaturesEntryView(scontext: ServiceContext, private val onSelected: OnS
 
     init {
         if (icon_view_size == 0) {
-            icon_view_size = AndroidAppDensity(context).toPixel_i(IconMapService.BIG_ICON_SIZE + 10)
+            icon_view_size = AndroidAppDensity(context).toPixelInt(IconMapService.BIG_ICON_SIZE + 10)
         }
 
         icon.setOnClickListener(this)

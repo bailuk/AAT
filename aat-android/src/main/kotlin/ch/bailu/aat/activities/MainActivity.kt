@@ -25,7 +25,7 @@ import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc_android.FocAndroidFactory
-import javax.annotation.Nonnull
+
 
 class MainActivity : ActivityContext() {
     private val theme = AppTheme.intro
@@ -124,8 +124,8 @@ class MainActivity : ActivityContext() {
         }
 
         override fun onPreferencesChanged(
-            @Nonnull storage: StorageInterface,
-            @Nonnull key: String
+             storage: StorageInterface,
+             key: String
         ) {
             if (sdirectory.hasKey(key)) {
                 setText()

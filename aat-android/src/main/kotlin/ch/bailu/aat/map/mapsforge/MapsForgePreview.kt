@@ -53,7 +53,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         val tileLayer = MapsForgeTileLayer(appContext.services, provider, appContext.tilePainter)
         add(tileLayer, tileLayer)
 
-        val gpxLayer = GpxDynLayer(Storage(getContext()), mContext, appContext.services)
+        val gpxLayer = GpxDynLayer(Storage(getContext()), getMContext(), appContext.services)
         add(gpxLayer)
         attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILE_VIEW, info)

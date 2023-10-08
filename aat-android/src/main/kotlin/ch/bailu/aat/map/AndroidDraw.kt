@@ -36,7 +36,7 @@ class AndroidDraw(res: AppDensity, appContext: AppContext?) : MapDraw {
         textPaint = setFakeBoldText(MapPaint.createStatusTextPaint(res))
         textHeight = textPaint.getTextHeight("X") + 5
         nodePainter = NodeBitmap.get(res, appContext)
-        pointRadius = res.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
+        pointRadius = res.toPixelInt(MapDraw.POINT_RADIUS.toFloat())
     }
 
     private fun setFakeBoldText(p: Paint): Paint {

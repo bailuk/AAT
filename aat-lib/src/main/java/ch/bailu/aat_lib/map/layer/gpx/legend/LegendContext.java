@@ -19,10 +19,10 @@ public final class LegendContext {
 
     private final Paint backgroundPaint, framePaint;
 
-    public LegendContext(MapContext mc, Paint background, Paint frame) {
-        mcontext = mc;
-        nodes=mc.getTwoNodes();
-        min_pixel_distance = mc.getMetrics().getDensity().toPixel_i(MIN_DI_PIXEL_DISTANCE);
+    public LegendContext(MapContext mcontext, Paint background, Paint frame) {
+        this.mcontext = mcontext;
+        nodes= mcontext.getTwoNodes();
+        min_pixel_distance = mcontext.getMetrics().getDensity().toPixelInt(MIN_DI_PIXEL_DISTANCE);
         backgroundPaint = background;
         framePaint = frame;
     }

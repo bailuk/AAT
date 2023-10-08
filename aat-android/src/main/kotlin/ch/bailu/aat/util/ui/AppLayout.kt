@@ -60,7 +60,7 @@ object AppLayout {
 
     @JvmStatic
     fun getBigButtonSize(context: Context, buttonCount: Int): Int {
-        val bigButtonSize = AndroidAppDensity(context).toPixel_i(BIG_BUTTON_SIZE.toFloat())
+        val bigButtonSize = AndroidAppDensity(context).toPixelInt(BIG_BUTTON_SIZE.toFloat())
         return Math.min(getScreenSmallSide(context) / buttonCount, bigButtonSize)
     }
 

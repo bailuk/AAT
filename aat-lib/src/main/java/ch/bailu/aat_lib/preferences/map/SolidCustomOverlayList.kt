@@ -5,7 +5,6 @@ import ch.bailu.aat_lib.preferences.SolidCheckList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.FocFactory
-import javax.annotation.Nonnull
 
 class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) :
     SolidCheckList() {
@@ -39,8 +38,8 @@ class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) 
         return array
     }
 
-    override fun setEnabled(i: Int, isChecked: Boolean) {
-        get(i).setEnabled(isChecked)
+    override fun setEnabled(index: Int, isChecked: Boolean) {
+        get(index).setEnabled(isChecked)
     }
 
     override fun getKey(): String {
@@ -56,7 +55,7 @@ class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) 
         return false
     }
 
-    @Nonnull
+
     override fun getLabel(): String {
         return Res.str().file_overlay()
     }

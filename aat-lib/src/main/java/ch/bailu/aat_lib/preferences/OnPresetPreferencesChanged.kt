@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.preferences;
+package ch.bailu.aat_lib.preferences
 
-public interface OnPresetPreferencesChanged {
-    void onPreferencesChanged(StorageInterface storage, String key, int presetIndex);
+fun interface OnPresetPreferencesChanged {
+    fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int)
 }

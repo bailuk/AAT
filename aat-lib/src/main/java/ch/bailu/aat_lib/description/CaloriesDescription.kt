@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.preferences.general.SolidWeight
 import ch.bailu.aat_lib.preferences.presets.SolidMET
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class CaloriesDescription(private val storage: StorageInterface) : LongDescription() {
     override fun getLabel(): String {
@@ -21,7 +21,7 @@ class CaloriesDescription(private val storage: StorageInterface) : LongDescripti
         return cache.toString()
     }
 
-    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         setCache(calculateCalories(info).toLong())
     }
 

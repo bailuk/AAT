@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.preferences.SolidStaticIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import java.util.Objects
-import javax.annotation.Nonnull
+
 
 class SolidUnit(storage: StorageInterface) : SolidStaticIndexList(storage, KEY, Res.str().p_unit_list()) {
     init {
@@ -24,7 +24,7 @@ class SolidUnit(storage: StorageInterface) : SolidStaticIndexList(storage, KEY, 
     val speedUnit: String
         get() = SPEED_UNIT[index]
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_unit_title()
     }

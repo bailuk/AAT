@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import java.io.Closeable
-import javax.annotation.Nonnull
+
 
 class Backlight(private val activity: Activity, private val scontext: ServiceContext) :
     OnContentUpdatedInterface, OnPreferencesChanged, Closeable {
@@ -41,7 +41,7 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
         }
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (spreset.hasKey(key)) {
             setBacklightAndPreset()
         } else if (sbacklight.hasKey(key)) {

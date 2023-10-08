@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences.presets
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidMissingTrigger(storage: StorageInterface, i: Int) : SolidStaticIndexList(
     storage, KEY + i, labels
@@ -13,7 +13,7 @@ class SolidMissingTrigger(storage: StorageInterface, i: Int) : SolidStaticIndexL
     val triggerMillis: Int
         get() = triggerSeconds * 1000
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_missing_trigger()
     }

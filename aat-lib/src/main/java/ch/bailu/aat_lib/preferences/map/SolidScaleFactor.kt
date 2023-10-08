@@ -3,13 +3,13 @@ package ch.bailu.aat_lib.preferences.map
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidScaleFactor(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     val scaleFactor: Float
         get() = VALUE_LIST[index]
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_mapsforge_scale_factor()
     }

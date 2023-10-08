@@ -2,14 +2,13 @@ package ch.bailu.aat_lib.preferences
 
 import ch.bailu.aat_lib.exception.ValidationException
 import ch.bailu.aat_lib.util.Objects.equals
-import javax.annotation.Nonnull
+
 
 abstract class AbsSolidType : SolidTypeInterface {
     open fun getIconResource(): String {
         return ""
     }
 
-    @Nonnull
     override fun getLabel(): String {
         return NULL_LABEL
     }
@@ -28,7 +27,6 @@ abstract class AbsSolidType : SolidTypeInterface {
         getStorage().unregister(listener)
     }
 
-    @Nonnull
     override fun toString(): String {
         return getValueAsString()
     }

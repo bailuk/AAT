@@ -4,14 +4,14 @@ import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.MemSize
-import javax.annotation.Nonnull
+
 
 class SolidCacheSize(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     override fun length(): Int {
         return sizes.size
     }
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_cache_size()
     }

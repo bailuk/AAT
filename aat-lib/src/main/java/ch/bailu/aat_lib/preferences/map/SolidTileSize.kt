@@ -9,7 +9,7 @@ class SolidTileSize(storage: StorageInterface, density: AppDensity) : SolidIndex
     private val tileSizeDP: Int
 
     init {
-        tileSizeDP = density.toPixel_i(DEFAULT_TILESIZE.toFloat())
+        tileSizeDP = density.toPixelInt(DEFAULT_TILESIZE.toFloat())
     }
 
     val tileSize: Int

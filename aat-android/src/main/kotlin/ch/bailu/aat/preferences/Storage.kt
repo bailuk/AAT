@@ -31,17 +31,17 @@ class Storage (private val context: Context): StorageInterface {
         }
     }
 
-    override fun writeInteger(key: String, v: Int) {
-        if (readInteger(key) != v) {
-            editor.putInt(key, v)
+    override fun writeInteger(key: String, value: Int) {
+        if (readInteger(key) != value) {
+            editor.putInt(key, value)
             editor.apply()
         }
     }
 
-    override fun writeIntegerForce(key: String, v: Int) {
+    override fun writeIntegerForce(key: String, value: Int) {
         editor.remove(key)
         editor.apply()
-        editor.putInt(key, v)
+        editor.putInt(key, value)
         editor.apply()
     }
 
@@ -49,9 +49,9 @@ class Storage (private val context: Context): StorageInterface {
         return preferences.getLong(key, 0)
     }
 
-    override fun writeLong(key: String, v: Long) {
-        if (readLong(key) != v) {
-            editor.putLong(key, v)
+    override fun writeLong(key: String, value: Long) {
+        if (readLong(key) != value) {
+            editor.putLong(key, value)
             editor.apply()
         }
     }
@@ -59,21 +59,21 @@ class Storage (private val context: Context): StorageInterface {
     private val observers: MutableMap<OnPreferencesChanged, OnSharedPreferenceChangeListener> =
         HashMap(20)
 
-    override fun register(observer: OnPreferencesChanged) {
-        if (!observers.containsKey(observer)) {
-            val listener =
+    override fun register(onPreferencesChanged: OnPreferencesChanged) {
+        if (!observers.containsKey(onPreferencesChanged)) {
+            val newListener =
                 OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->
-                    observer.onPreferencesChanged(this@Storage, key)
+                    onPreferencesChanged.onPreferencesChanged(this@Storage, key)
                 }
-            preferences.registerOnSharedPreferenceChangeListener(listener)
-            observers[observer] = listener
+            preferences.registerOnSharedPreferenceChangeListener(newListener)
+            observers[onPreferencesChanged] = newListener
         } else {
             AppLog.e(this, "Observer was already registered")
         }
     }
 
-    override fun unregister(observer: OnPreferencesChanged) {
-        val listener = observers.remove(observer)
+    override fun unregister(onPreferencesChanged: OnPreferencesChanged) {
+        val listener = observers.remove(onPreferencesChanged)
         if (listener != null) {
             preferences.unregisterOnSharedPreferenceChangeListener(listener)
         } else {
@@ -82,7 +82,7 @@ class Storage (private val context: Context): StorageInterface {
     }
 
     override fun isDefaultString(s: String): Boolean {
-        return defaultString == s
+        return getDefaultString() == s
     }
 
     override fun getDefaultString(): String {

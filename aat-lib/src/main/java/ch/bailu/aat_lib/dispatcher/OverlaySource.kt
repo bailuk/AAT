@@ -11,6 +11,7 @@ class OverlaySource private constructor(
     context: AppContext,
     private val soverlay: SolidOverlayInterface
 ) : FileSource(context, soverlay.getIID()) {
+
     private val onPreferencesChanged = OnPreferencesChanged { _, key ->
         if (soverlay.hasKey(key)) {
             initAndUpdateOverlay()

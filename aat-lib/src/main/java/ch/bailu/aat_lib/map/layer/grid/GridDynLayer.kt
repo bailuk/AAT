@@ -1,59 +1,40 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
 
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidMapGrid;
-import ch.bailu.aat_lib.service.ServicesInterface;
+class GridDynLayer(
+    private val services: ServicesInterface,
+    storage: StorageInterface,
+    private val mcontext: MapContext
+) : MapLayerInterface {
+    private val sgrid = SolidMapGrid(storage, mcontext.getSolidKey())
+    private var gridLayer = sgrid.createGridLayer(services)
 
-public final class GridDynLayer implements MapLayerInterface {
-    private MapLayerInterface gridLayer;
-    private final SolidMapGrid sgrid;
-
-    private final MapContext mcontext;
-    private final ServicesInterface services;
-
-    public GridDynLayer(ServicesInterface services, StorageInterface s, MapContext mc) {
-        mcontext = mc;
-        this.services = services;
-        sgrid = new SolidMapGrid(s, mc.getSolidKey());
-        gridLayer = sgrid.createGridLayer(services);
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun drawInside(mcontext: MapContext) {
+        gridLayer.drawInside(mcontext)
     }
 
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public void drawInside(MapContext mcontext) {
-        gridLayer.drawInside(mcontext);
+    override fun onTap(tapXY: Point): Boolean {
+        return false
     }
 
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
+    override fun drawForeground(mcontext: MapContext) {
+        gridLayer.drawForeground(mcontext)
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {
-        gridLayer.drawForeground(mcontext);
-    }
-
-
-    @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sgrid.hasKey(key)) {
-            gridLayer = sgrid.createGridLayer(services);
-            mcontext.getMapView().requestRedraw();
+            gridLayer = sgrid.createGridLayer(services)
+            mcontext.getMapView().requestRedraw()
         }
-
     }
 
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

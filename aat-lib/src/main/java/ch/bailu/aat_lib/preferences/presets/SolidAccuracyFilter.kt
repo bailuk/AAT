@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidAccuracyFilter(storage: StorageInterface, index: Int) : SolidIndexList(storage, KEY + index) {
     private val sunit: SolidUnit = SolidUnit(storage)
@@ -13,7 +13,7 @@ class SolidAccuracyFilter(storage: StorageInterface, index: Int) : SolidIndexLis
     val minAccuracy: Float
         get() = VALUE_LIST[index]
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_accuracy_filter()
     }

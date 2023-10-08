@@ -4,17 +4,17 @@ import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.FocFactory
-import javax.annotation.Nonnull
+
 
 abstract class SolidTileCacheDirectory(storage: StorageInterface, focFactory: FocFactory) : SolidFile(
     storage, SolidTileCacheDirectory::class.java.simpleName, focFactory
 ) {
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_directory_tiles()
     }
 
-    @Nonnull
+    
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
@@ -28,7 +28,7 @@ abstract class SolidTileCacheDirectory(storage: StorageInterface, focFactory: Fo
         get() {
             var list = ArrayList<String>(5)
             list = buildSelection(list)
-            list.add(getStorage().defaultString)
+            list.add(getStorage().getDefaultString())
             return list[0]
         }
 }

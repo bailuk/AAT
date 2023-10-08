@@ -28,7 +28,7 @@ abstract class AbsNodeViewLayer(
         infoView.setOnLongClickListener(this)
         infoView.setOnClickListener(this)
         infoView.visibility = View.GONE
-        To.view(mcontext.mapView)?.addView(infoView)
+        To.view(mcontext.getMapView())?.addView(infoView)
     }
 
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
@@ -67,14 +67,14 @@ abstract class AbsNodeViewLayer(
 
     override fun hide() {
         AppLayout.fadeOut(infoView)
-        mcontext.mapView.requestRedraw()
+        mcontext.getMapView().requestRedraw()
     }
 
     override fun show() {
         measure()
         layout()
         AppLayout.fadeIn(infoView)
-        mcontext.mapView.requestRedraw()
+        mcontext.getMapView().requestRedraw()
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

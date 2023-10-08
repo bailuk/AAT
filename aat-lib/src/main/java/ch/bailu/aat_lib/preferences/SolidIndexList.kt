@@ -1,7 +1,5 @@
 package ch.bailu.aat_lib.preferences
 
-import javax.annotation.Nonnull
-
 abstract class SolidIndexList(storage: StorageInterface, key: String) : AbsSolidType() {
     private val sindex: SolidInteger
 
@@ -11,7 +9,7 @@ abstract class SolidIndexList(storage: StorageInterface, key: String) : AbsSolid
 
     abstract fun length(): Int
     protected abstract fun getValueAsString(index: Int): String
-    @Nonnull
+
     override fun getValueAsString(): String {
         return getValueAsString(index)
     }

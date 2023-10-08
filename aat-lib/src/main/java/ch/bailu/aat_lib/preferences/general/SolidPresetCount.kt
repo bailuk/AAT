@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.preferences.general
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidPresetCount(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     fun getValue(v: Int): Int {
@@ -13,7 +13,7 @@ class SolidPresetCount(storage: StorageInterface) : SolidIndexList(storage, KEY)
     val value: Int
         get() = getValue(index)
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_preset_slots()
     }

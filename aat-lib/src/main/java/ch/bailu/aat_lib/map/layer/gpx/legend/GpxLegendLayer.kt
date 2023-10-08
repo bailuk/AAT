@@ -1,66 +1,49 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import org.mapsforge.core.graphics.Paint;
+import ch.bailu.aat_lib.lib.color.ARGB
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapPaint.createBackgroundPaint
+import ch.bailu.aat_lib.map.MapPaint.createEdgePaintLine
+import ch.bailu.aat_lib.map.layer.gpx.GpxLayer
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.graphics.Paint
 
-import javax.annotation.Nonnull;
+class GpxLegendLayer(private val walker: LegendWalker) : GpxLayer() {
+    private var backgroundPaint = createBackgroundPaint()
+    private var framePaint: Paint = createBackgroundPaint()
+    private var color = ARGB.WHITE
 
-import ch.bailu.aat_lib.lib.color.ARGB;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.MapMetrics;
-import ch.bailu.aat_lib.map.MapPaint;
-import ch.bailu.aat_lib.map.layer.gpx.GpxLayer;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.util.Point;
-
-public final class GpxLegendLayer extends GpxLayer {
-    private final LegendWalker walker;
-
-    private Paint backgroundPaint, framePaint;
-
-    private int color = ARGB.WHITE;
-
-    public GpxLegendLayer(LegendWalker w) {
-        walker=w;
-
-        initPaint();
+    init {
+        initPaint()
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {
+    override fun drawInside(mcontext: MapContext) {
         if (color != getColor()) {
-            color = getColor();
-
-            initPaint(mcontext.getMetrics());
+            color = getColor()
+            initPaint(mcontext.getMetrics())
         }
-
-        walker.init(mcontext, backgroundPaint, framePaint);
-        walker.walkTrack(getGpxList());
+        walker.init(mcontext, backgroundPaint, framePaint)
+        walker.walkTrack(gpxList)
     }
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-
-    private void initPaint(MapMetrics metrics) {
-        backgroundPaint = MapPaint.createBackgroundPaint(color);
-        framePaint = MapPaint.createEdgePaintLine(metrics.getDensity());
-        framePaint.setColor(color);
+    private fun initPaint(metrics: MapMetrics) {
+        backgroundPaint = createBackgroundPaint(color)
+        framePaint = createEdgePaintLine(metrics.density)
+        framePaint.color = color
     }
 
-
-    private void initPaint() {
-        backgroundPaint = MapPaint.createBackgroundPaint(color);
-        framePaint = MapPaint.createBackgroundPaint(color);
+    private fun initPaint() {
+        backgroundPaint = createBackgroundPaint(color)
+        framePaint = createBackgroundPaint(color)
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

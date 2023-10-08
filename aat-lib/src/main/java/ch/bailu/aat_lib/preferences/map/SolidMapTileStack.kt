@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.SolidCheckList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.cache.DownloadSource
-import javax.annotation.Nonnull
+
 
 class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: Int) :
     SolidCheckList() {
@@ -48,7 +48,7 @@ class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: I
         enabledArray[i]!!.value = isChecked
     }
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_map()
     }

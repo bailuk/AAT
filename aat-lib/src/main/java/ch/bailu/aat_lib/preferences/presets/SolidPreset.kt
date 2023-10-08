@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
-import javax.annotation.Nonnull
+
 
 class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     override fun length(): Int {
@@ -18,7 +18,7 @@ class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return smet(index).getValueAsString()
     }
 
-    @Nonnull
+    
     override fun getValueAsString(): String {
         return smet().getValueAsString()
     }
@@ -35,7 +35,7 @@ class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return super.hasKey(key) || smet().hasKey(key)
     }
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_preset()
     }

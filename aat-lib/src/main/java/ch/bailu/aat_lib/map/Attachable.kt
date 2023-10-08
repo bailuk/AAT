@@ -1,7 +1,6 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
-public interface Attachable {
-
-    void onAttached();
-    void onDetached();
+interface Attachable {
+    fun onAttached()
+    fun onDetached()
 }

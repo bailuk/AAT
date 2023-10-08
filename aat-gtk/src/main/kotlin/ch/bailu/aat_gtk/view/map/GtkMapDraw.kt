@@ -25,7 +25,7 @@ class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): Ma
     private val legendPaint: Paint = MapPaint.createLegendTextPaint(appDensity)
 
     private val textHeight   = textPaint.getTextHeight("X") + 5
-    private val pointRadius = appDensity.toPixel_i(MapDraw.POINT_RADIUS.toFloat())
+    private val pointRadius = appDensity.toPixelInt(MapDraw.POINT_RADIUS.toFloat())
 
     private var left = 0
     private var top = 0

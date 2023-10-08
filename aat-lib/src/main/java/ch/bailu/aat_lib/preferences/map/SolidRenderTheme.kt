@@ -8,11 +8,11 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme
 import org.mapsforge.map.rendertheme.XmlRenderTheme
 import java.io.File
 import java.io.FileNotFoundException
-import javax.annotation.Nonnull
+
 
 class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, focFactory: FocFactory)
     : SolidFile(mapsForgeDirectory.getStorage(), SolidRenderTheme::class.java.simpleName, focFactory) {
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_mapsforge_theme()
     }

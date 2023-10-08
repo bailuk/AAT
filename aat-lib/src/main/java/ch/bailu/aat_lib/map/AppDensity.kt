@@ -1,23 +1,23 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
-public abstract class AppDensity {
-    public float toPixel_f(float diPixel) {
-        return diPixel;
+abstract class AppDensity {
+    open fun toPixelFloat(diPixel: Float): Float {
+        return diPixel
     }
 
-    public float toPixelScaled_f(float diPixel) {
-        return diPixel;
+    open fun toPixelScaledFloat(diPixel: Float): Float {
+        return diPixel
     }
 
-    public int toPixel_i(float diPixel) {
-        return (int) (toPixel_f(diPixel) + 0.5f);
+    open fun toPixelInt(diPixel: Float): Int {
+        return (toPixelFloat(diPixel) + 0.5f).toInt()
     }
 
-    public int toPixel_i(float diPixel, int min) {
-        return Math.max(min, toPixel_i(diPixel));
+    open fun toPixelInt(diPixel: Float, min: Int): Int {
+        return Math.max(min, toPixelInt(diPixel))
     }
 
-    public int toDensityIndependentPixel(float pixel) {
-        return (int) (pixel);
+    open fun toDensityIndependentPixel(pixel: Float): Int {
+        return pixel.toInt()
     }
 }

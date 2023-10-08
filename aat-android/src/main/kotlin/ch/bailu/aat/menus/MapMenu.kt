@@ -59,7 +59,7 @@ class MapMenu(private val context: Context, private val mcontext: MapContext) : 
             start(context, PreferencesActivity::class.java)
         }
 
-        add(menu, R.string.tt_info_reload) {mcontext.mapView.reDownloadTiles()}.apply {
+        add(menu, R.string.tt_info_reload) {mcontext.getMapView().reDownloadTiles()}.apply {
             setIcon(R.drawable.view_refresh)
         }
     }

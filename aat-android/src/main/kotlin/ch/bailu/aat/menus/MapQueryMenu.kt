@@ -18,21 +18,21 @@ class MapQueryMenu(private val context: Context, private val mcontext: MapContex
             start(
                 context,
                 NominatimActivity::class.java,
-                mcontext.metrics.boundingBox
+                mcontext.getMetrics().boundingBox
             )
         }
         add(menu, getName(context)) {
             start(
                 context,
                 OverpassActivity::class.java,
-                mcontext.metrics.boundingBox
+                mcontext.getMetrics().boundingBox
             )
         }
         add(menu, R.string.p_mapsforge_poi) {
             start(
                 context,
                 PoiActivity::class.java,
-                mcontext.metrics.boundingBox
+                mcontext.getMetrics().boundingBox
             )
         }
     }

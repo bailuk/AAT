@@ -55,8 +55,8 @@ public abstract class MeterGridLayer implements MapLayerInterface {
     }
 
 
-    private Point getCenterPixel(MapContext mc, MeterCoordinates c) {
-        return mc.getMetrics().toPixel(c.toLatLong());
+    private Point getCenterPixel(MapContext mcontext, MeterCoordinates c) {
+        return mcontext.getMetrics().toPixel(c.toLatLong());
     }
 
 

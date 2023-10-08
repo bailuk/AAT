@@ -44,7 +44,7 @@ class LocationMenu(private val context: Context, private val map: MapViewInterfa
     private fun copy() {
         val sgrid = SolidMapGrid(
             Storage(context),
-            map.mContext.solidKey
+            map.getMContext().getSolidKey()
         )
         clipboard.setText(sgrid.clipboardLabel, sgrid.getCode(center))
     }
@@ -74,5 +74,5 @@ class LocationMenu(private val context: Context, private val map: MapViewInterfa
     }
 
     private val center: LatLong
-        get() = map.mapViewPosition.center
+        get() = map.getMapViewPosition().center
 }

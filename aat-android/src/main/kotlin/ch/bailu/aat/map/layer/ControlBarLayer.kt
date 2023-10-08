@@ -12,16 +12,16 @@ import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.Point
-import javax.annotation.Nonnull
 
-abstract class ControlBarLayer(mc: MapContext, val bar: ControlBar, private val placement: Position, color: Int) :
+
+abstract class ControlBarLayer(mcontext: MapContext, val bar: ControlBar, private val placement: Position, color: Int) :
     MapLayerInterface, View.OnClickListener {
 
     private var w = 0
     private var h = 0
 
     init {
-        val map = mc.mapView
+        val map = mcontext.getMapView()
         bar.setBackgroundColor(color)
         bar.addOnClickListener(this)
         bar.visibility = View.GONE
@@ -122,7 +122,7 @@ abstract class ControlBarLayer(mc: MapContext, val bar: ControlBar, private val 
     }
 
     override fun drawForeground(mcontext: MapContext) {}
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
 
     companion object {
         fun getOrientation(placement: Position): Int {

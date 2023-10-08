@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
+
 
 class SolidDistanceFilter(storage: StorageInterface, i: Int) : SolidIndexList(storage, KEY + i) {
     private val sunit: SolidUnit
@@ -17,7 +17,7 @@ class SolidDistanceFilter(storage: StorageInterface, i: Int) : SolidIndexList(st
     val minDistance: Float
         get() = VALUE_LIST[index]
 
-    @Nonnull
+    
     override fun getLabel(): String {
         return Res.str().p_distance_filter()
     }

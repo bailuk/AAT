@@ -32,7 +32,7 @@ class MapsForgeForeground(
 
     init {
         metrics = MapsForgeMetrics(mapView, d)
-        draw = AndroidDraw(mcontext.metrics.density, appContext)
+        draw = AndroidDraw(mcontext.getMetrics().density, appContext)
     }
 
     fun dispatchDraw(services: ServicesInterface, canvas: Canvas) {
@@ -54,14 +54,14 @@ class MapsForgeForeground(
     }
 
     override fun getSolidKey(): String {
-        return mcontext.solidKey
+        return mcontext.getSolidKey()
     }
 
     override fun getTwoNodes(): TwoNodes {
-        return mcontext.twoNodes
+        return mcontext.getTwoNodes()
     }
 
     override fun getMapView(): MapViewInterface {
-        return mcontext.mapView
+        return mcontext.getMapView()
     }
 }

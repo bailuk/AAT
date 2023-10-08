@@ -8,8 +8,8 @@ import org.mapsforge.map.model.IMapViewPosition
  * Passive map takes zoom and position from active map
  */
 class MapViewLinker(active: MapViewInterface, passive: MapsForgeViewBase) {
-    private val active: IMapViewPosition = active.mapViewPosition
-    private val passive: IMapViewPosition = passive.mapViewPosition
+    private val active: IMapViewPosition = active.getMapViewPosition()
+    private val passive: IMapViewPosition = passive.getMapViewPosition()
     private val onChange: ()->Unit = {
         setCenter()
         setZoom()

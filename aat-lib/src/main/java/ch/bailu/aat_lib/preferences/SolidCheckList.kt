@@ -5,7 +5,7 @@ abstract class SolidCheckList : AbsSolidType() {
     abstract fun getStringArray(): Array<String>
     abstract fun getEnabledArray(): BooleanArray
 
-    abstract fun setEnabled(i: Int, isChecked: Boolean)
+    abstract fun setEnabled(index: Int, isChecked: Boolean)
     override fun setValueFromString(string: String) {}
 
     override fun getValueAsString(): String {

@@ -15,7 +15,6 @@ import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.map.layer.Layer
-import javax.annotation.Nonnull
 
 /**
  * MapContext for Android
@@ -49,7 +48,7 @@ class MapsForgeContext(
         draw.init(canvas, metrics)
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
 
     override fun getMetrics(): MapMetrics {
         return metrics
