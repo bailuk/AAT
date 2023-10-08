@@ -5,6 +5,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.view.solid.ActivityPreferencesPage
 import ch.bailu.aat_gtk.view.solid.GeneralPreferencesPage
 import ch.bailu.aat_gtk.view.solid.MapPreferencesPage
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
@@ -12,14 +13,14 @@ import ch.bailu.gtk.gtk.Application
 object PreferencesDialog {
     private var window: PreferencesWindow? = null
 
-    fun show(app: Application) {
+    fun show(app: Application, appContext: AppContext) {
         if (window == null) {
             window = PreferencesWindow().apply {
                 application = app // This enables actions in app.* scope
                 canNavigateBack = true
                 modal = false
 
-                add(GeneralPreferencesPage(GtkAppContext.storage, app, this).page)
+                add(GeneralPreferencesPage(app, this, appContext).page)
                 add(MapPreferencesPage(GtkAppContext.storage, app, this).page)
 
                 val presetCount = SolidPresetCount(GtkAppContext.storage)
@@ -39,8 +40,8 @@ object PreferencesDialog {
         window?.show()
     }
 
-    fun showMap(app: Application) {
-        show(app)
+    fun showMap(app: Application, appContext: AppContext) {
+        show(app, appContext)
         val window = this.window
         if (window is PreferencesWindow) {
             window.setVisiblePageName("map")

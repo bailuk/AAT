@@ -29,7 +29,7 @@ fun main() {
     val app = Application(GtkAppConfig.appId, ApplicationFlags.FLAGS_NONE)
 
     app.onActivate {
-        MainWindow(app, App.dispatcher).window.show()
+        MainWindow(app, GtkAppContext, App.dispatcher).window.show()
         App.setupDispatcher()
         App.dispatcher.onResume()
     }

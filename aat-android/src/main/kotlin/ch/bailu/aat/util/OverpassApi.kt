@@ -2,10 +2,12 @@ package ch.bailu.aat.util
 
 import android.content.Context
 import ch.bailu.aat.R
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
+import ch.bailu.foc_android.FocAndroidFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.Locale
@@ -23,7 +25,7 @@ abstract class OverpassApi(context: Context, b: BoundingBoxE6) : DownloadApi() {
         apiName = getName(context)
         bounding = toString(b)
         baseDirectory = AppDirectory.getDataDirectory(
-            AndroidSolidDataDirectory(context),
+            SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context)),
             AppDirectory.DIR_OVERPASS
         )
     }

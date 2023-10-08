@@ -19,8 +19,6 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
         return "folder_inverse"
     }
 
-    abstract override fun buildSelection(list: ArrayList<String>): ArrayList<String>
-
     override fun getToolTip(): String {
         return getPermissionText(getValueAsFile())
     }

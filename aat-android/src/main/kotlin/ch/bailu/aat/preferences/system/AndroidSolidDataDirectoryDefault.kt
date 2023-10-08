@@ -8,11 +8,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc_android.FocAndroidFactory
 
-class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(
-    Storage(
-        context
-    ), FocAndroidFactory(context)
-) {
+class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(Storage(context), FocAndroidFactory(context)) {
 
     override fun getValueAsString(): String {
         val r = super.getValueAsString()

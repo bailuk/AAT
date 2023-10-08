@@ -4,10 +4,10 @@ import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.foc.FocFactory
 
-class SolidDirectoryQuery(s: StorageInterface, f: FocFactory) : SolidFile(s, KEY_DIR_DIRECTORY, f) {
+class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : SolidFile(storage, KEY_DIR_DIRECTORY, focFactory) {
 
-    fun containsKey(s: String): Boolean {
-        return s.contains(getValueAsString())
+    fun containsKey(key: String): Boolean {
+        return key.contains(getValueAsString())
     }
 
     val position: SolidInteger
@@ -70,10 +70,6 @@ class SolidDirectoryQuery(s: StorageInterface, f: FocFactory) : SolidFile(s, KEY
                     + Math.max(start, end))
         }
         return selection
-    }
-
-    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        return list
     }
 
     companion object {

@@ -39,7 +39,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         iterator.setOnCursorChangedListener(this)
     }
 
-    abstract fun factoryIterator(appContext: AppContext?): Iterator
+    abstract fun factoryIterator(appContext: AppContext): Iterator
     override fun getInfo(): GpxInformation {
         return iterator.info
     }
@@ -60,7 +60,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         appContext
     ) {
         private var handle = ObjNull.NULL
-        override fun factoryIterator(appContext: AppContext?): Iterator {
+        override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorFollowFile(appContext)
         }
 
@@ -108,7 +108,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
     }
 
     class Summary(appContext: AppContext) : IteratorSource(appContext) {
-        override fun factoryIterator(appContext: AppContext?): Iterator {
+        override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorSummary(appContext)
         }
     }

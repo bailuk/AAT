@@ -2,7 +2,6 @@ package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.App
 import ch.bailu.aat_gtk.app.GtkAppConfig
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -13,6 +12,7 @@ import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.list.FileList
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.FileViewSource
@@ -29,7 +29,7 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 
-class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiController {
+class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) : UiController {
 
     companion object {
         val pageIdCockpit = Icons.incCockpit
@@ -44,8 +44,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         }
     }
 
-    private val customFileSource =
-        FileViewSource(GtkAppContext)
+    private val customFileSource = FileViewSource(appContext)
 
 
     private val headerBar = HeaderBar().apply {
@@ -70,8 +69,8 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         CSS.addProviderForDisplay(display, Strings.appCss)
 
         setDefaultSize(
-            SolidWindowSize.readWidth(GtkAppContext.storage),
-            SolidWindowSize.readHeight(GtkAppContext.storage)
+            SolidWindowSize.readWidth(appContext.storage),
+            SolidWindowSize.readHeight(appContext.storage)
         )
         setIconName(GtkAppConfig.appId)
         content = overlay
@@ -79,7 +78,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         overlay.addOverlay(messageOverlay.box)
     }
 
-    private val mapView = MapMainView(app, dispatcher, this, GtkAppContext, window).apply {
+    private val mapView = MapMainView(app, dispatcher, this, appContext, window).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
@@ -98,7 +97,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         dispatcher.addSource(customFileSource)
 
         stackPage.addView(CockpitPage(this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        stackPage.addView(FileList(app, GtkAppContext.storage, GtkAppContext, this).vbox, pageIdFileList, Res.str().label_list())
+        stackPage.addView(FileList(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
         stackPage.addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
 
 
@@ -107,11 +106,11 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
         headerBar.packEnd(showMapButton)
         headerBar.packStart(MainMenuButton(app, window, dispatcher, this).menuButton)
 
-        stackPage.restore(GtkAppContext.storage)
+        stackPage.restore(appContext.storage)
 
         window.onCloseRequest {
-            SolidWindowSize.writeSize(GtkAppContext.storage, window.width, window.height)
-            stackPage.save(GtkAppContext.storage)
+            SolidWindowSize.writeSize(appContext.storage, window.width, window.height)
+            stackPage.save(appContext.storage)
             mapView.onDetached()
             false
         }
@@ -164,7 +163,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     }
 
     override fun showPreferencesMap() {
-        PreferencesDialog.showMap(app)
+        PreferencesDialog.showMap(app, appContext)
     }
 
     override fun getMapBounding(): BoundingBoxE6 {
@@ -177,7 +176,7 @@ class MainWindow(private val app: Application, dispatcher: Dispatcher) : UiContr
     }
 
     override fun showPreferences() {
-        PreferencesDialog.show(app)
+        PreferencesDialog.show(app, appContext)
     }
 
     override fun showInDetail(infoID: Int) {

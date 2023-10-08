@@ -1,10 +1,12 @@
 package ch.bailu.aat.util
 
 import android.content.Context
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
+import ch.bailu.foc_android.FocAndroidFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
@@ -17,7 +19,7 @@ abstract class NominatimApi(context: Context, boundingBox: BoundingBoxE6) : Down
 
     init {
         baseDirectory = AppDirectory.getDataDirectory(
-            AndroidSolidDataDirectory(context),
+            SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))            ,
             AppDirectory.DIR_NOMINATIM
         )
         bounding = toString(boundingBox)
