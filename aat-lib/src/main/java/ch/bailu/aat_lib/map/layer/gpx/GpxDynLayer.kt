@@ -1,110 +1,91 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxInformationCache
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidLegend
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxInformationCache;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidLegend;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.util.Point;
+class GpxDynLayer(
+    storage: StorageInterface,
+    private val mcontext: MapContext,
+    private val services: ServicesInterface
+) : MapLayerInterface, OnContentUpdatedInterface {
+    private val infoCache = GpxInformationCache()
+    private var gpxOverlay: GpxLayer? = null
+    private var legendOverlay: GpxLayer? = null
+    private val slegend: SolidLegend
 
-public final class GpxDynLayer implements MapLayerInterface, OnContentUpdatedInterface {
-    private final GpxInformationCache infoCache = new GpxInformationCache();
-
-    private GpxLayer gpxOverlay;
-    private GpxLayer legendOverlay;
-
-    private final SolidLegend slegend;
-
-    private final MapContext mcontext;
-
-    private final ServicesInterface services;
-
-    public GpxDynLayer(StorageInterface s, MapContext mc, ServicesInterface services) {
-        mcontext = mc;
-        this.services = services;
-        slegend = new SolidLegend(s, mcontext.getSolidKey());
-
-        createLegendOverlay();
-        createGpxOverlay();
+    constructor(
+        storage: StorageInterface, mc: MapContext, services: ServicesInterface,
+        dispatcher: DispatcherInterface, iid: Int
+    ) : this(storage, mc, services) {
+        dispatcher.addTarget(this, iid)
     }
 
-    public GpxDynLayer(StorageInterface s, MapContext mc, ServicesInterface services,
-                         DispatcherInterface dispatcher, int iid) {
-        this(s, mc, services);
-        dispatcher.addTarget(this, iid);
+    override fun drawInside(mcontext: MapContext) {
+        gpxOverlay?.drawInside(mcontext)
+        legendOverlay?.drawInside(mcontext)
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {
-        gpxOverlay.drawInside(mcontext);
-        legendOverlay.drawInside(mcontext);
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {}
+    private var type = GpxType.NONE
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    init {
+        slegend = SolidLegend(storage, mcontext.getSolidKey())
+        createLegendOverlay()
+        createGpxOverlay()
     }
 
-    private GpxType type = GpxType.NONE;
-
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        infoCache.set(iid, info);
-
-        if (type != toType(info)) {
-            type = toType(info);
-            createGpxOverlay();
-            createLegendOverlay();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        infoCache[iid] = info
+        if (type !== toType(info)) {
+            type = toType(info)
+            createGpxOverlay()
+            createLegendOverlay()
         }
-
-        infoCache.letUpdate(gpxOverlay);
-        infoCache.letUpdate(legendOverlay);
-
-        mcontext.getMapView().requestRedraw();
+        infoCache.letUpdate(gpxOverlay)
+        infoCache.letUpdate(legendOverlay)
+        mcontext.getMapView().requestRedraw()
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (slegend.hasKey(key)) {
-            createLegendOverlay();
-            infoCache.letUpdate(legendOverlay);
-            mcontext.getMapView().requestRedraw();
+            createLegendOverlay()
+            infoCache.letUpdate(legendOverlay)
+            mcontext.getMapView().requestRedraw()
         }
     }
 
-    private static GpxType toType(GpxInformation i) {
-        if (i != null && i.getGpxList() != null) {
-            return i.getGpxList().getDelta().getType();
+    private fun createGpxOverlay() {
+        val type = toType(infoCache.info)
+        gpxOverlay = Factory[type].layer(mcontext, services)
+    }
+
+    private fun createLegendOverlay() {
+        val type = toType(infoCache.info)
+        legendOverlay = Factory[type].legend(slegend)
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
+
+    companion object {
+        private fun toType(i: GpxInformation?): GpxType {
+            return if (i != null && i.gpxList != null) {
+                i.gpxList.getDelta().getType()
+            } else GpxType.NONE
         }
-        return GpxType.NONE;
     }
-
-    private void createGpxOverlay() {
-        GpxType type = toType(infoCache.info);
-        gpxOverlay = Factory.get(type).layer(mcontext, services,0);
-    }
-
-    private void createLegendOverlay() {
-        GpxType type = toType(infoCache.info);
-        legendOverlay = Factory.get(type).legend(slegend.getStorage(), slegend, 0);
-    }
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
 }

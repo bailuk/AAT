@@ -8,15 +8,15 @@ import org.mapsforge.core.graphics.Paint
 
 abstract class LegendWalker : GpxListWalker() {
     @JvmField
-    var c: LegendContext? = null
+    var legendContext: LegendContext? = null
 
     fun init(mcontext: MapContext, backgroundPaint: Paint, framePaint: Paint) {
-        c = LegendContext(mcontext, backgroundPaint, framePaint)
+        legendContext = LegendContext(mcontext, backgroundPaint, framePaint)
     }
 
     override fun doList(track: GpxList): Boolean {
         return track.pointList.size() > 0 &&
-                c!!.isVisible(track.getDelta().getBoundingBox())
+                legendContext!!.isVisible(track.getDelta().getBoundingBox())
     }
 
     override fun doSegment(segment: GpxSegmentNode): Boolean {

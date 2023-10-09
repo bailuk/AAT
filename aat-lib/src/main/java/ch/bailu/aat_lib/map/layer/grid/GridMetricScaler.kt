@@ -1,52 +1,42 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
-public final class GridMetricScaler {
-    private static final int KM=1000;
-    private static final int[] GRID_LEVELS = {
-        500*KM,
-        200*KM,
-        100*KM,
-        50*KM,
-        20*KM,
-        10*KM,
-        5*KM,
-        2*KM,
-        1*KM,
-        500,
-        200,
-        100,
-        50,
-        20,
-        10,
-        5,
-        2
-    };
+import kotlin.math.roundToInt
 
-    private int squareDistance=0;
+class GridMetricScaler {
+    var optimalScale = 0
+        private set
 
-
-    public GridMetricScaler() {}
-
-
-    public GridMetricScaler(int distance) {
-        findOptimalScale(distance);
-    }
-
-
-    public int getOptimalScale() {
-        return squareDistance;
-    }
-
-
-    public void findOptimalScale(int distance) {
-        final float fdistance = distance / 2;
-
-        for (int level:GRID_LEVELS) {
-            final float flevel = level;
-            if (Math.round(fdistance / flevel) > 0) {
-                squareDistance=level;
-                break;
+    fun findOptimalScale(distance: Int) {
+        val fdistance = (distance / 2).toFloat()
+        for (level in GRID_LEVELS) {
+            val flevel = level.toFloat()
+            if ((fdistance / flevel).roundToInt() > 0) {
+                optimalScale = level
+                break
             }
         }
+    }
+
+    companion object {
+        private const val KM = 1000
+        private val GRID_LEVELS = intArrayOf(
+            500 * KM,
+            200 * KM,
+            100 * KM,
+            50 * KM,
+            20 * KM,
+            10 * KM,
+            5 * KM,
+            2 * KM,
+            1 * KM,
+            500,
+            200,
+            100,
+            50,
+            20,
+            10,
+            5,
+            2
+        )
     }
 }

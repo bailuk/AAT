@@ -1,16 +1,12 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
 
-public final class NullLegendWalker extends LegendWalker {
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return false;
+class NullLegendWalker : LegendWalker() {
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return false
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
-
-    }
+    override fun doPoint(point: GpxPointNode) {}
 }

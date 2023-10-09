@@ -1,52 +1,41 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
 
-public final class SegmentIndexWalker extends LegendWalker{
-
-    private int index=1;
-
-    @Override
-    public boolean doList(GpxList l) {
-        index=1;
-
-        return super.doList(l);
+class SegmentIndexWalker : LegendWalker() {
+    private var index = 1
+    override fun doList(track: GpxList): Boolean {
+        index = 1
+        return super.doList(track)
     }
 
-
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        c.nodes.nodeB.set((GpxPointNode)segment.getFirstNode());
-
-        if (!c.arePointsTooClose() || index == 1) {
-            drawLegendFromB();
-            c.nodes.switchNodes();
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        legendContext!!.nodes.nodeB.set((segment.firstNode as GpxPointNode))
+        if (!legendContext!!.arePointsTooClose() || index == 1) {
+            drawLegendFromB()
+            legendContext!!.nodes.switchNodes()
         }
-        index++;
-        return segment.getNext()==null;
+        index++
+        return segment.next == null
     }
 
-
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return marker.getNext()==null;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return marker.next == null
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
-        if (point.getNext()==null) {
-            c.nodes.nodeB.set(point);
-            drawLegendFromB();
+    override fun doPoint(point: GpxPointNode) {
+        if (point.next == null) {
+            legendContext!!.nodes.nodeB.set(point)
+            drawLegendFromB()
         }
     }
 
-    private void drawLegendFromB() {
-        if (c.isBVisible()) {
-            c.drawNodeB();
-            if (!c.arePointsTooClose())
-                c.drawLabelB(String.valueOf(index));
+    private fun drawLegendFromB() {
+        if (legendContext!!.isBVisible) {
+            legendContext!!.drawNodeB()
+            if (!legendContext!!.arePointsTooClose()) legendContext!!.drawLabelB(index.toString())
         }
     }
 }

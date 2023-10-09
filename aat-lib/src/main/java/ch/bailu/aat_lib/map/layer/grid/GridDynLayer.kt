@@ -20,7 +20,7 @@ class GridDynLayer(
         gridLayer.drawInside(mcontext)
     }
 
-    override fun onTap(tapXY: Point): Boolean {
+    override fun onTap(tapPos: Point): Boolean {
         return false
     }
 

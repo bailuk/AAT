@@ -25,12 +25,12 @@ class SolidExternalDirectory(val context: Context) : SolidFile(
         list.add(context.getString(R.string.none))
         for (dir in KNOWN_DIRS) {
             for (vol in volumes.volumes) {
-                SelectionList.add_w(list, vol.child(dir))
+                SelectionList.addW(list, vol.child(dir))
             }
         }
         for (dir in KNOWN_DIRS) {
             for (vol in volumes.volumes) {
-                SelectionList.add_ro(list, vol.child(dir))
+                SelectionList.addRo(list, vol.child(dir))
             }
         }
         return list

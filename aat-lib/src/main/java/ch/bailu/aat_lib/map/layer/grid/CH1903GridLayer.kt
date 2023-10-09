@@ -9,8 +9,8 @@ import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.model.LatLong
 
 class CH1903GridLayer(storage: StorageInterface) : MeterGridLayer(storage) {
-    override fun getCoordinates(p: LatLong): MeterCoordinates {
-        return CH1903Coordinates(p)
+    override fun getCoordinates(point: LatLong): MeterCoordinates {
+        return CH1903Coordinates(point)
     }
 
     override fun drawInside(mcontext: MapContext) {

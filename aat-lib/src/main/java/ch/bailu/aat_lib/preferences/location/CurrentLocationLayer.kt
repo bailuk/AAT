@@ -1,122 +1,102 @@
-package ch.bailu.aat_lib.preferences.location;
+package ch.bailu.aat_lib.preferences.location
 
+import ch.bailu.aat_lib.app.AppColor
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.lib.color.ARGB
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.graphics.Paint
+import org.mapsforge.core.graphics.Style
+import org.mapsforge.core.model.LatLong
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
-import org.mapsforge.core.graphics.Paint;
-import org.mapsforge.core.graphics.Style;
-import org.mapsforge.core.model.LatLong;
+class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterface) :
+    OnContentUpdatedInterface, MapLayerInterface {
+    private var center = GpxInformation.NULL
+    private val paint: Paint = mcontext.draw().createPaint()
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.app.AppColor;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.lib.color.ARGB;
-
-public final class CurrentLocationLayer implements OnContentUpdatedInterface, MapLayerInterface {
-    private static final int MIN_RADIUS=7;
-    private final static int STROKE_WIDTH=2;
-
-    private final static Saturate COLOR = new Saturate(AppColor.HL_ORANGE);
-    private GpxInformation center = GpxInformation.NULL;
-    private final Paint paint;
-    private final MapContext mcontext;
-
-
-    public CurrentLocationLayer(MapContext mc, DispatcherInterface d) {
-        mcontext = mc;
-
-        paint = mc.draw().createPaint();
-        paint.setStyle(Style.STROKE);
-        paint.setStrokeWidth(STROKE_WIDTH);
-
-        d.addTarget(this, InfoID.LOCATION);
+    init {
+        paint.setStyle(Style.STROKE)
+        paint.strokeWidth = STROKE_WIDTH.toFloat()
+        d.addTarget(this, InfoID.LOCATION)
     }
 
-    private static class Saturate {
-        private final static int STEPS=60;
+    private class Saturate(c: Int) {
+        private val r = ShortArray(STEPS)
+        private val g = ShortArray(STEPS)
+        private val b = ShortArray(STEPS)
+        private val rgb: ARGB
 
-        private final short[] r = new short[STEPS];
-        private final short[] g = new short[STEPS];
-        private final short[] b = new short[STEPS];
-
-        private final ARGB rgb;
-        public Saturate(int c) {
-            rgb = new ARGB(c);
-
-            int max = Math.max(rgb.red(), Math.max(rgb.green(),rgb.blue()));
-
-            fill(rgb.red(), max, r);
-            fill(rgb.green(), max, g);
-            fill(rgb.blue(), max, b);
+        init {
+            rgb = ARGB(c)
+            val max = Math.max(rgb.red(), Math.max(rgb.green(), rgb.blue()))
+            fill(rgb.red(), max, r)
+            fill(rgb.green(), max, g)
+            fill(rgb.blue(), max, b)
         }
 
-        private void fill(int base, int max, short[] t) {
-            for (int i=0; i<STEPS; i++) {
-                float step = (max - base) / (float) STEPS;
-
-                t[i] = (short) (base+ Math.round(step * i));
+        private fun fill(base: Int, max: Int, t: ShortArray) {
+            for (i in 0 until STEPS) {
+                val step = (max - base) / STEPS.toFloat()
+                t[i] = (base + (step * i).roundToInt()).toShort()
             }
         }
 
-        public int colorFromTimeStamp(long time) {
-
-            return color((int) (System.currentTimeMillis() - time)/1000);
+        fun colorFromTimeStamp(time: Long): Int {
+            return color((System.currentTimeMillis() - time).toInt() / 1000)
         }
 
-        public int color(int i) {
-            i = Math.min(STEPS-1, Math.abs(i));
-            return new ARGB(rgb.alpha(), r[i], g[i], b[i]).toInt();
+        fun color(index: Int): Int {
+            var i = index
+            i = Math.min(STEPS - 1, abs(i))
+            return ARGB(rgb.alpha(), r[i].toInt(), g[i].toInt(), b[i].toInt()).toInt()
         }
-    }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        center = info;
-
-        if (contains(center))
-            mcontext.getMapView().requestRedraw();
-    }
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public void drawInside(MapContext mcontext) {
-        if (contains(center) && center.getAccuracy() > 0) {
-            Point pixel = mcontext.getMetrics().toPixel(center);
-            int radius = Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.getAccuracy()));
-
-            paint.setColor(COLOR.colorFromTimeStamp(center.getTimeStamp()));
-
-            mcontext.draw().circle(pixel, radius, paint);
+        companion object {
+            private const val STEPS = 60
         }
     }
 
-    private boolean contains(GpxInformation center) {
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        center = info
+        if (contains(center)) mcontext.getMapView().requestRedraw()
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun drawInside(mcontext: MapContext) {
+        if (contains(center) && center.accuracy > 0) {
+            val pixel = mcontext.getMetrics().toPixel(center)
+            val radius =
+                Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.accuracy))
+            paint.color = COLOR.colorFromTimeStamp(center.getTimeStamp())
+            mcontext.draw().circle(pixel, radius, paint)
+        }
+    }
+
+    private operator fun contains(center: GpxInformation): Boolean {
         return mcontext.getMetrics().getBoundingBox().contains(
-                new LatLong(center.getLatitude(), center.getLongitude()));
+            LatLong(center.getLatitude(), center.getLongitude())
+        )
     }
 
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {}
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    companion object {
+        private const val MIN_RADIUS = 7
+        private const val STROKE_WIDTH = 2
+        private val COLOR = Saturate(AppColor.HL_ORANGE)
+    }
 }

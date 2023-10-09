@@ -10,7 +10,7 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
         return focFactory.toFoc(getValueAsString())
     }
 
-    
+
     override fun toString(): String {
         return getValueAsFile().pathName
     }
@@ -53,7 +53,7 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
 
         fun addByExtension(list: ArrayList<String>, directory: Foc, ext: String): ArrayList<String> {
             directory.foreachFile { child: Foc ->
-                if (child.name.endsWith(ext)) SelectionList.add_r(
+                if (child.name.endsWith(ext)) SelectionList.addR(
                     list,
                     child
                 )

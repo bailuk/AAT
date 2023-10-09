@@ -18,8 +18,8 @@ class AndroidSolidDem3Directory(private val context: Context) : SolidDem3Directo
         for (vol in volumes.volumes) {
             val dem3 = vol.child(DEM3_DIR)
             val aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + DEM3_DIR)
-            SelectionList.add_w(list, aat)
-            SelectionList.add_w(list, dem3)
+            SelectionList.addW(list, aat)
+            SelectionList.addW(list, dem3)
         }
 
 
@@ -27,22 +27,22 @@ class AndroidSolidDem3Directory(private val context: Context) : SolidDem3Directo
         for (vol in volumes.volumes) {
             val aatDem3 = vol.child(AppDirectory.DIR_AAT_DATA + "/" + DEM3_DIR)
             val dem3 = vol.child(DEM3_DIR)
-            if (!aatDem3.exists()) SelectionList.add_w(list, aatDem3.parent(), aatDem3)
-            if (!dem3.exists()) SelectionList.add_w(list, dem3.parent(), dem3)
+            if (!aatDem3.exists()) SelectionList.addW(list, aatDem3.parent(), aatDem3)
+            if (!dem3.exists()) SelectionList.addW(list, dem3.parent(), dem3)
         }
 
         // exists and is read only
         for (vol in volumes.volumes) {
             val aatDem3 = vol.child(AppDirectory.DIR_AAT_DATA + "/" + DEM3_DIR)
             val dem3 = vol.child(DEM3_DIR)
-            SelectionList.add_ro(list, aatDem3)
-            SelectionList.add_ro(list, dem3)
+            SelectionList.addRo(list, aatDem3)
+            SelectionList.addRo(list, dem3)
         }
 
         // official writeable cache directory
         for (cache in volumes.caches) {
             val dem3 = cache.child(DEM3_DIR)
-            SelectionList.add_w(list, cache, dem3)
+            SelectionList.addW(list, cache, dem3)
         }
         return list
     }

@@ -24,29 +24,29 @@ class SolidLegend(storage: StorageInterface, key: String) : SolidStaticIndexList
         Res.str().speed()
     )
 ) {
-    fun createTrackLegendLayer(storage: StorageInterface?): GpxLayer {
+    fun createTrackLegendLayer(): GpxLayer {
         if (index == 0) return GpxLegendLayer(SegmentIndexWalker())
-        if (index == 1) return GpxLegendLayer(MarkerDistanceWalker(storage, false))
-        if (index == 2) return GpxLegendLayer(MarkerDistanceWalker(storage, true))
-        return if (index == 3) GpxLegendLayer(MarkerAltitudeWalker(storage)) else GpxLegendLayer(
-            MarkerSpeedWalker(storage)
+        if (index == 1) return GpxLegendLayer(MarkerDistanceWalker(getStorage(), false))
+        if (index == 2) return GpxLegendLayer(MarkerDistanceWalker(getStorage(), true))
+        return if (index == 3) GpxLegendLayer(MarkerAltitudeWalker(getStorage())) else GpxLegendLayer(
+            MarkerSpeedWalker(getStorage())
         )
     }
 
-    fun createWayLegendLayer(storage: StorageInterface?): GpxLayer {
+    fun createWayLegendLayer(): GpxLayer {
         if (index == 0) return GpxLegendLayer(NullLegendWalker())
         if (index == 1) return GpxLegendLayer(PointNameWalker())
         if (index == 2) return GpxLegendLayer(PointNameWalker())
-        return if (index == 3) GpxLegendLayer(PointAltitudeWalker(storage)) else GpxLegendLayer(
+        return if (index == 3) GpxLegendLayer(PointAltitudeWalker(getStorage())) else GpxLegendLayer(
             PointIndexWalker()
         )
     }
 
-    fun createRouteLegendLayer(storage: StorageInterface?): GpxLayer {
+    fun createRouteLegendLayer(): GpxLayer {
         if (index == 0) return GpxLegendLayer(NullLegendWalker())
-        if (index == 1) return GpxLegendLayer(PointDistanceWalker(storage, false))
-        if (index == 2) return GpxLegendLayer(PointDistanceWalker(storage, true))
-        return if (index == 3) GpxLegendLayer(PointAltitudeWalker(storage)) else GpxLegendLayer(
+        if (index == 1) return GpxLegendLayer(PointDistanceWalker(getStorage(), false))
+        if (index == 2) return GpxLegendLayer(PointDistanceWalker(getStorage(), true))
+        return if (index == 3) GpxLegendLayer(PointAltitudeWalker(getStorage())) else GpxLegendLayer(
             PointIndexWalker()
         )
     }

@@ -17,7 +17,7 @@ open class MapsForgeTileLayerStack(private val scontext: ServicesInterface) : La
     private val layers = SubLayers()
     private var minZoom = 5
     private var maxZoom = 5
-    fun addLayer(tileProvider: TileProvider, tilePainter: TilePainter?) {
+    fun addLayer(tileProvider: TileProvider, tilePainter: TilePainter) {
         val layer = MapsForgeTileLayer(scontext, tileProvider, tilePainter)
         layer.displayModel = getDisplayModel()
         layers.add(layer)
@@ -102,7 +102,7 @@ open class MapsForgeTileLayerStack(private val scontext: ServicesInterface) : La
         }
 
         @Synchronized
-        fun draw(box: BoundingBox?, zoom: Byte, c: Canvas?, tlp: Point?) {
+        fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point) {
             for (l in layers) {
                 l.draw(box, zoom, c, tlp)
             }

@@ -1,90 +1,71 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import org.mapsforge.core.graphics.Paint;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.map.MapColor
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.TwoNodes
+import ch.bailu.aat_lib.map.TwoNodes.PixelNode
+import org.mapsforge.core.graphics.Paint
 
-import ch.bailu.aat_lib.map.MapColor;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.TwoNodes;
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+class LegendContext(
+    private val mcontext: MapContext,
+    private val backgroundPaint: Paint,
+    private val framePaint: Paint
+) {
+    private val minPixelDistance: Int = mcontext.getMetrics().getDensity().toPixelInt(MIN_DI_PIXEL_DISTANCE.toFloat())
+    val nodes: TwoNodes = mcontext.getTwoNodes()
 
-public final class LegendContext {
-
-
-    public static final int MIN_DI_PIXEL_DISTANCE=100;
-    public final int min_pixel_distance;
-
-    private final MapContext mcontext;
-    public final TwoNodes nodes;
-
-    private final Paint backgroundPaint, framePaint;
-
-    public LegendContext(MapContext mcontext, Paint background, Paint frame) {
-        this.mcontext = mcontext;
-        nodes= mcontext.getTwoNodes();
-        min_pixel_distance = mcontext.getMetrics().getDensity().toPixelInt(MIN_DI_PIXEL_DISTANCE);
-        backgroundPaint = background;
-        framePaint = frame;
+    fun isVisible(bounding: BoundingBoxE6?): Boolean {
+        return mcontext.getMetrics().isVisible(bounding!!)
     }
 
-    public boolean isVisible(BoundingBoxE6 bounding) {
-        return mcontext.getMetrics().isVisible(bounding);
+    fun drawNodeB() {
+        drawNode(nodes.nodeB)
     }
 
-
-    public void drawNodeB() {
-        drawNode(nodes.nodeB);
+    fun drawNodeA() {
+        drawNode(nodes.nodeA)
     }
 
-    public void drawNodeA() {
-        drawNode(nodes.nodeA);
+    private fun drawNode(node: PixelNode) {
+        mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, MapColor.NODE_NEUTRAL)
     }
 
-
-    private void drawNode(TwoNodes.PixelNode node) {
-        mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, MapColor.NODE_NEUTRAL);
+    fun setA(point: GpxPointNode?) {
+        nodes.nodeA.set(point!!)
     }
 
-
-    public void setA(GpxPointNode point) {
-        nodes.nodeA.set(point);
+    fun setB(point: GpxPointNode?) {
+        nodes.nodeB.set(point!!)
     }
 
-    public void setB(GpxPointNode point) {
-        nodes.nodeB.set(point);
+    fun drawLabelB(text: String) {
+        drawLabel(nodes.nodeB, text)
     }
 
-
-    public void drawLabelB(String text) {
-        drawLabel(nodes.nodeB, text);
+    private fun drawLabel(node: PixelNode, text: String) {
+        mcontext.draw().label(text, node.pixel, backgroundPaint, framePaint)
     }
 
-
-
-    private void drawLabel(TwoNodes.PixelNode node, String text) {
-        mcontext.draw().label(text, node.pixel, backgroundPaint, framePaint);
+    fun arePointsTooClose(): Boolean {
+        return nodes.arePointsTooClose(minPixelDistance)
     }
 
-
-    public boolean arePointsTooClose() {
-        return nodes.arePointsTooClose(min_pixel_distance);
+    fun switchNodes() {
+        nodes.switchNodes()
     }
 
-    public void switchNodes() {
-        nodes.switchNodes();
+    val isAVisible: Boolean
+        get() = isVisible(nodes.nodeA)
+    val isBVisible: Boolean
+        get() = isVisible(nodes.nodeB)
+
+    private fun isVisible(node: PixelNode): Boolean {
+        return mcontext.getMetrics().isVisible(node.point)
     }
 
-
-    public boolean isAVisible() {
-        return isVisible(nodes.nodeA);
+    companion object {
+        const val MIN_DI_PIXEL_DISTANCE = 100
     }
-
-    public boolean isBVisible() {
-        return isVisible(nodes.nodeB);
-    }
-
-    private boolean isVisible(TwoNodes.PixelNode node) {
-        return mcontext.getMetrics().isVisible(node.point);
-    }
-
 }

@@ -1,67 +1,44 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
+import ch.bailu.aat_lib.coordinates.WGS84Coordinates
+import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.LatLong;
+class WGS84Layer(services: ServicesInterface, storage: StorageInterface) : MapLayerInterface {
+    private val elevation: ElevationLayer
+    private val crosshair: Crosshair
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates;
-import ch.bailu.aat_lib.description.FF;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public final class WGS84Layer implements MapLayerInterface {
-
-    private final ElevationLayer elevation;
-    private final Crosshair crosshair;
-
-
-    public WGS84Layer(ServicesInterface services, StorageInterface storage) {
-        elevation = new ElevationLayer(services, storage);
-        crosshair = new Crosshair();
+    init {
+        elevation = ElevationLayer(services, storage)
+        crosshair = Crosshair()
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {
-        final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();
-
-        crosshair.drawForeground(mcontext);
-        drawCoordinates(mcontext, point);
-        elevation.drawForeground(mcontext);
+    override fun drawForeground(mcontext: MapContext) {
+        val point = mcontext.getMapView().getMapViewPosition().center
+        crosshair.drawForeground(mcontext)
+        drawCoordinates(mcontext, point)
+        elevation.drawForeground(mcontext)
     }
 
-
-    @Override
-    public void drawInside(MapContext mcontext) {}
-
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
+    override fun drawInside(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-
-    private void drawCoordinates(MapContext clayer, LatLong point) {
-        final FF f = FF.f();
-
-        clayer.draw().textBottom(new WGS84Coordinates(point).toString(),1);
-        clayer.draw().textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()),0);
+    private fun drawCoordinates(clayer: MapContext, point: LatLong) {
+        val f = f()
+        clayer.draw().textBottom(WGS84Coordinates(point).toString(), 1)
+        clayer.draw()
+            .textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()), 0)
     }
 
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
-
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

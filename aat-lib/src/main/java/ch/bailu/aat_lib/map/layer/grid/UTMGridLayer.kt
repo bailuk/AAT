@@ -1,36 +1,22 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
-import org.mapsforge.core.model.LatLong;
+import ch.bailu.aat_lib.coordinates.MeterCoordinates
+import ch.bailu.aat_lib.coordinates.UTMCoordinates
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.model.LatLong
 
-import ch.bailu.aat_lib.coordinates.MeterCoordinates;
-import ch.bailu.aat_lib.coordinates.UTMCoordinates;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-
-public final class UTMGridLayer extends MeterGridLayer {
-    public UTMGridLayer(StorageInterface s) {
-        super(s);
+class UTMGridLayer(storage: StorageInterface) : MeterGridLayer(storage) {
+    override fun getCoordinates(point: LatLong): MeterCoordinates {
+        return UTMCoordinates(point)
     }
 
-    @Override
-    public MeterCoordinates getCoordinates(LatLong p) {
-        return new UTMCoordinates(p);
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public boolean onTap(Point tapXY) {
-        return false;
-    }
-
-    @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

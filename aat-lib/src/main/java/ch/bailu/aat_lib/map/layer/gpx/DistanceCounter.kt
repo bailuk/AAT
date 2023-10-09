@@ -1,34 +1,30 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-public final class DistanceCounter {
-    public final float min, max;
-    private float count=0;
+class DistanceCounter(limit1: Float, limit2: Float) {
+    val min: Float
+    val max: Float
+    private var count = 0f
 
-    public DistanceCounter(float limit1, float limit2) {
-        max = Math.max(limit1, limit2);
-        min = Math.min(limit1, limit2);
+    init {
+        max = Math.max(limit1, limit2)
+        min = Math.min(limit1, limit2)
     }
 
-    public void add(float x) {
-        count += x;
+    fun add(x: Float) {
+        count += x
     }
 
-
-    public void reset() {
-        count = 0;
+    fun reset() {
+        count = 0f
     }
 
+    val isTooSmall: Boolean
+        get() = count < min
 
-    public boolean isTooSmall() {
-        return count < min;
+    fun hasDistance(): Boolean {
+        return count >= min
     }
 
-    public boolean hasDistance() {
-        return count >= min;
-    }
-
-
-    public boolean isTooLarge() {
-        return count > max;
-    }
+    val isTooLarge: Boolean
+        get() = count > max
 }

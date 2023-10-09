@@ -1,37 +1,32 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-public final class PointAltitudeWalker extends LegendWalker {
-    private final DistanceDescription description;
+class PointAltitudeWalker(storage: StorageInterface?) : LegendWalker() {
+    private val description: DistanceDescription
 
-    public PointAltitudeWalker(StorageInterface storage) {
-        description = new DistanceDescription(storage);
+    init {
+        description = DistanceDescription(storage!!)
     }
 
-
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return c.isVisible(marker.getBoundingBox());
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return legendContext!!.isVisible(marker.getBoundingBox())
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
-        c.setB(point);
-
-        if (!c.arePointsTooClose()) {
-            drawLegendFromB();
-            c.switchNodes();
-
+    override fun doPoint(point: GpxPointNode) {
+        legendContext!!.setB(point)
+        if (!legendContext!!.arePointsTooClose()) {
+            drawLegendFromB()
+            legendContext!!.switchNodes()
         }
     }
 
-    private void drawLegendFromB() {
-        if (c.isBVisible()) {
-            c.drawLabelB(description.getAltitudeDescription(c.nodes.nodeB.point.getAltitude()));
+    private fun drawLegendFromB() {
+        if (legendContext!!.isBVisible) {
+            legendContext!!.drawLabelB(description.getAltitudeDescription(legendContext!!.nodes.nodeB.point.getAltitude()))
         }
     }
 }

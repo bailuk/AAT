@@ -11,12 +11,12 @@ import ch.bailu.foc.FocFactory
 open class SolidMapsForgeDirectory(storage: StorageInterface, factory: FocFactory, private val directories: MapDirectories) : SolidFile(
     storage, KEY, factory) {
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_mapsforge_directory()
     }
 
-    
+
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
@@ -29,26 +29,28 @@ open class SolidMapsForgeDirectory(storage: StorageInterface, factory: FocFactor
     private fun getDefaultValue(): String {
         var list = ArrayList<String>(5)
         list = buildSelection(list)
-        val external = directories.default
-        if (external != null) {
-            SelectionList.add_w(list, external)
+
+        val external = directories.getDefault()
+        if (external is Foc) {
+            SelectionList.addW(list, external)
         }
+
         return if (list.size > 0) {
             list[0]
         } else ""
     }
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        val dirs = directories.wellKnownMapDirs
+        val dirs = directories.getWellKnownMapDirs()
         for (dir in dirs) {
-            SelectionList.add_r(list, dir)
-            SelectionList.add_subdirectories_r(list, dir)
+            SelectionList.addR(list, dir)
+            SelectionList.addSubdirectoriesR(list, dir)
         }
         return list
     }
 
     val wellKnownMapDirs: ArrayList<Foc>
-        get() = directories.wellKnownMapDirs
+        get() = directories.getWellKnownMapDirs()
 
     companion object {
         const val EXTENSION = ".map"

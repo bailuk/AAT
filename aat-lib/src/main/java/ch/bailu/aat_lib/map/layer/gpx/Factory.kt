@@ -1,68 +1,46 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import ch.bailu.aat_lib.preferences.map.SolidLegend;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.preferences.map.SolidLegend
+import ch.bailu.aat_lib.service.ServicesInterface
 
-public abstract class Factory {
+abstract class Factory {
+    abstract fun legend(slegend: SolidLegend): GpxLayer
+    abstract fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer
 
-    public abstract GpxLayer legend(StorageInterface storage, SolidLegend slegend, int color);
-    public abstract GpxLayer layer(MapContext mcontext, ServicesInterface services, int color);
+    companion object {
+        @JvmStatic
+        operator fun get(type: GpxType): Factory {
+            return if (type === GpxType.WAY) WAY else if (type === GpxType.ROUTE) ROUTE else TRACK
+        }
 
+        private val WAY: Factory = object : Factory() {
+            override fun legend(slegend: SolidLegend): GpxLayer {
+                return slegend.createWayLegendLayer()
+            }
 
-    public static Factory get(GpxType type) {
-        if (type == GpxType.WAY) return WAY;
-        else if (type == GpxType.ROUTE) return ROUTE;
-        else return TRACK;
+            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
+                return WayLayer(mcontext, services)
+            }
+        }
+        private val ROUTE: Factory = object : Factory() {
+            override fun legend(slegend: SolidLegend): GpxLayer {
+                return slegend.createRouteLegendLayer()
+            }
+
+            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
+                return RouteLayer(mcontext)
+            }
+        }
+        val TRACK: Factory = object : Factory() {
+            override fun legend(slegend: SolidLegend): GpxLayer {
+                return slegend.createTrackLegendLayer()
+            }
+
+            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
+                return TrackLayer(mcontext)
+            }
+        }
     }
-
-
-    public final static Factory WAY = new Factory() {
-
-
-        @Override
-        public GpxLayer legend(StorageInterface storage, SolidLegend slegend, int iid) {
-            return slegend.createWayLegendLayer(storage);
-        }
-
-        @Override
-        public GpxLayer layer(MapContext mcontext, ServicesInterface services, int iid) {
-            return new WayLayer(mcontext, services);
-        }
-
-
-
-    };
-
-
-    public final static Factory ROUTE = new Factory() {
-
-
-        @Override
-        public GpxLayer legend(StorageInterface storage, SolidLegend slegend, int iid) {
-            return slegend.createRouteLegendLayer(storage);
-        }
-
-        @Override
-        public GpxLayer layer(MapContext mcontext, ServicesInterface services, int iid) {
-            return new RouteLayer(mcontext);
-        }
-
-    };
-
-
-    public final static Factory TRACK = new Factory() {
-
-        @Override
-        public GpxLayer legend(StorageInterface storage, SolidLegend slegend, int iid) {
-            return slegend.createTrackLegendLayer(storage);
-        }
-
-        @Override
-        public GpxLayer layer(MapContext mcontext, ServicesInterface services, int iid) {
-            return new TrackLayer(mcontext);
-        }
-    };
 }

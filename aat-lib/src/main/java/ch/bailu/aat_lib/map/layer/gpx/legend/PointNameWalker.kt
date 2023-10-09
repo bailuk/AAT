@@ -1,59 +1,49 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.Keys.Companion.toIndex
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.Keys;
-
-public final class PointNameWalker extends LegendWalker{
-    private static final int LIMIT=20;
-    private int displayed=0;
-
-
-    @Override
-    public boolean doList(GpxList l) {
-        displayed=0;
-        return super.doList(l);
+class PointNameWalker : LegendWalker() {
+    private var displayed = 0
+    override fun doList(track: GpxList): Boolean {
+        displayed = 0
+        return super.doList(track)
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return (displayed < LIMIT) && c.isVisible(marker.getBoundingBox());
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return displayed < LIMIT && legendContext!!.isVisible(marker.getBoundingBox())
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (displayed < LIMIT) {
-            c.setB(point);
-
-            if (c.arePointsTooClose()==false) {
-                drawLegendFromB();
-                c.switchNodes();
-
+            legendContext!!.setB(point)
+            if (!legendContext!!.arePointsTooClose()) {
+                drawLegendFromB()
+                legendContext!!.switchNodes()
             }
         }
     }
 
-    private void drawLegendFromB() {
-
-        if (c.isBVisible()) {
-            String name = getNameFromB();
+    private fun drawLegendFromB() {
+        if (legendContext!!.isBVisible) {
+            val name = nameFromB
             if (name != null) {
-                c.drawLabelB(getNameFromB());
-                displayed++;
+                legendContext!!.drawLabelB(name)
+                displayed++
             }
         }
     }
 
-    private static final int KEY_INDEX_NAME = Keys.toIndex("name");
-    private String getNameFromB() {
-        final GpxAttributes attr = c.nodes.nodeB.point.getAttributes();
+    private val nameFromB: String?
+        get() {
+            val attr = legendContext!!.nodes.nodeB.point.getAttributes()
+            return if (attr.hasKey(KEY_INDEX_NAME)) attr[KEY_INDEX_NAME] else null
+        }
 
-        if (attr.hasKey(KEY_INDEX_NAME))
-            return attr.get(KEY_INDEX_NAME);
-
-        return null;
+    companion object {
+        private const val LIMIT = 20
+        private val KEY_INDEX_NAME = toIndex("name")
     }
 }

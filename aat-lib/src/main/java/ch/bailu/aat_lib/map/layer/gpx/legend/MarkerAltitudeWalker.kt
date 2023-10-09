@@ -1,52 +1,43 @@
-package ch.bailu.aat_lib.map.layer.gpx.legend;
+package ch.bailu.aat_lib.map.layer.gpx.legend
 
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.preferences.StorageInterface
 
-public final class MarkerAltitudeWalker extends LegendWalker {
+class MarkerAltitudeWalker(storage: StorageInterface) : LegendWalker() {
+    private val description: DistanceDescription
 
-    private final DistanceDescription description;
-
-    public MarkerAltitudeWalker(StorageInterface storage) {
-        description = new DistanceDescription(storage);
+    init {
+        description = DistanceDescription(storage)
     }
 
-
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        boolean isLast = (marker.getNext() == null);
-
-        if (!isLast) {
-            c.nodes.nodeB.set((GpxPointNode)marker.getFirstNode());
-
-            drawLegendFromB();
-
-            if (!c.arePointsTooClose()) {
-                c.nodes.switchNodes();
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        val isLast = marker.next == null
+        val legend = legendContext
+        if (legend is LegendContext && !isLast) {
+            legend.nodes.nodeB.set((marker.firstNode as GpxPointNode))
+            drawLegendFromB()
+            if (!legend.arePointsTooClose()) {
+                legend.nodes.switchNodes()
             }
-
         }
-
-        return isLast;
+        return isLast
     }
 
-
-    @Override
-    public void doPoint(GpxPointNode point) {
-        if (point.getNext()==null) {
-            c.nodes.nodeB.set(point);
-            drawLegendFromB();
-
+    override fun doPoint(point: GpxPointNode) {
+        if (point.next == null) {
+            legendContext?.nodes?.nodeB?.set(point)
+            drawLegendFromB()
         }
     }
 
-    private void drawLegendFromB() {
-        if (c.isBVisible()) {
-            if (!c.arePointsTooClose()) {
-                c.drawNodeB();
-                c.drawLabelB(description.getAltitudeDescription(c.nodes.nodeB.point.getAltitude()));
+    private fun drawLegendFromB() {
+        val legend = legendContext
+        if (legend is LegendContext && legend.isBVisible) {
+            if (!legend.arePointsTooClose()) {
+                legend.drawNodeB()
+                legend.drawLabelB(description.getAltitudeDescription(legend.nodes.nodeB.point.getAltitude()))
             }
         }
     }

@@ -15,23 +15,23 @@ class AndroidSolidTileCacheDirectory(private val context: Context) : SolidTileCa
         val volumes = AndroidVolumes(context)
         for (cache in volumes.caches) {
             val tiles = cache.child(AppDirectory.DIR_TILES)
-            SelectionList.add_w(list, cache, tiles)
+            SelectionList.addW(list, cache, tiles)
         }
         for (vol in volumes.volumes) {
             val osmdroid = vol.child(AppDirectory.DIR_TILES_OSMDROID)
             val aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES)
-            SelectionList.add_w(list, osmdroid)
-            SelectionList.add_w(list, aat)
+            SelectionList.addW(list, osmdroid)
+            SelectionList.addW(list, aat)
         }
         for (vol in volumes.volumes) {
             val osmdroid = vol.child(AppDirectory.DIR_TILES_OSMDROID)
             val aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES)
-            SelectionList.add_ro(list, osmdroid)
-            SelectionList.add_ro(list, aat)
+            SelectionList.addRo(list, osmdroid)
+            SelectionList.addRo(list, aat)
         }
         for (vol in volumes.volumes) {
             val aat = vol.child(AppDirectory.DIR_AAT_DATA + "/" + AppDirectory.DIR_TILES)
-            if (!aat.exists()) SelectionList.add_ro(list, vol, aat)
+            if (!aat.exists()) SelectionList.addRo(list, vol, aat)
         }
         return list
     }
