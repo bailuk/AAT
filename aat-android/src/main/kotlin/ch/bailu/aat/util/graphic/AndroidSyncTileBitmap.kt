@@ -74,10 +74,10 @@ class AndroidSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun set(b: Bitmap?) {
-        if (bitmap === b) return
+    override fun set(bitmap: Bitmap?) {
+        if (this.bitmap === bitmap) return
         free()
-        bitmap = b
+        this.bitmap = bitmap
         size = sizeOfBitmap
     }
 
@@ -110,10 +110,10 @@ class AndroidSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun setBuffer( buffer: IntArray,  r: Rect) {
+    override fun setBuffer(buffer: IntArray, interR: Rect) {
         initBitmap()
         val b = androidBitmap
-        b?.setPixels(buffer, 0, r.width(), r.left, r.top, r.width(), r.height())
+        b?.setPixels(buffer, 0, interR.width(), interR.left, interR.top, interR.width(), interR.height())
     }
 
     private fun initBitmap() {

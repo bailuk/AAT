@@ -62,7 +62,7 @@ class AndroidCanvas(
     }
 
     override fun drawBitmap(point: Point, color: Int) {
-        val mfBitmap = nodeBitmap.tileBitmap.bitmap
+        val mfBitmap = nodeBitmap.tileBitmap.getBitmap()
         if (mfBitmap != null) {
             val androidBitmap = AndroidGraphicFactory.getBitmap(mfBitmap)
             if (androidBitmap != null) {

@@ -106,7 +106,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
     private fun generateBitmap(): AndroidSyncTileBitmap {
         val bitmap = AndroidSyncTileBitmap()
 
-        bitmap[BITMAP_SIZE] = false
+        bitmap.set(BITMAP_SIZE, false)
         if (bitmap.androidBitmap != null) {
             val c = bitmap.androidCanvas
             val canvas = AndroidGraphicFactory.createGraphicContext(c)

@@ -15,14 +15,14 @@ class NodeBitmap private constructor(radius: Int, res: AppDensity, context: AppC
         val strokeWidth = res.toPixelInt(STROKE_WIDTH.toFloat())
         val hSize = radius + strokeWidth
         val size = hSize * 2
-        tileBitmap[size] = true
-        val canvas = tileBitmap.canvas
+        tileBitmap.set(size, true)
+        val canvas = tileBitmap.getCanvas()
         val stroke = createEdgePaintLine(res)
         val fill = instance().createPaint()
         fill.setStyle(Style.FILL)
         fill.color = ARGB(150, ARGB.WHITE).toInt()
-        canvas.drawCircle(hSize, hSize, radius, fill)
-        canvas.drawCircle(hSize, hSize, radius, stroke)
+        canvas?.drawCircle(hSize, hSize, radius, fill)
+        canvas?.drawCircle(hSize, hSize, radius, stroke)
     }
 
     companion object {

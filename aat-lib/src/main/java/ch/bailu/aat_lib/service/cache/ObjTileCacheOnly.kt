@@ -26,7 +26,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     override fun getTileBitmap(): TileBitmap? {
-        return bitmap.tileBitmap
+        return bitmap.getTileBitmap()
     }
 
     override fun getTile(): Tile {
@@ -44,7 +44,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     override fun isLoaded(): Boolean {
-        return bitmap.isLoaded
+        return bitmap.isLoaded()
     }
 
     protected val isLoadable: Boolean
@@ -76,7 +76,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
 
     override fun onChanged(id: String, sc: AppContext) {}
     override fun getSize(): Long {
-        return bitmap.size
+        return bitmap.getSize()
     }
 
     override fun getFile(): Foc {
@@ -94,7 +94,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
                         AppBroadcaster.FILE_CHANGED_INCACHE,
                         file.toString()
                     )
-                    size[0] = tile.bitmap.size
+                    size[0] = tile.bitmap.getSize()
                 }
             }
             return size[0]

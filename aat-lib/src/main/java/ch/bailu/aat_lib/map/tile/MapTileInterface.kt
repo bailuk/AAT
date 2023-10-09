@@ -1,32 +1,25 @@
-package ch.bailu.aat_lib.map.tile;
+package ch.bailu.aat_lib.map.tile
 
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.graphics.TileBitmap;
+import ch.bailu.aat_lib.util.Rect
+import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.Bitmap
+import org.mapsforge.core.graphics.Canvas
+import org.mapsforge.core.graphics.TileBitmap
+import java.io.IOException
 
-import java.io.IOException;
+interface MapTileInterface {
+    fun isLoaded(): Boolean
+    fun set(bitmap: Bitmap?)
+    operator fun set(file: Foc, defaultTileSize: Int, transparent: Boolean)
 
-import javax.annotation.Nonnull;
+    @Throws(IOException::class)
+    fun setSVG(file: Foc, size: Int, transparent: Boolean)
 
-import ch.bailu.aat_lib.util.Rect;
-import ch.bailu.foc.Foc;
-
-public interface MapTileInterface {
-    boolean isLoaded();
-
-    void set(Bitmap bitmap);
-    void set(Foc file, int defaultTileSize, boolean transparent);
-    void setSVG(Foc file, int size, boolean transparent) throws IOException;
-
-    void set(int defaultTileSize, boolean transparent);
-
-    void free();
-
-    TileBitmap getTileBitmap();
-    Bitmap getBitmap();
-
-    long getSize();
-    Canvas getCanvas();
-
-    void setBuffer(@Nonnull int[] buffer, @Nonnull Rect interR);
+    fun set(defaultTileSize: Int, transparent: Boolean)
+    fun free()
+    fun getTileBitmap(): TileBitmap?
+    fun getBitmap(): Bitmap?
+    fun getSize(): Long
+    fun getCanvas(): Canvas?
+    fun setBuffer(buffer: IntArray, interR: Rect)
 }

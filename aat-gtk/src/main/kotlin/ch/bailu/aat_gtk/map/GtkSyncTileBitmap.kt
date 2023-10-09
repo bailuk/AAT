@@ -25,11 +25,11 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun set(tileBitmap: Bitmap?) {
-        if (bitmapOrNull == tileBitmap) return
+    override fun set(bitmap: Bitmap?) {
+        if (bitmapOrNull == bitmap) return
 
         free()
-        bitmapOrNull = tileBitmap
+        bitmapOrNull = bitmap
         size = getSizeOfBitmap()
     }
 
@@ -96,11 +96,7 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     override fun getBitmap(): Bitmap? {
-        val bitmap = bitmapOrNull
-        if (bitmap is Bitmap) {
-            return bitmap
-        }
-        return null
+        return bitmapOrNull
     }
 
     @Synchronized
@@ -118,13 +114,13 @@ class GtkSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    override fun setBuffer(src: IntArray, srcRect: Rect) {
+    override fun setBuffer(buffer: IntArray, interR: Rect) {
         initBitmap()
 
         val bitmap = bitmapOrNull
         if (bitmap is GtkBitmap) {
             bitmap.surface.flush()
-            setPixels(bitmap.surface, src, srcRect)
+            setPixels(bitmap.surface, buffer, interR)
             bitmap.surface.markDirty()
         }
     }
@@ -141,7 +137,7 @@ class GtkSyncTileBitmap : MapTileInterface {
         var srcLine = 0
         var dstLine = srcRect.top
         var dstPixel = dstLine * dstPixelsPerLine + dstPixelOffset
-        var srcPixel = srcLine * srcPixelsPerLine
+        var srcPixel = 0
 
         while (dstPixel < dstPixelSize && srcPixel < srcPixelSize) {
             dst.setInt(dstPixel * 4, src[srcPixel])

@@ -50,7 +50,7 @@ class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): Ma
     }
 
     override fun getNodeBitmap(): Bitmap {
-        return nodeBitmap.tileBitmap.bitmap
+        return nodeBitmap.tileBitmap.getBitmap()!!
     }
 
     override fun grid(center: Point, space: Int) {

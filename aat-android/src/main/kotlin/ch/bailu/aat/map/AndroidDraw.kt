@@ -65,7 +65,7 @@ class AndroidDraw(res: AppDensity, appContext: AppContext) : MapDraw {
     }
 
     override fun getNodeBitmap(): Bitmap {
-        return nodePainter.tileBitmap.bitmap
+        return nodePainter.tileBitmap.getBitmap()!!
     }
 
     override fun grid(center: Point, space: Int) {

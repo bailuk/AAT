@@ -47,7 +47,7 @@ class SyncBitmap {
     operator fun set(svg: SVG?, size: Int) {
         val b = AndroidSyncTileBitmap()
         b[svg!!] = size
-        set(b.tileBitmap)
+        set(b.getTileBitmap())
     }
 
     @Synchronized
