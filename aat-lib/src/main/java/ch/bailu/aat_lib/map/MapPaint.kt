@@ -42,7 +42,7 @@ object MapPaint {
         return p
     }
 
-    fun createTextPaint(res: AppDensity, size: Float): Paint {
+    private fun createTextPaint(res: AppDensity, size: Float): Paint {
         val p = instance().createPaint()
         p.color = MapColor.TEXT
         p.setTextSize(res.toPixelScaledFloat(size))
@@ -62,7 +62,7 @@ object MapPaint {
     @JvmStatic
     fun createEdgePaintBlur(draw: MapDraw, color: Int, zoom: Int): Paint {
         return instance().createPaint().apply {
-            this.strokeWidth = draw.nodeBitmap.width.toFloat()
+            this.strokeWidth = draw.getNodeBitmap().width.toFloat()
             this.color = setAlpha(color, zoomToAlpha(zoom))
             this.setStyle(Style.STROKE)
         }

@@ -1,157 +1,147 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.Dimension;
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.MapPosition;
-import org.mapsforge.core.util.MercatorProjection;
-import org.mapsforge.map.util.MapPositionUtil;
-import org.mapsforge.map.view.MapView;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6.Companion.doOverlap
+import ch.bailu.aat_lib.coordinates.LatLongE6
+import ch.bailu.aat_lib.coordinates.LatLongE6.Companion.toD
+import ch.bailu.aat_lib.coordinates.LatLongE6.Companion.toLatLong
+import ch.bailu.aat_lib.coordinates.LatLongInterface
+import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.Dimension
+import org.mapsforge.core.model.LatLong
+import org.mapsforge.core.model.Point
+import org.mapsforge.core.util.MercatorProjection
+import org.mapsforge.map.util.MapPositionUtil
+import org.mapsforge.map.view.MapView
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.coordinates.LatLongE6;
-import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.Rect;
+class MapsForgeMetrics(private val mapView: MapView, private val density: AppDensity) : MapMetrics {
+    private var tl: Point? = null
+    private var zoom: Byte = 0
+    private var dim: Dimension? = null
+    private var center: ch.bailu.aat_lib.util.Point? = null
+    private var bounding: BoundingBox
+    private val distances = MapDistances()
+    private var tileSize: Int
 
-public final class MapsForgeMetrics implements MapMetrics {
-
-    private org.mapsforge.core.model.Point tl;
-    private byte zoom = 0;
-    private Dimension dim;
-    private Point center;
-    private BoundingBox bounding;
-
-
-    private final MapView mapView;
-    private final AppDensity density;
-    private final MapDistances distances = new MapDistances();
-
-    private int tileSize;
-
-    public MapsForgeMetrics(MapView v, AppDensity d) {
-        density = d;
-        mapView = v;
-        bounding = v.getBoundingBox();
-        tileSize = mapView.getModel().displayModel.getTileSize();
+    init {
+        bounding = mapView.boundingBox
+        tileSize = mapView.model.displayModel.tileSize
     }
 
+    fun init(b: BoundingBox, z: Byte, d: Dimension, p: Point) {
+        tileSize = mapView.model.displayModel.tileSize
+        dim = d
+        bounding = b
+        tl = p
+        zoom = z
 
-    public void init(BoundingBox b, byte z, Dimension d, org.mapsforge.core.model.Point p) {
-        tileSize = mapView.getModel().displayModel.getTileSize();
-        dim = d;
-        bounding = b;
-        tl = p;
-        zoom = z;
-        distances.init(bounding, dim);
-        center = new Point(dim.width/2, dim.height/2);
+        val dimension = dim
+        if (dimension is Dimension) {
+            distances.init(bounding, dimension)
+            center = ch.bailu.aat_lib.util.Point(dimension.width / 2, dimension.height / 2)
+        }
     }
 
-
-    public void init(Dimension d) {
-        MapPosition pos = mapView.getModel().mapViewPosition.getMapPosition();
-        init(   MapPositionUtil.getBoundingBox(pos, d, tileSize),
-                mapView.getModel().mapViewPosition.getZoomLevel(),
-                d,
-                MapPositionUtil.getTopLeftPoint(pos, d, tileSize));
+    fun init(d: Dimension) {
+        val pos = mapView.model.mapViewPosition.mapPosition
+        init(
+            MapPositionUtil.getBoundingBox(pos, d, tileSize),
+            mapView.model.mapViewPosition.zoomLevel,
+            d,
+            MapPositionUtil.getTopLeftPoint(pos, d, tileSize)
+        )
     }
 
-
-
-    @Override
-    public AppDensity getDensity() {
-        return density;
+    override fun getDensity(): AppDensity {
+        return density
     }
 
-    public int getLeft() {
-        return 0;
-    }
-    public int getRight() {
-        return dim.width;
-    }
-    public int getTop() {
-        return 0;
-    }
-    public int getBottom() {
-        return dim.height;
-    }
-    public int getWidth() {  return dim.width; }
-    public int getHeight() { return dim.height; }
-
-    @Override
-    public float pixelToDistance(int pixel) {
-        return distances.toDistance(pixel);
+    override fun getLeft(): Int {
+        return 0
     }
 
-    @Override
-    public int distanceToPixel(float meter) {
-        return (int)distances.toPixel(meter);
+    override fun getRight(): Int {
+        return dim?.width ?: 0
     }
 
-    @Override
-    public int getShortDistance() {
-        return (int)distances.getShortDistance();
+    override fun getTop(): Int {
+        return 0
     }
 
-
-
-    @Override
-    public Point getCenterPixel() {
-        return center;
+    override fun getBottom(): Int {
+        return dim?.height ?: 0
     }
-    @Override
-    public boolean isVisible(BoundingBoxE6 box) {
-        return BoundingBoxE6.doOverlap(box, new BoundingBoxE6(bounding));
+
+    override fun getWidth(): Int {
+        return dim?.width ?: 0
     }
-    @Override
-    public boolean isVisible(LatLongInterface point) {
+
+    override fun getHeight(): Int {
+        return dim?.height ?: 0
+    }
+
+    override fun pixelToDistance(pixel: Int): Float {
+        return distances.toDistance(pixel.toFloat())
+    }
+
+    override fun distanceToPixel(meter: Float): Int {
+        return distances.toPixel(meter).toInt()
+    }
+
+    override fun getShortDistance(): Int {
+        return distances.shortDistance.toInt()
+    }
+
+    override fun getCenterPixel(): ch.bailu.aat_lib.util.Point {
+        return center ?: return ch.bailu.aat_lib.util.Point(0,0)
+    }
+
+    override fun isVisible(box: BoundingBoxE6): Boolean {
+        return doOverlap(box, BoundingBoxE6(bounding))
+    }
+
+    override fun isVisible(point: LatLongInterface): Boolean {
         return bounding.contains(
-                LatLongE6.toD(point.getLatitudeE6()),
-                LatLongE6.toD(point.getLongitudeE6()));
+            toD(point.getLatitudeE6()),
+            toD(point.getLongitudeE6())
+        )
     }
 
-    @Override
-    public Rect toMapPixels(BoundingBoxE6 box) {
-        Rect rect = new Rect();
-
-        Point tl = toPixel(new LatLongE6(box.getLatNorthE6(), box.getLonWestE6()).toLatLong());
-        Point br = toPixel(new LatLongE6(box.getLatSouthE6(), box.getLonEastE6()).toLatLong());
-        rect.left = tl.x;
-        rect.right = br.x;
-        rect.bottom = br.y;
-        rect.top = tl.y;
-        return rect;
+    override fun toMapPixels(box: BoundingBoxE6): Rect {
+        val rect = Rect()
+        val tl = toPixel(LatLongE6(box.latNorthE6, box.lonWestE6).toLatLong())
+        val br = toPixel(LatLongE6(box.latSouthE6, box.lonEastE6).toLatLong())
+        rect.left = tl.x
+        rect.right = br.x
+        rect.bottom = br.y
+        rect.top = tl.y
+        return rect
     }
 
-
-    @Override
-    public Point toPixel(LatLongInterface tp) {
-        return toPixel(LatLongE6.toLatLong(tp));
+    override fun toPixel(tp: LatLongInterface): ch.bailu.aat_lib.util.Point {
+        return toPixel(toLatLong(tp))
     }
 
+    override fun toPixel(p: LatLong): ch.bailu.aat_lib.util.Point {
+        val y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tileSize)
+        val x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize)
+        tl?.apply {
+            return ch.bailu.aat_lib.util.Point(x - this.x, y - this.y)
+        }
 
-    @Override
-    public Point toPixel(LatLong p) {
-        double y = MercatorProjection.latitudeToPixelY(p.getLatitude(), zoom, tileSize);
-        double x = MercatorProjection.longitudeToPixelX(p.getLongitude(), zoom, tileSize);
-
-        return new Point(x-tl.x, y-tl.y);
+        return ch.bailu.aat_lib.util.Point(0, 0)
     }
 
-
-    @Override
-    public LatLong fromPixel(int x, int y) {
-        return mapView.getMapViewProjection().fromPixels(x, y);
+    override fun fromPixel(x: Int, y: Int): LatLong {
+        return mapView.mapViewProjection.fromPixels(x.toDouble(), y.toDouble())
     }
 
-
-    @Override
-    public BoundingBox getBoundingBox() {
-        return bounding;
+    override fun getBoundingBox(): BoundingBox {
+        return bounding
     }
 
-    @Override
-    public int getZoomLevel() {
-        return zoom;
+    override fun getZoomLevel(): Int {
+        return zoom.toInt()
     }
 }

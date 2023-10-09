@@ -75,10 +75,10 @@ abstract class ControlBarLayer(mcontext: MapContext, val bar: ControlBar, privat
     }
 
     open fun onHideBar() {}
-    override fun onTap(tapXY: Point): Boolean {
+    override fun onTap(tapPos: Point): Boolean {
         val size = bar.controlSize
-        val y = tapXY.y
-        val x = tapXY.x
+        val y = tapPos.y
+        val x = tapPos.x
         if (y < size) {
             topTap()
         } else if (y > h - size) {

@@ -1,69 +1,48 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
+import ch.bailu.aat_lib.description.AltitudeDescription
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.LatLong;
+class ElevationLayer(services: ServicesInterface, storage: StorageInterface?) : MapLayerInterface {
+    private val altitudeDescription: AltitudeDescription
+    private val services: ServicesInterface
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.description.AltitudeDescription;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.util.Point;
-
-public final class ElevationLayer implements MapLayerInterface {
-
-    private final static int MIN_ZOOM_LEVEL = 7;
-
-    private final AltitudeDescription altitudeDescription;
-    private final ServicesInterface services;
-
-    public ElevationLayer(ServicesInterface services, StorageInterface storage) {
-        altitudeDescription = new AltitudeDescription(storage);
-        this.services = services;
+    init {
+        altitudeDescription = AltitudeDescription(storage!!)
+        this.services = services
     }
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun drawInside(mcontext: MapContext) {}
+    override fun drawForeground(mcontext: MapContext) {
+        val zoomLevel = mcontext.getMetrics().getZoomLevel().toByte()
+        val point = mcontext.getMapView().getMapViewPosition().center
+        drawElevation(services, mcontext, zoomLevel.toInt(), point)
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {
-    }
-
-    @Override
-    public void drawForeground(MapContext mcontext) {
-        byte zoomLevel = (byte) mcontext.getMetrics().getZoomLevel();
-        final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();
-
-        drawElevation(services, mcontext, zoomLevel, point);
-    }
-
-
-    private void drawElevation(ServicesInterface sc, MapContext mc, int zoom, final LatLong point) {
+    private fun drawElevation(sc: ServicesInterface, mc: MapContext, zoom: Int, point: LatLong) {
         if (zoom > MIN_ZOOM_LEVEL) {
-            sc.insideContext(() -> {
-                final short ele = sc.
-                        getElevationService().
-                        getElevation(point.getLatitudeE6(), point.getLongitudeE6());
-                mc.draw().textBottom(altitudeDescription.getValueUnit(ele), 2);
-
-            });
+            sc.insideContext {
+                val ele = sc.elevationService.getElevation(point.latitudeE6, point.longitudeE6)
+                mc.draw().textBottom(altitudeDescription.getValueUnit(ele.toFloat()), 2)
+            }
         }
     }
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    companion object {
+        private const val MIN_ZOOM_LEVEL = 7
+    }
 }

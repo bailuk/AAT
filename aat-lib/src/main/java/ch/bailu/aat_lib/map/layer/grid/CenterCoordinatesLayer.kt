@@ -8,13 +8,8 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.model.LatLong
 
-abstract class CenterCoordinatesLayer(services: ServicesInterface?, storage: StorageInterface?) :
-    MapLayerInterface {
-    private val elevation: ElevationLayer
-
-    init {
-        elevation = ElevationLayer(services, storage)
-    }
+abstract class CenterCoordinatesLayer(services: ServicesInterface, storage: StorageInterface) : MapLayerInterface {
+    private val elevation: ElevationLayer = ElevationLayer(services, storage)
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
     override fun drawForeground(mcontext: MapContext) {
@@ -23,8 +18,8 @@ abstract class CenterCoordinatesLayer(services: ServicesInterface?, storage: Sto
         elevation.drawForeground(mcontext)
     }
 
-    override fun drawInside(mc: MapContext) {}
-    override fun onTap(tapXY: Point): Boolean {
+    override fun drawInside(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
         return false
     }
 

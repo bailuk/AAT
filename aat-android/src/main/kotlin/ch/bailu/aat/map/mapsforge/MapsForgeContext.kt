@@ -28,7 +28,7 @@ class MapsForgeContext(
 ) : Layer(), MapContext, MapLayerInterface {
 
     private val metrics = MapsForgeMetrics(map, density)
-    private val draw = AndroidDraw(metrics.density, appContext)
+    private val draw = AndroidDraw(metrics.getDensity(), appContext)
     private val nodes = TwoNodes(metrics)
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}

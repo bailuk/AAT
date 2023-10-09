@@ -23,8 +23,8 @@ abstract class AbsNodeSelectorLayer(
     private val pos: Position
 ) : MapLayerInterface, OnContentUpdatedInterface, EdgeViewInterface {
 
-    private val squareSize = mc.getMetrics().density.toPixelInt(SQUARE_SIZE.toFloat())
-    private val squareHSize = mc.getMetrics().density.toPixelInt(SQUARE_HSIZE.toFloat())
+    private val squareSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_SIZE.toFloat())
+    private val squareHSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_HSIZE.toFloat())
 
     private var visible = true
 
@@ -57,18 +57,16 @@ abstract class AbsNodeSelectorLayer(
     override fun drawForeground(mcontext: MapContext) {
         if (visible) {
             centerRect.offsetTo(
-                mcontext.getMetrics().width / 2 - squareHSize,
-                mcontext.getMetrics().height / 2 - squareHSize
+                mcontext.getMetrics().getWidth() / 2 - squareHSize,
+                mcontext.getMetrics().getHeight() / 2 - squareHSize
             )
             val centerBounding = BoundingBoxE6()
             val lt = mcontext.getMetrics().fromPixel(centerRect.left, centerRect.top)
             val rb = mcontext.getMetrics().fromPixel(centerRect.right, centerRect.bottom)
-            if (lt != null && rb != null) {
-                centerBounding.add(lt)
-                centerBounding.add(rb)
-                findNodeAndNotify(centerBounding)
-            }
-            centerRect.offset(mcontext.getMetrics().left, mcontext.getMetrics().top)
+            centerBounding.add(lt)
+            centerBounding.add(rb)
+            findNodeAndNotify(centerBounding)
+            centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop())
             drawSelectedNode(mcontext)
             drawCenterSquare(mcontext)
             coordinates.drawForeground(mcontext)
@@ -113,13 +111,13 @@ abstract class AbsNodeSelectorLayer(
         if (node != null) {
             val selectedPixel = mcontext.getMetrics().toPixel(node)
             mcontext.draw()
-                .bitmap(mcontext.draw().nodeBitmap, selectedPixel, MapColor.NODE_SELECTED)
+                .bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, MapColor.NODE_SELECTED)
         }
     }
 
     private fun drawCenterSquare(mcontext: MapContext) {
-        mcontext.draw().rect(centerRect, mcontext.draw().gridPaint)
-        mcontext.draw().point(mcontext.getMetrics().centerPixel)
+        mcontext.draw().rect(centerRect, mcontext.draw().getGridPaint())
+        mcontext.draw().point(mcontext.getMetrics().getCenterPixel())
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

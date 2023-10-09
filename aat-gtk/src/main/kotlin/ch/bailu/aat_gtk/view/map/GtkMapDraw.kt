@@ -39,17 +39,17 @@ class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): Ma
     }
 
     private fun init(metric: MapMetrics) {
-        left = metric.left
-        top = metric.top
-        bottom = metric.bottom
-        right = metric.right
+        left = metric.getLeft()
+        top = metric.getTop()
+        bottom = metric.getBottom()
+        right = metric.getRight()
     }
 
     override fun getGridPaint(): Paint {
         return gridPaint
     }
 
-    override fun getNodeBitmap(): Bitmap? {
+    override fun getNodeBitmap(): Bitmap {
         return nodeBitmap.tileBitmap.bitmap
     }
 
@@ -93,20 +93,20 @@ class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): Ma
         circle(pixel, pointRadius, gridPaint)
     }
 
-    override fun textTop(text: String?, line: Int) {
+    override fun textTop(text: String, line: Int) {
         canvas?.drawText(text, left + SPACE, top + SPACE + textHeight * line, textPaint)
     }
 
-    override fun textBottom(s: String?, line: Int) {
+    override fun textBottom(s: String, line: Int) {
         canvas?.drawText(s, left + SPACE, bottom - SPACE - textHeight * (line + 1), textPaint)
     }
 
 
-    override fun circle(pixel: Point, radius: Int, paint: Paint?) {
+    override fun circle(pixel: Point, radius: Int, paint: Paint) {
         canvas?.drawCircle(pixel.x, pixel.y, radius, paint)
     }
 
-    override fun rect(rect: Rect, paint: Paint?) {
+    override fun rect(rect: Rect, paint: Paint) {
         canvas?.drawLine(rect.left, rect.top, rect.left, rect.bottom, paint)
         canvas?.drawLine(rect.left, rect.bottom, rect.right, rect.bottom, paint)
         canvas?.drawLine(rect.right, rect.bottom, rect.right, rect.top, paint)
@@ -114,12 +114,12 @@ class GtkMapDraw(appDensity: AppDensity, private val nodeBitmap: NodeBitmap): Ma
     }
 
 
-    override fun bitmap(b: Bitmap, pixel: Point) {
-        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    override fun bitmap(bitmap: Bitmap, pixel: Point) {
+        canvas?.drawBitmap(bitmap, centerX(bitmap,pixel), centerY(bitmap,pixel))
     }
 
-    override fun bitmap(b: Bitmap, pixel: Point, color: Int) {
-        canvas?.drawBitmap(b, centerX(b,pixel), centerY(b,pixel))
+    override fun bitmap(bitmap: Bitmap, pixel: Point, color: Int) {
+        canvas?.drawBitmap(bitmap, centerX(bitmap,pixel), centerY(bitmap,pixel))
     }
 
     private fun centerX(b: Bitmap, p: Point): Int {

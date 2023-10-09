@@ -14,7 +14,7 @@ import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.graphics.Paint
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 
-class AndroidDraw(res: AppDensity, appContext: AppContext?) : MapDraw {
+class AndroidDraw(res: AppDensity, appContext: AppContext) : MapDraw {
     var canvas: Canvas? = null
         private set
 
@@ -45,10 +45,10 @@ class AndroidDraw(res: AppDensity, appContext: AppContext?) : MapDraw {
     }
 
     private fun init(metric: MapMetrics) {
-        left = metric.left
-        top = metric.top
-        bottom = metric.bottom
-        right = metric.right
+        left = metric.getLeft()
+        top = metric.getTop()
+        bottom = metric.getBottom()
+        right = metric.getRight()
     }
 
     fun init(c: Canvas, metric: MapMetrics) {
@@ -126,16 +126,16 @@ class AndroidDraw(res: AppDensity, appContext: AppContext?) : MapDraw {
         canvas?.drawLine(rect.right, rect.top, rect.left, rect.top, paint)
     }
 
-    override fun bitmap(b: Bitmap, p: Point, c: Int) {
+    override fun bitmap(bitmap: Bitmap, pixel: Point, color: Int) {
         canvas?.apply {
-            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(b), p, c)
+            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(bitmap), pixel, color)
         }
 
     }
 
-    override fun bitmap(b: Bitmap, p: Point) {
+    override fun bitmap(bitmap: Bitmap, pixel: Point) {
         canvas?.apply {
-            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(b), p)
+            bitmapCanvas.draw(To.androidCanvas(this), To.androidBitmap(bitmap), pixel)
         }
 
     }

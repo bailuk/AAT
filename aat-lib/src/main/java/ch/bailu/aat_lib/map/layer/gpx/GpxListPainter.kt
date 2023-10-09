@@ -18,7 +18,7 @@ abstract class GpxListPainter @JvmOverloads constructor(
     private var action = START_PAINTING
 
     init {
-        val res = mcontext.getMetrics().density
+        val res = mcontext.getMetrics().getDensity()
         edgeDistance = DistanceCounter(
             mcontext.getMetrics()
                 .pixelToDistance(res.toPixelFloat(MIN_PIXEL_SPACE.toFloat()).toInt()),

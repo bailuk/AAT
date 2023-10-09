@@ -32,7 +32,7 @@ class MapsForgeForeground(
 
     init {
         metrics = MapsForgeMetrics(mapView, d)
-        draw = AndroidDraw(mcontext.getMetrics().density, appContext)
+        draw = AndroidDraw(mcontext.getMetrics().getDensity(), appContext)
     }
 
     fun dispatchDraw(services: ServicesInterface, canvas: Canvas) {

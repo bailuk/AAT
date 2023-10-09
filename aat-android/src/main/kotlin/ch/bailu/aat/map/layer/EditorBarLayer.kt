@@ -59,10 +59,10 @@ class EditorBarLayer(
         selector.onLayout(changed, l, t, r, b)
     }
 
-    override fun drawInside(p: MapContext) {
-        content.drawInside(p)
+    override fun drawInside(mcontext: MapContext) {
+        content.drawInside(mcontext)
         if (isBarVisible) {
-            selector.drawInside(p)
+            selector.drawInside(mcontext)
         }
     }
 

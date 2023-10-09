@@ -1,67 +1,45 @@
-package ch.bailu.aat_lib.map.layer.grid;
+package ch.bailu.aat_lib.map.layer.grid
 
-import com.google.openlocationcode.OpenLocationCode;
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
+import com.google.openlocationcode.OpenLocationCode
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.LatLong;
+class PlusCodesCenterCoordinatesLayer(
+    services: ServicesInterface,
+    storage: StorageInterface
+) : MapLayerInterface {
+    private val elevation: ElevationLayer
+    private val crosshair: Crosshair
 
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public final class PlusCodesCenterCoordinatesLayer  implements MapLayerInterface {
-
-    private final ElevationLayer elevation;
-    private final Crosshair crosshair;
-
-    public PlusCodesCenterCoordinatesLayer (ServicesInterface services, StorageInterface storageInterface) {
-        elevation = new ElevationLayer(services, storageInterface);
-        crosshair = new Crosshair();
-    }
-    @Override
-    public void drawForeground(MapContext mcontext) {
-        final LatLong point = mcontext.getMapView().getMapViewPosition().getCenter();
-
-        crosshair.drawForeground(mcontext);
-        drawCoordinates(mcontext, point);
-        elevation.drawForeground(mcontext);
+    init {
+        elevation = ElevationLayer(services, storage)
+        crosshair = Crosshair()
     }
 
-
-    @Override
-    public void drawInside(MapContext mcontext) {
-
-
+    override fun drawForeground(mcontext: MapContext) {
+        val point = mcontext.getMapView().getMapViewPosition().center
+        crosshair.drawForeground(mcontext)
+        drawCoordinates(mcontext, point)
+        elevation.drawForeground(mcontext)
     }
 
-    @Override
-    public boolean onTap( Point tapXY) {
-        return false;
+    override fun drawInside(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-
-    private void drawCoordinates(MapContext clayer,LatLong point) {
-        final OpenLocationCode center =
-                new OpenLocationCode(point.latitude, point.longitude);
-
-        final String code = center.getCode();
-        clayer.draw().textBottom(code,1);
-
+    private fun drawCoordinates(clayer: MapContext, point: LatLong) {
+        val center = OpenLocationCode(point.latitude, point.longitude)
+        val code = center.code
+        clayer.draw().textBottom(code, 1)
     }
 
-
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-
-    @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {}
-
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

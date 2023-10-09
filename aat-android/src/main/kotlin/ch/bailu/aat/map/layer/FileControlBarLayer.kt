@@ -79,9 +79,9 @@ class FileControlBarLayer(
         }
     }
 
-    override fun drawInside(mc: MapContext) {
+    override fun drawInside(mcontext: MapContext) {
         if (isBarVisible) {
-            selector.drawInside(mc)
+            selector.drawInside(mcontext)
         }
     }
 
@@ -145,8 +145,8 @@ class FileControlBarLayer(
             acontext.displayFile()
         }
 
-        override fun onPreferencesChanged(s: StorageInterface, key: String) {
-            selector.onPreferencesChanged(s, key)
+        override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+            selector.onPreferencesChanged(storage, key)
         }
 
         override fun onAttached() {}

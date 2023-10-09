@@ -14,7 +14,6 @@ import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
-import ch.bailu.aat_lib.util.Objects
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 import java.io.Closeable
@@ -214,7 +213,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             val keys = ArrayList<String>()
             val values = ArrayList<String>()
             createContentValues(file.name, list.getDelta(), keys, values)
-            database?.insert(Objects.toArray(keys), *Objects.toArray(values))
+            database?.insert(keys.toTypedArray(), *values.toTypedArray())
         }
 
         private fun createContentValues(

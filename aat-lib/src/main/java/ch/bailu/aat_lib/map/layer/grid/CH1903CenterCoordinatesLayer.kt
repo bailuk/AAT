@@ -15,7 +15,7 @@ class CH1903CenterCoordinatesLayer(services: ServicesInterface, storage: Storage
     }
 
     override fun drawForeground(mcontext: MapContext) {
-        if (inSwitzerland(mcontext.getMetrics().boundingBox.centerPoint)) super.drawForeground(
+        if (inSwitzerland(mcontext.getMetrics().getBoundingBox().centerPoint)) super.drawForeground(
             mcontext
         )
     }

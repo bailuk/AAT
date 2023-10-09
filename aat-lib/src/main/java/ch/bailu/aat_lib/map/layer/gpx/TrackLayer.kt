@@ -16,7 +16,7 @@ class TrackLayer(private val mcontext: MapContext) : GpxLayer() {
 
     init {
         paint.strokeWidth =
-            mcontext.getMetrics().density.toPixelFloat(STROKE_WIDTH.toFloat())
+            mcontext.getMetrics().getDensity().toPixelFloat(STROKE_WIDTH.toFloat())
         paint.setStrokeCap(Cap.ROUND)
         paint.setStrokeJoin(Join.ROUND)
     }

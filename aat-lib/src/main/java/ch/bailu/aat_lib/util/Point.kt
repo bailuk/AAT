@@ -1,42 +1,46 @@
-package ch.bailu.aat_lib.util;
+package ch.bailu.aat_lib.util
+
+import kotlin.math.roundToInt
 
 /**
  * A point holding two integer coordinates.
  * To keep some code independent from UI libraries.
  */
-public class Point {
+class Point {
+    @JvmField
+    var x: Int
+    @JvmField
+    var y: Int
 
-    public int x, y;
-
-    public Point(int x2, int y2) {
-        x = x2;
-        y = y2;
+    constructor(x: Int, y: Int) {
+        this.x = x
+        this.y = y
     }
 
-    public Point() {
-        x=y=0;
+    constructor() {
+        y = 0
+        x = y
     }
 
-    public Point(float x2, float y2) {
-        x = Math.round(x2);
-        y = Math.round(y2);
+    constructor(x: Float, y: Float) {
+        this.x = x.roundToInt()
+        this.y = y.roundToInt()
     }
 
-    public Point(double x2, double y2) {
-        x = Math.round((float)x2);
-        y = Math.round((float)y2);
+    constructor(x: Double, y: Double) {
+        this.x = x.toFloat().roundToInt()
+        this.y = y.toFloat().roundToInt()
     }
 
-    public void set(Point p) {
-        x = p.x;
-        y = p.y;
+    fun set(p: Point) {
+        x = p.x
+        y = p.y
     }
 
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "Point{" +
                 "x=" + x +
                 ", y=" + y +
-                '}';
+                '}'
     }
 }

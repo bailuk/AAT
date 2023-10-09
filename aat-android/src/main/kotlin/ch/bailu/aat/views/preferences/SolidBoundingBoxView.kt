@@ -18,7 +18,7 @@ class SolidBoundingBoxView(
     init {
         setText(sbounding.getValueAsString())
         theme.button(this)
-        setOnClickListener { sbounding.value = BoundingBoxE6(mcontext.getMetrics().boundingBox) }
+        setOnClickListener { sbounding.value = BoundingBoxE6(mcontext.getMetrics().getBoundingBox()) }
     }
 
     public override fun onAttachedToWindow() {

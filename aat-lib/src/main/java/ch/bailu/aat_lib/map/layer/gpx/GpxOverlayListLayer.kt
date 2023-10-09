@@ -1,53 +1,41 @@
-package ch.bailu.aat_lib.map.layer.gpx;
+package ch.bailu.aat_lib.map.layer.gpx
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
 
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.map.layer.MapLayerInterface;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList;
-import ch.bailu.aat_lib.service.ServicesInterface;
-
-public final class GpxOverlayListLayer implements MapLayerInterface {
-    private final GpxDynLayer[] overlays;
-
-
-    public GpxOverlayListLayer(StorageInterface s, MapContext mc, ServicesInterface services, DispatcherInterface d) {
-
-        overlays = new GpxDynLayer[SolidCustomOverlayList.MAX_OVERLAYS];
-
-        for (int i = 0; i< overlays.length; i++) {
-            overlays[i] = new GpxDynLayer(s, mc,services, d, InfoID.OVERLAY + i);
+class GpxOverlayListLayer(
+    storage: StorageInterface,
+    mcontext: MapContext,
+    services: ServicesInterface,
+    d: DispatcherInterface
+) : MapLayerInterface {
+    private val overlays = ArrayList<GpxDynLayer>(SolidCustomOverlayList.MAX_OVERLAYS).apply {
+        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+            add(GpxDynLayer(storage, mcontext, services, d, InfoID.OVERLAY + i))
         }
     }
 
-    @Override
-    public void drawForeground(MapContext mcontext) {}
 
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {
-        for (MapLayerInterface o : overlays) o.drawInside(mcontext);
+    override fun drawInside(mcontext: MapContext) {
+        for (o in overlays) o.drawInside(mcontext)
     }
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
-        for (MapLayerInterface o : overlays) o.onPreferencesChanged(s, key);
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        for (o in overlays) o.onPreferencesChanged(storage, key)
     }
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {}
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onAttached() {}
+    override fun onDetached() {}
 }

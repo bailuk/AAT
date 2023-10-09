@@ -20,16 +20,16 @@ class RouteLayer(private val mcontext: MapContext) : GpxLayer() {
 
     init {
         color = getColor()
-        paint = createEdgePaintLine(mcontext.getMetrics().density)
+        paint = createEdgePaintLine(mcontext.getMetrics().getDensity())
         shadow = createEdgePaintBlur(mcontext.draw(), color, zoom)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
     override fun drawInside(mcontext: MapContext) {
-        if (zoom != mcontext.getMetrics().zoomLevel || color != getColor()) {
-            zoom = mcontext.getMetrics().zoomLevel
+        if (zoom != mcontext.getMetrics().getZoomLevel() || color != getColor()) {
+            zoom = mcontext.getMetrics().getZoomLevel()
             color = getColor()
-            paint = createEdgePaintLine(mcontext.getMetrics().density)
+            paint = createEdgePaintLine(mcontext.getMetrics().getDensity())
             shadow = createEdgePaintBlur(mcontext.draw(), ColorInterface.BLACK, zoom)
             paint.color = color
         }
@@ -60,7 +60,7 @@ class RouteLayer(private val mcontext: MapContext) : GpxLayer() {
             c =
                 if (altitude == ElevationProvider.NULL_ALTITUDE) getColor() else AltitudeColorTable.instance()
                     .getColor(altitude)
-            mcontext.draw().bitmap(mcontext.draw().nodeBitmap, node.pixel, c)
+            mcontext.draw().bitmap(mcontext.draw().getNodeBitmap(), node.pixel, c)
         }
     }
 

@@ -14,15 +14,15 @@ class CH1903GridLayer(storage: StorageInterface) : MeterGridLayer(storage) {
     }
 
     override fun drawInside(mcontext: MapContext) {
-        if (inSwitzerland(mcontext.getMetrics().boundingBox.centerPoint)) super.drawInside(mcontext)
+        if (inSwitzerland(mcontext.getMetrics().getBoundingBox().centerPoint)) super.drawInside(mcontext)
     }
 
     override fun drawForeground(mcontext: MapContext) {
-        if (inSwitzerland(mcontext.getMetrics().boundingBox.centerPoint)) super.drawForeground(mcontext)
+        if (inSwitzerland(mcontext.getMetrics().getBoundingBox().centerPoint)) super.drawForeground(mcontext)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
-    override fun onTap(tapXY: Point): Boolean {
+    override fun onTap(tapPos: Point): Boolean {
         return false
     }
 

@@ -34,7 +34,7 @@ class GpxLegendLayer(private val walker: LegendWalker) : GpxLayer() {
 
     private fun initPaint(metrics: MapMetrics) {
         backgroundPaint = createBackgroundPaint(color)
-        framePaint = createEdgePaintLine(metrics.density)
+        framePaint = createEdgePaintLine(metrics.getDensity())
         framePaint.color = color
     }
 

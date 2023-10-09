@@ -1,38 +1,29 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.graphics.Bitmap
+import org.mapsforge.core.graphics.Paint
 
-import org.mapsforge.core.graphics.Bitmap;
-import org.mapsforge.core.graphics.Paint;
+interface MapDraw {
+    fun getGridPaint(): Paint
+    fun getNodeBitmap(): Bitmap
+    fun grid(center: Point, space: Int)
+    fun vLine(x: Int)
+    fun hLine(y: Int)
+    fun point(pixel: Point)
+    fun textTop(text: String, line: Int)
+    fun textBottom(s: String, line: Int)
+    fun circle(pixel: Point, radius: Int, paint: Paint)
+    fun rect(rect: Rect, paint: Paint)
+    fun bitmap(bitmap: Bitmap, pixel: Point)
+    fun bitmap(bitmap: Bitmap, pixel: Point, color: Int)
+    fun edge(nodes: TwoNodes, paint: Paint)
+    fun label(text: String, pixel: Point, background: Paint, frame: Paint)
+    fun createPaint(): Paint
 
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.Rect;
-
-public interface MapDraw {
-    int POINT_RADIUS=3;
-    int MARGIN=5;
-
-    Paint getGridPaint();
-    Bitmap getNodeBitmap();
-
-
-    void grid(Point center, int space);
-
-    void vLine(int x);
-    void hLine(int y);
-
-    void point(Point pixel);
-    void textTop(String text, int line);
-
-    void textBottom(String s, int line);
-    void circle(Point pixel, int radius, Paint paint);
-
-    void rect(Rect r, Paint paint);
-
-    void bitmap(Bitmap b, Point pixel);
-    void bitmap(Bitmap b, Point pixel, int color);
-
-    void edge(TwoNodes nodes, Paint paint);
-    void label(String text, Point pixel, Paint background, Paint frame);
-
-    Paint createPaint();
+    companion object {
+        const val POINT_RADIUS = 3
+        const val MARGIN = 5
+    }
 }

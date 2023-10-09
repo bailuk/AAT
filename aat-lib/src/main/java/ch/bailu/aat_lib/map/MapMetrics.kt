@@ -1,39 +1,30 @@
-package ch.bailu.aat_lib.map;
+package ch.bailu.aat_lib.map
 
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.coordinates.LatLongInterface
+import ch.bailu.aat_lib.util.Point
+import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.LatLong
 
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.LatLong;
-
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.util.Rect;
-
-public interface MapMetrics {
-    AppDensity getDensity();
-
-    int getLeft();
-    int getRight();
-    int getTop();
-    int getBottom();
-    int getWidth();
-    int getHeight();
-
-
-    float pixelToDistance(int pixel);
-    int distanceToPixel(float meter);
-    int getShortDistance();
-
-    Point getCenterPixel();
-
-    boolean isVisible(BoundingBoxE6 box);
-    boolean isVisible(LatLongInterface point);
-    Rect toMapPixels(BoundingBoxE6 box);
-    Point toPixel(LatLongInterface tp);
-    Point toPixel(LatLong p);
-    LatLong fromPixel(int x, int y);
-
-    BoundingBox getBoundingBox();
-
-    int getZoomLevel();
+interface MapMetrics {
+    fun getDensity(): AppDensity
+    fun getLeft(): Int
+    fun getRight(): Int
+    fun getTop(): Int
+    fun getBottom(): Int
+    fun getWidth(): Int
+    fun getHeight(): Int
+    fun pixelToDistance(pixel: Int): Float
+    fun distanceToPixel(meter: Float): Int
+    fun getShortDistance(): Int
+    fun getCenterPixel(): Point
+    fun isVisible(box: BoundingBoxE6): Boolean
+    fun isVisible(point: LatLongInterface): Boolean
+    fun toMapPixels(box: BoundingBoxE6): Rect
+    fun toPixel(tp: LatLongInterface): Point
+    fun toPixel(p: LatLong): Point
+    fun fromPixel(x: Int, y: Int): LatLong
+    fun getBoundingBox(): BoundingBox
+    fun getZoomLevel(): Int
 }

@@ -1,101 +1,77 @@
-package ch.bailu.aat_lib.map.layer;
+package ch.bailu.aat_lib.map.layer
 
-import org.mapsforge.core.model.LatLong;
+import ch.bailu.aat_lib.coordinates.LatLongE6.Companion.toLatLong
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidMapPosition
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.util.Point
+import org.mapsforge.core.model.LatLong
 
-import javax.annotation.Nonnull;
+class MapPositionLayer(
+    private val mcontext: MapContext,
+    private val storage: StorageInterface,
+    d: DispatcherInterface
+) : MapLayerInterface, OnContentUpdatedInterface {
+    private val slock: SolidPositionLock = SolidPositionLock(storage, mcontext.getSolidKey())
+    private var gpsLocation = LatLong(0.0, 0.0)
 
-import ch.bailu.aat_lib.coordinates.LatLongE6;
-import ch.bailu.aat_lib.dispatcher.DispatcherInterface;
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.map.MapContext;
-import ch.bailu.aat_lib.preferences.location.SolidMapPosition;
-import ch.bailu.aat_lib.util.Point;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidPositionLock;
-
-public final class MapPositionLayer implements MapLayerInterface, OnContentUpdatedInterface {
-
-    private final MapContext mcontext;
-    private final SolidPositionLock slock;
-
-    private LatLong gpsLocation = new LatLong(0,0);
-
-    private final StorageInterface storage;
-
-    public MapPositionLayer(MapContext mc, StorageInterface storage, DispatcherInterface d) {
-        mcontext = mc;
-        this.storage = storage;
-
-        slock = new SolidPositionLock(storage, mcontext.getSolidKey());
-
-        loadState();
-        d.addTarget(this, InfoID.LOCATION);
+    init {
+        loadState()
+        d.addTarget(this, InfoID.LOCATION)
     }
 
-    public void onMapCenterChanged(LatLong center) {
-        if (!gpsLocation.equals(center)) {
-            disableLock();
+    fun onMapCenterChanged(center: LatLong) {
+        if (gpsLocation != center) {
+            disableLock()
         }
     }
 
-    public void disableLock() {
-        slock.setValue(false);
+    private fun disableLock() {
+        slock.value = false
     }
 
-    private void loadState() {
-        gpsLocation = SolidMapPosition.readPosition(storage, mcontext.getSolidKey()).toLatLong();
-        mcontext.getMapView().setZoomLevel((byte) 15);
-        mcontext.getMapView().setCenter(gpsLocation);
+    private fun loadState() {
+        gpsLocation = SolidMapPosition.readPosition(storage, mcontext.getSolidKey()).toLatLong()
+        mcontext.getMapView().setZoomLevel(15.toByte())
+        mcontext.getMapView().setCenter(gpsLocation)
     }
 
-    private void setMapCenter() {
-        if (slock.isEnabled()) {
-            mcontext.getMapView().setCenter(gpsLocation);
+    private fun setMapCenter() {
+        if (slock.isEnabled) {
+            mcontext.getMapView().setCenter(gpsLocation)
         }
     }
 
-    private void saveState() {
-        LatLong center = mcontext.getMapView().getMapViewPosition().getCenter();
-        SolidMapPosition.writePosition(storage, mcontext.getSolidKey(), center);
+    private fun saveState() {
+        val center = mcontext.getMapView().getMapViewPosition().center
+        SolidMapPosition.writePosition(storage, mcontext.getSolidKey(), center)
     }
 
-    @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {}
-
-
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (slock.hasKey(key)) {
-            setMapCenter();
+            setMapCenter()
         }
     }
 
-
-
-    @Override
-    public void onAttached() {}
-
-    @Override
-    public void onDetached() {
-        saveState();
+    override fun onAttached() {}
+    override fun onDetached() {
+        saveState()
     }
 
-    @Override
-    public void onContentUpdated(int iid, @Nonnull GpxInformation info) {
-        gpsLocation = LatLongE6.toLatLong(info);
-        setMapCenter();
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        gpsLocation = toLatLong(info)
+        setMapCenter()
     }
 
-    @Override
-    public void drawInside(MapContext mcontext) {}
-
-    @Override
-    public void drawForeground(MapContext mcontext) {}
-
-    @Override
-    public boolean onTap(Point tapPos) {
-        return false;
+    override fun drawInside(mcontext: MapContext) {}
+    override fun drawForeground(mcontext: MapContext) {}
+    override fun onTap(tapPos: Point): Boolean {
+        return false
     }
 }
