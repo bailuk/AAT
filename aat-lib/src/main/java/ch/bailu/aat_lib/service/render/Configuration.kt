@@ -13,7 +13,7 @@ class Configuration {
     private val mapFiles = ArrayList<Foc>()
     private var renderer: Renderer? = null
     private var themeID: String? = null
-    val isConfigured: Boolean
+    private val isConfigured: Boolean
         get() = renderer != null
 
     fun configure(

@@ -101,7 +101,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             val categoryFilter: PoiCategoryFilter = ExactMatchPoiCategoryFilter()
 
             for (category in categories) categoryFilter.addCategory(category)
-            return persistenceManager.findInRect(box, categoryFilter, null, box.centerPoint, LIMIT)
+            return persistenceManager.findInRect(box, categoryFilter, null, box.centerPoint, LIMIT, false)
         }
 
         @Throws(IOException::class)

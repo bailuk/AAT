@@ -17,7 +17,7 @@ class LayerWrapper(
         services.insideContext { layer.drawInside(mcontext) }
     }
 
-    override fun onTap(tapLatLong: LatLong, layerXY: Point, tapXY: Point): Boolean {
+    override fun onTap(tapLatLong: LatLong, layerXY: Point?, tapXY: Point): Boolean {
         return layer.onTap(ch.bailu.aat_lib.util.Point(tapXY.x, tapXY.y))
     }
 }

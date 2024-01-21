@@ -90,14 +90,6 @@ dependencies {
 
     // MapsForge POI
     implementation ("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
-    implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion")
-
-    // SqLite natives needed by MapsForge POI (when using remote repository)
-    implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-armeabi-v7a")
-    implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-arm64-v8a")
-    implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86")
-    implementation ("org.mapsforge:sqlite-android:$mapsForgeVersion:natives-x86_64")
-    testImplementation("org.testng:testng:6.9.6")
 
     // Acra
     val acraVersion = "5.7.0"
@@ -108,6 +100,7 @@ dependencies {
     // test
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("org.testng:testng:6.9.6")
     // Optional -- Robolectric environment
     testImplementation("androidx.test:core:1.5.0")
     // Optional -- Mockito framework
