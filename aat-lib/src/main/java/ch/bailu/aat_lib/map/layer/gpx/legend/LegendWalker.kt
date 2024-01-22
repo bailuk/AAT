@@ -15,8 +15,7 @@ abstract class LegendWalker : GpxListWalker() {
     }
 
     override fun doList(track: GpxList): Boolean {
-        return track.pointList.size() > 0 &&
-                legendContext!!.isVisible(track.getDelta().getBoundingBox())
+        return track.pointList.size() > 0 && legendContext?.isVisible(track.getDelta().getBoundingBox()) == true
     }
 
     override fun doSegment(segment: GpxSegmentNode): Boolean {

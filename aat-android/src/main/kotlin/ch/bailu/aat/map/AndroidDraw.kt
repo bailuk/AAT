@@ -11,7 +11,9 @@ import ch.bailu.aat_lib.util.Point
 import ch.bailu.aat_lib.util.Rect
 import org.mapsforge.core.graphics.Bitmap
 import org.mapsforge.core.graphics.Canvas
+import org.mapsforge.core.graphics.FillRule
 import org.mapsforge.core.graphics.Paint
+import org.mapsforge.core.graphics.Path
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 
 class AndroidDraw(res: AppDensity, appContext: AppContext) : MapDraw {
@@ -159,17 +161,23 @@ class AndroidDraw(res: AppDensity, appContext: AppContext) : MapDraw {
     private fun drawBackground(text: String, pixel: Point, paint: Paint) {
         val lp = To.androidPaint(legendPaint)
         val legendMetrics = lp.fontMetrics
-
         val canvas = canvas
 
         if (canvas is Canvas) {
-            To.androidCanvas(canvas).drawRect(
-                pixel.x.toFloat(),
-                pixel.y.toFloat() + legendMetrics.top - MapDraw.MARGIN,
-                pixel.x.toFloat() + lp.measureText(text) + MapDraw.MARGIN * 2,
-                pixel.y.toFloat() + legendMetrics.bottom + MapDraw.MARGIN,
-                To.androidPaint(paint)
-            )
+            val x1 = pixel.x.toFloat()
+            val y1 = pixel.y.toFloat() + legendMetrics.top - MapDraw.MARGIN
+            val x2 = pixel.x.toFloat() + lp.measureText(text) + MapDraw.MARGIN * 2
+            val y2 = pixel.y.toFloat() + legendMetrics.bottom + MapDraw.MARGIN
+
+            val path: Path = AndroidGraphicFactory.INSTANCE.createPath()
+
+            path.moveTo(x1, y1)
+            path.lineTo(x1, y2)
+            path.lineTo(x2 , y2)
+            path.lineTo(x2 , y1)
+            path.lineTo(x1, y1)
+            path.setFillRule(FillRule.EVEN_ODD)
+            canvas.drawPath(path, paint)
         }
     }
 
