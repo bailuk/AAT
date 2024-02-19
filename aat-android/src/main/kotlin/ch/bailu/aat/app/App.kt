@@ -1,7 +1,6 @@
 package ch.bailu.aat.app
 
 import android.app.Application
-import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.util.AndroidLoggerFactory
 import ch.bailu.aat_lib.app.AppConfig
@@ -48,23 +47,21 @@ class App : Application() {
     }
 
     private fun initAcra() {
-        val builder = CoreConfigurationBuilder(this)
-            .setBuildConfigClass(BuildConfig::class.java)
-            .setReportFormat(StringFormat.KEY_VALUE_LIST)
-
-        builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder::class.java)
-            .setMailTo(AppConfig.getInstance().appContact)
-            .setEnabled(true)
-
-        builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            .setTitle(AppConfig.getInstance().appName + " crashed")
-            .setText(
-                """
-                This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().appContact}".
-                This will help the author to fix and improve this app.
-                """.trimIndent()
-            )
-            .setEnabled(true)
-        ACRA.init(this, builder)
+        ACRA.init(this, CoreConfigurationBuilder()
+            .withBuildConfigClass(org.acra.BuildConfig::class.java)
+            .withReportFormat(StringFormat.KEY_VALUE_LIST)
+            .withPluginConfigurations(MailSenderConfigurationBuilder()
+                .withMailTo(AppConfig.getInstance().appContact)
+                .withEnabled(true)
+                .build())
+            .withPluginConfigurations(DialogConfigurationBuilder()
+                .withTitle("${AppConfig.getInstance().appName} crashed")
+                .withText("""
+                    This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().appContact}".
+                    This will help the author to fix and improve this app.
+                """.trimIndent())
+                .withEnabled(true)
+                .build())
+        )
     }
 }

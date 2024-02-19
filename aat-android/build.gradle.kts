@@ -92,7 +92,7 @@ dependencies {
     implementation ("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
 
     // Acra
-    val acraVersion = "5.7.0"
+    val acraVersion : String by project
     implementation ("ch.acra:acra-mail:$acraVersion")
     implementation ("ch.acra:acra-dialog:$acraVersion")
 

@@ -2,6 +2,7 @@ package ch.bailu.aat_lib;
 
 // Generated from 'gradle.properties' with 'property2config'
 public class Configuration{
+    public final static String acraVersion = "5.11.3";
     public final static String appWebsite = "https://github.com/bailuk/AAT";
     public final static String appLongName = "AAT Activity Tracker";
     public final static String mapsForgeGtkVersion = "0.4.0";
