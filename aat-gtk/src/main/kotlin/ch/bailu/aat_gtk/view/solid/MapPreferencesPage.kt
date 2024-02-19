@@ -6,11 +6,11 @@ import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.map.tile.source.ElevationSource
-import ch.bailu.aat_lib.preferences.SolidVolumeKeys
 import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
+import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
@@ -28,7 +28,7 @@ class MapPreferencesPage(appContext: AppContext, app: Application, window: Prefe
         add(SolidIndexComboView(SolidTileSize(appContext.storage, GtkAppDensity())).layout)
 
         add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
-        add(SolidBooleanSwitchView(SolidVolumeKeys(appContext.storage)).layout)
+        add(SolidIndexComboView(SolidLayerType(appContext.storage)).layout)
 
         add(Res.str().p_offline_map())
         add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)

@@ -22,6 +22,7 @@ import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.HillShade
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.MapsForge
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
+import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
@@ -48,7 +49,8 @@ class MapPreferencesView(acontext: Activity, scontext: ServiceContext, theme: Ui
         add(TitleView(context, context.getString(R.string.p_tiles), theme))
         add(SolidIndexListView(context, SolidTileSize(storage, AndroidAppDensity(context)), theme))
         add(SolidDirectoryViewSAF(acontext, AndroidSolidTileCacheDirectory(context), theme))
-        add(SolidCheckBox(acontext, SolidVolumeKeys(Storage(context)), theme))
+        add(SolidCheckBox(acontext, SolidVolumeKeys(storage), theme))
+        add(SolidIndexListView(acontext, SolidLayerType(storage), theme))
         add(TitleView(context, MapsForgeSource.NAME, theme))
         add(SolidDirectoryView(context, solidMapFile, theme))
         add(SolidDirectoryView(context, solidMapDirectory, theme))

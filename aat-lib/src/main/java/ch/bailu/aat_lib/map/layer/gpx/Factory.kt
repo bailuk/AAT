@@ -2,12 +2,13 @@ package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.map.MapContext
+import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.service.ServicesInterface
 
 abstract class Factory {
-    abstract fun legend(slegend: SolidLegend): GpxLayer
-    abstract fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer
+    abstract fun legend(solidLegend: SolidLegend): GpxLayer
+    abstract fun layer(mcontext: MapContext, services: ServicesInterface, layerType: SolidLayerType): GpxLayer
 
     companion object {
         @JvmStatic
@@ -20,7 +21,11 @@ abstract class Factory {
                 return slegend.createWayLegendLayer()
             }
 
-            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
+            override fun layer(
+                mcontext: MapContext,
+                services: ServicesInterface,
+                forceOverlyColor: SolidLayerType
+            ): GpxLayer {
                 return WayLayer(mcontext, services)
             }
         }
@@ -29,7 +34,11 @@ abstract class Factory {
                 return slegend.createRouteLegendLayer()
             }
 
-            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
+            override fun layer(
+                mcontext: MapContext,
+                services: ServicesInterface,
+                forceOverlyColor: SolidLayerType
+            ): GpxLayer {
                 return RouteLayer(mcontext)
             }
         }
@@ -38,8 +47,12 @@ abstract class Factory {
                 return slegend.createTrackLegendLayer()
             }
 
-            override fun layer(mcontext: MapContext, services: ServicesInterface): GpxLayer {
-                return TrackLayer(mcontext)
+            override fun layer(
+                mcontext: MapContext,
+                services: ServicesInterface,
+                forceOverlyColor: SolidLayerType
+            ): GpxLayer {
+                return forceOverlyColor.createTrackLayer(mcontext)
             }
         }
     }

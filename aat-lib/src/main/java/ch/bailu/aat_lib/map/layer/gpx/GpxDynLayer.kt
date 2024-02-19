@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidLegend
+import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 
@@ -20,7 +21,8 @@ class GpxDynLayer(
     private val infoCache = GpxInformationCache()
     private var gpxOverlay: GpxLayer? = null
     private var legendOverlay: GpxLayer? = null
-    private val slegend: SolidLegend
+    private val slegend: SolidLegend = SolidLegend(storage, mcontext.getSolidKey())
+    private val solidLayerType = SolidLayerType(storage)
 
     constructor(
         storage: StorageInterface, mc: MapContext, services: ServicesInterface,
@@ -42,7 +44,6 @@ class GpxDynLayer(
     private var type = GpxType.NONE
 
     init {
-        slegend = SolidLegend(storage, mcontext.getSolidKey())
         createLegendOverlay()
         createGpxOverlay()
     }
@@ -69,7 +70,7 @@ class GpxDynLayer(
 
     private fun createGpxOverlay() {
         val type = toType(infoCache.info)
-        gpxOverlay = Factory[type].layer(mcontext, services)
+        gpxOverlay = Factory[type].layer(mcontext, services, solidLayerType)
     }
 
     private fun createLegendOverlay() {
