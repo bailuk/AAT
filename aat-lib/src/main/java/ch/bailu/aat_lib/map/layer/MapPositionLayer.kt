@@ -37,7 +37,8 @@ class MapPositionLayer(
 
     private fun loadState() {
         gpsLocation = SolidMapPosition.readPosition(storage, mcontext.getSolidKey()).toLatLong()
-        mcontext.getMapView().setZoomLevel(15.toByte())
+        val zoomLevel = SolidMapPosition.readZoomLevel(storage, mcontext.getSolidKey()).toByte()
+        mcontext.getMapView().setZoomLevel(zoomLevel)
         mcontext.getMapView().setCenter(gpsLocation)
     }
 
@@ -49,7 +50,9 @@ class MapPositionLayer(
 
     private fun saveState() {
         val center = mcontext.getMapView().getMapViewPosition().center
+        val zoomLevel = mcontext.getMapView().getMapViewPosition().zoomLevel.toInt()
         SolidMapPosition.writePosition(storage, mcontext.getSolidKey(), center)
+        SolidMapPosition.writeZoomLevel(storage, mcontext.getSolidKey(), zoomLevel)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
