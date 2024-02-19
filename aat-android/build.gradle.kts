@@ -99,8 +99,8 @@ dependencies {
 
     // test
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("org.testng:testng:6.9.6")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testImplementation("org.testng:testng:7.9.0")
     // Optional -- Robolectric environment
     testImplementation("androidx.test:core:1.5.0")
     // Optional -- Mockito framework
