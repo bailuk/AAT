@@ -6,8 +6,6 @@ import ch.bailu.aat_lib.map.MapMetrics
 import ch.bailu.aat_lib.map.MapPaint.createBackgroundPaint
 import ch.bailu.aat_lib.map.MapPaint.createEdgePaintLine
 import ch.bailu.aat_lib.map.layer.gpx.GpxLayer
-import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.graphics.Paint
 
 class GpxLegendLayer(private val walker: LegendWalker) : GpxLayer() {
@@ -20,16 +18,12 @@ class GpxLegendLayer(private val walker: LegendWalker) : GpxLayer() {
     }
 
     override fun drawInside(mcontext: MapContext) {
-        if (color != getColor()) {
-            color = getColor()
+        if (color != colorFromIID) {
+            color = colorFromIID
             initPaint(mcontext.getMetrics())
         }
         walker.init(mcontext, backgroundPaint, framePaint)
         walker.walkTrack(gpxList)
-    }
-
-    override fun onTap(tapPos: Point): Boolean {
-        return false
     }
 
     private fun initPaint(metrics: MapMetrics) {
@@ -42,8 +36,4 @@ class GpxLegendLayer(private val walker: LegendWalker) : GpxLayer() {
         backgroundPaint = createBackgroundPaint(color)
         framePaint = createBackgroundPaint(color)
     }
-
-    override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
-    override fun onAttached() {}
-    override fun onDetached() {}
 }

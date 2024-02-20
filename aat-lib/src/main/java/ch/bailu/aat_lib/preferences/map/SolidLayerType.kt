@@ -1,10 +1,8 @@
 package ch.bailu.aat_lib.preferences.map
 
+import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.MapContext
-import ch.bailu.aat_lib.map.layer.gpx.GpxLayer
-import ch.bailu.aat_lib.map.layer.gpx.RouteLayer
-import ch.bailu.aat_lib.map.layer.gpx.TrackLayer
-import ch.bailu.aat_lib.map.layer.gpx.TrackOverlayLayer
+import ch.bailu.aat_lib.map.layer.gpx.*
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.ToDo
@@ -23,13 +21,15 @@ class SolidLayerType(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return ToDo.translate("Track overlay type")
     }
 
-    fun createTrackLayer(mcontext: MapContext): GpxLayer {
-        if (index == 0) {
+    fun createTrackLayer(mcontext: MapContext, iid: Int): GpxLayer {
+        if (index == 0 || iid < InfoID.OVERLAY) {
             return TrackLayer(mcontext)
         } else if (index == 1) {
             return RouteLayer(mcontext)
-        } else {
+        } else if (index == 2) {
             return TrackOverlayLayer(mcontext)
+        } else {
+            return TrackOverlayLayerShadow(mcontext)
         }
     }
 
@@ -38,7 +38,8 @@ class SolidLayerType(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         private val VAL = arrayOf(
             ToDo.translate("Track"),
             ToDo.translate("Route"),
-            ToDo.translate("Track with color")
+            ToDo.translate("Track with color"),
+            ToDo.translate("Track with color and shadow")
         )
     }
 }

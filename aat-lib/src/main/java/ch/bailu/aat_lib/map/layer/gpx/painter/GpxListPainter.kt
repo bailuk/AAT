@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.map.layer.gpx
+package ch.bailu.aat_lib.map.layer.gpx.painter
 
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListWalker
@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.TwoNodes
 import ch.bailu.aat_lib.map.TwoNodes.PixelNode
+import ch.bailu.aat_lib.map.layer.gpx.DistanceCounter
 
 abstract class GpxListPainter @JvmOverloads constructor(
     private val mcontext: MapContext,
@@ -21,7 +22,7 @@ abstract class GpxListPainter @JvmOverloads constructor(
         val res = mcontext.getMetrics().getDensity()
         edgeDistance = DistanceCounter(
             mcontext.getMetrics()
-                .pixelToDistance(res.toPixelFloat(MIN_PIXEL_SPACE.toFloat()).toInt()),
+                .pixelToDistance(res.toPixelFloat(minPixelSpace.toFloat()).toInt()),
             mcontext.getMetrics()
                 .pixelToDistance(res.toPixelFloat(MAX_PIXEL_SPACE.toFloat()).toInt())
         )

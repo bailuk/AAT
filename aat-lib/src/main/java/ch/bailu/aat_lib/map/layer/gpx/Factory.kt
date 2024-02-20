@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 
 abstract class Factory {
     abstract fun legend(solidLegend: SolidLegend): GpxLayer
-    abstract fun layer(mcontext: MapContext, services: ServicesInterface, layerType: SolidLayerType): GpxLayer
+    abstract fun layer(mcontext: MapContext, services: ServicesInterface, layerType: SolidLayerType, iid: Int): GpxLayer
 
     companion object {
         @JvmStatic
@@ -24,7 +24,8 @@ abstract class Factory {
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                forceOverlyColor: SolidLayerType
+                solidLayerType: SolidLayerType,
+                iid: Int
             ): GpxLayer {
                 return WayLayer(mcontext, services)
             }
@@ -37,7 +38,8 @@ abstract class Factory {
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                forceOverlyColor: SolidLayerType
+                solidLayerType: SolidLayerType,
+                iid: Int
             ): GpxLayer {
                 return RouteLayer(mcontext)
             }
@@ -50,9 +52,10 @@ abstract class Factory {
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                forceOverlyColor: SolidLayerType
+                solidLayerType: SolidLayerType,
+                iid: Int
             ): GpxLayer {
-                return forceOverlyColor.createTrackLayer(mcontext)
+                return solidLayerType.createTrackLayer(mcontext, iid)
             }
         }
     }
