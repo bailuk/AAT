@@ -62,7 +62,7 @@ class OverpassActivity : AbsOsmApiActivity() {
     }
 
     public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : OverpassApi(this@OverpassActivity, boundingBox) {
+        return object : OverpassApi(appContext, boundingBox) {
             override val queryString: String
                 get() = editorView.toString()
         }

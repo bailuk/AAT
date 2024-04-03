@@ -21,15 +21,11 @@ import org.mapsforge.poi.storage.PointOfInterest
 import java.io.IOException
 
 abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) : OsmApiConfiguration() {
-    private val poiOverlay: SolidPoiOverlay
+    private val overlay = SolidPoiOverlay(context.dataDirectory)
     private var task = BackgroundTask.NULL
 
-    init {
-        poiOverlay = SolidPoiOverlay(context.dataDirectory)
-    }
-
     override val resultFile: Foc
-        get() = poiOverlay.getValueAsFile()
+        get() = overlay.getValueAsFile()
 
     companion object {
         private const val LIMIT = 10000
@@ -38,7 +34,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override val fileExtension = AppDirectory.GPX_EXTENSION
 
     override val apiName: String
-        get() = poiOverlay.getLabel()
+        get() = overlay.getLabel()
 
     override fun getUrl(query: String): String {
         return ""
@@ -47,7 +43,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override val urlStart: String
         get() = ""
     override val baseDirectory: Foc
-        get() = poiOverlay.directory
+        get() = overlay.directory
 
     override fun getUrlPreview(query: String): String {
         return ""
@@ -66,7 +62,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             )
             appContext.services.backgroundService.process(task)
         }
-        poiOverlay.setEnabled(true)
+        overlay.setEnabled(true)
     }
 
     protected abstract val selectedCategories: ArrayList<PoiCategory>

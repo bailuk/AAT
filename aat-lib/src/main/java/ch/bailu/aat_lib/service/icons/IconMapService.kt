@@ -29,15 +29,15 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
         }
     }
 
-    override fun getIconSVG(point: GpxPointInterface, icon_size: Int): ObjImageAbstract? {
+    override fun getIconSVG(point: GpxPointInterface, iconSize: Int): ObjImageAbstract? {
         val attr = point.getAttributes()
         val path = toAssetPath(attr)
-        return cache.getIcon(path, icon_size)
+        return cache.getIcon(path, iconSize)
     }
 
-    override fun toAssetPath(key: Int, value: String): String {
-        val icon = map[key, value]
-        return icon.svg
+    override fun toAssetPath(key: Int, value: String): String? {
+        val icon: IconMap.Icon? = map[key, value]
+        return icon?.svg
     }
 
     private fun toAssetPath(attr: GpxAttributes): String? {

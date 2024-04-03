@@ -1,27 +1,29 @@
 package ch.bailu.aat.util
 
-import android.content.Context
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
-import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.preferences.map.SolidNominatimOverlay
 import ch.bailu.foc.Foc
-import ch.bailu.foc_android.FocAndroidFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
-abstract class NominatimApi(context: Context, boundingBox: BoundingBoxE6) : DownloadApi() {
-    final override val baseDirectory: Foc
+abstract class NominatimApi(context: AppContext, boundingBox: BoundingBoxE6) : DownloadApi() {
+    private val overlay = SolidNominatimOverlay(context.dataDirectory)
+
     private val bounding: String
-    override val apiName = API_NAME
     override val urlStart = "https://nominatim.openstreetmap.org/search?q="
     override val fileExtension = ".xml"
 
+    final override val apiName: String
+        get() = overlay.getLabel()
+
+    override val resultFile: Foc
+        get() = overlay.getValueAsFile()
+
+    override val baseDirectory: Foc
+        get() = overlay.directory
+
     init {
-        baseDirectory = AppDirectory.getDataDirectory(
-            SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))            ,
-            AppDirectory.DIR_NOMINATIM
-        )
         bounding = toString(boundingBox)
     }
 
@@ -47,8 +49,7 @@ abstract class NominatimApi(context: Context, boundingBox: BoundingBoxE6) : Down
     }
 
     companion object {
-        const val API_NAME = "Nominatim"
-        const val POST = "&format=xml"
+         const val POST = "&format=xml"
         private fun toString(b: BoundingBoxE6): String {
             return if (b.latitudeSpanE6 > 0 && b.longitudeSpanE6 > 0) {
                 "&bounded=1&viewbox=" +

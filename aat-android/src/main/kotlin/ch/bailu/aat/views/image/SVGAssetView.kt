@@ -23,7 +23,7 @@ class SVGAssetView(private val scontext: ServiceContext, rid: Int) : ImageObject
     }
 
     private fun setImageObject(name: String?) {
-        if (name != null) {
+        if (name is String) {
             val id = ObjSVGAsset.toID(name, size)
             setImageObject(id, ObjSVGAsset.Factory(name, size))
         } else {

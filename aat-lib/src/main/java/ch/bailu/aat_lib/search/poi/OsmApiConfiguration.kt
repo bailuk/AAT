@@ -20,8 +20,7 @@ abstract class OsmApiConfiguration {
 
     abstract fun startTask(appContext: AppContext)
 
-    open val resultFile: Foc
-        get() = baseDirectory.child("result$fileExtension")
+    abstract val resultFile: Foc
 
     val queryFile: Foc
         get() = baseDirectory.child("query.txt")

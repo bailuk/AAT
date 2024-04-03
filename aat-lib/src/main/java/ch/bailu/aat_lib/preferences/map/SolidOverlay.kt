@@ -3,27 +3,17 @@ package ch.bailu.aat_lib.preferences.map
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
-import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
 abstract class SolidOverlay(
-    baseDirectory: SolidDataDirectory,
+    private val baseDirectory: SolidDataDirectory,
     private val iid: Int,
     private val subDir: String,
     private val fileName: String
 ) : SolidOverlayInterface {
-    private val enabled: SolidOverlayFileEnabled
-    private val baseDirectory: SolidDataDirectory
-
-    init {
-        enabled = SolidOverlayFileEnabled(baseDirectory.getStorage(), iid)
-        this.baseDirectory = baseDirectory
-    }
-
-    override fun getLabel(): String {
-        return Res.str().p_mapsforge_poi()
-    }
+    private val enabled: SolidOverlayFileEnabled =
+        SolidOverlayFileEnabled(baseDirectory.getStorage(), iid)
 
     override fun getValueAsFile(): Foc {
         return directory.child(fileName)

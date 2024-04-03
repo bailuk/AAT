@@ -25,9 +25,16 @@ object AppDirectory {
 
     const val DIR_OVERLAY = "overlay"
     const val DIR_IMPORT = "import"
+
     const val DIR_NOMINATIM = "query/nominatim"
+    const val FILE_NOMINATIM = "nominatim.xml"
+
     const val DIR_OVERPASS = "query/overpass"
+    const val FILE_OVERPASS = "overpass.osm"
+
     const val DIR_POI = "query/poi"
+    const val FILE_POI = "poi.gpx"
+
     const val DIR_CACHE = "cache"
     const val FILE_CACHE_DB = "summary.db"
     const val FILE_CACHE_MVDB = "summary.mv.db"
@@ -63,6 +70,8 @@ object AppDirectory {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private const val MAX_TRY = 99
     const val GPX_EXTENSION = ".gpx"
+    const val OSM_EXTENSION = ".osm"
+
     @Throws(IOException::class)
     fun generateUniqueFilePath(directory: Foc, prefix: String, extension: String): Foc {
         var file = directory.child(generateFileName(prefix, extension))
