@@ -2,8 +2,11 @@ package ch.bailu.aat_lib.service.render;
 
 import org.mapsforge.core.model.Tile;
 
+import java.util.ConcurrentModificationException;
+
 import javax.annotation.Nonnull;
 
+import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
@@ -38,13 +41,12 @@ public final class RenderService  extends VirtualService
 
 
     private void reconfigureRenderer() {
-        configuration.destroy();
         SolidRendererThreads.set();
 
         var themeID = stheme.getValueAsThemeID();
         var tileCache = caches.get(themeID);
 
-        configuration.configure(
+        configuration.reconfigure(
                 sdirectory.getValueAsFile(),
                 tileCache,
                 stheme.getValueAsRenderTheme(),
@@ -55,8 +57,12 @@ public final class RenderService  extends VirtualService
     }
 
     private void reSchedule(Cache cache) {
-        for (var tile: cache.getTiles()) {
-            configuration.lockToRenderer(tile);
+        try {
+            for (var tile : cache.getTiles()) {
+                configuration.lockToRenderer(tile);
+            }
+        } catch (ConcurrentModificationException e) {
+            AppLog.e(this, e);
         }
     }
 

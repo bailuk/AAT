@@ -13,23 +13,26 @@ class Configuration {
     private val mapFiles = ArrayList<Foc>()
     private var renderer: Renderer? = null
     private var themeID: String? = null
-    private val isConfigured: Boolean
-        get() = renderer != null
 
-    fun configure(
+    fun reconfigure(
         mapDir: Foc,
         cache: TileCache?,
         theme: XmlRenderTheme?,
         tID: String?,
         scaleFactor: Float
     ) {
-        if (!isConfigured && configureMapList(mapDir)) {
-            themeID = tID
-            renderer = try {
-                Renderer(theme, cache, mapFiles, scaleFactor)
+
+        if (configureMapList(mapDir)) {
+
+
+            try {
+                val oldRenderer = renderer
+                renderer = Renderer(theme, cache, mapFiles, scaleFactor)
+                themeID = tID
+                oldRenderer?.destroy()
+
             } catch (e: Exception) {
                 e(renderer, e)
-                null
             }
         } else {
             e(this, Res.str().error_no_map_file() + mapDir.path)
@@ -37,10 +40,8 @@ class Configuration {
     }
 
     fun destroy() {
-        if (isConfigured) {
-            renderer!!.destroy()
-            renderer = null
-        }
+        renderer?.destroy()
+        renderer = null
     }
 
     private fun configureMapList(dir: Foc): Boolean {
@@ -58,12 +59,15 @@ class Configuration {
     }
 
     fun supportsTile(t: Tile?): Boolean {
-        return isConfigured && renderer!!.supportsTile(t)
+        renderer?.apply {
+            return supportsTile(t)
+        }
+        return false
     }
 
     fun lockToRenderer(o: ObjTileMapsForge) {
-        if (isConfigured && themeID == o.themeID) {
-            renderer!!.addJob(o.tile)
+        if (themeID == o.themeID) {
+            renderer?.addJob(o.tile)
         }
     }
 }
