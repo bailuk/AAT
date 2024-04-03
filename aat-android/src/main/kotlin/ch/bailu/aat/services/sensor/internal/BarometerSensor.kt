@@ -43,7 +43,7 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
-    override fun onPreferencesChanged(s: StorageInterface, key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (saltitude.hasKey(key)) {
             hypsometric.altitude = saltitude.getValue().toDouble()
             if (hypsometric.isPressureAtSeaLevelValid) {
