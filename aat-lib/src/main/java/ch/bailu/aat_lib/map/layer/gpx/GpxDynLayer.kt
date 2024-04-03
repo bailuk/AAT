@@ -23,6 +23,7 @@ class GpxDynLayer(
     private var legendOverlay: GpxLayer? = null
     private val slegend: SolidLegend = SolidLegend(storage, mcontext.getSolidKey())
     private val solidLayerType = SolidLayerType(storage)
+    private var forceReconfigure = true
 
     constructor(
         storage: StorageInterface, mc: MapContext, services: ServicesInterface,
@@ -45,14 +46,15 @@ class GpxDynLayer(
 
     init {
         createLegendOverlay()
-        createGpxOverlay()
+        createGpxOverlay(0)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         infoCache[iid] = info
-        if (type !== toType(info)) {
+        if (forceReconfigure || type !== toType(info)) {
+            forceReconfigure = false
             type = toType(info)
-            createGpxOverlay()
+            createGpxOverlay(iid)
             createLegendOverlay()
         }
         infoCache.letUpdate(gpxOverlay)
@@ -61,16 +63,15 @@ class GpxDynLayer(
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (slegend.hasKey(key)) {
-            createLegendOverlay()
-            infoCache.letUpdate(legendOverlay)
-            mcontext.getMapView().requestRedraw()
+        if (slegend.hasKey(key) || solidLayerType.hasKey(key)) {
+            forceReconfigure = true
+            infoCache.letUpdate(this)
         }
     }
 
-    private fun createGpxOverlay() {
+    private fun createGpxOverlay(iid: Int) {
         val type = toType(infoCache.info)
-        gpxOverlay = Factory[type].layer(mcontext, services, solidLayerType)
+        gpxOverlay = Factory[type].layer(mcontext, services, solidLayerType, iid)
     }
 
     private fun createLegendOverlay() {
