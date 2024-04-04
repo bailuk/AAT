@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.service.location.LocationStackItem
 import ch.bailu.foc.FocFile
 
 class GtkSolidLocationProvider (storage: StorageInterface) :
-    SolidLocationProvider(storage, arrayOf("GeoClue2", "GPSd", Res.str().p_location_mock()))
+    SolidLocationProvider(storage, arrayOf("GeoClue2", Res.str().p_location_mock()))
 {
 
     override fun createProvider(
