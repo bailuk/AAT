@@ -1,42 +1,36 @@
-package ch.bailu.aat_lib.resources;
+package ch.bailu.aat_lib.resources
 
-import java.util.Locale;
+import ch.bailu.aat_lib.resources.generated.Strings
+import ch.bailu.aat_lib.resources.generated.Strings_cs
+import ch.bailu.aat_lib.resources.generated.Strings_de
+import ch.bailu.aat_lib.resources.generated.Strings_fr
+import ch.bailu.aat_lib.resources.generated.Strings_nl
+import java.util.Locale
 
-public class Res {
-    private static  Strings STR = null;
-    private Res() {}
+object Res {
+    private val STR: Strings by lazy {  initStrings(Locale.getDefault().language) }
 
-    public static Strings str() {
-        if (STR == null) {
-            STR = setStrings(Locale.getDefault().getLanguage());
-        }
-        return STR;
+    @JvmStatic
+    fun str(): Strings {
+        return STR
     }
 
-    private static Strings setStrings(String lang) {
-
-        if (is(lang, "de")) {
-            return new Strings_de();
+    private fun initStrings(lang: String): Strings {
+        if (isLang(lang, "de")) {
+            return Strings_de()
         }
-        if (is(lang, "fr")) {
-            return new Strings_fr();
+        if (isLang(lang, "fr")) {
+            return Strings_fr()
         }
-        if (is(lang, "cs")) {
-            return new Strings_cs();
+        if (isLang(lang, "cs")) {
+            return Strings_cs()
         }
-        if (is(lang, "nl")) {
-            return new Strings_nl();
-        }
-
-        return new Strings();
+        return if (isLang(lang, "nl")) {
+            Strings_nl()
+        } else Strings()
     }
 
-
-    private static boolean is(String lang, String code) {
-        return lang.equals(new Locale(code).getLanguage());
-    }
-
-    public static int getIconResource(String s) {
-        return 0;
+    private fun isLang(lang: String, code: String): Boolean {
+        return lang == Locale(code).language
     }
 }

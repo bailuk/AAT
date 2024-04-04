@@ -17,45 +17,45 @@ abstract class Factory {
         }
 
         private val WAY: Factory = object : Factory() {
-            override fun legend(slegend: SolidLegend): GpxLayer {
-                return slegend.createWayLegendLayer()
+            override fun legend(solidLegend: SolidLegend): GpxLayer {
+                return solidLegend.createWayLegendLayer()
             }
 
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                solidLayerType: SolidLayerType,
+                layerType: SolidLayerType,
                 iid: Int
             ): GpxLayer {
                 return WayLayer(mcontext, services)
             }
         }
         private val ROUTE: Factory = object : Factory() {
-            override fun legend(slegend: SolidLegend): GpxLayer {
-                return slegend.createRouteLegendLayer()
+            override fun legend(solidLegend: SolidLegend): GpxLayer {
+                return solidLegend.createRouteLegendLayer()
             }
 
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                solidLayerType: SolidLayerType,
+                layerType: SolidLayerType,
                 iid: Int
             ): GpxLayer {
                 return RouteLayer(mcontext)
             }
         }
         val TRACK: Factory = object : Factory() {
-            override fun legend(slegend: SolidLegend): GpxLayer {
-                return slegend.createTrackLegendLayer()
+            override fun legend(solidLegend: SolidLegend): GpxLayer {
+                return solidLegend.createTrackLegendLayer()
             }
 
             override fun layer(
                 mcontext: MapContext,
                 services: ServicesInterface,
-                solidLayerType: SolidLayerType,
+                layerType: SolidLayerType,
                 iid: Int
             ): GpxLayer {
-                return solidLayerType.createTrackLayer(mcontext, iid)
+                return layerType.createTrackLayer(mcontext, iid)
             }
         }
     }
