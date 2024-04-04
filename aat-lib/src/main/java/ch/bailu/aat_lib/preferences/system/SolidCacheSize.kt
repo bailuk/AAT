@@ -11,7 +11,6 @@ class SolidCacheSize(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return sizes.size
     }
 
-    
     override fun getLabel(): String {
         return Res.str().p_cache_size()
     }
@@ -26,13 +25,14 @@ class SolidCacheSize(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         get() = sizes[index]
 
     companion object {
-        private const val MAX_CACHE_SIZE = 256 * MemSize.MB
+        const val MAX_CACHE_SIZE = 256 * MemSize.MB
         private const val ENTRIES = 11
 
         const val KEY = "cache_size"
-        private var sizes: LongArray = LongArray(11).apply {
+        private val sizes: LongArray = LongArray(ENTRIES)
+
+        init {
             val max = Math.min(Runtime.getRuntime().maxMemory(), MAX_CACHE_SIZE)
-            sizes = LongArray(ENTRIES)
             sizes[0] = MemSize.round(max / 5)
             sizes[sizes.size - 1] = max
             for (i in sizes.size - 2 downTo 1) {
