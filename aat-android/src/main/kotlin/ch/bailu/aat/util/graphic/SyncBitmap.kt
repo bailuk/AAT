@@ -39,15 +39,17 @@ class SyncBitmap {
     }
 
     @Synchronized
-    operator fun set(size: Int, transparent: Boolean) {
+    fun set(size: Int, transparent: Boolean) {
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(size, transparent))
     }
 
     @Synchronized
-    operator fun set(svg: SVG?, size: Int) {
-        val b = AndroidSyncTileBitmap()
-        b[svg!!] = size
-        set(b.getTileBitmap())
+    fun set(svg: SVG?, size: Int) {
+        if (svg is SVG) {
+            val b = AndroidSyncTileBitmap()
+            b.set(svg, size)
+            set(b.getTileBitmap())
+        }
     }
 
     @Synchronized

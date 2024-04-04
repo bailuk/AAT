@@ -89,7 +89,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
             object : OnObject(appContext, file.toString(), ObjTileCacheOnly::class.java) {
                 override fun run(handle: Obj) {
                     val tile = handle as ObjTileCacheOnly
-                    tile.bitmap[file, SolidTileSize.DEFAULT_TILESIZE] = tile.source.isTransparent
+                    tile.bitmap.set(file, SolidTileSize.DEFAULT_TILESIZE, tile.source.isTransparent)
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,
                         file.toString()

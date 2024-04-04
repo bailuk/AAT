@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.map
 
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.map.tile.MapTileUtil
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
@@ -46,7 +47,7 @@ class GtkSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(loadTileBitmap(file, defaultTileSize, transparent))
+        set(MapTileUtil.load(file, defaultTileSize, transparent))
     }
 
     @Synchronized
@@ -59,14 +60,7 @@ class GtkSyncTileBitmap : MapTileInterface {
         set(loadSVG(file, size))
     }
 
-    private fun loadTileBitmap(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
-        var result: TileBitmap? = null
-        file.openR()?.use {
-            result = AppGraphicFactory.instance().createTileBitmap(it, size, transparent)
-            result?.timestamp = file.lastModified()
-        }
-        return result
-    }
+
 
     private fun loadSVG(file: Foc, size: Int): Bitmap? {
         var result: Bitmap? = null

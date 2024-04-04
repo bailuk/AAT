@@ -10,7 +10,7 @@ import java.io.IOException
 interface MapTileInterface {
     fun isLoaded(): Boolean
     fun set(bitmap: Bitmap?)
-    operator fun set(file: Foc, defaultTileSize: Int, transparent: Boolean)
+    fun set(file: Foc, defaultTileSize: Int, transparent: Boolean)
 
     @Throws(IOException::class)
     fun setSVG(file: Foc, size: Int, transparent: Boolean)

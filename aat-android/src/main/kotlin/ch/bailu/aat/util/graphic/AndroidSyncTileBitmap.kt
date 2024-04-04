@@ -3,6 +3,7 @@ package ch.bailu.aat.util.graphic
 import android.graphics.Canvas
 import android.graphics.RectF
 import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.map.tile.MapTileUtil
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.util.Rect
@@ -10,7 +11,6 @@ import ch.bailu.foc.Foc
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import org.mapsforge.core.graphics.Bitmap
-import org.mapsforge.core.graphics.CorruptedInputStreamException
 import org.mapsforge.core.graphics.TileBitmap
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 import java.io.IOException
@@ -56,7 +56,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(load(file, defaultTileSize, transparent))
+        set(MapTileUtil.load(file, defaultTileSize, transparent))
     }
 
     @Throws(IOException::class)
@@ -97,7 +97,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
     }
 
     @Synchronized
-    operator fun set(svg: SVG, size: Int) {
+    fun set(svg: SVG, size: Int) {
         set(size, true)
         val p = svg.renderToPicture()
         val c = androidCanvas
@@ -133,27 +133,5 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     override fun isLoaded(): Boolean {
         return bitmap != null
-    }
-
-    companion object {
-        private fun load(file: Foc, size: Int, transparent: Boolean): TileBitmap? {
-            var bitmap: TileBitmap?
-            var inputStream: InputStream? = null
-            try {
-                inputStream = file.openR()
-                bitmap =
-                    AndroidGraphicFactory.INSTANCE.createTileBitmap(inputStream, size, transparent)
-                bitmap.timestamp = file.lastModified()
-            } catch (e: CorruptedInputStreamException) {
-                bitmap = null
-            } catch (e: OutOfMemoryError) {
-                bitmap = null
-            } catch (e: IOException) {
-                bitmap = null
-            } finally {
-                Foc.close(inputStream)
-            }
-            return bitmap
-        }
     }
 }
