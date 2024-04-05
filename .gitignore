@@ -82,3 +82,7 @@ todo/
 .flatpak-builder/
 gradle-sources.json?*
 maven-local
+
+# nix-shell
+/aat-android/sdk
+/shell.nix
