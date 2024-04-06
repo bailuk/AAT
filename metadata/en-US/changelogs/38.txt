@@ -9,7 +9,7 @@ v1.25 (38)
 - GTK: Remove proguard
 - GTK: Flatpak
 - GTK: Fix label annotation in GpxOverlay not readable
-- GTK: Fix Tile Downloader stopped: Exception in thread "LT_/home/lukas/.config/aat-gtk/tile_cache" java.io.IOException: Image::load::256::256
+- GTK: Fix Tile Downloader stopped: Exception in thread "LT_/.../tile_cache"
 - LIB: Translate strings
 - CI: Update gradle `./gradlew wrapper --gradle-version 8.6`
 - CI: Update mapsforge to 0.20.0: Only supports POI v3.0 (no  v1/v2 with rtree support)
