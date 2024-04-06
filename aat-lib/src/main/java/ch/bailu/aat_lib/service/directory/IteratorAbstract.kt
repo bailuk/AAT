@@ -3,11 +3,11 @@ package ch.bailu.aat_lib.service.directory
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 
@@ -50,6 +50,13 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         return if (resultSet != null) resultSet!!.moveToPosition(pos) else false
     }
 
+    override fun getId(): Long {
+        resultSet?.apply {
+            return getLong(GpxDbConfiguration.KEY_ID)
+        }
+        return 0L
+    }
+
     override fun getCount(): Int {
         return if (resultSet != null) resultSet!!.count else 0
     }
@@ -58,7 +65,6 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         return if (resultSet != null) resultSet!!.position else -1
     }
 
-    abstract override fun getInfo(): GpxInformation
     abstract fun onCursorChanged(resultSet: DbResultSet?, directory: Foc?, fid: String?)
     private fun openAndQuery() {
         val fileOnOldPosition = ""

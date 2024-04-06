@@ -11,10 +11,8 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.service.directory.Iterator
-import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener
 
-class GpxListView(c: Context, private val data: Array<ContentDescription>) : ListView(c),
-    OnCursorChangedListener {
+class GpxListView(c: Context, private val data: Array<ContentDescription>) : ListView(c) {
     private var observers = ArrayList<DataSetObserver>()
     private var theme = AppTheme.trackList
 
@@ -23,12 +21,10 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
     }
 
     fun setIterator(acontext: ActivityContext, iterator: Iterator) {
-        iterator.setOnCursorChangedListener(this)
+        iterator.setOnCursorChangedListener { observers.forEach {
+            it.onChanged() }
+        }
         adapter = IteratorAdapter(acontext, iterator)
-    }
-
-    override fun onCursorChanged() {
-        observers.forEach { it.onChanged() }
     }
 
     fun themify(t: UiTheme) {
@@ -48,7 +44,8 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
         }
 
         override fun getItemId(position: Int): Long {
-            return 0
+            iterator.moveToPosition(position)
+            return iterator.id
         }
 
         override fun getItemViewType(position: Int): Int {
@@ -75,7 +72,7 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
         }
 
         override fun hasStableIds(): Boolean {
-            return false
+            return true
         }
 
         override fun isEmpty(): Boolean {

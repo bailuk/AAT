@@ -122,15 +122,15 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
     override fun generateBitmapFile() {
         val bitmap = generateBitmap()
         try {
-            val outStream = imageFile.openW()
-            bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, outStream)
-            outStream.close()
-            AndroidBroadcaster.broadcast(
-                context,
-                AppBroadcaster.FILE_CHANGED_ONDISK,
-                imageFile.toString(),
-                javaClass.name
-            )
+            imageFile.openW()?.use { out ->
+                bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, out)
+                AndroidBroadcaster.broadcast(
+                    context,
+                    AppBroadcaster.FILE_CHANGED_ONDISK,
+                    imageFile,
+                    javaClass.name
+                )
+            }
         } catch (e: Exception) {
             AppLog.e(context, e)
         }

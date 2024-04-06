@@ -33,7 +33,7 @@ class GpxDatabase @JvmOverloads constructor(
     override fun deleteEntry(file: Foc) {
         database.execSQL(
             "DELETE FROM " + GpxDbConfiguration.TABLE + " WHERE " + GpxDbConfiguration.KEY_FILENAME + " = ?",
-            file.getName()
+            file.name
         )
     }
 

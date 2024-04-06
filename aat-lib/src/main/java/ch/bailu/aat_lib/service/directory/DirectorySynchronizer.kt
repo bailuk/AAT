@@ -28,8 +28,8 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     private var database: GpxDatabase? = null
     private var dbAccessTime: Long = 0
     private var canContinue = true
-    private var state: State? = null
-    private val onFileChanged = BroadcastReceiver { state!!.ping() }
+    private var state: State = NullState()
+    private val onFileChanged = BroadcastReceiver { state.ping() }
 
     init {
         if (appContext.services.lock()) {
@@ -46,7 +46,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     private fun setState(s: State) {
         if (canContinue) {
             state = s
-            state?.start()
+            state.start()
         } else {
             terminate()
         }
@@ -54,12 +54,17 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
     private fun terminate(e: Exception) {
         state = StateTerminate(e)
-        state?.start()
+        state.start()
     }
 
     private fun terminate() {
         state = StateTerminate()
-        state?.start()
+        state.start()
+    }
+
+    private inner class NullState : State() {
+        override fun start() {}
+        override fun ping() {}
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,10 +188,10 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
                 )
                 if (h is ObjGpx) {
                     setPendingGpxHandle(h)
-                    state?.ping()
+                    state.ping()
                 } else {
                     h.free()
-                    state?.start()
+                    state.start()
                 }
             }
         }
@@ -204,7 +209,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
                     terminate(e)
                 }
             } else if (handle != null && handle.hasException()) {
-                state?.start()
+                state.start()
             }
         }
 
@@ -268,7 +273,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             try {
                 val p = appContext.createMapPreview(info, previewImageFile)
                 setPendingPreviewGenerator(p)
-                state!!.ping()
+                state.ping()
             } catch (e: Exception) {
                 AppLog.w(this, e)
                 appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
@@ -277,21 +282,21 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         }
 
         override fun ping() {
-            if (!canContinue) {
+            val previewGenerator = pendingPreviewGenerator
+
+            if (!canContinue || previewGenerator !is MapPreviewInterface) {
                 terminate()
-            } else if (pendingPreviewGenerator!!.isReady) {
-                pendingPreviewGenerator!!.generateBitmapFile()
+            } else if (previewGenerator.isReady) {
+                previewGenerator.generateBitmapFile()
                 appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
                 setState(StateLoadNextGpx())
             }
         }
     }
 
-    private fun setPendingPreviewGenerator(g: MapPreviewInterface?) {
-        if (pendingPreviewGenerator != null) {
-            pendingPreviewGenerator!!.onDestroy()
-        }
-        pendingPreviewGenerator = g
+    private fun setPendingPreviewGenerator(previewGenerator: MapPreviewInterface?) {
+        pendingPreviewGenerator?.onDestroy()
+        pendingPreviewGenerator = previewGenerator
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,6 +322,6 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     @Synchronized
     override fun close() {
         canContinue = false
-        state?.ping()
+        state.ping()
     }
 }

@@ -56,26 +56,8 @@ class AndroidBroadcaster(private val context: Context) : Broadcaster {
             context.registerReceiver(receiver, filter)
         }
 
-        fun broadcast(context: Context, action: String, file: Foc) {
-            broadcast(context, action, file.path)
-        }
-
-        fun broadcast(context: Context, action: String, file: String) {
-            val intent = Intent()
-            intent.action = action
-            AppIntent.setFile(intent, file)
-            context.sendBroadcast(intent)
-        }
-
         fun broadcast(context: Context, action: String, file: Foc, url: String) {
-            broadcast(context, action, file.path, url)
-        }
-
-        fun broadcast(context: Context, action: String, file: String, url: String) {
-            val intent = Intent()
-            intent.action = action
-            AppIntent.setFile(intent, file)
-            AppIntent.setUrl(intent, url)
+            val intent = AppIntent.toIntent(action, file.path, url)
             context.sendBroadcast(intent)
         }
     }
