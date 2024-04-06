@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Generate documentation that is used from within the app by
 # generating html files from markdown documentation.
-# Depends on 'markdown': http://daringfireball.net
+# Depends on 'markdown': https://daringfireball.net/projects/markdown/
 
 manual="manual"
 
