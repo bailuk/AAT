@@ -11,6 +11,7 @@ v1.25 (38)
 - GTK: Fix label annotation in GpxOverlay not readable
 - GTK: Fix Tile Downloader stopped: Exception in thread "LT_/.../tile_cache"
 - LIB: Translate strings
+- LIB: Save and restore zoom level in map view
 - CI: Update gradle `./gradlew wrapper --gradle-version 8.6`
 - CI: Update mapsforge to 0.20.0: Only supports POI v3.0 (no  v1/v2 with rtree support)
 - CI: Update java-gtk to 0.5.0
