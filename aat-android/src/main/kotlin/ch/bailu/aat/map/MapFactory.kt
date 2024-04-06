@@ -25,7 +25,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 
 class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityContext) {
     private val d: DispatcherInterface = activityContext
-    private val mc: MapContext = m.mContext
+    private val mc: MapContext = m.getMContext()
     private val s: StorageInterface = activityContext.appContext.storage
     private val ser: ServicesInterface = activityContext.serviceContext
     private val appContext: AppContext= activityContext.appContext

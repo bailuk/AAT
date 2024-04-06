@@ -2,14 +2,13 @@ package ch.bailu.aat_lib.util.net
 
 import java.net.MalformedURLException
 import java.net.URL
-import javax.annotation.Nonnull
 
 class URX(private val string: String) {
     private var url: URL? = null
     private var urlException: MalformedURLException? = null
 
 
-    @Nonnull
+
     override fun toString(): String {
         return string
     }

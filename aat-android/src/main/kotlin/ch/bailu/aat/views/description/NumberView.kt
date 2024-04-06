@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
-import javax.annotation.Nonnull
+
 import kotlin.math.roundToInt
 
 open class NumberView(context: Context, data: ContentDescription, private val theme: UiTheme) :
@@ -136,7 +136,7 @@ open class NumberView(context: Context, data: ContentDescription, private val th
 
     }
 
-    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         description.onContentUpdated(iid, info)
         updateAllText()
     }

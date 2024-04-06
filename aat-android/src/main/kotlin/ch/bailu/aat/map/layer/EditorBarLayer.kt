@@ -59,10 +59,10 @@ class EditorBarLayer(
         selector.onLayout(changed, l, t, r, b)
     }
 
-    override fun drawInside(p: MapContext) {
-        content.drawInside(p)
+    override fun drawInside(mcontext: MapContext) {
+        content.drawInside(mcontext)
         if (isBarVisible) {
-            selector.drawInside(p)
+            selector.drawInside(mcontext)
         }
     }
 
@@ -77,7 +77,7 @@ class EditorBarLayer(
         super.onClick(v)
         val editor = edit.editor
         if (v === add) {
-            val p = mcontext.mapView.mapViewPosition.center
+            val p = mcontext.getMapView().getMapViewPosition().center
             editor.add(
                 GpxPoint(
                     p,
@@ -108,9 +108,9 @@ class EditorBarLayer(
         selector.hide()
     }
 
-    override fun onPreferencesChanged(s: StorageInterface, key: String) {
-        content.onPreferencesChanged(s, key)
-        selector.onPreferencesChanged(s, key)
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        content.onPreferencesChanged(storage, key)
+        selector.onPreferencesChanged(storage, key)
     }
 
     override fun onAttached() {}

@@ -33,7 +33,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     private val busy: BusyIndicator = BusyIndicator(context)
     private val slist: SolidOsmFeaturesList = SolidOsmFeaturesList(context)
     private val list = FilterList()
-    private val listView: MapFeaturesListView = MapFeaturesListView(scontext, list)
+    private val listView = MapFeaturesListView(scontext, list)
 
     private val theme = AppTheme.search
     private val onListLoaded: BroadcastReceiver = object : BroadcastReceiver() {
@@ -66,6 +66,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
         layout.add(SolidCheckBox(context, slist, theme))
 
         addView(layout)
+        addView(listView)
     }
 
     private fun updateList() {
@@ -125,6 +126,4 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     fun setFilterText(summaryKey: String) {
         filterView.setText(summaryKey)
     }
-
-
 }

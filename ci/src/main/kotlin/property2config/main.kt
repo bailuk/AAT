@@ -5,35 +5,28 @@ import java.io.FileInputStream
 import java.io.FileWriter
 import java.util.*
 
-
-fun main(args: Array<String>) {
+fun main() {
     try {
-        generate(args)
+        generate(
+            File("gradle.properties"),
+            File("aat-lib/src/main/java/ch/bailu/aat_lib/Configuration.kt"))
     } catch (e: Exception) {
         e.printStackTrace()
     }
 }
 
-private fun generate(args: Array<String>) {
-    if (args.size > 1) {
-        generate(File(args[args.size - 2]), File(args[args.size - 1]))
-    } else {
-        throw Exception("Usage: property2config property-file-path java-file-path")
-    }
-}
-
-private fun generate(propertyFile: File, javaFile: File) {
+private fun generate(propertyFile: File, kotlinFile: File) {
     val properties = Properties().apply { load(FileInputStream(propertyFile)) }
 
-    FileWriter(javaFile).apply {
-        append("package ${fileToPackage(javaFile)};\n\n")
+    FileWriter(kotlinFile).apply {
+        append("package ${fileToPackage(kotlinFile)}\n\n")
         append("// Generated from '${propertyFile.name}' with 'property2config'\n")
-        append("public class ").append(fileToClass(javaFile)).append("{\n")
+        append("object ").append(fileToClass(kotlinFile)).append(" {\n")
 
         for (key in properties.keys) {
             val attribute = key.toString()
             if (!attribute.contains(".")) {
-                append("    public final static String $key = \"${properties[key].toString()}\";\n")
+                append("    const val $key = \"${properties[key].toString()}\"\n")
             }
         }
         append("}\n")
@@ -47,7 +40,7 @@ private fun fileToClass(file: File): String {
     return if (split.size == 2) {
         split[0]
     } else {
-        throw Exception("Invalid java file name: $name")
+        throw Exception("Invalid kotlin file name: $name")
     }
 }
 
@@ -61,7 +54,6 @@ private fun fileToPackage(file: File): String {
     }
     return dirsToPackage(dirs)
 }
-
 
 private fun dirsToPackage(dirs: List<String>): String {
     val result = StringBuilder("")

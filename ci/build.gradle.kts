@@ -19,24 +19,19 @@ task<JavaExec>("property2config") {
     description = "Generate configuration class from gradle property"
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("property2config.MainKt")
-
-    args(
-        setOf (
-            "${project.rootDir}/gradle.properties",
-            "${project.rootDir}/aat-lib/src/main/java/ch/bailu/aat_lib/Configuration.java"
-        )
-    )
+    workingDir(project.rootDir)
 }
 
-task<Exec>("generateStrings") {
-    workingDir("util")
-    commandLine("./generate-strings.sh")
+task<JavaExec>("generateStrings") {
+    description = "Generate Kotlin string resource classes from Android string resources"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("generate_strings.MainKt")
+    workingDir(project.rootDir)
 }
 
 
 task<JavaExec>("generateImageMapping") {
     dependsOn(":aat-android:processReleaseResources")
-
     description = "Generate image mapping from R.txt"
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("generate_image_mapping.MainKt")

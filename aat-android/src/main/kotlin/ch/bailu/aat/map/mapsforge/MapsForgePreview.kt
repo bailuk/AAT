@@ -53,7 +53,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         val tileLayer = MapsForgeTileLayer(appContext.services, provider, appContext.tilePainter)
         add(tileLayer, tileLayer)
 
-        val gpxLayer = GpxDynLayer(Storage(getContext()), mContext, appContext.services)
+        val gpxLayer = GpxDynLayer(Storage(getContext()), getMContext(), appContext.services)
         add(gpxLayer)
         attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILE_VIEW, info)
@@ -106,7 +106,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
     private fun generateBitmap(): AndroidSyncTileBitmap {
         val bitmap = AndroidSyncTileBitmap()
 
-        bitmap[BITMAP_SIZE] = false
+        bitmap.set(BITMAP_SIZE, false)
         if (bitmap.androidBitmap != null) {
             val c = bitmap.androidCanvas
             val canvas = AndroidGraphicFactory.createGraphicContext(c)
@@ -122,15 +122,15 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
     override fun generateBitmapFile() {
         val bitmap = generateBitmap()
         try {
-            val outStream = imageFile.openW()
-            bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, outStream)
-            outStream.close()
-            AndroidBroadcaster.broadcast(
-                context,
-                AppBroadcaster.FILE_CHANGED_ONDISK,
-                imageFile.toString(),
-                javaClass.name
-            )
+            imageFile.openW()?.use { out ->
+                bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, out)
+                AndroidBroadcaster.broadcast(
+                    context,
+                    AppBroadcaster.FILE_CHANGED_ONDISK,
+                    imageFile,
+                    javaClass.name
+                )
+            }
         } catch (e: Exception) {
             AppLog.e(context, e)
         }
@@ -153,7 +153,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
 
         private fun getSource(stheme: SolidRenderTheme): Source {
             val tiles = SolidMapTileStack(stheme)
-            val enabled = tiles.enabledArray
+            val enabled = tiles.getEnabledArray()
             if (enabled[0]) {
                 val theme = stheme.getValueAsString()
                 val mfs = MapsForgeSource(theme)

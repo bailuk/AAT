@@ -5,8 +5,18 @@ import java.io.Closeable;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.InfoID;
 
-public class Iterator implements Closeable {
-    public static final Iterator NULL = new Iterator();
+public abstract class Iterator implements Closeable {
+    public static final Iterator NULL = new Iterator() {
+        @Override
+        public long getId() {
+            return 0;
+        }
+
+        @Override
+        public GpxInformation getInfo() {
+            return GpxInformation.NULL;
+        }
+    };
 
 
     public interface OnCursorChangedListener {
@@ -16,6 +26,7 @@ public class Iterator implements Closeable {
     public static final OnCursorChangedListener NULL_LISTENER = () -> {};
 
 
+    public abstract long getId();
     public int getInfoID() {
         return InfoID.FILE_VIEW;
     }
@@ -40,10 +51,7 @@ public class Iterator implements Closeable {
     }
 
 
-    public GpxInformation getInfo() {
-        return GpxInformation.NULL;
-    }
-
+    public abstract GpxInformation getInfo();
 
     public void query() {}
 

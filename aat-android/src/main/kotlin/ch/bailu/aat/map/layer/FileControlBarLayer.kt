@@ -79,9 +79,9 @@ class FileControlBarLayer(
         }
     }
 
-    override fun drawInside(mc: MapContext) {
+    override fun drawInside(mcontext: MapContext) {
         if (isBarVisible) {
-            selector.drawInside(mc)
+            selector.drawInside(mcontext)
         }
     }
 
@@ -129,7 +129,7 @@ class FileControlBarLayer(
 
         override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
             super.setSelectedNode(iid, info, node, index)
-            SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.value = index
+            SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.setValue(index)
             iterator.moveToPosition(index)
             selectedFile = iterator.info.file
             preview.setFilePath(selectedFile)
@@ -145,19 +145,20 @@ class FileControlBarLayer(
             acontext.displayFile()
         }
 
-        override fun onPreferencesChanged(s: StorageInterface, key: String) {
-            selector.onPreferencesChanged(s, key)
+        override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+            selector.onPreferencesChanged(storage, key)
         }
 
         override fun onAttached() {}
         override fun onDetached() {}
         override fun onLongClick(view: View): Boolean {
-            if (selectedFile is Foc) {
+            val file = selectedFile
+            if (file is Foc) {
                 SolidCustomOverlay(
                     Storage(acontext),
                     FocAndroidFactory(acontext),
                     0
-                ).setValueFromFile(selectedFile)
+                ).setValueFromFile(file)
                 return true
             }
             return false

@@ -1,5 +1,6 @@
 .map-control {
     background: #cccccc80;
+    color: black;
 }
 
 .graph-view {
@@ -28,4 +29,41 @@
     border-style: none;
     font-weight: bold;
     border-radius: 5px;
+}
+
+.number-view {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.number-view-width-1 {
+        min-width: 85px;
+}
+
+.number-view-width-2 {
+        min-width: 85px;
+}
+
+.number-view-width-3 {
+        min-width: 85px;
+}
+
+.number-view-width-4 {
+        min-width: 120px;
+}
+
+.number-view-width-5 {
+        min-width: 120px;
+}
+
+.number-view-width-6 {
+        min-width: 170px;
+}
+
+.number-view-width-7 {
+        min-width: 170px;
+}
+
+.number-view-width-8 {
+        min-width: 170px;
 }

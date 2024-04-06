@@ -36,7 +36,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
         buttonPlus = bar.addImageButton(R.drawable.zoom_in)
         buttonMinus = bar.addImageButton(R.drawable.zoom_out)
         val lock = bar.addSolidIndexButton(
-            SolidPositionLock(Storage(context), mcontext.solidKey)
+            SolidPositionLock(Storage(context), mcontext.getSolidKey())
         )
         buttonFrame = bar.addImageButton(R.drawable.zoom_fit_best)
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin)
@@ -46,21 +46,21 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
         d.addTarget(this, InfoID.ALL)
         val volumeView = VolumeView(context)
         volumeView.visibility = View.INVISIBLE
-        To.view(mcontext.mapView)!!.addView(volumeView)
+        To.view(mcontext.getMapView())!!.addView(volumeView)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         if (v === buttonPlus) {
-            mcontext.mapView.zoomIn()
+            mcontext.getMapView().zoomIn()
         } else if (v === buttonMinus) {
-            mcontext.mapView.zoomOut()
+            mcontext.getMapView().zoomOut()
         } else if (v === buttonFrame && infoCache.size() > 0) {
             if (nextInBoundingCycle()) {
                 val info = infoCache.getValueAt(boundingCycle)
 
                 if (info is GpxInformation) {
-                    mcontext.mapView.frameBounding(info.getBoundingBox())
+                    mcontext.getMapView().frameBounding(info.getBoundingBox())
                     AppLog.i(v.context, info.file.name)
                 }
             }
@@ -102,13 +102,13 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
         override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 
         override fun onHardwareButtonPressed(code: Int, type: AbsHardwareButtons.EventType): Boolean {
-            if (To.view(mcontext.mapView)!!.visibility == VISIBLE) {
+            if (To.view(mcontext.getMapView())!!.visibility == VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
-                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.mapView.zoomIn()
+                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomIn()
                     return true
                 }
                 if (code == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.mapView.zoomOut()
+                    if (type === AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomOut()
                     return true
                 }
             }

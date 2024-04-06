@@ -11,7 +11,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import javax.annotation.Nonnull
+
 
 open class DownloadTask(
     val source: URX,
@@ -50,7 +50,7 @@ open class DownloadTask(
         AppLog.w(this, e)
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         return source.toString()
     }

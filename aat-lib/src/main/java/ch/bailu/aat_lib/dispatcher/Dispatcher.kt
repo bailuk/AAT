@@ -2,17 +2,16 @@ package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
-import javax.annotation.Nonnull
 
 class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
     private val targets: MutableMap<Int, TargetList> = HashMap(10)
     private val sources = ArrayList<ContentSourceInterface>(5)
     private var updater = OnContentUpdatedInterface.NULL
-    override fun addTarget(@Nonnull target: OnContentUpdatedInterface, vararg iid: Int) {
+    override fun addTarget( target: OnContentUpdatedInterface, vararg iid: Int) {
         for (i in iid) addSingleTarget(target, i)
     }
 
-    private fun addSingleTarget(@Nonnull t: OnContentUpdatedInterface, iid: Int) {
+    private fun addSingleTarget( t: OnContentUpdatedInterface, iid: Int) {
         getTargetList(iid)!!.add(t)
     }
 
@@ -47,12 +46,12 @@ class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
         for (source in sources) source.requestUpdate()
     }
 
-    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         updater.onContentUpdated(iid, info)
     }
 
     private val ON: OnContentUpdatedInterface = object : OnContentUpdatedInterface {
-        override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+        override fun onContentUpdated(iid: Int,  info: GpxInformation) {
             update(iid, iid, info)
             update(InfoID.ALL, iid, info)
         }

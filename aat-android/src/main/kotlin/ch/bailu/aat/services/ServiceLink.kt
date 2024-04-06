@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
 import java.io.Closeable
-import javax.annotation.Nonnull
+
 
 abstract class ServiceLink(private val context: Context) : ServiceContext, ServiceConnection,
     Closeable {
@@ -180,7 +180,7 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
         return getService()!!.renderService
     }
 
-    @Nonnull
+    
     override fun getTileRemoverService(): TileRemoverService {
         return getService()!!.getTileRemoverService()
     }

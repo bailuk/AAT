@@ -11,7 +11,7 @@ open class FileSource(private val context: AppContext, private val iid: Int) : C
     private val gpxHandler = GpxHandler()
     private var lifeCycleEnabled = false
     private var trackEnabled = true
-    private val onChangedInCache = BroadcastReceiver { args: Array<out String?> ->
+    private val onChangedInCache = BroadcastReceiver { args: Array<out String> ->
         if (has(args, gpxHandler.get().id)) {
             requestUpdate()
         }

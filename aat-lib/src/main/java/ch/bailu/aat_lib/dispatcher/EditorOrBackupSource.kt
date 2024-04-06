@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.foc.Foc
-import javax.annotation.Nonnull
+
 
 class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterface) :
     EditorSourceInterface, ContentSourceInterface {
@@ -40,7 +40,7 @@ class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterfac
         }
     }
 
-    override fun setTarget(@Nonnull target: OnContentUpdatedInterface) {
+    override fun setTarget( target: OnContentUpdatedInterface) {
         editorSource.setTarget(target)
         backupSource.setTarget(target)
     }

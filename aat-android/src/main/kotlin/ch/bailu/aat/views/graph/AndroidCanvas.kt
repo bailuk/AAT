@@ -29,11 +29,11 @@ class AndroidCanvas(
         paintFont.isDither = false
         paintFont.color = theme.getGraphTextColor()
         paintFont.textSize =
-            res.toPixelScaled_f(TEXT_SIZE.toFloat())
+            res.toPixelScaledFloat(TEXT_SIZE.toFloat())
         paintPlotLines = Paint()
         paintPlotLines.isAntiAlias = true
         paintPlotLines.isDither = false
-        paintPlotLines.strokeWidth = res.toPixel_f(2f)
+        paintPlotLines.strokeWidth = res.toPixelFloat(2f)
         paintLines = Paint()
         paintLines.isAntiAlias = true
         paintLines.isDither = false
@@ -62,7 +62,7 @@ class AndroidCanvas(
     }
 
     override fun drawBitmap(point: Point, color: Int) {
-        val mfBitmap = nodeBitmap.tileBitmap.bitmap
+        val mfBitmap = nodeBitmap.tileBitmap.getBitmap()
         if (mfBitmap != null) {
             val androidBitmap = AndroidGraphicFactory.getBitmap(mfBitmap)
             if (androidBitmap != null) {

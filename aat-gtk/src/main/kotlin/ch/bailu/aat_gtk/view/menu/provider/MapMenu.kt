@@ -45,7 +45,7 @@ class MapMenu(
 
     override fun createActions(app: Application) {
         MenuHelper.setAction(app, "showMapSettings") { uiController.showPreferencesMap() }
-        MenuHelper.setAction(app, "reloadMapTiles") { mapContext.mapView.reDownloadTiles() }
+        MenuHelper.setAction(app, "reloadMapTiles") { mapContext.getMapView().reDownloadTiles() }
         renderMenu.createActions(app)
         tilesMenu.createActions(app)
         offlineMenu.createActions(app)

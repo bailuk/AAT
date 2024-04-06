@@ -1,7 +1,5 @@
 package ch.bailu.aat_lib.dispatcher
 
-import javax.annotation.Nonnull
-
 /**
  * Connect sources with targets
  */
@@ -12,13 +10,13 @@ interface DispatcherInterface {
      * @param target: receiver of a message
      * @param iid list of info ids: only transmits messages having one of these ids
      */
-    fun addTarget(@Nonnull target: OnContentUpdatedInterface, vararg iid: Int)
+    fun addTarget(target: OnContentUpdatedInterface, vararg iid: Int)
 
     /**
      * Add a source to this dispatcher. This dispatcher will dispatch all messages that pass
      * the an info id filter from this source to its connected targets.
      * @param source that transmits messages
      */
-    fun addSource(@Nonnull source: ContentSourceInterface)
+    fun addSource(source: ContentSourceInterface)
     fun requestUpdate()
 }

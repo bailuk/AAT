@@ -26,7 +26,7 @@ class GtkMapDirectories(private val storageInterface: StorageInterface, private 
     }
 
     override fun getDefault(): Foc {
-        return SolidGtkDefaultDirectory(storageInterface, focFactory).valueAsFile.child(mapChild)
+        return SolidGtkDefaultDirectory(storageInterface, focFactory).getValueAsFile().child(mapChild)
     }
 
     override fun createSolidDirectory(): SolidMapsForgeDirectory {

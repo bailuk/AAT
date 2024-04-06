@@ -6,7 +6,7 @@ import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
-import javax.annotation.Nonnull
+
 
 class DescriptionLabelTextView(
     context: Context,
@@ -17,7 +17,7 @@ class DescriptionLabelTextView(
         setText()
     }
 
-    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         description.onContentUpdated(iid, info)
         setText()
     }

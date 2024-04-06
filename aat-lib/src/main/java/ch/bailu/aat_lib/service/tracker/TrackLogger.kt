@@ -19,7 +19,7 @@ import java.io.IOException
 
 class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: Int) : Logger() {
     private var requestSegment = true
-    private val track: GpxList = createTrack(sdirectory.storage, presetIndex)
+    private val track: GpxList = createTrack(sdirectory.getStorage(), presetIndex)
     private val logFile: Foc
     private val writer: GpxListWriter
 

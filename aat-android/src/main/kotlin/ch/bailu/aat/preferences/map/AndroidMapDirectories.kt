@@ -21,18 +21,18 @@ class AndroidMapDirectories(private val context: Context) : MapDirectories {
         val dirs = ArrayList<Foc>(5)
         val volumes = AndroidVolumes(context)
         for (f in volumes.volumes) {
-            SelectionList.add_dr(dirs, f.child(SolidMapsForgeDirectory.MAPS_DIR))
-            SelectionList.add_dr(
+            SelectionList.addDr(dirs, f.child(SolidMapsForgeDirectory.MAPS_DIR))
+            SelectionList.addDr(
                 dirs,
                 f.child(AppDirectory.DIR_AAT_DATA + "/" + SolidMapsForgeDirectory.MAPS_DIR)
             )
-            SelectionList.add_dr(dirs, f.child(SolidMapsForgeDirectory.ORUX_MAPS_DIR))
+            SelectionList.addDr(dirs, f.child(SolidMapsForgeDirectory.ORUX_MAPS_DIR))
         }
 
         // app_private/files/maps (readable and on external medium)
         val files = volumes.files
         for (i in 1 until files.size) {
-            SelectionList.add_dr(dirs, files[i].child(SolidMapsForgeDirectory.MAPS_DIR))
+            SelectionList.addDr(dirs, files[i].child(SolidMapsForgeDirectory.MAPS_DIR))
         }
         return dirs
     }

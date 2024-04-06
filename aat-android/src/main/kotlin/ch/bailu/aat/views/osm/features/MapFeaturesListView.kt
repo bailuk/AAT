@@ -39,13 +39,13 @@ class MapFeaturesListView(private val scontext: ServiceContext, private val list
             return list.sizeVisible()
         }
 
-        override fun getView(index: Int, v: View, p: ViewGroup): View {
+        override fun getView(index: Int, v: View?, p: ViewGroup): View {
             return toEntryView(v).apply {
                 set((list.getFromVisible(index) as MapFeaturesListItem))
             }
         }
 
-        private fun toEntryView(view: View): MapFeaturesEntryView {
+        private fun toEntryView(view: View?): MapFeaturesEntryView {
             return if (view is MapFeaturesEntryView) {
                 view
             } else {

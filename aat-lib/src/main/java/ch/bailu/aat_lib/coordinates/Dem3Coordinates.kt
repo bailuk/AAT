@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.coordinates
 
 import org.mapsforge.core.model.LatLong
 import java.text.DecimalFormat
-import javax.annotation.Nonnull
 import kotlin.math.abs
 import kotlin.math.floor
 
@@ -47,7 +46,7 @@ class Dem3Coordinates(la: Double, lo: Double) : Coordinates(), LatLongInterface 
      *
      * @return A base string for a file name of a dem3 tile. Example: "N16E077"
      */
-    @Nonnull
+
     override fun toString(): String {
         return string
     }

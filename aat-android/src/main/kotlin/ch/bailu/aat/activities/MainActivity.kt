@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.dispatcher.SensorSource
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
@@ -22,8 +22,10 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import javax.annotation.Nonnull
+import ch.bailu.foc_android.FocAndroidFactory
+
 
 class MainActivity : ActivityContext() {
     private val theme = AppTheme.intro
@@ -103,7 +105,7 @@ class MainActivity : ActivityContext() {
         }
 
         fun setText() {
-            visibility = if (sdirectory.valueAsFile.canRead()) {
+            visibility = if (sdirectory.getValueAsFile().canRead()) {
                 VISIBLE
             } else {
                 GONE
@@ -122,8 +124,8 @@ class MainActivity : ActivityContext() {
         }
 
         override fun onPreferencesChanged(
-            @Nonnull storage: StorageInterface,
-            @Nonnull key: String
+             storage: StorageInterface,
+             key: String
         ) {
             if (sdirectory.hasKey(key)) {
                 setText()
@@ -132,7 +134,7 @@ class MainActivity : ActivityContext() {
     }
 
     private inner class PresetDirectoryLabel(s: ActivitySwitcher.Entry) : ActivityLabel(s), OnPreferencesChanged {
-        private val sdirectory: AndroidSolidDataDirectory = AndroidSolidDataDirectory(context)
+        private val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
         private val spreset: SolidPreset = SolidPreset(appContext.storage)
 
         init {
@@ -163,15 +165,10 @@ class MainActivity : ActivityContext() {
 
     private inner class InternalDirectoryLabel(s: ActivitySwitcher.Entry, private val directory: String) :
         ActivityLabel(s), OnPreferencesChanged {
-        private val sdirectory = AndroidSolidDataDirectory(context)
+        private val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
 
         fun setText() {
-            setText(
-                AppDirectory.getDataDirectory(
-                    AndroidSolidDataDirectory(context),
-                    directory
-                ).pathName
-            )
+            setText(AppDirectory.getDataDirectory(sdirectory, directory).pathName)
         }
 
         public override fun onAttachedToWindow() {

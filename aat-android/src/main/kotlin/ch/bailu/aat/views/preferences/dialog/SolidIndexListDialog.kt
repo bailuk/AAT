@@ -11,7 +11,7 @@ class SolidIndexListDialog(context: Context, private val slist: SolidIndexList) 
 
     init {
         dialog = createDefaultDialog(context, slist)
-        dialog.setSingleChoiceItems(slist.stringArray, slist.index, this)
+        dialog.setSingleChoiceItems(slist.getStringArray(), slist.index, this)
         dialog.create()
         dialog.show()
     }

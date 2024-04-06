@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.exception.IllegalCodeException
 import ch.bailu.aat_lib.logger.AppLog
 import org.mapsforge.core.model.LatLong
 import java.text.DecimalFormat
-import javax.annotation.Nonnull
+
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -41,7 +41,7 @@ class WGS84Coordinates : Coordinates {
             return (decimal * 1e6).roundToInt()
         }
 
-        @Nonnull
+        
         override fun toString(): String {
             return (fX.format(abs(degree).toLong()) + "\u00B0 "
                     + f00.format(minute.toLong()) + "\u0027 "
@@ -91,7 +91,7 @@ class WGS84Coordinates : Coordinates {
         }
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         return (latitude.toString() + " "
                 + latitudeChar + " "

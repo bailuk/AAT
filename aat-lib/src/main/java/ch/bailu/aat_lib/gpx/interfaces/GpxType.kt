@@ -1,11 +1,9 @@
 package ch.bailu.aat_lib.gpx.interfaces
 
-import javax.annotation.Nonnull
-
 enum class GpxType {
     WAY, ROUTE, TRACK, NONE;
 
-    @Nonnull
+
     override fun toString(): String {
         return name
     }

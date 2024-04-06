@@ -102,7 +102,9 @@ open class ImageObjectView(
     private val onFileChanged: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val file = imageHandle.toString()
-            if (AppIntent.hasFile(intent, file)) displayImage()
+            if (AppIntent.hasFile(intent, file)) {
+                displayImage()
+            }
         }
     }
 

@@ -23,15 +23,15 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
         height = b - t
     }
 
-    override fun drawInside(mcontext: MapContext?) {}
+    override fun drawInside(mcontext: MapContext) {}
 
-    override fun drawForeground(mcontext: MapContext?) {}
+    override fun drawForeground(mcontext: MapContext) {}
 
-    override fun onTap(tapXY: Point): Boolean {
+    override fun onTap(tapPos: Point): Boolean {
         var result = true
 
-        val y = tapXY.y
-        val x = tapXY.x
+        val y = tapPos.y
+        val x = tapPos.x
 
         if (y < edgeSize) {
             show(Position.TOP)
@@ -45,7 +45,7 @@ class EdgeControlLayer(private val mcontext: MapContext, private val edgeSize: I
             hide()
             result = false
         }
-        mcontext.mapView.requestRedraw()
+        mcontext.getMapView().requestRedraw()
         return result
     }
 

@@ -3,14 +3,14 @@ package ch.bailu.aat_lib.service.directory
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
-import javax.annotation.Nonnull
+
 
 abstract class IteratorAbstract(private val appContext: AppContext) : Iterator(),
     OnPreferencesChanged {
@@ -30,7 +30,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         onCursorChangedListener = l
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key)) {
             openAndQuery()
         } else if (sdirectory.containsKey(key) && selection != sdirectory.createSelectionString()) {
@@ -50,6 +50,13 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         return if (resultSet != null) resultSet!!.moveToPosition(pos) else false
     }
 
+    override fun getId(): Long {
+        resultSet?.apply {
+            return getLong(GpxDbConfiguration.KEY_ID)
+        }
+        return 0L
+    }
+
     override fun getCount(): Int {
         return if (resultSet != null) resultSet!!.count else 0
     }
@@ -58,12 +65,11 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         return if (resultSet != null) resultSet!!.position else -1
     }
 
-    abstract override fun getInfo(): GpxInformation
     abstract fun onCursorChanged(resultSet: DbResultSet?, directory: Foc?, fid: String?)
     private fun openAndQuery() {
         val fileOnOldPosition = ""
         val oldPosition = 0
-        appContext.services.directoryService.openDir(sdirectory.valueAsFile)
+        appContext.services.directoryService.openDir(sdirectory.getValueAsFile())
         updateResultFromSelection()
         moveToOldPosition(oldPosition, fileOnOldPosition)
     }
@@ -92,7 +98,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private fun moveToOldPosition(oldPosition: Int, fileOnOldPosition: String) {
         if (resultSet != null) {
             resultSet!!.moveToPosition(oldPosition)
-            onCursorChanged(resultSet, sdirectory.valueAsFile, fileOnOldPosition)
+            onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition)
             onCursorChangedListener.onCursorChanged()
         }
     }

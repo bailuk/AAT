@@ -10,7 +10,8 @@ import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 class OverlaySource private constructor(
     context: AppContext,
     private val soverlay: SolidOverlayInterface
-) : FileSource(context, soverlay.iid) {
+) : FileSource(context, soverlay.getIID()) {
+
     private val onPreferencesChanged = OnPreferencesChanged { _, key ->
         if (soverlay.hasKey(key)) {
             initAndUpdateOverlay()
@@ -22,13 +23,13 @@ class OverlaySource private constructor(
     }
 
     private fun initAndUpdateOverlay() {
-        setFile(soverlay.valueAsFile)
-        super.setEnabled(soverlay.isEnabled)
+        setFile(soverlay.getValueAsFile())
+        super.setEnabled(soverlay.isEnabled())
     }
 
     override fun setEnabled(enabled: Boolean) {
-        soverlay.isEnabled = enabled
-        super.setEnabled(soverlay.isEnabled)
+        soverlay.setEnabled(enabled)
+        super.setEnabled(soverlay.isEnabled())
     }
 
     override fun onPause() {

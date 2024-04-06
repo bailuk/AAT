@@ -15,7 +15,7 @@ class BusyView(context: Context) : LinearLayout(context) {
     init {
         orientation = HORIZONTAL
         val density: AppDensity = AndroidAppDensity(context)
-        val m = density.toPixel_i(2f)
+        val m = density.toPixelInt(2f)
         val lp =
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         lp.setMargins(m, m, m, m)

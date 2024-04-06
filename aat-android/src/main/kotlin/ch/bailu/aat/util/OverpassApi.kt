@@ -1,31 +1,35 @@
 package ch.bailu.aat.util
 
-import android.content.Context
-import ch.bailu.aat.R
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.preferences.map.SolidOverpassOverlay
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.Locale
 
-abstract class OverpassApi(context: Context, b: BoundingBoxE6) : DownloadApi() {
+abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi() {
+    private val overlay = SolidOverpassOverlay(context.dataDirectory)
+
     final override val apiName: String
+        get() = overlay.getLabel()
+
     private val bounding: String
-    final override val baseDirectory: Foc
+
     override val urlStart: String
         get() = "$URL…"
 
-    override val fileExtension = ".osm"
+    override val fileExtension = AppDirectory.OSM_EXTENSION
+
+    override val resultFile: Foc
+        get() = overlay.getValueAsFile()
+
+    override val baseDirectory: Foc
+        get() = overlay.directory
 
     init {
-        apiName = getName(context)
         bounding = toString(b)
-        baseDirectory = AppDirectory.getDataDirectory(
-            AndroidSolidDataDirectory(context),
-            AppDirectory.DIR_OVERPASS
-        )
     }
 
     /**
@@ -104,11 +108,7 @@ abstract class OverpassApi(context: Context, b: BoundingBoxE6) : DownloadApi() {
         const val URL = "https://overpass-api.de/api/interpreter?data=(" // data=node
         const val POST = ">;);out;"
 
-        fun getName(context: Context): String {
-            return context.getString(R.string.query_overpass)
-        }
-
-        private fun toString(bounding: BoundingBoxE6): String {
+           private fun toString(bounding: BoundingBoxE6): String {
             val lo1 = bounding.lonWestE6 / 1E6
             val la1 = bounding.latSouthE6 / 1E6
             val lo2 = bounding.lonEastE6 / 1E6

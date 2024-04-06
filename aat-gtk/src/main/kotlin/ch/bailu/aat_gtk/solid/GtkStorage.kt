@@ -60,14 +60,14 @@ class GtkStorage : StorageInterface {
         }
     }
 
-    override fun register(listener: OnPreferencesChanged) {
-        if (!OBSERVERS.contains(listener)) {
-            OBSERVERS.add(listener)
+    override fun register(onPreferencesChanged: OnPreferencesChanged) {
+        if (!OBSERVERS.contains(onPreferencesChanged)) {
+            OBSERVERS.add(onPreferencesChanged)
         }
     }
 
-    override fun unregister(l: OnPreferencesChanged) {
-        OBSERVERS.remove(l)
+    override fun unregister(onPreferencesChanged: OnPreferencesChanged) {
+        OBSERVERS.remove(onPreferencesChanged)
     }
 
     override fun isDefaultString(s: String): Boolean {

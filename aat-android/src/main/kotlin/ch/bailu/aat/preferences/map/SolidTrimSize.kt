@@ -28,8 +28,8 @@ class SolidTrimSize(storageInterface: StorageInterface) : SolidIndexList(
         return entries[index].value
     }
 
-    public override fun getValueAsString(i: Int): String {
-        return entries[i].text
+    public override fun getValueAsString(index: Int): String {
+        return entries[index].text
     }
 
     companion object {

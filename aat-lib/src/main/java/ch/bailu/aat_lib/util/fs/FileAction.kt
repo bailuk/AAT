@@ -18,7 +18,7 @@ object FileAction {
     }
 
     private fun isParentActive(context: AppContext, file: Foc): Boolean {
-        val currentDir = SolidDirectoryQuery(context.storage, context).valueAsFile
+        val currentDir = SolidDirectoryQuery(context.storage, context).getValueAsFile()
         val dir = file.parent()
         return dir != null && dir == currentDir
     }
@@ -35,27 +35,29 @@ object FileAction {
         )
     }
 
-    fun copyToDir(context: AppContext, src: Foc?, destDir: Foc?, p: String?, ext: String?) {
+    fun copyToDir(context: AppContext, src: Foc, destDir: Foc, prefix: String, extension: String) {
         try {
-            copyToDest(context, src, AppDirectory.generateUniqueFilePath(destDir, p, ext))
+            copyToDest(
+                context,
+                src,
+                AppDirectory.generateUniqueFilePath(destDir, prefix, extension)
+            )
         } catch (e: IOException) {
             AppLog.e(context, e)
         }
     }
 
     @Throws(IOException::class)
-    private fun copyToDest(context: AppContext, src: Foc?, dest: Foc?) {
-        if (src != null && dest != null) {
-            if (dest.exists()) {
-                logErrorExists(dest)
-            } else {
-                src.copy(dest)
-                context.broadcaster.broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK,
-                    dest.path,
-                    src.path
-                )
-            }
+    private fun copyToDest(context: AppContext, src: Foc, dest: Foc) {
+        if (dest.exists()) {
+            logErrorExists(dest)
+        } else {
+            src.copy(dest)
+            context.broadcaster.broadcast(
+                AppBroadcaster.FILE_CHANGED_ONDISK,
+                dest.path,
+                src.path
+            )
         }
     }
 

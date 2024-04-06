@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.coordinates
 import ch.bailu.aat_lib.description.FF
 import ch.bailu.aat_lib.exception.IllegalCodeException
 import org.mapsforge.core.model.LatLong
-import javax.annotation.Nonnull
+
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.pow
@@ -123,7 +123,7 @@ class UTMCoordinates : MeterCoordinates {
         return toLatLong(eastingDouble, northingDouble, eastingZone, isInSouthernHemisphere)
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         return ("Z " + eastingZone + northingZone
                 + ", E " + FF.f().N3_3.format((eastingDouble.toFloat() / 1000f).toDouble())

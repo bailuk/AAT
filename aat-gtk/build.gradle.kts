@@ -35,13 +35,7 @@ dependencies {
     //implementation("org.xerial:sqlite-jdbc:3.28.0")
 
     // https://mvnrepository.com/artifact/com.h2database/h2
-    implementation("com.h2database:h2:2.0.204")
-
-    /**
-     *    https://github.com/taimos/GPSd4Java
-     *    https://wiki.mobian-project.org/doku.php?id=location
-     */
-    implementation("de.taimos:gpsd4java:1.10")
+    implementation("com.h2database:h2:2.2.224")
 
     /**
      *    https://github.com/mapsforge/mapsforge/blob/master/docs/Integration.md
@@ -53,7 +47,7 @@ dependencies {
     // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     /**
      *
@@ -61,7 +55,7 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"

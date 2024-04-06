@@ -19,4 +19,6 @@ object InfoID {
     const val BAROMETER_SENSOR = 75
     const val STEP_COUNTER_SENSOR = 76
     const val POI = 80
+    const val OVERPASS = 81
+    const val NOMINATIM = 82
 }

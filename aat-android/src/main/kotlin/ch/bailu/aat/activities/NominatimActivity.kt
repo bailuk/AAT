@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 class NominatimActivity : AbsOsmApiActivity() {
 
     public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : NominatimApi(this@NominatimActivity, boundingBox) {
+        return object : NominatimApi(appContext, boundingBox) {
             override val queryString: String
                 get() = editorView.toString()
         }

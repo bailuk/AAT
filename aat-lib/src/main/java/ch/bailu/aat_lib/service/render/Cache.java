@@ -7,16 +7,16 @@ import org.mapsforge.map.layer.queue.Job;
 import org.mapsforge.map.model.common.Observer;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
 
 public final class Cache implements TileCache {
 
-    private final Map <Integer, ObjTileMapsForge> cache = new HashMap<>();
+    private final Map <Integer, ObjTileMapsForge> cache = new ConcurrentHashMap<>();
 
     /**
      * Interface function for MapWorkerPool.

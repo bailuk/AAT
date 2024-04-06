@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.list
 
-import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -11,6 +10,7 @@ import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
@@ -18,11 +18,9 @@ import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
-import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.directory.IteratorSimple
-import ch.bailu.foc.FocFactory
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
@@ -40,14 +38,13 @@ import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.type.Str
 
 class FileList(app: Application,
-               storage: StorageInterface,
-               focFactory: FocFactory,
+               appContext: AppContext,
                private val uiController: UiController
 ) {
     private val descriptions = arrayOf(
         DateDescription(),
-        DistanceDescription(GtkAppContext.storage),
-        AverageSpeedDescription(GtkAppContext.storage),
+        DistanceDescription(appContext.storage),
+        AverageSpeedDescription(appContext.storage),
         TimeDescription())
 
 
@@ -76,7 +73,7 @@ class FileList(app: Application,
     private var listIsDirty = false
     private val updateTimer = GtkTimer()
 
-    private val iteratorSimple = IteratorSimple(GtkAppContext).apply {
+    private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
             if (listIndex.size != count) {
                 if (!listIsDirty) {
@@ -106,9 +103,9 @@ class FileList(app: Application,
     private val items = HashMap<ListItem, FileListItem>()
     private val overlayMenu = FileContextMenu(
         SolidCustomOverlayList(
-            storage,
-            focFactory
-        ), SolidMockLocationFile(storage)).apply {
+            appContext.storage,
+            appContext
+        ), SolidMockLocationFile(appContext.storage)).apply {
         createActions(app)
     }
     private val logItems = SizeLog("FileListItem")
@@ -167,14 +164,11 @@ class FileList(app: Application,
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     addCssClass(Strings.linked)
                     append(
-                        SolidDirectoryQueryComboView(
-                            storage,
-                            focFactory
-                        ).combo.apply { addCssClass(Strings.linked) })
+                        SolidDirectoryQueryComboView(appContext).combo.apply { addCssClass(Strings.linked) })
                     append(Button().apply {
                         iconName = Icons.folderSymbolic
                         onClicked {
-                            val path = SolidDirectoryQuery(storage, focFactory).valueAsFile.path
+                            val path = SolidDirectoryQuery(appContext.storage, appContext).getValueAsFile().path
                             Directory.openExternal(path)
                         }
                     })

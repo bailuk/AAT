@@ -2,10 +2,12 @@
 # Create Flatpak
 
 ```bash
-# generate 'gradle-sources.json'
+# 1. generate 'gradle-sources.json'
 ./flatpak-generate-gradle-sources.sh
 
-# create and run flatpak distribution
+# 2. adjust version and hash of `gradle-bin.zip` in `./ch.bailu.aat.json`
+
+# 3. create and run flatpak distribution
 ./flatpak-create.sh
 ```
 

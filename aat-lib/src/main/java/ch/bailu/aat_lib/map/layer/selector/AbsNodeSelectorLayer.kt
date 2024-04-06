@@ -23,8 +23,8 @@ abstract class AbsNodeSelectorLayer(
     private val pos: Position
 ) : MapLayerInterface, OnContentUpdatedInterface, EdgeViewInterface {
 
-    private val squareSize = mc.metrics.density.toPixel_i(SQUARE_SIZE.toFloat())
-    private val squareHSize = mc.metrics.density.toPixel_i(SQUARE_HSIZE.toFloat())
+    private val squareSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_SIZE.toFloat())
+    private val squareHSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_HSIZE.toFloat())
 
     private var visible = true
 
@@ -34,7 +34,7 @@ abstract class AbsNodeSelectorLayer(
     private var selectedNode: GpxPointNode? = null
 
 
-    private val sgrid = SolidMapGrid(s, mc.solidKey)
+    private val sgrid = SolidMapGrid(s, mc.getSolidKey())
     private var coordinates = sgrid.createCenterCoordinatesLayer(services)
 
 
@@ -57,18 +57,16 @@ abstract class AbsNodeSelectorLayer(
     override fun drawForeground(mcontext: MapContext) {
         if (visible) {
             centerRect.offsetTo(
-                mcontext.metrics.width / 2 - squareHSize,
-                mcontext.metrics.height / 2 - squareHSize
+                mcontext.getMetrics().getWidth() / 2 - squareHSize,
+                mcontext.getMetrics().getHeight() / 2 - squareHSize
             )
             val centerBounding = BoundingBoxE6()
-            val lt = mcontext.metrics.fromPixel(centerRect.left, centerRect.top)
-            val rb = mcontext.metrics.fromPixel(centerRect.right, centerRect.bottom)
-            if (lt != null && rb != null) {
-                centerBounding.add(lt)
-                centerBounding.add(rb)
-                findNodeAndNotify(centerBounding)
-            }
-            centerRect.offset(mcontext.metrics.left, mcontext.metrics.top)
+            val lt = mcontext.getMetrics().fromPixel(centerRect.left, centerRect.top)
+            val rb = mcontext.getMetrics().fromPixel(centerRect.right, centerRect.bottom)
+            centerBounding.add(lt)
+            centerBounding.add(rb)
+            findNodeAndNotify(centerBounding)
+            centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop())
             drawSelectedNode(mcontext)
             drawCenterSquare(mcontext)
             coordinates.drawForeground(mcontext)
@@ -111,15 +109,15 @@ abstract class AbsNodeSelectorLayer(
     private fun drawSelectedNode(mcontext: MapContext) {
         val node = selectedNode
         if (node != null) {
-            val selectedPixel = mcontext.metrics.toPixel(node)
+            val selectedPixel = mcontext.getMetrics().toPixel(node)
             mcontext.draw()
-                .bitmap(mcontext.draw().nodeBitmap, selectedPixel, MapColor.NODE_SELECTED)
+                .bitmap(mcontext.draw().getNodeBitmap(), selectedPixel, MapColor.NODE_SELECTED)
         }
     }
 
     private fun drawCenterSquare(mcontext: MapContext) {
-        mcontext.draw().rect(centerRect, mcontext.draw().gridPaint)
-        mcontext.draw().point(mcontext.metrics.centerPixel)
+        mcontext.draw().rect(centerRect, mcontext.draw().getGridPaint())
+        mcontext.draw().point(mcontext.getMetrics().getCenterPixel())
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
@@ -130,7 +128,7 @@ abstract class AbsNodeSelectorLayer(
         }
     }
 
-    override fun onPreferencesChanged(s: StorageInterface, key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sgrid.hasKey(key)) {
             coordinates = sgrid.createCenterCoordinatesLayer(services)
         }

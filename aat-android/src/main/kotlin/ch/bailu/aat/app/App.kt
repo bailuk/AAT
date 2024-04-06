@@ -1,18 +1,16 @@
 package ch.bailu.aat.app
 
 import android.app.Application
-import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.util.AndroidLoggerFactory
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
-import org.acra.ACRA
-import org.acra.config.CoreConfigurationBuilder
-import org.acra.config.DialogConfigurationBuilder
-import org.acra.config.MailSenderConfigurationBuilder
+import org.acra.config.dialog
+import org.acra.config.mailSender
 import org.acra.data.StringFormat
+import org.acra.ktx.initAcra
 import org.mapsforge.core.util.Parameters
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 
@@ -22,7 +20,7 @@ class App : Application() {
         initLogger()
         initMapsForge()
         if (AppConfig.getInstance().isRelease) {
-            initAcra()
+            initAcraReport()
         }
         super.onCreate()
     }
@@ -47,24 +45,20 @@ class App : Application() {
         Parameters.SQUARE_FRAME_BUFFER = false
     }
 
-    private fun initAcra() {
-        val builder = CoreConfigurationBuilder(this)
-            .setBuildConfigClass(BuildConfig::class.java)
-            .setReportFormat(StringFormat.KEY_VALUE_LIST)
-
-        builder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder::class.java)
-            .setMailTo(AppConfig.getInstance().appContact)
-            .setEnabled(true)
-
-        builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            .setTitle(AppConfig.getInstance().appName + " crashed")
-            .setText(
-                """
-                This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().appContact}".
-                This will help the author to fix and improve this app.
+    private fun initAcraReport() {
+        initAcra {
+            buildConfigClass = org.acra.BuildConfig::class.java
+            reportFormat = StringFormat.KEY_VALUE_LIST
+            dialog {
+                title = "${AppConfig.getInstance().appName} crashed"
+                text = """
+                    This will open your e-mail app to send a crash report including some information about your device to "${AppConfig.getInstance().appContact}".
+                    This will help the author to fix and improve this app.
                 """.trimIndent()
-            )
-            .setEnabled(true)
-        ACRA.init(this, builder)
+            }
+            mailSender {
+                mailTo = AppConfig.getInstance().appContact
+            }
+        }
     }
 }

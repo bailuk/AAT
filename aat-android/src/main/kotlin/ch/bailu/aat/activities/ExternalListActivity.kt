@@ -28,7 +28,7 @@ class ExternalListActivity : AbsGpxListActivity() {
     }
 
     override val directory: Foc
-        get() = SolidExternalDirectory(this).valueAsFile
+        get() = SolidExternalDirectory(this).getValueAsFile()
     override val label: String
         get() = getString(R.string.intro_external_list)
 }

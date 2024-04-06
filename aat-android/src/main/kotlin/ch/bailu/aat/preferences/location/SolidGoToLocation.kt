@@ -30,7 +30,7 @@ class SolidGoToLocation(val context: Context) : SolidString(
     }
 
     fun goToLocationFromUser(map: MapViewInterface) {
-        reference = map.mapViewPosition.center
+        reference = map.getMapViewPosition().center
         SolidTextInputDialog(
             context,
             this,
@@ -44,7 +44,7 @@ class SolidGoToLocation(val context: Context) : SolidString(
     }
 
     fun goToLocation(map: MapViewInterface, s: String) {
-        reference = map.mapViewPosition.center
+        reference = map.getMapViewPosition().center
         try {
             map.setCenter(latLongFromString(s))
         } catch (e: Exception) {

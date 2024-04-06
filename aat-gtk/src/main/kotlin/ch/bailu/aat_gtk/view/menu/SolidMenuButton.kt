@@ -16,12 +16,12 @@ class SolidMenuButton(solid: SolidIndexList) : PopupButton(
 
     init {
         this.solid.register(this)
-        setIcon(this.solid.iconResource)
+        setIcon(this.solid.getIconResource())
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            setIcon(solid.iconResource)
+            setIcon(solid.getIconResource())
             AppLog.i(this, solid.getValueAsString())
         }
     }

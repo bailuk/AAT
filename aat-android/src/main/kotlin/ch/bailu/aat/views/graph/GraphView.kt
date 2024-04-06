@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig
-import javax.annotation.Nonnull
+
 
 class GraphView(
     context: Context,
@@ -48,7 +48,7 @@ class GraphView(
         plotter.initLabels(yLabel)
     }
 
-    override fun onContentUpdated(iid: Int, @Nonnull info: GpxInformation) {
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         onContentUpdated(info, -1)
     }
 

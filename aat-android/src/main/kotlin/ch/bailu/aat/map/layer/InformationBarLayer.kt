@@ -36,8 +36,8 @@ class InformationBarLayer(
 
     init {
         val storage: StorageInterface = appContext.storage
-        val sgrid = SolidMapGrid(storage, mcontext.solidKey)
-        val slegend = SolidLegend(storage, mcontext.solidKey)
+        val sgrid = SolidMapGrid(storage, mcontext.getSolidKey())
+        val slegend = SolidLegend(storage, mcontext.getSolidKey())
         val grid = bar.addSolidIndexButton(sgrid)
         val legend = bar.addSolidIndexButton(slegend)
 
@@ -55,7 +55,7 @@ class InformationBarLayer(
         } else if (v === search) {
             MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v)
         } else if (v === location) {
-            LocationMenu(context, mcontext.mapView).showAsPopup(v.getContext(), location)
+            LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location)
         }
     }
 
@@ -82,7 +82,7 @@ class InformationBarLayer(
 
     override fun onAttached() {}
     override fun onDetached() {}
-    override fun onPreferencesChanged(s: StorageInterface, key: String) {
-        selector.onPreferencesChanged(s, key)
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        selector.onPreferencesChanged(storage, key)
     }
 }

@@ -1,23 +1,23 @@
 package ch.bailu.aat
 
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class TestTest {
     var initValue = false
-    @Before
+    @BeforeEach
     fun init() {
         initValue = true
     }
 
     @Test
     fun testTest() {
-        Assert.assertEquals("This test failed", true, initValue)
+        Assertions.assertEquals(true, initValue, "This test failed")
     }
 
-    @After
+    @AfterEach
     fun reset() {
         initValue = false
     }

@@ -20,9 +20,9 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
 
     override fun createMenu(): Menu {
         return Menu().apply {
-            appendItem(MenuHelper.createCustomItem(solid.key))
-            append("${Res.str().file_dialog()}…" , "app.get${solid.key}")
-            append("${Res.str().file_directory_open()}…", "app.open${solid.key}")
+            appendItem(MenuHelper.createCustomItem(solid.getKey()))
+            append("${Res.str().file_dialog()}…" , "app.get${solid.getKey()}")
+            append("${Res.str().file_directory_open()}…", "app.open${solid.getKey()}")
         }
     }
 
@@ -41,24 +41,24 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
                         label.margin(3)
                         append(label)
                     }
-                }, solid.key
+                }, solid.getKey()
             ) {}
         )
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "get${solid.key}") {
+        MenuHelper.setAction(app, "get${solid.getKey()}") {
             FileDialog()
                 .title(solid.getLabel())
-                .path(pathFromFile(solid.valueAsFile))
+                .path(pathFromFile(solid.getValueAsFile()))
                 .onResponse {
                     if (it.isNotEmpty()) {
                         solid.setValueFromString(it)
                     }
                 }.show(window)
             }
-        MenuHelper.setAction(app, "open${solid.key}") {
-            Directory.openExternal(pathFromFile(solid.valueAsFile))
+        MenuHelper.setAction(app, "open${solid.getKey()}") {
+            Directory.openExternal(pathFromFile(solid.getValueAsFile()))
         }
     }
 

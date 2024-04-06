@@ -7,8 +7,8 @@ import ch.bailu.aat_lib.resources.Res
 /**
  * TODO move to lib
  */
-class SolidTrimMode(storageInterface: StorageInterface?) : SolidStaticIndexList(
-    storageInterface,
+class SolidTrimMode(storage: StorageInterface) : SolidStaticIndexList(
+    storage,
     SolidTrimMode::class.java.simpleName,
     generateModes()
 ) {
@@ -20,8 +20,8 @@ class SolidTrimMode(storageInterface: StorageInterface?) : SolidStaticIndexList(
         return Res.str().p_trim_mode()
     }
 
-    override fun getValueAsString(i: Int): String {
-        return modes[i]
+    override fun getValueAsString(index: Int): String {
+        return modes[index]
     }
 
     companion object {

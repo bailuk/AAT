@@ -3,17 +3,15 @@ package ch.bailu.aat_lib.preferences
 import ch.bailu.aat_lib.exception.ValidationException
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.resources.Res
-import javax.annotation.Nonnull
 
-open class SolidInteger(
-    @param:Nonnull private val storage: StorageInterface,
-    @param:Nonnull private val key: String
-) : AbsSolidType() {
-    open var value: Int
-        get() = getStorage().readInteger(getKey())
-        set(v) {
-            getStorage().writeInteger(getKey(), v)
-        }
+open class SolidInteger(private val storage: StorageInterface, private val key: String) : AbsSolidType() {
+    open fun getValue(): Int {
+        return getStorage().readInteger(getKey())
+    }
+
+    open fun setValue(value: Int) {
+        getStorage().writeInteger(getKey(), value)
+    }
 
     override fun getKey(): String {
         return key
@@ -24,7 +22,7 @@ open class SolidInteger(
     }
 
     override fun getValueAsString(): String {
-        return value.toString()
+        return getValue().toString()
     }
 
     @Throws(ValidationException::class)
@@ -35,7 +33,7 @@ open class SolidInteger(
             throw ValidationException(String.format(Res.str().error_integer(), s))
         } else {
             try {
-                value = s.toInt()
+                setValue(s.toInt())
             } catch (e: NumberFormatException) {
                 e(this, e)
             }

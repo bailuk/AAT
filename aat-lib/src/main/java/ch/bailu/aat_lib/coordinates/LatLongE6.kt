@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.coordinates
 
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
-import javax.annotation.Nonnull
 
 class LatLongE6 : LatLongInterface {
     private val latitudeE6: Int
@@ -43,7 +42,7 @@ class LatLongE6 : LatLongInterface {
         return toD(longitudeE6)
     }
 
-    @Nonnull
+
     override fun toString(): String {
         return toLatLong().toString()
     }

@@ -12,5 +12,5 @@
 # GTK
 
 <div style="display:flex;">
-<img alt="Screenshot GTK" src="screenshot-gtk.png" width="30%">
+<img alt="Screenshot GTK" src="screenshot-gtk.png">
 </div>

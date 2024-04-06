@@ -10,7 +10,7 @@ import ch.bailu.gtk.gtk.ListBox
 class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
-            appendItem(MenuHelper.createCustomItem(solid.key))
+            appendItem(MenuHelper.createCustomItem(solid.getKey()))
         }
     }
 
@@ -19,9 +19,9 @@ class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
             CustomWidget(
                 ListBox().apply {
                     selectionMode = 0
-                    val enabledArray = solid.enabledArray
+                    val enabledArray = solid.getEnabledArray()
 
-                    solid.stringArray.forEachIndexed { index, it ->
+                    solid.getStringArray().forEachIndexed { index, it ->
                         append(CheckButton().apply {
                             setLabel(it)
                             active = enabledArray[index]
@@ -30,7 +30,7 @@ class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
                             }
                         })
                     }
-                }, solid.key
+                }, solid.getKey()
             ) {}
         )
     }

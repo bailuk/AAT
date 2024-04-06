@@ -11,8 +11,8 @@ class ToolTipLongClick(v: View, private val tip: ToolTipProvider) : View.OnLongC
     }
 
     override fun onLongClick(view: View): Boolean {
-        val text = tip.toolTip
-        if (text != null && text.isNotEmpty()) {
+        val text = tip.getToolTip()
+        if (!text.isNullOrEmpty()) {
             AppLog.i(view.context, text)
             return true
         }

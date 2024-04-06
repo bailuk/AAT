@@ -1,11 +1,9 @@
 package ch.bailu.aat_lib.gpx.attributes
 
-import javax.annotation.Nonnull
-
 class GpxAttributesStatic(private var tagList: Array<Tag> = arrayOf()) :
     GpxAttributes() {
     class Tag(val key: Int, val value: String) : Comparable<Tag> {
-        override fun compareTo(@Nonnull other: Tag): Int {
+        override fun compareTo( other: Tag): Int {
             return key.compareTo(other.key)
         }
     }

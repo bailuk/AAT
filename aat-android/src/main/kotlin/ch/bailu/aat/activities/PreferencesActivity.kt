@@ -8,9 +8,9 @@ import ch.bailu.aat.preferences.SolidSAF
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
 import ch.bailu.aat.views.preferences.MapPreferencesView
 import ch.bailu.aat.views.preferences.PresetPreferencesView
@@ -18,7 +18,6 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
-import javax.annotation.Nonnull
 
 class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     companion object {
@@ -86,7 +85,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
         super.onDestroy()
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         spresetCount?.apply {
             if (this.hasKey(key)) {
                 multiView?.apply { addPresetPreferences(this, theme) }

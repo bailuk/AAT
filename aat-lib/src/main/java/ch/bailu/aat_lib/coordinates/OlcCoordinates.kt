@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.coordinates
 
 import com.google.openlocationcode.OpenLocationCode
 import org.mapsforge.core.model.LatLong
-import javax.annotation.Nonnull
+
 
 class OlcCoordinates : Coordinates {
     /**
@@ -43,7 +43,7 @@ class OlcCoordinates : Coordinates {
         olc = OpenLocationCode(c.getLatitude(), c.getLongitude())
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         return olc.code
     }

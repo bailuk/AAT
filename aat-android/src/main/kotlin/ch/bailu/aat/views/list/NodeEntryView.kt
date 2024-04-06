@@ -28,7 +28,7 @@ class NodeEntryView(activityContext: ActivityContext) : LinearLayout(activityCon
         activityContext.addLifeCycle(map)
         gpxOverlay = GpxDynLayer(
             activityContext.appContext.storage,
-            map.mContext,
+            map.getMContext(),
             activityContext.serviceContext
         )
         map.add(gpxOverlay)

@@ -18,9 +18,9 @@ class MapsForgeView(
 ) : MapsForgeViewBase(appContext, context, key, MapDensity(context)) {
 
     private val stack = MapsForgeTileLayerStackConfigured.All(this, appContext)
-    private val pos = MapPositionLayer(mContext, Storage(context), dispatcher)
+    private val pos = MapPositionLayer(getMContext(), Storage(context), dispatcher)
     private val services = appContext.services
-    private val foreground = MapsForgeForeground(appContext, this, mContext, MapDensity(context), layers)
+    private val foreground = MapsForgeForeground(appContext, this, getMContext(), MapDensity(context), layers)
 
     init {
         add(stack, stack)

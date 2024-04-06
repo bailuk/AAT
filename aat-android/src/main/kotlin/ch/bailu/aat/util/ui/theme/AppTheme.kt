@@ -32,7 +32,7 @@ object AppTheme {
     @JvmStatic
     @JvmOverloads
     fun padding(view: View, p: Int = 15) {
-        val padding = AndroidAppDensity(view.context).toPixel_i(p.toFloat())
+        val padding = AndroidAppDensity(view.context).toPixelInt(p.toFloat())
         view.setPadding(padding, padding, padding, padding)
     }
 

@@ -35,24 +35,24 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
 
     override fun onResume() {
         iterator = factoryIterator(appContext)
-        iterator.moveToPosition(sdirectory.position.value)
+        iterator.moveToPosition(sdirectory.position.getValue())
         iterator.setOnCursorChangedListener(this)
     }
 
-    abstract fun factoryIterator(appContext: AppContext?): Iterator
+    abstract fun factoryIterator(appContext: AppContext): Iterator
     override fun getInfo(): GpxInformation {
         return iterator.info
     }
 
     fun moveToPrevious() {
         if (!iterator.moveToPrevious()) iterator.moveToPosition(iterator.count - 1)
-        sdirectory.position.value = iterator.position
+        sdirectory.position.setValue(iterator.position)
         requestUpdate()
     }
 
     fun moveToNext() {
         if (!iterator.moveToNext()) iterator.moveToPosition(0)
-        sdirectory.position.value = iterator.position
+        sdirectory.position.setValue(iterator.position)
         requestUpdate()
     }
 
@@ -60,7 +60,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         appContext
     ) {
         private var handle = ObjNull.NULL
-        override fun factoryIterator(appContext: AppContext?): Iterator {
+        override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorFollowFile(appContext)
         }
 
@@ -108,7 +108,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
     }
 
     class Summary(appContext: AppContext) : IteratorSource(appContext) {
-        override fun factoryIterator(appContext: AppContext?): Iterator {
+        override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorSummary(appContext)
         }
     }

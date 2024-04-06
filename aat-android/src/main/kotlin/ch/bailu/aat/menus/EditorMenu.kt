@@ -5,17 +5,19 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.Menu
 import ch.bailu.aat.R
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
 import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
+import ch.bailu.foc_android.FocAndroidFactory
 
 class EditorMenu(
     private val context: Context,
@@ -43,10 +45,11 @@ class EditorMenu(
 
     override fun prepare(menu: Menu) {}
     private fun saveCopy() {
-        if (file == AppDirectory.getEditorDraft(AndroidSolidDataDirectory(context))) {
+        val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        if (file == AppDirectory.getEditorDraft(sdirectory)) {
             editor.saveTo(
                 AppDirectory.getDataDirectory(
-                    AndroidSolidDataDirectory(context),
+                    sdirectory,
                     AppDirectory.DIR_OVERLAY
                 )
             )

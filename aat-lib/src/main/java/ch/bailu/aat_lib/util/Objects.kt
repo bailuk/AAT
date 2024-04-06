@@ -45,13 +45,4 @@ object Objects {
         if (s.isNotEmpty()) c = s[0]
         return c == 't' || c == 'T'
     }
-
-    fun toArray(list: List<String?>): Array<String> {
-        val result = arrayOfNulls<String>(list.size)
-
-        for (i in result.indices) {
-            result[i] = toString(list[i])
-        }
-        return result as Array<String>
-    }
 }

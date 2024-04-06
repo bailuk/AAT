@@ -34,10 +34,10 @@ class InfoBar(app: Application,
             createActions(app)
             setIcon(Icons.openMenuSymbolic)
         }.overlay)
-        add(SolidMenuButton(SolidMapGrid(storage, mcontext.solidKey)).apply {
+        add(SolidMenuButton(SolidMapGrid(storage, mcontext.getSolidKey())).apply {
             createActions(app)
         }.overlay)
-        add(SolidMenuButton(SolidLegend(storage, mcontext.solidKey)).apply {
+        add(SolidMenuButton(SolidLegend(storage, mcontext.getSolidKey())).apply {
             createActions(app)
         }.overlay)
         add(PopupButton(LocationMenu(app)).apply {

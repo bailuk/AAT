@@ -9,11 +9,11 @@ import ch.bailu.foc.FocFactory
 class SolidGtkDefaultDirectory (storage: StorageInterface, focFactory: FocFactory) :
     SolidDataDirectoryDefault(storage, focFactory) {
 
-    override fun buildSelection(result: ArrayList<String>): ArrayList<String> {
+    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
         val home = System.getProperty("user.home")
-        addDistinct(result,"$home/.config/$appIdName")
-        addDistinct(result,"$home/${AppDirectory.DIR_AAT_DATA}")
-        return result
+        addDistinct(list,"$home/.config/$appIdName")
+        addDistinct(list,"$home/${AppDirectory.DIR_AAT_DATA}")
+        return list
     }
 
     fun buildSubDirectorySelection(result: ArrayList<String>, subDirectory: String): ArrayList<String> {

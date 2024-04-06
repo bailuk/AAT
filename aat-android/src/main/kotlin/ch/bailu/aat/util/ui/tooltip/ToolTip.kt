@@ -12,7 +12,7 @@ object ToolTip {
     @JvmStatic
     fun set(view: View, resID: Int) {
         if (Build.VERSION.SDK_INT >= 26) {
-            view.tooltipText = ToolTipRes(view.context, resID).toolTip
+            view.tooltipText = ToolTipRes(view.context, resID).getToolTip()
         } else {
             ToolTipLongClick(view, ToolTipRes(view.context, resID))
         }

@@ -7,7 +7,7 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
 import java.io.IOException
-import javax.annotation.Nonnull
+
 
 class BoundingBoxE6 {
     var latNorthE6 = MIN_LA
@@ -127,7 +127,7 @@ class BoundingBoxE6 {
         return latNorthE6 > latSouthE6 && lonEastE6 > lonWestE6
     }
 
-    @Nonnull
+    
     override fun toString(): String {
         val f = FF.f()
         return f.N2.format((latNorthE6 / 1e6f).toDouble()) + "," +

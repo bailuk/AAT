@@ -8,15 +8,11 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc_android.FocAndroidFactory
 
-class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(
-    Storage(
-        context
-    ), FocAndroidFactory(context)
-) {
+class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(Storage(context), FocAndroidFactory(context)) {
 
     override fun getValueAsString(): String {
         val r = super.getValueAsString()
-        return if (storage.isDefaultString(r)) setDefaultValue() else r
+        return if (getStorage().isDefaultString(r)) setDefaultValue() else r
     }
 
     override fun setDefaultValue(): String {
@@ -30,7 +26,7 @@ class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirector
         get() {
             var list = ArrayList<String>(5)
             list = buildSelection(list)
-            list.add(storage.defaultString) // failsave
+            list.add(getStorage().getDefaultString()) // failsave
             return list[0]
         }
 
@@ -41,34 +37,34 @@ class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirector
         // volume/aat_data (exists and is writeable)
         for (vol in volumes.volumes) {
             val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
-            SelectionList.add_w(list, aatData)
+            SelectionList.addW(list, aatData)
         }
 
         // volume/aat_data (does not exist but can be created)
         for (vol in volumes.volumes) {
             val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
-            if (!aatData.exists()) SelectionList.add_w(list, vol, aatData)
+            if (!aatData.exists()) SelectionList.addW(list, vol, aatData)
         }
 
         // app_private/files (writeable and on external medium)
         val files = volumes.files
         for (i in 1 until files.size) {
-            SelectionList.add_w(list, files[i])
+            SelectionList.addW(list, files[i])
         }
 
         // app_private/files (read only and on external medium)
         for (i in 1 until files.size) {
-            SelectionList.add_ro(list, files[i])
+            SelectionList.addRo(list, files[i])
         }
 
         // volume/aat_data (read only)
         for (vol in volumes.volumes) {
             val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
-            SelectionList.add_ro(list, vol, aatData)
+            SelectionList.addRo(list, vol, aatData)
         }
 
         // app_private/files (readable and internal)
-        if (files.isNotEmpty()) SelectionList.add_r(list, files[0])
+        if (files.isNotEmpty()) SelectionList.addR(list, files[0])
         return list
     }
 }

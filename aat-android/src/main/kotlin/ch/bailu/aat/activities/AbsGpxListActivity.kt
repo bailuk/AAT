@@ -37,7 +37,6 @@ import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
-import javax.annotation.Nonnull
 
 abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPreferencesChanged {
     private val theme: UiTheme = AppTheme.trackList
@@ -93,7 +92,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         listView?.setIterator(this, iteratorSimple)
         fileControlBar?.setIterator(iteratorSimple)
         sdirectory?.apply {
-            listView?.setSelection(position.value)
+            listView?.setSelection(position.getValue())
             register(this@AbsGpxListActivity)
             setListBackgroundColor(createSelectionString().isNotEmpty())
         }
@@ -120,11 +119,11 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     }
 
     private fun displayFileOnPosition(position: Int) {
-        sdirectory?.position?.value = position
+        sdirectory?.position?.setValue(position)
         displayFile()
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         sdirectory?.apply {
             if (containsKey(key)) {
                 setListBackgroundColor(createSelectionString().isNotEmpty())
@@ -161,10 +160,10 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             busyControl = BusyViewControlDbSync(contentView)
             val map: MapViewInterface = MapFactory.DEF(acontext, solidKey).list()
 
-            fileControlBar =
-                FileControlBarLayer(appContext, map.mContext, acontext, appContext.summaryConfig)
+            fileControlBar = FileControlBarLayer(appContext, map.getMContext(), acontext, appContext.summaryConfig).apply {
+                map.add(this)
+            }
 
-            map.add(fileControlBar)
 
             val summary = VerticalScrollView(acontext)
             summary.add(TitleView(acontext, label, theme))
@@ -173,7 +172,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
             summary.addAllContent(acontext, summaryData, theme, InfoID.LIST_SUMMARY)
             val title = TitleView(acontext, filterLabel, filterTheme)
             summary.add(title)
-            summary.addAllFilterViews(map.mContext, filterTheme)
+            summary.addAllFilterViews(map.getMContext(), filterTheme)
             val bar = MainControlBar(acontext)
             val layout = createLayout(map, summary, bar)
             contentView.add(bar)

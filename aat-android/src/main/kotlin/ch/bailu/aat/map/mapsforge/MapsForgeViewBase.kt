@@ -21,7 +21,6 @@ import org.mapsforge.core.util.LatLongUtils
 import org.mapsforge.map.android.view.MapView
 import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.model.IMapViewPosition
-import javax.annotation.Nonnull
 
 open class MapsForgeViewBase(
     appContext: AppContext,
@@ -128,8 +127,8 @@ open class MapsForgeViewBase(
         }
     }
 
-    override fun onPreferencesChanged(@Nonnull s: StorageInterface, @Nonnull key: String) {
-        for (l in layers) l.onPreferencesChanged(s, key)
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        for (l in layers) l.onPreferencesChanged(storage, key)
     }
 
     public override fun onLayout(c: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -176,7 +175,7 @@ open class MapsForgeViewBase(
          * Sometimes the LayerManager thread is still running after calling destroyAll().
          * This happens when MapView was never attached to window.
          * Same problem with the Animator thread of MapViewPosition. */layerManager.finish()
-        mapViewPosition.destroy()
+        getMapViewPosition().destroy()
     }
 
     private fun attachDetachLayers() {
