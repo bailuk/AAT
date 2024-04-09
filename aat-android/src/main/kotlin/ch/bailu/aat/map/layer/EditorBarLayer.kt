@@ -16,10 +16,9 @@ import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.service.ServicesInterface
 
 class EditorBarLayer(
-    appContext: AppContext,
+    private val appContext: AppContext,
     context: Context,
     private val mcontext: MapContext,
     dispatcher: DispatcherInterface,
@@ -35,15 +34,10 @@ class EditorBarLayer(
     private val down: View = bar.addImageButton(R.drawable.go_down)
     private val undo: View = bar.addImageButton(R.drawable.edit_redo)
     private val redo: View = bar.addImageButton(R.drawable.edit_redo)
-    private val services: ServicesInterface
-    private val selector: EditorNodeViewLayer
-    private val content: GpxDynLayer
+    private val content: GpxDynLayer = GpxDynLayer(appContext.storage, mcontext, appContext.services)
+    private val selector = EditorNodeViewLayer(appContext, context, mcontext, edit)
 
     init {
-        services = appContext.services
-        content = GpxDynLayer(appContext.storage, mcontext, appContext.services)
-        selector = EditorNodeViewLayer(appContext, context, mcontext, edit)
-
         ToolTip.set(add, Res.str().tt_edit_add())
         ToolTip.set(remove, Res.str().tt_edit_remove())
         ToolTip.set(up, Res.str().tt_edit_up())
@@ -73,30 +67,22 @@ class EditorBarLayer(
         }
     }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
+    override fun onClick(view: View) {
+        super.onClick(view)
         val editor = edit.editor
-        if (v === add) {
-            val p = mcontext.getMapView().getMapViewPosition().center
-            editor.add(
-                GpxPoint(
-                    p,
-                    services.elevationService.getElevation(p.latitudeE6, p.longitudeE6).toFloat(),
-                    0
-                )
-            )
-        } else if (v === remove) {
-            editor.remove()
-        } else if (v === up){
-            editor.up()
-        } else if (v === down){
-            editor.down()
-        } else if (v === undo){
-            editor.undo()
-        } else if (v === redo){
-            editor.redo()
-        } else if (v === menu){
-            EditorMenu(v.context, services, editor, edit.file).showAsPopup(v.context, v)
+
+        when(view) {
+            add -> {
+                val pos = mcontext.getMapView().getMapViewPosition().center
+                val ele = appContext.services.elevationService.getElevation(pos.latitudeE6, pos.longitudeE6).toFloat()
+                editor.add(GpxPoint(pos, ele,0))
+            }
+            remove -> editor.remove()
+            up -> editor.up()
+            down -> editor.down()
+            undo -> editor.undo()
+            redo -> editor.redo()
+            menu -> EditorMenu(appContext, view.context, editor, edit.file).showAsPopup(view.context, view)
         }
     }
 

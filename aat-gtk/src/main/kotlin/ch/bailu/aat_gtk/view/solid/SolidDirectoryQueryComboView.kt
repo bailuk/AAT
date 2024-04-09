@@ -6,41 +6,39 @@ import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.ComboBoxText
-import ch.bailu.gtk.type.Str
 
 class SolidDirectoryQueryComboView(appContext: AppContext)
     : OnPreferencesChanged {
-    private val solid = SolidDirectoryQuery(appContext.storage, appContext)
-    private val sdirectory = appContext.dataDirectory
-    private val directories = AppDirectory.getGpxDirectories(sdirectory)
+    private val solidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
+    private val directories = AppDirectory.getGpxDirectories(appContext)
 
     val combo = ComboBoxText()
 
     init {
-        var index = 0
-        directories.forEach {
-            combo.insertText(index++, Str(it.name))
+        directories.forEachIndexed { index, gpxDirectoryEntry ->
+            combo.insertText(index, gpxDirectoryEntry.name)
         }
+
         indexFromSolid()
+
         combo.onChanged {
-            solid.setValue(directories[combo.active].path)
+            solidDirectoryQuery.setValue(directories[combo.active].file.path)
         }
-        solid.register(this)
+
+        solidDirectoryQuery.register(this)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (key == solid.getKey()) {
+        if (key == solidDirectoryQuery.getKey()) {
             indexFromSolid()
         }
     }
 
     private fun indexFromSolid() {
-        var index = 0
-        directories.forEach {
-            if (it == solid.getValueAsFile()) {
+        directories.forEachIndexed { index, directory ->
+            if (directory.file == solidDirectoryQuery.getValueAsFile()) {
                 combo.active = index
             }
-            index++
         }
     }
 }

@@ -66,7 +66,7 @@ object AndroidFileAction {
     }
 
     fun copyToDir(context: Context, appContext: AppContext, src: Foc) {
-        object : AppSelectDirectoryDialog(context, src) {
+        object : AppSelectDirectoryDialog(appContext, context, src) {
             override fun copyTo(
                 context: Context,
                 srcFile: Foc,
