@@ -73,7 +73,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
          * TODO: move db open into background
          */
         override fun start() {
-            appContext.broadcaster.register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE)
+            appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged)
             try {
                 database = openDatabase()
                 setState(StatePrepareSync())

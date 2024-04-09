@@ -87,7 +87,7 @@ class TileProvider(private val appContext: AppContext, val source: Source) : Att
         if (!isAttached) {
             cache.reset()
             cache = TileObjectCache()
-            appContext.broadcaster.register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE)
+            appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged)
             isAttached = true
         }
     }

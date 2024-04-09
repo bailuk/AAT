@@ -15,6 +15,7 @@ import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -33,6 +34,7 @@ import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.SignalListItemFactory
+import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.type.Str
@@ -164,7 +166,6 @@ class FileList(app: Application,
                     addCssClass(Strings.linked)
                     append(
                         SolidDirectoryQueryComboView(appContext).combo.apply {
-                            addCssClass(Strings.linked)
                             hexpand = true
                         })
                     append(Button().apply {
@@ -174,6 +175,11 @@ class FileList(app: Application,
                             Directory.openExternal(path)
                         }
                     })
+                })
+                append(Spinner().apply {
+                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_DONE) { stop() }
+                    appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
+                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
                 })
             })
 

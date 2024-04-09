@@ -46,8 +46,8 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         addTarget(list!!, InfoID.FILE_VIEW)
 
         appContext.broadcaster.register(
-            onFileTaskChanged,
-            AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED
+            AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
+            onFileTaskChanged
         )
     }
 

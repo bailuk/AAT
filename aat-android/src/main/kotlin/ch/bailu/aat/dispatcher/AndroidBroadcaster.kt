@@ -17,7 +17,7 @@ class AndroidBroadcaster(private val context: Context) : Broadcaster {
         context.sendBroadcast(AppIntent.toIntent(action, *args))
     }
 
-    override fun register(broadcastReceiver: BroadcastReceiver, action: String) {
+    override fun register(action: String, broadcastReceiver: BroadcastReceiver) {
         if (!observers.containsKey(broadcastReceiver)) {
             val receiver = object : android.content.BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {

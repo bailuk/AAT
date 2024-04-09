@@ -25,7 +25,7 @@ open class FileSource(private val context: AppContext, private val iid: Int) : C
 
     override fun onResume() {
         lifeCycleEnabled = true
-        context.broadcaster.register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE)
+        context.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onChangedInCache)
         if (trackEnabled) {
             gpxHandler.enable(context.services)
         }

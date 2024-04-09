@@ -21,8 +21,8 @@ public final class ObjectBroadcaster implements Closeable {
     public ObjectBroadcaster(AppContext sc) {
         appContext = sc;
 
-        appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
-        appContext.getBroadcaster().register(onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+        appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged);
+        appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_ONDISK, onFileDownloaded);
     }
 
     public synchronized void put(ObjBroadcastReceiver b) {

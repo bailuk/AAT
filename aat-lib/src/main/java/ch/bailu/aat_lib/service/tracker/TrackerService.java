@@ -20,7 +20,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
     public TrackerService(SolidDataDirectory sdirectory, StatusIconInterface statusIconInterface, Broadcaster broadcaster, ServicesInterface servicesInterface) {
         this.internal = new TrackerInternals(sdirectory,statusIconInterface, broadcaster, servicesInterface);
         this.broadcaster = broadcaster;
-        this.broadcaster.register(onLocation, AppBroadcaster.LOCATION_CHANGED);
+        this.broadcaster.register(AppBroadcaster.LOCATION_CHANGED, onLocation);
     }
 
 
