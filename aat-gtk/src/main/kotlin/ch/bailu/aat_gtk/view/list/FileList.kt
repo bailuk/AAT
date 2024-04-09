@@ -159,12 +159,14 @@ class FileList(app: Application,
                 }
             }
 
-            vbox.append(fileNameLabel)
             vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     addCssClass(Strings.linked)
                     append(
-                        SolidDirectoryQueryComboView(appContext).combo.apply { addCssClass(Strings.linked) })
+                        SolidDirectoryQueryComboView(appContext).combo.apply {
+                            addCssClass(Strings.linked)
+                            hexpand = true
+                        })
                     append(Button().apply {
                         iconName = Icons.folderSymbolic
                         onClicked {
@@ -173,9 +175,9 @@ class FileList(app: Application,
                         }
                     })
                 })
+            })
 
-                append(Separator(Orientation.VERTICAL))
-
+            vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)
                     append(trackCenterButton)
@@ -183,6 +185,8 @@ class FileList(app: Application,
                     append(menuButton)
                     addCssClass(Strings.linked)
                 })
+                append(Separator(Orientation.VERTICAL))
+                append(fileNameLabel)
             })
 
             vbox.append(ScrolledWindow().apply {
