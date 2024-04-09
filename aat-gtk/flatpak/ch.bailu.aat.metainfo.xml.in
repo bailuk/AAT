@@ -5,14 +5,12 @@
     <name>AAT Activity Tracker</name>
     <summary>Track your outdoor activities</summary>
 
-    <developer>
+    <developer id="ch.bailu">
         <name>bailuk</name>
     </developer>
 
     <metadata_license>MIT</metadata_license>
     <project_license>GPL-3.0-or-later</project_license>
-
-
 
     <description>
         <p>
@@ -39,12 +37,12 @@
       <control>touch</control>
     </recommends>
     <requires>
-      <display_length compare="ge">small</display_length>
+      <display_length compare="ge">360</display_length>
     </requires>
 
     <screenshots>
         <screenshot type="default">
-            <image>https://github.com/bailuk/AAT/blob/master/doc/screenshot-gtk.png</image>
+            <image>https://github.com/bailuk/AAT/blob/258f466a53b6c4f184f86f9e348ac8a352d5c105/doc/screenshot-gtk.png</image>
             <caption>Map view and track list side by side</caption>
          </screenshot>
     </screenshots>
