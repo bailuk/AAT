@@ -22,14 +22,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "branch": "stage"
-        },
-        {
-          "type": "file",
-          "url": "https://services.gradle.org/distributions/gradle-8.6-bin.zip",
-          "sha256": "9631d53cf3e74bfa726893aee1f8994fee4e060c401335946dba2156f440f24c",
-          "dest": "gradle/wrapper",
-          "dest-filename": "gradle-bin.zip"
+          "branch": "915c49dbeecd89ce2256b860fab3fa8f2698bf43"
         },
         "gradle-sources.json"
       ],
@@ -60,8 +53,5 @@
     "--env=PATH=/app/bin:/app/jre/bin",
     "--filesystem=~/.config/aat-gtk",
     "--filesystem=~/.java/.userPrefs/ch/bailu/aat"
-  ],
-  "tags": [
-    "nightly"
   ]
 }
