@@ -2,17 +2,17 @@
 <component type="desktop-application">
     <id>ch.bailu.aat</id>
 
-    <name>AAT</name>
-    <summary>Activity tracker and map viewer</summary>
+    <name>AAT Activity Tracker</name>
+    <summary>Track your outdoor activities</summary>
+
+    <developer>
+        <name>Lukas Bai</name>
+    </developer>
 
     <metadata_license>MIT</metadata_license>
     <project_license>GPL-3.0-or-later</project_license>
 
-    <supports>
-        <control>pointing</control>
-        <control>keyboard</control>
-        <control>touch</control>
-    </supports>
+
 
     <description>
         <p>
@@ -33,14 +33,63 @@
 
     <url type="homepage">https://github.com/bailuk/AAT</url>
 
+    <recommends>
+      <control>keyboard</control>
+      <control>pointing</control>
+      <control>touch</control>
+    </recommends>
+    <requires>
+      <display_length compare="ge">small</display_length>
+    </requires>
+
     <screenshots>
-        <screenshot type="default">https://bailu.ch/aat/screens/screen-gtk.png</screenshot>
+        <screenshot type="default">
+            <image>https://github.com/bailuk/AAT/blob/master/doc/screenshot-gtk.png</image>
+            <caption>Map view and track list side by side</caption>
+         </screenshot>
     </screenshots>
 
+    <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
-    <custom>
-        <value key="Purism::form_factor">workstation</value>
-        <value key="Purism::form_factor">mobile</value>
-    </custom>
-
+    <releases>
+        <release version="1.25" date="2024-04-06">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.25</url>
+            <description>
+                <p>v1.25 (38)</p>
+                <ul>
+                    <li>Android: Fix annoying error messages in map view</li>
+                    <li>Android: minSdk from 14 (Android 4.0, October 2011) to 22 (Android 5.1, March 2015), Remove legacy code</li>
+                    <li>GTK/Android: Add overlay display mode setting</li>
+                    <li>GTK/Android: Add scale factor setting for offline map renderer</li>
+                    <li>GTK: New Adwaita based GUI</li>
+                    <li>GTK: Show Name and icon in Phosh</li>
+                    <li>GTK: Remove proguard</li>
+                    <li>GTK: Flatpak</li>
+                    <li>GTK: Fix label annotation in GpxOverlay not readable</li>
+                    <li>GTK: Fix Tile Downloader stopped: Exception in thread "LT_/.../tile_cache"</li>
+                    <li>LIB: Translate strings</li>
+                    <li>LIB: Save and restore zoom level in map view</li>
+                    <li>CI: Update gradle `./gradlew wrapper --gradle-version 8.6`</li>
+                    <li>CI: Update mapsforge to 0.20.0: Only supports POI v3.0 (no  v1/v2 with rtree support)</li>
+                    <li>CI: Update java-gtk to 0.5.0</li>
+                    <li>CI: Update mapsforge-gtk to 0.4.0</li>
+                    <li>CI: Update foc to 1.3</li>
+                    <li>CI: Port generate_string script to Kotlin: Fixes :ci:run failed</li>
+                    <li>CI: Generate resource files within gradle</li>
+                </ul>
+            </description>
+        </release>
+        <release version="1.24" date="2023-03-07">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.24</url>
+            <description>
+                <p>v1.24 (37)</p>
+                <ul>
+                    <li>Update mapsforge to 0.18.0</li>
+                    <li>Update documentation</li>
+                    <li>Fix wrong GPX files on map-summary</li>
+                    <li>Fix DEM3 Not downloading after enabling option</li>
+                </ul>
+            </description>
+        </release>
+    </releases>
 </component>
