@@ -36,7 +36,7 @@ public final class Dem3TileLoader implements Closeable {
         this.timer = timer;
         this.tiles = tiles;
         this.appContext = appContext;
-        this.appContext.getBroadcaster().register(onFileDownloaded, AppBroadcaster.FILE_CHANGED_ONDISK);
+        this.appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_ONDISK, onFileDownloaded);
 
         this.sdownload = new SolidDem3EnableDownload(appContext.getStorage());
         this.sdownload.register(onPreferencesChanged);

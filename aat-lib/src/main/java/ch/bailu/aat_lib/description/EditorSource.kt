@@ -31,7 +31,7 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
     }
 
     override fun onResume() {
-        appContext.broadcaster.register(onFileEdited, AppBroadcaster.FILE_CHANGED_INCACHE)
+        appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileEdited)
         edit.onResume()
     }
 

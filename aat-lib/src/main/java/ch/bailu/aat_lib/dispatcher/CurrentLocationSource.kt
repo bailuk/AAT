@@ -24,7 +24,7 @@ class CurrentLocationSource(
     }
 
     override fun onResume() {
-        broadcaster.register(onLocationChange, AppBroadcaster.LOCATION_CHANGED)
+        broadcaster.register(AppBroadcaster.LOCATION_CHANGED, onLocationChange)
     }
 
     override fun getIID(): Int {

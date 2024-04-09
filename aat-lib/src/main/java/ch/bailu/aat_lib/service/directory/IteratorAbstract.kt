@@ -22,7 +22,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
 
     init {
         sdirectory.register(this)
-        appContext.broadcaster.register(onSyncChanged, AppBroadcaster.DB_SYNC_CHANGED)
+        appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED, onSyncChanged)
         openAndQuery()
     }
 

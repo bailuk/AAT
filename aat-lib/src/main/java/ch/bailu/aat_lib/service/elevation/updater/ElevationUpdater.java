@@ -31,9 +31,8 @@ public final class ElevationUpdater implements Closeable {
         tiles = t;
         loader = d;
 
-        this.appContext.getBroadcaster().register(onFileChanged, AppBroadcaster.FILE_CHANGED_INCACHE);
+        this.appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged);
     }
-
 
     private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
         @Override
