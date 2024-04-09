@@ -49,11 +49,11 @@ class FileList(app: Application,
         AverageSpeedDescription(appContext.storage),
         TimeDescription())
 
-
     val vbox = Box(Orientation.VERTICAL, Layout.margin).apply {
         margin(Layout.margin)
     }
 
+    private val fileCountLabel = Label(Str.NULL)
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
         iconName = Icons.zoomFitBestSymbolic
@@ -77,17 +77,22 @@ class FileList(app: Application,
 
     private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
-            if (listIndex.size != count) {
-                if (!listIsDirty) {
-                    listIsDirty = true
-                    updateLater()
-                }
+            updateList()
+        }
+    }
+
+    private fun updateList() {
+        fileCountLabel.setLabel(iteratorSimple.count.toString())
+        if (listIndex.size != iteratorSimple.count) {
+            if (!listIsDirty) {
+                listIsDirty = true
+                updateLater()
             }
         }
     }
 
     private fun updateLater() {
-        updateTimer.kick(1000) {
+        updateTimer.kick(500) {
             if (listIsDirty) {
                 listIsDirty = false
                 val count = iteratorSimple.count
@@ -131,9 +136,9 @@ class FileList(app: Application,
     }
 
     init {
-        select(-1)
         try {
-            listIndex.size = iteratorSimple.count
+            select(-1)
+            updateList()
 
             val factory = SignalListItemFactory().apply {
                 onSetup {
@@ -181,6 +186,7 @@ class FileList(app: Application,
                     appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
                     appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
                 })
+                append(fileCountLabel)
             })
 
             vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {

@@ -44,14 +44,14 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
     fun bind(info: GpxInformation, index: Int) {
         this.index = index
         var title = ""
-        var infoText = ""
+        var infoText = "#${index+1}"
 
         descriptions.forEachIndexed { i, d ->
             d.onContentUpdated(InfoID.ALL, info)
             if (i == 0) {
                 title = "<b>${d.getValueAsString()}</b>"
-            } else {
-                infoText = d.getValueAsString()
+            }  else {
+                infoText = "$infoText - ${d.getValueAsString()}"
             }
         }
 
