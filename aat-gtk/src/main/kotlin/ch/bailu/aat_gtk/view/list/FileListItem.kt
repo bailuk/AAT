@@ -62,7 +62,11 @@ class FileListItem(appContext: AppContext, listItem: ListItem, private val descr
         labels[1].setText(infoText)
         labels[2].setText(info.file.name)
 
-        previewImageView.setFilePath(info.file) // TODO error message if file does not exists
-        previewImageView.onAttached() // TODO memory management
+        previewImageView.setFilePath(info.file)
+        previewImageView.onAttached()
+    }
+
+    fun teardown() {
+        previewImageView.onDetached()
     }
 }
