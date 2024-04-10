@@ -109,6 +109,7 @@ class FileList(app: Application,
 
     private val items = HashMap<ListItem, FileListItem>()
     private val overlayMenu = FileContextMenu(
+        appContext,
         SolidCustomOverlayList(
             appContext.storage,
             appContext

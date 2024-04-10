@@ -4,6 +4,7 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.menu.MenuHelper
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
@@ -22,7 +23,7 @@ import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
-class FileContextMenu(private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProvider {
+class FileContextMenu(private val appContext: AppContext, private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -35,6 +36,7 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
                 append(Res.str().file_mock(), Strings.actionFileMock)
                 append(Res.str().file_rename(), Strings.actionFileRename)
                 append(Res.str().file_delete(), Strings.actionFileDelete)
+                append(Res.str().file_reload(), Strings.actionFileReload)
             })
         }
     }
@@ -58,6 +60,10 @@ class FileContextMenu(private val solid: SolidCustomOverlayList, private val sol
 
         MenuHelper.setAction(app, Strings.actionFileDelete) {
             delete(app)
+        }
+
+        MenuHelper.setAction(app, Strings.actionFileReload) {
+            FileAction.reloadPreview(appContext, file)
         }
     }
 

@@ -20,6 +20,7 @@ object Strings {
     const val actionFileMock   = "app.fileMock"
     const val actionFileRename = "app.fileRename"
     const val actionFileDelete = "app.fileDelete"
+    const val actionFileReload = "app.fileReload"
 
 
     // Ids
