@@ -1,9 +1,7 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-public interface MapPreviewInterface {
-    boolean isReady();
-
-    void generateBitmapFile();
-
-    void onDestroy();
+interface MapPreviewInterface {
+    fun isReady(): Boolean
+    fun generateBitmapFile()
+    fun onDestroy()
 }

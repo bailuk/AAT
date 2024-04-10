@@ -1,10 +1,10 @@
-package ch.bailu.aat.map.mapsforge
+package ch.bailu.aat_gtk.view.map.preview
 
-import android.content.Context
-import ch.bailu.aat.map.MapDensity
+import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.lib.color.ColorInterface
@@ -31,10 +31,10 @@ import org.mapsforge.map.util.MapPositionUtil
 import org.mapsforge.map.view.FrameBuffer
 import org.mapsforge.map.view.FrameBufferHA3
 
-class MapsForgePreview(context: Context, private val appContext: AppContext, info: GpxInformation, out: Foc):
-    MapsForgeViewBase(appContext, context, MapsForgePreview::class.java.simpleName, MapDensity()),
-    MapPreviewInterface {
-
+class MapsForgePreview(private val appContext: AppContext,
+                       info: GpxInformation,
+                       out: Foc
+) : GtkCustomMapView(appContext, Dispatcher(), MapsForgePreview::class.java.simpleName), MapPreviewInterface {
     private val imageFile: Foc
     private val provider: TileProvider
     private val mapPosition: MapPosition
@@ -42,7 +42,10 @@ class MapsForgePreview(context: Context, private val appContext: AppContext, inf
     private val tlPoint: Point
 
     init {
-        layout(0, 0, BITMAP_SIZE, BITMAP_SIZE)
+
+        // Interface: Resize models
+        onResize(BITMAP_SIZE, BITMAP_SIZE)
+
         model.mapViewDimension.dimension = DIM
         imageFile = out
         provider = TileProvider(appContext, getSource(SolidRenderTheme(appContext.mapDirectory, appContext)))
@@ -52,7 +55,8 @@ class MapsForgePreview(context: Context, private val appContext: AppContext, inf
 
         val gpxLayer = GpxDynLayer(appContext.storage, getMContext(), appContext.services)
         add(gpxLayer)
-        attachLayers()
+        // Interface
+        // attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILE_VIEW, info)
         frameBounding(info.gpxList.getDelta().getBoundingBox())
         mapPosition = model.mapViewPosition.mapPosition

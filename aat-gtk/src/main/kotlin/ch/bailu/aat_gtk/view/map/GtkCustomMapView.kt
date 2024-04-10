@@ -5,6 +5,7 @@ import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -31,19 +32,20 @@ import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.model.IMapViewPosition
 import org.mapsforge.map.model.common.Observer
 
-class GtkCustomMapView (
+open class GtkCustomMapView (
     private val appContext: AppContext,
-    dispatcher: DispatcherInterface
-) : MapView(), MapViewInterface, OnPreferencesChanged, Attachable {
+    dispatcher: DispatcherInterface,
+    key: String = DEFAULT_KEY
+) : MapView(), MapViewInterface, OnPreferencesChanged, Attachable, LifeCycleInterface {
 
     companion object {
-        const val KEY = "MAP_VIEW"
+        const val DEFAULT_KEY = "MAP_VIEW"
         private const val SHOW_DEBUG_LAYERS = false
     }
 
     private val density = GtkAppDensity()
 
-    private val backgroundContext: GtkMapContext = GtkMapContext(this, KEY, NodeBitmap.get(density, appContext), density)
+    private val backgroundContext: GtkMapContext = GtkMapContext(this, key, NodeBitmap.get(density, appContext), density)
     private val foregroundContext: GtkMapContextForeground
 
     private val layers = ArrayList<MapLayerInterface>(10)
@@ -187,5 +189,21 @@ class GtkCustomMapView (
         for (layer in layers) {
             layer.onPreferencesChanged(storage, key)
         }
+    }
+
+    override fun onResumeWithService() {}
+
+    override fun onPauseWithService() {}
+
+    override fun onDestroy() {
+        onDetached()
+        destroyAll()
+
+        /* FIXME: this is a workaround to a bug:
+         * Sometimes the LayerManager thread is still running after calling destroyAll().
+         * This happens when MapView was never attached to window.
+         * Same problem with the Animator thread of MapViewPosition. */
+        layerManager.finish()
+        getMapViewPosition().destroy()
     }
 }

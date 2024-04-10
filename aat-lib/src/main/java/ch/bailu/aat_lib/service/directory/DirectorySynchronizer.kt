@@ -286,7 +286,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
             if (!canContinue || previewGenerator !is MapPreviewInterface) {
                 terminate()
-            } else if (previewGenerator.isReady) {
+            } else if (previewGenerator.isReady()) {
                 previewGenerator.generateBitmapFile()
                 appContext.broadcaster.broadcast(AppBroadcaster.DB_SYNC_CHANGED)
                 setState(StateLoadNextGpx())
