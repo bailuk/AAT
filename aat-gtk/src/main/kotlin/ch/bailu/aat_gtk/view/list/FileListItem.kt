@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.list
 
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -10,8 +11,9 @@ import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
-class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDescription>) {
+class FileListItem(appContext: AppContext, listItem: ListItem, private val descriptions: Array<ContentDescription>) {
     private val labels = ArrayList<Label>()
+    private val previewImageView = PreviewImageView(appContext)
     private var index = -1
 
     init {
@@ -20,7 +22,8 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
 
         vbox.hexpand = true
         hbox.append(vbox)
-        vbox.margin(5)
+        hbox.append(previewImageView.image)
+        hbox.margin(5)
 
         val title = createLabel()
         title.useMarkup = true
@@ -58,5 +61,8 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
         labels[0].setLabel(title)
         labels[1].setText(infoText)
         labels[2].setText(info.file.name)
+
+        previewImageView.setFilePath(info.file) // TODO error message if file does not exists
+        previewImageView.onAttached() // TODO memory management
     }
 }
