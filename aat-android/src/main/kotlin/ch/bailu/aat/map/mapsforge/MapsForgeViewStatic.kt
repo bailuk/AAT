@@ -12,7 +12,7 @@ class MapsForgeViewStatic(context: Context, appContext: AppContext) : MapsForgeV
 ) {
     init {
         val tiles: MapsForgeTileLayerStackConfigured = BackgroundOnly(this, appContext)
-        add(tiles, tiles)
+        add(tiles)
         isClickable = false
     }
 }

@@ -29,7 +29,7 @@ class NodeBitmap private constructor(radius: Int, res: AppDensity, context: AppC
         private const val STROKE_WIDTH = MapPaint.EDGE_WIDTH_LINE
         private const val RADIUS = 6
         private val nodes = HashMap<Int, NodeBitmap>(10)
-        operator fun get(res: AppDensity, context: AppContext): NodeBitmap {
+        fun get(res: AppDensity, context: AppContext): NodeBitmap {
             val radius = res.toPixelInt(RADIUS.toFloat())
             var node = nodes[radius]
             if (node == null) {

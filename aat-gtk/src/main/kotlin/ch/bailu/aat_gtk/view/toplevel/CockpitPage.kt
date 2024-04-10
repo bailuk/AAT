@@ -44,7 +44,7 @@ class CockpitPage(appContext: AppContext, uiController: UiController, dispatcher
                 iconName = Icons.zoomFitBestSymbolic
                 onClicked {
                     uiController.showMap()
-                    SolidPositionLock(appContext.storage, GtkCustomMapView.KEY).value = true
+                    SolidPositionLock(appContext.storage, GtkCustomMapView.DEFAULT_KEY).value = true
                 }
             })
         })
