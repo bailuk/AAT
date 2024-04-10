@@ -32,11 +32,11 @@ import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.gtk.ScrolledWindow
-import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.SignalListItemFactory
 import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
+import ch.bailu.gtk.pango.EllipsizeMode
 import ch.bailu.gtk.type.Str
 
 class FileList(app: Application,
@@ -162,6 +162,7 @@ class FileList(app: Application,
 
                 onTeardown {
                     val item = ListItem(it.cast())
+                    items[item]?.apply { teardown() }
                     items.remove(item)
                     logItems.log(items.size.toLong())
                 }
@@ -198,8 +199,9 @@ class FileList(app: Application,
                     append(menuButton)
                     addCssClass(Strings.linked)
                 })
-                append(Separator(Orientation.VERTICAL))
-                append(fileNameLabel)
+                append(fileNameLabel.apply {
+                    ellipsize = EllipsizeMode.START
+                })
             })
 
             vbox.append(ScrolledWindow().apply {
@@ -219,7 +221,6 @@ class FileList(app: Application,
             AppLog.e(this, e)
         }
     }
-
 
     private fun selectAndFrame(index: Int) {
         select(index)
@@ -265,9 +266,11 @@ class FileList(app: Application,
             iteratorSimple.moveToPosition(indexOfSelected)
             overlayMenu.setFile(iteratorSimple.info.file)
             fileNameLabel.setLabel(iteratorSimple.info.file.name)
+            fileNameLabel.setTooltipText(iteratorSimple.info.file.toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
+            fileNameLabel.tooltipText = Str.NULL
             menuButton.sensitive = false
         }
     }
