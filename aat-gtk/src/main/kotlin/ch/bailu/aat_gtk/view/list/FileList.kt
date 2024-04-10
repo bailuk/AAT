@@ -145,7 +145,7 @@ class FileList(app: Application,
                 onSetup {
                     val item = ListItem(it.cast())
 
-                    items[item] = FileListItem(item, descriptions)
+                    items[item] = FileListItem(appContext, item, descriptions)
                     logItems.log(items.size.toLong())
                 }
 

@@ -1,20 +1,15 @@
-package ch.bailu.aat.services.cache
+package ch.bailu.aat_lib.service.cache
 
-import ch.bailu.aat.util.graphic.SyncBitmap
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.FileTask
-import ch.bailu.aat_lib.service.cache.Obj
-import ch.bailu.aat_lib.service.cache.OnObject
 import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract
 import ch.bailu.foc.Foc
 import org.mapsforge.core.graphics.Bitmap
 
-class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
-    private val syncBitmap = SyncBitmap()
-
-    private constructor() : this(Foc.FOC_NULL)
+class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInterface) : ObjImageAbstract(imageFile.path) {
 
     override fun onInsert(sc: AppContext) {
         load(sc.services)
@@ -31,20 +26,20 @@ class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
     }
 
     override fun getSize(): Long {
-        return syncBitmap.size.toLong()
+        return syncBitmap.getSize()
     }
 
     override fun isReadyAndLoaded(): Boolean {
-        return syncBitmap.bitmap != null
+        return syncBitmap.isLoaded()
     }
 
     override fun getBitmap(): Bitmap? {
-        return syncBitmap.bitmap
+        return syncBitmap.getBitmap()
     }
 
     class Factory : Obj.Factory() {
-        override fun factory(id: String, sc: AppContext): Obj {
-            return ObjBitmap(sc.toFoc(id))
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjBitmap(appContext.toFoc(id), appContext.createMapTile())
         }
     }
 
@@ -64,8 +59,8 @@ class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
                 override fun run(obj: Obj) {
                     val self = obj as ObjBitmap
                     try {
-                        self.syncBitmap.set(self.imageFile)
-                        size = self.syncBitmap.size.toLong()
+                        self.syncBitmap.set(self.imageFile, 0, false)
+                        size = self.syncBitmap.getSize()
                     } catch (e: Exception) {
                         self.exception = e
                     }
@@ -77,9 +72,5 @@ class ObjBitmap(private val imageFile: Foc) : ObjImageAbstract(imageFile.path) {
             }
             return size
         }
-    }
-
-    companion object {
-        val NULL = ObjBitmap()
     }
 }

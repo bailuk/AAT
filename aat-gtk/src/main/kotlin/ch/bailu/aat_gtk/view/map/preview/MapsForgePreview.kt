@@ -145,7 +145,7 @@ class MapsForgePreview(private val appContext: AppContext,
     }
 
     companion object {
-        private const val BITMAP_SIZE = 128
+        const val BITMAP_SIZE = 128
         private val DIM = Dimension(BITMAP_SIZE, BITMAP_SIZE)
         private val MAPNIK: Source = CacheOnlySource(DownloadSource.MAPNIK)
 

@@ -7,10 +7,10 @@ import android.widget.ImageView
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.map.To.androidBitmap
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat.services.cache.ObjBitmap
 import ch.bailu.aat.util.AppIntent
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract
 
 open class ImageObjectView(
@@ -20,7 +20,7 @@ open class ImageObjectView(
     scontext.getContext()
 ) {
     private var isAttached = false
-    private var imageHandle: ObjImageAbstract = ObjBitmap.NULL
+    private var handle = ObjNull.NULL
     private var idToLoad: String? = null
     private var factoryToLoad: Obj.Factory? = null
     fun setImageObject() {
@@ -55,22 +55,22 @@ open class ImageObjectView(
     }
 
     private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
-        val r = booleanArrayOf(false)
+        var result = false
         scontext.insideContext {
             val h = scontext.cacheService.getObject(id, factory)
             if (h is ObjImageAbstract) {
-                imageHandle = h
-                r[0] = true
+                handle = h
+                result = true
             } else {
                 h.free()
             }
         }
-        return r[0]
+        return result
     }
 
     private fun freeImageHandle() {
-        imageHandle.free()
-        imageHandle = ObjBitmap.NULL
+        handle.free()
+        handle = ObjNull.NULL
     }
 
     public override fun onAttachedToWindow() {
@@ -92,16 +92,18 @@ open class ImageObjectView(
     }
 
     private fun displayImage() {
+        val imageHandle = handle
+
         if (imageHandle.hasException()) {
             resetImage()
-        } else if (imageHandle.isReadyAndLoaded) {
+        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded) {
             setImageBitmap(androidBitmap(imageHandle.bitmap))
         }
     }
 
     private val onFileChanged: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val file = imageHandle.toString()
+            val file = handle.toString()
             if (AppIntent.hasFile(intent, file)) {
                 displayImage()
             }

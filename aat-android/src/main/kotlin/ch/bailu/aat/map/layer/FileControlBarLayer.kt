@@ -9,8 +9,8 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
-import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.CaloriesDescription
@@ -132,7 +132,10 @@ class FileControlBarLayer(
             SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.setValue(index)
             iterator.moveToPosition(index)
             selectedFile = iterator.info.file
-            preview.setFilePath(selectedFile)
+            val file = selectedFile
+            if (file is Foc) {
+                preview.setFilePath(file)
+            }
             markupBuilder.appendHeader(iterator.info.file.name)
             for (d in summaryData) {
                 d.onContentUpdated(iterator.infoID, iterator.info)
