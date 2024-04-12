@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class TrackerSource(private val services: ServicesInterface, private val broadcaster: Broadcaster) :
-    ContentSource(), GpxInformationSource {
+    ContentSource() {
     private val onTrackChanged =
         BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.trackerService.getInfo()) }
 
@@ -27,12 +27,6 @@ class TrackerSource(private val services: ServicesInterface, private val broadca
     override fun getIID(): Int {
         return InfoID.TRACKER
     }
-
-    override fun isEnabled(): Boolean {
-        return true
-    }
-
-    override fun setEnabled(isEnabled: Boolean) {}
 
     override fun getInfo(): GpxInformation {
         return services.trackerService.getInfo()

@@ -47,7 +47,7 @@ class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterfac
 
     override fun edit() {
         val file = backupSource.getInfo().getFile()
-        if (file != null && !isEditing) {
+        if (!isEditing) {
             isEditing = true
             editorSource.edit(file)
             editorSource.onResume()

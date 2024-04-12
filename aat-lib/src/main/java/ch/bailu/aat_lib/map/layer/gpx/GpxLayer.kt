@@ -18,7 +18,7 @@ abstract class GpxLayer : MapLayerInterface, OnContentUpdatedInterface {
 
     override fun drawForeground(mcontext: MapContext) {}
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxList = info.getGpxList() ?: GpxList.NULL_ROUTE
+        gpxList = info.getGpxList()
         colorFromIID = getColorFromIID(iid)
     }
 

@@ -4,13 +4,12 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxInformationCacheSingle
-import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.preferences.map.SolidLayerType
+import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 
@@ -86,9 +85,7 @@ class GpxDynLayer(
 
     companion object {
         private fun toType(info: GpxInformation): GpxType {
-            return if (info.getGpxList() is GpxList) {
-                info.getGpxList().getDelta().getType()
-            } else GpxType.NONE
+            return info.getGpxList().getDelta().getType()
         }
     }
 }

@@ -1,79 +1,66 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
+import ch.bailu.aat_lib.gpx.GpxBigDelta
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryTrackList
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed.Raw2
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
 
-import ch.bailu.aat_lib.gpx.GpxBigDelta;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+class GpxInformationDbSummary(private val directory: Foc, cursor: DbResultSet) : GpxInformation() {
+    private val list: GpxList = GpxList(GpxType.WAY, factoryTrackList())
+    private val maxSpeed: MaxSpeed = Raw2()
 
-public final class GpxInformationDbSummary extends GpxInformation {
-    private final GpxList list;
-    private final Foc directory;
-
-    private final MaxSpeed maxSpeed = new MaxSpeed.Raw2();
-
-
-    public GpxInformationDbSummary(Foc dir, DbResultSet cursor) {
-        directory = dir;
-        list = new GpxList(GpxType.WAY, GpxListAttributes.factoryTrackList());
-
-        GpxBigDelta summary=new GpxBigDelta(GpxListAttributes.factoryTrackList());
-        GpxInformation entry = new GpxInformationDbEntry(cursor, dir);
-
-        cursor.moveToPosition(-1);
+    init {
+        val summary = GpxBigDelta(factoryTrackList())
+        val entry: GpxInformation = GpxInformationDbEntry(cursor, directory)
+        cursor.moveToPosition(-1)
         while (cursor.moveToNext()) {
-            addEntryToList(entry);
+            addEntryToList(entry)
             if (hasTimeDelta(entry)) {
-                summary.updateWithPause(entry);
+                summary.updateWithPause(entry)
             }
         }
-        setVisibleTrackSegment(summary);
+        setVisibleTrackSegment(summary)
     }
 
-    private boolean hasTimeDelta(GpxInformation entry) {
-        return     entry.getTimeDelta() > 0
-                && entry.getStartTime() > 0
-                && entry.getEndTime() > entry.getStartTime();
+    private fun hasTimeDelta(entry: GpxInformation): Boolean {
+        return entry.getTimeDelta() > 0 && entry.getStartTime() > 0 && entry.getEndTime() > entry.getStartTime()
     }
 
-    private void addEntryToList(GpxInformation entry) {
-        final GpxPoint point = new GpxPoint(
-                entry.getBoundingBox().getCenter(),
-                0, entry.getTimeStamp());
-
-        list.appendToCurrentSegment(point, GpxAttributesNull.NULL);
-        maxSpeed.add(entry.getSpeed());
+    private fun addEntryToList(entry: GpxInformation) {
+        val point = GpxPoint(
+            entry.getBoundingBox().center,
+            0f, entry.getTimeStamp()
+        )
+        list.appendToCurrentSegment(point, GpxAttributesNull.NULL)
+        maxSpeed.add(entry.getSpeed())
     }
 
-    @Override
-    public Foc getFile() {
-        return directory;
+    override fun getFile(): Foc {
+        return directory
     }
 
-    @Override
-    public GpxList getGpxList() {
-        return list;
+    override fun getGpxList(): GpxList {
+        return list
     }
 
-    @Override
-    public boolean isLoaded() {
-        return true;
+    override fun isLoaded(): Boolean {
+        return true
     }
 
-    public int getID() {
+    fun getID(): Int {
         return InfoID.LIST_SUMMARY;
     }
 
-    @Override
-    public GpxAttributes getAttributes() {
-        return maxSpeed;
+    override fun getAttributes(): GpxAttributes {
+        return maxSpeed
     }
 }

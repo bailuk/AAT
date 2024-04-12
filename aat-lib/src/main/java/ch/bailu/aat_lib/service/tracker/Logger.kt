@@ -1,36 +1,33 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import java.io.Closeable;
-import java.io.IOException;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import java.io.Closeable
+import java.io.IOException
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+abstract class Logger : GpxInformation(), Closeable {
+    private var state = StateID.OFF
 
-public abstract class Logger extends GpxInformation implements Closeable {
-    private int state = StateID.OFF;
+    open fun logPause() {}
 
-    public static final Logger NULL_LOGGER = new Logger() {
-        @Override
-        public void log(GpxPointInterface tp, GpxAttributes attr) {}
-    };
+    @Throws(IOException::class)
+    abstract fun log(tp: GpxPointInterface, attr: GpxAttributes)
 
-    public void logPause() {
+    override fun close() {}
+
+    fun setState(s: Int) {
+        state = s
     }
 
-    public abstract void log(GpxPointInterface tp, GpxAttributes attr) throws IOException;
-
-    @Override
-    public void close() {
+    override fun getState(): Int {
+        return state
     }
 
-    public void setState(int s) {
-        state = s;
-    }
-
-    @Override
-    public int getState() {
-        return state;
+    companion object {
+        val NULL_LOGGER: Logger = object : Logger() {
+            override fun log(tp: GpxPointInterface, attr: GpxAttributes) {}
+        }
     }
 }
