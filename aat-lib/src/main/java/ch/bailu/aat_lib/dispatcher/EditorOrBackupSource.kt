@@ -40,7 +40,7 @@ class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterfac
         }
     }
 
-    override fun setTarget( target: OnContentUpdatedInterface) {
+    override fun setTarget(target: OnContentUpdatedInterface) {
         editorSource.setTarget(target)
         backupSource.setTarget(target)
     }

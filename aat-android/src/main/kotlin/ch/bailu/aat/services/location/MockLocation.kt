@@ -61,7 +61,7 @@ class MockLocation(c: Context, next: LocationStackItem) : LocationStackChainedIt
     private fun sendLocation(): Boolean {
         val currentNode = node
         if (currentNode != null) {
-            passLocation(MockLocationInformation(file, state, node))
+            passLocation(MockLocationInformation(file, state, currentNode))
 
             val nextNode = currentNode.next
             if (nextNode is GpxPointNode) {
