@@ -18,7 +18,7 @@ abstract class GpxLayer : MapLayerInterface, OnContentUpdatedInterface {
 
     override fun drawForeground(mcontext: MapContext) {}
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxList = info.gpxList ?: GpxList.NULL_ROUTE
+        gpxList = info.getGpxList() ?: GpxList.NULL_ROUTE
         colorFromIID = getColorFromIID(iid)
     }
 
@@ -31,4 +31,10 @@ abstract class GpxLayer : MapLayerInterface, OnContentUpdatedInterface {
     override fun onAttached() {}
     override fun onDetached() {}
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {}
+
+    companion object {
+        val NULL = object : GpxLayer() {
+            override fun drawInside(mcontext: MapContext) {}
+        }
+    }
 }

@@ -12,6 +12,6 @@ class SolidPresetComboView : OnContentUpdatedInterface {
     val layout = SolidIndexComboView(SolidPreset(GtkAppContext.storage)).apply {label.hide()}.layout.apply {margin(Layout.margin)}
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        layout.sensitive = info.state == StateID.OFF
+        layout.sensitive = info.getState() == StateID.OFF
     }
 }

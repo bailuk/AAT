@@ -6,7 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 class ErrorMsgView(context: Context) : AbsMsgView(context, DISPLAY_FOR_MILLIS) {
     private val onMessage: BroadcastReceiver = object : BroadcastReceiver() {

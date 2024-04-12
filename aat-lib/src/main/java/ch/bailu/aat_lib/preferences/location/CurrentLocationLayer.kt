@@ -70,10 +70,10 @@ class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterf
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
     override fun drawInside(mcontext: MapContext) {
-        if (contains(center) && center.accuracy > 0) {
+        if (contains(center) && center.getAccuracy() > 0) {
             val pixel = mcontext.getMetrics().toPixel(center)
             val radius =
-                Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.accuracy))
+                Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.getAccuracy()))
             paint.color = COLOR.colorFromTimeStamp(center.getTimeStamp())
             mcontext.draw().circle(pixel, radius, paint)
         }

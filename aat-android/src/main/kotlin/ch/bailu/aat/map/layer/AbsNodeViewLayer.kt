@@ -34,7 +34,7 @@ abstract class AbsNodeViewLayer(
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         infoView.setBackgroundColorFromIID(iid)
         val limit = GpxVisibleLimit(mcontext)
-        limit.walkTrack(info.gpxList)
+        limit.walkTrack(info.getGpxList())
         setGraph(info, index, limit.firstPoint, limit.lastPoint)
     }
 

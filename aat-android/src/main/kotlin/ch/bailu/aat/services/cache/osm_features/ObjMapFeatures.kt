@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache.osm_features
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList.Companion.getKeyList
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.AbsFilterList
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.service.background.BackgroundTask

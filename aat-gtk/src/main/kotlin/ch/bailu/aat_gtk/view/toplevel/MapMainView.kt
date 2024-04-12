@@ -15,6 +15,7 @@ import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.GpxInformationSource
 import ch.bailu.aat_lib.dispatcher.OverlaySource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -39,7 +40,7 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
     val overlay = Overlay()
 
     private val editorSource = EditorSource(appContext)
-    private val overlayList = ArrayList<OverlaySource>().apply {
+    private val overlays = ArrayList<GpxInformationSource>().apply {
         val poiOverlaySource = OverlaySource.factoryPoiOverlaySource(appContext)
         add(poiOverlaySource)
         dispatcher.addSource(poiOverlaySource)
@@ -53,7 +54,7 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
-    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList, uiController)
+    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlays, uiController)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
     private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editorSource)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
@@ -123,6 +124,6 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
 
     fun edit(info: GpxInformation) {
         edgeControl.show(Position.LEFT)
-        editorSource.edit(info.file)
+        editorSource.edit(info.getFile())
     }
 }

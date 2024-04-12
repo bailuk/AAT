@@ -85,17 +85,18 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
          * This callback will then call queueDraw() from within the main (UI) thread.
          */
         redrawNeeded = true
-        Glib.idleAdd({_, _ ->
+        Glib.idleAdd({self, _ ->
             if (redrawNeeded) {
                 redrawNeeded = false
                 drawingArea.queueDraw()
             }
+            self.unregister() // Important: free callback resource
             false
         }, null)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxCache = info.gpxList
+        gpxCache = info.getGpxList()
         repaint()
     }
 }

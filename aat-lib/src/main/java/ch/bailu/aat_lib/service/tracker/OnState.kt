@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.resources.Res

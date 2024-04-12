@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.map.layer.selector
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.GpxInformationCache
 import ch.bailu.aat_lib.gpx.GpxNodeFinder
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapColor
@@ -13,7 +14,6 @@ import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.aat_lib.util.Rect
 
 abstract class AbsNodeSelectorLayer(
@@ -28,7 +28,7 @@ abstract class AbsNodeSelectorLayer(
 
     private var visible = true
 
-    private val infoCache = IndexedMap<Int, GpxInformation>()
+    private val infoCache = GpxInformationCache()
     private val centerRect = Rect()
 
     private var selectedNode: GpxPointNode? = null
@@ -91,15 +91,13 @@ abstract class AbsNodeSelectorLayer(
             val info = infoCache.getValueAt(index)
             val infoID = infoCache.getKeyAt(index)
 
-            if (info is GpxInformation && infoID is Int) {
-                val finder = GpxNodeFinder(centerBounding)
-                finder.walkTrack(info.gpxList)
+            val finder = GpxNodeFinder(centerBounding)
+            finder.walkTrack(info.getGpxList())
 
-                if (finder.haveNode()) {
-                    selectedNode = finder.node
-                    setSelectedNode(infoID, info, finder.node, finder.nodeIndex)
-                    break
-                }
+            if (finder.haveNode()) {
+                selectedNode = finder.node
+                setSelectedNode(infoID, info, finder.node, finder.nodeIndex)
+                break
             }
         }
     }
@@ -121,11 +119,7 @@ abstract class AbsNodeSelectorLayer(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
-            infoCache.put(iid, info)
-        } else {
-            infoCache.remove(iid)
-        }
+        infoCache.onContentUpdated(iid, info)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

@@ -93,7 +93,7 @@ abstract class ControlBarLayer(mcontext: MapContext, val bar: ControlBar, privat
         return false
     }
 
-    override fun onClick(v: View) {
+    override fun onClick(view: View) {
         showBar()
     }
 

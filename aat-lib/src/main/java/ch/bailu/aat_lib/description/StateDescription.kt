@@ -24,6 +24,6 @@ abstract class StateDescription : ContentDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        state = info.state
+        state = info.getState()
     }
 }

@@ -2,9 +2,9 @@ package ch.bailu.aat_gtk.view.list
 
 import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastData
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.map.Attachable
@@ -37,7 +37,7 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setFilePath(info.file)
+        setFilePath(info.getFile())
     }
 
     private fun setImageObject(ID: String?, factory: Obj.Factory?) {

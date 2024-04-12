@@ -1,6 +1,8 @@
 package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.gpx.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -21,7 +23,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
     }
 
     override fun requestUpdate() {
-        sendUpdate(iterator.infoID, info)
+        sendUpdate(iterator.infoID, getInfo())
     }
 
     override fun getIID(): Int {
@@ -83,7 +85,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         }
 
         override fun getInfo(): GpxInformation {
-            val info = arrayOf(super.getInfo())
+            var info = super.getInfo()
             appContext.services.insideContext {
                 val h = appContext.services.cacheService.getObject(
                     iD,
@@ -92,7 +94,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
                 if (h is ObjGpx) {
                     handle.free()
                     handle = h
-                    if (handle.isReadyAndLoaded) info[0] = GpxFileWrapper(
+                    if (handle.isReadyAndLoaded) info = GpxFileWrapper(
                         handle.file,
                         (handle as ObjGpx).gpxList
                     )
@@ -100,11 +102,11 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
                     h.free()
                 }
             }
-            return info[0]
+            return info
         }
 
         private val iD: String
-            get() = super.getInfo().file.toString()
+            get() = super.getInfo().getFile().toString()
     }
 
     class Summary(appContext: AppContext) : IteratorSource(appContext) {

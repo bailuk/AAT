@@ -15,7 +15,7 @@ import ch.bailu.aat.app.ActivitySwitcher.Companion.start
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationCache
+import ch.bailu.aat_lib.gpx.GpxInformationCacheSingle
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListArray
 
@@ -24,7 +24,7 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
 ), OnContentUpdatedInterface, ListAdapter, OnItemClickListener {
     private val observer = SparseArray<DataSetObserver>(5)
     private var array = GpxListArray(GpxList.NULL_ROUTE)
-    private val cachedInfo = GpxInformationCache()
+    private val cachedInfo = GpxInformationCacheSingle()
 
     init {
         THEME.list(this)
@@ -33,8 +33,8 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        array = GpxListArray(info.gpxList)
-        cachedInfo[iid] = info
+        array = GpxListArray(info.getGpxList())
+        cachedInfo.set(iid, info)
         notifyDataSetChanged()
     }
 
@@ -71,7 +71,7 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
     override fun onItemClick(arg0: AdapterView<*>?, arg1: View, pos: Int, arg3: Long) {
         val intent = Intent()
         intent.putExtra("I", pos)
-        intent.putExtra("ID", cachedInfo.info.file.toString())
+        intent.putExtra("ID", cachedInfo.info.getFile().toString())
         start(context, NodeDetailActivity::class.java, intent)
     }
 

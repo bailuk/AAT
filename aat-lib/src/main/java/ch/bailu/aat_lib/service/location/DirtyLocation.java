@@ -3,8 +3,8 @@ package ch.bailu.aat_lib.service.location;
 import javax.annotation.Nonnull;
 
 import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
+import ch.bailu.aat_lib.broadcaster.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.preferences.StorageInterface;
 import ch.bailu.aat_lib.preferences.location.SolidMapPosition;

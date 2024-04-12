@@ -31,7 +31,7 @@ class GpxListEntryView(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        file = info.file
+        file = info.getFile()
         for (description in descriptions) {
             description.onContentUpdated(iid, info)
         }

@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControl
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.bar.ControlBar
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory

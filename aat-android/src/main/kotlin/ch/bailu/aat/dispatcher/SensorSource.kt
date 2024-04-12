@@ -1,8 +1,8 @@
 package ch.bailu.aat.dispatcher
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.dispatcher.ContentSource
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -10,10 +10,10 @@ import ch.bailu.aat_lib.service.ServicesInterface
 class SensorSource(private val services: ServicesInterface, private val broadcaster: Broadcaster, private val iid: Int) : ContentSource() {
 
     private val changedAction: String = AppBroadcaster.SENSOR_CHANGED + iid
-    private val onSensorUpdated = BroadcastReceiver { _: Array<out String> -> sendUpdate(getIID(), info) }
+    private val onSensorUpdated = BroadcastReceiver { _: Array<out String> -> sendUpdate(getIID(), getInfo()) }
 
     override fun requestUpdate() {
-        sendUpdate(getIID(), info)
+        sendUpdate(getIID(), getInfo())
     }
 
     override fun onPause() {

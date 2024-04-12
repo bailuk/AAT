@@ -39,7 +39,6 @@ object MapColor {
         return hsv.toInt()
     }
 
-    @JvmStatic
     fun getColorFromIID(iid: Int): Int {
         val overlayCount = AppColor.OVERLAY_COLOR.size
         if (iid == InfoID.TRACKER) return AppColor.HL_ORANGE

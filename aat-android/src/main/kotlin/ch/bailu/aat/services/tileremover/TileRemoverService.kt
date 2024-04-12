@@ -1,8 +1,8 @@
 package ch.bailu.aat.services.tileremover
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.service.VirtualService
 
 // TODO move to lib

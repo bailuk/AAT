@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.cache
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.map.tile.source.Source

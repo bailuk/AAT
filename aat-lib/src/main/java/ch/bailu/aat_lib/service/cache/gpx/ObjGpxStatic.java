@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.service.cache.gpx;
 
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxListWalker;
 import ch.bailu.aat_lib.gpx.GpxPoint;

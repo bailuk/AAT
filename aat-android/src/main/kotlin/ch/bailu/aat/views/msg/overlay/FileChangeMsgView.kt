@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import ch.bailu.aat.util.AppIntent.getFile
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.foc_android.FocAndroid
 
 class FileChangeMsgView(context: Context) : AbsBroadcastMsgView(

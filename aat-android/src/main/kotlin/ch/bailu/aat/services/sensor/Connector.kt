@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor
 
 import android.content.Context
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.sensor.SensorState
 import java.io.Closeable

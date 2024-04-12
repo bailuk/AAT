@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxDeltaHelper
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
@@ -28,7 +28,7 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
             val newLocation = scontext.locationService.getLoggableLocationOrNull(currentLocation)
             if (newLocation != null) {
                 currentLocation = newLocation
-                if (currentLocation.accuracy <= MIN_ACCURACY && revolution.isInitialized) {
+                if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized) {
                     if (previousLocation == null) {
                         reset(currentLocation)
                     } else {

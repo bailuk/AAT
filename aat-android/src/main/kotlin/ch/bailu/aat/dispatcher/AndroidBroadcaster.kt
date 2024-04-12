@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.foc.Foc
 

@@ -1,11 +1,10 @@
-package ch.bailu.aat_gtk.view.toplevel
+package ch.bailu.aat_lib.gpx
 
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.util.IndexedMap
-import java.lang.IndexOutOfBoundsException
 
-class InfoCache : OnContentUpdatedInterface {
+class GpxInformationCache : OnContentUpdatedInterface {
 
     private val cache = IndexedMap<Int, GpxInformation>()
 
@@ -17,7 +16,7 @@ class InfoCache : OnContentUpdatedInterface {
         return getValueAt(indexOf(iid))
     }
 
-    private fun getValueAt(index: Int): GpxInformation {
+    fun getValueAt(index: Int): GpxInformation {
         val info = cache.getValueAt(index)
         if (info is GpxInformation) {
             return info
@@ -30,7 +29,7 @@ class InfoCache : OnContentUpdatedInterface {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded && info.gpxList.pointList.size() > 0) {
+        if (info.isLoaded() && info.getGpxList().pointList.size() > 0) {
             cache.put(iid, info)
         } else if (isInCache(iid)) {
             cache.remove(iid)
@@ -41,12 +40,19 @@ class InfoCache : OnContentUpdatedInterface {
         return cache.indexOfKey(iid)
     }
 
-    fun withKeyAt(index: Int, cb: (iid: Int) -> Unit) {
+    fun size(): Int {
+        return cache.size()
+    }
+
+    fun getKeyAt(index: Int): Int {
+        var result = InfoID.UNSPECIFIED
         try {
-            val iid = cache.getKeyAt(index)
-            if (iid is Int) {
-                cb(iid)
+            cache.getKeyAt(index)?.apply {
+                result = this
             }
-        } catch (e: IndexOutOfBoundsException) {}
+        } catch (e: IndexOutOfBoundsException) {
+            AppLog.w(this, e)
+        }
+        return result
     }
 }

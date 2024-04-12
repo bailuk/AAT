@@ -3,8 +3,8 @@ package ch.bailu.aat_lib.service.background;
 
 import java.util.ArrayList;
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
+import ch.bailu.aat_lib.broadcaster.Broadcaster;
 import ch.bailu.aat_lib.util.Objects;
 import ch.bailu.foc.Foc;
 

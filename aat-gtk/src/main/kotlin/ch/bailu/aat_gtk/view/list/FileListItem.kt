@@ -60,9 +60,9 @@ class FileListItem(appContext: AppContext, listItem: ListItem, private val descr
 
         labels[0].setLabel(title)
         labels[1].setText(infoText)
-        labels[2].setText(info.file.name)
+        labels[2].setText(info.getFile().name)
 
-        previewImageView.setFilePath(info.file)
+        previewImageView.setFilePath(info.getFile())
         previewImageView.onAttached()
     }
 

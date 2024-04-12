@@ -1,16 +1,19 @@
 package ch.bailu.aat_lib.dispatcher
 
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class TrackerSource(private val services: ServicesInterface, private val broadcaster: Broadcaster) :
-    ContentSource() {
+    ContentSource(), GpxInformationSource {
     private val onTrackChanged =
-        BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.trackerService.info) }
+        BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.trackerService.getInfo()) }
 
     override fun requestUpdate() {
-        sendUpdate(InfoID.TRACKER, services.trackerService.info)
+        sendUpdate(InfoID.TRACKER, services.trackerService.getInfo())
     }
 
     override fun onPause() {
@@ -25,7 +28,13 @@ class TrackerSource(private val services: ServicesInterface, private val broadca
         return InfoID.TRACKER
     }
 
+    override fun isEnabled(): Boolean {
+        return true
+    }
+
+    override fun setEnabled(isEnabled: Boolean) {}
+
     override fun getInfo(): GpxInformation {
-        return services.trackerService.info
+        return services.trackerService.getInfo()
     }
 }

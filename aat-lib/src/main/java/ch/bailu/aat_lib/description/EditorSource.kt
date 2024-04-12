@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastData
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.ContentSource
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.GpxFileWrapper
@@ -22,7 +22,7 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
     }
 
     override fun requestUpdate() {
-        sendUpdate(edit.infoID, edit.info)
+        sendUpdate(edit.infoID, edit.getInfo())
     }
 
     override fun onPause() {
@@ -45,7 +45,7 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
     }
 
     override fun getInfo(): GpxInformation {
-        return edit.info
+        return edit.getInfo()
     }
 
     override val file: Foc

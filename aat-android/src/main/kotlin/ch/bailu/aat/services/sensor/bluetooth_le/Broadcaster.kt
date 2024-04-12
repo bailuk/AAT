@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor.bluetooth_le
 
 import android.content.Context
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 class Broadcaster(private val context: Context, iid: Int) {
     companion object {

@@ -1,13 +1,17 @@
 package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.BroadcastData.has
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData.has
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.cache.gpx.GpxHandler
 import ch.bailu.foc.Foc
 
-open class FileSource(private val context: AppContext, private val iid: Int) : ContentSource(),
-    FileSourceInterface {
+open class FileSource(private val context: AppContext, private val iid: Int) :
+    ContentSource(),
+    GpxInformationSource {
+
     private val gpxHandler = GpxHandler()
     private var lifeCycleEnabled = false
     private var trackEnabled = true
@@ -36,31 +40,29 @@ open class FileSource(private val context: AppContext, private val iid: Int) : C
     }
 
     override fun getInfo(): GpxInformation {
-        return gpxHandler.info
+        return gpxHandler.getInfo()
     }
 
-    override fun setFile(file: Foc) {
+    open fun setFile(file: Foc) {
         gpxHandler.setFileID(context.services, file)
         requestUpdate()
     }
-
 
     override fun isEnabled(): Boolean {
         return lifeCycleEnabled && trackEnabled
     }
 
     override fun setEnabled(enabled: Boolean) {
-            trackEnabled = enabled
-            if (lifeCycleEnabled && trackEnabled) {
-                gpxHandler.enable(context.services)
-            } else {
-                gpxHandler.disable()
-            }
-            requestUpdate()
+        trackEnabled = enabled
+        if (lifeCycleEnabled && trackEnabled) {
+            gpxHandler.enable(context.services)
+        } else {
+            gpxHandler.disable()
         }
-
+        requestUpdate()
+    }
 
     override fun requestUpdate() {
-        context.services.insideContext { sendUpdate(iid, info) }
+        context.services.insideContext { sendUpdate(iid, getInfo()) }
     }
 }

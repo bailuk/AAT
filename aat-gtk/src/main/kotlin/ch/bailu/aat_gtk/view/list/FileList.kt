@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -264,9 +264,9 @@ class FileList(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.info.file)
-            fileNameLabel.setLabel(iteratorSimple.info.file.name)
-            fileNameLabel.setTooltipText(iteratorSimple.info.file.toString())
+            overlayMenu.setFile(iteratorSimple.info.getFile())
+            fileNameLabel.setLabel(iteratorSimple.info.getFile().name)
+            fileNameLabel.setTooltipText(iteratorSimple.info.getFile().toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL

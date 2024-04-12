@@ -15,7 +15,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID

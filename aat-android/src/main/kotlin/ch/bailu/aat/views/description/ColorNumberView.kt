@@ -12,8 +12,8 @@ open class ColorNumberView(context: Context, c: ContentDescription, theme: UiThe
 
     override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         super.onContentUpdated(iid, info)
-        if (state != info.state) {
-            state = info.state
+        if (state != info.getState()) {
+            state = info.getState()
             if (state == StateID.ON) {
                 setHighlightUnitLabelColor()
             } else {

@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.services.sensor.list.SensorListItem
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes

@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.service.directory
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -79,7 +79,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         var oldPosition = 0
         if (resultSet != null) {
             oldPosition = resultSet!!.position
-            fileOnOldPosition = info.file.path
+            fileOnOldPosition = info.getFile().path
             resultSet!!.close()
         }
         updateResultFromSelection()

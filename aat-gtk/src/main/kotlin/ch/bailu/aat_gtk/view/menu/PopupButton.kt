@@ -19,6 +19,7 @@ open class PopupButton(private val menuProvider: MenuProvider) {
 
         PopoverMenu(popover.cast()).apply {
             val customWidgets = menuProvider.createCustomWidgets()
+            child.parent.opacity = 0.9
             customWidgets.forEach {
                 addChild(it.widget, it.id)
             }

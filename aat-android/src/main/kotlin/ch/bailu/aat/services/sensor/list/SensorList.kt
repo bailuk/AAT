@@ -2,7 +2,7 @@ package ch.bailu.aat.services.sensor.list
 
 import android.content.Context
 import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.StateID

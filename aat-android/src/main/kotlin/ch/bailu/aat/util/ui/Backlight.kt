@@ -35,8 +35,8 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (state != info.state) {
-            state = info.state
+        if (state != info.getState()) {
+            state = info.getState()
             setBacklight()
         }
     }

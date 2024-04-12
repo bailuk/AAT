@@ -27,7 +27,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
                 iconName = Icons.zoomFitBestSymbolic
                 onClicked {
                     uiController.showMap()
-                    uiController.frameInMap(selectedSource.info)
+                    uiController.frameInMap(selectedSource.getInfo())
                 }
             })
 
@@ -35,7 +35,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher) {
                 iconName = Icons.findLocationSymbolic
                 onClicked {
                     uiController.showMap()
-                    uiController.centerInMap(selectedSource.info)
+                    uiController.centerInMap(selectedSource.getInfo())
                 }
             })
         })

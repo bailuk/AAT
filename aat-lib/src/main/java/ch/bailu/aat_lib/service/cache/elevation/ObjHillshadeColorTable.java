@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.service.cache.elevation;
 
 import ch.bailu.aat_lib.service.elevation.tile.MultiCell;
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
 import ch.bailu.aat_lib.service.background.BackgroundTask;
 import ch.bailu.aat_lib.service.cache.Obj;
 

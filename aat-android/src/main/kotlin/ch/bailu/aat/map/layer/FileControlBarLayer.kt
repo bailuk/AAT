@@ -90,19 +90,19 @@ class FileControlBarLayer(
         selector.onLayout(changed, l, t, r, b)
     }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
+    override fun onClick(view: View) {
+        super.onClick(view)
         val node = selector.getSelectedNode()
         if (node != null && selectedFile != null) {
             val file = selectedFile
             if (file is Foc && file.exists()) {
-                if (v === preview) {
-                    FileMenu(acontext, file).showAsPopup(acontext, v)
-                } else if (v === overlay) {
+                if (view === preview) {
+                    FileMenu(acontext, file).showAsPopup(acontext, view)
+                } else if (view === overlay) {
                     AndroidFileAction.useAsOverlay(acontext, file)
-                } else if (v === reloadPreview) {
+                } else if (view === reloadPreview) {
                     FileAction.reloadPreview(acontext.appContext, file)
-                } else if (v === delete) {
+                } else if (view === delete) {
                     AndroidFileAction.delete(acontext.appContext, acontext, file)
                 }
             }
@@ -131,12 +131,12 @@ class FileControlBarLayer(
             super.setSelectedNode(iid, info, node, index)
             SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.setValue(index)
             iterator.moveToPosition(index)
-            selectedFile = iterator.info.file
+            selectedFile = iterator.info.getFile()
             val file = selectedFile
             if (file is Foc) {
                 preview.setFilePath(file)
             }
-            markupBuilder.appendHeader(iterator.info.file.name)
+            markupBuilder.appendHeader(iterator.info.getFile().name)
             for (d in summaryData) {
                 d.onContentUpdated(iterator.infoID, iterator.info)
                 markupBuilder.appendNl(d)

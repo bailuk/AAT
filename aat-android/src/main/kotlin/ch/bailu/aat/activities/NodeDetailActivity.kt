@@ -106,7 +106,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        arrayCache = GpxListArray(info.gpxList)
+        arrayCache = GpxListArray(info.getGpxList())
         infoCache = info
         graph?.setVisibility(info)
         setSeekBarMax()

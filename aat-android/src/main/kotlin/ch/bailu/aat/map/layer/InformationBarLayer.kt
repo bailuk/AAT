@@ -48,14 +48,14 @@ class InformationBarLayer(
         dispatcher.addTarget(selector, InfoID.ALL)
     }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-        if (v === map) {
-            MapMenu(context, mcontext).showAsPopup(v.getContext(), v)
-        } else if (v === search) {
-            MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v)
-        } else if (v === location) {
-            LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location)
+    override fun onClick(view: View) {
+        super.onClick(view)
+        if (view === map) {
+            MapMenu(context, mcontext).showAsPopup(view.getContext(), view)
+        } else if (view === search) {
+            MapQueryMenu(context, mcontext).showAsPopup(view.getContext(), view)
+        } else if (view === location) {
+            LocationMenu(context, mcontext.getMapView()).showAsPopup(view.getContext(), location)
         }
     }
 

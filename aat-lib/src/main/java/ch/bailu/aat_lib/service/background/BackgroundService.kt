@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.background
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.util.WithStatusText

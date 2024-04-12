@@ -7,8 +7,8 @@ class TrackSizeDescription : ContentDescription() {
     private var value = ""
     private var size = -1
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        val track = info.gpxList
-        if (track != null && size != track.pointList.size()) {
+        val track = info.getGpxList()
+        if (size != track.pointList.size()) {
             size = track.pointList.size()
             value = "P: " + track.pointList.size() +
                     ", M: " + track.markerList.size() +

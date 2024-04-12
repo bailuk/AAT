@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.service.elevation.tile;
 import java.util.zip.ZipInputStream;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
 import ch.bailu.aat_lib.logger.AppLog;
 import ch.bailu.aat_lib.service.background.FileTask;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;

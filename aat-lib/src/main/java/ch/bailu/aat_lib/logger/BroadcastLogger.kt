@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.logger
 
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 
 class BroadcastLogger(
     private val broadcaster: Broadcaster,

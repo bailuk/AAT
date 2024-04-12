@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.broadcaster
 
 import ch.bailu.aat_lib.Configuration
 

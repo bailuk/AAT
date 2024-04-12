@@ -5,20 +5,20 @@ import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
-import ch.bailu.aat_lib.dispatcher.FileSourceInterface
+import ch.bailu.aat_lib.dispatcher.GpxInformationSource
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.gpx.GpxInformationCache
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
-import ch.bailu.aat_lib.util.IndexedMap
 
-class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<FileSourceInterface>, uiController: UiController) : Bar(Position.BOTTOM),
+class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<GpxInformationSource>, uiController: UiController) : Bar(Position.BOTTOM),
     OnContentUpdatedInterface{
 
-    private val infoCache = IndexedMap<Int, GpxInformation>()
+    private val infoCache = GpxInformationCache()
     private var boundingCycle = 0
 
     init {
@@ -29,15 +29,13 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
             if (nextInBoundingCycle()) {
                 val info = infoCache.getValueAt(boundingCycle)
 
-                if (info is GpxInformation) {
-                    val bounding = info.getBoundingBox()
-                    val fileName = info.file.name
+                 val bounding = info.getBoundingBox()
+                 val fileName = info.getFile().name
 
-                    if (fileName != null) {
-                        mcontext.getMapView().frameBounding(bounding)
-                        AppLog.i(this, fileName)
-                    }
-                }
+                 if (fileName != null) {
+                     mcontext.getMapView().frameBounding(bounding)
+                     AppLog.i(this, fileName)
+                 }
             }
         }
         add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon(Icons.viewPagedSymbolic) }.overlay)
@@ -51,10 +49,10 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
             if (boundingCycle >= infoCache.size()) boundingCycle = 0
 
             val info = infoCache.getValueAt(boundingCycle)
-            val boundingBox = info?.getBoundingBox()
-            val pointList = info?.gpxList?.pointList
+            val boundingBox = info.getBoundingBox()
+            val pointList = info.getGpxList().pointList
 
-            if (boundingBox != null && pointList != null && boundingBox.hasBounding() && pointList.size() > 0) {
+            if (boundingBox.hasBounding() && pointList.size() > 0) {
                 return true
             }
         }
@@ -62,10 +60,6 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
-            infoCache.put(iid, info)
-        } else {
-            infoCache.remove(iid)
-        }
+        infoCache.onContentUpdated(iid, info)
     }
 }
