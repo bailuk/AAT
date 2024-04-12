@@ -1,18 +1,9 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
-
-public final class InformationFilter extends LocationStackChainedItem {
-
-    public InformationFilter(LocationStackItem n) {
-        super(n);
-    }
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
+class InformationFilter(next: LocationStackItem) : LocationStackChainedItem(next) {
+    override fun passLocation(location: LocationInformation) {
         if (location.hasAltitude()) {
-            super.passLocation(location);
+            super.passLocation(location)
         }
     }
-
 }

@@ -1,36 +1,28 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.foc.Foc;
+import ch.bailu.foc.Foc
 
+class GpxFileWrapper(private val file: Foc, private val list: GpxList) : GpxInformation() {
+    init {
+        if (list.pointList.size() > 0) {
+            val last = list.pointList.last
 
-public class GpxFileWrapper extends GpxInformation {
-    private final GpxList list;
-    private final Foc file;
-
-
-    public GpxFileWrapper(Foc f, GpxList l) {
-        list = l;
-        file = f;
-
-        if (list.getPointList().size()>0)
-            setVisibleTrackPoint((GpxPointNode)list.getPointList().getLast());
-
-        this.setVisibleTrackSegment(list.getDelta());
+            if (last is GpxPointNode) {
+                setVisibleTrackPoint(last)
+            }
+        }
+        setVisibleTrackSegment(list.getDelta())
     }
 
-    @Override
-    public boolean isLoaded() {
-        return true;
+    override fun isLoaded(): Boolean {
+        return true
     }
 
-
-    @Override
-    public GpxList getGpxList() {
-        return list;
+    override fun getGpxList(): GpxList {
+        return list
     }
 
-    @Override
-    public Foc getFile() {
-        return file;
+    override fun getFile(): Foc {
+        return file
     }
 }

@@ -1,113 +1,88 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
+import ch.bailu.aat_lib.coordinates.LatLongInterface
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidMapPosition.readPosition
+import ch.bailu.aat_lib.preferences.location.SolidMapPosition.writePosition
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocName
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.broadcaster.Broadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.SolidMapPosition;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocName;
+class DirtyLocation(
+    next: LocationStackItem,
+    private val storage: StorageInterface,
+    private val broadcast: Broadcaster
+) : LocationStackChainedItem(next) {
+    var locationInformation: GpxInformation
+        private set
+    private var state = LocationService.INITIAL_STATE
 
-public final class DirtyLocation extends LocationStackChainedItem {
-    private final static String SOLID_KEY="DirtyLocation_";
-
-    private GpxInformation locationInformation;
-    private int state = LocationService.INITIAL_STATE;
-
-    private final StorageInterface storage;
-    private final Broadcaster broadcast;
-
-
-    public DirtyLocation(LocationStackItem n, StorageInterface s, Broadcaster b) {
-        super(n);
-        storage = s;
-        broadcast = b;
-
-        locationInformation = new OldLocation(storage);
+    init {
+        locationInformation = OldLocation(storage)
     }
 
-
-    public GpxInformation getLocationInformation() {
-        return locationInformation;
+    override fun close() {
+        writePosition(storage, SOLID_KEY, locationInformation)
     }
 
-    @Override
-    public void close() {
-        SolidMapPosition.writePosition(storage, SOLID_KEY, locationInformation);
+    override fun passLocation(@Nonnull location: LocationInformation) {
+        locationInformation = location
+        super.passLocation(location)
+        broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED)
     }
 
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        locationInformation=location;
-        super.passLocation(location);
-        broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED);
-
+    override fun passState(state: Int) {
+        super.passState(state)
+        this.state = state
+        broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED)
     }
 
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {}
+    internal inner class OldLocation(storage: StorageInterface) : GpxInformation() {
+        private var longitude = 0
+        private var latitude = 0
+        private val file: Foc
 
-    @Override
-    public void passState(int s) {
-        super.passState(s);
-        state = s;
-        broadcast.broadcast(AppBroadcaster.LOCATION_CHANGED);
+        init {
+            file = FocName(OldLocation::class.java.simpleName)
+            readPosition(storage)
+        }
+
+        override fun getFile(): Foc {
+            return file
+        }
+
+        private fun readPosition(storage: StorageInterface) {
+            val latLongE6: LatLongInterface = readPosition(storage, SOLID_KEY)
+            longitude = latLongE6.getLongitudeE6()
+            latitude = latLongE6.getLatitudeE6()
+        }
+
+        override fun getLongitudeE6(): Int {
+            return longitude
+        }
+
+        override fun getLatitudeE6(): Int {
+            return latitude
+        }
+
+        override fun getLongitude(): Double {
+            return longitude.toDouble() / 1e6
+        }
+
+        override fun getLatitude(): Double {
+            return latitude.toDouble() / 1e6
+        }
+
+        override fun getState(): Int {
+            return state
+        }
     }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {}
-
-
-
-    class OldLocation extends GpxInformation  {
-        private int longitude, latitude;
-
-        private final Foc file;
-
-        public OldLocation(StorageInterface storage) {
-            file = new FocName(OldLocation.class.getSimpleName());
-            readPosition(storage);
-        }
-
-        @Override
-        public Foc getFile() {
-            return file;
-        }
-
-
-        private void readPosition(StorageInterface storage) {
-            LatLongInterface latLongE6 = SolidMapPosition.readPosition(storage, SOLID_KEY);
-
-            longitude=latLongE6.getLongitudeE6();
-            latitude= latLongE6.getLatitudeE6();
-        }
-
-        @Override
-        public int getLongitudeE6() {
-            return longitude;
-        }
-
-        @Override
-        public int getLatitudeE6() {
-            return latitude;
-        }
-
-        @Override
-        public double getLongitude() {
-            return ((double)longitude)/1e6d;
-        }
-
-        @Override
-        public double getLatitude() {
-            return ((double)latitude)/1e6d;
-        }
-
-        @Override
-        public int getState() {
-            return state;
-        }
-
+    companion object {
+        private const val SOLID_KEY = "DirtyLocation_"
     }
 }

@@ -20,7 +20,7 @@ import ch.bailu.foc_android.FocAndroid
 /**
  * TODO move to lib and merge with ThreadedMockLocation
  */
-class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem(i), Runnable {
+class MockLocation(c: Context, next: LocationStackItem) : LocationStackChainedItem(next), Runnable {
     private var list: GpxList = GpxList(GpxType.TRACK, GpxListAttributes.NULL)
     private var node: GpxPointNode? = null
     private var state = StateID.NO_SERVICE
@@ -83,10 +83,10 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
         }
     }
 
-    override fun passState(s: Int) {
-        if (state != s) {
-            state = s
-            super.passState(s)
+    override fun passState(state: Int) {
+        if (this.state != state) {
+            this.state = state
+            super.passState(state)
         }
     }
 }

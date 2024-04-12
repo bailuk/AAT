@@ -115,11 +115,11 @@ class ThreadedMockLocation(
         synchronized(lock) { super.passLocation(location) }
     }
 
-    override fun passState(s: Int) {
+    override fun passState(state: Int) {
         synchronized(lock) {
-            if (serviceState != s) {
-                serviceState = s
-                super.passState(s)
+            if (serviceState != state) {
+                serviceState = state
+                super.passState(state)
             }
         }
     }
