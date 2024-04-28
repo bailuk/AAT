@@ -21,7 +21,9 @@ android {
     defaultConfig {
         minSdk = 22
         targetSdk = 33
-        versionCode = 37
+
+        // Version Code can not be taken from from variable (f-droid version checker fail)
+        versionCode = 38
         versionName = appVersionName
         applicationId = appId
     }
