@@ -15,7 +15,7 @@ abstract class AppConfig : WithStatusText {
     open val appVersionName: String
         get() = Configuration.appVersionName
     open val appVersionCode: Int
-        get() = Configuration.appVersionCode.toInt()
+        get() = 0
     val appWebsite: String
         get() = Configuration.appWebsite
     val appCopyright: String
