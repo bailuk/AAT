@@ -1,3 +1,4 @@
 v1.25.2 (39)
 
 - Fix crash on Kotlin null check: Allow parameter `Intent` to be null in `AbsService::onStartCommand()`
+- Fix crash on Kotlin null check: Allow parameter `Intent` to be null in `PreferencesActivity::onActivityResult()`
