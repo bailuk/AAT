@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id ("kotlin-android")
+    id("kotlin-android")
 }
 
 android {
@@ -60,11 +60,6 @@ android {
             jvmTarget = "11"
         }
     }
-
-    useLibrary ("android.test.runner")
-
-    useLibrary ("android.test.base")
-    useLibrary ("android.test.mock")
 }
 
 
@@ -75,7 +70,7 @@ dependencies {
     /**
      *    https://github.com/bailuk/foc
      */
-    val focVersion : String by project
+    val focVersion: String by project
     implementation("com.github.bailuk.foc:foc-android:$focVersion")
 
 
@@ -87,27 +82,16 @@ dependencies {
 
 
     // MapsForge Android
-    implementation ("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")
-    implementation ("com.caverock:androidsvg:1.4")
+    implementation("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")
+    implementation("com.caverock:androidsvg:1.4")
 
     // MapsForge POI
-    implementation ("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
+    implementation("org.mapsforge:mapsforge-poi-android:$mapsForgeVersion")
 
     // Acra
-    val acraVersion : String by project
-    implementation ("ch.acra:acra-mail:$acraVersion")
-    implementation ("ch.acra:acra-dialog:$acraVersion")
-
-
-    // test
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testImplementation("org.testng:testng:7.9.0")
-    // Optional -- Robolectric environment
-    testImplementation("androidx.test:core:1.5.0")
-    // Optional -- Mockito framework
-    // testImplementation ("org.mockito:mockito-core:1.10.19")
-
+    val acraVersion: String by project
+    implementation("ch.acra:acra-mail:$acraVersion")
+    implementation("ch.acra:acra-dialog:$acraVersion")
 }
 
 

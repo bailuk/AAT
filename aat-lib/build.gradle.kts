@@ -52,11 +52,13 @@ dependencies {
      */
     implementation("org.apache.commons:commons-text:1.9")
 
+    val jupiterVersion: String by project
+
     /**
      *   https://junit.org/junit5/docs/current/user-guide/#dependency-metadata
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:$jupiterVersion")
 
     /**
      * https://mvnrepository.com/artifact/com.google.openlocationcode/openlocationcode
