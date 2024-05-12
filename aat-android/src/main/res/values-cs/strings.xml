@@ -122,35 +122,35 @@
           List is taken and modified from "Compendium of Physical Activities"
           https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
         -->
-        <item> 6.8 cyklistika, volnočasová, mírná zátěž</item>
-        <item> 8.5 cyklistika, horská, obecné</item>
-        <item> 7.0 běh, obecné</item>
-        <item> 6.0 pěší turistika, terénní</item>
-        <item> 2.0 test</item>
+        <item>6.8 cyklistika, volnočasová, mírná zátěž</item>
+        <item>8.5 cyklistika, horská, obecné</item>
+        <item>7.0 běh, obecné</item>
+        <item>6.0 pěší turistika, terénní</item>
+        <item>2.0 test</item>
 
         <item>14.0 cyklistika, horská, do kopce</item>
         <item>16.0 cyklistika, horská, závodní</item>
-        <item> 5.8 cyklistika, volnočasová, mírná zátěž</item>
+        <item>5.8 cyklistika, volnočasová, mírná zátěž</item>
         <item>10.0 cyklistika, závod nebo volnočasová, velká zátěž</item>
-        <item> 6.0 běh, 4 mph (13 min/míli)</item>
-        <item> 9.0 běh, 5.2 mph (11.5 min/míli)</item>
-        <item> 9.8 běh, 6 mph (10 min/míli)</item>
-        <item> 9.0 běh, terénní</item>
+        <item>6.0 běh, 4 mph (13 min/míli)</item>
+        <item>9.0 běh, 5.2 mph (11.5 min/míli)</item>
+        <item>9.8 běh, 6 mph (10 min/míli)</item>
+        <item>9.0 běh, terénní</item>
         <item>10.0 běh, na trati, týmový výcvik</item>
-        <item> 8.0 běh, trénink, tlačení invalidního vozíku nebo kočárku</item>
+        <item>8.0 běh, trénink, tlačení invalidního vozíku nebo kočárku</item>
         <item>13.3 běh, maraton</item>
-        <item> 7.8 túra, pěší turistika nebo organizovaná chůze s batohem</item>
-        <item> 7.3 horozelecký výstup s nákladem od 4,5 kg do 9 kg</item>
-        <item> 8.3 horozelecký výstup s nákladem od 9,5 kg do 19 kg</item>
-        <item> 9.0 horozelecký výstup s nákladem na 19 kg</item>
-        <item> 5.3 pěší turistika nebo chůze běžnou rychlostí přes pole a svahy</item>
-        <item> 6.5 sportovní chůze</item>
-        <item> 8.0 horolezectví</item>
-        <item> 2.0 chůze, procházka, velmi pomalá</item>
-        <item> 3.5 chůze pro radost</item>
-        <item> 3.0 vycházka se psem</item>
-        <item> 4.8 chůze, pro trénink, od 5,6 km/h do 6,4 km/h, s lyžařskými holemi, severská chůze, vyrovnaná, mírné tempo</item>
-        <item> 6.8 chůze, pro trénink, s lyžařskými holemi, severská chůze, do kopce</item>
+        <item>7.8 túra, pěší turistika nebo organizovaná chůze s batohem</item>
+        <item>7.3 horozelecký výstup s nákladem od 4,5 kg do 9 kg</item>
+        <item>8.3 horozelecký výstup s nákladem od 9,5 kg do 19 kg</item>
+        <item>9.0 horozelecký výstup s nákladem na 19 kg</item>
+        <item>5.3 pěší turistika nebo chůze běžnou rychlostí přes pole a svahy</item>
+        <item>6.5 sportovní chůze</item>
+        <item>8.0 horolezectví</item>
+        <item>2.0 chůze, procházka, velmi pomalá</item>
+        <item>3.5 chůze pro radost</item>
+        <item>3.0 vycházka se psem</item>
+        <item>4.8 chůze, pro trénink, od 5,6 km/h do 6,4 km/h, s lyžařskými holemi, severská chůze, vyrovnaná, mírné tempo</item>
+        <item>6.8 chůze, pro trénink, s lyžařskými holemi, severská chůze, do kopce</item>
 
     </string-array>
 

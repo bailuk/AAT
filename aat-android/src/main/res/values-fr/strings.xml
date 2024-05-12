@@ -122,35 +122,35 @@
           List is taken and modified from "Compendium of Physical Activities"
           https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
         -->
-        <item> 6.8 Cyclisme : Route (20km/h)</item>
-        <item> 8.5 Cyclisme : VTT Général</item>
-        <item> 7.0 Jogging : Général</item>
-        <item> 6.0 Randonnée : Cross country</item>
-        <item> 2.0 Test</item>
+        <item>6.8 Cyclisme : Route (20km/h)</item>
+        <item>8.5 Cyclisme : VTT Général</item>
+        <item>7.0 Jogging : Général</item>
+        <item>6.0 Randonnée : Cross country</item>
+        <item>2.0 Test</item>
 
         <item>14.0 Cyclisme : Côtes ou VTT</item>
         <item>16.0 Cyclisme : Course ou VTT</item>
-        <item> 5.8 Cyclisme : Route (15km/h)</item>
+        <item>5.8 Cyclisme : Route (15km/h)</item>
         <item>10.0 Cyclisme, Route (26km/h)</item>
-        <item> 6.0 Course à pied (6,4km/h)</item>
-        <item> 9.0 Course à pied (8,4km/h)</item>
-        <item> 9.8 Course à pied (9,7km/h)</item>
-        <item> 9.0 Course à pied : Cross</item>
+        <item>6.0 Course à pied (6,4km/h)</item>
+        <item>9.0 Course à pied (8,4km/h)</item>
+        <item>9.8 Course à pied (9,7km/h)</item>
+        <item>9.0 Course à pied : Cross</item>
         <item>10.0 Course à pied : Sur bitume ou en groupe</item>
-        <item> 8.0 Course à pied : Chaise roulante ou Poussette</item>
+        <item>8.0 Course à pied : Chaise roulante ou Poussette</item>
         <item>13.3 Course à pied : Marathon</item>
-        <item> 7.8 Randonnée avec sac à dos</item>
-        <item> 7.3 Randonnée avec charge de 0,5 à 1kg</item>
-        <item> 8.3 Randonnée avec charge de 10 à 20kg</item>
-        <item> 9.0 Randonnée avec charge supérieure à 20kg</item>
-        <item> 5.3 Marche : Général</item>
-        <item> 6.5 Marche Sportive</item>
-        <item> 8.0 Escalade</item>
-        <item> 2.0 Marche Lente (3km/h) </item>
-        <item> 3.5 Marche Loisir</item>
-        <item> 3.0 Marche avec chien</item>
-        <item> 4.8 Marche Nordique</item>
-        <item> 6.8 Marche Nordique en Montée</item>
+        <item>7.8 Randonnée avec sac à dos</item>
+        <item>7.3 Randonnée avec charge de 0,5 à 1kg</item>
+        <item>8.3 Randonnée avec charge de 10 à 20kg</item>
+        <item>9.0 Randonnée avec charge supérieure à 20kg</item>
+        <item>5.3 Marche : Général</item>
+        <item>6.5 Marche Sportive</item>
+        <item>8.0 Escalade</item>
+        <item>2.0 Marche Lente (3km/h) </item>
+        <item>3.5 Marche Loisir</item>
+        <item>3.0 Marche avec chien</item>
+        <item>4.8 Marche Nordique</item>
+        <item>6.8 Marche Nordique en Montée</item>
 
     </string-array>
 
