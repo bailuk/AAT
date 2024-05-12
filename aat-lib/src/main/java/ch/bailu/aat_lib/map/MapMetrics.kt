@@ -24,7 +24,7 @@ interface MapMetrics {
     fun toMapPixels(box: BoundingBoxE6): Rect
     fun toPixel(tp: LatLongInterface): Point
     fun toPixel(p: LatLong): Point
-    fun fromPixel(x: Int, y: Int): LatLong
+    fun fromPixel(x: Int, y: Int): LatLong?
     fun getBoundingBox(): BoundingBox
     fun getZoomLevel(): Int
 }
