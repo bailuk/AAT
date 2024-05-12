@@ -10,12 +10,12 @@ import java.util.Collections
 class SolidMET(storage: StorageInterface, private val preset: Int) : SolidString(
     storage, SolidMET::class.java.simpleName + "_" + preset
 ) {
-    
+
     override fun getLabel(): String {
         return Res.str().p_met()
     }
 
-    
+
     override fun getValueAsString(): String {
         var result = super.getValueAsString()
         if (getStorage().isDefaultString(result)) {
@@ -36,13 +36,13 @@ class SolidMET(storage: StorageInterface, private val preset: Int) : SolidString
 
     val metValue: Float
         get() {
-            val `val` = getValueAsString()
+            val stringValue = getValueAsString().trim()
             val from = 0
-            val to = `val`.indexOf(' ')
+            val to = stringValue.indexOf(' ')
             var r = 0f
             if (to > from) {
                 r = try {
-                    val met = `val`.substring(from, to)
+                    val met = stringValue.substring(from, to)
                     met.toFloat()
                 } catch (e: NumberFormatException) {
                     0f
