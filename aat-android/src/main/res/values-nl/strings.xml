@@ -121,35 +121,35 @@
           List is taken and modified from "Compendium of Physical Activities"
           https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
         -->
-        <item> 6.8 fietsen, vrije tijd, gematigde inspanning</item>
-        <item> 8.5 fietsen, berg, algemeen</item>
-        <item> 7.0 joggen, algemeen</item>
-        <item> 6.0 wandelen, cross country</item>
-        <item> 2.0 test</item>
+        <item>6.8 fietsen, vrije tijd, gematigde inspanning</item>
+        <item>8.5 fietsen, berg, algemeen</item>
+        <item>7.0 joggen, algemeen</item>
+        <item>6.0 wandelen, cross country</item>
+        <item>2.0 test</item>
 
         <item>14.0 fietsen, berg, bergop</item>
         <item>16.0 fietsen, berg, competitief</item>
-        <item> 5.8 fietsen, vrije tijd, lichte inspanning</item>
+        <item>5.8 fietsen, vrije tijd, lichte inspanning</item>
         <item>10.0 fietsen, racen of vrije tijd, veel inspanning</item>
-        <item> 6.0 lopen, 4 mph (13 min/mile)</item>
-        <item> 9.0 lopen, 5.2 mph (11.5 min/mile)</item>
-        <item> 9.8 lopen, 6 mph (10 min/mile)</item>
-        <item> 9.0 lopen, cross country</item>
+        <item>6.0 lopen, 4 mph (13 min/mile)</item>
+        <item>9.0 lopen, 5.2 mph (11.5 min/mile)</item>
+        <item>9.8 lopen, 6 mph (10 min/mile)</item>
+        <item>9.0 lopen, cross country</item>
         <item>10.0 lopen, op een piste, team oefening</item>
-        <item> 8.0 lopen, training, een rolstoel of kinderwagen duwend</item>
+        <item>8.0 lopen, training, een rolstoel of kinderwagen duwend</item>
         <item>13.3 lopen, marathon</item>
-        <item> 7.8 backpacking of wandelen met een rugzak</item>
-        <item> 7.3 heuvels beklimmen met een lading van 10 tot 20 pond.</item>
-        <item> 8.3 heuvels beklimmen met een lading van 21 tot 42 pond.</item>
-        <item> 9.0 heuvels beklimmen met een lading van 42+ pond.</item>
-        <item> 5.3 wandelen op een normaal tempo door velden en heuvels</item>
-        <item> 6.5 race wandelen</item>
-        <item> 8.0 bergbeklimmen</item>
-        <item> 2.0 wandelen, heel traag</item>
-        <item> 3.5 wandelen voor plezier</item>
-        <item> 3.0 de hond uitlaten</item>
-        <item> 4.8 wandelen, als oefening, met snelheid van 3.5 tot 4 mph, met wandelstokken, Nordic wandelen aan een gemiddeld tempo</item>
-        <item> 6.8 wandelen, als oefening, met wandelstokken, Nordic wandelen, bergop</item>
+        <item>7.8 backpacking of wandelen met een rugzak</item>
+        <item>7.3 heuvels beklimmen met een lading van 10 tot 20 pond.</item>
+        <item>8.3 heuvels beklimmen met een lading van 21 tot 42 pond.</item>
+        <item>9.0 heuvels beklimmen met een lading van 42+ pond.</item>
+        <item>5.3 wandelen op een normaal tempo door velden en heuvels</item>
+        <item>6.5 race wandelen</item>
+        <item>8.0 bergbeklimmen</item>
+        <item>2.0 wandelen, heel traag</item>
+        <item>3.5 wandelen voor plezier</item>
+        <item>3.0 de hond uitlaten</item>
+        <item>4.8 wandelen, als oefening, met snelheid van 3.5 tot 4 mph, met wandelstokken, Nordic wandelen aan een gemiddeld tempo</item>
+        <item>6.8 wandelen, als oefening, met wandelstokken, Nordic wandelen, bergop</item>
 
     </string-array>
 

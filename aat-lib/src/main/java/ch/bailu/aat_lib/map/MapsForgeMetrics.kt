@@ -133,7 +133,7 @@ class MapsForgeMetrics(private val mapView: MapView, private val density: AppDen
         return ch.bailu.aat_lib.util.Point(0, 0)
     }
 
-    override fun fromPixel(x: Int, y: Int): LatLong {
+    override fun fromPixel(x: Int, y: Int): LatLong? {
         return mapView.mapViewProjection.fromPixels(x.toDouble(), y.toDouble())
     }
 
