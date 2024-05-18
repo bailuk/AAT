@@ -186,35 +186,35 @@
           List is taken and modified from "Compendium of Physical Activities"
           https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories
         -->
-        <item> 6.8 bicycling, leisure, moderate effort</item>
-        <item> 8.5 bicycling, mountain, general</item>
-        <item> 7.0 jogging, general</item>
-        <item> 6.0 hiking, cross country</item>
-        <item> 2.0 test</item>
+        <item>6.8 bicycling, leisure, moderate effort</item>
+        <item>8.5 bicycling, mountain, general</item>
+        <item>7.0 jogging, general</item>
+        <item>6.0 hiking, cross country</item>
+        <item>2.0 test</item>
 
         <item>14.0 bicycling, mountain, uphill</item>
         <item>16.0 bicycling, mountain, competitive</item>
-        <item> 5.8 bicycling, leisure, light effort</item>
+        <item>5.8 bicycling, leisure, light effort</item>
         <item>10.0 bicycling, racing or leisure, vigorous effort</item>
-        <item> 6.0 running, 4 mph (13 min/mile)</item>
-        <item> 9.0 running, 5.2 mph (11.5 min/mile)</item>
-        <item> 9.8 running, 6 mph (10 min/mile)</item>
-        <item> 9.0 running, cross country</item>
+        <item>6.0 running, 4 mph (13 min/mile)</item>
+        <item>9.0 running, 5.2 mph (11.5 min/mile)</item>
+        <item>9.8 running, 6 mph (10 min/mile)</item>
+        <item>9.0 running, cross country</item>
         <item>10.0 running, on a track, team practice</item>
-        <item> 8.0 running, training, pushing a wheelchair or baby carrier</item>
+        <item>8.0 running, training, pushing a wheelchair or baby carrier</item>
         <item>13.3 running, marathon</item>
-        <item> 7.8 backpacking, hiking or organized walking with a daypack</item>
-        <item> 7.3 climbing hills with 10 to 20 lb load</item>
-        <item> 8.3 climbing hills with 21 to 42 lb load</item>
-        <item> 9.0 climbing hills with 42+ lb load</item>
-        <item> 5.3 hiking or walking at a normal pace through fields and hillsides</item>
-        <item> 6.5 race walking</item>
-        <item> 8.0 rock or mountain climbing</item>
-        <item> 2.0 walking, strolling, very slow</item>
-        <item> 3.5 walking for pleasure</item>
-        <item> 3.0 walking the dog</item>
-        <item> 4.8 walking, for exercise, 3.5 to 4 mph, with ski poles, Nordic walking, level, moderate pace</item>
-        <item> 6.8 walking, for exercise, with ski poles, Nordic walking, uphill</item>
+        <item>7.8 backpacking, hiking or organized walking with a daypack</item>
+        <item>7.3 climbing hills with 10 to 20 lb load</item>
+        <item>8.3 climbing hills with 21 to 42 lb load</item>
+        <item>9.0 climbing hills with 42+ lb load</item>
+        <item>5.3 hiking or walking at a normal pace through fields and hillsides</item>
+        <item>6.5 race walking</item>
+        <item>8.0 rock or mountain climbing</item>
+        <item>2.0 walking, strolling, very slow</item>
+        <item>3.5 walking for pleasure</item>
+        <item>3.0 walking the dog</item>
+        <item>4.8 walking, for exercise, 3.5 to 4 mph, with ski poles, Nordic walking, level, moderate pace</item>
+        <item>6.8 walking, for exercise, with ski poles, Nordic walking, uphill</item>
 
     </string-array>
 

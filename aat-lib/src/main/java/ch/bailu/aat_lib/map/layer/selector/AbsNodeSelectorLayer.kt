@@ -15,6 +15,7 @@ import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.IndexedMap
 import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.model.LatLong
 
 abstract class AbsNodeSelectorLayer(
     private val services: ServicesInterface,
@@ -60,12 +61,17 @@ abstract class AbsNodeSelectorLayer(
                 mcontext.getMetrics().getWidth() / 2 - squareHSize,
                 mcontext.getMetrics().getHeight() / 2 - squareHSize
             )
-            val centerBounding = BoundingBoxE6()
+
             val lt = mcontext.getMetrics().fromPixel(centerRect.left, centerRect.top)
             val rb = mcontext.getMetrics().fromPixel(centerRect.right, centerRect.bottom)
-            centerBounding.add(lt)
-            centerBounding.add(rb)
-            findNodeAndNotify(centerBounding)
+
+            if (lt is LatLong && rb is LatLong) {
+                val centerBounding = BoundingBoxE6()
+                centerBounding.add(lt)
+                centerBounding.add(rb)
+                findNodeAndNotify(centerBounding)
+            }
+
             centerRect.offset(mcontext.getMetrics().getLeft(), mcontext.getMetrics().getTop())
             drawSelectedNode(mcontext)
             drawCenterSquare(mcontext)

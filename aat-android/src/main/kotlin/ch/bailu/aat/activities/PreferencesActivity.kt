@@ -70,7 +70,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        data: Intent
+        data: Intent? // Parameter of API call is nullable
     ) {
         SolidSAF.onActivityResult(this, requestCode, resultCode, data)
     }
