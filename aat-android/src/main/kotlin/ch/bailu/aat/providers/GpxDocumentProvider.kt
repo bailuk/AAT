@@ -14,10 +14,7 @@ class GpxDocumentProvider : DocumentsProvider() {
 
     override fun queryRoots(projection: Array<String>?): Cursor {
         AppLog.d(this, "queryRoots")
-
-        val result = MatrixRoot(Constants.getRootProjection(projection))
-        result.newAppRoot()
-        return result.matrix
+        return MatrixRoot(Constants.getRootProjection(projection)).newAppRoot().matrix
     }
 
     override fun queryChildDocuments(
@@ -34,20 +31,19 @@ class GpxDocumentProvider : DocumentsProvider() {
         if (context is Context) {
             val providerContext = ProviderContext(context)
 
-            if (providerContext.allowExportToDocumentManager()) {
-                val result = MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
+            val result =
+                MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
 
-                if (documentId.isRoot && documentId.isValid()) {
-                    result.includeDirectories()
-                    result.addRecentDocuments()
-                } else {
-                    result.includeFiles(
-                        parentDocumentId.substring(Constants.DIR_PREFIX.length).toInt()
-                    )
-                }
-
-                return result.matrix
+            if (documentId.isRoot && documentId.isValid()) {
+                result.includeDirectories()
+                result.addRecentDocuments()
+            } else {
+                result.includeFiles(
+                    parentDocumentId.substring(Constants.DIR_PREFIX.length).toInt()
+                )
             }
+
+            return result.matrix
         }
         return MatrixCursor(projection)
     }
@@ -59,28 +55,28 @@ class GpxDocumentProvider : DocumentsProvider() {
 
         if (context is Context) {
             val providerContext = ProviderContext(context)
+            val documentId = DocumentId(documentIdString)
 
-            if (providerContext.allowExportToDocumentManager()) {
-                val documentId = DocumentId(documentIdString)
+            if (documentId.isRoot && documentId.isValid()) {
+                return MatrixRoot(Constants.getDocumentProjection(projection))
+                    .newDirectoryRoot().matrix
 
-                if (documentId.isRoot && documentId.isValid()) {
-                    AppLog.d(this, "queryDocument: returnRoot")
+            } else if (documentId.isDirectory && documentId.isValid()) {
+                return MatrixDirectories(
+                    Constants.getDocumentProjection(projection),
+                    providerContext
+                )
+                    .includeDirectory(documentId.preset)
+                    .matrix
 
-                    val result = MatrixRoot(Constants.getDocumentProjection(projection))
-                    result.newDirectoryRoot()
-                    return result.matrix
-
-                } else if (documentId.isDirectory && documentId.isValid()) {
-                    val result = MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
-                    result.includeDirectory(documentId.preset)
-                    return result.matrix
-
-                } else if (documentId.isFile && documentId.isValid()) {
-                    val result = MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
-                    val file = providerContext.getTrackListDirectory(documentId.preset).descendant(documentId.fileName)
-                    result.includeFile(file, documentId.preset)
-                    return result.matrix
-                }
+            } else if (documentId.isFile && documentId.isValid()) {
+                val file = providerContext.getTrackListDirectory(documentId.preset)
+                    .descendant(documentId.fileName)
+                return MatrixDirectories(
+                    Constants.getDocumentProjection(projection),
+                    providerContext
+                )
+                    .includeFile(file, documentId.preset).matrix
             }
         }
         return MatrixCursor(projection)
@@ -100,13 +96,12 @@ class GpxDocumentProvider : DocumentsProvider() {
 
         if (context is Context && !mode.contains("w") && documentId.isFile && documentId.isValid()) {
             val providerContext = ProviderContext(context)
-            if (providerContext.allowExportToDocumentManager()) {
-                val directory = providerContext.getTrackListDirectory(documentId.preset)
-                val file = File(directory.child(documentId.fileName).path) // Only supports unix files (no SAF support)
+            val directory = providerContext.getTrackListDirectory(documentId.preset)
+            val file =
+                File(directory.child(documentId.fileName).path) // Only supports unix files (no SAF support)
 
-                if (file.isFile && file.name.endsWith(".gpx")) {
-                    return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode))
-                }
+            if (file.isFile && file.name.endsWith(".gpx")) {
+                return ParcelFileDescriptor.open(file, ParcelFileDescriptor.parseMode(mode))
             }
         }
         throw FileNotFoundException(documentIdString)
@@ -119,11 +114,10 @@ class GpxDocumentProvider : DocumentsProvider() {
 
         if (context is Context) {
             val providerContext = ProviderContext(context)
-            if (providerContext.allowExportToDocumentManager()) {
-                val result = MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
-                result.addRecentDocuments()
-                return result.matrix
-            }
+            val result =
+                MatrixDirectories(Constants.getDocumentProjection(projection), providerContext)
+            result.addRecentDocuments()
+            return result.matrix
         }
         return MatrixCursor(Constants.getDocumentProjection(projection))
     }

@@ -1,10 +1,8 @@
 package ch.bailu.aat.providers
 
 import android.content.Context
-import ch.bailu.aat.preferences.SolidDocumentProviderPermission
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
-import ch.bailu.aat.preferences.system.SolidExportedDocument
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.aat_lib.preferences.presets.SolidMET
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
@@ -25,13 +23,5 @@ class ProviderContext(private val context: Context) {
 
      fun getPresetName(preset: Int): String {
         return SolidMET(Storage(context), preset).getValueAsString()
-    }
-
-    fun allowExportToSendView(path: String): Boolean {
-        return SolidExportedDocument(Storage(context)).allowExportToSendView(path)
-    }
-
-    fun allowExportToDocumentManager(): Boolean {
-        return SolidDocumentProviderPermission(Storage(context)).allowExportToDocumentManager()
     }
 }

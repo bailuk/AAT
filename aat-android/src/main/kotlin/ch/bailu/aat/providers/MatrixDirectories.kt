@@ -8,13 +8,14 @@ import ch.bailu.foc.Foc
 class MatrixDirectories(projection: Array<String>, private val context: ProviderContext) {
     val matrix = MatrixCursor(projection)
 
-    fun includeDirectories() {
+    fun includeDirectories(): MatrixDirectories {
         for (i in 0 until context.getPresetCount()) {
             includeDirectory(i)
         }
+        return this
     }
 
-    fun includeDirectory(preset: Int) {
+    fun includeDirectory(preset: Int): MatrixDirectories {
         val presetLabel = Res.str().p_preset()
         val directory = context.getTrackListDirectory(preset)
         val presetName = context.getPresetName(preset)
@@ -32,9 +33,10 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
             .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
             .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, directory.lastModified())
             .add(DocumentsContract.Document.COLUMN_SIZE, directory.length())
+        return this
     }
 
-    fun addRecentDocuments() {
+    fun addRecentDocuments(): MatrixDirectories {
         // Add gpx files from the last 24 hours
         val yesterday = System.currentTimeMillis() - 86400000 // 24*60*60*1000
         for (preset in 0 until context.getPresetCount()) {
@@ -47,22 +49,24 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
                 }
             }
         }
+        return this
     }
 
-    fun includeFiles(preset: Int) {
+    fun includeFiles(preset: Int): MatrixDirectories {
         val dir = context.getTrackListDirectory(preset)
         dir.foreachFile {
             if (it.name.endsWith(".gpx")) {
                 includeFile(it, preset)
             }
         }
+        return this
     }
 
-    fun includeFile(file: Foc, preset: Int) {
-        includeFile(file, preset.toString())
+    fun includeFile(file: Foc, preset: Int): MatrixDirectories {
+        return includeFile(file, preset.toString())
     }
 
-    fun includeFile(file: Foc, preset: String = "") {
+    private fun includeFile(file: Foc, preset: String = ""): MatrixDirectories {
         matrix.newRow()
             .add(
                 DocumentsContract.Document.COLUMN_DOCUMENT_ID,
@@ -73,5 +77,6 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
             .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
             .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
             .add(DocumentsContract.Document.COLUMN_SIZE, file.length())
+        return this
     }
 }
