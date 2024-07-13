@@ -4,7 +4,6 @@ import android.provider.DocumentsContract
 
 object Constants {
 
-    const val MIME_TYPE = "application/gpx+xml"
     const val ROOT = "root"
     const val DIR_PREFIX = "dir"
     const val GPX_PREFIX = "gpx"

@@ -141,5 +141,15 @@ object AppDirectory {
         return result
     }
 
+    fun getMimeTypeFromFileName(name: String): String {
+        return if (name.endsWith(GPX_EXTENSION)) {
+            "application/gpx+xml" }
+        else if (name.endsWith(OSM_EXTENSION)) {
+            "application/xml"
+        } else {
+            return "application/octet-stream"
+        }
+    }
+
     data class GpxDirectoryEntry(val name: String, val file: Foc)
 }

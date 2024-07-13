@@ -3,6 +3,7 @@ package ch.bailu.aat.providers
 import android.database.MatrixCursor
 import android.provider.DocumentsContract
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
 class MatrixDirectories(projection: Array<String>, private val context: ProviderContext) {
@@ -43,7 +44,7 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
             val directory = context.getTrackListDirectory(preset)
             if (directory.exists() && directory.isDir) {
                 directory.foreachFile {
-                    if (it.name.endsWith(".gpx") && it.lastModified() > yesterday) {
+                    if (it.name.endsWith(AppDirectory.GPX_EXTENSION) && it.lastModified() > yesterday) {
                         includeFile(it, preset)
                     }
                 }
@@ -55,7 +56,7 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
     fun includeFiles(preset: Int): MatrixDirectories {
         val dir = context.getTrackListDirectory(preset)
         dir.foreachFile {
-            if (it.name.endsWith(".gpx")) {
+            if (it.name.endsWith(AppDirectory.GPX_EXTENSION)) {
                 includeFile(it, preset)
             }
         }
@@ -66,14 +67,14 @@ class MatrixDirectories(projection: Array<String>, private val context: Provider
         return includeFile(file, preset.toString())
     }
 
-    private fun includeFile(file: Foc, preset: String = ""): MatrixDirectories {
+    fun includeFile(file: Foc, preset: String = ""): MatrixDirectories {
         matrix.newRow()
             .add(
                 DocumentsContract.Document.COLUMN_DOCUMENT_ID,
                 Constants.GPX_PREFIX + preset + Constants.GPX_INFIX + file.name
             )
             .add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, file.name)
-            .add(DocumentsContract.Document.COLUMN_MIME_TYPE, Constants.MIME_TYPE)
+            .add(DocumentsContract.Document.COLUMN_MIME_TYPE, AppDirectory.getMimeTypeFromFileName(file.name))
             .add(DocumentsContract.Document.COLUMN_FLAGS, 0)
             .add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
             .add(DocumentsContract.Document.COLUMN_SIZE, file.length())

@@ -8,4 +8,7 @@ class AndroidAppConfig : AppConfig() {
 
     // Version Code can not be taken from from variable (f-droid version checker fail)
     override val appVersionCode = BuildConfig.VERSION_CODE
+
+    override val appId: String
+        get() = BuildConfig.APPLICATION_ID
 }

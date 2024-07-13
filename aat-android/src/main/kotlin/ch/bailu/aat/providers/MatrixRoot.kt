@@ -4,6 +4,7 @@ import android.database.MatrixCursor
 import android.provider.DocumentsContract
 import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.R
+import ch.bailu.aat_lib.util.fs.AppDirectory
 
 class MatrixRoot(projection: Array<String>) {
     val matrix = MatrixCursor(projection)
@@ -20,7 +21,9 @@ class MatrixRoot(projection: Array<String>) {
             .add(DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.FLAG_SUPPORTS_RECENTS)
             .add(DocumentsContract.Root.COLUMN_TITLE, appTitle)
             .add(DocumentsContract.Root.COLUMN_DOCUMENT_ID, Constants.ROOT)
-            .add(DocumentsContract.Root.COLUMN_MIME_TYPES, HashSet(listOf(Constants.MIME_TYPE)))
+            .add(DocumentsContract.Root.COLUMN_MIME_TYPES, HashSet(
+                listOf(AppDirectory.getMimeTypeFromFileName(AppDirectory.GPX_EXTENSION)))
+            )
         return this
     }
 
