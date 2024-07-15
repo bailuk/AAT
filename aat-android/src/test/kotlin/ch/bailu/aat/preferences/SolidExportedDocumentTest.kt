@@ -76,12 +76,12 @@ class SolidExportedDocumentTest {
 
         val exportedDocument = SolidExportedDocument(mockStorage)
 
-        mockStorage.mockLongValue = System.currentTimeMillis() + LIMIT_MILLIS
-
         assertEquals(false, exportedDocument.isExportAllowed(testFileEmpty))
 
-        exportedDocument.setValueFromString(testFileEmpty)
+        mockStorage.mockLongValue = System.currentTimeMillis() + LIMIT_MILLIS
+        assertEquals(false, exportedDocument.isExportAllowed(testFile1))
 
+        exportedDocument.setValueFromString(testFileEmpty)
         assertEquals(true, exportedDocument.isExportAllowed(testFileEmpty))
         assertEquals(false, exportedDocument.isExportAllowed(testFile1))
         assertEquals(false, exportedDocument.isExportAllowed(testFile2))
