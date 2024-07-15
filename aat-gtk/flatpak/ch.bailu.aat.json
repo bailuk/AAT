@@ -1,7 +1,7 @@
 {
   "app-id": "ch.bailu.aat",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "44",
+  "runtime-version": "46",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.openjdk17"
@@ -22,7 +22,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "branch": "915c49dbeecd89ce2256b860fab3fa8f2698bf43"
+          "branch": "9445592efb224d0c5b4d9835b0f52ac65983fce2"
         },
         "gradle-sources.json"
       ],
