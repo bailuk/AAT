@@ -14,13 +14,13 @@ class SolidExportedDocument(storage: StorageInterface) : SolidString(storage, KE
         const val LIMIT_MILLIS = 30 * 1000 // 1/2 minute
     }
 
-    override fun setValueFromString(string: String) {
+    override fun setValue(string: String) {
         time.setValue(System.currentTimeMillis())
-        super.setValueFromString(string)
+        super.setValue(string)
     }
 
     fun setDocument(file: Foc) {
-        setValueFromString(file.path);
+        setValue(file.path);
     }
 
     fun isExportAllowed(path: String): Boolean {

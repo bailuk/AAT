@@ -81,6 +81,10 @@ dependencies {
     val mapsForgeVersion: String by project
 
 
+    // Android support only Junit 4
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation("junit:junit:4.12")
+
     // MapsForge Android
     implementation("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")
     implementation("com.caverock:androidsvg:1.4")
