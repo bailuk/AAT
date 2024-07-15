@@ -50,6 +50,18 @@
     <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
     <releases>
+        <release version="1.25.2" date="2024-05-12">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.25.2</url>
+            <description>
+                <p>v1.25.2 (39)</p>
+                <ul>
+                    <li>Fix crash on Kotlin null check: Allow parameter `Intent` to be null in `AbsService::onStartCommand()`</li>
+                    <li>Fix crash on Kotlin null check: Allow parameter `Intent` to be null in `PreferencesActivity::onActivityResult()`</li>
+                    <li>Fix crash on Kotlin null check: Return value of `MapMetrics.fromPixel(...)``</li>
+                    <li>Fix missing MET value if MET string has leading spaces</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.25" date="2024-04-06">
             <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.25</url>
             <description>

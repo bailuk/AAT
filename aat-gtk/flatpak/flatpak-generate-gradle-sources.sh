@@ -116,7 +116,7 @@ find * -type f | sort | while IFS= read -r file; do
 	url=''
 	for repo in "${REPO_BASEURL[@]}"; do
 		url_to_try="${repo}${file}"
-		if curl --HEAD "$url_to_try" --fail -L &> /dev/null; then
+		if curl --head "$url_to_try" --fail -L &> /dev/null; then
 			url="$url_to_try"
 			break
 		fi
