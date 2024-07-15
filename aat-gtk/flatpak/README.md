@@ -2,13 +2,24 @@
 # Create Flatpak
 
 ```bash
-# 1. generate 'gradle-sources.json'
+# Clear cache
+rm -rf build
+
+# Generate / update `metainfo.xml` (add releases)
+./flatpak-generate-metainfo.sh
+
+# Generate 'gradle-sources.json'
 ./flatpak-generate-gradle-sources.sh
 
-# 2. adjust version and hash of `gradle-bin.zip` in `./ch.bailu.aat.json`
+# Commit changes and push changes
+# Pin to commit (update flatpak manifest)
+./flatpak-pin-commit.sh 
 
-# 3. create and run flatpak distribution
+# Create flatpak
 ./flatpak-create.sh
+
+# ...Or build install and test flathub-flatpak
+./flatpak-create-lint.sh 
 ```
 
 # Flatpak and gradle

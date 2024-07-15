@@ -78,7 +78,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         }
 
         override fun onResume() {
-            appContext.broadcaster.register(onChangedInCache, AppBroadcaster.FILE_CHANGED_INCACHE)
+            appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onChangedInCache)
             super.onResume()
         }
 

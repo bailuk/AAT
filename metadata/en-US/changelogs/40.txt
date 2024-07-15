@@ -1,0 +1,6 @@
+v1.26 (40)
+
+- Android: Fix recursive call in GpxDocumentProvider
+- Android: Fix security issue in GpxSendViewProvider: Limit access to only exported file
+- Android: Inform user about missing permissions
+- Gtk: Add preview image support to file list

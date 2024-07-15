@@ -24,8 +24,16 @@ test -f gradlew || cd ..
 test -f gradlew || exit 1
 
 # Must be an absolute path
-project_root="$(pwd)/aat-gtk"
-source_file="${project_root}/flatpak/gradle-sources.json"
+project_root="$(pwd)"
+module_root="${project_root}/aat-gtk"
+source_file="${module_root}/flatpak/gradle-sources.json"
+
+gradlew_version="$(grep bin.zip ${project_root}/gradle/wrapper/gradle-wrapper.properties | cut -d '-' -f 2-2)"
+gradlew_url="https://services.gradle.org/distributions/gradle-${gradlew_version}-bin.zip"
+gradlew_sha256_url="https://downloads.gradle.org/distributions/gradle-${gradlew_version}-bin.zip.sha256"
+gradlew_sha256="$(curl ${gradlew_sha256_url})"
+
+echo "Gradle wrapper: ${gradlew_url} (${gradlew_sha256})"
 
 # The target to generate the dependencies for:
 gradle_target="aat-gtk:build"
@@ -38,8 +46,8 @@ REPO_BASEURL=(
 	'https://jitpack.io/'
 )
 
-gradle_user_home="${project_root}/flatpak/build/gradle"
-maven_repo="${project_root}/flatpak/build/maven"
+gradle_user_home="${module_root}/flatpak/build/gradle"
+maven_repo="${module_root}/flatpak/build/maven"
 
 # Clean cache
 if [ -d ${gradle_user_home}/chaches ]; then
@@ -56,9 +64,11 @@ mkdir -p $maven_repo
 if [ ! -z $1 ]; then
   echo "_"
   echo "Using proxy: $1"
-  gradle_proxy="-Dhttps.proxyHost=${proxy_host} -Dhttps.proxyPort=8080 -Dhttp.proxyHost=${proxy_host} -Dhttp.proxyPort=8080"
-  export http_proxy=http://${proxy_host}:8080
-  export https_proxy=http://${proxy_host}:8080
+  gradle_proxy="-Dhttps.proxyHost=${1} -Dhttps.proxyPort=8080 -Dhttp.proxyHost=${1} -Dhttp.proxyPort=8080"
+  export GRADLE_OPTS=$gradle_proxy
+  export JAVA_OPTS=$gradle_proxy
+  export http_proxy=http://${1}:8080
+  export https_proxy=http://${1}:8080
 fi
 
 if [ -f "$source_file" ]; then
@@ -102,11 +112,11 @@ echo '[' > "$source_file"
 
 echo "_"
 echo "Probe repository for each file and write source object to json"
-find * -type f -print0 | while IFS= read -r -d '' file; do
+find * -type f | sort | while IFS= read -r file; do
 	url=''
 	for repo in "${REPO_BASEURL[@]}"; do
 		url_to_try="${repo}${file}"
-		if curl --HEAD "$url_to_try" --fail -L &> /dev/null; then
+		if curl --head "$url_to_try" --fail -L &> /dev/null; then
 			url="$url_to_try"
 			break
 		fi
@@ -133,13 +143,25 @@ find * -type f -print0 | while IFS= read -r -d '' file; do
 HERE
 done
 
+echo "_"
+echo "$gradlew_url"
+echo "$gradlew_sha256"
+echo "gradlew/wrapper/gradle-bin.zip"
+cat << HERE >> "$source_file"
+  {
+    "type": "file",
+    "url": "${gradlew_url}",
+    "sha256": "${gradlew_sha256}",
+    "dest": "gradle/wrapper",
+    "dest-filename": "gradle-bin.zip"
+  }
+HERE
+
 # Remove last line in json file and replace with closing braces without comma
 head -n -1 "$source_file" > temp.json && mv temp.json "$source_file"
 echo '	}' >> "$source_file"
 # And close the json array
 echo ']' >> "$source_file"
-
-cd "$projectRoot"
 
 echo "_"
 echo "Finished. Success is unknown until observed."

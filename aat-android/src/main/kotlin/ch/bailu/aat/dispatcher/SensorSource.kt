@@ -21,7 +21,7 @@ class SensorSource(private val services: ServicesInterface, private val broadcas
     }
 
     override fun onResume() {
-        broadcaster.register(onSensorUpdated, changedAction)
+        broadcaster.register(changedAction, onSensorUpdated)
     }
 
     override fun getIID(): Int {

@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
@@ -9,12 +9,13 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
-import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
+import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
+import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -31,15 +32,16 @@ import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.gtk.ScrolledWindow
-import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.SignalListItemFactory
+import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
+import ch.bailu.gtk.pango.EllipsizeMode
 import ch.bailu.gtk.type.Str
 
-class FileList(app: Application,
-               appContext: AppContext,
-               private val uiController: UiController
+class FileListPage(app: Application,
+                   appContext: AppContext,
+                   private val uiController: UiController
 ) {
     private val descriptions = arrayOf(
         DateDescription(),
@@ -47,11 +49,11 @@ class FileList(app: Application,
         AverageSpeedDescription(appContext.storage),
         TimeDescription())
 
-
     val vbox = Box(Orientation.VERTICAL, Layout.margin).apply {
         margin(Layout.margin)
     }
 
+    private val fileCountLabel = Label(Str.NULL)
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
         iconName = Icons.zoomFitBestSymbolic
@@ -75,17 +77,22 @@ class FileList(app: Application,
 
     private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
-            if (listIndex.size != count) {
-                if (!listIsDirty) {
-                    listIsDirty = true
-                    updateLater()
-                }
+            updateList()
+        }
+    }
+
+    private fun updateList() {
+        fileCountLabel.setLabel(iteratorSimple.count.toString())
+        if (listIndex.size != iteratorSimple.count) {
+            if (!listIsDirty) {
+                listIsDirty = true
+                updateLater()
             }
         }
     }
 
     private fun updateLater() {
-        updateTimer.kick(1000) {
+        updateTimer.kick(500) {
             if (listIsDirty) {
                 listIsDirty = false
                 val count = iteratorSimple.count
@@ -102,6 +109,7 @@ class FileList(app: Application,
 
     private val items = HashMap<ListItem, FileListItem>()
     private val overlayMenu = FileContextMenu(
+        appContext,
         SolidCustomOverlayList(
             appContext.storage,
             appContext
@@ -129,15 +137,15 @@ class FileList(app: Application,
     }
 
     init {
-        select(-1)
         try {
-            listIndex.size = iteratorSimple.count
+            select(-1)
+            updateList()
 
             val factory = SignalListItemFactory().apply {
                 onSetup {
                     val item = ListItem(it.cast())
 
-                    items[item] = FileListItem(item, descriptions)
+                    items[item] = FileListItem(appContext, item, descriptions)
                     logItems.log(items.size.toLong())
                 }
 
@@ -154,17 +162,19 @@ class FileList(app: Application,
 
                 onTeardown {
                     val item = ListItem(it.cast())
+                    items[item]?.apply { teardown() }
                     items.remove(item)
                     logItems.log(items.size.toLong())
                 }
             }
 
-            vbox.append(fileNameLabel)
             vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     addCssClass(Strings.linked)
                     append(
-                        SolidDirectoryQueryComboView(appContext).combo.apply { addCssClass(Strings.linked) })
+                        SolidDirectoryDropDownView(appContext).dropDown.apply {
+                            hexpand = true
+                        })
                     append(Button().apply {
                         iconName = Icons.folderSymbolic
                         onClicked {
@@ -172,16 +182,31 @@ class FileList(app: Application,
                             Directory.openExternal(path)
                         }
                     })
+                    append(Button().apply {
+                        iconName = Icons.viewRefresh
+                        onClicked {
+                            appContext.services.directoryService.rescan()
+                        }
+                    })
                 })
+                append(Spinner().apply {
+                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_DONE) { stop() }
+                    appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
+                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
+                })
+                append(fileCountLabel)
+            })
 
-                append(Separator(Orientation.VERTICAL))
-
+            vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)
                     append(trackCenterButton)
                     append(trackDetailButton)
                     append(menuButton)
                     addCssClass(Strings.linked)
+                })
+                append(fileNameLabel.apply {
+                    ellipsize = EllipsizeMode.START
                 })
             })
 
@@ -202,7 +227,6 @@ class FileList(app: Application,
             AppLog.e(this, e)
         }
     }
-
 
     private fun selectAndFrame(index: Int) {
         select(index)
@@ -248,9 +272,11 @@ class FileList(app: Application,
             iteratorSimple.moveToPosition(indexOfSelected)
             overlayMenu.setFile(iteratorSimple.info.file)
             fileNameLabel.setLabel(iteratorSimple.info.file.name)
+            fileNameLabel.setTooltipText(iteratorSimple.info.file.toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
+            fileNameLabel.tooltipText = Str.NULL
             menuButton.sensitive = false
         }
     }

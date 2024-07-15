@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.service.cache
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.map.tile.source.Source
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
@@ -89,7 +90,16 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
             object : OnObject(appContext, file.toString(), ObjTileCacheOnly::class.java) {
                 override fun run(handle: Obj) {
                     val tile = handle as ObjTileCacheOnly
-                    tile.bitmap.set(file, SolidTileSize.DEFAULT_TILESIZE, tile.source.isTransparent)
+                    try {
+                        tile.bitmap.set(
+                            file,
+                            SolidTileSize.DEFAULT_TILESIZE,
+                            tile.source.isTransparent
+                        )
+                    } catch (e : Exception) {
+                        AppLog.e(this, e)
+                    }
+
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,
                         file.toString()

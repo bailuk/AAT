@@ -28,7 +28,7 @@ public final class CacheService extends VirtualService implements CacheServiceIn
 
         table.limit(this, slimit.getValueAsLong());
 
-        sc.getBroadcaster().register(onFileProcessed, AppBroadcaster.FILE_CHANGED_INCACHE);
+        sc.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileProcessed);
     }
 
     public void onLowMemory() {

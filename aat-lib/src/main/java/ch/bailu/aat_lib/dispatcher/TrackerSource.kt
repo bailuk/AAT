@@ -18,7 +18,7 @@ class TrackerSource(private val services: ServicesInterface, private val broadca
     }
 
     override fun onResume() {
-        broadcaster.register(onTrackChanged, AppBroadcaster.TRACKER)
+        broadcaster.register(AppBroadcaster.TRACKER, onTrackChanged)
     }
 
     override fun getIID(): Int {

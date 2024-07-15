@@ -28,5 +28,6 @@
         <file preprocess="xml-stripblanks">icons/scalable/actions/folder-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/edit-find-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/view-more-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-refresh-symbolic.svg</file>
     </gresource>
 </gresources>

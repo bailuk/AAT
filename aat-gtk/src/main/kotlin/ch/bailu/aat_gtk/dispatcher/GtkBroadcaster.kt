@@ -36,7 +36,7 @@ class GtkBroadcaster : Broadcaster {
     }
 
     @Synchronized
-    override fun register(broadcastReceiver: BroadcastReceiver, action: String) {
+    override fun register(action: String, broadcastReceiver: BroadcastReceiver) {
         unregister(broadcastReceiver)
         signals.putIfAbsent(action, ArrayList())
         signals[action]?.add(broadcastReceiver)

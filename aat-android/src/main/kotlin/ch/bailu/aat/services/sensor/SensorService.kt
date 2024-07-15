@@ -49,10 +49,10 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
             BluetoothAdapter.ACTION_STATE_CHANGED
         )
         broadcaster.register(
-            onSensorDisconnected,
-            AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS
+            AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS,
+            onSensorDisconnected
         )
-        broadcaster.register(onSensorReconnect, AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS)
+        broadcaster.register(AppBroadcaster.SENSOR_RECONNECT + InfoID.SENSORS, onSensorReconnect)
         updateConnections()
     }
 

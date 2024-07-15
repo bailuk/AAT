@@ -1,6 +1,7 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -10,8 +11,9 @@ import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
-class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDescription>) {
+class FileListItem(appContext: AppContext, listItem: ListItem, private val descriptions: Array<ContentDescription>) {
     private val labels = ArrayList<Label>()
+    private val previewImageView = PreviewImageView(appContext)
     private var index = -1
 
     init {
@@ -20,7 +22,8 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
 
         vbox.hexpand = true
         hbox.append(vbox)
-        vbox.margin(5)
+        hbox.append(previewImageView.image)
+        hbox.margin(5)
 
         val title = createLabel()
         title.useMarkup = true
@@ -44,19 +47,26 @@ class FileListItem(listItem: ListItem, private val descriptions: Array<ContentDe
     fun bind(info: GpxInformation, index: Int) {
         this.index = index
         var title = ""
-        var infoText = ""
+        var infoText = "#${index+1}"
 
         descriptions.forEachIndexed { i, d ->
             d.onContentUpdated(InfoID.ALL, info)
             if (i == 0) {
                 title = "<b>${d.getValueAsString()}</b>"
-            } else {
-                infoText = d.getValueAsString()
+            }  else {
+                infoText = "$infoText - ${d.getValueAsString()}"
             }
         }
 
         labels[0].setLabel(title)
         labels[1].setText(infoText)
         labels[2].setText(info.file.name)
+
+        previewImageView.setFilePath(info.file)
+        previewImageView.onAttached()
+    }
+
+    fun teardown() {
+        previewImageView.onDetached()
     }
 }

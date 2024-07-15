@@ -1,18 +1,16 @@
 package ch.bailu.aat.map.mapsforge
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
 import ch.bailu.aat.map.MapDensity
-import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.lib.color.ColorInterface
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
+import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.map.tile.MapsForgeTileLayer
 import ch.bailu.aat_lib.map.tile.TileProvider
 import ch.bailu.aat_lib.map.tile.source.CacheOnlySource
@@ -28,13 +26,12 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.MapPosition
 import org.mapsforge.core.model.Point
-import org.mapsforge.map.android.graphics.AndroidGraphicFactory
 import org.mapsforge.map.util.LayerUtil
 import org.mapsforge.map.util.MapPositionUtil
 import org.mapsforge.map.view.FrameBuffer
 import org.mapsforge.map.view.FrameBufferHA3
 
-class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInformation, out: Foc):
+class MapsForgePreview(context: Context, private val appContext: AppContext, info: GpxInformation, out: Foc):
     MapsForgeViewBase(appContext, context, MapsForgePreview::class.java.simpleName, MapDensity()),
     MapPreviewInterface {
 
@@ -51,9 +48,9 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         provider = TileProvider(appContext, getSource(SolidRenderTheme(appContext.mapDirectory, appContext)))
 
         val tileLayer = MapsForgeTileLayer(appContext.services, provider, appContext.tilePainter)
-        add(tileLayer, tileLayer)
+        add(tileLayer)
 
-        val gpxLayer = GpxDynLayer(Storage(getContext()), getMContext(), appContext.services)
+        val gpxLayer = GpxDynLayer(appContext.storage, getMContext(), appContext.services)
         add(gpxLayer)
         attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILE_VIEW, info)
@@ -88,7 +85,7 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         return object : FrameBufferHA3(
             model.frameBufferModel,
             model.displayModel,
-            AndroidGraphicFactory.INSTANCE
+            AppGraphicFactory.instance()
         ) {
             override fun getDrawingBitmap(): Bitmap? {
                 return null
@@ -103,14 +100,13 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
      * End of "prevent MapView from drawing" hack
      */
 
-    private fun generateBitmap(): AndroidSyncTileBitmap {
-        val bitmap = AndroidSyncTileBitmap()
+    private fun generateBitmap(): MapTileInterface {
+        val bitmap = appContext.createMapTile()
 
         bitmap.set(BITMAP_SIZE, false)
-        if (bitmap.androidBitmap != null) {
-            val c = bitmap.androidCanvas
-            val canvas = AndroidGraphicFactory.createGraphicContext(c)
-            bitmap.androidBitmap?.eraseColor(Color.BLACK)
+        if (bitmap.isLoaded()) {
+            val canvas = bitmap.getCanvas()
+            bitmap.getBitmap()?.setBackgroundColor(ColorInterface.BLACK)
             for (layer in layerManager.layers) {
                 layer.draw(bounding, mapPosition.zoomLevel, canvas, tlPoint)
             }
@@ -118,21 +114,19 @@ class MapsForgePreview(context: Context, appContext: AppContext, info: GpxInform
         return bitmap
     }
 
-    @SuppressLint("WrongThread")
     override fun generateBitmapFile() {
         val bitmap = generateBitmap()
         try {
             imageFile.openW()?.use { out ->
-                bitmap.androidBitmap?.compress(android.graphics.Bitmap.CompressFormat.PNG, 90, out)
-                AndroidBroadcaster.broadcast(
-                    context,
+                bitmap.getBitmap()?.compress(out)
+                appContext.broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK,
-                    imageFile,
+                    imageFile.path,
                     javaClass.name
                 )
             }
         } catch (e: Exception) {
-            AppLog.e(context, e)
+            AppLog.e(this, e)
         }
         bitmap.free()
     }

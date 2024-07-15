@@ -8,10 +8,10 @@ import ch.bailu.aat.R
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
 import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
-import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.editor.EditorInterface
@@ -20,8 +20,8 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
 
 class EditorMenu(
+    private val appContext: AppContext,
     private val context: Context,
-    private val scontext: ServicesInterface,
     private val editor: EditorInterface,
     private val file: Foc
 ) : AbsMenu() {
@@ -57,7 +57,7 @@ class EditorMenu(
     }
 
     private fun saveCopyTo() {
-        object : AppSelectDirectoryDialog(context, file) {
+        object : AppSelectDirectoryDialog(appContext, context, file) {
             override fun copyTo(context: Context, srcFile: Foc, destDirectory: Foc) {
                 editor.saveTo(destDirectory)
             }
@@ -67,8 +67,8 @@ class EditorMenu(
     private fun attach() {
         object : AbsSelectOverlayDialog(context) {
             override fun onFileSelected(slist: SolidCustomOverlayList, index: Int, file: Foc) {
-                scontext.insideContext {
-                    val handle = scontext.cacheService.getObject(
+                appContext.services.insideContext {
+                    val handle = appContext.services.cacheService.getObject(
                         file.path,
                         Obj.Factory()
                     )

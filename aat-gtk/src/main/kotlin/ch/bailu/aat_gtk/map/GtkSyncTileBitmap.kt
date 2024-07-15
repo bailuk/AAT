@@ -47,7 +47,8 @@ class GtkSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(MapTileUtil.load(file, defaultTileSize, transparent))
+        free()
+        set(MapTileUtil.loadThrow(file, defaultTileSize, transparent))
     }
 
     @Synchronized

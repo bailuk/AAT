@@ -10,8 +10,8 @@ export LANG=C # So we can google error messages
 if [ ! -z $1 ]; then
   echo "_"
   echo "Using proxy: $1"
-  export http_proxy=http://${proxy_host}:8080
-  export https_proxy=http://${proxy_host}:8080
+  export http_proxy=http://${1}:8080
+  export https_proxy=http://${1}:8080
 fi
 
 echo "_"

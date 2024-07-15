@@ -1,7 +1,10 @@
 package ch.bailu.aat_lib.util.fs
 
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import java.io.IOException
 import java.util.Locale
@@ -116,15 +119,37 @@ object AppDirectory {
         return name.toString()
     }
 
-    fun getGpxDirectories(sdirectory: SolidDataDirectory): Array<Foc> {
-        return arrayOf(
-            getTrackListDirectory(sdirectory, 0),
-            getTrackListDirectory(sdirectory, 1),
-            getTrackListDirectory(sdirectory, 2),
-            getTrackListDirectory(sdirectory, 3),
-            getTrackListDirectory(sdirectory, 4),
-            getDataDirectory(sdirectory, DIR_OVERLAY),
-            getDataDirectory(sdirectory, DIR_IMPORT)
-        )
+    /**
+     * List of gpx directories as name / directory pair
+     * All presets (according to SolidPreset) and overlay and import directories
+     */
+    fun getGpxDirectories(appContext: AppContext): ArrayList<GpxDirectoryEntry> {
+        val result = ArrayList<GpxDirectoryEntry>()
+        val solidPreset = SolidPreset(appContext.storage)
+
+        for (index in 0 until  solidPreset.length()) {
+            val name = solidPreset.getValueAsString(index)
+            val directory = getTrackListDirectory(appContext.dataDirectory, index)
+            result.add(GpxDirectoryEntry(name, directory))
+        }
+        getDataDirectory(appContext.dataDirectory, DIR_OVERLAY).apply {
+            result.add(GpxDirectoryEntry(Res.str().p_overlay(), this))
+        }
+        getDataDirectory(appContext.dataDirectory, DIR_IMPORT).apply {
+            result.add(GpxDirectoryEntry(this.name, this))
+        }
+        return result
     }
+
+    fun getMimeTypeFromFileName(name: String): String {
+        return if (name.endsWith(GPX_EXTENSION)) {
+            "application/gpx+xml" }
+        else if (name.endsWith(OSM_EXTENSION)) {
+            "application/xml"
+        } else {
+            return "application/octet-stream"
+        }
+    }
+
+    data class GpxDirectoryEntry(val name: String, val file: Foc)
 }

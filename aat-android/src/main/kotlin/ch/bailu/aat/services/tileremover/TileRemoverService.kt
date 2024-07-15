@@ -22,8 +22,8 @@ class TileRemoverService(val appContext: AppContext) : VirtualService() {
     private val onStopped: BroadcastReceiver = BroadcastReceiver {free() }
 
     init {
-        appContext.broadcaster.register(onStopped, AppBroadcaster.TILE_REMOVER_STOPPED)
-        appContext.broadcaster.register(onRemove, AppBroadcaster.TILE_REMOVER_REMOVE)
+        appContext.broadcaster.register(AppBroadcaster.TILE_REMOVER_STOPPED, onStopped)
+        appContext.broadcaster.register(AppBroadcaster.TILE_REMOVER_REMOVE, onRemove)
 
         state = StateMachine(appContext)
     }

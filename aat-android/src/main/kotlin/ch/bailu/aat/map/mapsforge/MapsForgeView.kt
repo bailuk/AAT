@@ -23,7 +23,7 @@ class MapsForgeView(
     private val foreground = MapsForgeForeground(appContext, this, getMContext(), MapDensity(context), layers)
 
     init {
-        add(stack, stack)
+        add(stack)
         add(pos)
 
         isClickable = true

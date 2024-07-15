@@ -12,6 +12,7 @@ import ch.bailu.aat_gtk.solid.GtkStorage
 import ch.bailu.aat_gtk.solid.SolidGtkDefaultDirectory
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
+import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.map.tile.MapTileInterface
@@ -58,7 +59,7 @@ object GtkAppContext: AppContext {
     }
 
     override fun createMapPreview(info: GpxInformation, previewImageFile: Foc): MapPreviewInterface {
-        return Preview()
+        return MapsForgePreview(this, info, previewImageFile)
     }
 
     override fun createMapTile(): MapTileInterface {

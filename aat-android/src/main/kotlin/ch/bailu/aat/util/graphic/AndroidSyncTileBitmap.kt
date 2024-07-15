@@ -31,7 +31,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
         return bitmap
     }
 
-    val androidBitmap: android.graphics.Bitmap?
+    private val androidBitmap: android.graphics.Bitmap?
         get() {
             val b = bitmap
             return if (b != null) {
@@ -39,7 +39,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
             } else null
         }
 
-    val androidCanvas: Canvas?
+    private val androidCanvas: Canvas?
         get() {
             val b = androidBitmap
             return if (b != null) {
@@ -56,7 +56,8 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(file: Foc, defaultTileSize: Int, transparent: Boolean) {
-        set(MapTileUtil.load(file, defaultTileSize, transparent))
+        free()
+        set(MapTileUtil.loadThrow(file, defaultTileSize, transparent))
     }
 
     @Throws(IOException::class)
@@ -93,6 +94,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun set(defaultTileSize: Int, transparent: Boolean) {
+        free()
         set(AndroidGraphicFactory.INSTANCE.createTileBitmap(defaultTileSize, transparent))
     }
 
@@ -124,9 +126,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
 
     @Synchronized
     override fun free() {
-        if (bitmap != null) {
-            bitmap!!.decrementRefCount()
-        }
+        bitmap?.apply { decrementRefCount() }
         bitmap = null
         size = Obj.MIN_SIZE.toLong()
     }

@@ -23,7 +23,7 @@ android {
         targetSdk = 33
 
         // Version Code can not be taken from from variable (f-droid version checker fail)
-        versionCode = 39
+        versionCode = 40
         versionName = appVersionName
         applicationId = appId
     }
@@ -80,6 +80,10 @@ dependencies {
     */
     val mapsForgeVersion: String by project
 
+
+    // Android support only Junit 4
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation("junit:junit:4.12")
 
     // MapsForge Android
     implementation("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")

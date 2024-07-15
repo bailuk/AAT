@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>ch.bailu.aat</id>
+
+    <name>AAT Activity Tracker</name>
+    <summary>Track your outdoor activities</summary>
+
+    <developer id="ch.bailu">
+        <name>bailuk</name>
+    </developer>
+
+    <metadata_license>MIT</metadata_license>
+    <project_license>GPL-3.0-or-later</project_license>
+
+    <description>
+        <p>
+            Track sportive activities while displaying them on cockpit and map view.
+            Store tracks in standard GPX format for sharing with other application.
+        </p>
+        <p>
+            Display offline as well as tile based maps. Tile based overlays for displaying cycle and hiking routes (Waymarked Trails)
+        </p>
+        <p>
+            Integration of Offline POI and Nominatim map search. Display Offline POIs from Mapsforge compatible Databases.
+        </p>
+        <p>
+            Simple GPX editor for quick route planning.
+            GPS independent altitude information and hill shading.
+        </p>
+    </description>
+
+    <url type="homepage">https://github.com/bailuk/AAT</url>
+
+    <recommends>
+      <control>keyboard</control>
+      <control>pointing</control>
+      <control>touch</control>
+    </recommends>
+    <requires>
+      <display_length compare="ge">360</display_length>
+    </requires>
+
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/bailuk/AAT/258f466a53b6c4f184f86f9e348ac8a352d5c105/doc/screenshot-gtk.png</image>
+            <caption>Map view and track list side by side</caption>
+         </screenshot>
+    </screenshots>
+
+    <content_rating type="oars-1.1"/>
+    <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>

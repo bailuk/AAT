@@ -13,7 +13,7 @@ open class SolidString(private val storage: StorageInterface, private val key: S
         setValue(string)
     }
 
-    fun setValue(v: String) {
+    open fun setValue(v: String) {
         getStorage().writeString(key, v)
     }
 

@@ -33,8 +33,8 @@ open class MapsForgeViewBase(
     private val mcontext: MapsForgeContext
     private val services: ServicesInterface
     private val storage: Storage
-    var areServicesUp = false
-    var isVisible = false
+    private var areServicesUp = false
+    private var isVisible = false
     val layers = ArrayList<MapLayerInterface>(10)
     private var areLayersAttached = false
 
@@ -43,7 +43,7 @@ open class MapsForgeViewBase(
         model.displayModel.setFixedTileSize(d.tileSize)
         services = appContext.services
         mcontext = MapsForgeContext(appContext, this, key, d)
-        add(mcontext, mcontext)
+        add(mcontext)
         storage = Storage(context)
         mapScaleBar.isVisible = false
         setBuiltInZoomControls(false)
@@ -54,8 +54,14 @@ open class MapsForgeViewBase(
     }
 
     override fun add(layer: MapLayerInterface) {
-        val wrapper = LayerWrapper(services, mcontext, layer)
-        add(wrapper, layer)
+        val wrapper: Layer = if (layer is Layer) {
+            layer
+        } else {
+            LayerWrapper(services, mcontext, layer)
+        }
+        addLayer(wrapper)
+        layers.add(layer)
+        if (areLayersAttached) layer.onAttached()
     }
 
     override fun getMContext(): MapContext {
@@ -69,12 +75,6 @@ open class MapsForgeViewBase(
     override fun reDownloadTiles() {}
     override fun getMapViewPosition(): IMapViewPosition {
         return model.mapViewPosition
-    }
-
-    fun add(mfLayer: Layer, layer: MapLayerInterface) {
-        addLayer(mfLayer)
-        layers.add(layer)
-        if (areLayersAttached) layer.onAttached()
     }
 
     override fun zoomOut() {
@@ -174,7 +174,8 @@ open class MapsForgeViewBase(
         /* FIXME: this is a workaround to a bug:
          * Sometimes the LayerManager thread is still running after calling destroyAll().
          * This happens when MapView was never attached to window.
-         * Same problem with the Animator thread of MapViewPosition. */layerManager.finish()
+         * Same problem with the Animator thread of MapViewPosition. */
+        layerManager.finish()
         getMapViewPosition().destroy()
     }
 

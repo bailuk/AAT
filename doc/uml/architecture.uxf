@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>100</x>
+      <y>50</y>
+      <w>1100</w>
+      <h>1020</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>410</x>
+      <y>300</y>
+      <w>470</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>260</x>
+      <y>190</y>
+      <w>770</w>
+      <h>740</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>760</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FOC
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>850</x>
+      <y>880</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FileSystem</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>250</x>
+      <y>840</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>DB</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>410</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>GPS
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>500</x>
+      <y>390</y>
+      <w>300</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>210</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>470</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Context
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>280</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>View
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>410</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Location
+Provider
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>760</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Iterator
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>210</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Dispatcher
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>250</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Controler
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>380</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>List Files
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>540</y>
+      <w>70</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Show
+Detail
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>680</y>
+      <w>90</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Control
+Tracker
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>490</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Map
+Show Track
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>560</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Map
+Edit Track
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>380</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Map
+POI Search
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>320</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Map
+Nominatim
+Search
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>500</x>
+      <y>680</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Change
+Settings
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>250</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Preferences
+Listener
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>580</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Location
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>610</x>
+      <y>630</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Tracker
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>450</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Elevation
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>510</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Directory
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>460</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Cache
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>400</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Background
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>610</x>
+      <y>510</y>
+      <w>70</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Render
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>520</y>
+      <w>80</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>IconMap
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>570</y>
+      <w>90</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Sensor
+Service
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>350</y>
+      <w>110</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Description
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
