@@ -41,6 +41,15 @@ object AppPermission {
         return Build.VERSION.SDK_INT < 23 || checkLocationSdk23(context)
     }
 
+    fun checkBackgroundLocation(context: Context): Boolean {
+        return Build.VERSION.SDK_INT < 29 || checkBackgroundLocationSdk29(context)
+    }
+
+    @TargetApi(29)
+    private fun checkBackgroundLocationSdk29(context: Context): Boolean {
+        return checkSdk23(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+    }
+
     @TargetApi(23)
     private fun checkLocationSdk23(context: Context): Boolean {
         return checkSdk23(context, Manifest.permission.ACCESS_FINE_LOCATION) &&

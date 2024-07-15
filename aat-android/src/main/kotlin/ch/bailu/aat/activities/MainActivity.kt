@@ -13,6 +13,8 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.LabelTextView
+import ch.bailu.aat.views.msg.permission.DataDirectoryPermissionInfoView
+import ch.bailu.aat.views.msg.permission.LocationPermissionInfoView
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.dispatcher.AppBroadcaster
@@ -44,8 +46,17 @@ class MainActivity : ActivityContext() {
     private fun createViews() {
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
+        contentView.add(permissionInfo())
         contentView.addW(createActionList())
         setContentView(contentView)
+    }
+
+    private fun permissionInfo(): View {
+        return LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(LocationPermissionInfoView(this@MainActivity, theme))
+            addView(DataDirectoryPermissionInfoView(this@MainActivity, appContext.dataDirectory, theme))
+        }
     }
 
     private fun createActionList(): View {
