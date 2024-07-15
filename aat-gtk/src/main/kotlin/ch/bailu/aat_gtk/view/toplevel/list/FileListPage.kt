@@ -9,7 +9,7 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
-import ch.bailu.aat_gtk.view.solid.SolidDirectoryQueryComboView
+import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
@@ -172,7 +172,7 @@ class FileListPage(app: Application,
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     addCssClass(Strings.linked)
                     append(
-                        SolidDirectoryQueryComboView(appContext).combo.apply {
+                        SolidDirectoryDropDownView(appContext).dropDown.apply {
                             hexpand = true
                         })
                     append(Button().apply {
