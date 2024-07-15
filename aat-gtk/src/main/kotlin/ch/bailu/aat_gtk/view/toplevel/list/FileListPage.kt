@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
@@ -39,9 +39,9 @@ import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.pango.EllipsizeMode
 import ch.bailu.gtk.type.Str
 
-class FileList(app: Application,
-               appContext: AppContext,
-               private val uiController: UiController
+class FileListPage(app: Application,
+                   appContext: AppContext,
+                   private val uiController: UiController
 ) {
     private val descriptions = arrayOf(
         DateDescription(),
@@ -180,6 +180,12 @@ class FileList(app: Application,
                         onClicked {
                             val path = SolidDirectoryQuery(appContext.storage, appContext).getValueAsFile().path
                             Directory.openExternal(path)
+                        }
+                    })
+                    append(Button().apply {
+                        iconName = Icons.viewRefresh
+                        onClicked {
+                            appContext.services.directoryService.rescan()
                         }
                     })
                 })

@@ -9,7 +9,7 @@ import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
-import ch.bailu.aat_gtk.view.list.FileList
+import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_lib.app.AppContext
@@ -97,7 +97,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(customFileSource)
 
         stackPage.addView(CockpitPage(appContext,this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        stackPage.addView(FileList(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
+        stackPage.addView(FileListPage(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
         stackPage.addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
 
 

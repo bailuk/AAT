@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
 import ch.bailu.aat_lib.app.AppContext

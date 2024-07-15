@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.list
+package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_lib.app.AppContext

@@ -31,4 +31,5 @@ object Icons {
     val folderSymbolic = Str("folder-symbolic")
     val editFindSymbolic = Str("edit-find-symbolic")
     val viewMoreSymbolic = Str("view-more-symbolic")
+    val viewRefresh = Str("view-refresh-symbolic")
 }

@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.toplevel
+package ch.bailu.aat_gtk.dispatcher
 
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation

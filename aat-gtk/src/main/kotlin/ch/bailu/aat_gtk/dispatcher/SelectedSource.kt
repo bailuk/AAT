@@ -1,16 +1,16 @@
 package ch.bailu.aat_gtk.dispatcher
 
-import ch.bailu.aat_gtk.view.toplevel.InfoCache
+import ch.bailu.aat_gtk.dispatcher.InfoCache
 import ch.bailu.aat_lib.dispatcher.ContentSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 
-class SelectedSource(val cache: InfoCache = InfoCache()) : ContentSource(), OnContentUpdatedInterface {
-    var selectedIID = InfoID.TRACKER
+class SelectedSource(private val cache: InfoCache = InfoCache()) : ContentSource(), OnContentUpdatedInterface {
+    private var selectedIID = InfoID.TRACKER
 
-    fun requestUpdate(iid: Int) {
+    private fun requestUpdate(iid: Int) {
         if (selectedIID == iid) {
             requestUpdate()
         }
