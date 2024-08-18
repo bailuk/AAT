@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.solid
 
-import ch.bailu.aat_gtk.config.Strings.appIdName
+import ch.bailu.aat_gtk.config.Environment
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -10,9 +10,8 @@ class SolidGtkDefaultDirectory (storage: StorageInterface, focFactory: FocFactor
     SolidDataDirectoryDefault(storage, focFactory) {
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        val home = System.getProperty("user.home")
-        addDistinct(list,"$home/.config/$appIdName")
-        addDistinct(list,"$home/${AppDirectory.DIR_AAT_DATA}")
+        addDistinct(list,"${Environment.configDirectory}")
+        addDistinct(list,"${Environment.userHome}/${AppDirectory.DIR_AAT_DATA}")
         return list
     }
 

@@ -40,10 +40,10 @@ gradle_target="aat-gtk:build"
 
 # The maven repos:
 REPO_BASEURL=(
-	'https://repo1.maven.org/maven2/'
-	'https://dl.google.com/android/maven2/'
-	'https://plugins.gradle.org/m2/'
-	'https://jitpack.io/'
+  'https://repo1.maven.org/maven2/'
+  'https://dl.google.com/android/maven2/'
+  'https://plugins.gradle.org/m2/'
+  'https://jitpack.io/'
 )
 
 gradle_user_home="${module_root}/flatpak/build/gradle"
@@ -88,19 +88,19 @@ cd "$gradle_user_home/caches/modules-2/files-2.1" || exit 1
 # Transforms gradle cache paths to maven repo paths
 function mavenize {
   IFS='/' read -r -a paths <<< "$1"
-	groupId=$(echo "${paths[1]}" | tr . /)
-	artifactId="${paths[2]}"
-	version="${paths[3]}"
-	echo "$groupId/$artifactId/$version"
+  groupId=$(echo "${paths[1]}" | tr . /)
+  artifactId="${paths[2]}"
+  version="${paths[3]}"
+  echo "$groupId/$artifactId/$version"
 }
 
 echo "_"
 echo "Copy every file from the cache to it's maven repo location"
 find . -type f -print0 | while IFS= read -r -d '' file; do
-	filename=$(basename "$file")
-	source_dir=$(dirname "$file")
-	target_dir="$maven_repo/$(mavenize "$file")"
-	mkdir -p "$target_dir" && cp "$source_dir/$filename" "$target_dir/"
+  filename=$(basename "$file")
+  source_dir=$(dirname "$file")
+  target_dir="$maven_repo/$(mavenize "$file")"
+  mkdir -p "$target_dir" && cp "$source_dir/$filename" "$target_dir/"
 done
 
 echo "_"
@@ -113,33 +113,33 @@ echo '[' > "$source_file"
 echo "_"
 echo "Probe repository for each file and write source object to json"
 find * -type f | sort | while IFS= read -r file; do
-	url=''
-	for repo in "${REPO_BASEURL[@]}"; do
-		url_to_try="${repo}${file}"
-		if curl --head "$url_to_try" --fail -L &> /dev/null; then
-			url="$url_to_try"
-			break
-		fi
-	done
-	if [ -z "$url" ]; then
-		echo "ERROR: No repo contains $file"
-		exit 1
-	fi
-	hash="$(sha256sum "$file" | cut -f 1 -d ' ')"
+  url=''
+  for repo in "${REPO_BASEURL[@]}"; do
+    url_to_try="${repo}${file}"
+    if curl --head "$url_to_try" --fail -L &> /dev/null; then
+      url="$url_to_try"
+      break
+    fi
+  done
+  if [ -z "$url" ]; then
+    echo "ERROR: No repo contains $file"
+    exit 1
+  fi
+  hash="$(sha256sum "$file" | cut -f 1 -d ' ')"
 
-	echo "_"
+  echo "_"
   echo "$url"
   echo "$hash"
   echo "$file"
 
-	cat << HERE >> "$source_file"
-	{
-		"type": "file",
-		"url": "$url",
-		"sha256": "$hash",
-		"dest": "maven-local/$(dirname "$file")",
-		"dest-filename": "$(basename "$file")"
-	},
+  cat << HERE >> "$source_file"
+  {
+    "type": "file",
+    "url": "$url",
+    "sha256": "$hash",
+    "dest": "maven-local/$(dirname "$file")",
+    "dest-filename": "$(basename "$file")"
+  },
 HERE
 done
 
@@ -159,7 +159,7 @@ HERE
 
 # Remove last line in json file and replace with closing braces without comma
 head -n -1 "$source_file" > temp.json && mv temp.json "$source_file"
-echo '	}' >> "$source_file"
+echo '  }' >> "$source_file"
 # And close the json array
 echo ']' >> "$source_file"
 

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-#!/bin/sh
+short_id="aat"
+full_id="ch.bailu.$short_id"
 
 # As described in https://docs.flathub.org/docs/for-app-authors/submission/
-
-test -d flatpak || cd ..
-cd flatpak || exit 1
 
 flatpak_base="build/flatpak"
 flatpak_export="${flatpak_base}/export"
@@ -44,7 +42,7 @@ flatpak run org.flatpak.Builder \
   --ccache \
   --mirror-screenshots-url=https://dl.flathub.org/media/ \
   --repo=${flatpak_repo} \
-  ${flatpak_build} ch.bailu.aat.json
+  ${flatpak_build} "$full_id.json"
 
 test $? == 0 || exit 1
 
@@ -67,8 +65,8 @@ flatpak build-export ${flatpak_export} ${flatpak_build} || exit 1
 
 echo "_"
 echo "Build single-file bundle"
-flatpak build-bundle ${flatpak_export} ${flatpak_base}/aat.flatpak "ch.bailu.aat"
+flatpak build-bundle ${flatpak_export} ${flatpak_base}/${short_id}.flatpak "$full_id"
 
 echo "_"
 echo "Run flatpak"
-echo "> flatpak run ch.bailu.aat"
+echo "> flatpak run $full_id"
