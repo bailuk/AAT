@@ -80,7 +80,7 @@ class DirtyLocation(next: LocationStackItem, private val storage: StorageInterfa
         }
 
         override fun getState(): Int {
-            return state
+            return this@DirtyLocation.state
         }
     }
 
