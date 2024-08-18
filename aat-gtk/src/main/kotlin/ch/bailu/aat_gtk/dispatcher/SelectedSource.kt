@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.dispatcher
 
-import ch.bailu.aat_gtk.dispatcher.InfoCache
 import ch.bailu.aat_lib.dispatcher.ContentSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface

@@ -10,7 +10,7 @@ class TargetList : OnContentUpdatedInterface {
         }
     }
 
-    fun add( t: OnContentUpdatedInterface) {
+    fun add(t: OnContentUpdatedInterface) {
         targets.add(t)
     }
 }

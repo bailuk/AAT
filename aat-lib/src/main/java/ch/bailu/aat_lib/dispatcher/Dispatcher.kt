@@ -12,14 +12,14 @@ class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
     }
 
     private fun addSingleTarget( t: OnContentUpdatedInterface, iid: Int) {
-        getTargetList(iid)!!.add(t)
+        getTargetList(iid).add(t)
     }
 
-    private fun getTargetList(iid: Int): TargetList? {
+    private fun getTargetList(iid: Int): TargetList {
         if (!targets.containsKey(iid)) {
             targets[iid] = TargetList()
         }
-        return targets[iid]
+        return targets[iid]!!
     }
 
     override fun addSource(source: ContentSourceInterface) {
