@@ -7,7 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.LinearLayout
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList
 import ch.bailu.aat.services.ServiceContext
@@ -17,7 +17,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.busy.BusyIndicator
 import ch.bailu.aat.views.osm.EditTextTool
 import ch.bailu.aat.views.preferences.SolidCheckBox
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidString

@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.description.EditorSource
 import ch.bailu.aat_lib.gpx.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
@@ -11,15 +10,10 @@ import ch.bailu.foc.Foc
 
 class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterface) :
     EditorSourceInterface, ContentSourceInterface {
-    private val editorSource: EditorSource
-    private val backupSource: ContentSourceInterface
+    private val editorSource: EditorSource = EditorSource(appContext)
+    private val backupSource: ContentSourceInterface = source
     override var isEditing = false
         private set
-
-    init {
-        editorSource = EditorSource(appContext)
-        backupSource = source
-    }
 
     val isModified: Boolean
         get() = isEditing && editor.isModified

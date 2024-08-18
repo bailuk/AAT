@@ -7,7 +7,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.R
-import ch.bailu.aat.dispatcher.AndroidBroadcaster.Companion.register
+import ch.bailu.aat.broadcaster.AndroidBroadcaster.Companion.register
 import ch.bailu.aat.menus.RemoveTilesMenu
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
 import ch.bailu.aat.services.ServiceContext
@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControl
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.bar.ControlBar
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory

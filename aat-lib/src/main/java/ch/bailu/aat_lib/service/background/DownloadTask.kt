@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.background
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.util.net.URX
@@ -50,7 +50,7 @@ open class DownloadTask(
         AppLog.w(this, e)
     }
 
-    
+
     override fun toString(): String {
         return source.toString()
     }

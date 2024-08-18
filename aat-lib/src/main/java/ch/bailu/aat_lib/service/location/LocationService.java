@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import ch.bailu.aat_lib.dispatcher.Broadcaster;
+import ch.bailu.aat_lib.broadcaster.Broadcaster;
 import ch.bailu.aat_lib.gpx.GpxInformation;
 import ch.bailu.aat_lib.gpx.StateID;
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged;

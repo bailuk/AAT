@@ -1,7 +1,7 @@
 package ch.bailu.aat.app
 
 import android.app.Application
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.util.AndroidLoggerFactory
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory

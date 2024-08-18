@@ -4,7 +4,7 @@ import ch.bailu.aat.preferences.map.SolidTrimDate
 import ch.bailu.aat.preferences.map.SolidTrimIndex
 import ch.bailu.aat.preferences.map.SolidTrimMode
 import ch.bailu.aat.preferences.map.SolidTrimSize
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 class StateScanForRemoval(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateScanned::class.java

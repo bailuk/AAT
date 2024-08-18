@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import java.util.concurrent.Callable
 import java.util.concurrent.CompletionService

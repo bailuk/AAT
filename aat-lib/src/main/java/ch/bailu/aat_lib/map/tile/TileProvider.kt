@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.map.tile
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastData.getFile
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData.getFile
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.tile.source.Source
 import ch.bailu.aat_lib.service.cache.ObjTile

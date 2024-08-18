@@ -4,10 +4,10 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import androidx.annotation.RequiresApi
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.services.sensor.list.SensorListItem
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
@@ -66,14 +66,9 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
     }
 
     class Information(a: Double, p: Float) : GpxInformation() {
-        private val attributes: GpxAttributes
-        private val altitude: Double
+        private val attributes: GpxAttributes = Attributes(p)
+        private val altitude: Double = a
         private val time = System.currentTimeMillis()
-
-        init {
-            attributes = Attributes(p)
-            altitude = a
-        }
 
         override fun getAttributes(): GpxAttributes {
             return attributes

@@ -17,8 +17,8 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.list.NodeListView
 import ch.bailu.aat.views.osm.OsmApiEditorView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.FileViewSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration

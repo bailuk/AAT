@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidAutopause
@@ -22,7 +22,7 @@ class TrackerInternals(
     private var state: State
     @JvmField
     var logger: Logger
-    var sautopause: SolidAutopause? = null
+    private var sautopause: SolidAutopause? = null
     @JvmField
     var presetIndex = 0
 

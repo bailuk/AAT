@@ -4,7 +4,7 @@ import android.content.Context
 import ch.bailu.aat.map.MapDensity
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.app.AppGraphicFactory
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.lib.color.ColorInterface

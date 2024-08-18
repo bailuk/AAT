@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.service.cache;
 import java.util.HashMap;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.dispatcher.BroadcastData;
+import ch.bailu.aat_lib.broadcaster.BroadcastData;
 import ch.bailu.aat_lib.service.cache.Obj.Factory;
 import ch.bailu.aat_lib.util.MemSize;
 

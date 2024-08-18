@@ -5,7 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
 import ch.bailu.aat.util.AppIntent.getUrl
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 class DownloadMsgView(context: Context) :
     AbsBroadcastMsgView(context, AppBroadcaster.FILE_CHANGED_ONDISK) {

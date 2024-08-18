@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.map.preview
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.app.AppGraphicFactory
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID

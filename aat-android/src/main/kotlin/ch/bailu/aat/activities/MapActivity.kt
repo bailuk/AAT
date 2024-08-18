@@ -12,7 +12,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
-import ch.bailu.aat_lib.description.EditorSource
+import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.OverlaysSource
 import ch.bailu.aat_lib.dispatcher.TrackerSource

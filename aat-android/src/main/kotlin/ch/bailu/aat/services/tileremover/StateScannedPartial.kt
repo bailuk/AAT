@@ -1,6 +1,6 @@
 package ch.bailu.aat.services.tileremover
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 class StateScannedPartial(private val state: StateMachine) : State {
     init {

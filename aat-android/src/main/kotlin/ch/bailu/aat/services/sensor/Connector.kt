@@ -1,15 +1,14 @@
 package ch.bailu.aat.services.sensor
 
 import android.content.Context
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.sensor.SensorState
 import java.io.Closeable
 
 class Connector(private val context: Context, private val iid: Int) : Closeable {
-    var isConnected = false
-        private set
+    private var isConnected = false
 
     fun connect() {
         if (!isConnected) {

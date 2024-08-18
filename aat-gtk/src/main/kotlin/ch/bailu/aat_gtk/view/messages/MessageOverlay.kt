@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.messages
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation

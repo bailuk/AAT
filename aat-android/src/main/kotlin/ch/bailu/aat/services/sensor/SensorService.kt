@@ -3,12 +3,12 @@ package ch.bailu.aat.services.sensor
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.list.SensorList
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
@@ -17,11 +17,11 @@ import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.util.WithStatusText
 
 class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, SensorServiceInterface {
-    val sensorList: SensorList
-    private val bluetoothLE: Sensors
-    private val internal: Sensors
-    private val broadcaster: Broadcaster
-    private val context: Context
+    val sensorList: SensorList = SensorList(sc.getContext())
+    private val bluetoothLE: Sensors = Sensors.factoryBle(sc, sensorList)
+    private val internal: Sensors = Sensors.factoryInternal(sc.getContext(), sensorList)
+    private val broadcaster: Broadcaster = AndroidBroadcaster(sc.getContext())
+    private val context: Context = sc.getContext()
     private val onBluetoothStateChanged: android.content.BroadcastReceiver =
         object : android.content.BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -38,11 +38,6 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
     }
 
     init {
-        context = sc.getContext()
-        sensorList = SensorList(sc.getContext())
-        bluetoothLE = Sensors.factoryBle(sc, sensorList)
-        internal = Sensors.factoryInternal(sc.getContext(), sensorList)
-        broadcaster = AndroidBroadcaster(sc.getContext())
         AndroidBroadcaster.register(
             context,
             onBluetoothStateChanged,

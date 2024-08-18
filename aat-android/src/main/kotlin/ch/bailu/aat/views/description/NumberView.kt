@@ -11,11 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ch.bailu.aat.R
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
@@ -56,7 +56,7 @@ open class NumberView(context: Context, data: ContentDescription, private val th
         setHighlightUnitLabelColor(theme.getHighlightColor())
     }
 
-    fun setHighlightUnitLabelColor(color: Int) {
+    private fun setHighlightUnitLabelColor(color: Int) {
         unit.setBackgroundColor(color)
         unit.setTextColor(Color.BLACK)
     }
@@ -82,7 +82,7 @@ open class NumberView(context: Context, data: ContentDescription, private val th
         val X = 5f
 
 
-        constructor(l: Int, t: Int, r: Int, b: Int) : this(r - l, b - t) {}
+        constructor(l: Int, t: Int, r: Int, b: Int) : this(r - l, b - t)
 
         init {
             var margin = height / 10

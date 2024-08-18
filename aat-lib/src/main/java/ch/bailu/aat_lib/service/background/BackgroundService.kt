@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.background
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.util.WithStatusText
@@ -12,15 +12,13 @@ class BackgroundService(
     broadcaster: Broadcaster?,
     threads: Int
 ) : VirtualService(), BackgroundServiceInterface, WithStatusText {
-    private val tasks: Tasks
+    private val tasks: Tasks = Tasks(broadcaster)
     private val downloaders = HashMap<String, DownloaderThread>(5)
     private val loaders = HashMap<String, LoaderThread>(5)
-    private val queue: HandleStack
+    private val queue: HandleStack = HandleStack()
     private val workers = ArrayList<WorkerThread>()
 
     init {
-        tasks = Tasks(broadcaster)
-        queue = HandleStack()
 
         for (i in 0 until threads) {
             workers.add(WorkerThread("WT_$i", appContext, queue))

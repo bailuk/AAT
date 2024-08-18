@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
+import ch.bailu.aat_lib.lifecycle.LifeCycleInterface
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.MapViewInterface

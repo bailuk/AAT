@@ -3,7 +3,7 @@ package ch.bailu.aat.activities
 import android.content.Intent
 import android.os.Bundle
 import ch.bailu.aat.R
-import ch.bailu.aat.dispatcher.SensorSource
+import ch.bailu.aat_lib.dispatcher.SensorSource
 import ch.bailu.aat.preferences.SolidSAF
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.theme.AppTheme

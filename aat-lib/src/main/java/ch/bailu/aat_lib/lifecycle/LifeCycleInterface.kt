@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.lifecycle
 
 interface LifeCycleInterface {
     fun onResumeWithService()

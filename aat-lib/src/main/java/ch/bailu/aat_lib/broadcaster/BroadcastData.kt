@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.broadcaster
 
 import ch.bailu.aat_lib.util.Objects
 
@@ -15,15 +15,15 @@ object BroadcastData {
 
     @JvmStatic
     fun getFile(args: Array<out String>): String {
-        return BroadcastData[args, 0]
+        return get(args, 0)
     }
 
     @JvmStatic
     fun getUrl(args: Array<out String>): String {
-        return BroadcastData[args, 1]
+        return get(args,1)
     }
 
-    operator fun get(args: Array<out String>, index: Int): String {
+    private fun get(args: Array<out String>, index: Int): String {
         return if (args.size > index) args[index] else ""
     }
 }

@@ -2,7 +2,7 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import android.view.View
-import ch.bailu.aat.dispatcher.SensorSource
+import ch.bailu.aat_lib.dispatcher.SensorSource
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
@@ -17,7 +17,7 @@ import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
-import ch.bailu.aat_lib.description.EditorSource
+import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.CurrentLocationSource

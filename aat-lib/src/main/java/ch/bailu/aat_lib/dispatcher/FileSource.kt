@@ -1,7 +1,9 @@
 package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.BroadcastData.has
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData.has
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.service.cache.gpx.GpxHandler
 import ch.bailu.foc.Foc

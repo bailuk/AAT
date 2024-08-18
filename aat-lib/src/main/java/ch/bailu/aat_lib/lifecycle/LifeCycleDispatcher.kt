@@ -1,6 +1,4 @@
-package ch.bailu.aat.dispatcher
-
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
+package ch.bailu.aat_lib.lifecycle
 
 class LifeCycleDispatcher : LifeCycleInterface {
     private val targets = ArrayList<LifeCycleInterface>(10)

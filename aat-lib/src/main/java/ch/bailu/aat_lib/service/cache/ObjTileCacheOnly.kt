@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.cache
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.map.tile.source.Source
@@ -15,14 +15,11 @@ import org.mapsforge.core.model.Tile
 
 open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, s: Source) :
     ObjTile(id) {
-    private val file: Foc
-    private val bitmap: MapTileInterface
-    private val source: Source
+    private val file: Foc = sc.toFoc(id)
+    private val bitmap: MapTileInterface = sc.createMapTile()
+    private val source: Source = s
 
     init {
-        file = sc.toFoc(id)
-        source = s
-        bitmap = sc.createMapTile()
         sc.services.cacheService.addToBroadcaster(this)
     }
 
