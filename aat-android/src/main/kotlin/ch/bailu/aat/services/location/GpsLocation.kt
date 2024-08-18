@@ -10,14 +10,14 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.location.LocationInformation
 import ch.bailu.aat_lib.service.location.LocationStackItem
 
-class GpsLocation(i: LocationStackItem?, context: Context, interval: Int) :
-    RealLocation(i, context, LocationManager.GPS_PROVIDER, interval) {
+class GpsLocation(next: LocationStackItem, context: Context, interval: Int) :
+    RealLocation(next, context, LocationManager.GPS_PROVIDER, interval) {
     private var fixTime: Boolean = SolidGpsTimeFix(Storage(context)).value
 
 
     override fun factoryLocationInformation(location: Location, state: Int): LocationInformation {
         val result: LocationInformation = GpsLocationInformation(location, state)
-        fixGpsTime(location, result.creationTime)
+        fixGpsTime(location, result.getCreationTime())
         return result
     }
 

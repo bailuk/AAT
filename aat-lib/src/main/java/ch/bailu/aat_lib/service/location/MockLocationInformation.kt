@@ -1,92 +1,83 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.foc.Foc
 
-public final class MockLocationInformation extends LocationInformation {
+class MockLocationInformation(file: Foc, state: Int, node: GpxPointNode) : LocationInformation() {
+    private val time = System.currentTimeMillis()
+    private val node: GpxPointNode
 
-    private final long time = System.currentTimeMillis();
-    private final GpxPointNode node;
+    private val file: Foc
+    private val state: Int
 
-    private final Foc file;
-    private final int state;
-
-    public MockLocationInformation(Foc f, int s, GpxPointNode n) {
-        setVisibleTrackPoint(n);
-        node = n;
-        file = f;
-        state = s;
-    }
-
-    @Override
-    public int getState() {
-        return state;
+    init {
+        setVisibleTrackPoint(node)
+        this.node = node
+        this.file = file
+        this.state = state
     }
 
-    @Override
-    public Foc getFile() {
-        return file;
-    }
-    @Override
-    public long getTimeStamp() {
-        return time;
-    }
-    @Override
-    public float getDistance() {
-        return node.getDistance();
-    }
-    @Override
-    public float getSpeed() {
-        return node.getSpeed();
-    }
-    @Override
-    public float getAcceleration() {
-        return node.getAcceleration();
-    }
-    @Override
-    public long getTimeDelta() {
-        return node.getTimeDelta();
-    }
-    @Override
-    public BoundingBoxE6 getBoundingBox() {
-        return node.getBoundingBox();
-    }
-    @Override
-    public boolean hasAccuracy() {
-        return true;
-    }
-    @Override
-    public boolean hasSpeed() {
-        return true;
-    }
-    @Override
-    public boolean hasAltitude() {
-        return true;
-    }
-    @Override
-    public boolean hasBearing() {
-        return true;
+    override fun getState(): Int {
+        return state
     }
 
-    @Override
-    public boolean isFromGPS() {
-        return true;
+    override fun getFile(): Foc {
+        return file
     }
 
-    @Override
-    public long getCreationTime() {
-        return getTimeStamp();
+    override fun getTimeStamp(): Long {
+        return time
     }
 
-    @Override
-    public void setAltitude(double altitude) {
-
+    override fun getDistance(): Float {
+        return node.getDistance()
     }
 
-    @Override
-    public float getAccuracy() {
-        return 5f;
+    override fun getSpeed(): Float {
+        return node.getSpeed()
     }
 
+    override fun getAcceleration(): Float {
+        return node.getAcceleration()
+    }
+
+    override fun getTimeDelta(): Long {
+        return node.getTimeDelta()
+    }
+
+    override fun getBoundingBox(): BoundingBoxE6 {
+        return node.getBoundingBox()
+    }
+
+    override fun hasAccuracy(): Boolean {
+        return true
+    }
+
+    override fun hasSpeed(): Boolean {
+        return true
+    }
+
+    override fun hasAltitude(): Boolean {
+        return true
+    }
+
+    override fun hasBearing(): Boolean {
+        return true
+    }
+
+    override fun isFromGPS(): Boolean {
+        return true
+    }
+
+    override fun getCreationTime(): Long {
+        return getTimeStamp()
+    }
+
+    override fun setAltitude(altitude: Double) {
+    }
+
+    override fun getAccuracy(): Float {
+        return 5f
+    }
 }

@@ -1,13 +1,13 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.GpxInformation
 
-public interface LocationServiceInterface {
-    void setPresetIndex(int presetIndex);
+interface LocationServiceInterface {
+    fun setPresetIndex(presetIndex: Int)
 
-    boolean isMissingUpdates();
-    boolean isAutopaused();
+    fun isMissingUpdates(): Boolean
+    fun isAutoPaused(): Boolean
 
-    GpxInformation getLoggableLocationOrNull(GpxInformation old);
-    GpxInformation getLocationInformation();
+    fun getLoggableLocationOrNull(old: GpxInformation): GpxInformation?
+    fun getLocationInformation(): GpxInformation
 }

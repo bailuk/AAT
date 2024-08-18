@@ -1,27 +1,21 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import java.io.Closeable;
+import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import java.io.Closeable
+import javax.annotation.Nonnull
 
-import javax.annotation.Nonnull;
+abstract class LocationStackItem : Closeable, OnPresetPreferencesChanged {
+    abstract fun passState(state: Int)
+    abstract fun passLocation(location: LocationInformation)
 
-import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+    override fun close() {}
 
-public abstract class LocationStackItem implements Closeable, OnPresetPreferencesChanged {
-    public abstract void passState(int state);
-    public abstract void passLocation(@Nonnull LocationInformation location);
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {}
 
-
-    @Override
-    public void close(){}
-
-
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {}
-
-    public void appendStatusText(StringBuilder builder) {
-        builder.append("<b>");
-        builder.append(getClass().getSimpleName());
-        builder.append("</b><br>");
+    open fun appendStatusText(builder: StringBuilder) {
+        builder.append("<b>")
+        builder.append(javaClass.simpleName)
+        builder.append("</b><br>")
     }
 }

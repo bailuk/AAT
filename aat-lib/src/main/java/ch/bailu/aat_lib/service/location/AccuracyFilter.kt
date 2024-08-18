@@ -1,33 +1,25 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.presets.SolidAccuracyFilter;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.presets.SolidAccuracyFilter
+import javax.annotation.Nonnull
 
 /**
  * Only pass location if accuracy is more precise than min accuracy.
  * Accuracy represents a diameter of a circle. Unit is meter
  */
-public final class AccuracyFilter extends LocationStackChainedItem {
-    private float minAccuracy=99f;
+class AccuracyFilter(n: LocationStackItem) : LocationStackChainedItem(n) {
+    private var minAccuracy = 99f
 
-    public AccuracyFilter(LocationStackItem n) {
-        super(n);
-    }
+    override fun close() {}
 
-    @Override
-    public void close() {}
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        if (location.getAccuracy() < minAccuracy) {
-            super.passLocation(location);
+    override fun passLocation(@Nonnull location: LocationInformation) {
+        if (location.accuracy < minAccuracy) {
+            super.passLocation(location)
         }
     }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex){
-        minAccuracy=new SolidAccuracyFilter(storage, presetIndex).getMinAccuracy();
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        minAccuracy = SolidAccuracyFilter(storage, presetIndex).minAccuracy
     }
 }

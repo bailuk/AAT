@@ -1,28 +1,20 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
-
-public class AltitudeFromBarometer extends LocationStackChainedItem {
-    private final SensorServiceInterface sensorService;
-
-    public AltitudeFromBarometer(LocationStackItem n, SensorServiceInterface sensorService) {
-        super(n);
-        this.sensorService = sensorService;
-    }
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        GpxInformation info = sensorService.getInformationOrNull(InfoID.BAROMETER_SENSOR);
+class AltitudeFromBarometer(next: LocationStackItem,
+                            private val sensorService: SensorServiceInterface
+) : LocationStackChainedItem(next) {
+    override fun passLocation(location: LocationInformation) {
+        val info = sensorService.getInformationOrNull(InfoID.BAROMETER_SENSOR)
 
         if (info != null) {
-            double altitude = info.getAltitude();
-            location.setAltitude(altitude);
+            val altitude = info.getAltitude()
+            location.setAltitude(altitude)
         }
 
-        super.passLocation(location);
+        super.passLocation(location)
     }
 }

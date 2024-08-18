@@ -72,8 +72,8 @@ class TrackerInternals(
     }
 
     val isReadyForAutoPause: Boolean
-        get() = (services.locationService.isMissingUpdates ||
-                services.locationService.isAutopaused) &&
+        get() = (services.locationService.isMissingUpdates() ||
+                services.locationService.isAutoPaused()) &&
                 sautopause!!.isEnabled
 
     fun emergencyOff(e: Exception?) {

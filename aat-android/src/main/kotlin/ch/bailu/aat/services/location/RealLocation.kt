@@ -14,12 +14,12 @@ import ch.bailu.aat_lib.service.location.LocationStackItem
 import ch.bailu.aat_lib.util.Objects
 
 @SuppressLint("MissingPermission")
-open class RealLocation(i: LocationStackItem?,
+open class RealLocation(next: LocationStackItem,
                         private val context: Context,
                         private val provider: String,
                         interval: Int
 
-) : LocationStackChainedItem(i), LocationListener {
+) : LocationStackChainedItem(next), LocationListener {
     private var state = INITIAL_STATE
 
 
@@ -119,10 +119,10 @@ open class RealLocation(i: LocationStackItem?,
         }
     }
 
-    override fun passState(s: Int) {
-        if (state != s) {
-            state = s
-            super.passState(s)
+    override fun passState(state: Int) {
+        if (this.state != state) {
+            this.state = state
+            super.passState(state)
         }
     }
 

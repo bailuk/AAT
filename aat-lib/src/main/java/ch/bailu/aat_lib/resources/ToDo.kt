@@ -1,7 +1,7 @@
-package ch.bailu.aat_lib.resources;
+package ch.bailu.aat_lib.resources
 
-public class ToDo {
-    public static String translate(String s) {
-        return s + "°";
+object ToDo {
+    fun translate(s: String): String {
+        return "$s°"
     }
 }

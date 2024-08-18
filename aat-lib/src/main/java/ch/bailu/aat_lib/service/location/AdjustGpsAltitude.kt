@@ -1,79 +1,68 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude
+import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue
+import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude;
-import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue;
-import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude;
+class AdjustGpsAltitude(next: LocationStackItem, storage: StorageInterface) :
+    LocationStackChainedItem(next) {
+    private val saltitude = SolidProvideAltitude(storage, SolidUnit.SI)
 
-public final class AdjustGpsAltitude extends LocationStackChainedItem {
+    private val senabled = SolidAdjustGpsAltitude(storage)
+    private val sadjust = SolidAdjustGpsAltitudeValue(storage)
 
-    private final SolidProvideAltitude saltitude;
+    private var adjust: Int
+    private var enabled: Boolean
 
-    private final SolidAdjustGpsAltitude senabled;
-    private final SolidAdjustGpsAltitudeValue sadjust;
+    private val altitude = AltitudeCache()
 
-    private int adjust;
-    private boolean enabled;
-
-    private final AltitudeCache altitude = new AltitudeCache();
-
-    public AdjustGpsAltitude(LocationStackItem n, StorageInterface s) {
-        super(n);
-
-        senabled  = new SolidAdjustGpsAltitude(s);
-        sadjust = new SolidAdjustGpsAltitudeValue(s);
-
-        saltitude = new SolidProvideAltitude(s, SolidUnit.SI);
-
-        adjust    = sadjust.getValue();
-        enabled   = senabled.isEnabled();
+    init {
+        adjust = sadjust.getValue()
+        enabled = senabled.isEnabled
     }
 
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
+    override fun passLocation(location: LocationInformation) {
         if (altitude.set(location) && enabled) {
-            location.setAltitude(location.getAltitude() + adjust);
+            location.setAltitude(location.getAltitude() + adjust)
         }
-        super.passLocation(location);
+        super.passLocation(location)
     }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
         if (senabled.hasKey(key)) {
-            enabled = senabled.getValue();
-
+            enabled = senabled.value
         } else if (sadjust.hasKey(key)) {
-            adjust = sadjust.getValue();
-
+            adjust = sadjust.getValue()
         } else if (saltitude.hasKey(key)) {
-            altitude.setGPSAdjustValue(sadjust, saltitude.getValue());
+            altitude.setGPSAdjustValue(sadjust, saltitude.getValue())
         }
     }
 
-    private static class AltitudeCache {
-        private final static long MAX_AGE = 10 * 1000;
+    private class AltitudeCache {
+        private var altitude = 0
+        private var time: Long = 0
 
-        private int altitude = 0;
-        private long time = 0;
-
-        public boolean set(LocationInformation l) {
+        fun set(l: LocationInformation): Boolean {
             if (l.hasAltitude()) {
-                altitude = (int) l.getAltitude();
-                time = l.getTimeStamp();
-                return true;
+                altitude = l.getAltitude().toInt()
+                time = l.getTimeStamp()
+                return true
             }
-            return false;
+            return false
         }
 
-        public void setGPSAdjustValue(SolidAdjustGpsAltitudeValue sadjust, int currentAltitude) {
-            long age = System.currentTimeMillis() - time;
+        fun setGPSAdjustValue(sadjust: SolidAdjustGpsAltitudeValue, currentAltitude: Int) {
+            val age = System.currentTimeMillis() - time
 
             if (age < MAX_AGE) {
-                sadjust.setValue(currentAltitude - altitude);
+                sadjust.setValue(currentAltitude - altitude)
             }
+        }
+
+        companion object {
+            private const val MAX_AGE = (10 * 1000).toLong()
         }
     }
 }

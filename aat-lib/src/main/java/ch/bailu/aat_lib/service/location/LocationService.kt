@@ -1,21 +1,17 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import java.io.Closeable;
-import java.util.ArrayList;
-
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.broadcaster.Broadcaster;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.StateID;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.SolidLocationProvider;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
-import ch.bailu.aat_lib.util.WithStatusText;
+import ch.bailu.aat_lib.broadcaster.Broadcaster
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidLocationProvider
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
+import ch.bailu.aat_lib.util.WithStatusText
+import java.io.Closeable
 
 /**
  * Maintains a stack of location devices and filters. Will broadcast location changes.
@@ -23,126 +19,128 @@ import ch.bailu.aat_lib.util.WithStatusText;
  * - Clean: Loggable location with precision according to user settings
  * - Dirty: Latest available location update. Can be from network or saved from last app run.
  */
-public final class LocationService extends VirtualService
-        implements LocationServiceInterface, Closeable, OnPresetPreferencesChanged, WithStatusText, OnPreferencesChanged {
+class LocationService(
+    private val sprovider: SolidLocationProvider,
+    broadcastInterface: Broadcaster,
+    sensorService: SensorServiceInterface
+) : VirtualService(), LocationServiceInterface, Closeable, OnPresetPreferencesChanged,
+    WithStatusText, OnPreferencesChanged {
+    private val itemList = ArrayList<LocationStackItem>()
 
-    public final static int INITIAL_STATE = StateID.WAIT;
+    private var provider: LocationStackItem? = null
+    private val clean: CleanLocation
+    private val dirty: DirtyLocation
+    private val missing: MissingTrigger
+    private val autoPause: AutoPauseTrigger
 
-    private final SolidLocationProvider sprovider;
+    private var presetIndex = 0
 
-    private final ArrayList<LocationStackItem> itemList= new ArrayList<>();
+    init {
+        sprovider.register(this)
 
-    private LocationStackItem provider;
-    private CleanLocation clean;
-    private DirtyLocation dirty;
-    private MissingTrigger missing;
-    private AutopauseTrigger autopause;
+        clean = CleanLocation().apply { itemList.add(this) }
 
-    private int presetIndex;
+        itemList.add(DistanceFilter(lastItem()))
 
-    public LocationService(SolidLocationProvider sprovider, Broadcaster broadcastInterface, SensorServiceInterface sensorService) {
-        super();
+        autoPause = AutoPauseTrigger(lastItem()).apply { itemList.add(this) }
+        missing = MissingTrigger(lastItem()).apply { itemList.add(this) }
+        itemList.add(AccuracyFilter(lastItem()))
+        itemList.add(InformationFilter(lastItem()))
 
-        this.sprovider = sprovider;
-        sprovider.register(this);
+        dirty = DirtyLocation(lastItem(), sprovider.getStorage(), broadcastInterface).apply { itemList.add(this) }
 
-        createLocationStack(broadcastInterface, sensorService);
-        createLocationProvider();
+        itemList.add(AltitudeFromBarometer(lastItem(), sensorService))
+        itemList.add(AdjustGpsAltitude(lastItem(), sprovider.getStorage()))
+        createLocationProvider()
 
-        setPresetIndex(new SolidPreset(sprovider.getStorage()).getIndex());
+        setPresetIndex(SolidPreset(sprovider.getStorage()).index)
     }
 
 
-    public synchronized void setPresetIndex(int i) {
-        presetIndex = i;
-        onPreferencesChanged(sprovider.getStorage(),SolidPreset.KEY, presetIndex);
+    @Synchronized
+    override fun setPresetIndex(i: Int) {
+        presetIndex = i
+        onPreferencesChanged(sprovider.getStorage(), SolidPreset.KEY, presetIndex)
     }
 
 
-    private void createLocationStack(Broadcaster broadcastInterface, SensorServiceInterface sensorService) {
-        clean = new CleanLocation();
-        itemList.add(clean);
-
-        itemList.add(new DistanceFilter(lastItem()));
-
-        autopause = new AutopauseTrigger(lastItem());
-        itemList.add(autopause);
-
-        missing = new MissingTrigger(lastItem());
-        itemList.add(missing);
-
-        itemList.add(new AccuracyFilter(lastItem()));
-        itemList.add(new InformationFilter(lastItem()));
-
-
-        dirty = new DirtyLocation(lastItem(), sprovider.getStorage(), broadcastInterface);
-        itemList.add(dirty);
-
-       itemList.add(new AltitudeFromBarometer(lastItem(), sensorService));
-       itemList.add(new AdjustGpsAltitude(lastItem(), sprovider.getStorage()));
-    }
-
-    private LocationStackItem lastItem() {
-        return itemList.get(itemList.size()-1);
-    }
-
-    private void createLocationProvider() {
-        if (itemList.remove(provider)) {
-            provider.close();
+    private fun lastItem(): LocationStackItem {
+        val lastIndex = itemList.lastIndex
+        return if (lastIndex > -1) {
+            itemList[lastIndex]
+        } else {
+            CleanLocation()
         }
-        provider = sprovider.createProvider(this, lastItem());
-        itemList.add(provider);
     }
 
-    @Override
-    public synchronized void close() {
-        for (int i=0; i<itemList.size(); i++)
-            itemList.get(i).close();
+    private fun createLocationProvider() {
+        val oldProvider = provider
 
-        sprovider.unregister(this);
+        if (oldProvider is LocationStackItem) {
+            if (itemList.remove(oldProvider)) {
+                oldProvider.close()
+            }
+        }
+
+        val newProvider =  sprovider.createProvider(this, lastItem())
+        this.provider = newProvider
+        itemList.add(newProvider)
     }
 
-    @Override
-    public synchronized void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
-        for (int i=0; i<itemList.size(); i++)
-            itemList.get(i).onPreferencesChanged(storage, key, presetIndex);
+    @Synchronized
+    override fun close() {
+        itemList.forEach { it.close() }
+        sprovider.unregister(this)
     }
 
-    public synchronized GpxInformation getLocationInformation() {
-        return dirty.getLocationInformation();
+    @Synchronized
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        itemList.forEach { it.onPreferencesChanged(storage, key, presetIndex) }
     }
 
-    @Override
-    public synchronized GpxInformation getLoggableLocationOrNull(GpxInformation old) {
+    @Synchronized
+    override fun getLocationInformation(): GpxInformation {
+        return dirty.locationInformation
+    }
+
+    @Synchronized
+    override fun getLoggableLocationOrNull(old: GpxInformation): GpxInformation? {
         if (hasLoggableLocation(old)) {
-            return getLoggableLocation();
+            return loggableLocation
         }
-        return null;
+        return null
     }
 
-    private GpxInformation getLoggableLocation() {return clean.getLoggableLocation();}
+    private val loggableLocation: GpxInformation
+        get() = clean.loggableLocation
 
-    private boolean hasLoggableLocation(GpxInformation old) {
-        return clean.hasLoggableLocation(old);
+    private fun hasLoggableLocation(old: GpxInformation): Boolean {
+        return clean.hasLoggableLocation(old)
     }
 
-    public synchronized boolean isAutopaused() {
-        return autopause.isAutopaused();
+    @Synchronized
+    override fun isAutoPaused(): Boolean {
+        return autoPause.isAutoPaused
     }
 
-    public synchronized boolean isMissingUpdates() {
-        return missing.isMissingUpdates();
+    @Synchronized
+    override fun isMissingUpdates(): Boolean {
+        return missing.isMissingUpdates
     }
 
-    @Override
-    public synchronized void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
-        if (sprovider.hasKey(key)) createLocationProvider();
+    @Synchronized
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        if (sprovider.hasKey(key)) createLocationProvider()
 
-        onPreferencesChanged(storage, key, presetIndex);
+        onPreferencesChanged(storage, key, presetIndex)
     }
 
-    public synchronized void appendStatusText(StringBuilder builder) {
-        for (int i=0; i<itemList.size(); i++)
-            itemList.get(i).appendStatusText(builder);
+    @Synchronized
+    override fun appendStatusText(builder: StringBuilder) {
+        for (i in itemList.indices) itemList[i].appendStatusText(builder)
+    }
+
+    companion object {
+        const val INITIAL_STATE: Int = StateID.WAIT
     }
 }

@@ -1,50 +1,34 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause;
-
-public final class AutopauseTrigger extends LocationStackChainedItem {
-    private float triggerSpeed=0f;
-    private Trigger trigger=new Trigger(10);
+class AutoPauseTrigger(next: LocationStackItem) : LocationStackChainedItem(next) {
+    private var triggerSpeed = 0f
+    private var trigger = Trigger(10)
 
 
-    public AutopauseTrigger(LocationStackItem n) {
-        super(n);
-    }
+    override fun close() {}
 
-
-    @Override
-    public void close() {}
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-
-
-        float speed = location.getSpeed();
+    override fun passLocation(location: LocationInformation) {
+        val speed = location.getSpeed()
         if (speed < triggerSpeed) {
-            trigger.down();
+            trigger.down()
         } else {
-            trigger.up();
+            trigger.up()
         }
 
-        trigger.log();
+        trigger.log()
 
-        super.passLocation(location);
+        super.passLocation(location)
     }
 
 
-    public boolean isAutopaused() {
-        return  trigger.isLow();
+    val isAutoPaused: Boolean
+        get() = trigger.isLow
+
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        triggerSpeed = SolidTrackerAutopause(storage, presetIndex).triggerSpeed
+        trigger = Trigger(SolidTrackerAutopause(storage, presetIndex).triggerLevel, trigger)
     }
-
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
-        triggerSpeed = new SolidTrackerAutopause(storage, presetIndex).getTriggerSpeed();
-        trigger = new Trigger(new SolidTrackerAutopause(storage, presetIndex).getTriggerLevel(), trigger);
-    }
-
-
-
 }

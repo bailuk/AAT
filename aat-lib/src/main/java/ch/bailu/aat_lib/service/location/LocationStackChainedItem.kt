@@ -1,22 +1,11 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
-
-public class LocationStackChainedItem extends LocationStackItem {
-    private final LocationStackItem next;
-
-    public LocationStackChainedItem(LocationStackItem n) {
-        next = n;
+open class LocationStackChainedItem(private val next: LocationStackItem) : LocationStackItem() {
+    override fun passLocation(location: LocationInformation) {
+        next.passLocation(location)
     }
 
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        next.passLocation(location);
+    override fun passState(state: Int) {
+        next.passState(state)
     }
-
-    @Override
-    public void passState(int state) {
-        next.passState(state);
-    }
-
 }

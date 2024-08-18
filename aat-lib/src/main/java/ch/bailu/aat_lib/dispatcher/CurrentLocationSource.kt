@@ -14,12 +14,12 @@ class CurrentLocationSource(
     private val onLocationChange = BroadcastReceiver {
         sendUpdate(
             InfoID.LOCATION,
-            services.locationService.locationInformation
+            services.locationService.getLocationInformation()
         )
     }
 
     override fun requestUpdate() {
-        sendUpdate(InfoID.LOCATION, services.locationService.locationInformation)
+        sendUpdate(InfoID.LOCATION, services.locationService.getLocationInformation())
     }
 
     override fun onPause() {
@@ -35,6 +35,6 @@ class CurrentLocationSource(
     }
 
     override fun getInfo(): GpxInformation {
-        return services.locationService.locationInformation
+        return services.locationService.getLocationInformation()
     }
 }

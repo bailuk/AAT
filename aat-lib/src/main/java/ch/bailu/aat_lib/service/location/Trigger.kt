@@ -1,59 +1,45 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-public final class Trigger {
-    private static final int LOW =-1;
-    private static final int NEUTRAL = 0;
-    private static final int HIGH = 1;
+import ch.bailu.aat_lib.logger.AppLog.i
 
-    private final int htrigger;
-    private final int ltrigger;
+class Trigger(private var htrigger: Int) {
+    private val ltrigger = 0 - htrigger
+    private var level = 0
 
-    private int trigger=NEUTRAL;
-
-    private int level=0;
-
-    public Trigger(int trigger) {
-        htrigger=trigger;
-        ltrigger=0-trigger;
+    constructor(triggerLevel: Int, old: Trigger) : this(triggerLevel) {
+        htrigger = old.htrigger
+        level = old.level
     }
 
-    public Trigger(int triggerLevel, Trigger old) {
-        this(triggerLevel);
-        trigger = old.trigger;
-        level = old.level;
-    }
-
-    public void up() {
-        level++;
+    fun up() {
+        level++
         if (level >= htrigger) {
-            level = htrigger;
-            trigger=HIGH;
+            level = htrigger
+            htrigger = HIGH
         }
     }
 
 
-    public void down() {
-        level--;
+    fun down() {
+        level--
         if (level <= ltrigger) {
-            level = ltrigger;
-            trigger=LOW;
+            level = ltrigger
+            htrigger = LOW
         }
     }
 
-    public boolean isHigh() {
-        return trigger==HIGH;
-    }
-    public boolean isNeutral() {
-        return trigger==NEUTRAL;
-    }
-    public boolean isLow() {
-        return trigger==LOW;
+    val isLow: Boolean
+        get() = htrigger == LOW
+
+    fun log() {
+        var t = "Neutral"
+        if (htrigger == HIGH) t = "High"
+        else if (htrigger == LOW) t = "Low"
+        i(this, t)
     }
 
-    public void log() {
-        String  t="Neutral";
-        if (trigger==HIGH) t="High";
-        else if (trigger==LOW) t="Low";
-
+    companion object {
+        private const val LOW = -1
+        private const val HIGH = 1
     }
 }

@@ -1,17 +1,16 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
+
+import ch.bailu.aat_lib.gpx.GpxInformation
 
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
+abstract class LocationInformation : GpxInformation() {
+    abstract fun hasAccuracy(): Boolean
+    abstract fun hasSpeed(): Boolean
+    abstract fun hasAltitude(): Boolean
+    abstract fun hasBearing(): Boolean
 
-public abstract class LocationInformation extends GpxInformation {
-    public abstract boolean hasAccuracy();
-    public abstract boolean hasSpeed();
-    public abstract boolean hasAltitude();
-    public abstract boolean hasBearing();
+    abstract fun isFromGPS(): Boolean
+    abstract fun getCreationTime(): Long
 
-
-    public abstract boolean isFromGPS();
-    public abstract long getCreationTime();
-
-    public abstract void setAltitude(double altitude);
+    abstract fun setAltitude(altitude: Double)
 }

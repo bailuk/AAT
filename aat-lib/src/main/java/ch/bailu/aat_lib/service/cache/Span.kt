@@ -1,77 +1,72 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
+
+import ch.bailu.aat_lib.util.Rect
 
 
-import java.util.ArrayList;
+class Span {
+    private var deg: Int
+    private var firstPixel: Int
+    private var lastPixel: Int
 
-import ch.bailu.aat_lib.util.Rect;
-
-public final class Span {
-    private int deg;
-    private int firstPixel;
-    private int lastPixel;
-
-    public Span() {
-        deg = -1;
-        firstPixel = 0;
-        lastPixel = -1;
+    constructor() {
+        deg = -1
+        firstPixel = 0
+        lastPixel = -1
     }
 
 
-    public Span(Span s) {
-        deg = s.deg;
-        firstPixel = s.firstPixel;
-        lastPixel = s.lastPixel;
+    constructor(s: Span) {
+        deg = s.deg
+        firstPixel = s.firstPixel
+        lastPixel = s.lastPixel
     }
 
 
-    public int firstPixelIndex() {
-        return firstPixel;
-    }
-    public int lastPixelIndex() {
-        return lastPixel;
+    fun firstPixelIndex(): Int {
+        return firstPixel
     }
 
-    public int deg() {
-        return deg;
+    fun lastPixelIndex(): Int {
+        return lastPixel
+    }
+
+    fun deg(): Int {
+        return deg
     }
 
 
-    public int pixelDim() {
+    fun pixelDim(): Int {
         if (deg > -1 && lastPixel >= firstPixel) {
-            return lastPixel - firstPixel + 1;
+            return lastPixel - firstPixel + 1
         }
-        return 0;
+        return 0
     }
 
 
-    public void incrementAndCopyIntoArray(ArrayList<Span> span_array, int pixel_index, int deg) {
-        lastPixel = pixel_index;
+    fun incrementAndCopyIntoArray(spanArray: ArrayList<Span?>, pixelIndex: Int, deg: Int) {
+        lastPixel = pixelIndex
 
         if (deg != this.deg) {
-            copyIntoArray(span_array);
+            copyIntoArray(spanArray)
 
-            this.deg = deg;
-            firstPixel = pixel_index;
+            this.deg = deg
+            firstPixel = pixelIndex
         }
     }
 
-    /*
-    public void copyIntoArray(ArrayList<Span> span_array, int pixel_index) {
-        lastPixel = pixel_index;
-        copyIntoArray(span_array);
-    }
-     */
-
-    public void copyIntoArray(ArrayList<Span> l) {
-        if (pixelDim() > 0) l.add(new Span(this));
+    fun copyIntoArray(l: ArrayList<Span?>) {
+        if (pixelDim() > 0) l.add(Span(this))
     }
 
-    public static Rect toRect(Span laSpan, Span loSpan) {
-        Rect r = new Rect();
-        r.top=laSpan.firstPixel;
-        r.bottom=laSpan.lastPixel;
-        r.left=loSpan.firstPixel;
-        r.right=loSpan.lastPixel;
-        return r;
+    companion object {
+        @JvmStatic
+        fun toRect(laSpan: Span, loSpan: Span): Rect {
+            val r = Rect()
+            r.top = laSpan.firstPixel
+            r.bottom = laSpan.lastPixel
+            r.left = loSpan.firstPixel
+            r.right = loSpan.lastPixel
+            return r
+        }
     }
 }

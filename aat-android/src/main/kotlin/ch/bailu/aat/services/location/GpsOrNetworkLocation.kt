@@ -6,8 +6,8 @@ import ch.bailu.aat_lib.service.location.LocationInformation
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
 import ch.bailu.aat_lib.service.location.LocationStackItem
 
-class GpsOrNetworkLocation(i: LocationStackItem?, context: Context, interval: Int) :
-    LocationStackChainedItem(i) {
+class GpsOrNetworkLocation(next: LocationStackItem, context: Context, interval: Int) :
+    LocationStackChainedItem(next) {
     private val network: NetworkLocation
     private val gps: GpsLocation
     private var haveGps = false

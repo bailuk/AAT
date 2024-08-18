@@ -1,40 +1,34 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.gpx.GpxDeltaHelper
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.location.SolidDistanceFilter
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.gpx.GpxDeltaHelper;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.location.SolidDistanceFilter;
+class DistanceFilter(next: LocationStackItem) : LocationStackChainedItem(next) {
+    private var oldLocation: LocationInformation? = null
+    private var minDistance = 0f
 
-public final class DistanceFilter extends LocationStackChainedItem {
-    private LocationInformation oldLocation=null;
-    private float minDistance=0f;
+    override fun close() {}
 
-    public DistanceFilter(LocationStackItem n) {
-        super(n);
-    }
+    override fun passLocation(location: LocationInformation) {
+        val oldLocation = this.oldLocation
 
-    @Override
-    public void close() {}
-
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        if (oldLocation==null || notTooClose(oldLocation,location)) {
-            oldLocation=location;
-            super.passLocation(location);
+        if (oldLocation == null || notTooClose(oldLocation, location)) {
+            this.oldLocation = location
+            super.passLocation(location)
         }
     }
 
-    private boolean notTooClose(LocationInformation a, LocationInformation b) {
-        if (minDistance > 90) {
-            return GpxDeltaHelper.getDistance(a, b) >= (a.getAccuracy()+b.getAccuracy())/2;
+    private fun notTooClose(a: LocationInformation, b: LocationInformation): Boolean {
+        return if (minDistance > 90) {
+            GpxDeltaHelper.getDistance(a, b) >= (a.accuracy + b.accuracy) / 2
         } else {
-            return (GpxDeltaHelper.getDistance(a, b) >= minDistance);
+            GpxDeltaHelper.getDistance(a, b) >= minDistance
         }
     }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
-        minDistance = new SolidDistanceFilter(storage, presetIndex).getMinDistance();
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        minDistance = SolidDistanceFilter(storage, presetIndex).minDistance
     }
 }

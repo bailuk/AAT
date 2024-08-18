@@ -1,33 +1,22 @@
-package ch.bailu.aat_lib.service.location;
+package ch.bailu.aat_lib.service.location
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger;
+class MissingTrigger(next: LocationStackItem) : LocationStackChainedItem(next) {
+    private var triggerMillis = 15000
+    private var stamp = System.currentTimeMillis()
 
-public final class MissingTrigger extends LocationStackChainedItem {
-    private int triggerMillis=15000;
-    private long stamp = System.currentTimeMillis();
-
-    public MissingTrigger(LocationStackItem n) {
-        super(n);
+    override fun passLocation(@Nonnull location: LocationInformation) {
+        stamp = location.getTimeStamp()
+        super.passLocation(location)
     }
 
+    val isMissingUpdates: Boolean
+        get() = System.currentTimeMillis() - stamp > triggerMillis
 
-    @Override
-    public void passLocation(@Nonnull LocationInformation location) {
-        stamp=location.getTimeStamp();
-        super.passLocation(location);
-
-
-    }
-
-    public boolean isMissingUpdates() {
-        return System.currentTimeMillis()-stamp > triggerMillis;
-    }
-
-    @Override
-    public void onPreferencesChanged(StorageInterface storage, String key, int presetIndex) {
-        triggerMillis=new SolidMissingTrigger(storage, presetIndex).getTriggerMillis();
+    override fun onPreferencesChanged(storage: StorageInterface, key: String, presetIndex: Int) {
+        triggerMillis = SolidMissingTrigger(storage, presetIndex).triggerMillis
     }
 }
