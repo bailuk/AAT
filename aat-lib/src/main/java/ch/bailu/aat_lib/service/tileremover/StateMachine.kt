@@ -1,7 +1,7 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
-import ch.bailu.aat.preferences.map.SolidTrimIndex
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.preferences.map.SolidTrimIndex
 import ch.bailu.foc.Foc
 
 class StateMachine(val appContext: AppContext) : State {

@@ -58,7 +58,7 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     private val presetIndex: Int
         get() {
             val result = IntArray(1)
-            scontext.insideContext { result[0] = scontext.trackerService.presetIndex }
+            scontext.insideContext { result[0] = scontext.getTrackerService().presetIndex }
             return result[0]
         }
 

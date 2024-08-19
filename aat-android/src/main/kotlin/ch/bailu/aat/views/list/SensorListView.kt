@@ -29,7 +29,7 @@ class SensorListView(sc: ServiceContext, theme: UiTheme) : LinearLayout(sc.getCo
 
     private fun updateViews() {
         scontext.insideContext {
-            val sensorList = (scontext.sensorService as SensorService).sensorList
+            val sensorList = (scontext.getSensorService() as SensorService).sensorList
             for (i in 0 until sensorList.size()) {
                 if (children.size <= i) {
                     children.add(SensorListItemView(scontext, sensorList.get(i), theme))

@@ -14,7 +14,7 @@ class TrackerStateButton(private val scontext: ServiceContext) : ColorNumberView
 
     override fun onClick(v: View) {
         if (v === this) {
-            scontext.insideContext { scontext.trackerService.onStartPauseResume() }
+            scontext.insideContext { scontext.getTrackerService().onStartPauseResume() }
         }
     }
 }

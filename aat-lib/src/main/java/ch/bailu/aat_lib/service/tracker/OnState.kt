@@ -27,12 +27,12 @@ class OnState(tracker: TrackerInternals) : State(tracker) {
         if (internal.isReadyForAutoPause) {
             internal.setState(AutoPauseState(internal))
         } else {
-            val l = internal.services.locationService
+            val l = internal.services.getLocationService()
             try {
                 val newLocation = l.getLoggableLocationOrNull(location)
                 if (newLocation != null) {
                     location = newLocation
-                    val attr = attributes.collect(internal.services.sensorService)
+                    val attr = attributes.collect(internal.services.getSensorService())
                     internal.logger.log(location, attr)
                 }
             } catch (e: IOException) {

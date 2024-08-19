@@ -10,10 +10,10 @@ import ch.bailu.aat_lib.service.ServicesInterface
 class TrackerSource(private val services: ServicesInterface, private val broadcaster: Broadcaster) :
     ContentSource() {
     private val onTrackChanged =
-        BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.trackerService.info) }
+        BroadcastReceiver { sendUpdate(InfoID.TRACKER, services.getTrackerService().info) }
 
     override fun requestUpdate() {
-        sendUpdate(InfoID.TRACKER, services.trackerService.info)
+        sendUpdate(InfoID.TRACKER, services.getTrackerService().info)
     }
 
     override fun onPause() {
@@ -29,6 +29,6 @@ class TrackerSource(private val services: ServicesInterface, private val broadca
     }
 
     override fun getInfo(): GpxInformation {
-        return services.trackerService.info
+        return services.getTrackerService().info
     }
 }

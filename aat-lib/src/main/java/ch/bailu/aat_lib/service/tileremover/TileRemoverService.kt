@@ -1,11 +1,10 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.service.VirtualService
 
-// TODO move to lib
 class TileRemoverService(val appContext: AppContext) : VirtualService() {
     private var locked = false
 
@@ -42,7 +41,7 @@ class TileRemoverService(val appContext: AppContext) : VirtualService() {
         }
     }
 
-    fun close() {
+    override fun close() {
         appContext.broadcaster.unregister(onRemove)
         appContext.broadcaster.unregister(onStopped)
         state.reset()

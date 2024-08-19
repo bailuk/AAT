@@ -60,7 +60,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
                 categories,
                 poiDatabase
             )
-            appContext.services.backgroundService.process(task)
+            appContext.services.getBackgroundService().process(task)
         }
         overlay.setEnabled(true)
     }

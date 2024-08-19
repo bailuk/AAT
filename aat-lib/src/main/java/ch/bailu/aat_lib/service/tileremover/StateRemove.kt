@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorCompletionService
 import java.util.concurrent.Executors
 
-// TODO move to lib
 class StateRemove(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateRemoved::class.java
 

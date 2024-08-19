@@ -20,7 +20,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     private val source: Source = s
 
     init {
-        sc.services.cacheService.addToBroadcaster(this)
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
     override fun getTileBitmap(): TileBitmap? {
@@ -63,7 +63,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     protected fun load(sc: ServicesInterface) {
-        sc.backgroundService.process(TileLoaderTask(file))
+        sc.getBackgroundService().process(TileLoaderTask(file))
     }
 
     override fun isReadyAndLoaded(): Boolean {

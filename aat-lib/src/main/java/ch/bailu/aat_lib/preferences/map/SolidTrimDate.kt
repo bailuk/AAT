@@ -1,13 +1,10 @@
-package ch.bailu.aat.preferences.map
+package ch.bailu.aat_lib.preferences.map
 
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.DateUtil
 
-/**
- * TODO move to lib
- */
 class SolidTrimDate(storageInterface: StorageInterface) : SolidIndexList(storageInterface, SolidTrimDate::class.java.simpleName) {
     companion object {
         private class Entry(val value: Long) {

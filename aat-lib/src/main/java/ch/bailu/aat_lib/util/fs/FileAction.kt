@@ -13,7 +13,7 @@ import java.io.IOException
 object FileAction {
     fun rescanDirectory(context: AppContext, file: Foc) {
         if (isParentActive(context, file)) {
-            context.services.directoryService.rescan()
+            context.services.getDirectoryService().rescan()
         }
     }
 
@@ -25,7 +25,7 @@ object FileAction {
 
     fun reloadPreview(context: AppContext, file: Foc) {
         if (isParentActive(context, file)) {
-            context.services.directoryService.deleteEntry(file)
+            context.services.getDirectoryService().deleteEntry(file)
         }
     }
 

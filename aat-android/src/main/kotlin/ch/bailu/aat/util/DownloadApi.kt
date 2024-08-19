@@ -33,7 +33,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
     override fun startTask(appContext: AppContext) {
         appContext.services.insideContext {
             try {
-                val background = appContext.services.backgroundService
+                val background = appContext.services.getBackgroundService()
                 val query: String = queryString
                 val url = getUrl(query)
                 task = ApiQueryTask(

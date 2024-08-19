@@ -33,7 +33,7 @@ class ObjMapFeatures(id: String) : Obj(id) {
 
     override fun onInsert(sc: AppContext) {
         super.onInsert(sc)
-        sc.services.backgroundService.process(ListLoader(id))
+        sc.services.getBackgroundService().process(ListLoader(id))
     }
 
     override fun onDownloaded(id: String, url: String, sc: AppContext) {}

@@ -34,7 +34,7 @@ class IconCache(private val scontext: ServicesInterface) : Closeable, WithStatus
 
     private fun add(id: String, path: String, size: Int): ObjImageAbstract? {
         var r: ObjImageAbstract? = null
-        val handle = scontext.cacheService.getObject(id, ObjSVGAsset.Factory(path, size))
+        val handle = scontext.getCacheService().getObject(id, ObjSVGAsset.Factory(path, size))
         if (handle is ObjSVGAsset) {
             icons.add(handle)
             r = handle

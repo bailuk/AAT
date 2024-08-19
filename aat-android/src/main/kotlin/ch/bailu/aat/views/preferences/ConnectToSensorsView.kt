@@ -27,7 +27,7 @@ class ConnectToSensorsView(private val scontext: ServiceContext, theme: UiTheme)
     }
 
     override fun onClick(v: View) {
-        scontext.insideContext { scontext.sensorService.updateConnections() }
+        scontext.insideContext { scontext.getSensorService().updateConnections() }
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

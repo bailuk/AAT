@@ -3,8 +3,8 @@ package ch.bailu.aat.views.tileremover
 import android.app.Activity
 import android.widget.RadioGroup
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat.preferences.map.SolidTrimIndex
-import ch.bailu.aat.services.tileremover.SourceSummaries
+import ch.bailu.aat_lib.preferences.map.SolidTrimIndex
+import ch.bailu.aat_lib.service.tileremover.SourceSummaries
 import ch.bailu.aat.util.ui.theme.UiTheme
 
 class TileSummariesView(activity: Activity, theme: UiTheme) : RadioGroup(activity) {

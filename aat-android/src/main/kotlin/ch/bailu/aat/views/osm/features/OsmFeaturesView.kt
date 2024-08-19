@@ -113,7 +113,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     }
 
     private fun getListHandle() {
-        scontext.insideContext { listHandle = slist.getList(scontext.cacheService) }
+        scontext.insideContext { listHandle = slist.getList(scontext.getCacheService()) }
         updateList()
     }
 

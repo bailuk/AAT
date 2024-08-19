@@ -28,7 +28,7 @@ class EditorBar(app: Application,
         add(Icons.listAddSymbolic).onClicked {
                 val editor = edit.editor
                 val point = mcontext.getMapView().getMapViewPosition().center
-                val altitude = services.elevationService.getElevation(point.latitudeE6, point.longitudeE6).toFloat()
+                val altitude = services.getElevationService().getElevation(point.latitudeE6, point.longitudeE6).toFloat()
                 editor.add(GpxPoint(point, altitude, 0))
         }
 

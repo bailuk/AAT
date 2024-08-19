@@ -1,8 +1,7 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.foc.Foc
-import ch.bailu.foc.Foc.OnHaveFoc
 
 abstract class TileScanner(private val root: Foc) {
     protected var source: String = ""
@@ -38,7 +37,7 @@ abstract class TileScanner(private val root: Foc) {
     protected abstract fun doSourceContainer(dir: Foc): Boolean
     private fun scanZoomContainer(dir: Foc) {
         if (doZoomContainer(dir)) {
-            dir.foreachDir(object : OnHaveFoc {
+            dir.foreachDir(object : Foc.OnHaveFoc {
                 override fun run(child: Foc) {
                     try {
                         zoom = java.lang.Short.decode(child.name)
@@ -54,7 +53,7 @@ abstract class TileScanner(private val root: Foc) {
     protected abstract fun doZoomContainer(dir: Foc): Boolean
     private fun scanXContainer(dir: Foc) {
         if (doXContainer(dir)) {
-            dir.foreachDir(object : OnHaveFoc {
+            dir.foreachDir(object : Foc.OnHaveFoc {
                 override fun run(child: Foc) {
                     try {
                         x = Integer.decode(child.name)
@@ -70,7 +69,7 @@ abstract class TileScanner(private val root: Foc) {
     protected abstract fun doXContainer(dir: Foc): Boolean
     private fun scanYContainer(dir: Foc) {
         if (doYContainer(dir)) {
-            dir.foreachFile(object : OnHaveFoc {
+            dir.foreachFile(object : Foc.OnHaveFoc {
                 override fun run(child: Foc) {
                     try {
                         val parts = child.name.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }

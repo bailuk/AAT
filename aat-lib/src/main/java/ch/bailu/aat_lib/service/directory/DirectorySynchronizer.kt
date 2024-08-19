@@ -115,7 +115,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         override fun start() {
             backgroundTask?.apply {
                 appContext.broadcaster.broadcast(AppBroadcaster.DBSYNC_START)
-                appContext.services.backgroundService.process(this)
+                appContext.services.getBackgroundService().process(this)
             }
         }
 
@@ -183,7 +183,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             if (file == null) {
                 terminate()
             } else {
-                val h = appContext.services.cacheService.getObject(
+                val h = appContext.services.getCacheService().getObject(
                     file.path, ObjGpxStatic.Factory()
                 )
                 if (h is ObjGpx) {

@@ -21,7 +21,7 @@ class SensorListItemView(private val scontext: ServiceContext, private var item:
         setItem(item)
         checkBox.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             this.item.setEnabled(isChecked)
-            scontext.insideContext { scontext.sensorService.updateConnections() }
+            scontext.insideContext { scontext.getSensorService().updateConnections() }
         }
         theme.content(checkBox)
     }

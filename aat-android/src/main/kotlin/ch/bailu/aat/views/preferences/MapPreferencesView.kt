@@ -6,9 +6,9 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
-import ch.bailu.aat.preferences.map.SolidTrimDate
-import ch.bailu.aat.preferences.map.SolidTrimMode
-import ch.bailu.aat.preferences.map.SolidTrimSize
+import ch.bailu.aat_lib.preferences.map.SolidTrimDate
+import ch.bailu.aat_lib.preferences.map.SolidTrimMode
+import ch.bailu.aat_lib.preferences.map.SolidTrimSize
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.AndroidAppDensity
 import ch.bailu.aat.util.ui.theme.UiTheme

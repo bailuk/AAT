@@ -23,11 +23,11 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
     init {
         editor = GpxListEditor(sc.broadcaster)
-        sc.services.cacheService.addToBroadcaster(this)
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
     override fun onInsert(sc: AppContext) {
-        val handle = sc.services.cacheService.getObject(_file.path, ObjGpxStatic.Factory())
+        val handle = sc.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
         currentHandle = if (handle is ObjGpx) {
             handle
         } else {

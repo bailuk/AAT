@@ -52,6 +52,7 @@ public final class TrackerService extends VirtualService implements WithStatusTe
                 .append(internal.logger.getFile().getPathName());
     }
 
+    @Override
     public synchronized void close() {
         internal.close();
         broadcaster.unregister(onLocation);

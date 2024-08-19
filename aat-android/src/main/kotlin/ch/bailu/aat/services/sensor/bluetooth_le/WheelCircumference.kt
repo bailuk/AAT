@@ -25,7 +25,7 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
     private var previousLocation: GpxPointInterface? = null
     private val onLocationChanged: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val newLocation = scontext.locationService.getLoggableLocationOrNull(currentLocation)
+            val newLocation = scontext.getLocationService().getLoggableLocationOrNull(currentLocation)
             if (newLocation != null) {
                 currentLocation = newLocation
                 if (currentLocation.accuracy <= MIN_ACCURACY && revolution.isInitialized) {

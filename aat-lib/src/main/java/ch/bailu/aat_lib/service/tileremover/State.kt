@@ -1,4 +1,4 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 interface State {
     /** firstPixelIndex scanning  */

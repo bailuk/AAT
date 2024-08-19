@@ -1,12 +1,9 @@
-package ch.bailu.aat.preferences.map
+package ch.bailu.aat_lib.preferences.map
 
 import ch.bailu.aat_lib.preferences.SolidStaticIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 
-/**
- * TODO move to lib
- */
 class SolidTrimMode(storage: StorageInterface) : SolidStaticIndexList(
     storage,
     SolidTrimMode::class.java.simpleName,

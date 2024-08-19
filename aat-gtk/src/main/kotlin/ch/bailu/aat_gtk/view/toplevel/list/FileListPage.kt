@@ -185,7 +185,7 @@ class FileListPage(app: Application,
                     append(Button().apply {
                         iconName = Icons.viewRefresh
                         onClicked {
-                            appContext.services.directoryService.rescan()
+                            appContext.services.getDirectoryService().rescan()
                         }
                     })
                 })

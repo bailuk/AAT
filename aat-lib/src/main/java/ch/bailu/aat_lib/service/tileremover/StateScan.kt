@@ -1,12 +1,9 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.foc.Foc
 
-/**
- * TODO move to lib
- */
 class StateScan(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateScanForRemoval::class.java
 

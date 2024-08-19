@@ -1,9 +1,11 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
-class StateScanned(private val state: StateMachine) : State {
+class StateScannedPartial(private val state: StateMachine) : State {
     init {
+        state.list.resetToRemove()
+        state.summaries.resetToRemove()
         state.broadcast(AppBroadcaster.TILE_REMOVER_STOPPED)
     }
 
@@ -20,12 +22,7 @@ class StateScanned(private val state: StateMachine) : State {
         state.set(StateUnscanned(state))
     }
 
-    override fun remove() {
-        if (state.summaries[0].countToRemove > 0) {
-            state.set(StateRemove(state))
-        }
-    }
-
+    override fun remove() {}
     override fun removeAll() {
         state.set(StateRemoveAll(state))
     }

@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.service;
+package ch.bailu.aat_lib.service
 
-public abstract class VirtualService {
-
+abstract class VirtualService {
+    abstract fun close()
 }

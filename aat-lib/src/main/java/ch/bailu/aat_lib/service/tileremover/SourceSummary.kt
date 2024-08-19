@@ -1,8 +1,7 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.util.MemSize
 
-// TODO move to lib
 class SourceSummary(override val name: String) : SourceSummaryInterface {
     private var count = 0
 

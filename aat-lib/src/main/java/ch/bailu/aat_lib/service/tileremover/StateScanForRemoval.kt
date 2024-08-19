@@ -1,10 +1,10 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
-import ch.bailu.aat.preferences.map.SolidTrimDate
-import ch.bailu.aat.preferences.map.SolidTrimIndex
-import ch.bailu.aat.preferences.map.SolidTrimMode
-import ch.bailu.aat.preferences.map.SolidTrimSize
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.preferences.map.SolidTrimDate
+import ch.bailu.aat_lib.preferences.map.SolidTrimIndex
+import ch.bailu.aat_lib.preferences.map.SolidTrimMode
+import ch.bailu.aat_lib.preferences.map.SolidTrimSize
 
 class StateScanForRemoval(private val state: StateMachine) : State, Runnable {
     private var nextState: Class<*> = StateScanned::class.java

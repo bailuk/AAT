@@ -40,7 +40,7 @@ class EditorHelper(private val appContext: AppContext) : GpxInformationProvider 
     }
 
     fun onResume() {
-        val newHandle = appContext.services.cacheService.getObject(
+        val newHandle = appContext.services.getCacheService().getObject(
             vID,
             ObjGpxEditable.Factory(file)
         )

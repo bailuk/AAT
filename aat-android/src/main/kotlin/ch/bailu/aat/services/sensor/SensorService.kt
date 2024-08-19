@@ -56,7 +56,7 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
     }
 
     @Synchronized
-    fun close() {
+    override fun close() {
         bluetoothLE.close()
         internal.close()
         sensorList.close()

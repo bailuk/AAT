@@ -19,11 +19,11 @@ class ScanBluetoothView(private val scontext: ServiceContext, theme: UiTheme) : 
     }
 
     private fun setText() {
-        scontext.insideContext { setText(scontext.sensorService.toString()) }
+        scontext.insideContext { setText(scontext.getSensorService().toString()) }
     }
 
     override fun onClick(view: View) {
-        scontext.insideContext { scontext.sensorService.scan() }
+        scontext.insideContext { scontext.getSensorService().scan() }
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

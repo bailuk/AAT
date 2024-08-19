@@ -1,10 +1,9 @@
-package ch.bailu.aat.services.tileremover
+package ch.bailu.aat_lib.service.tileremover
 
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import java.io.IOException
 
-// TODO move to lib
 class SourceSummaries {
     companion object {
         const val SUMMARY_SIZE = 20

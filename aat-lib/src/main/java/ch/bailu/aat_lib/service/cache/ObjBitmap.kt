@@ -13,7 +13,7 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
 
     override fun onInsert(sc: AppContext) {
         load(sc.services)
-        sc.services.cacheService.addToBroadcaster(this)
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
     override fun onRemove(sc: AppContext) {
@@ -22,7 +22,7 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
     }
 
     private fun load(sc: ServicesInterface) {
-        sc.backgroundService.process(BitmapLoader(imageFile))
+        sc.getBackgroundService().process(BitmapLoader(imageFile))
     }
 
     override fun getSize(): Long {

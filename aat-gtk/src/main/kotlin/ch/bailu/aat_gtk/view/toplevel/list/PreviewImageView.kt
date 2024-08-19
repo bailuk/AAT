@@ -69,7 +69,7 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
     private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
         var result = false
         appContext.services.insideContext {
-            val handle = appContext.services.cacheService.getObject(id, factory)
+            val handle = appContext.services.getCacheService().getObject(id, factory)
             if (handle is ObjImageAbstract) {
                 this.handle = handle
                 result = true

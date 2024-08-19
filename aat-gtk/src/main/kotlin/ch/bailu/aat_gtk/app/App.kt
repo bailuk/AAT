@@ -57,7 +57,7 @@ private fun setupDispatcher(dispatcher: Dispatcher) {
 
 fun exit(dispatcher: Dispatcher, exitCode: Int) {
     dispatcher.onPause()
-    GtkAppContext.services.trackerService.onStartStop()
+    GtkAppContext.services.getTrackerService().onStartStop()
 
     GtkStorage.save()
     exitProcess(exitCode)

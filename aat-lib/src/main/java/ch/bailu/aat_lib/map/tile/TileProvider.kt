@@ -115,7 +115,7 @@ class TileProvider(private val appContext: AppContext, val source: Source) : Att
         val r = arrayOf<ObjTile?>(null)
         appContext.services.insideContext {
             val id = source.getID(mapTile, appContext)
-            val handle = appContext.services.cacheService.getObject(
+            val handle = appContext.services.getCacheService().getObject(
                 id,
                 source.getFactory(mapTile)
             )

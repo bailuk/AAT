@@ -74,7 +74,7 @@ class EditorBarLayer(
         when(view) {
             add -> {
                 val pos = mcontext.getMapView().getMapViewPosition().center
-                val ele = appContext.services.elevationService.getElevation(pos.latitudeE6, pos.longitudeE6).toFloat()
+                val ele = appContext.services.getElevationService().getElevation(pos.latitudeE6, pos.longitudeE6).toFloat()
                 editor.add(GpxPoint(pos, ele,0))
             }
             remove -> editor.remove()

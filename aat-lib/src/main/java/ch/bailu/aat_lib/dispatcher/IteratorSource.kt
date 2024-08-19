@@ -87,7 +87,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         override fun getInfo(): GpxInformation {
             val info = arrayOf(super.getInfo())
             appContext.services.insideContext {
-                val h = appContext.services.cacheService.getObject(
+                val h = appContext.services.getCacheService().getObject(
                     iD,
                     ObjGpxStatic.Factory()
                 )

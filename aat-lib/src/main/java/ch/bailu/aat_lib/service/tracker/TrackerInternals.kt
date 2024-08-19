@@ -51,7 +51,7 @@ class TrackerInternals(
     fun rereadPreferences() {
         presetIndex = SolidPreset(sdirectory.getStorage()).index
         sautopause = SolidTrackerAutopause(sdirectory.getStorage(), presetIndex)
-        services.locationService.setPresetIndex(presetIndex)
+        services.getLocationService().setPresetIndex(presetIndex)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
@@ -72,8 +72,8 @@ class TrackerInternals(
     }
 
     val isReadyForAutoPause: Boolean
-        get() = (services.locationService.isMissingUpdates() ||
-                services.locationService.isAutoPaused()) &&
+        get() = (services.getLocationService().isMissingUpdates() ||
+                services.getLocationService().isAutoPaused()) &&
                 sautopause!!.isEnabled
 
     fun emergencyOff(e: Exception?) {

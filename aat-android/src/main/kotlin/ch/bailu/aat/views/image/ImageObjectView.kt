@@ -57,7 +57,7 @@ open class ImageObjectView(
     private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
         var result = false
         scontext.insideContext {
-            val h = scontext.cacheService.getObject(id, factory)
+            val h = scontext.getCacheService().getObject(id, factory)
             if (h is ObjImageAbstract) {
                 handle = h
                 result = true

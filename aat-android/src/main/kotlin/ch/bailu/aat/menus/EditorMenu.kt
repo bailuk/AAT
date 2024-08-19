@@ -68,7 +68,7 @@ class EditorMenu(
         object : AbsSelectOverlayDialog(context) {
             override fun onFileSelected(slist: SolidCustomOverlayList, index: Int, file: Foc) {
                 appContext.services.insideContext {
-                    val handle = appContext.services.cacheService.getObject(
+                    val handle = appContext.services.getCacheService().getObject(
                         file.path,
                         Obj.Factory()
                     )
