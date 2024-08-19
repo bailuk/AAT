@@ -97,7 +97,7 @@ class SensorService(sc: ServiceContext) : VirtualService(), WithStatusText, Sens
     }
 
     @Synchronized
-    override fun getInformationOrNull(iid: Int): GpxInformation? {
-        return sensorList.getInformation(iid)
+    override fun getInformationOrNull(infoID: Int): GpxInformation? {
+        return sensorList.getInformation(infoID)
     }
 }

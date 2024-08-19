@@ -67,10 +67,10 @@ class CurrentSpeedDescription(storage: StorageInterface) : SpeedDescription(stor
     }
 
     private fun setSpeedFromLastPoint(info: GpxInformation): Boolean {
-        val track = info.gpxList
+        val track = info.getGpxList()
         if (track != null) {
             if (track.pointList.size() > 0) {
-                val delta = info.gpxList.pointList.last
+                val delta = info.getGpxList().pointList.last
                 if (delta is GpxDeltaInterface) {
                     setCache(delta.getSpeed())
                     return true

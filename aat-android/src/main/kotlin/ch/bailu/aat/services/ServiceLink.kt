@@ -135,13 +135,13 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
     }
 
     @Synchronized
-    override fun lock(resource: String) {
-        if (isUp) getService()?.lock(resource)
+    override fun lock(simpleName: String) {
+        if (isUp) getService()?.lock(simpleName)
     }
 
     @Synchronized
-    override fun free(resource: String) {
-        if (isUp) getService()?.free(resource)
+    override fun free(simpleName: String) {
+        if (isUp) getService()?.free(simpleName)
     }
 
     override fun close() {

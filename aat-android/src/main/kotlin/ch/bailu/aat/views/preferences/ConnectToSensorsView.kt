@@ -23,7 +23,7 @@ class ConnectToSensorsView(private val scontext: ServiceContext, theme: UiTheme)
     }
 
     private fun setText() {
-        setText(SensorState.getOverviewString() + " " + busy)
+        setText("${SensorState.overviewString} $busy")
     }
 
     override fun onClick(v: View) {
@@ -32,7 +32,7 @@ class ConnectToSensorsView(private val scontext: ServiceContext, theme: UiTheme)
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         if (iid == InfoID.SENSORS) {
-            busy = if (info.state == StateID.WAIT) context.getString(R.string.gps_wait) else ""
+            busy = if (info.getState() == StateID.WAIT) context.getString(R.string.gps_wait) else ""
             setText()
         }
     }

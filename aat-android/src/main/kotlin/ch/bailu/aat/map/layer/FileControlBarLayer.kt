@@ -131,12 +131,12 @@ class FileControlBarLayer(
             super.setSelectedNode(iid, info, node, index)
             SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.setValue(index)
             iterator.moveToPosition(index)
-            selectedFile = iterator.info.file
+            selectedFile = iterator.info.getFile()
             val file = selectedFile
             if (file is Foc) {
                 preview.setFilePath(file)
             }
-            markupBuilder.appendHeader(iterator.info.file.name)
+            markupBuilder.appendHeader(iterator.info.getFile().name)
             for (d in summaryData) {
                 d.onContentUpdated(iterator.infoID, iterator.info)
                 markupBuilder.appendNl(d)

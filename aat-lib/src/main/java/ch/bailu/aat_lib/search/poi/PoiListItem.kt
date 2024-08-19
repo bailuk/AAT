@@ -1,74 +1,62 @@
-package ch.bailu.aat_lib.search.poi;
+package ch.bailu.aat_lib.search.poi
 
-import org.mapsforge.poi.storage.PoiCategory;
+import ch.bailu.aat_lib.lib.filter_list.AbsListItem
+import ch.bailu.aat_lib.lib.filter_list.KeyList
+import org.mapsforge.poi.storage.PoiCategory
 
-import ch.bailu.aat_lib.lib.filter_list.KeyList;
-import ch.bailu.aat_lib.lib.filter_list.AbsListItem;
+class PoiListItem : AbsListItem {
+    val category: PoiCategory
 
-public class PoiListItem extends AbsListItem {
-    private final PoiCategory self;
+    private val isSummary: Boolean
+    private var isSelected = false
 
-    private final boolean isSummary;
-    private boolean isSelected = false;
-
-    private final KeyList keys;
-    private final String summaryKey;
+    private val keys: KeyList
+    private val summaryKey: String
 
 
-    public PoiListItem(PoiCategory c) {
-        isSummary = true;
-        self = c;
+    constructor(category: PoiCategory) {
+        isSummary = true
+        this.category = category
 
-        keys = new KeyList(c.getTitle());
-        summaryKey = "_" + keys.getKey(0);
-        keys.addKeys(summaryKey);
+        keys = KeyList(category.title)
+        summaryKey = "_" + keys.getKey(0)
+        keys.addKeys(summaryKey)
     }
 
-    public PoiListItem(PoiCategory c, PoiListItem s) {
-        isSummary = false;
+    constructor(category: PoiCategory, summary: PoiListItem) {
+        isSummary = false
 
-        self = c;
+        this.category = category
 
-        summaryKey = s.getSummaryKey();
-        keys = new KeyList(c.getTitle());
-        keys.addKeys(summaryKey);
+        summaryKey = summary.getSummaryKey()
+        keys = KeyList(category.title)
+        keys.addKeys(summaryKey)
     }
 
-    @Override
-    public boolean isSelected() {
-        return isSelected;
+    override fun isSelected(): Boolean {
+        return isSelected
     }
 
-    @Override
-    public boolean isSummary() {
-        return isSummary;
+    override fun isSummary(): Boolean {
+        return isSummary
     }
 
-    @Override
-    public KeyList getKeys() {
-        return keys;
+    override fun getKeys(): KeyList {
+        return keys
     }
 
-    @Override
-    public String getSummaryKey() {
-        return summaryKey;
+    override fun getSummaryKey(): String {
+        return summaryKey
     }
 
+    val title: String
+        get() = category.title
 
-    public String getTitle() {
-        return self.getTitle();
+    override fun getID(): Int {
+        return category.id
     }
 
-    public int getID() {
-        return self.getID();
-    }
-
-    @Override
-    public void setSelected(boolean selected) {
-        if (!isSummary()) isSelected = selected;
-    }
-
-    public PoiCategory getCategory() {
-        return self;
+    override fun setSelected(selected: Boolean) {
+        if (!isSummary()) isSelected = selected
     }
 }

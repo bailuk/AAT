@@ -270,9 +270,9 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.info.file)
-            fileNameLabel.setLabel(iteratorSimple.info.file.name)
-            fileNameLabel.setTooltipText(iteratorSimple.info.file.toString())
+            overlayMenu.setFile(iteratorSimple.info.getFile())
+            fileNameLabel.setLabel(iteratorSimple.info.getFile().name)
+            fileNameLabel.setTooltipText(iteratorSimple.info.getFile().toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL

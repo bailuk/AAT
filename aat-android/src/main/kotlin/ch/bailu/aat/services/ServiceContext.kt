@@ -8,6 +8,5 @@ interface ServiceContext : ServicesInterface {
     fun startForeground(id: Int, notification: Notification)
     fun stopForeground(b: Boolean)
     fun appendStatusText(builder: StringBuilder)
-
     fun getContext(): Context
 }

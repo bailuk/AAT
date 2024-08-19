@@ -1,21 +1,30 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import static ch.bailu.foc.Foc.FOC_NULL;
+import ch.bailu.foc.Foc
 
-import ch.bailu.foc.Foc;
-
-public class GpxInformation extends GpxDataWrapper  {
-    public final static GpxInformation NULL=new GpxInformation();
-
-    public boolean isLoaded() {
-        return false;
+open class GpxInformation : GpxDataWrapper() {
+    open fun getLoaded(): Boolean {
+        return false
     }
-    public GpxList getGpxList() {
-        return GpxList.NULL_TRACK;
+
+    open fun getGpxList(): GpxList {
+        return GpxList.NULL_TRACK
     }
-    public float getAccuracy() {
-        return 0f;
+
+    open fun getAccuracy(): Float {
+        return 0f
     }
-    public int getState() {return StateID.ON;}
-    public Foc getFile() {return FOC_NULL; }
+
+    open fun getState(): Int {
+        return StateID.ON
+    }
+
+    open fun getFile(): Foc {
+        return Foc.FOC_NULL
+    }
+
+    companion object {
+        @JvmField
+        val NULL: GpxInformation = GpxInformation()
+    }
 }

@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.service.location
 import ch.bailu.aat_lib.gpx.GpxDeltaHelper
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidDistanceFilter
-import javax.annotation.Nonnull
 
 class DistanceFilter(next: LocationStackItem) : LocationStackChainedItem(next) {
     private var oldLocation: LocationInformation? = null
@@ -22,7 +21,7 @@ class DistanceFilter(next: LocationStackItem) : LocationStackChainedItem(next) {
 
     private fun notTooClose(a: LocationInformation, b: LocationInformation): Boolean {
         return if (minDistance > 90) {
-            GpxDeltaHelper.getDistance(a, b) >= (a.accuracy + b.accuracy) / 2
+            GpxDeltaHelper.getDistance(a, b) >= (a.getAccuracy() + b.getAccuracy()) / 2
         } else {
             GpxDeltaHelper.getDistance(a, b) >= minDistance
         }

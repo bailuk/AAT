@@ -122,9 +122,10 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
         override fun save() {
             try {
-                GpxListWriter(editor.list, file).close()
+                GpxListWriter(editor.list, getFile()).close()
                 modified = false
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), id)
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
+                    .toString(), id)
             } catch (e: Exception) {
                 e(this, e)
             }
@@ -161,7 +162,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         }
 
         override fun saveTo(destDir: Foc) {
-            val prefix = AppDirectory.parsePrefix(file)
+            val prefix = AppDirectory.parsePrefix(getFile())
             try {
                 val file = AppDirectory.generateUniqueFilePath(
                     destDir,
@@ -190,7 +191,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             return _file
         }
 
-        override fun isLoaded(): Boolean {
+        override fun getLoaded(): Boolean {
             return true
         }
 
@@ -206,7 +207,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
     }
 
     override fun getGpxList(): GpxList {
-        return editor.gpxList
+        return editor.getGpxList()
     }
 
     companion object {

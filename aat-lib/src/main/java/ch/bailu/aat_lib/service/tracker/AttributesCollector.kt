@@ -1,139 +1,156 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.InfoID;
-import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic;
-import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes;
-import ch.bailu.aat_lib.gpx.attributes.PowerAttributes;
-import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes;
-import ch.bailu.aat_lib.service.sensor.SensorServiceInterface;
+import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic
+import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes
+import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
+import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
+import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 
-public final class AttributesCollector {
-    private final static long LOG_INTERVAL = 0;
-    private final static long SHORT_TIMEOUT = 2 * 1000;
-    private final static long LONG_TIMEOUT = 10 * 1000;
-
-    private long lastLog = System.currentTimeMillis();
+class AttributesCollector {
+    private var lastLog = System.currentTimeMillis()
 
 
-    private final Collector[] collectors = new Collector[]{
-            new Collector(InfoID.HEART_RATE_SENSOR, HeartRateAttributes.KEY_INDEX_BPM,
-                    SHORT_TIMEOUT),
+    private val collectors = arrayOf(
+        Collector(
+            InfoID.HEART_RATE_SENSOR, HeartRateAttributes.KEY_INDEX_BPM,
+            SHORT_TIMEOUT
+        ),
 
-            new Collector(InfoID.CADENCE_SENSOR, CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
-                    SHORT_TIMEOUT),
+        Collector(
+            InfoID.CADENCE_SENSOR, CadenceSpeedAttributes.KEY_INDEX_CRANK_RPM,
+            SHORT_TIMEOUT
+        ),
 
-            new Collector(InfoID.POWER_SENSOR, PowerAttributes.KEY_INDEX_POWER,
-                    SHORT_TIMEOUT),
+        Collector(
+            InfoID.POWER_SENSOR, PowerAttributes.KEY_INDEX_POWER,
+            SHORT_TIMEOUT
+        ),
 
-            new Collector(InfoID.STEP_COUNTER_SENSOR, StepCounterAttributes.KEY_INDEX_STEPS_RATE,
-                    LONG_TIMEOUT),
+        Collector(
+            InfoID.STEP_COUNTER_SENSOR, StepCounterAttributes.KEY_INDEX_STEPS_RATE,
+            LONG_TIMEOUT
+        ),
 
-            new StepsTotalCollector()
-    };
+        StepsTotalCollector()
+    )
 
 
-    public GpxAttributes collect(SensorServiceInterface sensorServiceInterface) {
-        GpxAttributes attr = null;
-        final long time = System.currentTimeMillis();
+    fun collect(sensorServiceInterface: SensorServiceInterface): GpxAttributes {
+        var attr: GpxAttributes? = null
+        val time = System.currentTimeMillis()
 
         if ((time - lastLog) >= LOG_INTERVAL) {
-            lastLog = time;
+            lastLog = time
 
-            for (Collector c : collectors) {
-                attr = c.collect(sensorServiceInterface, attr, time);
+            for (c in collectors) {
+                attr = c.collect(sensorServiceInterface, attr, time)
             }
         }
 
-        if (attr == null) attr = GpxAttributesNull.NULL;
-        return attr;
+        if (attr == null) attr = GpxAttributesNull.NULL
+        return attr
     }
 
 
-    private static class Collector {
-        private final int keyIndex;
-        private final int infoID;
-        private final long maxAge;
+    private open class Collector(
+        private val infoID: Int,
+        private val keyIndex: Int,
+        private val maxAge: Long
+    ) {
+        private var lastInfo: GpxInformation? = null
 
-        private GpxInformation lastInfo;
 
+        fun collect(
+            sensorServiceInterface: SensorServiceInterface,
+            target: GpxAttributes?,
+            time: Long
+        ): GpxAttributes? {
+            var target = target
+            val source = sensorServiceInterface.getInformationOrNull(infoID)
 
+            if (source != null && source !== lastInfo) {
+                lastInfo = source
 
-        public Collector(int infoID, int keyIndex, long maxAge) {
-
-            this.keyIndex = keyIndex;
-            this.infoID = infoID;
-            this.maxAge = maxAge;
-        }
-
-        public GpxAttributes collect(SensorServiceInterface sensorServiceInterface, GpxAttributes target, long time) {
-
-            GpxInformation source = sensorServiceInterface.getInformationOrNull(infoID);
-
-            if (source != null && source != lastInfo) {
-                lastInfo = source;
-
-                target = addAttribute(target, source, keyIndex, time);
+                target = addAttribute(target, source, keyIndex, time)
             }
-            return target;
+            return target
         }
 
 
-        protected GpxAttributes addAttribute(GpxAttributes target, GpxInformation source, int keyIndex, long time) {
+        protected fun addAttribute(
+            target: GpxAttributes?,
+            source: GpxInformation?,
+            keyIndex: Int,
+            time: Long
+        ): GpxAttributes? {
+            var target = target
             if (source != null && (time - source.getTimeStamp()) < maxAge) {
-                target = addAttribute(target, source.getAttributes(), keyIndex);
+                target = addAttribute(target, source.getAttributes(), keyIndex)
             }
-            return target;
+            return target
         }
 
-        protected GpxAttributes addAttribute(GpxAttributes target, GpxAttributes source, int keyIndex) {
+        protected fun addAttribute(
+            target: GpxAttributes?,
+            source: GpxAttributes,
+            keyIndex: Int
+        ): GpxAttributes? {
+            var target = target
             if (source.hasKey(keyIndex)) {
-
-                target = addAttributeHaveKey(getTargetNotNull(target), source, keyIndex);
+                target = addAttributeHaveKey(getTargetNotNull(target), source, keyIndex)
             }
-            return target;
+            return target
         }
 
-        protected GpxAttributes addAttributeHaveKey(GpxAttributes target, GpxAttributes source, int keyIndex) {
-            final String value = source.get(keyIndex);
+        protected open fun addAttributeHaveKey(
+            target: GpxAttributes,
+            source: GpxAttributes,
+            keyIndex: Int
+        ): GpxAttributes? {
+            val value = source[keyIndex]
 
-            if (value.length() > 0) {
-                target.put(keyIndex, value);
+            if (value.isNotEmpty()) {
+                target.put(keyIndex, value)
             }
-            return target;
+            return target
         }
 
-        protected GpxAttributes getTargetNotNull(GpxAttributes target) {
-            if (target == null) return new GpxAttributesStatic();
-            return target;
+        protected fun getTargetNotNull(target: GpxAttributes?): GpxAttributes {
+            if (target == null) return GpxAttributesStatic()
+            return target
         }
     }
 
 
-    private final class StepsTotalCollector extends Collector {
-        private int base = -1;
+    private inner class StepsTotalCollector : Collector(
+        InfoID.STEP_COUNTER_SENSOR,
+        StepCounterAttributes.KEY_INDEX_STEPS_TOTAL, LONG_TIMEOUT
+    ) {
+        private var base = -1
 
-        public StepsTotalCollector() {
-            super(InfoID.STEP_COUNTER_SENSOR,
-                    StepCounterAttributes.KEY_INDEX_STEPS_TOTAL, LONG_TIMEOUT);
+        override fun addAttributeHaveKey(
+            target: GpxAttributes, source: GpxAttributes,
+            keyIndex: Int
+        ): GpxAttributes {
+            var value = source.getAsInteger(keyIndex)
+
+            if (base == -1) base = value
+
+            value -= base
+
+            target.put(keyIndex, value.toString())
+            return target
         }
+    }
 
-
-        @Override
-        protected GpxAttributes addAttributeHaveKey(GpxAttributes target, GpxAttributes source,
-                                                    int keyIndex) {
-            int value = source.getAsInteger(keyIndex);
-
-            if (base == -1)
-                base = value;
-
-            value = value - base;
-
-            target.put(keyIndex, String.valueOf(value));
-            return target;
-        }
+    companion object {
+        private const val LOG_INTERVAL: Long = 0
+        private const val SHORT_TIMEOUT = (2 * 1000).toLong()
+        private const val LONG_TIMEOUT = (10 * 1000).toLong()
     }
 }

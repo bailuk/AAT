@@ -34,7 +34,7 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         return logFile
     }
 
-    override fun isLoaded(): Boolean {
+    override fun getLoaded(): Boolean {
         return true
     }
 

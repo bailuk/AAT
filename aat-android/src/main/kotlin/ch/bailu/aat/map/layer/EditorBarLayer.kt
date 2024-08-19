@@ -67,11 +67,11 @@ class EditorBarLayer(
         }
     }
 
-    override fun onClick(view: View) {
-        super.onClick(view)
+    override fun onClick(v: View) {
+        super.onClick(v)
         val editor = edit.editor
 
-        when(view) {
+        when(v) {
             add -> {
                 val pos = mcontext.getMapView().getMapViewPosition().center
                 val ele = appContext.services.getElevationService().getElevation(pos.latitudeE6, pos.longitudeE6).toFloat()
@@ -82,7 +82,7 @@ class EditorBarLayer(
             down -> editor.down()
             undo -> editor.undo()
             redo -> editor.redo()
-            menu -> EditorMenu(appContext, view.context, editor, edit.file).showAsPopup(view.context, view)
+            menu -> EditorMenu(appContext, v.context, editor, edit.file).showAsPopup(v.context, v)
         }
     }
 

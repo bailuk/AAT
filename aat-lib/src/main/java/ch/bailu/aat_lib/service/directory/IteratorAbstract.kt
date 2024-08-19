@@ -79,7 +79,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         var oldPosition = 0
         if (resultSet != null) {
             oldPosition = resultSet!!.position
-            fileOnOldPosition = info.file.path
+            fileOnOldPosition = info.getFile().path
             resultSet!!.close()
         }
         updateResultFromSelection()

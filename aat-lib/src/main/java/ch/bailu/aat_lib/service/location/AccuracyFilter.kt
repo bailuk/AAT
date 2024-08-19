@@ -14,7 +14,7 @@ class AccuracyFilter(n: LocationStackItem) : LocationStackChainedItem(n) {
     override fun close() {}
 
     override fun passLocation(@Nonnull location: LocationInformation) {
-        if (location.accuracy < minAccuracy) {
+        if (location.getAccuracy() < minAccuracy) {
             super.passLocation(location)
         }
     }

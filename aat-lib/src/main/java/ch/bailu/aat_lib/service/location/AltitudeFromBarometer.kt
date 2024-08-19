@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.service.location
 
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
-import javax.annotation.Nonnull
 
 class AltitudeFromBarometer(next: LocationStackItem,
                             private val sensorService: SensorServiceInterface

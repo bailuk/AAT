@@ -1,103 +1,81 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import org.mapsforge.core.model.LatLong;
+import ch.bailu.aat_lib.coordinates.LatLongInterface
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import org.mapsforge.core.model.LatLong
 
-import ch.bailu.aat_lib.coordinates.LatLongInterface;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
+class GpxPoint : GpxPointInterface {
+    private var altitude: Float
+    private val longitude: Int
+    private val latitude: Int
+    private val timestamp: Long
 
-public class GpxPoint implements GpxPointInterface {
-    public static final long SIZE_IN_BYTES=(1*4)+(2*4)+(1*8);
-
-    private float  altitude;
-    private final int    longitude;
-    private final int latitude;
-    private final long   timestamp;
-
-
-    public static final GpxPoint NULL=new GpxPoint();
-
-    private GpxPoint () {
-        altitude = 0;
-        longitude = 0;
-        latitude = 0;
-        timestamp = 0;
+    private constructor() {
+        altitude = 0f
+        longitude = 0
+        latitude = 0
+        timestamp = 0
     }
 
-
-    public GpxPoint (GpxPointInterface tp) {
-        altitude= (float) tp.getAltitude();
-        longitude=tp.getLongitudeE6();
-        latitude=tp.getLatitudeE6();
-        timestamp=tp.getTimeStamp();
-
-
+    constructor(tp: GpxPointInterface) {
+        altitude = tp.getAltitude().toFloat()
+        longitude = tp.getLongitudeE6()
+        latitude = tp.getLatitudeE6()
+        timestamp = tp.getTimeStamp()
     }
 
-    /* TODO move function (dependency to Location)
-    public GpxPoint (Location location) {
-        altitude=(float)location.getAltitude();
-        longitude=(int) (location.getLongitude()*1E6);
-        latitude=(int) (location.getLatitude()*1E6);
-        timestamp=location.getTime();
-    }
-    */
-    public GpxPoint(LatLong p, float a, long time) {
-        latitude=p.getLatitudeE6();
-        longitude=p.getLongitudeE6();
-        altitude= a;
-        timestamp=time;
+    constructor(p: LatLong, a: Float, time: Long) {
+        latitude = p.latitudeE6
+        longitude = p.longitudeE6
+        altitude = a
+        timestamp = time
     }
 
-    public GpxPoint(LatLongInterface gp, float a, long time) {
-        latitude = gp.getLatitudeE6();
-        longitude = gp.getLongitudeE6();
-        altitude = a;
-        timestamp = time;
+    constructor(gp: LatLongInterface, a: Float, time: Long) {
+        latitude = gp.getLatitudeE6()
+        longitude = gp.getLongitudeE6()
+        altitude = a
+        timestamp = time
     }
 
-    @Override
-    public double getLatitude() {
-        return ((double)getLatitudeE6())/ 1E6;
+    override fun getLatitude(): Double {
+        return (getLatitudeE6().toDouble()) / 1E6
     }
 
-    @Override
-    public double getLongitude() {
-        return ((double)getLongitudeE6())/ 1E6;
+    override fun getLongitude(): Double {
+        return (getLongitudeE6().toDouble()) / 1E6
     }
 
-    @Override
-    public long getTimeStamp() {
-        return timestamp;
+    override fun getTimeStamp(): Long {
+        return timestamp
     }
 
-    @Override
-    public int getLatitudeE6() {
-        return latitude;
+    override fun getLatitudeE6(): Int {
+        return latitude
     }
 
-    @Override
-    public int getLongitudeE6() {
-        return longitude;
+    override fun getLongitudeE6(): Int {
+        return longitude
     }
 
-    @Override
-    public double getAltitude() {
-        return (double)altitude;
+    override fun getAltitude(): Double {
+        return altitude.toDouble()
     }
 
-
-    public void setAltitude(float e) {
-        altitude=e;
+    fun setAltitude(e: Float) {
+        altitude = e
     }
 
-
-    @Override
-    public GpxAttributes getAttributes() {
-        return GpxAttributesNull.NULL;
+    override fun getAttributes(): GpxAttributes {
+        return GpxAttributesNull.NULL
     }
 
+    companion object {
+        const val SIZE_IN_BYTES: Long = ((4) + (2 * 4) + (8)).toLong()
 
+        @JvmField
+        val NULL: GpxPoint = GpxPoint()
+    }
 }
-

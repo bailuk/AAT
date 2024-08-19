@@ -29,7 +29,7 @@ class LogOnContentUpdate(dispatcher: DispatcherInterface): OnContentUpdatedInter
 
         if (data is Data) {
             data.log.log {
-                AppLog.d(this, "${dateFormat.format(System.currentTimeMillis())} ($it) ${data.name}: ${info.file}")
+                AppLog.d(this, "${dateFormat.format(System.currentTimeMillis())} ($it) ${data.name}: ${info.getFile()}")
             }
         } else {
             log[iid] = Data(TimeOutLog(), "UNKNOWN($iid)")

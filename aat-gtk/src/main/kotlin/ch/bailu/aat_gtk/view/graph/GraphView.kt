@@ -95,7 +95,7 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxCache = info.gpxList
+        gpxCache = info.getGpxList()
         repaint()
     }
 }

@@ -53,7 +53,7 @@ class GraphView(
     }
 
     fun onContentUpdated(info: GpxInformation, index: Int) {
-        gpxCache = info.gpxList
+        gpxCache = info.getGpxList()
         nodeIndex = index
         invalidate()
     }
@@ -115,7 +115,7 @@ class GraphView(
 
     fun setVisibility(info: GpxInformation) {
         visibility =
-            if (info.isLoaded && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
+            if (info.getLoaded() && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
                 VISIBLE
             } else {
                 GONE

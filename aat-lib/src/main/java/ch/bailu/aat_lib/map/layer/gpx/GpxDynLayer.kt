@@ -85,8 +85,8 @@ class GpxDynLayer(
 
     companion object {
         private fun toType(i: GpxInformation?): GpxType {
-            return if (i != null && i.gpxList != null) {
-                i.gpxList.getDelta().getType()
+            return if (i != null && i.getGpxList() != null) {
+                i.getGpxList().getDelta().getType()
             } else GpxType.NONE
         }
     }

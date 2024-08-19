@@ -64,7 +64,7 @@ public final class GpxInformationDbSummary extends GpxInformation {
     }
 
     @Override
-    public boolean isLoaded() {
+    public boolean getLoaded() {
         return true;
     }
 

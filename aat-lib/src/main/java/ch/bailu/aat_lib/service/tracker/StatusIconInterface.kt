@@ -1,11 +1,8 @@
-package ch.bailu.aat_lib.service.tracker;
+package ch.bailu.aat_lib.service.tracker
 
-public interface StatusIconInterface {
-    void hide();
-
-    void showAutoPause();
-
-    void showPause();
-
-    void showOn();
+interface StatusIconInterface {
+    fun hide()
+    fun showAutoPause()
+    fun showPause()
+    fun showOn()
 }

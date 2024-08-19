@@ -106,7 +106,7 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
         }
 
         private val iD: String
-            get() = super.getInfo().file.toString()
+            get() = super.getInfo().getFile().toString()
     }
 
     class Summary(appContext: AppContext) : IteratorSource(appContext) {

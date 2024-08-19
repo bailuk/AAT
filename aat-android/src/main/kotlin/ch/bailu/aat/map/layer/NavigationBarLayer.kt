@@ -61,7 +61,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
 
                 if (info is GpxInformation) {
                     mcontext.getMapView().frameBounding(info.getBoundingBox())
-                    AppLog.i(v.context, info.file.name)
+                    AppLog.i(v.context, info.getFile().name)
                 }
             }
         }
@@ -77,7 +77,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
             val info = infoCache.getValueAt(boundingCycle)
             if (info is GpxInformation) {
                 if (info.getBoundingBox().hasBounding()
-                    || info.gpxList.pointList.size() > 0
+                    || info.getGpxList().pointList.size() > 0
                 ) return true
             }
         }
@@ -85,7 +85,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
+        if (info.getLoaded()) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

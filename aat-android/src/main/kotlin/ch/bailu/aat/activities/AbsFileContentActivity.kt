@@ -109,11 +109,11 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         addTarget(fileOperation!!, InfoID.FILE_VIEW)
 
         addTarget({ _, info ->
-            val newFileID = info.file.toString()
+            val newFileID = info.getFile().toString()
             if (!Objects.equals(currentFileID, newFileID)) {
                 currentFileID = newFileID
                 map?.frameBounding(info.getBoundingBox())
-                AppLog.i(this@AbsFileContentActivity, info.file.name)
+                AppLog.i(this@AbsFileContentActivity, info.getFile().name)
             }
         }, InfoID.FILE_VIEW)
     }
@@ -122,7 +122,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         if (v === previousFile || v === nextFile) {
             changeFileAsk(v)
         } else if (v === fileOperation) {
-            currentFile?.apply { FileMenu(this@AbsFileContentActivity, info.file).showAsPopup(this@AbsFileContentActivity, v) }
+            currentFile?.apply { FileMenu(this@AbsFileContentActivity, info.getFile()).showAsPopup(this@AbsFileContentActivity, v) }
         }
     }
 

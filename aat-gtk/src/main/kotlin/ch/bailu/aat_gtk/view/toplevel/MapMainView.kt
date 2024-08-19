@@ -123,6 +123,6 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
 
     fun edit(info: GpxInformation) {
         edgeControl.show(Position.LEFT)
-        editorSource.edit(info.file)
+        editorSource.edit(info.getFile())
     }
 }

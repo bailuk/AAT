@@ -19,7 +19,7 @@ public class GpxFileWrapper extends GpxInformation {
     }
 
     @Override
-    public boolean isLoaded() {
+    public boolean getLoaded() {
         return true;
     }
 

@@ -30,7 +30,7 @@ class InfoCache : OnContentUpdatedInterface {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded && info.gpxList.pointList.size() > 0) {
+        if (info.getLoaded() && info.getGpxList().pointList.size() > 0) {
             cache.put(iid, info)
         } else if (isInCache(iid)) {
             cache.remove(iid)

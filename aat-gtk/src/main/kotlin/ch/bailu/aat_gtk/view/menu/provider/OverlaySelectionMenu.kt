@@ -58,7 +58,7 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                 }
             , "overlay") {
                 overlays.forEachIndexed { index, fileSource ->
-                    checkButtons[index].setLabel(fileSource.info.file.name)
+                    checkButtons[index].setLabel(fileSource.info.getFile().name)
                     checkButtons[index].active = fileSource.isEnabled()
                 }
             }

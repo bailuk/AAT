@@ -33,7 +33,7 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        array = GpxListArray(info.gpxList)
+        array = GpxListArray(info.getGpxList())
         cachedInfo[iid] = info
         notifyDataSetChanged()
     }
@@ -71,7 +71,7 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
     override fun onItemClick(arg0: AdapterView<*>?, arg1: View, pos: Int, arg3: Long) {
         val intent = Intent()
         intent.putExtra("I", pos)
-        intent.putExtra("ID", cachedInfo.info.file.toString())
+        intent.putExtra("ID", cachedInfo.info.getFile().toString())
         start(context, NodeDetailActivity::class.java, intent)
     }
 

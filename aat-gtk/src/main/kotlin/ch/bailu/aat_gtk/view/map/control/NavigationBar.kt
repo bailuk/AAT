@@ -31,7 +31,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
 
                 if (info is GpxInformation) {
                     val bounding = info.getBoundingBox()
-                    val fileName = info.file.name
+                    val fileName = info.getFile().name
 
                     if (fileName != null) {
                         mcontext.getMapView().frameBounding(bounding)
@@ -52,7 +52,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
 
             val info = infoCache.getValueAt(boundingCycle)
             val boundingBox = info?.getBoundingBox()
-            val pointList = info?.gpxList?.pointList
+            val pointList = info?.getGpxList()?.pointList
 
             if (boundingBox != null && pointList != null && boundingBox.hasBounding() && pointList.size() > 0) {
                 return true
@@ -62,7 +62,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
+        if (info.getLoaded()) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

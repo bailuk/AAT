@@ -35,8 +35,8 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (state != info.state) {
-            state = info.state
+        if (state != info.getState()) {
+            state = info.getState()
             setBacklight()
         }
     }
@@ -58,7 +58,7 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     private val presetIndex: Int
         get() {
             val result = IntArray(1)
-            scontext.insideContext { result[0] = scontext.getTrackerService().presetIndex }
+            scontext.insideContext { result[0] = scontext.getTrackerService().getPresetIndex() }
             return result[0]
         }
 

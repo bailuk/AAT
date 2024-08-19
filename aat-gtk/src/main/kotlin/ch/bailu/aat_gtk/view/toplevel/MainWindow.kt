@@ -144,7 +144,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     override fun load(info: GpxInformation) {
         // TODO saveFile()
         mapView.editDraft()
-        customFileSource.setFile(info.file)
+        customFileSource.setFile(info.getFile())
         customFileSource.setEnabled(true)
     }
 

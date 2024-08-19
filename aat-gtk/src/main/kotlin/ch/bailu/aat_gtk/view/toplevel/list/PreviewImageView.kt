@@ -37,7 +37,7 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setFilePath(info.file)
+        setFilePath(info.getFile())
     }
 
     private fun setImageObject(ID: String?, factory: Obj.Factory?) {

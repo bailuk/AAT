@@ -99,7 +99,7 @@ abstract class AbsNodeSelectorLayer(
 
             if (info is GpxInformation && infoID is Int) {
                 val finder = GpxNodeFinder(centerBounding)
-                finder.walkTrack(info.gpxList)
+                finder.walkTrack(info.getGpxList())
 
                 if (finder.haveNode()) {
                     selectedNode = finder.node
@@ -127,7 +127,7 @@ abstract class AbsNodeSelectorLayer(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
+        if (info.getLoaded()) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

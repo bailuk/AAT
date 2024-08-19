@@ -24,6 +24,6 @@ class PreviewView(sc: ServiceContext, private val summaryConfig: SummaryConfig) 
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setFilePath(info.file)
+        setFilePath(info.getFile())
     }
 }

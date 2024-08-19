@@ -24,6 +24,6 @@ open class NameDescription : ContentDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        updateName(info.file.name)
+        updateName(info.getFile().name)
     }
 }

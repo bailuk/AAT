@@ -34,7 +34,7 @@ open class NodeViewLayer(appContext: AppContext, private val context: Context, m
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         super.setSelectedNode(iid, info, node, index)
         this.index = index
-        file = info.file
+        file = info.getFile()
         markupBuilder.appendInfo(info, this.index)
         markupBuilder.appendNode(node, info)
         markupBuilder.appendAttributes(node.getAttributes())
