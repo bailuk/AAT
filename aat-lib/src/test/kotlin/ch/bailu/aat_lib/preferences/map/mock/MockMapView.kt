@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.map.mock
+package ch.bailu.aat_lib.preferences.map.mock
 
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension

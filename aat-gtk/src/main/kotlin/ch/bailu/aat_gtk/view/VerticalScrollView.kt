@@ -34,7 +34,7 @@ abstract class VerticalScrollView {
     fun add(di: DispatcherInterface, desc: ContentDescription, usageTracker: UsageTrackerInterface) {
         val view = DescriptionLabelTextView(desc)
         add(view.layout)
-        di.addTarget(ch.bailu.aat_lib.dispatcher.filter.Filter(view, usageTracker))
+        di.addTarget(ch.bailu.aat_lib.dispatcher.filter.TargetFilter(view, usageTracker))
     }
 
     fun addAllContent(di: DispatcherInterface, descs: Array<ContentDescription>,

@@ -1,7 +1,9 @@
-package ch.bailu.aat_lib.map
+package ch.bailu.aat_lib.preferences.map
 
-import ch.bailu.aat_lib.map.mock.MockAppDensity
-import ch.bailu.aat_lib.map.mock.MockMapView
+import ch.bailu.aat_lib.map.MapMetrics
+import ch.bailu.aat_lib.map.MapsForgeMetrics
+import ch.bailu.aat_lib.preferences.map.mock.MockAppDensity
+import ch.bailu.aat_lib.preferences.map.mock.MockMapView
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull

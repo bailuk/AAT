@@ -20,12 +20,18 @@ class UsageTrackers : UsageTrackerInterface {
         observers.add(onChanged)
     }
 
-    fun createTracker(): UsageTrackerInterface {
-        return addUsageTracker(UsageTracker())
+    fun createTracker(): UsageTracker {
+        val result = UsageTracker()
+        result.observe { observers.forEach { it() } }
+        usageTrackers.add(result)
+        return result
     }
 
-    fun createOverlayUsageTracker(storageInterface: StorageInterface, vararg infoIDs: Int): UsageTrackerInterface {
-        return addUsageTracker(OverlayUsageTracker(storageInterface, *infoIDs))
+    fun createOverlayUsageTracker(storageInterface: StorageInterface, vararg infoIDs: Int): OverlayUsageTracker {
+        val result = OverlayUsageTracker(storageInterface, *infoIDs)
+        result.observe { observers.forEach { it() } }
+        usageTrackers.add(result)
+        return result
     }
 
     fun createSelectableUsageTracker(): SelectableUsageTracker {
@@ -36,11 +42,6 @@ class UsageTrackers : UsageTrackerInterface {
 
     }
 
-    private fun addUsageTracker(usageTracker: UsageTrackerInterface): UsageTrackerInterface {
-        usageTracker.observe { observers.forEach { it() } }
-        usageTrackers.add(usageTracker)
-        return usageTracker
-    }
 
 
 }

@@ -16,9 +16,8 @@ import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.filter.Filter
+import ch.bailu.aat_lib.dispatcher.filter.TargetFilter
 import ch.bailu.aat_lib.dispatcher.source.FileSource
-import ch.bailu.aat_lib.dispatcher.usage.OverlayUsageTracker
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -156,7 +155,7 @@ private class OverlayContainer(
 
 
     init {
-        dispatcher.addTarget(Filter(gpxLayer, usageTracker))
+        dispatcher.addTarget(TargetFilter(gpxLayer, usageTracker))
 
     }
 

@@ -7,13 +7,17 @@ class MockStorage : StorageInterface {
     var mockIntValue: Int = 0
     var mockStringValue = ""
 
+    private val observers = ArrayList<OnPreferencesChanged>()
 
     override fun readString(key: String): String {
         return mockStringValue
     }
 
     override fun writeString(key: String, value: String) {
-        mockStringValue = value
+        if (mockStringValue != value) {
+            mockStringValue = value
+            notifyObservers(this, key)
+        }
     }
 
     override fun readInteger(key: String): Int {
@@ -21,11 +25,19 @@ class MockStorage : StorageInterface {
     }
 
     override fun writeInteger(key: String, value: Int) {
-        mockIntValue = value
+        if (mockIntValue != value) {
+            mockIntValue = value
+            notifyObservers(this, key)
+        }
+    }
+
+    private fun notifyObservers(storage: StorageInterface, key: String) {
+        observers.forEach { it.onPreferencesChanged(storage, key) }
     }
 
     override fun writeIntegerForce(key: String, value: Int) {
-        TODO("Not yet implemented")
+        mockIntValue = value
+        notifyObservers(this, key)
     }
 
     override fun readLong(key: String): Long {
@@ -37,11 +49,11 @@ class MockStorage : StorageInterface {
     }
 
     override fun register(onPreferencesChanged: OnPreferencesChanged) {
-        TODO("Not yet implemented")
+        observers.add(onPreferencesChanged)
     }
 
     override fun unregister(onPreferencesChanged: OnPreferencesChanged) {
-        TODO("Not yet implemented")
+        observers.remove(onPreferencesChanged)
     }
 
     override fun isDefaultString(s: String): Boolean {

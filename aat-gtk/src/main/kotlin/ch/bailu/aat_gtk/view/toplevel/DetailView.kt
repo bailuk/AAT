@@ -6,7 +6,6 @@ import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.HeartBeats
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.TotalCadence
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.filter.Filter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface

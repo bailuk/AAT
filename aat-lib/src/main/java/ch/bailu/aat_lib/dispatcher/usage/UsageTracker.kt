@@ -7,8 +7,10 @@ class UsageTracker : UsageTrackerInterface {
 
 
     fun setEnabled(infoID: Int, enabled: Boolean) {
-        usageMap[infoID] = enabled
-        observers.forEach { it() }
+        if (enabled != usageMap.getOrDefault(infoID, false)) {
+            usageMap[infoID] = enabled
+            observers.forEach { it() }
+        }
     }
 
     override fun isEnabled(infoID: Int): Boolean {
@@ -26,7 +28,7 @@ class UsageTracker : UsageTrackerInterface {
 
     fun disableAll() {
         usageMap.keys.forEach {
-            usageMap[it] = false
+            setEnabled(it, false)
         }
     }
 }
