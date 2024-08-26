@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.menu
 
 import ch.bailu.aat_gtk.app.GtkAppContext
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.view.menu.provider.AppMenu
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.gtk.gtk.Application

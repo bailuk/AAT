@@ -35,14 +35,14 @@ class GpxEditorActivity : AbsFileContentActivity() {
         )
         val summary = VerticalScrollView(this)
         summary.addAllContent(
-            this, summaryData,
+            dispatcher, summaryData,
             AppTheme.trackContent,
             InfoID.EDITOR_OVERLAY,
             InfoID.FILE_VIEW
         )
         summary.add(createAttributesView())
         val graph = GraphViewFactory.createAltitudeGraph(appContext, this, THEME)
-            .connect(this, InfoID.EDITOR_OVERLAY, InfoID.FILE_VIEW)
+            .connect(dispatcher, InfoID.EDITOR_OVERLAY, InfoID.FILE_VIEW)
         return if (AppLayout.isTablet(this)) {
             createPercentageLayout(summary, graph)
         } else {

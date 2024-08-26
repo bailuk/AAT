@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.gpx;
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface;
+import ch.bailu.aat_lib.dispatcher.TargetInterface;
 
 public class GpxInformationCache {
     public GpxInformation info;
@@ -23,7 +23,7 @@ public class GpxInformationCache {
     }
 
 
-    public void letUpdate(OnContentUpdatedInterface obj) {
+    public void letUpdate(TargetInterface obj) {
         obj.onContentUpdated(infoID, info);
     }
 }

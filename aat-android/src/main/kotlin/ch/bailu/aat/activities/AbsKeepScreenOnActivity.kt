@@ -10,7 +10,7 @@ abstract class AbsKeepScreenOnActivity : ActivityContext() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         backlight = Backlight(this, serviceContext).apply {
-            addTarget(this, InfoID.TRACKER)
+            dispatcher.addTarget(this, InfoID.TRACKER)
         }
     }
 

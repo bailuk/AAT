@@ -60,7 +60,7 @@ class FileControlBarLayer(
         ToolTip.set(overlay, R.string.file_overlay)
         ToolTip.set(reloadPreview, R.string.file_reload)
         ToolTip.set(delete, R.string.file_delete)
-        acontext.addTarget(selector, InfoID.LIST_SUMMARY)
+        acontext.dispatcher.addTarget(selector, InfoID.LIST_SUMMARY)
     }
 
     fun setIterator(i: Iterator) {

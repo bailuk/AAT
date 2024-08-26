@@ -16,7 +16,7 @@ import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.logger.AppLog
 import kotlin.math.roundToInt
 
 open class NumberView(context: Context, data: ContentDescription, private val theme: UiTheme) :
-    ViewGroup(context), OnContentUpdatedInterface {
+    ViewGroup(context), TargetInterface {
     private val label: TextView
     private val number: TextView
     private val unit: TextView

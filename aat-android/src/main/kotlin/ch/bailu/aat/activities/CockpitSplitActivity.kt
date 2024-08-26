@@ -2,7 +2,7 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import android.view.View
-import ch.bailu.aat_lib.dispatcher.SensorSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.mapsforge.MapViewLinker
 import ch.bailu.aat.preferences.Storage
@@ -31,10 +31,9 @@ import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.description.SlopeDescription
 import ch.bailu.aat_lib.description.StepRateDescription
 import ch.bailu.aat_lib.description.TotalStepsDescription
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.gpx.InfoID
 
 class CockpitSplitActivity : AbsKeepScreenOnActivity() {
@@ -64,42 +63,42 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         val percentageD = PercentageLayout(this)
         percentageD.setOrientation(AppLayout.getOrientationAlongLargeSide(this))
         cockpitA.add(
-            this, CurrentSpeedDescription(appContext.storage),
+            dispatcher, CurrentSpeedDescription(appContext.storage),
             InfoID.SPEED_SENSOR, InfoID.LOCATION
         )
-        cockpitA.addC(this, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
-        cockpitA.addC(this, AveragePaceDescription(appContext.storage), InfoID.TRACKER)
-        cockpitA.addC(this, DistanceDescription(appContext.storage), InfoID.TRACKER)
+        cockpitA.addC(dispatcher, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
+        cockpitA.addC(dispatcher, AveragePaceDescription(appContext.storage), InfoID.TRACKER)
+        cockpitA.addC(dispatcher, DistanceDescription(appContext.storage), InfoID.TRACKER)
         cockpitA.add(
-            this, PredictiveTimeDescription(),
+            dispatcher, PredictiveTimeDescription(),
             InfoID.TRACKER_TIMER
         )
-        cockpitB.addC(this, AveragePaceDescription(appContext.storage), InfoID.TRACKER)
-        cockpitB.addC(this, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
-        cockpitB.addC(this, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
+        cockpitB.addC(dispatcher, AveragePaceDescription(appContext.storage), InfoID.TRACKER)
+        cockpitB.addC(dispatcher, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
+        cockpitB.addC(dispatcher, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
         percentageB.add(cockpitB, 50)
         percentageB.add(
             GraphViewFactory.createSpeedGraph(appContext, this, THEME)
-                .connect(this, InfoID.TRACKER), 50
+                .connect(dispatcher, InfoID.TRACKER), 50
         )
-        cockpitD.addAltitude(this)
-        cockpitD.add(this, AscendDescription(Storage(this)), InfoID.TRACKER)
-        cockpitD.add(this, DescendDescription(Storage(this)), InfoID.TRACKER)
-        cockpitD.add(this, SlopeDescription(), InfoID.TRACKER)
+        cockpitD.addAltitude(dispatcher)
+        cockpitD.add(dispatcher, AscendDescription(Storage(this)), InfoID.TRACKER)
+        cockpitD.add(dispatcher, DescendDescription(Storage(this)), InfoID.TRACKER)
+        cockpitD.add(dispatcher, SlopeDescription(), InfoID.TRACKER)
         percentageD.add(cockpitD, 50)
         percentageD.add(
             GraphViewFactory.createAltitudeGraph(appContext, this, THEME)
-                .connect(this, InfoID.TRACKER), 50
+                .connect(dispatcher, InfoID.TRACKER), 50
         )
-        cockpitC.add(this, CadenceDescription(), InfoID.CADENCE_SENSOR)
-        cockpitC.add(this, HeartRateDescription(), InfoID.HEART_RATE_SENSOR)
-        cockpitC.add(this, PowerDescription(), InfoID.POWER_SENSOR)
-        cockpitC.add(this, StepRateDescription(), InfoID.STEP_COUNTER_SENSOR)
-        cockpitC.add(this, TotalStepsDescription(), InfoID.TRACKER)
+        cockpitC.add(dispatcher, CadenceDescription(), InfoID.CADENCE_SENSOR)
+        cockpitC.add(dispatcher, HeartRateDescription(), InfoID.HEART_RATE_SENSOR)
+        cockpitC.add(dispatcher, PowerDescription(), InfoID.POWER_SENSOR)
+        cockpitC.add(dispatcher, StepRateDescription(), InfoID.STEP_COUNTER_SENSOR)
+        cockpitC.add(dispatcher, TotalStepsDescription(), InfoID.TRACKER)
         percentageC.add(cockpitC, 50)
         percentageC.add(
             GraphViewFactory.createSpmGraph(appContext, this, THEME)
-                .connect(this, InfoID.TRACKER), 50
+                .connect(dispatcher, InfoID.TRACKER), 50
         )
         val mv = MultiView(this, SOLID_KEY)
         mv.add(cockpitA)
@@ -131,15 +130,15 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createDispatcher(edit: EditorSource) {
-        addSource(edit)
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.STEP_COUNTER_SENSOR))
+        dispatcher.addSource(edit)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        // TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.STEP_COUNTER_SENSOR))
     }
 }

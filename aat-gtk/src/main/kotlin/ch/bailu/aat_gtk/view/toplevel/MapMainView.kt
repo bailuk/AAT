@@ -3,8 +3,9 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
@@ -15,7 +16,11 @@ import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OverlaySource
+import ch.bailu.aat_lib.dispatcher.filter.Filter
+import ch.bailu.aat_lib.dispatcher.source.FileSource
+import ch.bailu.aat_lib.dispatcher.usage.OverlayUsageTracker
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
@@ -27,33 +32,49 @@ import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
 
-class MapMainView(app: Application, appContext: AppContext, dispatcher: DispatcherInterface, uiController: UiController, window: Window): Attachable {
+class MapMainView(
+    app: Application,
+    appContext: AppContext,
+    dispatcher: DispatcherInterface,
+    usageTrackers: UsageTrackers,
+    uiController: UiController,
+    window: Window)
+    : Attachable {
 
     val map = GtkCustomMapView(appContext, dispatcher)
     val overlay = Overlay()
 
     private val editorSource = EditorSource(appContext)
-    private val overlayList = ArrayList<OverlaySource>().apply {
-        val poiOverlaySource = OverlaySource.factoryPoiOverlaySource(appContext)
-        add(poiOverlaySource)
-        dispatcher.addSource(poiOverlaySource)
+    private val overlayList = ArrayList<OverlayContainer>().apply {
+
+        val iids = arrayOf(
+            InfoID.TRACKER,
+            InfoID.POI,
+            InfoID.EDITOR_DRAFT, // TODO should be InfoID.DRAFT
+            InfoID.FILE_VIEW)
+
+        val usageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage)
+        for (i in iids) {
+            add(OverlayContainer(i, appContext, map, dispatcher, usageTracker))
+            dispatcher.addSource(FileSource(appContext, i, usageTrackers))
+        }
 
         for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-            val overlaySource = OverlaySource.factoryCustomOverlaySource(appContext, i)
-            add(overlaySource)
-            dispatcher.addSource(overlaySource)
+            add(OverlayContainer(i, appContext, map, dispatcher, usageTracker))
+            dispatcher.addSource(FileSource(appContext, i, usageTrackers))
         }
     }
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
-    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList, uiController)
+    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
     private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editorSource)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
@@ -75,11 +96,8 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
         map.add(GridDynLayer(appContext.services, appContext.storage, map.getMContext()))
-        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.TRACKER))
-        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.FILE_VIEW))
-        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.EDITOR_DRAFT))
-        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.EDITOR_OVERLAY))
-        map.add(GpxDynLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher, InfoID.POI))
+
+        overlayList.forEach { map.add(it.gpxLayer) }
 
         map.add(GpxOverlayListLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher))
         map.add(edgeControl)
@@ -125,4 +143,41 @@ class MapMainView(app: Application, appContext: AppContext, dispatcher: Dispatch
         edgeControl.show(Position.LEFT)
         editorSource.edit(info.getFile())
     }
+}
+
+private class OverlayContainer(
+    val infoID: Int,
+    private val appContext: AppContext,
+    map: GtkCustomMapView,
+    dispatcher: DispatcherInterface,
+    usageTracker: UsageTrackerInterface): OverlayController {
+    val gpxLayer = GpxDynLayer(appContext.storage, map.getMContext(), appContext.services)
+
+
+
+    init {
+        dispatcher.addTarget(Filter(gpxLayer, usageTracker))
+
+    }
+
+    override fun setEnabled(enabled: Boolean) {
+        SolidOverlayFileEnabled(appContext.storage, infoID).value = enabled
+    }
+
+    override fun frame() {
+        TODO("Not yet implemented")
+    }
+
+    override fun center() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getName(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun isEnabled(): Boolean {
+        return SolidOverlayFileEnabled(appContext.storage, infoID).value
+    }
+
 }

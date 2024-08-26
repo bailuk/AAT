@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.app.ActivitySwitcher
-import ch.bailu.aat_lib.dispatcher.SensorSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
@@ -18,8 +18,8 @@ import ch.bailu.aat.views.msg.permission.LocationPermissionInfoView
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -70,9 +70,9 @@ class MainActivity : ActivityContext() {
     }
 
     private fun createDispatcher() {
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }
 
     private fun createButtonBar(): LinearLayout {

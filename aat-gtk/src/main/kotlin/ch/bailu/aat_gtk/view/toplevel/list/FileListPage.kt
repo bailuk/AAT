@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView

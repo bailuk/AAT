@@ -23,12 +23,13 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
         sendUpdate(edit.infoID, edit.info)
     }
 
-    override fun onPause() {
+    override fun onPauseWithService() {
         appContext.broadcaster.unregister(onFileEdited)
         edit.onPause()
     }
+    override fun onDestroy() {}
 
-    override fun onResume() {
+    override fun onResumeWithService() {
         appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileEdited)
         edit.onResume()
     }

@@ -2,10 +2,10 @@ package ch.bailu.aat_lib.dispatcher
 
 import ch.bailu.aat_lib.gpx.GpxInformation
 
-abstract class ContentSource : ContentSourceInterface {
-    private var target = OnContentUpdatedInterface.NULL
+abstract class ContentSource : SourceInterface {
+    private var target = TargetInterface.NULL
 
-    override fun setTarget(target: OnContentUpdatedInterface) {
+    override fun setTarget(target: TargetInterface) {
         this.target = target
     }
 

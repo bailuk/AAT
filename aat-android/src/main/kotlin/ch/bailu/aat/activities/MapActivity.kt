@@ -13,9 +13,8 @@ import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
 import ch.bailu.aat_lib.dispatcher.EditorSource
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects
@@ -60,10 +59,10 @@ class MapActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createDispatcher(edit: EditorSource) {
-        addSource(edit)
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
+        dispatcher.addSource(edit)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        // TODO dispatcher.addSource(OverlaysSource(appContext))
     }
 
     private fun createButtonBar(): ControlBar {

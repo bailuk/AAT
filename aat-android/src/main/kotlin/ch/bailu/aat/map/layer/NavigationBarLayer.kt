@@ -13,7 +13,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.util.IndexedMap
 
 class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) : ControlBarLayer(
     mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
-), OnContentUpdatedInterface {
+), TargetInterface {
 
     private val buttonPlus: View
     private val buttonMinus: View

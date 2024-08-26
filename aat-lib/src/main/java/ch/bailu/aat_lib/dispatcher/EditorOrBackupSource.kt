@@ -8,10 +8,10 @@ import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.foc.Foc
 
 
-class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterface) :
-    EditorSourceInterface, ContentSourceInterface {
+class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
+    EditorSourceInterface, SourceInterface {
     private val editorSource: EditorSource = EditorSource(appContext)
-    private val backupSource: ContentSourceInterface = source
+    private val backupSource: SourceInterface = source
     override var isEditing = false
         private set
 
@@ -28,24 +28,26 @@ class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterfac
     fun releaseEditorDiscard() {
         if (isEditing) {
             isEditing = false
-            editorSource.onPause()
-            backupSource.onResume()
+            editorSource.onPauseWithService()
+            backupSource.onResumeWithService()
             requestUpdate()
         }
     }
 
-    override fun setTarget( target: OnContentUpdatedInterface) {
+    override fun onDestroy() {}
+
+    override fun setTarget( target: TargetInterface) {
         editorSource.setTarget(target)
         backupSource.setTarget(target)
     }
 
     override fun edit() {
         val file = backupSource.info.getFile()
-        if (file != null && !isEditing) {
+        if (!isEditing) {
             isEditing = true
             editorSource.edit(file)
-            editorSource.onResume()
-            backupSource.onPause()
+            editorSource.onResumeWithService()
+            backupSource.onPauseWithService()
             requestUpdate()
         }
     }
@@ -72,24 +74,24 @@ class EditorOrBackupSource(appContext: AppContext, source: ContentSourceInterfac
         }
     }
 
-    override fun onPause() {
-        if (isEditing) editorSource.onPause() else backupSource.onPause()
+    override fun onPauseWithService() {
+        if (isEditing) editorSource.onPauseWithService() else backupSource.onPauseWithService()
     }
 
-    override fun onResume() {
+    override fun onResumeWithService() {
         if (isEditing) {
             requestNullUpdate(backupSource)
-            editorSource.onResume()
+            editorSource.onResumeWithService()
         } else {
             requestNullUpdate(editorSource)
-            backupSource.onResume()
+            backupSource.onResumeWithService()
         }
     }
 
     override val file: Foc
         get() =  if (isEditing) editorSource.file else backupSource.info.getFile()
 
-    private fun requestNullUpdate(source: ContentSourceInterface) {
+    private fun requestNullUpdate(source: SourceInterface) {
         editorSource.sendUpdate(source.getIID(), GpxFileWrapper(file, GpxList.NULL_ROUTE))
     }
 }

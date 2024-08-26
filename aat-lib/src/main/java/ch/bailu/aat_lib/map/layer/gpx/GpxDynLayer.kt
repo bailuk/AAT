@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxInformationCache
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
@@ -17,7 +17,7 @@ class GpxDynLayer(
     storage: StorageInterface,
     private val mcontext: MapContext,
     private val services: ServicesInterface
-) : MapLayerInterface, OnContentUpdatedInterface {
+) : MapLayerInterface, TargetInterface {
     private val infoCache = GpxInformationCache()
     private var gpxOverlay: GpxLayer? = null
     private var legendOverlay: GpxLayer? = null

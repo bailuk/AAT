@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.view.menu.provider.MapMenu
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.LocationMenu

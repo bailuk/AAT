@@ -4,12 +4,12 @@ import android.widget.LinearLayout
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.SensorService
 import ch.bailu.aat.util.ui.theme.UiTheme
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 
 class SensorListView(sc: ServiceContext, theme: UiTheme) : LinearLayout(sc.getContext()),
-    OnContentUpdatedInterface {
+    TargetInterface {
     private val scontext: ServiceContext
     private val children = ArrayList<SensorListItemView>(10)
     private val theme: UiTheme

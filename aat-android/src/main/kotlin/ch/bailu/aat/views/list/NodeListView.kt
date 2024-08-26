@@ -13,7 +13,7 @@ import ch.bailu.aat.activities.ActivityContext
 import ch.bailu.aat.activities.NodeDetailActivity
 import ch.bailu.aat.app.ActivitySwitcher.Companion.start
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxInformationCache
 import ch.bailu.aat_lib.gpx.GpxList
@@ -21,7 +21,7 @@ import ch.bailu.aat_lib.gpx.GpxListArray
 
 class NodeListView(private val dispatcher: ActivityContext) : ListView(
     dispatcher
-), OnContentUpdatedInterface, ListAdapter, OnItemClickListener {
+), TargetInterface, ListAdapter, OnItemClickListener {
     private val observer = SparseArray<DataSetObserver>(5)
     private var array = GpxListArray(GpxList.NULL_ROUTE)
     private val cachedInfo = GpxInformationCache()

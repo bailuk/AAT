@@ -1,25 +1,35 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.dispatcher.source
 
+import ch.bailu.aat_lib.dispatcher.SourceInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Timer
 
 class TrackerTimerSource(private val scontext: ServicesInterface, private val timer: Timer) :
-    ContentSource() {
+    SourceInterface {
+    private var target = TargetInterface.NULL
+
+    override fun setTarget(target: TargetInterface) {
+        this.target = target
+    }
+
     override fun requestUpdate() {
-        sendUpdate(
+        target.onContentUpdated(
             InfoID.TRACKER_TIMER,
             scontext.getTrackerService().info
         )
         timer.kick(INTERVAL.toLong()) { requestUpdate() }
     }
 
-    override fun onPause() {
+    override fun onPauseWithService() {
         timer.cancel()
     }
 
-    override fun onResume() {
+    override fun onDestroy() {}
+
+    override fun onResumeWithService() {
         timer.kick(INTERVAL.toLong()) { requestUpdate() }
     }
 

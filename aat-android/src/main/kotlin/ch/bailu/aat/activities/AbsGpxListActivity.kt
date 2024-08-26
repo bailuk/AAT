@@ -24,10 +24,9 @@ import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.description.PathDescription
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.IteratorSource
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -70,14 +69,14 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     }
 
     private fun createDispatcher() {
-        addSource(IteratorSource.Summary(appContext))
-        addSource(OverlaysSource(appContext))
-        addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
+        dispatcher.addSource(IteratorSource.Summary(appContext))
+        //TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
 
         val busyControl = busyControl
 
-        if (busyControl is OnContentUpdatedInterface) {
-            addTarget(
+        if (busyControl is TargetInterface) {
+            dispatcher.addTarget(
                 busyControl,
                 InfoID.OVERLAY,
                 InfoID.OVERLAY + 1,
@@ -167,9 +166,9 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
             val summary = VerticalScrollView(acontext)
             summary.add(TitleView(acontext, label, theme))
-            summary.add(acontext, PathDescription(), theme, InfoID.LIST_SUMMARY)
+            summary.add(dispatcher, PathDescription(), theme, InfoID.LIST_SUMMARY)
             summary.add(TitleView(acontext, summaryLabel, theme))
-            summary.addAllContent(acontext, summaryData, theme, InfoID.LIST_SUMMARY)
+            summary.addAllContent(dispatcher, summaryData, theme, InfoID.LIST_SUMMARY)
             val title = TitleView(acontext, filterLabel, filterTheme)
             summary.add(title)
             summary.addAllFilterViews(map.getMContext(), filterTheme)

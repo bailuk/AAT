@@ -12,7 +12,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.foc_android.FocAndroid
 
@@ -20,7 +20,7 @@ class GpxListEntryView(
     acontext: ActivityContext,
     private val descriptions: Array<ContentDescription>,
     theme: UiTheme
-) : LinearLayout(acontext), OnContentUpdatedInterface {
+) : LinearLayout(acontext), TargetInterface {
     private val preview: PreviewView
     private val labelTextView: LabelTextView
     private var file = FocAndroid.NULL

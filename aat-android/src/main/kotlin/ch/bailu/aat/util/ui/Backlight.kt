@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.presets.SolidBacklight
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -18,7 +18,7 @@ import java.io.Closeable
 
 
 class Backlight(private val activity: Activity, private val scontext: ServiceContext) :
-    OnContentUpdatedInterface, OnPreferencesChanged, Closeable {
+    TargetInterface, OnPreferencesChanged, Closeable {
     private val window: Window = activity.window
     private val spreset: SolidPreset = SolidPreset(Storage(scontext.getContext()))
     private var sbacklight: SolidBacklight

@@ -6,12 +6,14 @@ import ch.bailu.aat_lib.description.*
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.HeartBeats
 import ch.bailu.aat_lib.description.IndexedAttributeDescription.TotalCadence
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.filter.Filter
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
 
-class DetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalScrollView() {
+class DetailView(di: DispatcherInterface, usageTracker: UsageTrackerInterface, storage: StorageInterface) : VerticalScrollView() {
 
     init {
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
@@ -20,7 +22,7 @@ class DetailView(di: DispatcherInterface, storage: StorageInterface) : VerticalS
 
         graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(di, getSummaryData(storage), InfoID.ALL)
+        addAllContent(di, getSummaryData(storage), usageTracker)
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {

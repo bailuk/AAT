@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.TrackerSplitButton
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.solid.SolidPresetComboView

@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.preferences.location
 
 import ch.bailu.aat_lib.app.AppColor
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.lib.color.ARGB
@@ -17,7 +17,7 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterface) :
-    OnContentUpdatedInterface, MapLayerInterface {
+    TargetInterface, MapLayerInterface {
     private var center = GpxInformation.NULL
     private val paint: Paint = mcontext.draw().createPaint()
 

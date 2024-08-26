@@ -16,12 +16,12 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
-import ch.bailu.aat_lib.dispatcher.IteratorSource
-import ch.bailu.aat_lib.dispatcher.IteratorSource.FollowFile
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
+import ch.bailu.aat_lib.dispatcher.source.OverlaySource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -73,7 +73,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     protected fun createAttributesView(): View {
         val v = AttributesView(this, appContext.storage)
-        addTarget(v, InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY)
+        dispatcher.addTarget(v, InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY)
         return v
     }
 
@@ -94,11 +94,11 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
 
     private fun createDispatcher() {
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
-        addSource(editorSource)
-        addTarget(
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        // TODO dispatcher.addSource(OverlaySource(appContext))
+        dispatcher.addSource(editorSource)
+        dispatcher.addTarget(
             busyControl!!,
             InfoID.FILE_VIEW,
             InfoID.OVERLAY,
@@ -106,9 +106,9 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
             InfoID.OVERLAY + 2,
             InfoID.OVERLAY + 3
         )
-        addTarget(fileOperation!!, InfoID.FILE_VIEW)
+        dispatcher.addTarget(fileOperation!!, InfoID.FILE_VIEW)
 
-        addTarget({ _, info ->
+        dispatcher.addTarget({ _, info ->
             val newFileID = info.getFile().toString()
             if (!Objects.equals(currentFileID, newFileID)) {
                 currentFileID = newFileID

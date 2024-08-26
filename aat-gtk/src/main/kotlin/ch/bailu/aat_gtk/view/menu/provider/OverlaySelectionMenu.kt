@@ -3,9 +3,8 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
-import ch.bailu.aat_lib.dispatcher.FileSourceInterface
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
@@ -13,7 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, private val uiController: UiController) : MenuProvider {
+class OverlaySelectionMenu(private val overlays: List<OverlayController>) : MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -42,14 +41,14 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                                 iconName = Icons.findLocationSymbolic
                                 onClicked {
                                     checkButton.active = true
-                                    uiController.centerInMap(it.info)
+                                    it.center()
                                 }
                             })
                             append(Button().apply {
                                 iconName = Icons.zoomFitBestSymbolic
                                 onClicked {
                                     checkButton.active = true
-                                    uiController.frameInMap(it.info)
+                                    it.frame()
                                 }
                             })
                             append(checkButton)
@@ -58,7 +57,7 @@ class OverlaySelectionMenu(private val overlays: List<FileSourceInterface>, priv
                 }
             , "overlay") {
                 overlays.forEachIndexed { index, fileSource ->
-                    checkButtons[index].setLabel(fileSource.info.getFile().name)
+                    checkButtons[index].setLabel(fileSource.getName())
                     checkButtons[index].active = fileSource.isEnabled()
                 }
             }

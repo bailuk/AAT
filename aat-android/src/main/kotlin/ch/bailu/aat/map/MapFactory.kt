@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityContext) {
-    private val d: DispatcherInterface = activityContext
+    private val d: DispatcherInterface = activityContext.dispatcher
     private val mc: MapContext = m.getMContext()
     private val s: StorageInterface = activityContext.appContext.storage
     private val ser: ServicesInterface = activityContext.serviceContext
@@ -115,7 +115,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
                 MapsForgeView(
                     activityContext,
                     activityContext.appContext,
-                    activityContext,
+                    activityContext.dispatcher,
                     skey
                 ), activityContext
             )

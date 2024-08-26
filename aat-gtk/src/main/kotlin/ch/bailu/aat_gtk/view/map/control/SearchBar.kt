@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.search.SearchModel
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.gio.Menu

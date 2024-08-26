@@ -47,14 +47,14 @@ class FileContentActivity : AbsFileContentActivity() {
 
         val summary = VerticalScrollView(this)
         summary.addAllContent(
-            this, getSummaryData(this), AppTheme.trackContent,
+            dispatcher, getSummaryData(this), AppTheme.trackContent,
             InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 
         summary.add(createAttributesView())
 
         val graph: View = GraphViewFactory.all(
-            appContext, this, this, THEME,
+            appContext, this, dispatcher, THEME,
             InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 

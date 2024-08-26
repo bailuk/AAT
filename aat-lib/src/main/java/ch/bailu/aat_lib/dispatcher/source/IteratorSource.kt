@@ -1,8 +1,10 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.dispatcher.SourceInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -10,36 +12,44 @@ import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
 import ch.bailu.aat_lib.service.directory.Iterator
-import ch.bailu.aat_lib.service.directory.Iterator.OnCursorChangedListener
 import ch.bailu.aat_lib.service.directory.IteratorFollowFile
 import ch.bailu.aat_lib.service.directory.IteratorSummary
 
-abstract class IteratorSource(private val appContext: AppContext) : ContentSource(),
-    OnCursorChangedListener {
-    private val sdirectory: SolidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
+abstract class IteratorSource(private val appContext: AppContext) : SourceInterface,
+    Iterator.OnCursorChangedListener {
+    private val sdirectory: SolidDirectoryQuery =
+        SolidDirectoryQuery(appContext.storage, appContext)
     private var iterator = Iterator.NULL
+    private var target = TargetInterface.NULL
+
+    override fun setTarget(target: TargetInterface) {
+        this.target = target
+    }
+
     override fun onCursorChanged() {
         requestUpdate()
     }
 
     override fun requestUpdate() {
-        sendUpdate(iterator.infoID, info)
+        target.onContentUpdated(iterator.infoID, info)
     }
 
     override fun getIID(): Int {
         return iterator.infoID
     }
 
-    override fun onPause() {
+    override fun onPauseWithService() {
         iterator.close()
         iterator = Iterator.NULL
     }
 
-    override fun onResume() {
+    override fun onResumeWithService() {
         iterator = factoryIterator(appContext)
         iterator.moveToPosition(sdirectory.position.getValue())
         iterator.setOnCursorChangedListener(this)
     }
+
+    override fun onDestroy() {}
 
     abstract fun factoryIterator(appContext: AppContext): Iterator
     override fun getInfo(): GpxInformation {
@@ -72,16 +82,16 @@ abstract class IteratorSource(private val appContext: AppContext) : ContentSourc
             }
         }
 
-        override fun onPause() {
+        override fun onPauseWithService() {
             appContext.broadcaster.unregister(onChangedInCache)
             handle.free()
             handle = ObjNull.NULL
-            super.onPause()
+            super.onPauseWithService()
         }
 
-        override fun onResume() {
+        override fun onResumeWithService() {
             appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onChangedInCache)
-            super.onResume()
+            super.onResumeWithService()
         }
 
         override fun getInfo(): GpxInformation {

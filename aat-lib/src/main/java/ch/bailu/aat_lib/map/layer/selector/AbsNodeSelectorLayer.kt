@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.map.layer.selector
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxNodeFinder
 import ch.bailu.aat_lib.gpx.GpxPointNode
@@ -22,7 +22,7 @@ abstract class AbsNodeSelectorLayer(
     s: StorageInterface,
     mc: MapContext,
     private val pos: Position
-) : MapLayerInterface, OnContentUpdatedInterface, EdgeViewInterface {
+) : MapLayerInterface, TargetInterface, EdgeViewInterface {
 
     private val squareSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_SIZE.toFloat())
     private val squareHSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_HSIZE.toFloat())

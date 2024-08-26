@@ -5,17 +5,18 @@ import ch.bailu.aat_gtk.app.exit
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.solid.SolidWindowSize
-import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
-import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
+import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.dispatcher.FileViewSource
+import ch.bailu.aat_lib.dispatcher.source.FileViewSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Application
@@ -29,7 +30,8 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 
-class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) : UiController {
+class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
+    UiController {
 
     companion object {
         val pageIdCockpit = Icons.incCockpit
@@ -44,7 +46,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
     }
 
-    private val customFileSource = FileViewSource(appContext)
+    private val usageTrackers = UsageTrackers()
+    private val customFileSource = FileViewSource(appContext, usageTrackers)
 
 
     private val headerBar = HeaderBar().apply {
@@ -78,12 +81,12 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         overlay.addOverlay(messageOverlay.box)
     }
 
-    private val mapView = MapMainView(app, appContext, dispatcher, this, window).apply {
+    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, window).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
 
-    private val detailViewPage = DetailViewPage(this, dispatcher)
+    private val detailViewPage = DetailViewPage(this, dispatcher, usageTrackers.createSelectableUsageTracker())
 
     init {
         overlay.child = Box(Orientation.VERTICAL, 0).apply {
@@ -145,7 +148,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         // TODO saveFile()
         mapView.editDraft()
         customFileSource.setFile(info.getFile())
-        customFileSource.setEnabled(true)
     }
 
     override fun showCockpit() {
@@ -186,7 +188,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     override fun loadIntoEditor(info: GpxInformation) {
         // TODO saveFile()
         mapView.edit(info)
-        customFileSource.setEnabled(false)
     }
 
     override fun hideMap() {

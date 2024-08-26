@@ -68,21 +68,21 @@ class MainControlBar(acontext: AbsDispatcher, orientation: Int = HORIZONTAL, but
     fun addGpsState(acontext: AbsDispatcher): MainControlBar {
         val gps = GPSStateButton(acontext)
         add(gps)
-        acontext.addTarget(gps, InfoID.LOCATION)
+        acontext.dispatcher.addTarget(gps, InfoID.LOCATION)
         return this
     }
 
     fun addTrackerState(acontext: AbsDispatcher): MainControlBar {
         val ts = TrackerStateButton(acontext.serviceContext)
         add(ts)
-        acontext.addTarget(ts, InfoID.TRACKER)
+        acontext.dispatcher.addTarget(ts, InfoID.TRACKER)
         return this
     }
 
     fun addSensorState(acontext: ActivityContext) {
         val s = SensorStateButton(acontext.serviceContext)
         add(s)
-        acontext.addTarget(s, InfoID.SENSORS)
+        acontext.dispatcher.addTarget(s, InfoID.SENSORS)
     }
 
     fun addActivityCycle(acontext: ActivityContext) {

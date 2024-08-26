@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 
-abstract class ContentDescription : ContentInterface, OnContentUpdatedInterface {
+abstract class ContentDescription : ContentInterface, TargetInterface {
     abstract fun getValue(): String
 
     open fun getLabelShort(): String {
