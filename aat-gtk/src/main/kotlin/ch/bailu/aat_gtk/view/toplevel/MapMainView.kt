@@ -4,8 +4,8 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.OverlayController
-import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
@@ -14,10 +14,9 @@ import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
 import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.filter.TargetFilter
-import ch.bailu.aat_lib.dispatcher.source.FileSource
+import ch.bailu.aat_lib.dispatcher.EditorSource
+import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
@@ -26,7 +25,6 @@ import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
-import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
@@ -52,24 +50,22 @@ class MapMainView(
 
     private val editorSource = EditorSource(appContext)
     private val overlayList = ArrayList<OverlayContainer>().apply {
+        val infoIDs = ArrayList<Int>().apply {
+            add(InfoID.TRACKER)
+            add(InfoID.POI)
+            add(InfoID.EDITOR_DRAFT)
+            add(InfoID.FILE_VIEW)
+            for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+                add(InfoID.OVERLAY + i)
+            }
+        }.toIntArray()
 
-        val iids = arrayOf(
-            InfoID.TRACKER,
-            InfoID.POI,
-            InfoID.EDITOR_DRAFT, // TODO should be InfoID.DRAFT
-            InfoID.FILE_VIEW)
+        val usageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
-        val usageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage)
-        for (i in iids) {
-            add(OverlayContainer(i, appContext, map, dispatcher, usageTracker))
-            dispatcher.addSource(FileSource(appContext, i, usageTrackers))
+        infoIDs.forEach {
+            add(OverlayContainer(it, appContext, uiController, map, dispatcher, usageTracker))
         }
-
-        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-            add(OverlayContainer(i, appContext, map, dispatcher, usageTracker))
-            dispatcher.addSource(FileSource(appContext, i, usageTrackers))
-        }
-    }
+    }.toList()
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
@@ -98,7 +94,7 @@ class MapMainView(
 
         overlayList.forEach { map.add(it.gpxLayer) }
 
-        map.add(GpxOverlayListLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher))
+        //map.add(GpxOverlayListLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher))
         map.add(edgeControl)
         map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.LEFT).apply {
             observe(editorBar)
@@ -147,15 +143,14 @@ class MapMainView(
 private class OverlayContainer(
     val infoID: Int,
     private val appContext: AppContext,
+    private val uiController: UiController,
     map: GtkCustomMapView,
     dispatcher: DispatcherInterface,
     usageTracker: UsageTrackerInterface): OverlayController {
     val gpxLayer = GpxDynLayer(appContext.storage, map.getMContext(), appContext.services)
 
-
-
     init {
-        dispatcher.addTarget(TargetFilter(gpxLayer, usageTracker))
+        dispatcher.addTarget(ToggleFilter(gpxLayer, infoID, usageTracker))
 
     }
 
@@ -164,15 +159,15 @@ private class OverlayContainer(
     }
 
     override fun frame() {
-        TODO("Not yet implemented")
+        uiController.frameInMap(infoID)
     }
 
     override fun center() {
-        TODO("Not yet implemented")
+        uiController.centerInMap(infoID)
     }
 
     override fun getName(): String {
-        TODO("Not yet implemented")
+        return uiController.getName(infoID)
     }
 
     override fun isEnabled(): Boolean {

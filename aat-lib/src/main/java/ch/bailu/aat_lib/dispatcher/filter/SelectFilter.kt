@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.GpxInformation
 
-class TargetFilter(
+class SelectFilter(
     private val target: TargetInterface,
     private val usageTracker: UsageTrackerInterface) : TargetInterface {
 

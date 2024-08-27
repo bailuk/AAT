@@ -4,6 +4,7 @@ import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.filter.SelectFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str
@@ -34,7 +35,7 @@ abstract class VerticalScrollView {
     fun add(di: DispatcherInterface, desc: ContentDescription, usageTracker: UsageTrackerInterface) {
         val view = DescriptionLabelTextView(desc)
         add(view.layout)
-        di.addTarget(ch.bailu.aat_lib.dispatcher.filter.TargetFilter(view, usageTracker))
+        di.addTarget(SelectFilter(view, usageTracker))
     }
 
     fun addAllContent(di: DispatcherInterface, descs: Array<ContentDescription>,

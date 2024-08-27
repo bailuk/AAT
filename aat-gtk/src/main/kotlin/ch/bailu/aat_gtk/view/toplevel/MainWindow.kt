@@ -15,10 +15,16 @@ import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
+import ch.bailu.aat_lib.dispatcher.source.OverlaySource
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.SolidOverlay
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
 import ch.bailu.gtk.adw.HeaderBar
@@ -48,7 +54,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     private val usageTrackers = UsageTrackers()
     private val customFileSource = FileViewSource(appContext, usageTrackers)
-
+    private val metaInfoCollector = MetaInfoCollector()
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.appName, GtkAppConfig.appLongName)
@@ -97,7 +103,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         leaflet.append(stackPage.stackPage)
         leaflet.append(mapView.overlay)
 
-        dispatcher.addSource(customFileSource)
+        setupDispatcher(dispatcher)
 
         stackPage.addView(CockpitPage(appContext,this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
         stackPage.addView(FileListPage(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
@@ -138,9 +144,21 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
     }
 
+    override fun frameInMap(infoID: Int) {
+        if (metaInfoCollector.hasBounding(infoID)) {
+            mapView.map.frameBounding(metaInfoCollector.getBounding(infoID))
+        }
+    }
+
     override fun centerInMap(info: GpxInformation) {
         if (info.getBoundingBox().hasBounding()) {
             mapView.map.setCenter(info.getBoundingBox().center.toLatLong())
+        }
+    }
+
+    override fun centerInMap(infoID: Int) {
+        if (metaInfoCollector.hasBounding(infoID)) {
+            mapView.map.setCenter(metaInfoCollector.getBounding(infoID).center.toLatLong())
         }
     }
 
@@ -192,5 +210,52 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     override fun hideMap() {
         leaflet.visibleChild = stackPage.stackPage
+    }
+
+    override fun getName(infoID: Int): String {
+        return metaInfoCollector.getName(infoID)
+    }
+
+    private fun setupDispatcher(dispatcher: Dispatcher) {
+        dispatcher.addSource(customFileSource)
+        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+            dispatcher.addSource(OverlaySource(appContext, InfoID.OVERLAY + i, usageTrackers))
+        }
+
+        dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
+    }
+}
+
+
+private class MetaInfoCollector : TargetInterface {
+    private val files = HashMap<Int, Foc>()
+    private val boundings = HashMap<Int, BoundingBoxE6>()
+
+
+    override fun onContentUpdated(iid: Int, info: GpxInformation) {
+        if (info.getFile().name.isNotEmpty()) {
+            files[iid] = info.getFile()
+        }
+
+        if (info.getBoundingBox().hasBounding()) {
+            boundings[iid] = info.getBoundingBox()
+        }
+    }
+
+    fun hasBounding(infoID: Int): Boolean {
+       return  boundings.containsKey(infoID)
+    }
+
+    fun getBounding(infoID: Int): BoundingBoxE6 {
+        return boundings.getOrDefault(infoID, BoundingBoxE6.NULL_BOX)
+    }
+
+    fun getName(infoID: Int): String {
+        val result = files.getOrDefault(infoID, Foc.FOC_NULL).name
+
+        if (result.isEmpty()) {
+            return infoID.toString()
+        }
+        return result
     }
 }

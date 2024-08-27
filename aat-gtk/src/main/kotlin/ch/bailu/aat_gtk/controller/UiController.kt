@@ -7,7 +7,9 @@ interface UiController {
     fun showMap()
     fun showPoi()
     fun frameInMap(info: GpxInformation)
+    fun frameInMap(infoID: Int)
     fun centerInMap(info: GpxInformation)
+    fun centerInMap(infoID: Int)
     fun load(info: GpxInformation)
     fun showCockpit()
     fun showDetail()
@@ -19,4 +21,5 @@ interface UiController {
     fun showInDetail(infoID: Int)
     fun loadIntoEditor(info: GpxInformation)
     fun hideMap()
+    fun getName(infoID: Int): String
 }

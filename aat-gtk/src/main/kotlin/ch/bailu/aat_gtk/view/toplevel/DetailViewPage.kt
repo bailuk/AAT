@@ -15,8 +15,6 @@ import ch.bailu.gtk.gtk.Orientation
 
 class DetailViewPage(uiController: UiController, dispatcher: Dispatcher, private val usageTracker: SelectableUsageTracker) {
 
-
-
     private val detailView = DetailView(dispatcher, usageTracker, GtkAppContext.storage).scrolled
 
     val box = Box(Orientation.VERTICAL, 0).apply {
@@ -28,7 +26,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher, private
                 iconName = Icons.zoomFitBestSymbolic
                 onClicked {
                     uiController.showMap()
-                    // TODO: uiController.frameInMap(selectedSource.info)
+                    uiController.frameInMap(usageTracker.getIID())
                 }
             })
 
@@ -36,7 +34,7 @@ class DetailViewPage(uiController: UiController, dispatcher: Dispatcher, private
                 iconName = Icons.findLocationSymbolic
                 onClicked {
                     uiController.showMap()
-                    // TODO: uiController.centerInMap(selectedSource.info)
+                    uiController.centerInMap(usageTracker.getIID())
                 }
             })
         })

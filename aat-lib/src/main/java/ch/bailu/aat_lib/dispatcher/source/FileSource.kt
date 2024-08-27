@@ -14,7 +14,7 @@ import ch.bailu.foc.Foc
 open class FileSource(
     private val context: AppContext,
     private val iid: Int,
-    private val usageCounter: UsageTrackerInterface
+    private val usageTracker: UsageTrackerInterface
 )
     : SourceInterface
 {
@@ -25,10 +25,10 @@ open class FileSource(
     private var target = TargetInterface.NULL
 
     init {
-        usageCounter.observe {
-            setEnabled(usageCounter.isEnabled(iid))
+        usageTracker.observe {
+            setEnabled(usageTracker.isEnabled(iid))
         }
-        setEnabled(usageCounter.isEnabled(iid))
+        setEnabled(usageTracker.isEnabled(iid))
     }
     override fun setTarget(target: TargetInterface) {
         this.target = target

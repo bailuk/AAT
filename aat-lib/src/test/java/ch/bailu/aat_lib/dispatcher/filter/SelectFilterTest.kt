@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.gpx.InfoID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TargetFilterTest {
+class SelectFilterTest {
 
     @Test
     fun test() {
@@ -14,7 +14,7 @@ class TargetFilterTest {
         var observedInfoID = 0
         var observedGpxInformation = GpxInformation.NULL
 
-        val target = TargetFilter({ infoID, information ->
+        val target = SelectFilter({ infoID, information ->
             observedGpxInformation = information
             observedInfoID = infoID
         }, usageTracker)

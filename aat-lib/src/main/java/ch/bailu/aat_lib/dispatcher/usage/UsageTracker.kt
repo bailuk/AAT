@@ -14,12 +14,7 @@ class UsageTracker : UsageTrackerInterface {
     }
 
     override fun isEnabled(infoID: Int): Boolean {
-        val result = usageMap[infoID]
-
-        if (result is Boolean) {
-            return result
-        }
-        return false
+        return usageMap.getOrDefault(infoID, false)
     }
 
     override fun observe(onChanged: ()->Unit) {

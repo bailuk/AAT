@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.preferences.mock
+package ch.bailu.aat_lib.mock
 
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
