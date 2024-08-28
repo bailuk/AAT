@@ -3,6 +3,9 @@ package ch.bailu.aat_lib.service.location
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidTrackerAutopause
 
+/**
+ * TODO remove
+ */
 class AutoPauseTrigger(next: LocationStackItem) : LocationStackChainedItem(next) {
     private var triggerSpeed = 0f
     private var trigger = Trigger(10)
@@ -17,12 +20,8 @@ class AutoPauseTrigger(next: LocationStackItem) : LocationStackChainedItem(next)
         } else {
             trigger.up()
         }
-
-        trigger.log()
-
         super.passLocation(location)
     }
-
 
     val isAutoPaused: Boolean
         get() = trigger.isLow
