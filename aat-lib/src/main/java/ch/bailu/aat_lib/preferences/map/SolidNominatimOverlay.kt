@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 
 class SolidNominatimOverlay(baseDirectory: SolidDataDirectory) :
-    SolidOverlay(baseDirectory, InfoID.NOMINATIM, AppDirectory.DIR_NOMINATIM, AppDirectory.FILE_NOMINATIM) {
+    SolidFixedOverlay(baseDirectory, InfoID.NOMINATIM, AppDirectory.DIR_NOMINATIM, AppDirectory.FILE_NOMINATIM) {
 
     override fun getLabel(): String {
         return "Nominatim"

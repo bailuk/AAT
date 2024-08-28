@@ -6,7 +6,11 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
-abstract class SolidOverlay(
+/**
+ * Base class for overly files with fixed file path
+ *  example: POI and Draft
+ */
+abstract class SolidFixedOverlay(
     private val baseDirectory: SolidDataDirectory,
     private val iid: Int,
     private val subDir: String,

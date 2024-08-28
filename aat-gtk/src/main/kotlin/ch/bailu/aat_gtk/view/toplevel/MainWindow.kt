@@ -1,12 +1,14 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppConfig
+import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.exit
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.solid.SolidWindowSize
+import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
@@ -16,13 +18,15 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
-import ch.bailu.aat_lib.dispatcher.source.OverlaySource
+import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
-import ch.bailu.aat_lib.preferences.map.SolidOverlay
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
@@ -217,10 +221,14 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     private fun setupDispatcher(dispatcher: Dispatcher) {
+        dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
+        dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
+        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
+
         dispatcher.addSource(customFileSource)
-        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-            dispatcher.addSource(OverlaySource(appContext, InfoID.OVERLAY + i, usageTrackers))
-        }
+        dispatcher.addOverlaySources(appContext, usageTrackers)
+        dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
 
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }

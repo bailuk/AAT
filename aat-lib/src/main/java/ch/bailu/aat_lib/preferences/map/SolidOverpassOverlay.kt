@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
 
 class SolidOverpassOverlay (baseDirectory: SolidDataDirectory):
-    SolidOverlay(baseDirectory, InfoID.OVERPASS, AppDirectory.DIR_OVERPASS, AppDirectory.FILE_OVERPASS)
+    SolidFixedOverlay(baseDirectory, InfoID.OVERPASS, AppDirectory.DIR_OVERPASS, AppDirectory.FILE_OVERPASS)
 {
 
     override fun getLabel(): String {

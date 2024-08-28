@@ -7,14 +7,5 @@ import ch.bailu.aat_lib.gpx.InfoID
 /**
  * Display a file. Usually selected from track/overlay list
  */
-class FileViewSource : FileSource {
-    constructor(appContext: AppContext, usageTracker: UsageTrackerInterface)
-            : super(appContext, InfoID.FILE_VIEW, usageTracker)
-
-    /*
-    constructor(appContext: AppContext, file: Foc) : super(appContext, InfoID.FILE_VIEW) {
-        setFile(file)
-    }
-
-     */
-}
+class FileViewSource(appContext: AppContext, usageTracker: UsageTrackerInterface)
+    : FileSource(appContext, InfoID.FILE_VIEW, usageTracker)

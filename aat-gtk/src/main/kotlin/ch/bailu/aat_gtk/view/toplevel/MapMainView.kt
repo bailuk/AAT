@@ -86,7 +86,7 @@ class MapMainView(
             margin(Layout.margin)
         })
 
-        dispatcher.addSource(editorSource)
+        // TODO dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))

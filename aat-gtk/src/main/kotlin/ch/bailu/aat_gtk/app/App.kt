@@ -5,15 +5,11 @@ import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.solid.GtkStorage
-import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.toplevel.MainWindow
 import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
-import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
 import ch.bailu.aat_lib.logger.PrintLnLoggerFactory
@@ -31,7 +27,7 @@ fun main() {
     app.onActivate {
         val dispatcher = Dispatcher()
         MainWindow(app, GtkAppContext, dispatcher).window.show()
-        setupDispatcher(dispatcher)
+        dispatcher.onResumeWithService()
     }
 
     app.run(1, Strs(arrayOf(Configuration.appName)))
@@ -46,14 +42,6 @@ private fun setup() {
     AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
     PreferenceLoadDefaults(GtkAppContext)
 }
-
-private fun setupDispatcher(dispatcher: Dispatcher) {
-    dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
-    dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
-    dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
-    dispatcher.onResumeWithService()
-}
-
 
 fun exit(dispatcher: Dispatcher, exitCode: Int) {
     dispatcher.onPauseWithService()
