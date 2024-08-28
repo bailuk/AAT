@@ -1,9 +1,7 @@
 package ch.bailu.aat_lib.preferences.map
 
-import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidString
+import ch.bailu.aat_lib.preferences.SolidOverlayFile
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
@@ -14,36 +12,21 @@ import ch.bailu.foc.FocFactory
  * Has custom file path
  * InfoID.Overlay...
  */
-class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, iid: Int) :
-    SolidOverlayInterface {
-    private val path: SolidString
-    private val enabled: SolidOverlayFileEnabled
-    private val focFactory: FocFactory
-    private val iid: Int
-
-    init {
-        validateOverlayIID(iid)
-        this.iid = iid
-        path = SolidString(storage, KEY_NAME + iid)
-        enabled = SolidOverlayFileEnabled(storage, iid)
-        this.focFactory = focFactory
-    }
-
-    private fun validateOverlayIID(i: Int) {
-        if (!(i >= InfoID.OVERLAY && i < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS)) {
-            e(this, "Invalid overlay ID: $i")
-        }
-    }
+class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, private val iid: Int) :
+    SolidOverlayInterface
+{
+    private val file = SolidOverlayFile(storage, focFactory, iid)
+    private val enabled = SolidOverlayFileEnabled(storage, iid)
 
     fun setValueFromFile(file: Foc) {
         if (file.exists()) {
-            path.setValue(file.path)
+            this.file.setValue(file.path)
             enabled.value = true
         }
     }
 
     override fun getValueAsFile(): Foc {
-        return focFactory.toFoc(getValueAsString())
+        return file.getValueAsFile()
     }
 
     override fun getLabel(): String {
@@ -51,7 +34,7 @@ class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, iid:
     }
 
     override fun getValueAsString(): String {
-        return path.getValueAsString()
+        return file.getValueAsString()
     }
 
     override fun isEnabled(): Boolean {
@@ -67,7 +50,7 @@ class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, iid:
     }
 
     override fun getKey(): String {
-        return path.getKey()
+        return file.getKey()
     }
 
     override fun getStorage(): StorageInterface {
@@ -75,7 +58,7 @@ class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, iid:
     }
 
     override fun hasKey(key: String): Boolean {
-        return key.contains(KEY_NAME) || enabled.hasKey(key)
+        return file.hasKey(key) || enabled.hasKey(key)
     }
 
     override fun register(listener: OnPreferencesChanged) {
@@ -88,9 +71,5 @@ class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, iid:
 
     override fun getToolTip(): String? {
         return null
-    }
-
-    companion object {
-        private const val KEY_NAME = "overlay_path_"
     }
 }

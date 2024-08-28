@@ -4,9 +4,5 @@ import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 class SolidOverlayFileEnabled(storage: StorageInterface, val infoID: Int) : SolidBoolean(
-    storage, KEY_ENABLED + infoID
-) {
-    companion object {
-        private const val KEY_ENABLED = "overlay_enabled_"
-    }
-}
+    storage, "overlay_enabled_$infoID"
+)
