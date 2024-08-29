@@ -15,11 +15,10 @@ import ch.bailu.aat_gtk.view.map.control.NodeInfo
 import ch.bailu.aat_gtk.view.map.control.SearchBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.EditorSource
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
@@ -42,17 +41,18 @@ class MapMainView(
     dispatcher: DispatcherInterface,
     usageTrackers: UsageTrackers,
     uiController: UiController,
+    editor: EditorSourceInterface,
     window: Window)
     : Attachable {
 
     val map = GtkCustomMapView(appContext, dispatcher)
     val overlay = Overlay()
 
-    private val editorSource = EditorSource(appContext)
     private val overlayList = ArrayList<OverlayContainer>().apply {
         val infoIDs = ArrayList<Int>().apply {
             add(InfoID.TRACKER)
             add(InfoID.POI)
+            add(InfoID.EDITOR_OVERLAY)
             add(InfoID.EDITOR_DRAFT)
             add(InfoID.FILE_VIEW)
             for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
@@ -71,7 +71,7 @@ class MapMainView(
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
-    private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editorSource)
+    private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editor)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
     init {
@@ -86,7 +86,6 @@ class MapMainView(
             margin(Layout.margin)
         })
 
-        // TODO dispatcher.addSource(editorSource)
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
@@ -94,7 +93,6 @@ class MapMainView(
 
         overlayList.forEach { map.add(it.gpxLayer) }
 
-        //map.add(GpxOverlayListLayer(appContext.storage, map.getMContext(), appContext.services, dispatcher))
         map.add(edgeControl)
         map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.LEFT).apply {
             observe(editorBar)
@@ -130,13 +128,8 @@ class MapMainView(
         map.onDetached()
     }
 
-    fun editDraft() {
-        editorSource.editDraft()
-    }
-
-    fun edit(info: GpxInformation) {
+    fun showEditor() {
         edgeControl.show(Position.LEFT)
-        editorSource.edit(info.getFile())
     }
 }
 
@@ -173,5 +166,4 @@ private class OverlayContainer(
     override fun isEnabled(): Boolean {
         return SolidOverlayFileEnabled(appContext.storage, infoID).value
     }
-
 }

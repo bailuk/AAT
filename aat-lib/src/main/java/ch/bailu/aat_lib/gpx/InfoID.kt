@@ -6,8 +6,8 @@ object InfoID {
     const val FILE_VIEW = 2
     const val TRACKER = 3
     const val TRACKER_TIMER = 4
-    const val EDITOR_OVERLAY = 40
-    const val EDITOR_DRAFT = 41
+    const val EDITOR_OVERLAY = 40 // TODO rename to EDITOR
+    const val EDITOR_DRAFT = 41   // TODO rename to DRAFT
     const val LIST_SUMMARY = 5
     const val OVERLAY = 60
     const val UNSPECIFIED = -1

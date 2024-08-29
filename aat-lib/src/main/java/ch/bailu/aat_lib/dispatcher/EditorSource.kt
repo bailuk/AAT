@@ -53,11 +53,12 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
 
     override fun edit() {}
     fun edit(file: Foc) {
-        sendUpdate(edit.infoID, GpxFileWrapper(file, GpxList.NULL_ROUTE))
+        sendUpdate(edit.infoID, GpxFileWrapper(file, GpxList.NULL_ROUTE)) // TODO remove
         edit.edit(file)
         requestUpdate()
     }
 
+    @Deprecated("Editor should be able to edit any file, use edit(file: Foc)")
     fun editDraft() {
         sendUpdate(edit.infoID, GpxFileWrapper(file, GpxList.NULL_ROUTE))
         edit.editDraft()

@@ -1,13 +1,13 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 
-class EditorMenu(private val editor: EditorSourceInterface, private val app: Application): MenuProvider {
+class EditorMenu(private val editor: EditorInterface, private val app: Application): MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
             append(Res.str().edit_save(), "app.editSave")
@@ -40,19 +40,19 @@ class EditorMenu(private val editor: EditorSourceInterface, private val app: App
     }
 
     override fun createActions(app: Application) {
-        setAction(app, "editSave") {editor.editor.save()}
+        setAction(app, "editSave") { editor.save()}
         setAction(app, "editCopy", this::saveCopy)
         setAction(app, "editCopyTo", this::saveCopyTo)
-        setAction(app, "editInverse")  { editor.editor.inverse() }
-        setAction(app, "editTypeTrack")  { editor.editor.setType(GpxType.TRACK) }
-        setAction(app, "editTypeRoute") { editor.editor.setType(GpxType.ROUTE) }
-        setAction(app, "editTypeWay")  { editor.editor.setType(GpxType.WAY) }
-        setAction(app, "editSimplify") { editor.editor.simplify() }
+        setAction(app, "editInverse")  { editor.inverse() }
+        setAction(app, "editTypeTrack")  { editor.setType(GpxType.TRACK) }
+        setAction(app, "editTypeRoute") { editor.setType(GpxType.ROUTE) }
+        setAction(app, "editTypeWay")  { editor.setType(GpxType.WAY) }
+        setAction(app, "editSimplify") { editor.simplify() }
         setAction(app, "editAttach", this::attach)
-        setAction(app, "editFix") { editor.editor.fix() }
-        setAction(app, "editClear") { editor.editor.clear() }
-        setAction(app, "editRemaining") {editor.editor.cutRemaining() }
-        setAction(app, "editPreceding") {editor.editor.cutPreceding() }
+        setAction(app, "editFix") { editor.fix() }
+        setAction(app, "editClear") { editor.clear() }
+        setAction(app, "editRemaining") { editor.cutRemaining() }
+        setAction(app, "editPreceding") { editor.cutPreceding() }
     }
 
 

@@ -17,6 +17,7 @@ import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -56,6 +57,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
     }
 
+    private val editorSource = EditorSource(appContext)
     private val usageTrackers = UsageTrackers()
     private val customFileSource = FileViewSource(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
@@ -91,7 +93,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         overlay.addOverlay(messageOverlay.box)
     }
 
-    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, window).apply {
+    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, ).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
@@ -167,8 +169,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun load(info: GpxInformation) {
-        // TODO saveFile()
-        mapView.editDraft()
         customFileSource.setFile(info.getFile())
     }
 
@@ -208,8 +208,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun loadIntoEditor(info: GpxInformation) {
-        // TODO saveFile()
-        mapView.edit(info)
+        editorSource.edit(info.getFile())
+        mapView.showEditor()
     }
 
     override fun hideMap() {
@@ -224,12 +224,11 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
-
         dispatcher.addSource(customFileSource)
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
-
+        dispatcher.addSource(editorSource)
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }
 }

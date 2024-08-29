@@ -20,7 +20,7 @@ class EditorBar(app: Application,
                 private val edit: EditorSourceInterface
 ) : Bar(Position.LEFT), OnNodeSelectedInterface {
     init {
-        add(PopupButton(EditorMenu(edit, app)).apply {
+        add(PopupButton(EditorMenu(edit.editor, app)).apply {
             createActions(app)
             setIcon(Icons.openMenuSymbolic)
         }.overlay)

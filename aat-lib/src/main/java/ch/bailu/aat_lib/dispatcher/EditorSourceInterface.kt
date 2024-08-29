@@ -7,5 +7,7 @@ interface EditorSourceInterface {
     val isEditing: Boolean
     val editor: EditorInterface
     val file: Foc
+
+    @Deprecated("Editor should be able to edit any file, use edit(file: Foc)")
     fun edit()
 }

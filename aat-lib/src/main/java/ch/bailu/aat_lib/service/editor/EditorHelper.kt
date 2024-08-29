@@ -23,6 +23,7 @@ class EditorHelper(private val appContext: AppContext) : GpxInformationProvider 
         edit(draft, InfoID.EDITOR_DRAFT)
     }
 
+    @Deprecated("Editor should be able to edit any file, use edit(file: Foc)")
     fun editDraft() {
         edit(draft, InfoID.EDITOR_DRAFT)
         onResume()
