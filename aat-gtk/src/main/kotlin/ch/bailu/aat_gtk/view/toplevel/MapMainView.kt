@@ -96,7 +96,7 @@ class MapMainView(
         map.add(edgeControl)
         map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.LEFT).apply {
             observe(editorBar)
-            dispatcher.addTarget(this, InfoID.ALL)
+            dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
             edgeControl.add(this)
         })
 
