@@ -26,13 +26,13 @@ class OverlaySelectionMenu(private val overlays: List<OverlayController>) : Menu
         return arrayOf(
             CustomWidget(
                 Box(Orientation.VERTICAL, Layout.margin).apply {
-                    overlays.forEach {
+                    overlays.forEach { controller ->
                         append(Box(Orientation.HORIZONTAL, 0).apply {
                             addCssClass(Strings.linked)
 
                             val checkButton = CheckButton().apply {
                                 onToggled {
-                                    it.setEnabled(active)
+                                    controller.setEnabled(active)
                                 }
                             }
                             checkButtons.add(checkButton)
@@ -41,24 +41,32 @@ class OverlaySelectionMenu(private val overlays: List<OverlayController>) : Menu
                                 iconName = Icons.findLocationSymbolic
                                 onClicked {
                                     checkButton.active = true
-                                    it.center()
+                                    controller.center()
                                 }
                             })
                             append(Button().apply {
                                 iconName = Icons.zoomFitBestSymbolic
                                 onClicked {
                                     checkButton.active = true
-                                    it.frame()
+                                    controller.frame()
                                 }
                             })
+                            append(Button().apply {
+                                iconName = Icons.viewContinuousSymbolic
+                                onClicked {
+                                    checkButton.active = true
+                                    controller.showInDetail()
+                                }
+                            })
+
                             append(checkButton)
                         })
                     }
                 }
             , "overlay") {
-                overlays.forEachIndexed { index, fileSource ->
-                    checkButtons[index].setLabel(fileSource.getName())
-                    checkButtons[index].active = fileSource.isEnabled()
+                overlays.forEachIndexed { index, overlayController ->
+                    checkButtons[index].setLabel(overlayController.getName())
+                    checkButtons[index].active = overlayController.isEnabled()
                 }
             }
         )

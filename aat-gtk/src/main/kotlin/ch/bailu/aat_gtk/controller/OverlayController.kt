@@ -6,4 +6,5 @@ interface OverlayController {
     fun center()
     fun getName(): String
     fun isEnabled(): Boolean
+    fun showInDetail()
 }

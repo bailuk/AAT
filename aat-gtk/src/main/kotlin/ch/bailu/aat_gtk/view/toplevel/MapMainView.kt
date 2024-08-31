@@ -166,4 +166,9 @@ private class OverlayContainer(
     override fun isEnabled(): Boolean {
         return SolidOverlayFileEnabled(appContext.storage, infoID).value
     }
+
+    override fun showInDetail() {
+        uiController.showDetail()
+        uiController.showInDetail(infoID)
+    }
 }
