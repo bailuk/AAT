@@ -9,7 +9,7 @@ import ch.bailu.aat.views.graph.GraphView
 import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.html.HtmlScrollTextView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapColor
 
 class NodeInfoView(appContext: AppContext, context: Context) : PercentageLayout(context, 0) {

@@ -12,7 +12,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.general.SolidUnit

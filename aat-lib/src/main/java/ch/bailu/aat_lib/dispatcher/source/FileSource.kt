@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.cache.gpx.GpxHandler
 import ch.bailu.foc.Foc
 

@@ -2,8 +2,8 @@ package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationCache
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformationCache
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface

@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.directory;
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.information.GpxInformation;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
 import ch.bailu.aat_lib.util.sql.DbResultSet;

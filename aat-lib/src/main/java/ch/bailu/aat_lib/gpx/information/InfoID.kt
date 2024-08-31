@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.gpx
+package ch.bailu.aat_lib.gpx.information
 
 object InfoID {
     const val ALL = 0

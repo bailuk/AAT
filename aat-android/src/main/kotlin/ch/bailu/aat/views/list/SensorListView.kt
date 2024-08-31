@@ -5,8 +5,8 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.SensorService
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class SensorListView(sc: ServiceContext, theme: UiTheme) : LinearLayout(sc.getContext()),
     TargetInterface {

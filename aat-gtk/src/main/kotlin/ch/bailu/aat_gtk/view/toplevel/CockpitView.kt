@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.gtk.FlowBox
 import ch.bailu.gtk.gtk.ScrolledWindow
 

@@ -20,7 +20,7 @@ import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset

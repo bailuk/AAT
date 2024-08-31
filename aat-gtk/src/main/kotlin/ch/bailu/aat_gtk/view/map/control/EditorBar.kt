@@ -4,7 +4,7 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapContext

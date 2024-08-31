@@ -20,9 +20,8 @@ import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
-import ch.bailu.aat_lib.dispatcher.source.OverlaySource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects

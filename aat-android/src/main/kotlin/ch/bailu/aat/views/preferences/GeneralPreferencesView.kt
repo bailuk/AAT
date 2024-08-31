@@ -10,7 +10,7 @@ import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.list.SensorListView
 import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
 import ch.bailu.aat_lib.preferences.general.SolidUnit

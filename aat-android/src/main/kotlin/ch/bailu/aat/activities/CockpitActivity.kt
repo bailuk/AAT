@@ -23,7 +23,7 @@ import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitActivity : AbsKeepScreenOnActivity() {
     companion object {

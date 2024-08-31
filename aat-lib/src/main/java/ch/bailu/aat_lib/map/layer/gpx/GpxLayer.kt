@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.map.MapColor.getColorFromIID
 import ch.bailu.aat_lib.map.MapContext

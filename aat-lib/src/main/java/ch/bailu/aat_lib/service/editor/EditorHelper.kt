@@ -1,16 +1,17 @@
 package ch.bailu.aat_lib.service.editor
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationProvider
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformationProvider
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
-class EditorHelper(private val appContext: AppContext) : GpxInformationProvider {
+class EditorHelper(private val appContext: AppContext) :
+    GpxInformationProvider {
     private var handle = ObjNull.NULL
     var infoID = 0
         private set

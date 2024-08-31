@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.map.layer.selector
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxNodeFinder
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapColor

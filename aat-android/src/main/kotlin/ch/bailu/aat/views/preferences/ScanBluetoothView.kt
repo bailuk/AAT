@@ -6,8 +6,8 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class ScanBluetoothView(private val scontext: ServiceContext, theme: UiTheme) : LabelTextView(
     scontext.getContext(), scontext.getContext().getString(R.string.sensor_scan), theme

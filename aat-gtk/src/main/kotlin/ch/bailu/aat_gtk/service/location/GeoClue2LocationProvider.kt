@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.service.location
 
 import ch.bailu.aat_lib.app.AppConfig
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
 import ch.bailu.aat_lib.service.location.LocationStackItem

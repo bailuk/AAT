@@ -27,7 +27,7 @@ import ch.bailu.aat_lib.description.PathDescription
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery

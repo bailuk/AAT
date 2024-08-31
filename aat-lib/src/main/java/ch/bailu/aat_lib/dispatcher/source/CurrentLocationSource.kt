@@ -5,8 +5,8 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class CurrentLocationSource(

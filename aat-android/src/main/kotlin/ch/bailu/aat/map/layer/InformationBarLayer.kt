@@ -11,7 +11,7 @@ import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.StorageInterface

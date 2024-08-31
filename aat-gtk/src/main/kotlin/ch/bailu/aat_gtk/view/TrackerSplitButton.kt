@@ -4,8 +4,8 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.view.menu.provider.TrackerMenu
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.adw.SplitButton
 import ch.bailu.gtk.gtk.PopoverMenu

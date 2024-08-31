@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import ch.bailu.aat.activities.NodeDetailActivity
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.util.Point

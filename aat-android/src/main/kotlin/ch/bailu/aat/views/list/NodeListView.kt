@@ -14,8 +14,8 @@ import ch.bailu.aat.activities.NodeDetailActivity
 import ch.bailu.aat.app.ActivitySwitcher.Companion.start
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationCache
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformationCache
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListArray
 

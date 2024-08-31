@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 

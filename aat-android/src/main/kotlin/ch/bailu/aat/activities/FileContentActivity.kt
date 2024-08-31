@@ -38,7 +38,7 @@ import ch.bailu.aat_lib.description.PauseDescription
 import ch.bailu.aat_lib.description.TimeApDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class FileContentActivity : AbsFileContentActivity() {
 

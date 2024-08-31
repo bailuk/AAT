@@ -1,8 +1,10 @@
 package ch.bailu.aat_lib.preferences.map
 
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
@@ -64,5 +66,9 @@ abstract class SolidFixedOverlay(
 
     override fun getIID(): Int {
         return iid
+    }
+
+    override fun getLabel(): String {
+        return InformationUtil.defaultName(iid)
     }
 }

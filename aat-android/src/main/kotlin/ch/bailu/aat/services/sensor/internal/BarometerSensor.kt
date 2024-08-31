@@ -8,8 +8,8 @@ import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.services.sensor.list.SensorListItem
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.Keys
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged

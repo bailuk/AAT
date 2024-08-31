@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.gpx
+package ch.bailu.aat_lib.gpx.information
 
 object StateID {
     const val ON = 0

@@ -3,8 +3,8 @@ package ch.bailu.aat_lib.preferences.location
 import ch.bailu.aat_lib.app.AppColor
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.lib.color.ARGB
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface

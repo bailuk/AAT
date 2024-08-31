@@ -27,7 +27,7 @@ import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitTabletActivity : AbsKeepScreenOnActivity() {
     private val theme = AppTheme.cockpit

@@ -24,10 +24,10 @@ import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.html.HtmlScrollTextView
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListArray
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.foc.Foc

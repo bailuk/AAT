@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import java.io.Closeable

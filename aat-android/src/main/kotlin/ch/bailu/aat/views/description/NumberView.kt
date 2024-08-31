@@ -17,8 +17,8 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 
 import kotlin.math.roundToInt

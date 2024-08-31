@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull

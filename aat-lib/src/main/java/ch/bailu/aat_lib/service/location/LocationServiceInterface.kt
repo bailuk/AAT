@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 interface LocationServiceInterface {
     fun setPresetIndex(presetIndex: Int)

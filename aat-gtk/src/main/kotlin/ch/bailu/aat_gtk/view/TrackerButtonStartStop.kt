@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.Button
 

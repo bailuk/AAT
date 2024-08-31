@@ -18,7 +18,7 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.NameDescription
 import ch.bailu.aat_lib.description.PathDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class GpxEditorActivity : AbsFileContentActivity() {
     companion object {

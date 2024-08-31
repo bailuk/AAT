@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.dispatcher.filter
 
 import ch.bailu.aat_lib.dispatcher.usage.SelectableUsageTracker
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

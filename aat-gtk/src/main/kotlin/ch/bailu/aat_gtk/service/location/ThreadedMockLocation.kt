@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.service.location
 
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import ch.bailu.aat_lib.logger.AppLog

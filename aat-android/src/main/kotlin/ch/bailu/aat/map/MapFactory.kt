@@ -13,7 +13,7 @@ import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer

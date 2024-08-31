@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 
 class PredictiveTimeDescription : TimeDescription() {
     private var time: Long = 0

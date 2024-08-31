@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude
 import ch.bailu.aat_lib.resources.Res

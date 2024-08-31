@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class SensorSource(private val services: ServicesInterface, private val broadcaster: Broadcaster, private val iid: Int) :

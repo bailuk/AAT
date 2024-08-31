@@ -24,8 +24,8 @@ import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.foc.Foc

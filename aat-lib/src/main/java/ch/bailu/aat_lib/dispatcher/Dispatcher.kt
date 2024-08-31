@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.dispatcher
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class Dispatcher : DispatcherInterface {
     private val targets: MutableMap<Int, TargetList> = HashMap(10)

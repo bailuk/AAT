@@ -9,7 +9,7 @@ import ch.bailu.aat.map.mapsforge.MapsForgeViewStatic
 import ch.bailu.aat.util.AppHtml.fromHtml
 import ch.bailu.aat.util.ui.AppLayout.getBigButtonSize
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer

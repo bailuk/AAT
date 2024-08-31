@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.preferences.dispatcher.usage
 
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.mock.MockStorage
 import org.junit.jupiter.api.Assertions.assertEquals

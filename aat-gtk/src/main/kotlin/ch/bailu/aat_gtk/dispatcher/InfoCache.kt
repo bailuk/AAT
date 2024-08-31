@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.dispatcher
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.util.IndexedMap
 import java.lang.IndexOutOfBoundsException
 

@@ -7,7 +7,7 @@ import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxDeltaHelper
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import java.io.Closeable
 import kotlin.math.roundToInt

@@ -4,8 +4,8 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
 
 class SolidPresetComboView : TargetInterface {

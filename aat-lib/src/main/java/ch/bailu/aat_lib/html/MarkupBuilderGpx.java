@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.description.ContentDescription;
 import ch.bailu.aat_lib.description.CurrentSpeedDescription;
 import ch.bailu.aat_lib.description.DistanceDescription;
 import ch.bailu.aat_lib.description.SpeedDescription;
-import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.information.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxPointNode;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;

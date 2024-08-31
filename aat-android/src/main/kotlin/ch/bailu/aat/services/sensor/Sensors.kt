@@ -6,7 +6,7 @@ import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.bluetooth_le.BleSensors
 import ch.bailu.aat.services.sensor.internal.InternalSensorsSDK23
 import ch.bailu.aat.services.sensor.list.SensorList
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import java.io.Closeable
 
 open class Sensors : Closeable {

@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.resources.Res
 
 class PauseState(trackerInternals: TrackerInternals) : State(trackerInternals) {

@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude
 import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude

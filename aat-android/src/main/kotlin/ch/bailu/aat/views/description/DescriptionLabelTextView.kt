@@ -5,7 +5,7 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 
 class DescriptionLabelTextView(

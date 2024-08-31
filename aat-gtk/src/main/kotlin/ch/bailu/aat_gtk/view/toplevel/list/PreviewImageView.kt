@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjBitmap

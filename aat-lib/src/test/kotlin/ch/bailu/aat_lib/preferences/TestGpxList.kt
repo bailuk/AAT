@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.preferences
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode

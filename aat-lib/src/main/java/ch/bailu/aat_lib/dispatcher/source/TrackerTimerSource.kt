@@ -2,8 +2,8 @@ package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Timer
 

@@ -14,7 +14,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
 import ch.bailu.aat.views.preferences.MapPreferencesView
 import ch.bailu.aat.views.preferences.PresetPreferencesView
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount

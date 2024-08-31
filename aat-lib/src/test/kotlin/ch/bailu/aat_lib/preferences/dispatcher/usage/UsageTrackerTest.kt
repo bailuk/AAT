@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.preferences.dispatcher.usage
 
 import ch.bailu.aat_lib.dispatcher.usage.UsageTracker
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

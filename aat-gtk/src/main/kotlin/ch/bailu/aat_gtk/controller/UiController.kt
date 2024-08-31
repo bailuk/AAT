@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.controller
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 interface UiController {
     fun showMap()

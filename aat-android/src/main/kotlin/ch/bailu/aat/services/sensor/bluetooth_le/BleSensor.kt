@@ -14,7 +14,7 @@ import ch.bailu.aat.services.sensor.list.SensorItemState
 import ch.bailu.aat.services.sensor.list.SensorList
 import ch.bailu.aat.services.sensor.list.SensorListItem
 import ch.bailu.aat.util.AndroidTimer
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 
 class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorListItem) :

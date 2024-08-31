@@ -18,9 +18,9 @@ import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.TimeDescription
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery

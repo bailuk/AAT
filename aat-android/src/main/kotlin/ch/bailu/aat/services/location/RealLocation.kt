@@ -7,7 +7,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import ch.bailu.aat.util.AppPermission
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.service.location.LocationInformation
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
 import ch.bailu.aat_lib.service.location.LocationStackItem

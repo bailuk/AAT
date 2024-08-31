@@ -15,7 +15,7 @@ import ch.bailu.aat.views.description.TrackerStateButton
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.description.mview.MultiViewNextButton
 import ch.bailu.aat.views.description.mview.MultiViewSelector
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.util.Objects
 
 class MainControlBar(acontext: AbsDispatcher, orientation: Int = HORIZONTAL, button: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) :

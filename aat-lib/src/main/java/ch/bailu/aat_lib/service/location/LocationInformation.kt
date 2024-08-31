@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 
 abstract class LocationInformation : GpxInformation() {

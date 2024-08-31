@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.mock.MockAppContext
 import ch.bailu.foc.FocName
 import org.junit.jupiter.api.Assertions.assertEquals

@@ -4,7 +4,7 @@ import ch.bailu.aat.R
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.cache.ObjBitmap
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.foc.Foc

@@ -4,8 +4,8 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
-import ch.bailu.aat_lib.gpx.GpxFileWrapper
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.service.editor.EditorHelper
 import ch.bailu.aat_lib.service.editor.EditorInterface

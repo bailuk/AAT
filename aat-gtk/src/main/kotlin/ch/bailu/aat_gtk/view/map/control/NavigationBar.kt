@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position

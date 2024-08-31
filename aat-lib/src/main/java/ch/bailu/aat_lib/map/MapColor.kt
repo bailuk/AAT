@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.map
 
 import ch.bailu.aat_lib.app.AppColor
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.lib.color.ARGB
 import ch.bailu.aat_lib.lib.color.HSV
 

@@ -7,7 +7,7 @@ import ch.bailu.aat_gtk.view.menu.provider.MapMenu
 import ch.bailu.aat_gtk.view.menu.PopupButton
 import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.menu.SolidMenuButton
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position

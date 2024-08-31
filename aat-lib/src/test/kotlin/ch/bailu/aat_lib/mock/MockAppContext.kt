@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.mock
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.Broadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface

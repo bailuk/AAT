@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position

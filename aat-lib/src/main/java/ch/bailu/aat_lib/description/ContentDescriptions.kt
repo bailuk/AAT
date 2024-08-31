@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
     private val descriptions = arrayOf(*d)

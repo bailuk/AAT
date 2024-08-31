@@ -26,8 +26,9 @@ import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
@@ -217,7 +218,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun getName(infoID: Int): String {
-        return metaInfoCollector.getName(infoID)
+        return InformationUtil.defaultName(infoID)
     }
 
     private fun setupDispatcher(dispatcher: Dispatcher) {
@@ -258,11 +259,6 @@ private class MetaInfoCollector : TargetInterface {
     }
 
     fun getName(infoID: Int): String {
-        val result = files.getOrDefault(infoID, Foc.FOC_NULL).name
-
-        if (result.isEmpty()) {
-            return infoID.toString()
-        }
-        return result
+        return files.getOrDefault(infoID, Foc.FOC_NULL).name
     }
 }

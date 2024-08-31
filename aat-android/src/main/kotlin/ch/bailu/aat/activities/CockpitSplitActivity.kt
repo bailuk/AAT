@@ -34,7 +34,7 @@ import ch.bailu.aat_lib.description.TotalStepsDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitSplitActivity : AbsKeepScreenOnActivity() {
     companion object {

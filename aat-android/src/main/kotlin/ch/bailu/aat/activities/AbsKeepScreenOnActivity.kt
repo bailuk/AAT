@@ -2,7 +2,7 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import ch.bailu.aat.util.ui.Backlight
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 abstract class AbsKeepScreenOnActivity : ActivityContext() {
     private var backlight: Backlight? = null

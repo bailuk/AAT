@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.dispatcher
 
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 /**
  * Connect sources with targets

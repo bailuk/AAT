@@ -3,7 +3,7 @@ package ch.bailu.aat.views.html
 import android.content.Context
 import android.graphics.Color
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
 import ch.bailu.aat_lib.map.MapColor
 import ch.bailu.aat_lib.preferences.StorageInterface

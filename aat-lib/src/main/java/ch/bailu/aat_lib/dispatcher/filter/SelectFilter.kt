@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.dispatcher.filter
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 class SelectFilter(
     private val target: TargetInterface,

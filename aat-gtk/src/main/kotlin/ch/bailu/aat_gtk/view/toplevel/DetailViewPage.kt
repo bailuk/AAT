@@ -8,7 +8,7 @@ import ch.bailu.aat_gtk.controller.UiController
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.usage.SelectableUsageTracker
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation

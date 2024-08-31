@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState

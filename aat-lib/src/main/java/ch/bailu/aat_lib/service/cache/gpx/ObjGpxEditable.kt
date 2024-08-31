@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.Broadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
