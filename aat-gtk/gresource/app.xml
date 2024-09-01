@@ -2,10 +2,12 @@
 <gresources>
     <!-- See: README.md -->
     <gresource prefix="/ch/bailu/aat">
-        <file preprocess="xml-stripblanks">icons/scalable/apps/ch.bailu.aat.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/dialog_question.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/edit-find-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/edit-redo-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/edit-undo-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/find-location-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/folder-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-down-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-previous-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/go-up-symbolic.svg</file>
@@ -14,20 +16,19 @@
         <file preprocess="xml-stripblanks">icons/scalable/actions/list-remove-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/location.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/open-menu-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/preferences-other-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-continuous-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/view-list-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-more-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-paged-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/view_grid.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-fit-best-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-in-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-out-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original_inverse.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/preferences-other-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/find-location-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/view-paged-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/view-continuous-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/folder-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/edit-find-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/view-more-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/view-refresh-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/edit-select-all-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/apps/ch.bailu.aat.svg</file>
     </gresource>
 </gresources>

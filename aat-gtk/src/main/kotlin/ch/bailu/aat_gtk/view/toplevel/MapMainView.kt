@@ -10,6 +10,7 @@ import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
+import ch.bailu.aat_gtk.view.map.control.EditorStatusLabel
 import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
@@ -57,11 +58,17 @@ class MapMainView(
         }
     }
 
+    private val editableOverlayList = OverlayController.createEditableOverlayControllers(appContext.storage, uiController)
+
     private val nodeInfo = NodeInfo()
+    private val statusLabel = EditorStatusLabel().apply {
+        dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
+    }
+
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
-    private val editorBar = EditorBar(app, nodeInfo, map.getMContext(), appContext.services, editor)
+    private val editorBar = EditorBar(app, nodeInfo, statusLabel, map.getMContext(), appContext.services, editor, editableOverlayList)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
     init {
@@ -103,6 +110,7 @@ class MapMainView(
         addBar(editorBar)
 
         overlay.addOverlay(nodeInfo.box)
+        overlay.addOverlay(statusLabel.box)
     }
 
     private fun addBar(bar: Bar) {
@@ -163,5 +171,11 @@ private class OverlayContainer(
         overlayController.showInDetail()
     }
 
+    override fun edit() {
+        overlayController.edit()
+    }
 
+    override fun isEditable(): Boolean {
+        return overlayController.isEditable()
+    }
 }

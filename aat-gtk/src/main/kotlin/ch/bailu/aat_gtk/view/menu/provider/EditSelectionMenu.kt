@@ -12,8 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
-
+class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(ID))
@@ -55,17 +54,17 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
                                 }
                             })
                             append(Button().apply {
-                                iconName = Icons.viewContinuousSymbolic
+                                iconName = Icons.editSelectAllSymbolic
                                 onClicked {
                                     checkButton.active = true
-                                    controller.showInDetail()
+                                    controller.edit()
                                 }
                             })
                             append(checkButton)
                         })
                     }
                 }
-            , ID) {
+                , ID) {
                 overlays.forEachIndexed { index, overlayController ->
                     checkButtons[index].setLabel(overlayController.getName())
                     checkButtons[index].active = overlayController.isEnabled()
@@ -77,6 +76,6 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
     override fun createActions(app: Application) {}
 
     companion object {
-        private val ID = "overlay"
+        private val ID = "editable"
     }
 }

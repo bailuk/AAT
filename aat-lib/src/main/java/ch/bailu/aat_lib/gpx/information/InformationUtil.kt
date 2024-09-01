@@ -48,12 +48,25 @@ object InformationUtil {
         }
     }
 
+    fun getEditableOverlayInfoIdList(): List<Int> {
+        return ArrayList<Int>().apply {
+            add(InfoID.EDITOR_DRAFT)
+            add(InfoID.FILE_VIEW)
+            addAll(getOverlayInfoIdList())
+        }
+    }
+
     fun getOverlayInfoIdList(): List<Int> {
         return ArrayList<Int>().apply {
             for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
                 add(InfoID.OVERLAY + i)
             }
         }
-
     }
+
+    fun isEditable(iid: Int): Boolean {
+        return iid == InfoID.FILE_VIEW || iid == InfoID.EDITOR_DRAFT ||
+                (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS)
+    }
+
 }

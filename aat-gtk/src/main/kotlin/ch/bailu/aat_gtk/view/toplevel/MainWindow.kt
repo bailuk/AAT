@@ -46,7 +46,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     UiControllerInterface {
 
     companion object {
-        val pageIdCockpit = Icons.incCockpit
+        val pageIdCockpit = Icons.incCockpitSymbolic
         val pageIdFileList = Icons.viewListSymbolic
         val pageIdDetail = Icons.viewContinuousSymbolic
     }
@@ -210,9 +210,13 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         detailViewPage.select(infoID)
     }
 
-    override fun loadIntoEditor(info: GpxInformation) {
-        editorSource.edit(info.getFile())
+    override fun loadIntoEditor(file: Foc) {
+        editorSource.edit(file)
         mapView.showEditor()
+    }
+
+    override fun loadIntoEditor(iid: Int) {
+        loadIntoEditor(metaInfoCollector.getFile(iid))
     }
 
     override fun hideMap() {
@@ -252,15 +256,19 @@ private class MetaInfoCollector : TargetInterface {
         }
     }
 
-    fun hasBounding(infoID: Int): Boolean {
-       return  boundings.containsKey(infoID)
+    fun hasBounding(iid: Int): Boolean {
+       return  boundings.containsKey(iid)
     }
 
-    fun getBounding(infoID: Int): BoundingBoxE6 {
-        return boundings.getOrDefault(infoID, BoundingBoxE6.NULL_BOX)
+    fun getBounding(iid: Int): BoundingBoxE6 {
+        return boundings.getOrDefault(iid, BoundingBoxE6.NULL_BOX)
     }
 
-    fun getName(infoID: Int): String {
-        return files.getOrDefault(infoID, Foc.FOC_NULL).name
+    fun getName(iid: Int): String {
+        return getFile(iid).name
+    }
+
+    fun getFile(iid: Int): Foc {
+        return files.getOrDefault(iid, Foc.FOC_NULL)
     }
 }

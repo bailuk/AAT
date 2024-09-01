@@ -7,4 +7,6 @@ interface OverlayControllerInterface {
     fun getName(): String
     fun isEnabled(): Boolean
     fun showInDetail()
+    fun edit()
+    fun isEditable(): Boolean
 }

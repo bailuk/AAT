@@ -165,7 +165,7 @@ class FileListPage(app: Application,
                         }
                     })
                     append(Button().apply {
-                        iconName = Icons.viewRefresh
+                        iconName = Icons.viewListSymbolic
                         onClicked {
                             appContext.services.getDirectoryService().rescan()
                         }
@@ -226,7 +226,7 @@ class FileListPage(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.frameInMap(iteratorSimple.info)
-            uiController.loadIntoEditor(iteratorSimple.info)
+            uiController.loadIntoEditor(iteratorSimple.info.getFile())
         }
     }
 

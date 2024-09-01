@@ -2,6 +2,7 @@ package ch.bailu.aat_gtk.controller
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.foc.Foc
 
 interface UiControllerInterface {
     fun showMap()
@@ -19,7 +20,8 @@ interface UiControllerInterface {
     fun showFileList()
     fun showPreferences()
     fun showInDetail(infoID: Int)
-    fun loadIntoEditor(info: GpxInformation)
+    fun loadIntoEditor(file: Foc)
+    fun loadIntoEditor(iid: Int)
     fun hideMap()
     fun getName(infoID: Int): String
 }

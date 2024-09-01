@@ -32,16 +32,40 @@ class OverlayController(private val storage: StorageInterface, private val uiCon
         uiController.showInDetail(iid)
     }
 
+    override fun edit() {
+        uiController.loadIntoEditor(iid)
+    }
+
+    override fun isEditable(): Boolean {
+        return InformationUtil.isEditable(iid)
+    }
+
     companion object {
         fun createMapOverlayControllers(
             storage: StorageInterface,
             uiController: UiControllerInterface
         ): List<OverlayControllerInterface> {
+            return createOverlayControllers(storage, uiController, InformationUtil.getMapOverlayInfoIdList())
+        }
+
+        fun createEditableOverlayControllers(
+            storage: StorageInterface,
+            uiController: UiControllerInterface
+        ): List<OverlayControllerInterface> {
+            return createOverlayControllers(storage, uiController, InformationUtil.getEditableOverlayInfoIdList())
+        }
+
+        private fun createOverlayControllers (
+            storage: StorageInterface,
+            uiController: UiControllerInterface,
+            iidList: List<Int>
+        ): List<OverlayControllerInterface> {
             return ArrayList<OverlayController>().apply {
-                InformationUtil.getMapOverlayInfoIdList().forEach { iid ->
+                iidList.forEach { iid ->
                     add(OverlayController(storage, uiController, iid))
                 }
             }
         }
+
     }
 }

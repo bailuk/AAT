@@ -71,3 +71,12 @@
 .page-label {
     font-weight: bold;
 }
+
+.status-label {
+    padding: 10px;
+}
+
+.status-label-bold {
+    font-weight: bold;
+    padding: 10px;
+}
