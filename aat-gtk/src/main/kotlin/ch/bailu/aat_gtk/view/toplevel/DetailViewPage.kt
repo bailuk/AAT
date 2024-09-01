@@ -48,8 +48,7 @@ class DetailViewPage(
                         uiController.showMap()
                         uiController.centerInMap(usageTracker.getIID())
                     }
-                }
-                )
+                })
 
                 val overlayControllers =
                     OverlayController.createMapOverlayControllers(GtkAppContext.storage, uiController)

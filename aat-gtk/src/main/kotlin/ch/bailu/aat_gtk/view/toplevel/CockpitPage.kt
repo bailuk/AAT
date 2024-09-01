@@ -33,18 +33,26 @@ class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, d
         margin(Layout.margin)
         append(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
+
+            append(Button().apply {
+                iconName = Icons.zoomFitBestSymbolic
+                onClicked {
+                    uiController.showMap()
+                    uiController.frameInMap(InfoID.TRACKER)
+                }
+            })
+            append(Button().apply {
+                iconName = Icons.findLocationSymbolic
+                onClicked {
+                    uiController.showMap()
+                    uiController.centerInMap(InfoID.TRACKER)
+                }
+            })
             append(Button().apply {
                 iconName = Icons.viewContinuousSymbolic
                 onClicked {
                     uiController.showDetail()
                     uiController.showInDetail(InfoID.TRACKER)
-                }
-            })
-            append(Button().apply {
-                iconName = Icons.zoomFitBestSymbolic
-                onClicked {
-                    uiController.showMap()
-                    SolidPositionLock(appContext.storage, GtkCustomMapView.DEFAULT_KEY).value = true
                 }
             })
         })
