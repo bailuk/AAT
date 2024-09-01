@@ -13,6 +13,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.gtk.FlowBox
 import ch.bailu.gtk.gtk.ScrolledWindow
+import ch.bailu.gtk.gtk.SelectionMode
 
 class CockpitView(private val appContext: AppContext) {
 
@@ -20,6 +21,7 @@ class CockpitView(private val appContext: AppContext) {
         vexpand = true
         hexpand = true
         homogeneous = false
+        selectionMode = SelectionMode.NONE
     }
     val scrolledWindow = ScrolledWindow().apply {
         child = flow

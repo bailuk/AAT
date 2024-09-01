@@ -12,6 +12,7 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
+import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
@@ -30,6 +31,7 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
+import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
@@ -190,7 +192,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun centerInMap(infoID: Int) {
-        if (metaInfoCollector.hasBounding(infoID)) {
+        if (infoID == InfoID.TRACKER) {
+             SolidPositionLock(appContext.storage, GtkCustomMapView.DEFAULT_KEY).value = true
+        } else if (metaInfoCollector.hasBounding(infoID)) {
             mapView.map.setCenter(metaInfoCollector.getBounding(infoID).center.toLatLong())
         }
     }
@@ -235,9 +239,11 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun loadIntoEditor(file: Foc) {
-        clearEditor {
-            editorSource.edit(file)
-            mapView.showEditor()
+        if (file.exists() && file.canWrite()) {
+            clearEditor {
+                editorSource.edit(file)
+                mapView.showEditor()
+            }
         }
     }
 
