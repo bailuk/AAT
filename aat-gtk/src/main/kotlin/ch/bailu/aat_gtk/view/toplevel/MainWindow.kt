@@ -9,6 +9,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.util.GtkTimer
+import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
@@ -126,17 +127,40 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
         stackPage.restore(appContext.storage)
 
+        var blockCloseRequest = true
+
         window.onCloseRequest {
-            SolidWindowSize.writeSize(appContext.storage, window.width, window.height)
-            stackPage.save(appContext.storage)
-            mapView.onDetached()
-            false
+            if (blockCloseRequest) {
+                clearEditor {
+                    SolidWindowSize.writeSize(appContext.storage, window.width, window.height)
+                    stackPage.save(appContext.storage)
+                    mapView.onDetached()
+                    blockCloseRequest = false
+                    window.close()
+                }
+            }
+            blockCloseRequest
         }
 
         window.onDestroy {
             exit(dispatcher, 0)
         }
 
+    }
+
+    private fun clearEditor(onCleared: ()->Unit)  {
+        if (editorSource.editor.isModified) {
+            FileChangedDialog(window, editorSource.file.name)  { response ->
+                if (response == FileChangedDialog.DISCARD) {
+                    onCleared()
+                } else if (response == FileChangedDialog.SAVE) {
+                    editorSource.editor.save()
+                    onCleared()
+                }
+            }
+        } else {
+            onCleared()
+        }
     }
 
     override fun showMap() {
@@ -211,8 +235,10 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun loadIntoEditor(file: Foc) {
-        editorSource.edit(file)
-        mapView.showEditor()
+        clearEditor {
+            editorSource.edit(file)
+            mapView.showEditor()
+        }
     }
 
     override fun loadIntoEditor(iid: Int) {
