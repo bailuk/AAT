@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.controller.OverlayController
+import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class OverlaySelectionMenu(private val overlays: List<OverlayController>) : MenuProvider {
+class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -53,6 +53,8 @@ class OverlaySelectionMenu(private val overlays: List<OverlayController>) : Menu
                             })
                             append(Button().apply {
                                 iconName = Icons.viewContinuousSymbolic
+                                checkButton.setLabel(controller.getName())
+                                checkButton.active = controller.isEnabled()
                                 onClicked {
                                     checkButton.active = true
                                     controller.showInDetail()

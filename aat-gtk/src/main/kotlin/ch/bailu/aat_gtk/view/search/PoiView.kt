@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.search
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiApi
@@ -16,7 +16,7 @@ import ch.bailu.gtk.gtk.SearchEntry
 import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.Window
 
-class PoiView(private val controller: UiController, app: Application, window: Window) {
+class PoiView(private val controller: UiControllerInterface, app: Application, window: Window) {
     private val sdatabase = SolidPoiDatabase(GtkAppContext.mapDirectory, GtkAppContext)
     private val selected = AppDirectory.getDataDirectory(GtkAppContext.dataDirectory, AppDirectory.DIR_POI).child(AppDirectory.FILE_SELECTION)
 

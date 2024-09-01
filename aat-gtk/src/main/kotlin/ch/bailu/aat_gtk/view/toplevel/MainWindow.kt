@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.app.exit
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.PoiDialog
@@ -43,7 +43,7 @@ import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 
 class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
-    UiController {
+    UiControllerInterface {
 
     companion object {
         val pageIdCockpit = Icons.incCockpit
@@ -120,7 +120,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         leaflet.visibleChild = stackPage.stackPage
 
         headerBar.packEnd(showMapButton)
-        headerBar.packStart(MainMenuButton(app, window, dispatcher, this).menuButton)
+        headerBar.packStart(MainMenuButton(window, dispatcher, this).apply {
+            createActions(app)
+        }.menuButton)
 
         stackPage.restore(appContext.storage)
 

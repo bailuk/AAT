@@ -37,4 +37,23 @@ object InformationUtil {
     }
 
 
+    fun getMapOverlayInfoIdList(): List<Int> {
+        return ArrayList<Int>().apply {
+            add(InfoID.TRACKER)
+            add(InfoID.POI)
+            add(InfoID.EDITOR_OVERLAY)
+            add(InfoID.EDITOR_DRAFT)
+            add(InfoID.FILE_VIEW)
+            addAll(getOverlayInfoIdList())
+        }
+    }
+
+    fun getOverlayInfoIdList(): List<Int> {
+        return ArrayList<Int>().apply {
+            for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+                add(InfoID.OVERLAY + i)
+            }
+        }
+
+    }
 }

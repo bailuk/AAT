@@ -4,7 +4,8 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.OverlayController
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.OverlayControllerInterface
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
@@ -20,6 +21,7 @@ import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position
@@ -27,8 +29,6 @@ import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Button
@@ -40,7 +40,7 @@ class MapMainView(
     appContext: AppContext,
     dispatcher: DispatcherInterface,
     usageTrackers: UsageTrackers,
-    uiController: UiController,
+    uiController: UiControllerInterface,
     editor: EditorSourceInterface,
     window: Window)
     : Attachable {
@@ -49,23 +49,13 @@ class MapMainView(
     val overlay = Overlay()
 
     private val overlayList = ArrayList<OverlayContainer>().apply {
-        val infoIDs = ArrayList<Int>().apply {
-            add(InfoID.TRACKER)
-            add(InfoID.POI)
-            add(InfoID.EDITOR_OVERLAY)
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.FILE_VIEW)
-            for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-                add(InfoID.OVERLAY + i)
-            }
-        }.toIntArray()
-
+        val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
         val usageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
         infoIDs.forEach {
             add(OverlayContainer(it, appContext, uiController, map, dispatcher, usageTracker))
         }
-    }.toList()
+    }
 
     private val nodeInfo = NodeInfo()
     private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
@@ -134,41 +124,44 @@ class MapMainView(
 }
 
 private class OverlayContainer(
-    val infoID: Int,
-    private val appContext: AppContext,
-    private val uiController: UiController,
+    iid: Int,
+    appContext: AppContext,
+    uiController: UiControllerInterface,
     map: GtkCustomMapView,
     dispatcher: DispatcherInterface,
-    usageTracker: UsageTrackerInterface): OverlayController {
+    usageTracker: UsageTrackerInterface): OverlayControllerInterface {
+
+    val overlayController = OverlayController(appContext.storage, uiController, iid)
     val gpxLayer = GpxDynLayer(appContext.storage, map.getMContext(), appContext.services)
 
     init {
-        dispatcher.addTarget(ToggleFilter(gpxLayer, infoID, usageTracker))
+        dispatcher.addTarget(ToggleFilter(gpxLayer, iid, usageTracker))
 
     }
 
     override fun setEnabled(enabled: Boolean) {
-        SolidOverlayFileEnabled(appContext.storage, infoID).value = enabled
+        overlayController.setEnabled(enabled)
     }
 
     override fun frame() {
-        uiController.frameInMap(infoID)
+        overlayController.frame()
     }
 
     override fun center() {
-        uiController.centerInMap(infoID)
+        overlayController.center()
     }
 
     override fun getName(): String {
-        return uiController.getName(infoID)
+        return overlayController.getName()
     }
 
     override fun isEnabled(): Boolean {
-        return SolidOverlayFileEnabled(appContext.storage, infoID).value
+        return overlayController.isEnabled()
     }
 
     override fun showInDetail() {
-        uiController.showDetail()
-        uiController.showInDetail(infoID)
+        overlayController.showInDetail()
     }
+
+
 }

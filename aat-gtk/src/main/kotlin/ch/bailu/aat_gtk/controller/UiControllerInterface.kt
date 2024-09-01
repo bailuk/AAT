@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.controller
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 
-interface UiController {
+interface UiControllerInterface {
     fun showMap()
     fun showPoi()
     fun frameInMap(info: GpxInformation)

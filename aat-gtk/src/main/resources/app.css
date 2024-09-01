@@ -67,3 +67,7 @@
 .number-view-width-8 {
         min-width: 170px;
 }
+
+.page-label {
+    font-weight: bold;
+}

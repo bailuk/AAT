@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.view.TrackerSplitButton
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.dialog.About
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -19,7 +19,7 @@ import ch.bailu.gtk.type.Str
 class AppMenu(private val window: Window,
               private val services: ServicesInterface,
               private val dispatcher: Dispatcher,
-              private val uiController: UiController
+              private val uiController: UiControllerInterface
 ) :
     MenuProvider {
 

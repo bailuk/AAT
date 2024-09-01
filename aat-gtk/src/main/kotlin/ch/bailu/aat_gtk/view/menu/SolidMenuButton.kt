@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 
-class SolidMenuButton(solid: SolidIndexList) : PopupButton(
+class SolidMenuButton(solid: SolidIndexList) : PopupMenuButtonOverlay(
     SolidIndexMenu(solid)
 ), OnPreferencesChanged {
 

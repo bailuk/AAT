@@ -2,9 +2,9 @@ package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.provider.MapMenu
-import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.view.menu.PopupMenuButtonOverlay
 import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.menu.SolidMenuButton
 import ch.bailu.aat_lib.gpx.information.GpxInformation
@@ -21,7 +21,7 @@ import ch.bailu.gtk.gtk.Window
 
 class InfoBar(app: Application,
               private val nodeInfo: NodeInfo,
-              uiController: UiController,
+              uiController: UiControllerInterface,
               mcontext: MapContext,
               storage: StorageInterface,
               focFactory: FocFactory,
@@ -30,7 +30,7 @@ class InfoBar(app: Application,
     private val mapDirectories = GtkMapDirectories(storage, focFactory)
 
     init {
-        add(PopupButton(MapMenu(uiController, mcontext, mapDirectories, window)).apply {
+        add(PopupMenuButtonOverlay(MapMenu(uiController, mcontext, mapDirectories, window)).apply {
             createActions(app)
             setIcon(Icons.openMenuSymbolic)
         }.overlay)
@@ -40,7 +40,7 @@ class InfoBar(app: Application,
         add(SolidMenuButton(SolidLegend(storage, mcontext.getSolidKey())).apply {
             createActions(app)
         }.overlay)
-        add(PopupButton(LocationMenu(app)).apply {
+        add(PopupMenuButtonOverlay(LocationMenu(app)).apply {
             createActions(app)
             setIcon(Icons.location) }.overlay)
     }

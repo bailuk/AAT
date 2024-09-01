@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Icons
-import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.view.menu.PopupMenuButtonOverlay
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
@@ -20,7 +20,7 @@ class EditorBar(app: Application,
                 private val edit: EditorSourceInterface
 ) : Bar(Position.LEFT), OnNodeSelectedInterface {
     init {
-        add(PopupButton(EditorMenu(edit)).apply {
+        add(PopupMenuButtonOverlay(EditorMenu(edit)).apply {
             createActions(app)
             setIcon(Icons.openMenuSymbolic)
         }.overlay)

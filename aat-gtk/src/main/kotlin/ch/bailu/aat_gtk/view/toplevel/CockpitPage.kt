@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.view.TrackerSplitButton
-import ch.bailu.aat_gtk.controller.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.solid.SolidPresetComboView
@@ -20,7 +20,7 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 
-class CockpitPage(appContext: AppContext, uiController: UiController, dispatcher: Dispatcher) {
+class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, dispatcher: Dispatcher) {
     private val cockpitView = CockpitView(appContext).apply {addDefaults((dispatcher))}.scrolledWindow
 
     private val clamp = Clamp().apply {
