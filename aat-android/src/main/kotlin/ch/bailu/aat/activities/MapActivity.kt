@@ -15,6 +15,7 @@ import ch.bailu.aat_lib.coordinates.WGS84Coordinates
 import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects
@@ -26,7 +27,7 @@ class MapActivity : AbsKeepScreenOnActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView =
             ContentView(this, AppTheme.cockpit)
         val map = createMap(edit)

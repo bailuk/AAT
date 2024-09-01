@@ -34,6 +34,7 @@ import ch.bailu.aat_lib.description.TotalStepsDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitSplitActivity : AbsKeepScreenOnActivity() {
@@ -45,7 +46,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         setContentView(createContentView(edit))
         createDispatcher(edit)
     }

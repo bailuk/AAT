@@ -34,7 +34,6 @@ class OverlayController(private val storage: StorageInterface, private val uiCon
 
     override fun edit() {
         uiController.loadIntoEditor(iid)
-        uiController.frameInMap(iid)
     }
 
     override fun isEditable(): Boolean {

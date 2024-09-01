@@ -27,6 +27,7 @@ import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitTabletActivity : AbsKeepScreenOnActivity() {
@@ -39,7 +40,7 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         setContentView(createContentView(edit))
         createDispatcher(edit)
     }

@@ -31,6 +31,7 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
+import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
@@ -61,8 +62,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
     }
 
-    private val editorSource = EditorSource(appContext)
     private val usageTrackers = UsageTrackers()
+    private val editorSource = EditorSource(appContext, usageTrackers)
     private val customFileSource = FileViewSource(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
 
@@ -153,9 +154,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private fun clearEditor(onCleared: ()->Unit)  {
         if (editorSource.editor.isModified()) {
             FileChangedDialog(window, editorSource.file.name)  { response ->
-                if (response == FileChangedDialog.DISCARD) {
+                if (response == Strings.ID_DISCARD) {
                     onCleared()
-                } else if (response == FileChangedDialog.SAVE) {
+                } else if (response == Strings.ID_SAVE) {
                     editorSource.editor.save()
                     onCleared()
                 }
@@ -174,17 +175,18 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun frameInMap(info: GpxInformation) {
-        if (info.getBoundingBox().hasBounding()) {
-            mapView.map.frameBounding(info.getBoundingBox())
-        }
+        frameInMap(info.getBoundingBox())
     }
 
-    override fun frameInMap(infoID: Int) {
-        if (metaInfoCollector.hasBounding(infoID)) {
-            mapView.map.frameBounding(metaInfoCollector.getBounding(infoID))
-        }
+    override fun frameInMap(iid: Int) {
+        frameInMap(metaInfoCollector.getBounding(iid))
     }
 
+    private fun frameInMap(boundingBoxE6: BoundingBoxE6) {
+        if (boundingBoxE6.hasBounding()) {
+            mapView.map.frameBounding(boundingBoxE6)
+        }
+    }
     override fun centerInMap(info: GpxInformation) {
         if (info.getBoundingBox().hasBounding()) {
             mapView.map.setCenter(info.getBoundingBox().center.toLatLong())
@@ -238,18 +240,24 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         detailViewPage.select(infoID)
     }
 
-    override fun loadIntoEditor(file: Foc) {
+    override fun loadIntoEditor(info: GpxInformation) {
+        loadIntoEditor(info.getFile(), info.getBoundingBox())
+    }
+
+    override fun loadIntoEditor(iid: Int) {
+        loadIntoEditor(metaInfoCollector.getFile(iid), metaInfoCollector.getBounding(iid))
+    }
+
+    private fun loadIntoEditor(file: Foc, boundingBoxE6: BoundingBoxE6) {
         if (file.exists() && file.canWrite()) {
             clearEditor {
                 editorSource.editor.unload()
                 editorSource.edit(file)
                 mapView.showEditor()
+                frameInMap(boundingBoxE6)
+                SolidOverlayFileEnabled(appContext.storage, InfoID.EDITOR_OVERLAY).value = true
             }
         }
-    }
-
-    override fun loadIntoEditor(iid: Int) {
-        loadIntoEditor(metaInfoCollector.getFile(iid))
     }
 
     override fun hideMap() {

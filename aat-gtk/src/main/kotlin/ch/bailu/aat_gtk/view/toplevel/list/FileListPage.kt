@@ -223,10 +223,7 @@ class FileListPage(app: Application,
     private fun selectAndEdit(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
-            uiController.showMap()
-            uiController.frameInMap(iteratorSimple.info)
-            uiController.loadIntoEditor(iteratorSimple.info.getFile())
+            uiController.loadIntoEditor(iteratorSimple.info)
         }
     }
 

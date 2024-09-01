@@ -23,6 +23,7 @@ import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
 
 class CockpitActivity : AbsKeepScreenOnActivity() {
@@ -35,7 +36,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView = ContentView(this, theme)
         val multiView = createMultiView(edit)
         contentView.addMvIndicator(multiView)

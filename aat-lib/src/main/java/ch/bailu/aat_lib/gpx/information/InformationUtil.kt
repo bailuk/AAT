@@ -39,12 +39,12 @@ object InformationUtil {
 
     fun getMapOverlayInfoIdList(): List<Int> {
         return ArrayList<Int>().apply {
-            add(InfoID.TRACKER)
+            addAll(getOverlayInfoIdList())
             add(InfoID.POI)
-            add(InfoID.EDITOR_OVERLAY)
             add(InfoID.EDITOR_DRAFT)
             add(InfoID.FILE_VIEW)
-            addAll(getOverlayInfoIdList())
+            add(InfoID.EDITOR_OVERLAY)
+            add(InfoID.TRACKER)
         }
     }
 

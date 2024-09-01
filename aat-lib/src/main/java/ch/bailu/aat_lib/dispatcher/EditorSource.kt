@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
@@ -11,7 +12,7 @@ import ch.bailu.aat_lib.service.editor.EditorHelper
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.foc.Foc
 
-class EditorSource(private val appContext: AppContext) : ContentSource(), EditorSourceInterface {
+class EditorSource(private val appContext: AppContext, usageTracker: UsageTrackerInterface) : ContentSource(), EditorSourceInterface {
     private val edit: EditorHelper = EditorHelper(appContext)
     private val onFileEdited = BroadcastReceiver { args ->
         if (BroadcastData.has(args, edit.vID)) {
@@ -19,6 +20,11 @@ class EditorSource(private val appContext: AppContext) : ContentSource(), Editor
         }
     }
 
+    init {
+        usageTracker.observe {
+            requestUpdate()
+        }
+    }
     override fun requestUpdate() {
         sendUpdate(edit.infoID, edit.info)
     }
