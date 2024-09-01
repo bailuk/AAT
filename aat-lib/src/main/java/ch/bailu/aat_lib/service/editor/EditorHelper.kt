@@ -69,7 +69,7 @@ class EditorHelper(private val appContext: AppContext) :
 
     fun save() {
         val editor = editor
-        if (editor.isModified) {
+        if (editor.isModified()) {
             editor.save()
         }
     }

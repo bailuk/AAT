@@ -34,7 +34,7 @@ class EditorNodeViewLayer(appContext: AppContext,
     }
 
     override fun getSelectedNode(): GpxPointNode? {
-        return editorSource.editor.selected
+        return editorSource.editor.getSelected()
     }
 
     override fun setSelectedNode(

@@ -16,7 +16,7 @@ class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
         private set
 
     val isModified: Boolean
-        get() = isEditing && editor.isModified
+        get() = isEditing && editor.isModified()
 
     fun releaseEditorSave() {
         if (isEditing) {

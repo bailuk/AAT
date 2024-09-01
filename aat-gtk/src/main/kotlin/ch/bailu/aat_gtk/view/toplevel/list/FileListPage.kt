@@ -165,7 +165,7 @@ class FileListPage(app: Application,
                         }
                     })
                     append(Button().apply {
-                        iconName = Icons.viewListSymbolic
+                        iconName = Icons.viewRefreshSymbolic
                         onClicked {
                             appContext.services.getDirectoryService().rescan()
                         }

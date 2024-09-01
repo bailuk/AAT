@@ -1,96 +1,81 @@
-package ch.bailu.aat_lib.service.editor;
+package ch.bailu.aat_lib.service.editor
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.foc.Foc
 
-public interface EditorInterface {
-    EditorInterface NULL = new EditorInterface() {
+interface EditorInterface {
+    fun save()
+    fun unload()
+    fun setType(type: GpxType)
+    fun remove()
+    fun add(point: GpxPoint)
+    fun up()
+    fun down()
+    fun isModified(): Boolean
 
-        @Override
-        public void save() {}
+    fun getSelected(): GpxPointNode?
+    fun select(p: GpxPointNode)
 
-        @Override
-        public void setType(GpxType type) {}
+    fun saveTo(path: Foc)
+    fun clear()
+    fun redo()
+    fun undo()
 
-        @Override
-        public void remove() {}
+    fun inverse()
+    fun attach(toAttach: GpxList)
+    fun fix()
+    fun simplify()
+    fun cutPreceding()
+    fun cutRemaining()
 
-        @Override
-        public void add(GpxPoint point) {}
+    companion object {
+        val NULL: EditorInterface = object : EditorInterface {
+            override fun save() {}
 
-        @Override
-        public void up() {}
+            override fun unload() {}
 
-        @Override
-        public void down() {}
+            override fun setType(type: GpxType) {}
 
-        @Override
-        public boolean isModified() {
-            return false;
+            override fun remove() {}
+
+            override fun add(point: GpxPoint) {}
+
+            override fun up() {}
+
+            override fun down() {}
+
+            override fun isModified(): Boolean {
+                return false
+            }
+
+            override fun getSelected(): GpxPointNode? {
+                return null
+            }
+
+            override fun select(p: GpxPointNode) {}
+
+            override fun saveTo(path: Foc) {}
+
+            override fun clear() {}
+
+            override fun redo() {}
+
+            override fun undo() {}
+
+            override fun inverse() {}
+
+            override fun attach(file: GpxList) {}
+
+            override fun fix() {}
+
+            override fun simplify() {}
+
+            override fun cutPreceding() {}
+
+            override fun cutRemaining() {}
         }
-
-        @Override
-        public GpxPointNode getSelected() {
-            return null;
-        }
-
-        @Override
-        public void select(GpxPointNode p) {}
-
-        @Override
-        public void saveTo(Foc path) {}
-
-        @Override
-        public void clear() {}
-
-        @Override
-        public void redo() {}
-
-        @Override
-        public void undo() {}
-
-        @Override
-        public void inverse() {}
-
-        @Override
-        public void attach(GpxList file) {}
-
-        @Override
-        public void fix() {}
-
-        @Override
-        public void simplify() {}
-
-        @Override
-        public void cutPreceding() {}
-
-        @Override
-        public void cutRemaining(){}
-
-    };
-    void save();
-    void setType(GpxType type);
-    void remove();
-    void add(GpxPoint point);
-    void up();
-    void down();
-    boolean isModified();
-
-    GpxPointNode getSelected();
-    void select(GpxPointNode p);
-
-    void saveTo(Foc path);
-    void clear();
-    void redo();
-    void undo();
-
-    void inverse();
-    void attach(GpxList toAttach);
-    void fix();
-    void simplify();
-    void cutPreceding();
-    void cutRemaining();
+    }
 }

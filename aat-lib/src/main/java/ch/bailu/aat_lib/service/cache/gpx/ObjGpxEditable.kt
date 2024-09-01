@@ -131,6 +131,13 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             }
         }
 
+        override fun unload() {
+            loadIntoEditor(currentHandle.gpxList)
+            modified =false
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
+                .toString(), id)
+        }
+
         override fun inverse() {
             editor.inverse()
             modified(true)

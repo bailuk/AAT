@@ -151,7 +151,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {
-        if (editorSource.editor.isModified) {
+        if (editorSource.editor.isModified()) {
             FileChangedDialog(window, editorSource.file.name)  { response ->
                 if (response == FileChangedDialog.DISCARD) {
                     onCleared()
@@ -241,6 +241,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     override fun loadIntoEditor(file: Foc) {
         if (file.exists() && file.canWrite()) {
             clearEditor {
+                editorSource.editor.unload()
                 editorSource.edit(file)
                 mapView.showEditor()
             }

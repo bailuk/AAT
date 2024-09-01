@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
+import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.search.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.Application
@@ -20,9 +21,21 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
     private val sdatabase = SolidPoiDatabase(GtkAppContext.mapDirectory, GtkAppContext)
     private val selected = AppDirectory.getDataDirectory(GtkAppContext.dataDirectory, AppDirectory.DIR_POI).child(AppDirectory.FILE_SELECTION)
 
+    private val onPreferencesChanged = { _: StorageInterface, key: String ->
+        if (sdatabase.hasKey(key)) {
+            poiList.writeSelected()
+            poiList.readList()
+            updateList(Editable(searchEntry.cast()).text.toString())
+        }
+    }
+
+    init {
+        sdatabase.register(onPreferencesChanged)
+    }
     private val searchEntry = SearchEntry().apply {
         onSearchChanged {
             updateList(Editable(cast()).text.toString())
+
         }
     }
 
@@ -57,5 +70,10 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
 
         poiApi.startTask(GtkAppContext)
         poiList.writeSelected()
+
+    }
+
+    fun onDestroy() {
+        sdatabase.unregister(onPreferencesChanged)
     }
 }
