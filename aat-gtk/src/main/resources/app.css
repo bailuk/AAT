@@ -1,5 +1,5 @@
 .map-control {
-    background: #cccccc80;
+    background: #ffffff99;
     color: black;
 }
 
@@ -73,10 +73,6 @@
 }
 
 .status-label {
-    padding: 10px;
-}
-
-.status-label-bold {
     font-weight: bold;
-    padding: 10px;
+    padding: 5px 20px 5px 20px;
 }
