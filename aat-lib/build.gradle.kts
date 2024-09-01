@@ -65,6 +65,12 @@ dependencies {
      * https://github.com/google/open-location-code
      */
     implementation("com.google.openlocationcode:openlocationcode:1.0.4")
+
+    /**
+     *  https://mvnrepository.com/artifact/com.google.guava/guava
+     *  For HtmlEscapers
+     */
+    implementation("com.google.guava:guava:33.3.0-jre")
 }
 
 

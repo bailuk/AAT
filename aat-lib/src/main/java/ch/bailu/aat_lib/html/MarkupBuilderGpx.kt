@@ -1,65 +1,64 @@
-package ch.bailu.aat_lib.html;
+package ch.bailu.aat_lib.html
+
+import ch.bailu.aat_lib.description.AltitudeDescription
+import ch.bailu.aat_lib.description.ContentDescription
+import ch.bailu.aat_lib.description.CurrentSpeedDescription
+import ch.bailu.aat_lib.description.DistanceDescription
+import ch.bailu.aat_lib.description.SpeedDescription
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.preferences.StorageInterface
 
 
-import java.util.Locale;
+class MarkupBuilderGpx @JvmOverloads constructor(
+    storage: StorageInterface,
+    config: MarkupConfig = MarkupConfig.HTML
+) : MarkupBuilder(
+    config
+) {
+    private val distance = DistanceDescription(storage)
+    private val speed: SpeedDescription = CurrentSpeedDescription(storage)
+    private val altitude = AltitudeDescription(storage)
 
-import ch.bailu.aat_lib.description.AltitudeDescription;
-import ch.bailu.aat_lib.description.ContentDescription;
-import ch.bailu.aat_lib.description.CurrentSpeedDescription;
-import ch.bailu.aat_lib.description.DistanceDescription;
-import ch.bailu.aat_lib.description.SpeedDescription;
-import ch.bailu.aat_lib.gpx.information.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.preferences.StorageInterface;
+    fun appendInfo(info: GpxInformation, index: Int) {
+        val count = index + 1
+        val total = info.getGpxList().pointList.size()
 
-
-public class MarkupBuilderGpx extends MarkupBuilder {
-
-    private final DistanceDescription distance;
-    private final SpeedDescription speed;
-    private final AltitudeDescription altitude;
-
-    public MarkupBuilderGpx(StorageInterface storage) {
-        this(storage, MarkupConfig.HTML);
+        appendHeader(info.getFile().name)
+        appendBold(count.toString())
+        append("/")
+        append(total.toString())
+        appendNl()
     }
 
-    public MarkupBuilderGpx(StorageInterface storage, MarkupConfig config) {
-        super(config);
-        distance = new DistanceDescription(storage);
-        speed = new CurrentSpeedDescription(storage);
-        altitude = new AltitudeDescription(storage);
-    }
-
-    public void appendInfo(GpxInformation info, int index) {
-        final int count=index+1, total = info.getGpxList().getPointList().size();
-
-        appendHeader(info.getFile().getName());
-        appendNl(config.getBoldOpen() + count + config.getBoldClose() + "/" + total);
-    }
-
-    public void appendNode(GpxPointNode n, GpxInformation i) {
-        if (i.getType() == GpxType.TRACK && n.getTimeStamp() != 0 ) {
-            appendNl(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()));
+    fun appendNode(n: GpxPointNode, i: GpxInformation) {
+        if (i.getType() == GpxType.TRACK && n.getTimeStamp() != 0L) {
+            append(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()))
+            appendNl()
         }
-        appendNl(altitude.getLabel(), distance.getAltitudeDescription(n.getAltitude()));
+        append(altitude.getLabel(), distance.getAltitudeDescription(n.getAltitude()))
+        appendNl()
     }
 
-    public void appendNl(ContentDescription d) {
-        appendNl(d.getLabel(), d.getValueAsString());
+    fun appendNl(d: ContentDescription) {
+        append(d.getLabel(), d.getValueAsString())
+        appendNl()
     }
 
-    public void appendAttributes(GpxAttributes a) {
+    fun appendAttributes(a: GpxAttributes) {
         if (a.size() > 0) {
-            for (int i = 0; i < a.size(); i++) {
-                String kString = a.getSKeyAt(i);
-                String v = a.getAt(i);
+            for (i in 0 until a.size()) {
+                val kString = a.getSKeyAt(i)
+                val v = a.getAt(i)
 
-                if (kString.toLowerCase(Locale.ROOT).contains("name")) {
-                    appendBoldNl(kString, v);
-                }  else {
-                    appendKeyValueNl(kString, v);
+                if (kString.lowercase().contains("name")) {
+                    appendBold(kString, v)
+                    appendNl()
+                } else {
+                    appendKeyValue(kString, v)
+                    appendNl()
                 }
             }
         }

@@ -1,36 +1,28 @@
-package ch.bailu.aat_lib.html;
+package ch.bailu.aat_lib.html
 
-public interface MarkupConfig {
-    MarkupConfig HTML = new MarkupConfig() {
-        @Override
-        public String getNewLine() {
-            return "<br>";
+interface MarkupConfig {
+    val newLine: String
+    val boldOpen: String
+    val boldClose: String
+    val bigOpen: String
+    val bigClose: String
+
+    companion object {
+        val HTML: MarkupConfig = object : MarkupConfig {
+            override val newLine: String
+                get() = "<br>"
+
+            override val boldOpen: String
+                get() = "<b>"
+
+            override val boldClose: String
+                get() = "</b>"
+
+            override val bigOpen: String
+                get() = "<h3>"
+
+            override val bigClose: String
+                get() = "</h3>"
         }
-
-        @Override
-        public String getBoldOpen() {
-            return "<b>";
-        }
-
-        @Override
-        public String getBoldClose() {
-            return "</b>";
-        }
-
-        @Override
-        public String getBigOpen() {
-            return "<h3>";
-        }
-
-        @Override
-        public String getBigClose() {
-            return "</h3>";
-        }
-    };
-
-    String getNewLine();
-    String getBoldOpen();
-    String getBoldClose();
-    String getBigOpen();
-    String getBigClose();
+    }
 }

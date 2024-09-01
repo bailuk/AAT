@@ -3,23 +3,19 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_lib.html.MarkupConfig
 
 object PangoMarkupConfig : MarkupConfig {
-    override fun getNewLine(): String {
-        return "\n"
-    }
 
-    override fun getBoldOpen(): String {
-        return MarkupConfig.HTML.boldOpen
-    }
+    override val newLine: String
+        get() = "\n"
 
-    override fun getBoldClose(): String {
-        return MarkupConfig.HTML.boldClose
-    }
+    override val boldOpen: String
+        get() = MarkupConfig.HTML.boldOpen
 
-    override fun getBigOpen(): String {
-        return "<big><b>"
-    }
+    override val boldClose: String
+        get() = MarkupConfig.HTML.boldClose
 
-    override fun getBigClose(): String {
-        return "</b></big>\n"
-    }
+    override val bigOpen: String
+        get() = "<big><b>"
+
+    override val bigClose: String
+        get() = "</b></big>\n"
 }

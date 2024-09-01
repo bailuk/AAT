@@ -1,63 +1,65 @@
-package ch.bailu.aat_lib.html;
+package ch.bailu.aat_lib.html
+
+import com.google.common.html.HtmlEscapers
+import javax.annotation.Nonnull
 
 
-import javax.annotation.Nonnull;
+open class MarkupBuilder(@JvmField protected val config: MarkupConfig) {
+    private val stringBuilder = StringBuilder()
+    private val htmlEscaper = HtmlEscapers.htmlEscaper()
 
-public class MarkupBuilder {
-
-    private final StringBuilder b = new StringBuilder();
-
-    protected final MarkupConfig config;
-
-    public MarkupBuilder(MarkupConfig config) {
-        this.config = config;
+    fun clear() {
+        stringBuilder.setLength(0)
     }
 
-    public void clear() {
-        b.setLength(0);
+    fun appendHeader(s: String) {
+        stringBuilder.append(config.bigOpen)
+        appendEscaped(s)
+        stringBuilder.append(config.bigClose)
     }
 
-    public void appendHeader(String s) {
-        append(config.getBigOpen());
-        append(s);
-        append(config.getBigClose());
+    fun append(s: String) {
+        appendEscaped(s)
     }
 
-    public void append(String s) {
-        b.append(s);
+    fun appendBold(s: String) {
+        stringBuilder.append(config.boldOpen)
+        appendEscaped(s)
+        stringBuilder.append(config.boldClose)
     }
 
-    public void appendNl(String s) {
-        b.append(s);
-        b.append(config.getNewLine());
+
+    fun appendNl() {
+        stringBuilder.append(config.newLine)
     }
 
-    public void appendBoldNl(String k, String v) {
-        append(config.getBoldOpen());
-        append(k);
-        append("=");
-        append(v);
-        append(config.getBoldClose());
-        append(config.getNewLine());
+    fun appendBold(k: String, v: String) {
+        stringBuilder.append(config.boldOpen)
+        appendEscaped(k)
+        stringBuilder.append("=")
+        appendEscaped(v)
+        stringBuilder.append(config.boldClose)
     }
 
-    public void appendKeyValueNl(String k, String v) {
-        append(k);
-        append("=");
-        append(v);
-        append(config.getNewLine());
+    fun appendKeyValue(k: String, v: String) {
+        appendEscaped(k)
+        stringBuilder.append("=")
+        appendEscaped(v)
     }
 
-    public void appendNl(String l, String v) {
-        append(l);
-        append(": ");
-        append(v);
-        append(config.getNewLine());
+    fun append(l: String, v: String) {
+        appendEscaped(l)
+        stringBuilder.append(": ")
+        appendEscaped(v)
+        stringBuilder.append(config.newLine)
+    }
+
+    private fun appendEscaped(s: String) {
+        stringBuilder.append(htmlEscaper.escape(s))
     }
 
     @Nonnull
-    @Override
-    public String toString() {
-        return b.toString();
+    override fun toString(): String {
+        return stringBuilder.toString()
     }
 }

@@ -44,7 +44,6 @@ class NodeInfo {
         markupBuilder.appendInfo(info, index)
         markupBuilder.appendNode(node, info)
         markupBuilder.appendAttributes(node.getAttributes())
-
         label.setMarkup(markupBuilder.toString())
         markupBuilder.clear()
     }

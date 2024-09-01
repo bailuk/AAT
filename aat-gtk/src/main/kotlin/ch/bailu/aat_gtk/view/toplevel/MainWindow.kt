@@ -49,9 +49,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     UiControllerInterface {
 
     companion object {
-        val pageIdCockpit = Icons.incCockpitSymbolic
+        val pageIdCockpit  = Icons.incCockpitSymbolic
         val pageIdFileList = Icons.viewListSymbolic
-        val pageIdDetail = Icons.viewContinuousSymbolic
+        val pageIdDetail   = Icons.viewContinuousSymbolic
     }
 
     private val showMapButton = Button().apply {
@@ -295,10 +295,6 @@ private class MetaInfoCollector : TargetInterface {
 
     fun getBounding(iid: Int): BoundingBoxE6 {
         return boundings.getOrDefault(iid, BoundingBoxE6.NULL_BOX)
-    }
-
-    fun getName(iid: Int): String {
-        return getFile(iid).name
     }
 
     fun getFile(iid: Int): Foc {
