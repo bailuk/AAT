@@ -27,7 +27,10 @@ import ch.bailu.aat_lib.description.PathDescription
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -70,19 +73,13 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
     private fun createDispatcher() {
         dispatcher.addSource(IteratorSource.Summary(appContext))
-        //TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
 
         val busyControl = busyControl
 
         if (busyControl is TargetInterface) {
-            dispatcher.addTarget(
-                busyControl,
-                InfoID.OVERLAY,
-                InfoID.OVERLAY + 1,
-                InfoID.OVERLAY + 2,
-                InfoID.OVERLAY + 3
-            )
+            dispatcher.addTarget(busyControl, *InformationUtil.getOverlayInfoIdList().toIntArray())
         }
     }
 
@@ -157,7 +154,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
 
             registerForContextMenu(listView)
             busyControl = BusyViewControlDbSync(contentView)
-            val map: MapViewInterface = MapFactory.DEF(acontext, solidKey).list()
+            val map: MapViewInterface = MapFactory.createDefaultMapView(acontext, solidKey).list()
 
             fileControlBar = FileControlBarLayer(appContext, map.getMContext(), acontext, appContext.summaryConfig).apply {
                 map.add(this)

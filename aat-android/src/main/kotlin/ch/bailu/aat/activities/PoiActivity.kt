@@ -3,10 +3,10 @@ package ch.bailu.aat.activities
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.poi.PoiView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -68,14 +68,15 @@ class PoiActivity : AbsOsmApiActivity() {
     }
 
     private fun createPoiListView(): View {
-        val poiView = PoiView(
-            this, appContext,
-            configuration!!.baseDirectory.child(AppDirectory.FILE_SELECTION), theme
-        )
-        this.poiView = poiView
+        val configuration = configuration
 
-        theme.background(poiView)
-        return poiView
+        if (configuration is OsmApiConfiguration) {
+            val poiView = PoiView(this, appContext, configuration.baseDirectory.child(AppDirectory.FILE_SELECTION), theme)
+            this.poiView = poiView
+            theme.background(poiView)
+            return poiView
+        }
+        return View(this)
     }
 
     override fun onDestroy() {

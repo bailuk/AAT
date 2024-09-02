@@ -16,12 +16,15 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
+import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects
@@ -95,17 +98,13 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     private fun createDispatcher() {
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        // TODO dispatcher.addSource(OverlaySource(appContext))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(editorSource)
-        dispatcher.addTarget(
-            busyControl!!,
-            InfoID.FILE_VIEW,
-            InfoID.OVERLAY,
-            InfoID.OVERLAY + 1,
-            InfoID.OVERLAY + 2,
-            InfoID.OVERLAY + 3
-        )
-        dispatcher.addTarget(fileOperation!!, InfoID.FILE_VIEW)
+
+        busyControl?.apply {
+            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.getOverlayInfoIdList().toIntArray())
+        }
+        fileOperation?.apply { dispatcher.addTarget(this, InfoID.FILE_VIEW) }
 
         dispatcher.addTarget({ _, info ->
             val newFileID = info.getFile().toString()

@@ -23,7 +23,7 @@ import ch.bailu.aat_lib.description.CadenceDescription
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DescendDescription
 import ch.bailu.aat_lib.description.DistanceDescription
-import ch.bailu.aat_lib.dispatcher.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.description.HeartRateDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PowerDescription
@@ -34,8 +34,11 @@ import ch.bailu.aat_lib.description.TotalStepsDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 
 class CockpitSplitActivity : AbsKeepScreenOnActivity() {
     companion object {
@@ -52,7 +55,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createContentView(edit: EditorSource): View {
-        val mapSlave = MapFactory.DEF(this, SOLID_KEY).split()
+        val mapSlave = MapFactory.createDefaultMapView(this, SOLID_KEY).split()
         val cockpitA = CockpitView(this, THEME)
         val cockpitB = CockpitView(this, THEME)
         val cockpitC = CockpitView(this, THEME)
@@ -107,7 +110,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         mv.add(percentageC)
         mv.add(percentageD)
         mv.add(mapSlave)
-        val mapMaster = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar(mv))
+        val mapMaster = MapFactory.createDefaultMapView(this, SOLID_MAP_KEY).map(edit, createButtonBar(mv))
         MapViewLinker(mapMaster, mapSlave)
         val contentView = ContentView(this, THEME)
         contentView.addMvIndicator(mv)
@@ -135,7 +138,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        // TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))

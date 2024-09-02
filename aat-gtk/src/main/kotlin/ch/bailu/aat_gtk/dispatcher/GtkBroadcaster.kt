@@ -26,7 +26,6 @@ class GtkBroadcaster : Broadcaster {
         val observers = signals[action]?.toTypedArray()
 
         if (observers != null) {
-            // TODO AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
             if (broadcastQueue.offer(BroadcastEntry(observers, arrayOf(*args)))) {
                 Glib.idleAdd(onSourceFunc, null)
             } else {

@@ -40,6 +40,5 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
         fun createDraftSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
             return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_EDIT, AppDirectory.FILE_DRAFT, InfoID.EDITOR_DRAFT)
         }
-
     }
 }

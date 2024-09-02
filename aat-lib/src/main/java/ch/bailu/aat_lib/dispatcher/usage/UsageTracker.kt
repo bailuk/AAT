@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.dispatcher.usage
 
+import ch.bailu.aat_lib.lib.adroid_compat.getOrDefaultApi22
+
 class UsageTracker : UsageTrackerInterface {
 
     private val usageMap = HashMap<Int, Boolean>()
@@ -7,14 +9,14 @@ class UsageTracker : UsageTrackerInterface {
 
 
     fun setEnabled(infoID: Int, enabled: Boolean) {
-        if (enabled != usageMap.getOrDefault(infoID, false)) {
+        if (enabled != usageMap.getOrDefaultApi22(infoID, false)) {
             usageMap[infoID] = enabled
             observers.forEach { it() }
         }
     }
 
     override fun isEnabled(infoID: Int): Boolean {
-        return usageMap.getOrDefault(infoID, false)
+        return usageMap.getOrDefaultApi22(infoID, false)
     }
 
     override fun observe(onChanged: ()->Unit) {

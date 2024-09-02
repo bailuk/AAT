@@ -106,11 +106,11 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
     }
 
     companion object {
-        fun DEF(activityContext: ActivityContext, skey: String): MapFactory {
-            return MF(activityContext, skey)
+        fun createDefaultMapView(activityContext: ActivityContext, skey: String): MapFactory {
+            return createMultiViewMapView(activityContext, skey)
         }
 
-        fun MF(activityContext: ActivityContext, skey: String): MapFactory {
+        private fun createMultiViewMapView(activityContext: ActivityContext, skey: String): MapFactory {
             return MapFactory(
                 MapsForgeView(
                     activityContext,

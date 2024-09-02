@@ -19,9 +19,9 @@ import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource

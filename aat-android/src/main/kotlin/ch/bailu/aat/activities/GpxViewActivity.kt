@@ -23,9 +23,14 @@ import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.foc.Foc
@@ -71,7 +76,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
     }
 
     private fun createLayout(bar: MainControlBar, contentView: ContentView): View {
-        map = MapFactory.DEF(this, SOLID_KEY).externalContent()
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).externalContent()
         val summary = VerticalScrollView(this)
         summary.addAllContent(dispatcher, FileContentActivity.getSummaryData(this), theme, InfoID.FILE_VIEW)
         val graph: View = GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.FILE_VIEW)
@@ -119,8 +124,8 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
     private fun createDispatcher() {
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        // TODO dispatcher.addSource(OverlaysSource(appContext))
-        // TODO dispatcher.addSource(FileViewSource(appContext, file))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
         dispatcher.addTarget(this, InfoID.FILE_VIEW)
 
         busyControl?.apply {

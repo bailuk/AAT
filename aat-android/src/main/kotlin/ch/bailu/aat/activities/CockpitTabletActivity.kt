@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.CadenceDescription
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
-import ch.bailu.aat_lib.dispatcher.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.description.HeartRateDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
@@ -27,8 +27,11 @@ import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 
 class CockpitTabletActivity : AbsKeepScreenOnActivity() {
     private val theme = AppTheme.cockpit
@@ -47,8 +50,8 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
 
     private fun createContentView(edit: EditorSourceInterface): View {
         val result = ContentView(this, theme)
-        val smallMap = MapFactory.DEF(this, SOLID_KEY).split()
-        val bigMap = MapFactory.DEF(this, SOLID_MAP_KEY).map(edit, createButtonBar())
+        val smallMap = MapFactory.createDefaultMapView(this, SOLID_KEY).split()
+        val bigMap = MapFactory.createDefaultMapView(this, SOLID_MAP_KEY).map(edit, createButtonBar())
         MapViewLinker(bigMap, smallMap)
 
         val cockpitAndSmallMap = PercentageLayout(this)
@@ -98,7 +101,7 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        // TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))

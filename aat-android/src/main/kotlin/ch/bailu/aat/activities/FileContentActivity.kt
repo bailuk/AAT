@@ -43,7 +43,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 class FileContentActivity : AbsFileContentActivity() {
 
     override fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup {
-        map = MapFactory.DEF(this, SOLID_KEY).content(editorSource)
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).content(editorSource)
 
         val summary = VerticalScrollView(this)
         summary.addAllContent(

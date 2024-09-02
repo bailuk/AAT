@@ -26,7 +26,7 @@ class GpxEditorActivity : AbsFileContentActivity() {
     }
 
     override fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup {
-        map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource)
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).editor(editorSource)
         val summaryData = arrayOf(
             NameDescription(),
             PathDescription(),

@@ -1,14 +1,15 @@
-package ch.bailu.aat_lib.dispatcher
+package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.usage.UsageTracker
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
+import ch.bailu.aat_lib.dispatcher.SourceInterface
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.foc.Foc
-
 
 class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
     EditorSourceInterface, SourceInterface {

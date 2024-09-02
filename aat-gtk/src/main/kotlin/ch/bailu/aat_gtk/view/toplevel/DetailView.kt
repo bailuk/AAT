@@ -29,6 +29,7 @@ import ch.bailu.aat_lib.description.TrackSizeDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.filter.SelectFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
@@ -38,11 +39,11 @@ class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInte
     init {
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
         graphView.height = 100
-        dispatcher.addTarget(SelectFilter(graphView, usageTracker)) // TODO iids?
+        dispatcher.addTarget(SelectFilter(graphView, usageTracker), *InformationUtil.getMapOverlayInfoIdList().toIntArray())
 
         graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(dispatcher, getSummaryData(storage), usageTracker) // TODO iids?
+        addAllContent(dispatcher, getSummaryData(storage), usageTracker, *InformationUtil.getMapOverlayInfoIdList().toIntArray())
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {

@@ -26,8 +26,7 @@ class OverpassActivity : AbsOsmApiActivity() {
             mainView.add(createOsmFeaturesView(), 50)
             mainView
         } else {
-            val multiView =
-                MultiView(this, KEY)
+            val multiView = MultiView(this, KEY)
             this.multiView = multiView
             multiView.add(super.createNodeListView(contentView))
             multiView.add(createOsmFeaturesView())

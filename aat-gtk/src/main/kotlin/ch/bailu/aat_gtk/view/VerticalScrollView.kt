@@ -32,14 +32,17 @@ abstract class VerticalScrollView {
         add(label)
     }
 
-    fun add(di: DispatcherInterface, desc: ContentDescription, usageTracker: UsageTrackerInterface) {
+    fun add(di: DispatcherInterface, desc: ContentDescription, usageTracker: UsageTrackerInterface, vararg iid: Int) {
         val view = DescriptionLabelTextView(desc)
         add(view.layout)
-        di.addTarget(SelectFilter(view, usageTracker))
+        di.addTarget(SelectFilter(view, usageTracker), *iid)
     }
 
-    fun addAllContent(di: DispatcherInterface, descs: Array<ContentDescription>,
-                      usageTracker: UsageTrackerInterface) {
-        descs.forEach { add(di, it, usageTracker) }
+    fun addAllContent(
+        di: DispatcherInterface, descs: Array<ContentDescription>,
+        usageTracker: UsageTrackerInterface,
+        vararg iid: Int
+    ) {
+        descs.forEach { add(di, it, usageTracker, *iid) }
     }
 }

@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.View
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.app.ActivitySwitcher
-import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
@@ -19,6 +18,7 @@ import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -87,14 +87,12 @@ class MainActivity : ActivityContext() {
     }
 
     private fun labelFactory(s: ActivitySwitcher.Entry): ActivityLabel {
-        if (s.activityClass == TrackListActivity::class.java) {
-            return PresetDirectoryLabel(s)
-        } else if (s.activityClass == OverlayListActivity::class.java) {
-            return InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY)
-        } else if (s.activityClass == ExternalListActivity::class.java) {
-            return ExternalDirectoryLabel(s)
+        return when (s.activityClass) {
+            TrackListActivity::class.java -> PresetDirectoryLabel(s)
+            OverlayListActivity::class.java -> InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY)
+            ExternalListActivity::class.java -> ExternalDirectoryLabel(s)
+            else -> ActivityLabel(s)
         }
-        return ActivityLabel(s)
     }
 
     private open inner class ActivityLabel(theme: UiTheme, s: ActivitySwitcher.Entry) :

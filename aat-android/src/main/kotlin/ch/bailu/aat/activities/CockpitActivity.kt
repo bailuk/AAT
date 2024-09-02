@@ -2,29 +2,32 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import android.view.View
-import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.CockpitView
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
-import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 
 class CockpitActivity : AbsKeepScreenOnActivity() {
     companion object {
@@ -49,7 +52,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     private fun createMultiView(edit: EditorSource): MultiView {
         val multiView = MultiView(this, SOLID_KEY)
         multiView.add(createCockpit())
-        multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView())
+        multiView.add(MapFactory.createDefaultMapView(this, SOLID_KEY).tracker(edit).toView())
         multiView.add(GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.TRACKER))
         return multiView
     }
@@ -94,7 +97,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        // TODO dispatcher.addSource(OverlaysSource(appContext))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
