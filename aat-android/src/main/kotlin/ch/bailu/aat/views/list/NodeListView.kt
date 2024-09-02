@@ -34,7 +34,7 @@ class NodeListView(private val dispatcher: ActivityContext) : ListView(
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         array = GpxListArray(info.getGpxList())
-        cachedInfo[iid] = info
+        cachedInfo.set(iid, info)
         notifyDataSetChanged()
     }
 

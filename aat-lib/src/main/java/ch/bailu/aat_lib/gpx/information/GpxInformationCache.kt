@@ -1,29 +1,25 @@
-package ch.bailu.aat_lib.gpx.information;
+package ch.bailu.aat_lib.gpx.information
 
-import ch.bailu.aat_lib.dispatcher.TargetInterface;
+import ch.bailu.aat_lib.dispatcher.TargetInterface
 
-public class GpxInformationCache {
-    public GpxInformation info;
-    public int infoID;
+class GpxInformationCache {
+    var info = GpxInformation.NULL
+    var infoID = InfoID.UNSPECIFIED
 
-
-    public GpxInformationCache() {
-        reset();
+    init {
+        reset()
     }
 
-
-    public void set(int _infoID, GpxInformation _info) {
-        info = _info;
-        infoID = _infoID;
+    fun set(iid: Int, info: GpxInformation) {
+        this.info = info
+        infoID = iid
     }
 
-
-    public void reset() {
-        set(InfoID.UNSPECIFIED, GpxInformation.NULL);
+    fun reset() {
+        set(InfoID.UNSPECIFIED, GpxInformation.NULL)
     }
 
-
-    public void letUpdate(TargetInterface obj) {
-        obj.onContentUpdated(infoID, info);
+    fun letUpdate(obj: TargetInterface) {
+        obj.onContentUpdated(infoID, info)
     }
 }
