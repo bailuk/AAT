@@ -64,7 +64,8 @@ object FileAction {
     fun copyToDir(context: AppContext, src: Foc, destDir: Foc) {
         try {
             copyToDest(context, src, destDir.child(src.name))
-        } catch (e: IOException) {
+        } catch (e: Exception) {
+            // Android SAF backend can throw any exception (like IllegalArgumentException)
             AppLog.e(context, e)
         }
     }
