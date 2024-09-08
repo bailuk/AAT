@@ -76,6 +76,6 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
     override fun createActions(app: Application) {}
 
     companion object {
-        private val ID = "overlay"
+        private const val ID = "overlay"
     }
 }

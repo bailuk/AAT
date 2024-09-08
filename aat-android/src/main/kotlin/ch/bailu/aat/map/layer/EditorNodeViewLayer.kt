@@ -65,7 +65,7 @@ class EditorNodeViewLayer(appContext: AppContext,
         setHtmlText(markupBuilder)
     }
 
-    override fun onClick(v: View) {
+    override fun onClick(v: View?) {
         if (editorSource.isEditing) {
             startNodeDetailActivity(ObjGpxEditable.getVirtualID(editorSource.file))
         } else {

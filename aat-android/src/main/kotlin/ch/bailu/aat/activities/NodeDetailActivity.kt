@@ -78,7 +78,6 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, TargetInterf
         viewB.setOrientation(AppLayout.getOrientationAlongLargeSide(this))
 
         htmlView = HtmlScrollTextView(this).apply {
-            enableAutoLink()
             themify(theme)
             viewB.add(this, 40)
         }
