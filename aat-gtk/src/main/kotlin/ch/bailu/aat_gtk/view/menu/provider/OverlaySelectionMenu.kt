@@ -57,7 +57,6 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
                             append(Button().apply {
                                 iconName = Icons.viewContinuousSymbolic
                                 onClicked {
-                                    checkButton.active = true
                                     controller.showInDetail()
                                 }
                             })
