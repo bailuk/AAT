@@ -51,7 +51,6 @@ open class MarkupBuilder(@JvmField protected val config: MarkupConfig) {
         appendEscaped(l)
         stringBuilder.append(": ")
         appendEscaped(v)
-        stringBuilder.append(config.newLine)
     }
 
     private fun appendEscaped(s: String) {
