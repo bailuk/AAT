@@ -193,11 +193,11 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         }
     }
 
-    override fun centerInMap(infoID: Int) {
-        if (infoID == InfoID.TRACKER) {
+    override fun centerInMap(iid: Int) {
+        if (iid == InfoID.TRACKER) {
              SolidPositionLock(appContext.storage, GtkCustomMapView.DEFAULT_KEY).value = true
-        } else if (metaInfoCollector.hasBounding(infoID)) {
-            mapView.map.setCenter(metaInfoCollector.getBounding(infoID).center.toLatLong())
+        } else if (metaInfoCollector.hasBounding(iid)) {
+            mapView.map.setCenter(metaInfoCollector.getBounding(iid).center.toLatLong())
         }
     }
 
@@ -213,10 +213,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     override fun showDetail() {
         leaflet.visibleChild = stackPage.stackPage
         stackPage.showPage(pageIdDetail)
-    }
-
-    override fun showInList() {
-        TODO("Not yet implemented")
     }
 
     override fun showPreferencesMap() {
@@ -236,8 +232,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         PreferencesDialog.show(app, appContext)
     }
 
-    override fun showInDetail(infoID: Int) {
-        detailViewPage.select(infoID)
+    override fun showInDetail(iid: Int) {
+        detailViewPage.select(iid)
     }
 
     override fun loadIntoEditor(info: GpxInformation) {
@@ -264,8 +260,12 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         leaflet.visibleChild = stackPage.stackPage
     }
 
-    override fun getName(infoID: Int): String {
-        return InformationUtil.defaultName(infoID)
+    override fun getName(iid: Int): String {
+        return InformationUtil.defaultName(iid)
+    }
+
+    override fun setOverlayEnabled(iid: Int, enabled: Boolean) {
+        SolidOverlayFileEnabled(appContext.storage, iid).value = enabled
     }
 
     private fun setupDispatcher(dispatcher: Dispatcher) {

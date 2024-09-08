@@ -39,6 +39,7 @@ class DetailViewPage(
                     onClicked {
                         uiController.showMap()
                         uiController.frameInMap(usageTracker.getIID())
+                        uiController.setOverlayEnabled(usageTracker.getIID(), true)
                     }
                 })
 
@@ -47,6 +48,7 @@ class DetailViewPage(
                     onClicked {
                         uiController.showMap()
                         uiController.centerInMap(usageTracker.getIID())
+                        uiController.setOverlayEnabled(usageTracker.getIID(), true)
                     }
                 })
 

@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 
 class OverlayController(private val storage: StorageInterface, private val uiController: UiControllerInterface, private val iid: Int): OverlayControllerInterface {
     override fun setEnabled(enabled: Boolean) {
-        SolidOverlayFileEnabled(storage, iid).value = enabled
+        uiController.setOverlayEnabled(iid, enabled)
     }
 
     override fun frame() {

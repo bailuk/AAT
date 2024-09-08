@@ -7,20 +7,20 @@ interface UiControllerInterface {
     fun showMap()
     fun showPoi()
     fun frameInMap(info: GpxInformation)
-    fun frameInMap(infoID: Int)
+    fun frameInMap(iid: Int)
     fun centerInMap(info: GpxInformation)
-    fun centerInMap(infoID: Int)
+    fun centerInMap(iid: Int)
     fun load(info: GpxInformation)
     fun showCockpit()
     fun showDetail()
-    fun showInList()
     fun showPreferencesMap()
     fun getMapBounding(): BoundingBoxE6
     fun showFileList()
     fun showPreferences()
-    fun showInDetail(infoID: Int)
+    fun showInDetail(iid: Int)
     fun loadIntoEditor(info: GpxInformation)
     fun loadIntoEditor(iid: Int)
     fun hideMap()
-    fun getName(infoID: Int): String
+    fun getName(iid: Int): String
+    fun setOverlayEnabled(iid: Int, enabled: Boolean)
 }

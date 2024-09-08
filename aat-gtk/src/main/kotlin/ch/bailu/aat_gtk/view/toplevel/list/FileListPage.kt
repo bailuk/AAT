@@ -7,8 +7,8 @@ import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.lib.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.MenuHelper
+import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
@@ -217,6 +217,7 @@ class FileListPage(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.frameInMap(iteratorSimple.info)
+            uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
 
@@ -233,6 +234,7 @@ class FileListPage(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.centerInMap(iteratorSimple.info)
+            uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
 
