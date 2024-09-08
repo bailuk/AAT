@@ -78,7 +78,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             persistenceManager.close()
             appContext.broadcaster.broadcast(
                 AppBroadcaster.FILE_CHANGED_ONDISK,
-                file.toString(), poiDatabase
+                getFile().toString(), poiDatabase
             )
             return 100
         }
@@ -88,7 +88,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
             val poiCollection = searchPoi(persistenceManager, box)
 
             if (poiCollection is Collection<PointOfInterest>) {
-                if (file.exists()) file.remove()
+                if (getFile().exists()) getFile().remove()
                 writeGpxFile(poiCollection)
             }
         }
@@ -102,7 +102,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
 
         @Throws(IOException::class)
         private fun writeGpxFile(pois: Collection<PointOfInterest>) {
-            val writer: WayWriter = WayWriterOsmTags(file)
+            val writer: WayWriter = WayWriterOsmTags(getFile())
             writer.writeHeader(System.currentTimeMillis())
             for (poi in pois) {
                 writer.writeTrackPoint(GpxPointPoi(poi))

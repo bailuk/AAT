@@ -31,22 +31,22 @@ open class DownloadTask(
         try {
             size = bgDownload()
             appContext.broadcaster.broadcast(
-                AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
+                AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
             )
         } catch (e: Exception) {
             logError(e)
-            file.rm()
+            getFile().rm()
         }
         return size
     }
 
     @Throws(IOException::class)
     protected fun bgDownload(): Long {
-        return download(source.toURL(), file)
+        return download(source.toURL(), getFile())
     }
 
     protected open fun logError(e: Exception?) {
-        AppLog.w(this, file.pathName)
+        AppLog.w(this, getFile().pathName)
         AppLog.w(this, e)
     }
 

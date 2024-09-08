@@ -21,7 +21,7 @@ class SaveTileTask(private val sourceID: String, target: Foc) : FileTask(target)
     private fun save(sc: AppContext, self: ObjTile): Long {
         var size: Long = 0
         var out: OutputStream? = null
-        val file = file
+        val file = getFile()
         if (!file.exists()) {
             try {
                 out = file.openW()

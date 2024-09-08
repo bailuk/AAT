@@ -5,9 +5,9 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
@@ -47,10 +47,15 @@ class MockLocation(context: Context, next: LocationStackItem) : LocationStackCha
         if (sendLocation()) {
             kickTimer()
         } else {
-            node = list.pointList.first as GpxPointNode
-            if (sendLocation()) {
-                passState(StateID.ON)
-                kickTimer()
+            val firstNode = list.pointList.first
+            if (firstNode is GpxPointNode) {
+                node = firstNode
+                if (sendLocation()) {
+                    passState(StateID.ON)
+                    kickTimer()
+                } else {
+                    passState(StateID.OFF)
+                }
             } else {
                 passState(StateID.OFF)
             }

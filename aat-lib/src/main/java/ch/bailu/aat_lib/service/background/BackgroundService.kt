@@ -52,7 +52,7 @@ class BackgroundService(
     }
 
     private fun load(handle: FileTask) {
-        val base = getBaseDirectory(handle.file)
+        val base = getBaseDirectory(handle.getFile())
         var loader = loaders[base]
         if (loader == null) {
             loader = LoaderThread(appContext, base)

@@ -15,7 +15,7 @@ abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi(
     final override val apiName: String
         get() = overlay.getLabel()
 
-    private val bounding: String
+    private val bounding: String = toString(b)
 
     override val urlStart: String
         get() = "$URL…"
@@ -27,10 +27,6 @@ abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi(
 
     override val baseDirectory: Foc
         get() = overlay.directory
-
-    init {
-        bounding = toString(b)
-    }
 
     /**
      * See: http://overpass-api.de/command_line.html

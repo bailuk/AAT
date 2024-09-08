@@ -1,51 +1,36 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import javax.annotation.Nonnull;
+import ch.bailu.foc.Foc
+import javax.annotation.Nonnull
 
-import ch.bailu.foc.Foc;
-
-public abstract class FileTask extends BackgroundTask {
-    private final Foc file;
-
-    private Tasks tasks = null;
-
-
-    public FileTask(Foc f) {
-        file = f;
-    }
+abstract class FileTask(private val file: Foc) : BackgroundTask() {
+    private var tasks: Tasks? = null
 
 
     @Nonnull
-    @Override
-    public String toString() {
-        return file.toString();
+    override fun toString(): String {
+        return file.toString()
     }
 
-    public Foc getFile() {
-        return file;
+    fun getFile(): Foc {
+        return file
     }
 
-    public String getID() {
-        return file.getPath();
+    fun getID(): String {
+        return file.path
     }
 
-
-    public void register(Tasks t) {
-        if (tasks == null)
-            tasks = t;
-    }
-
-
-    @Override
-    public void onInsert() {
-        if (tasks != null) tasks.add(this);
-    }
-
-
-    @Override
-    public void onRemove() {
-        if (tasks != null) {
-            tasks.remove(this);
+    fun register(tasks: Tasks) {
+        if (this.tasks == null) {
+            this.tasks = tasks
         }
+    }
+
+    override fun onInsert() {
+        tasks?.add(this)
+    }
+
+    override fun onRemove() {
+        this.tasks?.remove(this)
     }
 }

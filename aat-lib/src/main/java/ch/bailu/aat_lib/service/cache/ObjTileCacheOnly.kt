@@ -84,12 +84,12 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     private class TileLoaderTask(f: Foc?) : FileTask(f) {
         override fun bgOnProcess(appContext: AppContext): Long {
             val size = longArrayOf(0)
-            object : OnObject(appContext, file.toString(), ObjTileCacheOnly::class.java) {
+            object : OnObject(appContext, getFile().toString(), ObjTileCacheOnly::class.java) {
                 override fun run(handle: Obj) {
                     val tile = handle as ObjTileCacheOnly
                     try {
                         tile.bitmap.set(
-                            file,
+                            getFile(),
                             SolidTileSize.DEFAULT_TILESIZE,
                             tile.source.isTransparent
                         )
@@ -99,7 +99,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
 
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,
-                        file.toString()
+                        getFile().toString()
                     )
                     size[0] = tile.bitmap.getSize()
                 }

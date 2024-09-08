@@ -20,7 +20,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 val size = bgDownload()
                 TextBackup.write(queryFile, queryString)
                 appContext.broadcaster.broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
+                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
                 )
                 size
             } catch (e: Exception) {
