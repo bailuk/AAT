@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothGattCharacteristic
 import ch.bailu.aat.R
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.services.sensor.Connector
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 

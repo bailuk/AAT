@@ -21,19 +21,22 @@ import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.preferences.VerticalScrollView
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.FileViewSource
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.FileViewSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroid
 
-class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdatedInterface {
+class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface {
     private var fileOperation: ImageButtonViewGroup? = null
     private var copyTo: ImageButtonViewGroup? = null
     private var busyControl: BusyViewControlIID? = null
@@ -73,10 +76,10 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     }
 
     private fun createLayout(bar: MainControlBar, contentView: ContentView): View {
-        map = MapFactory.DEF(this, SOLID_KEY).externalContent()
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).externalContent()
         val summary = VerticalScrollView(this)
-        summary.addAllContent(this, FileContentActivity.getSummaryData(this), theme, InfoID.FILE_VIEW)
-        val graph: View = GraphViewFactory.all(appContext, this, this, theme, InfoID.FILE_VIEW)
+        summary.addAllContent(dispatcher, FileContentActivity.getSummaryData(this), theme, InfoID.FILE_VIEW)
+        val graph: View = GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.FILE_VIEW)
         return if (AppLayout.isTablet(this)) {
             createPercentageLayout(summary, graph)
         } else {
@@ -119,14 +122,14 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, OnContentUpdate
     }
 
     private fun createDispatcher() {
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
-        addSource(FileViewSource(appContext, file))
-        addTarget(this, InfoID.FILE_VIEW)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
+        dispatcher.addTarget(this, InfoID.FILE_VIEW)
 
         busyControl?.apply {
-            addTarget(
+            dispatcher.addTarget(
                 this, InfoID.FILE_VIEW,
                 InfoID.OVERLAY,
                 InfoID.OVERLAY + 1,

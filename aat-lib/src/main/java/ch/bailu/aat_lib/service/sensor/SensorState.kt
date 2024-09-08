@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.sensor
 
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.resources.Res.str
 
 

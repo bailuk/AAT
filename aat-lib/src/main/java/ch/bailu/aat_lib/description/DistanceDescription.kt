@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.description.FF.Companion.f
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res

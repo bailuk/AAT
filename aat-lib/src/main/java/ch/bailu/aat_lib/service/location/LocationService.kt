@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.service.location
 
 import ch.bailu.aat_lib.broadcaster.Broadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface

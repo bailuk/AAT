@@ -1,7 +1,5 @@
 package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.logger.AppLog.i
-
 class Trigger(private var htrigger: Int) {
     private val ltrigger = 0 - htrigger
     private var level = 0
@@ -19,7 +17,6 @@ class Trigger(private var htrigger: Int) {
         }
     }
 
-
     fun down() {
         level--
         if (level <= ltrigger) {
@@ -30,13 +27,6 @@ class Trigger(private var htrigger: Int) {
 
     val isLow: Boolean
         get() = htrigger == LOW
-
-    fun log() {
-        var t = "Neutral"
-        if (htrigger == HIGH) t = "High"
-        else if (htrigger == LOW) t = "Low"
-        i(this, t)
-    }
 
     companion object {
         private const val LOW = -1

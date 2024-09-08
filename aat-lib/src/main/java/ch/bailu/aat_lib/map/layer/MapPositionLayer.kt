@@ -2,9 +2,9 @@ package ch.bailu.aat_lib.map.layer
 
 import ch.bailu.aat_lib.coordinates.LatLongE6.Companion.toLatLong
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidMapPosition
@@ -16,7 +16,7 @@ class MapPositionLayer(
     private val mcontext: MapContext,
     private val storage: StorageInterface,
     d: DispatcherInterface
-) : MapLayerInterface, OnContentUpdatedInterface {
+) : MapLayerInterface, TargetInterface {
     private val slock: SolidPositionLock = SolidPositionLock(storage, mcontext.getSolidKey())
     private var gpsLocation = LatLong(0.0, 0.0)
 

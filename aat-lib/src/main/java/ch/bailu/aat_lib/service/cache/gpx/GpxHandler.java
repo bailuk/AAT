@@ -2,9 +2,9 @@ package ch.bailu.aat_lib.service.cache.gpx;
 
 import static ch.bailu.foc.Foc.FOC_NULL;
 
-import ch.bailu.aat_lib.gpx.GpxFileWrapper;
-import ch.bailu.aat_lib.gpx.GpxInformation;
-import ch.bailu.aat_lib.gpx.GpxInformationProvider;
+import ch.bailu.aat_lib.gpx.information.GpxFileWrapper;
+import ch.bailu.aat_lib.gpx.information.GpxInformation;
+import ch.bailu.aat_lib.gpx.information.GpxInformationProvider;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.service.ServicesInterface;
 import ch.bailu.aat_lib.service.cache.CacheServiceInterface;

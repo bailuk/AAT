@@ -5,8 +5,8 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjBitmap
@@ -17,7 +17,7 @@ import ch.bailu.gtk.gdk.Gdk
 import ch.bailu.gtk.gtk.Image
 import org.mapsforge.map.gtk.graphics.GtkBitmap
 
-class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInterface, Attachable {
+class PreviewImageView(private val appContext: AppContext): TargetInterface, Attachable {
     val image = Image().apply {
         pixelSize = MapsForgePreview.BITMAP_SIZE/2
     }

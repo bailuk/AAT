@@ -18,9 +18,9 @@ import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.TimeDescription
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
@@ -60,7 +60,7 @@ class FileControlBarLayer(
         ToolTip.set(overlay, R.string.file_overlay)
         ToolTip.set(reloadPreview, R.string.file_reload)
         ToolTip.set(delete, R.string.file_delete)
-        acontext.addTarget(selector, InfoID.LIST_SUMMARY)
+        acontext.dispatcher.addTarget(selector, InfoID.LIST_SUMMARY)
     }
 
     fun setIterator(i: Iterator) {

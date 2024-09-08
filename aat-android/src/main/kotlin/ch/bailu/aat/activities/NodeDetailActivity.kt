@@ -13,27 +13,28 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.image.ImageButtonViewGroup
-import ch.bailu.aat.views.layout.PercentageLayout
-import ch.bailu.aat.views.image.SVGAssetView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.graph.GraphView
 import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.html.HtmlScrollTextView
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.FileViewSource
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.image.SVGAssetView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.FileViewSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListArray
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.foc.Foc
 
-class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpdatedInterface, OnSeekBarChangeListener {
+class NodeDetailActivity : ActivityContext(), View.OnClickListener, TargetInterface, OnSeekBarChangeListener {
     private var nextNode: ImageButtonViewGroup? = null
     private var previousNode: ImageButtonViewGroup? = null
     private var icon: SVGAssetView? = null
@@ -82,7 +83,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
             viewB.add(this, 40)
         }
 
-        mapView = MapFactory.DEF(this, SOLID_KEY).node().apply {
+        mapView = MapFactory.createDefaultMapView(this, SOLID_KEY).node().apply {
             viewB.add(To.view(this)!!, 60)
         }
 
@@ -100,9 +101,9 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, OnContentUpd
     }
 
     private fun createDispatcher() {
-        addTarget(this, InfoID.FILE_VIEW)
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(FileViewSource(appContext, file))
+        dispatcher.addTarget(this, InfoID.FILE_VIEW)
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

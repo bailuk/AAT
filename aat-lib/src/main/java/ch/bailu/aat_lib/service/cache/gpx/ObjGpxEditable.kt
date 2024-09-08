@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.Broadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
@@ -129,6 +129,13 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             } catch (e: Exception) {
                 e(this, e)
             }
+        }
+
+        override fun unload() {
+            loadIntoEditor(currentHandle.gpxList)
+            modified =false
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
+                .toString(), id)
         }
 
         override fun inverse() {

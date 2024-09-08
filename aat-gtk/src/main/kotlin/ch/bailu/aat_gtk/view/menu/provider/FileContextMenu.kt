@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
+import ch.bailu.aat_gtk.view.dialog.FileDeleteDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -68,21 +69,13 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
     }
 
     private fun delete(app: Application) {
-
         if (file.canWrite()) {
-            val dialog = MessageDialog(app.activeWindow, Res.str().file_delete_ask(), file.pathName)
-
-            dialog.addResponse(Strings.idCancel, Res.str().cancel())
-            dialog.addResponse(Strings.idOk, Res.str().ok())
-
-            dialog.onResponse {
-                val res = it.toString()
-                if (Strings.idOk == res) {
+            FileDeleteDialog(app, file) { response ->
+                if (Strings.ID_OK == response) {
                     file.rm()
                     FileAction.rescanDirectory(GtkAppContext, file)
                 }
             }
-            dialog.present()
         } else {
             AFile.logErrorReadOnly(file)
         }
@@ -95,11 +88,11 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
             val dialog = MessageDialog(app.activeWindow, Res.str().file_rename(), file.name)
             val entry = Entry()
             dialog.extraChild = entry
-            dialog.addResponse(Strings.idCancel, Res.str().cancel())
-            dialog.addResponse(Strings.idOk, Res.str().ok())
+            dialog.addResponse(Strings.ID_CANCEL, Res.str().cancel())
+            dialog.addResponse(Strings.ID_OK, Res.str().ok())
             dialog.onResponse {
                 val res = it.toString()
-                if (Strings.idOk == res) {
+                if (Strings.ID_OK == res) {
                     val source = directory.child(file.name)
                     val target = directory.child(entry.asEditable().text.toString())
 

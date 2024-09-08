@@ -68,7 +68,7 @@ class PoiList(
         readList()
     }
 
-    private fun readList() {
+    fun readList() {
         FilterListUtil.readList(filterList, GtkAppContext, sdatabase.getValueAsString(), selected)
         listIndex.size = filterList.sizeVisible()
     }

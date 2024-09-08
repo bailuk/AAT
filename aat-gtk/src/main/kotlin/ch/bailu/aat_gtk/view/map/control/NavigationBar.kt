@@ -1,13 +1,13 @@
 package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Icons
-import ch.bailu.aat_gtk.view.UiController
-import ch.bailu.aat_gtk.view.menu.PopupButton
+import ch.bailu.aat_gtk.controller.OverlayControllerInterface
+import ch.bailu.aat_gtk.view.menu.PopupMenuButton
+import ch.bailu.aat_gtk.view.menu.PopupMenuButtonOverlay
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
-import ch.bailu.aat_lib.dispatcher.FileSourceInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
@@ -15,8 +15,8 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.util.IndexedMap
 
-class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<FileSourceInterface>, uiController: UiController) : Bar(Position.BOTTOM),
-    OnContentUpdatedInterface{
+class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: List<OverlayControllerInterface>) : Bar(Position.BOTTOM),
+    TargetInterface{
 
     private val infoCache = IndexedMap<Int, GpxInformation>()
     private var boundingCycle = 0
@@ -40,7 +40,7 @@ class NavigationBar(mcontext: MapContext, storage: StorageInterface, overlays: L
                 }
             }
         }
-        add(PopupButton(OverlaySelectionMenu(overlays, uiController)).apply { setIcon(Icons.viewPagedSymbolic) }.overlay)
+        add(PopupMenuButton(OverlaySelectionMenu(overlays)).apply { setIcon(Icons.viewPagedSymbolic) }.menuButton)
     }
 
     private fun nextInBoundingCycle(): Boolean {

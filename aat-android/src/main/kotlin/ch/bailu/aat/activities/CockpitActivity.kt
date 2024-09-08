@@ -2,29 +2,32 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import android.view.View
-import ch.bailu.aat_lib.dispatcher.SensorSource
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.CockpitView
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
-import ch.bailu.aat_lib.dispatcher.EditorSource
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.dispatcher.TrackerTimerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 
 class CockpitActivity : AbsKeepScreenOnActivity() {
     companion object {
@@ -36,7 +39,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView = ContentView(this, theme)
         val multiView = createMultiView(edit)
         contentView.addMvIndicator(multiView)
@@ -49,8 +52,8 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     private fun createMultiView(edit: EditorSource): MultiView {
         val multiView = MultiView(this, SOLID_KEY)
         multiView.add(createCockpit())
-        multiView.add(MapFactory.DEF(this, SOLID_KEY).tracker(edit).toView())
-        multiView.add(GraphViewFactory.all(appContext, this, this, theme, InfoID.TRACKER))
+        multiView.add(MapFactory.createDefaultMapView(this, SOLID_KEY).tracker(edit).toView())
+        multiView.add(GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.TRACKER))
         return multiView
     }
 
@@ -60,18 +63,18 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         val c1 = CockpitView(this, theme)
 
         c1.add(
-            this, CurrentSpeedDescription(appContext.storage),
+            dispatcher, CurrentSpeedDescription(appContext.storage),
             InfoID.SPEED_SENSOR, InfoID.LOCATION
         )
-        c1.addAltitude(this)
-        c1.add(this, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
-        c1.addC(this, DistanceDescription(appContext.storage), InfoID.TRACKER)
-        c1.addC(this, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
+        c1.addAltitude(dispatcher)
+        c1.add(dispatcher, PredictiveTimeDescription(), InfoID.TRACKER_TIMER)
+        c1.addC(dispatcher, DistanceDescription(appContext.storage), InfoID.TRACKER)
+        c1.addC(dispatcher, AverageSpeedDescriptionAP(appContext.storage), InfoID.TRACKER)
         val c2 = CockpitView(this, theme)
-        c2.add(this, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
-        c2.addHeartRate(this) // With click to update sensors
-        c2.addPower(this) // With click to update sensors
-        c2.addCadence(this) // With click to update sensors
+        c2.add(dispatcher, MaximumSpeedDescription(appContext.storage), InfoID.TRACKER)
+        c2.addHeartRate(dispatcher) // With click to update sensors
+        c2.addPower(dispatcher) // With click to update sensors
+        c2.addCadence(dispatcher) // With click to update sensors
         p.add(c1, 80)
         p.add(c2, 20)
         return p
@@ -90,14 +93,14 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createDispatcher(edit: EditorSource) {
-        addSource(edit)
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))
+        dispatcher.addSource(edit)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SPEED_SENSOR))
     }
 }

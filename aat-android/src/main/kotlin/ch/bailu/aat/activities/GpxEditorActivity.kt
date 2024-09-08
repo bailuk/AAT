@@ -18,7 +18,7 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.NameDescription
 import ch.bailu.aat_lib.description.PathDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class GpxEditorActivity : AbsFileContentActivity() {
     companion object {
@@ -26,7 +26,7 @@ class GpxEditorActivity : AbsFileContentActivity() {
     }
 
     override fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup {
-        map = MapFactory.DEF(this, SOLID_KEY).editor(editorSource)
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).editor(editorSource)
         val summaryData = arrayOf(
             NameDescription(),
             PathDescription(),
@@ -35,14 +35,14 @@ class GpxEditorActivity : AbsFileContentActivity() {
         )
         val summary = VerticalScrollView(this)
         summary.addAllContent(
-            this, summaryData,
+            dispatcher, summaryData,
             AppTheme.trackContent,
             InfoID.EDITOR_OVERLAY,
             InfoID.FILE_VIEW
         )
         summary.add(createAttributesView())
         val graph = GraphViewFactory.createAltitudeGraph(appContext, this, THEME)
-            .connect(this, InfoID.EDITOR_OVERLAY, InfoID.FILE_VIEW)
+            .connect(dispatcher, InfoID.EDITOR_OVERLAY, InfoID.FILE_VIEW)
         return if (AppLayout.isTablet(this)) {
             createPercentageLayout(summary, graph)
         } else {

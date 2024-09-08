@@ -13,7 +13,7 @@ import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.aat_lib.service.ServicesInterface
 
 class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityContext) {
-    private val d: DispatcherInterface = activityContext
+    private val d: DispatcherInterface = activityContext.dispatcher
     private val mc: MapContext = m.getMContext()
     private val s: StorageInterface = activityContext.appContext.storage
     private val ser: ServicesInterface = activityContext.serviceContext
@@ -106,16 +106,16 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
     }
 
     companion object {
-        fun DEF(activityContext: ActivityContext, skey: String): MapFactory {
-            return MF(activityContext, skey)
+        fun createDefaultMapView(activityContext: ActivityContext, skey: String): MapFactory {
+            return createMultiViewMapView(activityContext, skey)
         }
 
-        fun MF(activityContext: ActivityContext, skey: String): MapFactory {
+        private fun createMultiViewMapView(activityContext: ActivityContext, skey: String): MapFactory {
             return MapFactory(
                 MapsForgeView(
                     activityContext,
                     activityContext.appContext,
-                    activityContext,
+                    activityContext.dispatcher,
                     skey
                 ), activityContext
             )

@@ -3,8 +3,8 @@ package ch.bailu.aat_lib.service.directory
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
-import ch.bailu.aat_lib.gpx.GpxFileWrapper
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
 import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface

@@ -1,15 +1,15 @@
 package ch.bailu.aat_gtk.dispatcher
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
-class LogOnContentUpdate(dispatcher: DispatcherInterface): OnContentUpdatedInterface {
+class LogOnContentUpdate(dispatcher: DispatcherInterface): TargetInterface {
     private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.ROOT)
 
     private val log = HashMap<Int, Data>()

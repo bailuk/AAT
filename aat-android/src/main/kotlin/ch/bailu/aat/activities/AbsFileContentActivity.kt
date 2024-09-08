@@ -16,13 +16,15 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.EditorOrBackupSource
-import ch.bailu.aat_lib.dispatcher.IteratorSource
-import ch.bailu.aat_lib.dispatcher.IteratorSource.FollowFile
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects
@@ -73,7 +75,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     protected fun createAttributesView(): View {
         val v = AttributesView(this, appContext.storage)
-        addTarget(v, InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY)
+        dispatcher.addTarget(v, InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY)
         return v
     }
 
@@ -94,21 +96,17 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
 
     private fun createDispatcher() {
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
-        addSource(editorSource)
-        addTarget(
-            busyControl!!,
-            InfoID.FILE_VIEW,
-            InfoID.OVERLAY,
-            InfoID.OVERLAY + 1,
-            InfoID.OVERLAY + 2,
-            InfoID.OVERLAY + 3
-        )
-        addTarget(fileOperation!!, InfoID.FILE_VIEW)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addSource(editorSource)
 
-        addTarget({ _, info ->
+        busyControl?.apply {
+            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.getOverlayInfoIdList().toIntArray())
+        }
+        fileOperation?.apply { dispatcher.addTarget(this, InfoID.FILE_VIEW) }
+
+        dispatcher.addTarget({ _, info ->
             val newFileID = info.getFile().toString()
             if (!Objects.equals(currentFileID, newFileID)) {
                 currentFileID = newFileID

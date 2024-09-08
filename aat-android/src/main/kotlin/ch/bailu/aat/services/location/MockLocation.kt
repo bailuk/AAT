@@ -5,7 +5,7 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 import ch.bailu.aat_lib.gpx.interfaces.GpxType

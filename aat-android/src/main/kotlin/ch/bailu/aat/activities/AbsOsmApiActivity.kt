@@ -19,8 +19,9 @@ import ch.bailu.aat.views.osm.OsmApiEditorView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.FileViewSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.source.FileViewSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
 abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
@@ -42,13 +43,21 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         configuration = createApiConfiguration(AppIntent.getBoundingBox(intent))
         setContentView(createContentView())
-        addSource(FileViewSource(appContext, configuration!!.resultFile))
-        addTarget(list!!, InfoID.FILE_VIEW)
 
-        appContext.broadcaster.register(
-            AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
-            onFileTaskChanged
-        )
+        val configuration = configuration
+        val list = list
+
+        if (configuration is OsmApiConfiguration && list is NodeListView) {
+            dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply {
+                setFile(configuration.resultFile)
+            })
+            dispatcher.addTarget(list, InfoID.FILE_VIEW)
+
+            appContext.broadcaster.register(
+                AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
+                onFileTaskChanged
+            )
+        }
     }
 
     private fun createContentView(): View {

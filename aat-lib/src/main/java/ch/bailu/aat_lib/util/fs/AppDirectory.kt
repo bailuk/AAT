@@ -41,9 +41,9 @@ object AppDirectory {
     const val DIR_CACHE = "cache"
     const val FILE_CACHE_DB = "summary.db"
     const val FILE_CACHE_MVDB = "summary.mv.db"
-    private const val DIR_EDIT = "overlay/draft"
+    const val DIR_EDIT = "overlay/draft"
     const val FILE_EDIT_BACKUP = "edit.txt"
-    private const val FILE_DRAFT = "draft.gpx"
+    const val FILE_DRAFT = "draft.gpx"
     const val FILE_SELECTION = "selection.txt"
     fun getEditorDraft(sdirectory: SolidDataDirectory): Foc {
         return getDataDirectory(sdirectory, DIR_EDIT).child(FILE_DRAFT)

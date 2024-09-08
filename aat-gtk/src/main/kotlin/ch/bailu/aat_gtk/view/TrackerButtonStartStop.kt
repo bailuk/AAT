@@ -1,11 +1,11 @@
 package ch.bailu.aat_gtk.view
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gtk.Button
 
-class TrackerButtonStartStop (private val services: ServicesInterface) : OnContentUpdatedInterface {
+class TrackerButtonStartStop (private val services: ServicesInterface) : TargetInterface {
     val button = Button()
     private var text = services.getTrackerService().getStartStopText()
 

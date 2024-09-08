@@ -6,8 +6,8 @@ import android.hardware.SensorEvent
 import androidx.annotation.RequiresApi
 import ch.bailu.aat.services.sensor.bluetooth_le.Broadcaster
 import ch.bailu.aat.services.sensor.list.SensorListItem
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.SensorInformation
 import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
 import kotlin.math.roundToInt

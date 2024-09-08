@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
@@ -11,7 +11,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Window
 
 class MapMenu(
-    private val uiController: UiController,
+    private val uiController: UiControllerInterface,
     private val mapContext: MapContext,
     mapDirectories: GtkMapDirectories,
     window: Window

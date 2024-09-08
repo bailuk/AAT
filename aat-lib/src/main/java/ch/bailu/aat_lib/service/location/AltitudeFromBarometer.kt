@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.service.location
 
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 
 class AltitudeFromBarometer(next: LocationStackItem,

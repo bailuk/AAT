@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.extensions.ellipsize
 import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.search.SearchModel
-import ch.bailu.aat_gtk.view.UiController
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.gio.Menu
@@ -22,7 +22,7 @@ import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 import org.mapsforge.core.model.LatLong
 
-class SearchBar(private val uiController: UiController, private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
+class SearchBar(private val uiController: UiControllerInterface, private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
     private val searchModel = SearchModel()
     private val searchController = SearchController(searchModel)
 

@@ -24,6 +24,8 @@ object Strings {
 
 
     // Ids
-    const val idCancel = "cancel"
-    const val idOk = "ok"
+    const val ID_CANCEL = "cancel"
+    const val ID_OK = "ok"
+    const val ID_DISCARD = "discard"
+    const val ID_SAVE = "save"
 }

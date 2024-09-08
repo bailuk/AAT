@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.service
 import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.BackgroundService

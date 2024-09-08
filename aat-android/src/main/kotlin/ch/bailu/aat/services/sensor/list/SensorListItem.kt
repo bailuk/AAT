@@ -3,7 +3,7 @@ package ch.bailu.aat.services.sensor.list
 import android.content.Context
 import ch.bailu.aat.R
 import ch.bailu.aat.services.sensor.SensorInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 class SensorListItem(
     private val context: Context,
