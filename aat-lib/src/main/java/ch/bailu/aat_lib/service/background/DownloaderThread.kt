@@ -1,47 +1,35 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.app.AppContext
 
-public final class DownloaderThread  extends WorkerThread {
-    private final static int DOWNLOAD_QUEUE_SIZE=100;
-    private final String server;
-    private final DownloadStatistics statistics = new DownloadStatistics();
+class DownloaderThread(appContext: AppContext, private val server: String) : WorkerThread(
+    "DT_$server", appContext, DOWNLOAD_QUEUE_SIZE
+) {
+    private val statistics = DownloadStatistics()
 
-    private static long totalSize = 0;
-
-
-    public DownloaderThread(AppContext sc, String s) {
-        super("DT_" + s, sc, DOWNLOAD_QUEUE_SIZE);
-        server = s;
-    }
-
-
-    @Override
-    public void bgOnHandleProcessed(BackgroundTask handle, long size) {
-        totalSize += size;
+    override fun bgOnHandleProcessed(handle: BackgroundTask, size: Long) {
+        totalSize += size
 
         if (size > 0) {
-            statistics.success(size);
+            statistics.success(size)
         } else {
-            statistics.failure();
+            statistics.failure()
         }
     }
 
-
-    @Override
-    public void bgProcessHandle(BackgroundTask handle) {
+    override fun bgProcessHandle(handle: BackgroundTask) {
         if (statistics.isReady()) {
-            super.bgProcessHandle(handle);
+            super.bgProcessHandle(handle)
         }
     }
 
-
-    public void appendStatusText(StringBuilder builder) {
-        statistics.appendStatusText(builder,server);
+    fun appendStatusText(builder: StringBuilder) {
+        statistics.appendStatusText(builder, server)
     }
 
-
-    public static long getTotalSize() {
-        return totalSize;
+    companion object {
+        private const val DOWNLOAD_QUEUE_SIZE = 200
+        var totalSize: Long = 0
+            private set
     }
 }
