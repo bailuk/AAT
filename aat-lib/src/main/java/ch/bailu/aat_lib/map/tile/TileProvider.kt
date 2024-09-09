@@ -112,7 +112,8 @@ class TileProvider(private val appContext: AppContext, val source: Source) : Att
     }
 
     private fun getTileHandleLevel2(mapTile: Tile): ObjTile? {
-        val r = arrayOf<ObjTile?>(null)
+        var result: ObjTile? = null
+
         appContext.services.insideContext {
             val id = source.getID(mapTile, appContext)
             val handle = appContext.services.getCacheService().getObject(
@@ -120,10 +121,10 @@ class TileProvider(private val appContext: AppContext, val source: Source) : Att
                 source.getFactory(mapTile)
             )
             if (handle is ObjTile) {
-                r[0] = handle
+                result = handle
             }
         }
-        return r[0]
+        return result
     }
 
     @get:Synchronized

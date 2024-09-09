@@ -81,7 +81,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
         return file
     }
 
-    private class TileLoaderTask(f: Foc?) : FileTask(f) {
+    private class TileLoaderTask(f: Foc) : FileTask(f) {
         override fun bgOnProcess(appContext: AppContext): Long {
             val size = longArrayOf(0)
             object : OnObject(appContext, getFile().toString(), ObjTileCacheOnly::class.java) {
@@ -94,6 +94,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
                             tile.source.isTransparent
                         )
                     } catch (e : Exception) {
+                        AppLog.e(this, getFile().toString())
                         AppLog.e(this, e)
                     }
 
