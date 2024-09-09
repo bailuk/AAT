@@ -14,7 +14,7 @@ class CacheService(val appContext: AppContext) : VirtualService(), CacheServiceI
     OnPreferencesChanged, WithStatusText {
 
     private val table: ObjectTable = ObjectTable()
-    private val broadcaster: ObjectBroadcaster = ObjectBroadcaster(appContext)
+    val broadcaster: ObjectBroadcaster = ObjectBroadcaster(appContext)
 
     private val solidCacheSize = SolidCacheSize(appContext.storage)
 

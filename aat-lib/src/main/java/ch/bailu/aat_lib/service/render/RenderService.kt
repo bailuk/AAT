@@ -5,13 +5,12 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
-import ch.bailu.aat_lib.preferences.map.SolidRendererThreads.Companion.set
+import ch.bailu.aat_lib.preferences.map.SolidRendererThreads
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
 import ch.bailu.foc.FocFactory
 import org.mapsforge.core.model.Tile
-import javax.annotation.Nonnull
 
 class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsForgeDirectory) :
     VirtualService(), OnPreferencesChanged, RenderServiceInterface {
@@ -29,7 +28,7 @@ class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsFor
 
 
     private fun reconfigureRenderer() {
-        set()
+        SolidRendererThreads.set()
 
         val themeID = stheme.valueAsThemeID
         val tileCache = caches.get(themeID)

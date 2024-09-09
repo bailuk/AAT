@@ -3,11 +3,7 @@ package ch.bailu.aat.preferences.location
 import android.content.Context
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.views.preferences.dialog.SolidTextInputDialog
-import ch.bailu.aat_lib.coordinates.CH1903Coordinates
-import ch.bailu.aat_lib.coordinates.OlcCoordinates
-import ch.bailu.aat_lib.coordinates.UTMCoordinates
-import ch.bailu.aat_lib.coordinates.WGS84Coordinates
-import ch.bailu.aat_lib.exception.IllegalCodeException
+import ch.bailu.aat_lib.coordinates.LocationParser
 import ch.bailu.aat_lib.exception.ValidationException
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -18,7 +14,6 @@ import org.mapsforge.core.model.LatLong
 class SolidGoToLocation(val context: Context) : SolidString(
     Storage(context), KEY)
 {
-
     companion object {
         private const val KEY = "GoToLocation"
     }
@@ -31,70 +26,26 @@ class SolidGoToLocation(val context: Context) : SolidString(
 
     fun goToLocationFromUser(map: MapViewInterface) {
         reference = map.getMapViewPosition().center
-        SolidTextInputDialog(
-            context,
-            this,
-            SolidTextInputDialog.TEXT
-        ) {
-            goToLocation(
-                map,
-                getValueAsString()
-            )
+        SolidTextInputDialog(context,this, SolidTextInputDialog.TEXT) {
+            goToLocation(map, getValueAsString())
         }
     }
 
     fun goToLocation(map: MapViewInterface, s: String) {
         reference = map.getMapViewPosition().center
         try {
-            map.setCenter(latLongFromString(s))
+            map.setCenter(LocationParser.latLongFromString(s))
         } catch (e: Exception) {
             AppLog.e(this, e)
         }
     }
 
-    @Throws(IllegalArgumentException::class, IllegalStateException::class)
-    private fun latLongFromString(code: String): LatLong {
-        return try {
-            val ref = reference
-            if (ref != null) {
-                OlcCoordinates(code, ref).toLatLong()
-            } else {
-                OlcCoordinates(code).toLatLong()
-            }
-        } catch (eOLC: Exception) {
-            try {
-                CH1903Coordinates(code).toLatLong()
-            } catch (eCH1903: Exception) {
-                try {
-                    WGS84Coordinates(code).toLatLong()
-                } catch (eWGS: Exception) {
-                    try {
-                        UTMCoordinates(code).toLatLong()
-                    } catch (eUTM: Exception) {
-                        throw IllegalCodeException(code)
-                    }
-                }
-            }
-        }
-    }
-
     @Throws(ValidationException::class)
     override fun setValueFromString(string: String) {
-        val stringTrimmed = string.trim { it <= ' ' }
-
-        if (!validate(stringTrimmed)) {
+        if (!validate(string)) {
             throw ValidationException(Res.str().p_goto_location_hint())
         } else {
-            setValue(stringTrimmed)
-        }
-    }
-
-    override fun validate(s: String): Boolean {
-        return try {
-            latLongFromString(s)
-            true
-        } catch (e: Exception) {
-            false
+            setValue(string)
         }
     }
 }

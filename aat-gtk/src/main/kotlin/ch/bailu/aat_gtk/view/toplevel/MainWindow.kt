@@ -6,6 +6,7 @@ import ch.bailu.aat_gtk.app.exit
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.controller.TrackerOverlayOnOffController
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.util.GtkTimer
@@ -14,6 +15,7 @@ import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
+import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_lib.app.AppContext
@@ -45,6 +47,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
+import org.mapsforge.core.model.LatLong
 
 class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
     UiControllerInterface {
@@ -115,6 +118,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         leaflet.append(mapView.overlay)
 
         setupDispatcher(dispatcher)
+        TrackerOverlayOnOffController(appContext.storage, dispatcher)
 
         stackPage.addView(CockpitPage(appContext,this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
         stackPage.addView(FileListPage(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
@@ -149,6 +153,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             exit(dispatcher, 0)
         }
 
+        LocationMenu.createActions(appContext.storage, app, window.display, this)
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {
@@ -191,6 +196,10 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         if (info.getBoundingBox().hasBounding()) {
             mapView.map.setCenter(info.getBoundingBox().center.toLatLong())
         }
+    }
+
+    override fun centerInMap(latLong: LatLong) {
+        mapView.map.setCenter(latLong)
     }
 
     override fun centerInMap(iid: Int) {
