@@ -67,7 +67,7 @@ class Configuration {
 
     fun lockToRenderer(o: ObjTileMapsForge) {
         if (themeID == o.themeID) {
-            renderer?.addJob(o.tile)
+            renderer?.addJob(o.getTile())
         }
     }
 }

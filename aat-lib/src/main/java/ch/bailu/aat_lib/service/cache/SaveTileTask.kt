@@ -25,7 +25,7 @@ class SaveTileTask(private val sourceID: String, target: Foc) : FileTask(target)
         if (!file.exists()) {
             try {
                 out = file.openW()
-                val bitmap = self.tileBitmap
+                val bitmap = self.getTileBitmap()
                 if (bitmap != null && out != null) {
                     bitmap.compress(out)
                 }

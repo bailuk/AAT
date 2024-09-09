@@ -56,12 +56,7 @@ class TileProvider(private val appContext: AppContext, val source: Source) : Att
     @Synchronized
     operator fun get(tile: Tile): TileBitmap? {
         val handle = getHandle(tile)
-        return handle?.tileBitmap
-    }
-
-    @Synchronized
-    operator fun contains(tile: Tile): Boolean {
-        return cache[tile] != null
+        return handle?.getTileBitmap()
     }
 
     override fun addObserver(observer: Observer) {

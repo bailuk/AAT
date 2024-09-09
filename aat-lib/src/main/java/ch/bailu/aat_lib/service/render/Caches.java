@@ -8,10 +8,10 @@ public final class Caches {
     private final HashMap<String, Cache> caches = new HashMap<>(5);
 
     public void lockToRenderer(ObjTileMapsForge o) {
-        get(o.getThemeID()).lockToRenderer(o);
+        get(o.themeID).lockToRenderer(o);
     }
     public void freeFromRenderer(ObjTileMapsForge o) {
-        get(o.getThemeID()).freeFromRenderer(o);
+        get(o.themeID).freeFromRenderer(o);
     }
 
     public Cache get(String themeID) {

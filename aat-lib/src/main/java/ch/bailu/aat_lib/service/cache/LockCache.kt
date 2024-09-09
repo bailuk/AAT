@@ -1,108 +1,91 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import java.io.Closeable;
+import ch.bailu.aat_lib.logger.AppLog
+import java.io.Closeable
 
-@SuppressWarnings("unchecked")
-public final class LockCache<E extends Obj>  implements Closeable {
-    private E[]    objects;
-    private long[] access;
-    private int    size;
+class LockCache<E : Obj?>(capacity: Int) : Closeable {
+    private var objects: Array<E?> = arrayOfNulls<Obj>(capacity) as Array<E?>
+    private var access = LongArray(capacity)
+    private var size = 0
 
-
-
-    public LockCache(int capacity) {
-        objects = (E[]) new Obj[capacity];
-        access = new long[capacity];
-        size = 0;
+    fun size(): Int {
+        return size
     }
 
-
-    public int size() {
-        return size;
+    operator fun get(i: Int): E? {
+        return objects[i]
     }
 
-
-    public E get(int i) {
-        return objects[i];
+    fun use(i: Int): E? {
+        objects[i]?.access()
+        access[i] = System.currentTimeMillis()
+        return objects[i]
     }
 
-    public E use(int i) {
-        objects[i].access();
-        access[i] = System.currentTimeMillis();
-        return objects[i];
-    }
+    fun add(handle: E) {
+        val i: Int
 
-
-    public void add(E handle) {
-        int i;
-
-        if (size < objects.length) {
-            i = size;
-            size++;
-
+        if (size < objects.size) {
+            i = size
+            size++
         } else {
-            i = indexOfOldest();
-            objects[i].free();
+            i = indexOfOldest()
+            objects[i]?.free()
         }
+        objects[i] = handle
 
-        objects[i] = handle;
-
-        use(i);
+        use(i)
     }
 
+    private fun indexOfOldest(): Int {
+        var x = 0
 
-    private int indexOfOldest() {
-        int x=0;
-
-        for (int i = 1; i < size; i++) {
+        for (i in 1 until size) {
             if (access[i] < access[x]) {
-                x=i;
+                x = i
             }
         }
-        return x;
+        return x
     }
 
-
-    @Override
-    public void close() {
-        reset();
+    override fun close() {
+        reset()
     }
 
-
-    public void reset() {
-        for (int i=0; i<size; i++) {
-            objects[i].free();
+    fun reset() {
+        for (i in 0 until size) {
+            objects[i]?.free()
         }
-        size=0;
+        size = 0
     }
 
-
-    public void ensureCapacity(int capacity) {
-        if (capacity > objects.length) {
-            resizeCache(capacity);
+    fun ensureCapacity(capacity: Int) {
+        if (capacity > objects.size) {
+            AppLog.d(this, "Grow capacity from ${objects.size} to $capacity")
+            resizeCache(capacity)
         }
     }
 
+    private fun resizeCache(capacity: Int) {
+        val newObjects = arrayOfNulls<Obj>(capacity) as Array<E?>
+        val newAccess = LongArray(capacity)
 
-    private void resizeCache(int capacity) {
-        final E[] newObjects= (E[]) new Obj[capacity];
-        final long[] newAccess = new long[capacity];
+        val l = newObjects.size.coerceAtMost(objects.size)
 
-        final int l = Math.min(newObjects.length, objects.length);
-        int x,i;
-
-        for (i=0; i<l; i++) {
-            newObjects[i]= objects[i];
-            newAccess[i]=access[i];
+        var i = 0
+        while (i < l) {
+            newObjects[i] = objects[i]
+            newAccess[i] = access[i]
+            i++
         }
 
-        for (x=i; x<size; x++) {
-            objects[x].free();
+        while (i < size) {
+            objects[i]?.free()
+            i++
         }
 
-        objects = newObjects;
-        access = newAccess;
-
-        size = Math.min(size, objects.length);
+        objects = newObjects
+        access = newAccess
+        size = size.coerceAtMost(objects.size)
     }
 }

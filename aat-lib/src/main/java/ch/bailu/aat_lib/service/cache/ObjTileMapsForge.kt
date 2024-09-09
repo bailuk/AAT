@@ -1,107 +1,76 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
+import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
+class ObjTileMapsForge(
+    id: String,
+    private val appContext: AppContext,
+    private val tile: Tile,
+    @JvmField val themeID: String
+) : ObjTile(id) {
+    private val bitmap = appContext.createMapTile()
 
-public final class ObjTileMapsForge extends ObjTile {
-    private static long DEFAULT_SIZE = SolidTileSize.DEFAULT_TILESIZE_BYTES * 4;
+    init {
+        appContext.services.getRenderService().lockToRenderer(this)
+    }
 
-    private final AppContext appContext;
-    private final Tile tile;
+    override fun reDownload(sc: AppContext) {}
 
-    private final MapTileInterface bitmap;
+    override fun isLoaded(): Boolean {
+        return bitmap.isLoaded()
+    }
 
-    private final String themeID;
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
 
-    public ObjTileMapsForge(String id, AppContext appContext, Tile t, String tID) {
-        super(id);
-        this.appContext = appContext;
-        tile = t;
-        themeID = tID;
+    override fun onChanged(id: String, sc: AppContext) {}
 
-        bitmap = appContext.createMapTile();
 
-        this.appContext.getServices().getRenderService().lockToRenderer(this);
+    fun onRendered(fromRenderer: TileBitmap?) {
+        bitmap.set(fromRenderer)
+        appContext.broadcaster.broadcast(
+            AppBroadcaster.FILE_CHANGED_INCACHE,
+            id
+        )
     }
 
 
-    public String getThemeID() {
-        return themeID;
+    override fun onRemove(sc: AppContext) {
+        appContext.services.getRenderService().freeFromRenderer(this@ObjTileMapsForge)
+        bitmap.free()
+        super.onRemove(sc)
     }
 
 
-    @Override
-    public void reDownload(AppContext sc) {}
+    override fun getSize(): Long {
+        DEFAULT_SIZE = getSize(bitmap, DEFAULT_SIZE)
 
-    @Override
-    public boolean isLoaded() {
-        return bitmap.isLoaded();
-    }
-
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
-
-    @Override
-    public void onChanged(String id, AppContext sc) {}
-
-
-    public void onRendered(TileBitmap fromRenderer) {
-            bitmap.set(fromRenderer);
-            appContext.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_INCACHE,
-                    getID());
-    }
-
-
-    @Override
-    public void onRemove(AppContext sc) {
-        appContext.getServices().getRenderService().freeFromRenderer(ObjTileMapsForge.this);
-        bitmap.free();
-        super.onRemove(sc);
-    }
-
-
-    @Override
-    public long getSize() {
-        DEFAULT_SIZE = ObjTile.getSize(bitmap, DEFAULT_SIZE);
-
-        if (isLoaded()) {
-            return DEFAULT_SIZE;
+        return if (isLoaded) {
+            DEFAULT_SIZE
         } else {
-            return DEFAULT_SIZE * 4;
+            DEFAULT_SIZE * 4
         }
     }
 
-    @Override
-    public TileBitmap getTileBitmap() {
-        return bitmap.getTileBitmap();
+    override fun getTileBitmap(): TileBitmap? {
+        return bitmap.getTileBitmap()
     }
 
-    public Tile getTile() {
-        return tile;
+    override fun getTile(): Tile {
+        return tile
     }
 
 
-
-    public static class Factory extends Obj.Factory {
-        private final Tile mapTile;
-        private final String themeID;
-
-        public Factory(Tile t, String tID) {
-
-            themeID = tID;
-            mapTile=t;
+    class Factory(private val mapTile: Tile, private val themeID: String) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileMapsForge(id, appContext, mapTile, themeID)
         }
+    }
 
-        @Override
-        public Obj factory(String id, AppContext appContext) {
-            return  new ObjTileMapsForge(id, appContext, mapTile, themeID);
-        }
-
+    companion object {
+        private var DEFAULT_SIZE = (SolidTileSize.DEFAULT_TILESIZE_BYTES * 4).toLong()
     }
 }

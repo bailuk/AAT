@@ -1,105 +1,70 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.DownloadTask
+import ch.bailu.foc.Foc
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.DownloadTask;
-import ch.bailu.foc.Foc;
+class ObjTileDownloadable(id: String, sc: AppContext, t: Tile, private val source: DownloadSource) : ObjTileCacheOnly(
+    id, sc, t, source) {
 
-public class ObjTileDownloadable extends ObjTileCacheOnly {
-
-    private final DownloadSource source;
-
-
-    public ObjTileDownloadable(String id, AppContext sc, Tile t, DownloadSource s) {
-        super(id, sc, t, s);
-        source=s;
-    }
-
-
-    @Override
-    public void onInsert(AppContext sc) {
-        if (isLoadable()) {
-            load(sc.getServices());
-        } else if (isDownloadable() && !isScheduled(sc.getServices()) && !fileExists()) {
-            download(sc);
+    override fun onInsert(sc: AppContext) {
+        if (isLoadable) {
+            load(sc.services)
+        } else if (isDownloadable && !isScheduled(sc.services) && !fileExists()) {
+            download(sc)
         }
     }
 
-
-    private void download(AppContext sc) {
-        final String url = source.getTileURLString(getTile());
-        sc.getServices().getBackgroundService().process(new FileDownloader(url, getFile(), sc));
+    private fun download(sc: AppContext) {
+        val url = source.getTileURLString(getTile())
+        sc.services.getBackgroundService().process(FileDownloader(url, file, sc))
     }
 
-
-    private boolean isScheduled(ServicesInterface sc) {
-        return sc.getBackgroundService().findTask(getFile()) != null;
+    private fun isScheduled(sc: ServicesInterface): Boolean {
+        return sc.getBackgroundService().findTask(file) != null
     }
 
-
-    @Override
-    public void reDownload(AppContext sc) {
-        if (isDownloadable() && !isScheduled(sc.getServices())) {
-            getFile().rm();
-            download(sc);
+    override fun reDownload(sc: AppContext) {
+        if (isDownloadable && !isScheduled(sc.services)) {
+            file.rm()
+            download(sc)
         }
     }
 
+    private val isDownloadable: Boolean
+        get() = (source.maximumZoomLevel >= getTile().zoomLevel &&
+                source.minimumZoomLevel <= getTile().zoomLevel
+                )
 
-    private boolean isDownloadable() {
-        return (
-                source.getMaximumZoomLevel() >= getTile().zoomLevel &&
-                        source.getMinimumZoomLevel() <= getTile().zoomLevel
-        );
-    }
+    private class FileDownloader(source: String, target: Foc, val appContext: AppContext) :
+        DownloadTask(source, target, appContext.downloadConfig) {
 
-
-    private static class FileDownloader extends DownloadTask {
-
-        final AppContext appContext;
-        public FileDownloader(String source, Foc target, AppContext sc)  {
-            super(source, target,sc.getDownloadConfig());
-            this.appContext = sc;
-        }
-
-
-        @Override
-        public long bgOnProcess(AppContext sc) {
-            if (isInCache()) {
-                return super.bgOnProcess(sc);
+        override fun bgOnProcess(sc: AppContext): Long {
+            if (isInCache) {
+                return super.bgOnProcess(sc)
             }
-            return 0;
+            return 0
         }
 
-        private boolean isInCache() {
-            final boolean[] result = {false};
+        private val isInCache: Boolean
+            get() {
+                val result = booleanArrayOf(false)
 
-            new OnObject(appContext, getFile().toString(), ObjTileCacheOnly.class) {
-                @Override
-                public void run(Obj handle) {
-                    result[0] = true;
+                object : OnObject(appContext, getFile().toString(), ObjTileCacheOnly::class.java) {
+                    override fun run(handle: Obj) {
+                        result[0] = true
+                    }
                 }
-            };
-            return result[0];
-        }
+                return result[0]
+            }
     }
 
 
-    public static class Factory extends Obj.Factory {
-        private final Tile tile;
-        private final DownloadSource source;
-
-
-        public Factory(Tile t, DownloadSource s) {
-            tile = t;
-            source = s;
-        }
-
-        @Override
-        public Obj factory(String id, AppContext appContext) {
-            return new ObjTileDownloadable(id, appContext, tile, source);
+    class Factory(private val tile: Tile, private val source: DownloadSource) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileDownloadable(id, appContext, tile, source)
         }
     }
 }

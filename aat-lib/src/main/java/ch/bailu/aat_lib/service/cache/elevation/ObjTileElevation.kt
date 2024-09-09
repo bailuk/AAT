@@ -1,183 +1,144 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
+
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
+import ch.bailu.aat_lib.service.cache.ObjTile
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
+import ch.bailu.aat_lib.service.elevation.tile.DemDimension
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider
+import ch.bailu.aat_lib.service.elevation.tile.DemSplitter
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
+import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.core.model.Tile
 
 
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
+abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface, private val mapTile: Tile, private val split: Int)
+    : ObjTile(id), ElevationUpdaterClient {
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat_lib.service.cache.ObjTile;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
-import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
-import ch.bailu.aat_lib.util.Rect;
-
-public abstract class ObjTileElevation extends ObjTile implements ElevationUpdaterClient {
-
-    private final Tile mapTile;
-    private final int split;
-
-    private final MapTileInterface bitmap;
-
-    private final SubTiles subTiles = new SubTiles();
-    private final Raster raster = new Raster();
+    private val subTiles = SubTiles()
+    private val raster = Raster()
 
 
-
-    public ObjTileElevation(String id, MapTileInterface bitmap, Tile _map_tile, int _split) {
-        super(id);
-        mapTile = _map_tile;
-        split = _split;
-        this.bitmap = bitmap;
+    override fun getTileBitmap(): TileBitmap? {
+        return bitmap.getTileBitmap()
     }
 
-
-    @Override
-    public TileBitmap getTileBitmap() {
-        return bitmap.getTileBitmap();
+    override fun getTile(): Tile {
+        return mapTile
     }
 
-    @Override
-    public Tile getTile() {
-        return mapTile;
-    }
-
-
-    public DemProvider split(DemProvider dem) {
-        int i = split;
+    fun split(dem: DemProvider): DemProvider {
+        var result = dem
+        var i = split
         while (i > 0) {
-            dem = factorySplitter(dem);
-            i--;
+            result = factorySplitter(result)
+            i--
         }
-        return dem;
+        return result
     }
 
-
-    public DemProvider factorySplitter(DemProvider dem) {
-        return DemSplitter.factory(dem);
+    open fun factorySplitter(dem: DemProvider): DemProvider {
+        return DemSplitter.factory(dem)
     }
 
-    public DemGeoToIndex factoryGeoToIndex(DemDimension dim) {
-        return new DemGeoToIndex(dim);
+    open fun factoryGeoToIndex(dim: DemDimension): DemGeoToIndex {
+        return DemGeoToIndex(dim)
     }
 
-    private DemGeoToIndex getGeoToIndex() {
-        DemDimension dim = split(Dem3Tile.NULL).getDim();
-        return factoryGeoToIndex(dim);
-    }
+    private val geoToIndex: DemGeoToIndex
+        get() {
+            val dim = split(Dem3Tile.NULL).dim
+            return factoryGeoToIndex(dim)
+        }
 
 
-    public abstract void fillBuffer(
-            int[] bitmap,
-            Raster raster,
-            SubTile span,
-            DemProvider demtile);
+    abstract fun fillBuffer(bitmap: IntArray?, raster: Raster?, span: SubTile?, demtile: DemProvider?)
 
+    override fun onInsert(appContext: AppContext) {
+        appContext.services.getCacheService().addToBroadcaster(this)
 
-    @Override
-    public void onInsert(AppContext appContext) {
-        appContext.getServices().getCacheService().addToBroadcaster(this);
-
-        if (!raster.isInitialized()) {
-            appContext.getServices().getBackgroundService().process(new RasterInitializer(getID()));
+        if (!raster.isInitialized) {
+            appContext.services.getBackgroundService().process(RasterInitializer(id))
         }
     }
 
+    override fun onRemove(appContext: AppContext) {
+        appContext.services.getElevationService().cancelElevationUpdates(this)
 
-    public void onRemove(AppContext appContext) {
-        appContext.getServices().getElevationService().cancelElevationUpdates(this);
-
-        super.onRemove(appContext);
-        bitmap.free();
+        super.onRemove(appContext)
+        bitmap.free()
     }
 
-    @Override
-    public void onChanged(String id, AppContext appContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 
-    @Override
-    public void onDownloaded(String id, String url, AppContext appContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
         if (subTiles.haveID(url)) {
-            requestElevationUpdates(appContext);
+            requestElevationUpdates(appContext)
         }
     }
 
-    @Override
-    public long getSize() {
-        return bitmap.getSize();
+    override fun getSize(): Long {
+        return bitmap.getSize()
+    }
+
+    override fun isReadyAndLoaded(): Boolean { // isDisplayable()
+        return this.isInitialized && subTiles.isNotPainting
+    }
+
+    override fun isLoaded(): Boolean { // isCacheable()
+        return this.isInitialized && subTiles.areAllPainted()
+    }
+
+    override fun updateFromSrtmTile(appContext: AppContext, tile: Dem3Tile) {
+        appContext.services.getBackgroundService()
+            .process(SubTilePainter(appContext.services, id, tile))
     }
 
 
-    public boolean isReadyAndLoaded() { // isDisplayable()
-        return isInitialized() && subTiles.isNotPainting();
-    }
+    override fun reDownload(sc: AppContext) {}
 
+    open val isInitialized: Boolean
+        get() = raster.isInitialized
 
-    @Override
-    public boolean isLoaded() { // isCacheable()
-        return isInitialized() && subTiles.areAllPainted();
-    }
+    fun bgOnProcessPainter(dem3Tile: Dem3Tile): Long {
+        var size: Long = 0
 
-
-
-    @Override
-    public void updateFromSrtmTile(AppContext appContext, Dem3Tile tile) {
-        appContext.getServices().getBackgroundService().process(new SubTilePainter(appContext.getServices(), getID(), tile));
-    }
-
-
-    @Override
-    public void reDownload(AppContext sc) {
-
-    }
-
-    public boolean isInitialized() {
-        return raster.isInitialized();
-    }
-
-    public long bgOnProcessPainter(Dem3Tile dem3Tile) {
-        long size = 0;
-
-        if (isInitialized()) {
-
-            final SubTile subTile = subTiles.take(dem3Tile.getCoordinates());
+        if (this.isInitialized) {
+            val subTile = subTiles.take(dem3Tile.coordinates)
 
             if (subTile != null) {
+                size = paintSubTile(subTile, dem3Tile)
 
-                size = paintSubTile(subTile, dem3Tile);
-
-                subTiles.done();
+                subTiles.done()
             }
         }
 
-        return size;
+        return size
     }
 
 
-    private long paintSubTile(SubTile subTile, Dem3Tile dem3Tile) {
+    private fun paintSubTile(subTile: SubTile, dem3Tile: Dem3Tile): Long {
+        val interR = subTile.toRect()
+        val buffer = IntArray(interR.width() * interR.height())
+        fillBuffer(buffer, raster, subTile, split(dem3Tile))
 
-        final Rect interR = subTile.toRect();
-        final int[] buffer = new int[interR.width() * interR.height()];
-        fillBuffer(buffer, raster, subTile, split(dem3Tile));
+        bitmap.setBuffer(buffer, interR)
 
-        bitmap.setBuffer(buffer, interR);
-
-        return (long) interR.width() * interR.height() * 2;
+        return interR.width().toLong() * interR.height() * 2
     }
 
-    public long bgOnProcessInitializer(AppContext a) {
+    fun bgOnProcessInitializer(a: AppContext): Long {
+        raster.initialize(getTile(), geoToIndex, subTiles)
+        requestElevationUpdates(a)
 
-        raster.initialize(getTile(), getGeoToIndex(), subTiles);
-        requestElevationUpdates(a);
-
-        return SolidTileSize.DEFAULT_TILESIZE * 2;
+        return (SolidTileSize.DEFAULT_TILESIZE * 2).toLong()
     }
 
-    public void requestElevationUpdates(AppContext appContext) {
-        if (isInitialized())
-            appContext.getServices().getElevationService().requestElevationUpdates(this, subTiles.toSrtmCoordinates());
+    fun requestElevationUpdates(appContext: AppContext) {
+        if (this.isInitialized) appContext.services.getElevationService().requestElevationUpdates(
+            this, subTiles.toSrtmCoordinates()
+        )
     }
 }

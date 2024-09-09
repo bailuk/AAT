@@ -1,135 +1,107 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.map.tile.source.CacheOnlySource
+import ch.bailu.aat_lib.map.tile.source.Source
+import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.map.tile.source.CacheOnlySource;
-import ch.bailu.aat_lib.map.tile.source.Source;
-import ch.bailu.foc.Foc;
+class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, source: Source) : ObjTile(id) {
 
-public final class ObjTileCached extends ObjTile {
-    private final static int MIN_SAVE_ZOOM_LEVEL = 16;
+    private val cachedFactory: Obj.Factory
+    private val sourceFactory: Obj.Factory = source.getFactory(mapTile)
+    private val cachedID: String
+    private val sourceID: String = source.getID(mapTile, sc)
 
-    private final Tile mapTile;
+    private var tile = NULL
+    private val save: SaveTileTask
 
-    private final Obj.Factory cachedFactory, sourceFactory;
-    private final String cachedID, sourceID;
+    private val cachedImageFile: Foc
 
-    private ObjTile tile = ObjTile.NULL;
+    init {
+        val cached: Source = CacheOnlySource(source)
 
-    private final SaveTileTask save;
+        cachedID = cached.getID(mapTile, sc)
+        cachedFactory = cached.getFactory(mapTile)
+        cachedImageFile = sc.toFoc(cachedID)
 
-    private final Foc cachedImageFile;
-
-    public ObjTileCached(String id, final AppContext sc, Tile t, Source source) {
-        super(id);
-
-        mapTile = t;
-
-        sourceID = source.getID(t, sc);
-        sourceFactory = source.getFactory(t);
-
-        final Source cached = new CacheOnlySource(source);
-
-        cachedID = cached.getID(t, sc);
-        cachedFactory = cached.getFactory(t);
-
-        cachedImageFile = sc.toFoc(cachedID);
-
-        save = new SaveTileTask(sourceID, cachedImageFile);
+        save = SaveTileTask(sourceID, cachedImageFile)
     }
 
-    @Override
-    public void onInsert(AppContext sc) {
-        if (isLoadable()) {
-            tile = (ObjTile) sc.getServices().getCacheService().getObject(cachedID, cachedFactory);
+    override fun onInsert(sc: AppContext) {
+        tile = if (isLoadable) {
+            sc.services.getCacheService().getObject(cachedID, cachedFactory) as ObjTile
         } else {
-            tile = (ObjTile) sc.getServices().getCacheService().getObject(sourceID, sourceFactory);
+            sc.services.getCacheService().getObject(sourceID, sourceFactory) as ObjTile
         }
-        sc.getServices().getCacheService().addToBroadcaster(this);
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
-    private boolean isLoadable() {
-        return cachedImageFile.exists();
-    }
+    private val isLoadable: Boolean
+        get() = cachedImageFile.exists()
 
-    @Override
-    public void onChanged(String id, AppContext sc) {
-        if (id.equals(tile.toString())) {
-            sc.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_INCACHE,
-                    toString());
+    override fun onChanged(id: String, sc: AppContext) {
+        if (id == tile.toString()) {
+            sc.broadcaster.broadcast(
+                AppBroadcaster.FILE_CHANGED_INCACHE,
+                toString()
+            )
 
-            if (mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL &&
-                    id.equals(sourceID) &&
-                    tile.isLoaded()) {
-
-                sc.getServices().getBackgroundService().process(save);
+            if (mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL && id == sourceID &&
+                tile.isLoaded
+            ) {
+                sc.services.getBackgroundService().process(save)
             }
         }
     }
 
-    @Override
-    public void access() {
-        tile.access();
-        super.access();
+    override fun access() {
+        tile.access()
+        super.access()
     }
 
-    @Override
-    public void onRemove(AppContext cs) {
-        tile.free();
+    override fun onRemove(cs: AppContext) {
+        tile.free()
     }
 
-    @Override
-    public TileBitmap getTileBitmap() {
-        return tile.getTileBitmap();
+    override fun getTileBitmap(): TileBitmap? {
+        return tile.getTileBitmap()
     }
 
-    @Override
-    public Tile getTile() {
-        return mapTile;
+    override fun getTile(): Tile {
+        return mapTile
     }
 
-    @Override
-    public void reDownload(AppContext sc) {
-        cachedImageFile.rm();
+    override fun reDownload(sc: AppContext) {
+        cachedImageFile.rm()
 
-        tile.free();
-        tile = (ObjTile) sc.getServices().getCacheService().getObject(sourceID, sourceFactory);
+        tile.free()
+        tile = sc.services.getCacheService().getObject(sourceID, sourceFactory) as ObjTile
     }
 
-    @Override
-    public boolean isLoaded() {
-        return tile.isLoaded();
+    override fun isLoaded(): Boolean {
+        return tile.isLoaded
     }
 
-    @Override
-    public long getSize() {
-        return MIN_SIZE;
+    override fun getSize(): Long {
+        return MIN_SIZE.toLong()
     }
 
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
 
-    @Override
-    public Foc getFile() {
-        return cachedImageFile;
+    override fun getFile(): Foc {
+        return cachedImageFile
     }
 
-    public static class Factory extends Obj.Factory {
-        private final Source source;
-        private final Tile tile;
-
-        public Factory(Tile t, Source s) {
-            source = s;
-            tile = t;
+    class Factory(private val tile: Tile, private val source: Source) : Obj.Factory() {
+        override fun factory(id: String, cs: AppContext): Obj {
+            return ObjTileCached(id, cs, tile, source)
         }
+    }
 
-        @Override
-        public Obj factory(String id, AppContext cs) {
-            return new ObjTileCached(id, cs, tile, source);
-        }
+    companion object {
+        private const val MIN_SAVE_ZOOM_LEVEL = 16
     }
 }
