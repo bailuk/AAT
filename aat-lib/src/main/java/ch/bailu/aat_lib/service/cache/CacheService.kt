@@ -1,75 +1,65 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.broadcaster.BroadcastReceiver;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.system.SolidCacheSize;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.util.MemSize;
-import ch.bailu.aat_lib.util.WithStatusText;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.system.SolidCacheSize
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.util.MemSize
+import ch.bailu.aat_lib.util.WithStatusText
 
+class CacheService(val appContext: AppContext) : VirtualService(), CacheServiceInterface,
+    OnPreferencesChanged, WithStatusText {
 
-public final class CacheService extends VirtualService implements CacheServiceInterface, OnPreferencesChanged, WithStatusText {
-    public final ObjectTable table=new ObjectTable();
-    public final ObjectBroadcaster broadcaster;
+    private val table: ObjectTable = ObjectTable()
+    private val broadcaster: ObjectBroadcaster = ObjectBroadcaster(appContext)
 
-    public final AppContext appContext;
+    private val solidCacheSize = SolidCacheSize(appContext.storage)
 
-    private final SolidCacheSize slimit;
-
-    public CacheService(AppContext sc) {
-        appContext = sc;
-        broadcaster = new ObjectBroadcaster(sc);
-
-        slimit = new SolidCacheSize(sc.getStorage());
-        slimit.register(this);
-
-        table.limit(this, slimit.getValueAsLong());
-
-        sc.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileProcessed);
+    private val onFileProcessed: BroadcastReceiver = BroadcastReceiver{ args ->
+        table.onObjectChanged(this@CacheService, *args)
     }
 
-    public void onLowMemory() {
-        table.limit(this, MemSize.MB);
-        slimit.setIndex(1);
+    init {
+        solidCacheSize.register(this)
+        table.limit(this, solidCacheSize.valueAsLong)
+        appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileProcessed)
     }
 
-    public Obj getObject(String id, Obj.Factory factory) {
-
-        return table.getHandle(id, factory, this);
+    override fun onLowMemory() {
+        table.limit(this, MemSize.MB)
+        solidCacheSize.index = 1
     }
 
-    public Obj getObject(String id) {
-        return table.getHandle(id);
+    override fun getObject(path: String, factory: Obj.Factory): Obj {
+        return table.getHandle(path, factory, this)
     }
 
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-        table.appendStatusText(builder);
+    override fun getObject(id: String): Obj {
+        return table.getHandle(id)
     }
 
-
-    public void close() {
-        appContext.getBroadcaster().unregister(onFileProcessed);
-
-        slimit.unregister(this);
-        broadcaster.close();
-        table.close(this);
+    override fun appendStatusText(builder: StringBuilder) {
+        table.appendStatusText(builder)
     }
 
+    override fun close() {
+        appContext.broadcaster.unregister(onFileProcessed)
 
-    public void addToBroadcaster(ObjBroadcastReceiver b) {
-        broadcaster.put(b);
+        solidCacheSize.unregister(this)
+        broadcaster.close()
+        table.close(this)
     }
 
-    private final BroadcastReceiver onFileProcessed = args -> table.onObjectChanged(CacheService.this, args);
+    override fun addToBroadcaster(obj: ObjBroadcastReceiver) {
+        broadcaster.put(obj)
+    }
 
-    @Override
-    public void onPreferencesChanged(StorageInterface s, String key) {
-        if (slimit.hasKey(key)) {
-            table.limit(this, slimit.getValueAsLong());
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
+        if (solidCacheSize.hasKey(key)) {
+            table.limit(this, solidCacheSize.valueAsLong)
         }
     }
 }

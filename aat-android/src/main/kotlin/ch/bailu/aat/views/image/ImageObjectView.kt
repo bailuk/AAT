@@ -22,14 +22,14 @@ open class ImageObjectView(
     private var isAttached = false
     private var handle: Obj = ObjNull
     private var idToLoad: String? = null
-    private var factoryToLoad: Obj.Factory? = null
+    private var factoryToLoad: Obj.Factory = Obj.Factory()
     fun setImageObject() {
         idToLoad = null
-        factoryToLoad = null
+        factoryToLoad = Obj.Factory()
         resetImage()
     }
 
-    fun setImageObject(ID: String?, factory: Obj.Factory?) {
+    fun setImageObject(ID: String, factory: Obj.Factory) {
         idToLoad = ID
         factoryToLoad = factory
         loadAndDisplayImage()
@@ -46,7 +46,7 @@ open class ImageObjectView(
                 resetImage()
             }
             this.idToLoad = null
-            factoryToLoad = null
+            factoryToLoad = Obj.Factory()
         }
     }
 
@@ -54,7 +54,7 @@ open class ImageObjectView(
         if (defaultImageID != 0) setImageResource(defaultImageID) else setImageDrawable(null)
     }
 
-    private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
+    private fun loadImage(id: String, factory: Obj.Factory): Boolean {
         var result = false
         scontext.insideContext {
             val h = scontext.getCacheService().getObject(id, factory)

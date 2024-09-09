@@ -7,11 +7,7 @@ import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.util.WithStatusText
 import ch.bailu.foc.Foc
 
-class BackgroundService(
-    private val appContext: AppContext,
-    broadcaster: Broadcaster?,
-    threads: Int
-) : VirtualService(), BackgroundServiceInterface, WithStatusText {
+class BackgroundService(private val appContext: AppContext, broadcaster: Broadcaster, threads: Int) : VirtualService(), BackgroundServiceInterface, WithStatusText {
     private val tasks: Tasks = Tasks(broadcaster)
     private val downloaders = HashMap<String, DownloaderThread>(5)
     private val loaders = HashMap<String, LoaderThread>(5)
@@ -89,7 +85,7 @@ class BackgroundService(
     }
 
     override fun findTask(file: Foc): FileTask? {
-        return tasks[file]
+        return tasks.get(file)
     }
 
     companion object {

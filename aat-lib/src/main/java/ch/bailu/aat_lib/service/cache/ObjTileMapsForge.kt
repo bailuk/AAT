@@ -24,19 +24,19 @@ class ObjTileMapsForge(
         return bitmap.isLoaded()
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 
     fun onRendered(fromRenderer: TileBitmap?) {
         bitmap.set(fromRenderer)
         appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
     }
 
-    override fun onRemove(sc: AppContext) {
-        appContext.services.getRenderService().freeFromRenderer(this@ObjTileMapsForge)
+    override fun onRemove(appContext: AppContext) {
+        this.appContext.services.getRenderService().freeFromRenderer(this@ObjTileMapsForge)
         bitmap.free()
-        super.onRemove(sc)
+        super.onRemove(appContext)
     }
 
     override fun getSize(): Long {

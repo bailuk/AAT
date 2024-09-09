@@ -7,9 +7,7 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.service.background.DownloaderThread
 import ch.bailu.aat_lib.util.MemSize
 
-class DownloadSizeMsgView(context: Context) : AbsBroadcastMsgView(
-    context, AppBroadcaster.FILE_CHANGED_ONDISK
-) {
+class DownloadSizeMsgView(context: Context) : AbsBroadcastMsgView(context, AppBroadcaster.FILE_CHANGED_ONDISK) {
     private var size: Long = 0
     val builder = StringBuilder()
 
@@ -18,7 +16,7 @@ class DownloadSizeMsgView(context: Context) : AbsBroadcastMsgView(
     }
 
     override fun set(intent: Intent) {
-        val newSize = DownloaderThread.getTotalSize()
+        val newSize = DownloaderThread.totalSize
         if (size != newSize) {
             size = newSize
             builder.setLength(0)

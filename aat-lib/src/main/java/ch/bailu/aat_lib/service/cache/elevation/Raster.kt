@@ -1,109 +1,111 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
+
+import ch.bailu.aat_lib.preferences.map.SolidTileSize
+import ch.bailu.aat_lib.service.cache.Span
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex
+import ch.bailu.aat_lib.util.Rect
+import org.mapsforge.core.model.LatLong
+import org.mapsforge.core.model.Tile
+import org.mapsforge.core.util.MercatorProjection
+import kotlin.math.floor
 
 
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.core.util.MercatorProjection;
+class Raster {
+    val toLaRaster: IntArray = IntArray(SolidTileSize.DEFAULT_TILESIZE)
+    val toLoRaster: IntArray = IntArray(SolidTileSize.DEFAULT_TILESIZE)
 
-import java.util.ArrayList;
-
-import ch.bailu.aat_lib.preferences.map.SolidTileSize;
-import ch.bailu.aat_lib.service.cache.Span;
-import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
-import ch.bailu.aat_lib.util.Rect;
-
-public final class Raster {
-    public final int[] toLaRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
-    public final int[] toLoRaster = new int[SolidTileSize.DEFAULT_TILESIZE];
-
-    private boolean initialized=false;
+    var isInitialized: Boolean = false
+        private set
 
 
-    public synchronized void initialize(Tile tile, DemGeoToIndex geoToIndex, SubTiles tiles) {
-            if (!initialized) {
-                final ArrayList<Span> laSpan = new ArrayList<>(5);
-                final ArrayList<Span> loSpan = new ArrayList<>(5);
+    @Synchronized
+    fun initialize(tile: Tile, geoToIndex: DemGeoToIndex, tiles: SubTiles) {
+        if (!this.isInitialized) {
+            val laSpan = ArrayList<Span>(5)
+            val loSpan = ArrayList<Span>(5)
 
-                initializeWGS84Raster(laSpan, loSpan, tile);
-                initializeIndexRaster(geoToIndex);
-                tiles.generateSubTileList(laSpan, loSpan);
+            initializeWGS84Raster(laSpan, loSpan, tile)
+            initializeIndexRaster(geoToIndex)
+            tiles.generateSubTileList(laSpan, loSpan)
 
-                initialized = true;
-            }
-    }
-
-
-    public boolean isInitialized() {
-        return initialized;
+            this.isInitialized = true
+        }
     }
 
 
     // 1. pixel to latitude
-    private void initializeWGS84Raster(ArrayList<Span> laSpan, ArrayList<Span> loSpan, Tile tile) {
-        final Rect tileR = getTileR(tile);
+    private fun initializeWGS84Raster(
+        laSpan: ArrayList<Span>,
+        loSpan: ArrayList<Span>,
+        tile: Tile
+    ) {
+        val tileR = getTileR(tile)
 
-        final LatLong tl=pixelToGeo(tile.zoomLevel,
-                tileR.left,
-                tileR.top);
+        val tl = pixelToGeo(
+            tile.zoomLevel,
+            tileR.left,
+            tileR.top
+        )
 
-        final LatLong br=pixelToGeo(tile.zoomLevel,
-                tileR.right,
-                tileR.bottom);
+        val br = pixelToGeo(
+            tile.zoomLevel,
+            tileR.right,
+            tileR.bottom
+        )
 
-        final float laDiff = br.getLatitudeE6()  - tl.getLatitudeE6();
-        final float loDiff = br.getLongitudeE6() - tl.getLongitudeE6(); //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
+        val laDiff = (br.latitudeE6 - tl.latitudeE6).toFloat()
+        val loDiff =
+            (br.longitudeE6 - tl.longitudeE6).toFloat() //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
 
 
-        float la = tl.getLatitudeE6();
-        float lo = tl.getLongitudeE6();
+        var la = tl.latitudeE6.toFloat()
+        var lo = tl.longitudeE6.toFloat()
 
-        final Span laS = new Span();
-        final Span loS = new Span();
+        val laS = Span()
+        val loS = Span()
 
-        final float laInc = laDiff / (SolidTileSize.DEFAULT_TILESIZE);
-        final float loInc = loDiff / (SolidTileSize.DEFAULT_TILESIZE);
+        val laInc = laDiff / (SolidTileSize.DEFAULT_TILESIZE)
+        val loInc = loDiff / (SolidTileSize.DEFAULT_TILESIZE)
+        var i = 0
+        while (i < SolidTileSize.DEFAULT_TILESIZE) {
+            toLaRaster[i] = Math.round(la)
+            toLoRaster[i] = Math.round(lo)
 
-        int i;
-        for (i=0; i< SolidTileSize.DEFAULT_TILESIZE; i++) {
-            toLaRaster[i]=Math.round(la);
-            toLoRaster[i]=Math.round(lo);
+            val laDeg = floor((la / 1e6f).toDouble()).toInt()
+            val loDeg = floor((lo / 1e6f).toDouble()).toInt()
 
-            final int laDeg = (int) Math.floor(la/1e6f);
-            final int loDeg = (int) Math.floor(lo/1e6f);
+            laS.incrementAndCopyIntoArray(laSpan, i, laDeg)
+            loS.incrementAndCopyIntoArray(loSpan, i, loDeg)
 
-            laS.incrementAndCopyIntoArray(laSpan, i, laDeg);
-            loS.incrementAndCopyIntoArray(loSpan, i, loDeg);
-
-            la+=laInc;
-            lo+=loInc;
+            la += laInc
+            lo += loInc
+            i++
         }
 
         // flush
-        laS.copyIntoArray(laSpan);
-        loS.copyIntoArray(loSpan);
+        laS.copyIntoArray(laSpan)
+        loS.copyIntoArray(loSpan)
     }
 
-
     // 2. pixel to dem index
-    private void initializeIndexRaster(DemGeoToIndex toIndex) {
-        for (int i=0; i< SolidTileSize.DEFAULT_TILESIZE; i++) {
-            toLaRaster[i]=toIndex.toYPos(toLaRaster[i]);
-            toLoRaster[i]=toIndex.toXPos(toLoRaster[i]);
+    private fun initializeIndexRaster(toIndex: DemGeoToIndex) {
+        for (i in 0 until SolidTileSize.DEFAULT_TILESIZE) {
+            toLaRaster[i] = toIndex.toYPos(toLaRaster[i])
+            toLoRaster[i] = toIndex.toXPos(toLoRaster[i])
         }
     }
 
-    private LatLong pixelToGeo(byte z, int x, int y) {
-        final long mapSize = MercatorProjection.getMapSize(z, SolidTileSize.DEFAULT_TILESIZE);
-        return MercatorProjection.fromPixels(x, y, mapSize);
+    private fun pixelToGeo(z: Byte, x: Int, y: Int): LatLong {
+        val mapSize = MercatorProjection.getMapSize(z, SolidTileSize.DEFAULT_TILESIZE)
+        return MercatorProjection.fromPixels(x.toDouble(), y.toDouble(), mapSize)
     }
 
-
-    private Rect getTileR(Tile tile) {
-        Rect r = new Rect();
-        r.top    = tile.tileY * SolidTileSize.DEFAULT_TILESIZE;
-        r.left   = tile.tileX * SolidTileSize.DEFAULT_TILESIZE;
-        r.right  = r.left + SolidTileSize.DEFAULT_TILESIZE - 1;
-        r.bottom = r.top  + SolidTileSize.DEFAULT_TILESIZE - 1;
-        return r;
+    private fun getTileR(tile: Tile): Rect {
+        val r = Rect()
+        r.top = tile.tileY * SolidTileSize.DEFAULT_TILESIZE
+        r.left = tile.tileX * SolidTileSize.DEFAULT_TILESIZE
+        r.right = r.left + SolidTileSize.DEFAULT_TILESIZE - 1
+        r.bottom = r.top + SolidTileSize.DEFAULT_TILESIZE - 1
+        return r
     }
 }

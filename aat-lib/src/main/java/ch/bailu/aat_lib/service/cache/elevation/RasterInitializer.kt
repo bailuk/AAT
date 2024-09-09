@@ -1,35 +1,22 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.OnObject
 
-public final class RasterInitializer extends BackgroundTask {
+class RasterInitializer(private val iid: String) : BackgroundTask() {
+    private var size: Long = 0
 
-    private final String iid;
-    private long size;
+    override fun bgOnProcess(appContext: AppContext): Long {
+        size = 0
 
-
-    public RasterInitializer(String i) {
-        iid = i;
-    }
-
-    @Override
-    public long bgOnProcess(final AppContext sc) {
-        size = 0;
-
-        new OnObject(sc, iid, ObjTileElevation.class) {
-            @Override
-            public void run(Obj obj) {
-                ObjTileElevation owner = (ObjTileElevation) obj;
-                size = owner.bgOnProcessInitializer(sc);
-
+        object : OnObject(appContext, iid, ObjTileElevation::class.java) {
+            override fun run(obj: Obj) {
+                val owner = obj as ObjTileElevation
+                size = owner.bgOnProcessInitializer(appContext)
             }
-        };
-        return size;
+        }
+        return size
     }
 }
-
-
-

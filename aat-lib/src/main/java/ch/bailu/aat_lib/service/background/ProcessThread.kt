@@ -1,65 +1,46 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import java.io.Closeable;
+import java.io.Closeable
 
-public abstract class ProcessThread extends Thread implements Closeable, ThreadControl {
+abstract class ProcessThread(name: String, private val queue: HandleStack) : Thread(name), Closeable, ThreadControl {
 
-    private boolean continueThread=true;
-    private final HandleStack queue;
+    private var continueThread = true
+    private var current = BackgroundTask.NULL
 
-    private BackgroundTask current = BackgroundTask.NULL;
-
-
-    public ProcessThread(String name, HandleStack q) {
-        super(name);
-        queue = q;
-        start();
+    init {
+        start()
     }
 
+    constructor(name: String, limit: Int) : this(name, HandleStack(limit))
 
-    public ProcessThread(String name, int limit) {
-        this(name, new HandleStack(limit));
-    }
-
-
-    @Override
-    public void run() {
-        while(canContinue()) {
-
+    override fun run() {
+        while (canContinue()) {
             try {
-                current = queue.take();
-                bgProcessHandle(current);
-                current.onRemove();
-                current = BackgroundTask.NULL;
-
-
-            } catch (InterruptedException e) {
-                continueThread=false;
-                e.printStackTrace();
+                current = queue.take()
+                bgProcessHandle(current)
+                current.onRemove()
+                current = BackgroundTask.NULL
+            } catch (e: InterruptedException) {
+                continueThread = false
+                e.printStackTrace()
             }
         }
     }
 
+    abstract fun bgOnHandleProcessed(handle: BackgroundTask, size: Long)
+    abstract fun bgProcessHandle(handle: BackgroundTask)
 
-
-    public abstract void bgOnHandleProcessed(BackgroundTask handle, long size);
-    public abstract void bgProcessHandle(BackgroundTask handle);
-
-    public void process(BackgroundTask handle) {
-        if (canContinue()) queue.offer(handle);
+    fun process(handle: BackgroundTask) {
+        if (canContinue()) queue.offer(handle)
     }
 
-
-    @Override
-    public void close() {
-        continueThread=false;
-        current.stopProcessing();
-        queue.offer(BackgroundTask.STOP);
+    override fun close() {
+        continueThread = false
+        current.stopProcessing()
+        queue.offer(BackgroundTask.STOP)
     }
 
-
-    @Override
-    public boolean canContinue() {
-        return continueThread;
+    override fun canContinue(): Boolean {
+        return continueThread
     }
 }

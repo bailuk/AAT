@@ -1,8 +1,13 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-public interface ThreadControl {
-    boolean canContinue();
+interface ThreadControl {
+    fun canContinue(): Boolean
 
-
-    ThreadControl KEEP_ON = () -> true;
+    companion object {
+        val KEEP_ON: ThreadControl = object: ThreadControl {
+            override fun canContinue(): Boolean {
+                return true
+            }
+        }
+    }
 }

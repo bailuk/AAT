@@ -1,73 +1,78 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
+
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.service.cache.Span
+import ch.bailu.aat_lib.util.IndexedMap
 
 
-import java.util.ArrayList;
+class SubTiles {
+    private val subTiles = IndexedMap<Dem3Coordinates, SubTile>()
+    private var coordinates: Array<Dem3Coordinates?>? = null
+    private var inUse = 0
 
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.service.cache.Span;
-import ch.bailu.aat_lib.util.IndexedMap;
-
-public final class SubTiles {
-    private final IndexedMap<Dem3Coordinates, SubTile> subTiles = new IndexedMap<>();
-    private Dem3Coordinates[] coordinates;
-
-    private int inUse=0;
-
-    public synchronized boolean haveID(String id) {
-
-        for (int i = 0; i< subTiles.size(); i++) {
-            final SubTile subTile = subTiles.getValueAt(i);
+    @Synchronized
+    fun haveID(id: String): Boolean {
+        for (i in 0 until subTiles.size()) {
+            val subTile = subTiles.getValueAt(i)
             if (subTile != null && id.contains(subTile.toString())) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
-    public synchronized boolean isNotPainting() {return inUse==0;}
-    public synchronized boolean areAllPainted() {return isNotPainting() && subTiles.size() == 0;}
+    @get:Synchronized
+    val isNotPainting: Boolean
+        get() = inUse == 0
 
-    public synchronized Dem3Coordinates[] toSrtmCoordinates() {
-        if (coordinates == null || coordinates.length != subTiles.size()) {
+    @Synchronized
+    fun areAllPainted(): Boolean {
+        return isNotPainting && subTiles.size() == 0
+    }
 
-            coordinates = new Dem3Coordinates[subTiles.size()];
+    @Synchronized
+    fun toSrtmCoordinates(): Array<Dem3Coordinates?> {
+        if (coordinates == null || coordinates!!.size != subTiles.size()) {
+            coordinates = arrayOfNulls(subTiles.size())
 
-            for (int i = 0; i < subTiles.size(); i++) {
-                coordinates[i] = subTiles.getValueAt(i).coordinates;
+            for (i in 0 until subTiles.size()) {
+                coordinates!![i] = subTiles.getValueAt(i)!!.coordinates
             }
         }
-        return coordinates;
+        return coordinates!!
     }
 
 
-    public synchronized void generateSubTileList(ArrayList<Span> laSpan, ArrayList<Span> loSpan) {
-        for (int la=0; la<laSpan.size(); la++) {
-            for (int lo=0; lo<loSpan.size(); lo++) {
-                put(laSpan.get(la), loSpan.get(lo));
+    @Synchronized
+    fun generateSubTileList(laSpan: ArrayList<Span>, loSpan: ArrayList<Span>) {
+        for (la in laSpan.indices) {
+            for (lo in loSpan.indices) {
+                put(laSpan[la], loSpan[lo])
             }
         }
     }
 
 
-    private void put(Span la, Span lo) {
-        SubTile subTile = new SubTile(la, lo);
-        subTiles.put(subTile.coordinates, subTile);
+    private fun put(la: Span, lo: Span) {
+        val subTile = SubTile(la, lo)
+        subTiles.put(subTile.coordinates, subTile)
     }
 
 
-    public synchronized SubTile take(Dem3Coordinates coordinates) {
-
-        final SubTile r = subTiles.getValue(coordinates);
+    @Synchronized
+    fun take(coordinates: Dem3Coordinates): SubTile? {
+        val r = subTiles.getValue(coordinates)
 
         if (r != null) {
-            inUse++;
-            subTiles.remove(coordinates);
+            inUse++
+            subTiles.remove(coordinates)
         }
-        return r;
+        return r
     }
 
 
-    public synchronized void done() {
-        inUse--;
+    @Synchronized
+    fun done() {
+        inUse--
     }
 }

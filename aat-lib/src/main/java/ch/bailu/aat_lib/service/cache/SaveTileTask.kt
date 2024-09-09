@@ -9,17 +9,17 @@ import java.io.OutputStream
 
 class SaveTileTask(private val sourceID: String, target: Foc) : FileTask(target) {
     override fun bgOnProcess(appContext: AppContext): Long {
-        val size = longArrayOf(0)
+        var size = 0L
         object : OnObject(appContext, sourceID, ObjTile::class.java) {
             override fun run(handle: Obj) {
-                size[0] = save(appContext, handle as ObjTile)
+                size = save(appContext, handle as ObjTile)
             }
         }
-        return size[0]
+        return size
     }
 
     private fun save(sc: AppContext, self: ObjTile): Long {
-        var size: Long = 0
+        var size = 0L
         var out: OutputStream? = null
         val file = getFile()
         if (!file.exists()) {

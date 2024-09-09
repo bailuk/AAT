@@ -14,13 +14,7 @@ class Configuration {
     private var renderer: Renderer? = null
     private var themeID: String? = null
 
-    fun reconfigure(
-        mapDir: Foc,
-        cache: TileCache?,
-        theme: XmlRenderTheme?,
-        tID: String?,
-        scaleFactor: Float
-    ) {
+    fun reconfigure(mapDir: Foc, cache: TileCache, theme: XmlRenderTheme, tID: String, scaleFactor: Float) {
 
         if (configureMapList(mapDir)) {
 
@@ -58,7 +52,7 @@ class Configuration {
         return mapFiles.size > 0
     }
 
-    fun supportsTile(t: Tile?): Boolean {
+    fun supportsTile(t: Tile): Boolean {
         renderer?.apply {
             return supportsTile(t)
         }

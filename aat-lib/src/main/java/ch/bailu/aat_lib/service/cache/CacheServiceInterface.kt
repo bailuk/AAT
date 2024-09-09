@@ -1,15 +1,11 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import ch.bailu.aat_lib.util.WithStatusText;
+import ch.bailu.aat_lib.util.WithStatusText
 
-public interface CacheServiceInterface extends WithStatusText {
-    void onLowMemory();
-
-    void close();
-
-    Obj getObject(String path, Obj.Factory factory);
-
-    void addToBroadcaster(ObjBroadcastReceiver obj);
-
-    Obj getObject(String id);
+interface CacheServiceInterface : WithStatusText {
+    fun onLowMemory()
+    fun close()
+    fun getObject(path: String, factory: Obj.Factory): Obj
+    fun addToBroadcaster(obj: ObjBroadcastReceiver)
+    fun getObject(id: String): Obj
 }

@@ -19,16 +19,16 @@ class MockCacheService : CacheServiceInterface {
         TODO("Not yet implemented")
     }
 
-    override fun getObject(path: String?, factory: Obj.Factory?): Obj {
+    override fun getObject(path: String, factory: Obj.Factory): Obj {
         return ObjGpx.NULL
 
     }
 
-    override fun getObject(id: String?): Obj {
+    override fun getObject(id: String): Obj {
         TODO("Not yet implemented")
     }
 
-    override fun addToBroadcaster(obj: ObjBroadcastReceiver?) {
+    override fun addToBroadcaster(obj: ObjBroadcastReceiver) {
         TODO("Not yet implemented")
     }
 }

@@ -1,57 +1,43 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.BlockingDeque
+import java.util.concurrent.LinkedBlockingDeque
 
-public final class HandleStack {
-    private final static int DEFAULT_LIMIT = 5000;
+class HandleStack(private val limit: Int = DEFAULT_LIMIT) {
+    private val queue: BlockingDeque<BackgroundTask> = LinkedBlockingDeque(limit)
 
-    private final BlockingDeque<BackgroundTask> queue;
-    private final int limit;
-
-    public HandleStack() {
-        this(DEFAULT_LIMIT);
+    @Throws(InterruptedException::class)
+    fun take(): BackgroundTask {
+        return queue.takeFirst()
     }
 
-
-    public HandleStack(int l) {
-        limit = l;
-        queue = new LinkedBlockingDeque<>(limit);
+    fun offer(handle: BackgroundTask) {
+        while (queue.size >= limit) remove()
+        insert(handle)
     }
 
-
-    public BackgroundTask take() throws InterruptedException {
-        return queue.takeFirst();
-    }
-
-
-    public void offer(BackgroundTask handle) {
-        while (queue.size() >= limit) remove();
-        insert(handle);
-    }
-
-
-    public void close(int i) {
-        while(remove() != null);
-        while(i>0) {
-            queue.offerFirst(BackgroundTask.NULL);
-            i--;
+    fun close(i: Int) {
+        var i = i
+        while (remove() != null);
+        while (i > 0) {
+            queue.offerFirst(BackgroundTask.NULL)
+            i--
         }
     }
 
-
-    private void insert(BackgroundTask handle) {
-        handle.onInsert();
-        queue.offerFirst(handle);
+    private fun insert(handle: BackgroundTask) {
+        handle.onInsert()
+        queue.offerFirst(handle)
     }
 
+    private fun remove(): BackgroundTask? {
+        val handle = queue.pollLast()
 
-    private BackgroundTask remove() {
-        BackgroundTask handle = queue.pollLast();
+        handle?.onRemove()
+        return handle
+    }
 
-        if (handle != null) {
-            handle.onRemove();
-        }
-        return handle;
+    companion object {
+        private const val DEFAULT_LIMIT = 5000
     }
 }

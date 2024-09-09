@@ -1,33 +1,27 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
 
-import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.app.AppContext
 
-public class WorkerThread extends ProcessThread {
+open class WorkerThread : ProcessThread {
+    private val appContext: AppContext
 
-    private final AppContext appContext;
 
-
-    public WorkerThread(String name, AppContext appContext, int limit) {
-        super(name, limit);
-        this.appContext = appContext;
+    constructor(name: String, appContext: AppContext, limit: Int) : super(name, limit) {
+        this.appContext = appContext
     }
 
 
-    public WorkerThread(String name, AppContext appContext, HandleStack q) {
-        super(name, q);
-        this.appContext = appContext;
+    constructor(name: String, appContext: AppContext, q: HandleStack) : super(name, q) {
+        this.appContext = appContext
     }
 
-    @Override
-    public void bgOnHandleProcessed(BackgroundTask handle, long size) {}
-
-    @Override
-    public void bgProcessHandle(final BackgroundTask handle) {
+    override fun bgOnHandleProcessed(handle: BackgroundTask, size: Long) {}
+    override fun bgProcessHandle(handle: BackgroundTask) {
         if (handle.canContinue()) {
-            appContext.getServices().insideContext(()-> {
-                long size = handle.bgOnProcess(appContext);
-                bgOnHandleProcessed(handle, size);
-            });
+            appContext.services.insideContext {
+                val size = handle.bgOnProcess(appContext)
+                bgOnHandleProcessed(handle, size)
+            }
         }
     }
 }

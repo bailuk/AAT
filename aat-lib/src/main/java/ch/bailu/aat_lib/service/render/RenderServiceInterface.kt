@@ -1,12 +1,11 @@
-package ch.bailu.aat_lib.service.render;
+package ch.bailu.aat_lib.service.render
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
+interface RenderServiceInterface {
+    fun lockToRenderer(objTileMapsForge: ObjTileMapsForge)
+    fun freeFromRenderer(objTileMapsForge: ObjTileMapsForge)
 
-public interface RenderServiceInterface {
-    void lockToRenderer(ObjTileMapsForge objTileMapsForge);
-    void freeFromRenderer(ObjTileMapsForge objTileMapsForge);
-
-    boolean supportsTile(Tile t);
+    fun supportsTile(tile: Tile): Boolean
 }

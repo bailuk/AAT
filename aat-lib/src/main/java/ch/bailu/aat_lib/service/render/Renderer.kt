@@ -1,166 +1,171 @@
-package ch.bailu.aat_lib.service.render;
+package ch.bailu.aat_lib.service.render
 
-import org.mapsforge.core.graphics.Canvas;
-import org.mapsforge.core.model.BoundingBox;
-import org.mapsforge.core.model.Point;
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.datastore.MapDataStore;
-import org.mapsforge.map.datastore.MultiMapDataStore;
-import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.queue.JobQueue;
-import org.mapsforge.map.layer.renderer.DatabaseRenderer;
-import org.mapsforge.map.layer.renderer.MapWorkerPool;
-import org.mapsforge.map.layer.renderer.RendererJob;
-import org.mapsforge.map.model.DisplayModel;
-import org.mapsforge.map.model.Model;
-import org.mapsforge.map.reader.MapFile;
-import org.mapsforge.map.reader.header.MapFileException;
-import org.mapsforge.map.rendertheme.XmlRenderTheme;
-import org.mapsforge.map.rendertheme.rule.RenderThemeFuture;
+import ch.bailu.aat_lib.app.AppGraphicFactory.instance
+import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.Canvas
+import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Tile
+import org.mapsforge.map.datastore.MapDataStore
+import org.mapsforge.map.datastore.MultiMapDataStore
+import org.mapsforge.map.layer.Layer
+import org.mapsforge.map.layer.cache.TileCache
+import org.mapsforge.map.layer.queue.JobQueue
+import org.mapsforge.map.layer.renderer.DatabaseRenderer
+import org.mapsforge.map.layer.renderer.MapWorkerPool
+import org.mapsforge.map.layer.renderer.RendererJob
+import org.mapsforge.map.model.DisplayModel
+import org.mapsforge.map.model.Model
+import org.mapsforge.map.reader.MapFile
+import org.mapsforge.map.reader.header.MapFileException
+import org.mapsforge.map.rendertheme.XmlRenderTheme
+import org.mapsforge.map.rendertheme.rule.RenderThemeFuture
 
-import java.util.ArrayList;
-
-import ch.bailu.aat_lib.app.AppGraphicFactory;
-import ch.bailu.foc.Foc;
-
-public final class Renderer extends Layer {
-    private final static boolean TRANSPARENT = false;
-    private final static boolean RENDER_LABELS = true;
-    private final static boolean CACHE_LABELS = false;
-    private final static float TEXT_SCALE = 1f;
-
-    private final MapDataStore mapDataStore;
-    private final MapWorkerPool mapWorkerPool;
-    private final RenderThemeFuture renderThemeFuture;
+class Renderer(renderTheme: XmlRenderTheme, cache: TileCache, files: ArrayList<Foc>, userScaleFactor: Float) : Layer() {
+    private var mapDataStore: MapDataStore? = null
+    private var mapWorkerPool: MapWorkerPool? = null
+    private var renderThemeFuture: RenderThemeFuture? = null
 
 
-    private final JobQueue<RendererJob> jobQueue;
+    private var jobQueue: JobQueue<RendererJob>? = null
 
 
-    public Renderer(XmlRenderTheme renderTheme, TileCache cache, ArrayList<Foc> files, float userScaleFactor) throws Exception {
+    init {
         // important: call model.mapViewPosition.destroy() to free resources
-        final Model model = new Model();
+        val model = Model()
 
         try {
-            displayModel = model.displayModel;
-            displayModel.setUserScaleFactor(userScaleFactor);
-            jobQueue = new JobQueue<>(model.mapViewPosition, model.displayModel);
+            displayModel = model.displayModel
+            displayModel.userScaleFactor = userScaleFactor
+            jobQueue = JobQueue(model.mapViewPosition, model.displayModel)
 
-            renderThemeFuture = createTheme(renderTheme, displayModel);
-            mapDataStore = createMapDataStore(files);
+            renderThemeFuture = createTheme(renderTheme, displayModel)
+            mapDataStore = createMapDataStore(files)
 
-            final DatabaseRenderer databaseRenderer = new DatabaseRenderer(
-                    mapDataStore,
-                    AppGraphicFactory.instance(),
-                    cache,
-                    null,
-                    RENDER_LABELS,
-                    CACHE_LABELS, null);
+            val databaseRenderer = DatabaseRenderer(
+                mapDataStore,
+                instance(),
+                cache,
+                null,
+                RENDER_LABELS,
+                CACHE_LABELS, null
+            )
 
-            mapWorkerPool = new MapWorkerPool(
-                    cache,
-                    jobQueue,
-                    databaseRenderer,
-                    this);
+            mapWorkerPool = MapWorkerPool(
+                cache,
+                jobQueue,
+                databaseRenderer,
+                this
+            )
 
 
-            mapWorkerPool.start();
-        } catch (Exception e) {
-            destroy();
-            throw e;
+            mapWorkerPool?.start()
+        } catch (e: Exception) {
+            destroy()
+            throw e
         } finally {
-            model.mapViewPosition.destroy();
+            model.mapViewPosition.destroy()
         }
     }
 
 
-    private MapDataStore createMapDataStore(ArrayList<Foc> files) throws Exception {
-        MapDataStore result;
-        ArrayList<MapFile> mapFiles = createMapFiles(files);
+    @Throws(Exception::class)
+    private fun createMapDataStore(files: ArrayList<Foc>): MapDataStore {
+        val result: MapDataStore
+        val mapFiles = createMapFiles(files)
 
-        if (mapFiles.size()==1) {
-            result = mapFiles.get(0);
+        result = if (mapFiles.size == 1) {
+            mapFiles[0]
         } else {
-            result = createMultiMapDataStore(mapFiles);
+            createMultiMapDataStore(mapFiles)
         }
 
-        return result;
+        return result
     }
 
 
-    private MapDataStore createMultiMapDataStore(ArrayList<MapFile> mapFiles) {
-        MultiMapDataStore result = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
-        for (MapFile mapFile : mapFiles) {
-            result.addMapDataStore(mapFile, true, true);
+    private fun createMultiMapDataStore(mapFiles: ArrayList<MapFile>): MapDataStore {
+        val result = MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL)
+        for (mapFile in mapFiles) {
+            result.addMapDataStore(mapFile, true, true)
         }
-        return result;
+        return result
     }
 
 
-    private ArrayList<MapFile> createMapFiles(ArrayList<Foc> files) throws Exception {
-        Exception exception = new MapFileException("No file specified");
+    @Throws(Exception::class)
+    private fun createMapFiles(files: ArrayList<Foc>): ArrayList<MapFile> {
+        var exception: Exception? = MapFileException("No file specified")
 
-        ArrayList<MapFile> result = new ArrayList<>(files.size());
+        val result = ArrayList<MapFile>(files.size)
 
-        for (Foc file : files) {
+        for (file in files) {
             try {
-                result.add(new MapFile(file.toString()));
-            } catch (Exception e) {
-                exception = e;
+                result.add(MapFile(file.toString()))
+            } catch (e: Exception) {
+                exception = e
             }
         }
-        if (result.size() == 0) {
-            throw exception;
+        if (result.size == 0) {
+            throw exception!!
         }
 
-        return result;
+        return result
     }
 
-    private static RenderThemeFuture createTheme(XmlRenderTheme renderTheme, DisplayModel displayModel) {
-        RenderThemeFuture theme = new RenderThemeFuture(
-                AppGraphicFactory.instance(),
-                renderTheme,
-                displayModel);
-        new Thread(theme).start();
-        return theme;
+    fun destroy() {
+        mapWorkerPool?.stop()
+        mapDataStore?.close()
+        renderThemeFuture?.decrementRefCount()
     }
 
-    public void destroy() {
-        if (mapWorkerPool != null) {
-            mapWorkerPool.stop();
+
+    fun addJob(tile: Tile) {
+        if (supportsTile(tile)) {
+            jobQueue?.add(createJob(tile))
         }
+    }
+
+
+    private fun createJob(tile: Tile): RendererJob {
+        return RendererJob(
+            tile, mapDataStore,
+            renderThemeFuture,
+            displayModel,
+            TEXT_SCALE,
+            TRANSPARENT, false
+        )
+    }
+
+
+    override fun draw(b: BoundingBox, z: Byte, c: Canvas, t: Point) {}
+
+    fun supportsTile(tile: Tile): Boolean {
+        val mapDataStore = mapDataStore
 
         if (mapDataStore != null) {
-            mapDataStore.close();
+            return mapDataStore.supportsTile(tile)
         }
-
-        if (renderThemeFuture != null) {
-            renderThemeFuture.decrementRefCount();
-        }
+        return false
     }
 
+    companion object {
+        private const val TRANSPARENT = false
+        private const val RENDER_LABELS = true
+        private const val CACHE_LABELS = false
+        private const val TEXT_SCALE = 1f
 
-    public void addJob(Tile tile) {
-        if (mapDataStore.supportsTile(tile)) {
-            jobQueue.add(createJob(tile));
+        private fun createTheme(
+            renderTheme: XmlRenderTheme,
+            displayModel: DisplayModel
+        ): RenderThemeFuture {
+            val theme = RenderThemeFuture(
+                instance(),
+                renderTheme,
+                displayModel
+            )
+            Thread(theme).start()
+            return theme
         }
-    }
-
-
-    private RendererJob createJob(Tile tile) {
-        return new RendererJob(tile, mapDataStore,
-                renderThemeFuture,
-                displayModel,
-                TEXT_SCALE,
-                TRANSPARENT, false);
-    }
-
-
-    @Override
-    public void draw(BoundingBox b, byte z, Canvas c, Point t) {}
-
-    public boolean supportsTile(Tile t) {
-        return mapDataStore.supportsTile(t);
     }
 }

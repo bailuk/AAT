@@ -1,26 +1,25 @@
-package ch.bailu.aat_lib.service.render;
+package ch.bailu.aat_lib.service.render
 
-import java.util.HashMap;
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
 
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
+class Caches {
+    private val caches = HashMap<String, Cache>(5)
 
-public final class Caches {
-    private final HashMap<String, Cache> caches = new HashMap<>(5);
-
-    public void lockToRenderer(ObjTileMapsForge o) {
-        get(o.themeID).lockToRenderer(o);
-    }
-    public void freeFromRenderer(ObjTileMapsForge o) {
-        get(o.themeID).freeFromRenderer(o);
+    fun lockToRenderer(o: ObjTileMapsForge) {
+        get(o.themeID).lockToRenderer(o)
     }
 
-    public Cache get(String themeID) {
-        Cache cache = caches.get(themeID);
+    fun freeFromRenderer(o: ObjTileMapsForge) {
+        get(o.themeID).freeFromRenderer(o)
+    }
+
+    fun get(themeID: String): Cache {
+        var cache = caches[themeID]
 
         if (cache == null) {
-            cache = new Cache();
-            caches.put(themeID, cache);
+            cache = Cache()
+            caches[themeID] = cache
         }
-        return cache;
+        return cache
     }
 }

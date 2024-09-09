@@ -43,7 +43,7 @@ class Span {
     }
 
 
-    fun incrementAndCopyIntoArray(spanArray: ArrayList<Span?>, pixelIndex: Int, deg: Int) {
+    fun incrementAndCopyIntoArray(spanArray: ArrayList<Span>, pixelIndex: Int, deg: Int) {
         lastPixel = pixelIndex
 
         if (deg != this.deg) {
@@ -54,7 +54,7 @@ class Span {
         }
     }
 
-    fun copyIntoArray(l: ArrayList<Span?>) {
+    fun copyIntoArray(l: ArrayList<Span>) {
         if (pixelDim() > 0) l.add(Span(this))
     }
 

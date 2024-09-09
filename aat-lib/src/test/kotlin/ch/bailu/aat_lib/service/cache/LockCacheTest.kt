@@ -48,8 +48,8 @@ class LockCacheTest {
         assertEquals(0, cache.size())
 
         val obj1 = object : Obj("1") {
-            override fun onDownloaded(id: String?, url: String?, appContext: AppContext?) {}
-            override fun onChanged(id: String?, appContext: AppContext?) {}
+            override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+            override fun onChanged(id: String, appContext: AppContext) {}
             override fun getSize(): Long {
                 return 10
             }
@@ -58,8 +58,8 @@ class LockCacheTest {
 
 
         val obj2 = object : Obj("2") {
-            override fun onDownloaded(id: String?, url: String?, appContext: AppContext?) {}
-            override fun onChanged(id: String?, appContext: AppContext?) {}
+            override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+            override fun onChanged(id: String, appContext: AppContext) {}
             override fun getSize(): Long {
                 return 20
             }
@@ -67,8 +67,8 @@ class LockCacheTest {
         }
 
         val obj3 = object : Obj("3") {
-            override fun onDownloaded(id: String?, url: String?, appContext: AppContext?) {}
-            override fun onChanged(id: String?, appContext: AppContext?) {}
+            override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+            override fun onChanged(id: String, appContext: AppContext) {}
             override fun getSize(): Long {
                 return 30
             }

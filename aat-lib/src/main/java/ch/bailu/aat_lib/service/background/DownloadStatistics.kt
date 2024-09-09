@@ -1,76 +1,87 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
+
+import kotlin.math.max
+import kotlin.math.min
 
 
-public final class DownloadStatistics {
-    private final static int MAX_RATE=5;
-    private int failureRate=0;
+class DownloadStatistics {
+    private var failureRate = 0
+    private var failure = 0L
+    private var success = 0L
+    private var bytes = 0L
 
-    private long failure=0;
-    private long success=0;
-    private long bytes=0;
-
-    private long nextDownload=System.currentTimeMillis() - 100;
+    private var nextDownload = System.currentTimeMillis() - 100
 
 
-    public synchronized void increment(long size) {
-        bytes += size;
+    @Synchronized
+    fun increment(size: Long) {
+        bytes += size
     }
 
-    public synchronized  void failure() {
-        failure++;
-        failureRate = Math.min(MAX_RATE, failureRate+1);
-        setNextDownloadTime();
+    @Synchronized
+    fun failure() {
+        failure++
+        failureRate = min(MAX_RATE.toDouble(), (failureRate + 1).toDouble())
+            .toInt()
+        setNextDownloadTime()
     }
 
-    public synchronized void success(long size) {
-        increment(size);
-        success();
+    @Synchronized
+    fun success(size: Long) {
+        increment(size)
+        success()
     }
 
-    public synchronized  void success() {
-        failureRate = Math.max(0, failureRate-2);
-        success++;
-        setNextDownloadTime();
+    @Synchronized
+    fun success() {
+        failureRate = max(0.0, (failureRate - 2).toDouble()).toInt()
+        success++
+        setNextDownloadTime()
     }
 
-    private  void setNextDownloadTime() {
-        nextDownload = System.currentTimeMillis() + (failureRate*failureRate*1000) - 100;
+    private fun setNextDownloadTime() {
+        nextDownload = System.currentTimeMillis() + (failureRate * failureRate * 1000) - 100
     }
 
-    public  synchronized boolean isReady() {
-        return System.currentTimeMillis() > nextDownload;
+    @Synchronized
+    fun isReady(): Boolean {
+        return System.currentTimeMillis() > nextDownload
     }
 
-    public  synchronized void appendStatusText(StringBuilder builder, String server) {
+    @Synchronized
+    fun appendStatusText(builder: StringBuilder, server: String) {
+        val time = getBlockInterval()
 
-        long time = getBlockIntervall();
-
-        builder.append("<h2>");
-        builder.append(server);
-        builder.append("</h2>");
-        builder.append("<p>Successfull downloads: ");
-        builder.append(success);
-        builder.append("<br>Total: ");
-        builder.append(bytes);
-        builder.append(" bytes");
+        builder.append("<h2>")
+        builder.append(server)
+        builder.append("</h2>")
+        builder.append("<p>Successfull downloads: ")
+        builder.append(success)
+        builder.append("<br>Total: ")
+        builder.append(bytes)
+        builder.append(" bytes")
 
         if (success > 0) {
-            builder.append("<br>Average file pixelCount: ");
-            builder.append(Math.round(bytes / (float)success));
-            builder.append(" bytes");
+            builder.append("<br>Average file pixelCount: ")
+            builder.append(Math.round(bytes / success.toFloat()))
+            builder.append(" bytes")
         }
 
-        builder.append("<br>Failed downloads: ");
-        builder.append(failure);
+        builder.append("<br>Failed downloads: ")
+        builder.append(failure)
 
-        builder.append("<br>Downloads blocked for ");
-        builder.append(time);
-        builder.append(" ms</p>");
-
+        builder.append("<br>Downloads blocked for ")
+        builder.append(time)
+        builder.append(" ms</p>")
     }
 
-    public  synchronized long getBlockIntervall() {
-        return Math.max(0, nextDownload - System.currentTimeMillis());
+    @Synchronized
+    fun getBlockInterval(): Long {
+        return max(0.0, (nextDownload - System.currentTimeMillis()).toDouble())
+            .toLong()
+    }
 
+    companion object {
+        private const val MAX_RATE = 5
     }
 }

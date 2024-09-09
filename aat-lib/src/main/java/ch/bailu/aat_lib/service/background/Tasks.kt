@@ -1,68 +1,62 @@
-package ch.bailu.aat_lib.service.background;
+package ch.bailu.aat_lib.service.background
+
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
+import ch.bailu.aat_lib.util.Objects.equals
+import ch.bailu.foc.Foc
 
 
-import java.util.ArrayList;
+class Tasks(private val broadcaster: Broadcaster) {
+    private val downloads = ArrayList<FileTask>(10)
 
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.broadcaster.Broadcaster;
-import ch.bailu.aat_lib.util.Objects;
-import ch.bailu.foc.Foc;
-
-public final class Tasks {
-
-    private final ArrayList<FileTask> downloads = new ArrayList<>(10);
-
-    private final Broadcaster broadcaster;
-
-    public Tasks(Broadcaster broadcaster) {
-        this.broadcaster = broadcaster;
-    }
-
-    public synchronized void add(FileTask t) {
-        if (!contains(t)) {
-            downloads.add(t);
-            changed(t);
+    @Synchronized
+    fun add(task: FileTask) {
+        if (!contains(task)) {
+            downloads.add(task)
+            changed(task)
         }
     }
 
 
-    public boolean contains(FileTask t) {
-        return contains(t.getFile());
+    fun contains(task: FileTask): Boolean {
+        return contains(task.getFile())
     }
 
-    public synchronized FileTask get(Foc file) {
-        for (FileTask t : downloads) {
-            if (Objects.equals(t.getFile(), file)) {
-                return t;
+    @Synchronized
+    fun get(file: Foc): FileTask? {
+        for (task in downloads) {
+            if (equals(task.getFile(), file)) {
+                return task
             }
         }
-        return null;
-
+        return null
     }
 
-    public synchronized boolean contains(Foc file) {
-        return get(file) != null;
+    @Synchronized
+    fun contains(file: Foc): Boolean {
+        return get(file) != null
     }
 
-
-    public synchronized void remove(FileTask t) {
-        if (downloads.remove(t)) {
-            changed(t);
+    @Synchronized
+    fun remove(task: FileTask) {
+        if (downloads.remove(task)) {
+            changed(task)
         }
     }
 
-    private synchronized void changed(FileTask t) {
-
-        if (t instanceof DownloadTask) {
+    @Synchronized
+    private fun changed(task: FileTask) {
+        if (task is DownloadTask) {
             broadcaster.broadcast(
-                    AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
-                    t.getFile().toString(),
-                    ((DownloadTask) t).getSource().toString());
-
+                AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
+                task.getFile().toString(),
+                task.source.toString()
+            )
         } else {
             broadcaster.broadcast(
-                    AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
-                    t.getFile().toString());
+                AppBroadcaster.FILE_BACKGROUND_TASK_CHANGED,
+                task.getFile().toString()
+            )
         }
     }
 }

@@ -1,22 +1,16 @@
-package ch.bailu.aat_lib.service.render;
+package ch.bailu.aat_lib.service.render
 
-import org.mapsforge.core.graphics.TileBitmap;
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.layer.cache.TileCache;
-import org.mapsforge.map.layer.queue.Job;
-import org.mapsforge.map.model.common.Observer;
+import ch.bailu.aat_lib.logger.AppLog.w
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
+import org.mapsforge.core.graphics.TileBitmap
+import org.mapsforge.core.model.Tile
+import org.mapsforge.map.layer.cache.TileCache
+import org.mapsforge.map.layer.queue.Job
+import org.mapsforge.map.model.common.Observer
+import java.util.concurrent.ConcurrentHashMap
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
-
-public final class Cache implements TileCache {
-
-    private final Map <Integer, ObjTileMapsForge> cache = new ConcurrentHashMap<>();
+class Cache : TileCache {
+    private val cache: MutableMap<Int, ObjTileMapsForge> = ConcurrentHashMap()
 
     /**
      * Interface function for MapWorkerPool.
@@ -25,95 +19,81 @@ public final class Cache implements TileCache {
      * @param j job id
      * @return returns true if render job does not exists or exists and is finished
      */
-    @Override
-    public boolean containsKey(Job j) {
-        ObjTileMapsForge o = cache.get(toKey(j));
+    override fun containsKey(j: Job): Boolean {
+        val o = cache[toKey(j)]
 
-        return (o == null || o.isLoaded());
+        return (o == null || o.isLoaded())
     }
 
-    @Override
-    public void destroy() {
-        purge();
+    override fun destroy() {
+        purge()
     }
 
-    @Override
-    public void purge() {
-        cache.clear();
+    override fun purge() {
+        cache.clear()
     }
 
-    @Override
-    public int getCapacity() {
-        return cache.size();
+    override fun getCapacity(): Int {
+        return cache.size
     }
 
-    @Override
-    public int getCapacityFirstLevel() {
-        return getCapacity();
+    override fun getCapacityFirstLevel(): Int {
+        return capacity
     }
 
-    @Override
-    public TileBitmap getImmediately(Job key) {
-        return get(key);
+    override fun getImmediately(key: Job): TileBitmap? {
+        return get(key)
     }
 
-    @Override
-    public TileBitmap get(Job job) {
-        ObjTileMapsForge owner =  cache.get(toKey(job));
+    override fun get(job: Job): TileBitmap? {
+        val owner = cache[toKey(job)]
 
         if (owner != null) {
-            return owner.getTileBitmap();
+            return owner.getTileBitmap()
         }
-        return null;
+        return null
     }
 
     /**
      *
      * This gets called from the renderer
      */
-    @Override
-    public void put(Job job, TileBitmap fromRenderer) {
-        if (fromRenderer != null) {
-            fromRenderer.incrementRefCount();
-
-            ObjTileMapsForge owner =  cache.get(toKey(job));
-
-            if (owner != null) {
-                owner.onRendered(fromRenderer);
-            }
-        }
+    override fun put(job: Job, fromRenderer: TileBitmap) {
+        fromRenderer.incrementRefCount()
+        val owner = cache[toKey(job)]
+        owner?.onRendered(fromRenderer)
     }
 
-    public void lockToRenderer(ObjTileMapsForge o) {
-        cache.put(toKey(o), o);
+    fun lockToRenderer(o: ObjTileMapsForge) {
+        cache[toKey(o)] = o
     }
 
-    public void freeFromRenderer(ObjTileMapsForge o) {
-        cache.remove(toKey(o));
+    fun freeFromRenderer(o: ObjTileMapsForge) {
+        cache.remove(toKey(o))
     }
 
-    private int toKey(Tile t) { return t.hashCode();}
-    private int toKey(ObjTileMapsForge o) {
-        return toKey(o.getTile());
-    }
-    private int toKey(Job j) {
-        return toKey(j.tile);
+    private fun toKey(t: Tile): Int {
+        return t.hashCode()
     }
 
-    @Override
-    public void setWorkingSet(Set<Job> workingSet) {}
-
-    @Override
-    public void addObserver(Observer observer) {
-        AppLog.w(this, "Use lockToRenderer()!");
+    private fun toKey(o: ObjTileMapsForge): Int {
+        return toKey(o.getTile())
     }
 
-    @Override
-    public void removeObserver(Observer observer) {
-        AppLog.w(this, "Use freeFromRenderer()!");
+    private fun toKey(j: Job): Int {
+        return toKey(j.tile)
     }
 
-    public Collection<ObjTileMapsForge> getTiles() {
-        return cache.values();
+    override fun setWorkingSet(workingSet: Set<Job>) {}
+
+    override fun addObserver(observer: Observer) {
+        w(this, "Use lockToRenderer()!")
     }
+
+    override fun removeObserver(observer: Observer) {
+        w(this, "Use freeFromRenderer()!")
+    }
+
+    val tiles: Collection<ObjTileMapsForge>
+        get() = cache.values
 }

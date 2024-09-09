@@ -1,161 +1,133 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.tile.source.Source
+import ch.bailu.aat_lib.util.fs.AppDirectory.getTileFile
+import org.mapsforge.core.model.Tile
+import java.util.Random
 
-import java.util.Random;
+open class DownloadSource(private val name: String, private val apiKey: String,  private val minZoom: Int, private val maxZoom: Int, a: Int, vararg u: String) : Source() {
+    private val urls: Array<out String> = u
+    private val alpha: Int = a
+    private val transparent: Boolean = (a != OPAQUE)
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.tile.source.Source;
-import ch.bailu.aat_lib.util.fs.AppDirectory;
+    constructor(n: String, a: Int, vararg url: String) : this(n, "", MIN_ZOOM, MAX_ZOOM, a, *url)
+    constructor(n: String, k: String, a: Int, vararg url: String) : this(n, k, MIN_ZOOM, MAX_ZOOM, a, *url)
+    constructor(n: String, minZ: Int, maxZ: Int, a: Int, vararg url: String) : this(n, "", minZ, maxZ, a, *url)
 
-public class DownloadSource extends Source {
-
-    public static final int MIN_ZOOM = 1;
-    public static final int MAX_ZOOM =17; // 18 takes way too much space for the gain.
-
-
-    private final Random random = new Random();
-    private final int minZoom, maxZoom;
-
-    private final String name;
-    private final String apiKey;
-
-    private final String[] urls;
-
-    private final int alpha;
-    private final boolean transparent;
-
-
-    public DownloadSource(String n, int a, final String... url) {
-        this(n, "", MIN_ZOOM, MAX_ZOOM, a, url);
+    override fun getName(): String {
+        return name
     }
 
-    public DownloadSource(String n, String k, int a, final String... url) {
-        this(n, k, MIN_ZOOM, MAX_ZOOM, a, url);
-    }
-    public DownloadSource(String n, int minZ, int maxZ, int a, final String... url) {
-        this(n, "",minZ, maxZ, a, url);
+    override fun getID(tile: Tile, context: AppContext): String {
+        return getTileFile(genRelativeFilePath(tile, name), context.tileCacheDirectory).path
     }
 
-    public DownloadSource(String n, String k, int minZ, int maxZ, int a, String... u) {
-        name = n;
-        apiKey = k;
-        minZoom = minZ;
-        maxZoom = maxZ;
-        urls = u;
-        alpha = a;
-        transparent = (a != Source.OPAQUE);
+    override fun getMinimumZoomLevel(): Int {
+        return minZoom
     }
 
-    public String getName() {
-        return name;
+    override fun getMaximumZoomLevel(): Int {
+        return maxZoom
     }
 
-    @Override
-    public String getID(Tile tile, AppContext context) {
-        return AppDirectory.getTileFile(Source.genRelativeFilePath(tile, name), context.getTileCacheDirectory()).getPath();
+    override fun isTransparent(): Boolean {
+        return transparent
     }
 
-    @Override
-    public int getMinimumZoomLevel() {
-        return minZoom;
+    override fun getAlpha(): Int {
+        return alpha
     }
 
-    @Override
-    public int getMaximumZoomLevel() {
-        return maxZoom;
+    override fun getFactory(t: Tile): Obj.Factory {
+        return ObjTileDownloadable.Factory(t, this)
     }
 
-    public boolean isTransparent() {
-        return transparent;
+    fun getTileURLString(tile: Tile): String {
+        return baseUrl + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + EXT + apiKey
     }
 
-    @Override
-    public int getAlpha() {
-        return alpha;
+    private val baseUrl: String
+        get() = urls[random.nextInt(urls.size)]
+
+    companion object {
+        private val random = Random()
+
+        const val MIN_ZOOM: Int = 1
+        const val MAX_ZOOM: Int = 17 // 18 takes way too much space for the gain.
+
+
+        fun isDownloadBackgroundSource(source: Source): Boolean {
+            return (source === MAPNIK || source === OPEN_TOPO_MAP || source === OPEN_CYCLE_MAP)
+        }
+
+        val MAPNIK: DownloadSource = object : DownloadSource(
+            "Mapnik",
+            OPAQUE,
+            "https://a.tile.openstreetmap.org/",
+            "https://b.tile.openstreetmap.org/",
+            "https://c.tile.openstreetmap.org/"
+        ) {
+            override fun filterBitmap(): Boolean {
+                return true
+            }
+        }
+
+
+        val OPEN_TOPO_MAP: DownloadSource = object : DownloadSource(
+            "OpenTopoMap",
+            OPAQUE,
+            "https://a.tile.opentopomap.org/",
+            "https://b.tile.opentopomap.org/",
+            "https://c.tile.opentopomap.org/"
+        ) {
+            override fun filterBitmap(): Boolean {
+                return true
+            }
+        }
+
+        val OPEN_CYCLE_MAP: DownloadSource = object : DownloadSource(
+            "OpenCycleMap",
+            "?apikey=4fc8425f35f44f11a59407ef5de1e2c2",
+            OPAQUE,
+            "https://tile.thunderforest.com/cycle/"
+        ) {
+            override fun filterBitmap(): Boolean {
+                return true
+            }
+        }
+
+        val TRAIL_MTB: DownloadSource = DownloadSource(
+            "TrailMTB",
+            TRANSPARENT,
+            "https://tile.waymarkedtrails.org/mtb/"
+        )
+
+        val TRAIL_SKATING: DownloadSource = DownloadSource(
+            "TrailSkating",
+            TRANSPARENT,
+            "https://tile.waymarkedtrails.org/skating/"
+        )
+
+        val TRAIL_HIKING: DownloadSource = DownloadSource(
+            "TrailHiking",
+            TRANSPARENT,
+            "https://tile.waymarkedtrails.org/hiking/"
+        )
+
+        val TRAIL_CYCLING: DownloadSource = DownloadSource(
+            "TrailCycling",
+            TRANSPARENT,
+            "https://tile.waymarkedtrails.org/cycling/"
+        )
+
+        // https://wiki.openstreetmap.org/wiki/Openptmap Seems to be gone
+        // Use https://www.öpnvkarte.de/ instead
+        val TRANSPORT_OVERLAY: DownloadSource = DownloadSource(
+            "OePNVKarte",
+            5, 16,
+            OPAQUE,
+            "https://tileserver.memomaps.de/tilegen/"
+        )
     }
-
-    @Override
-    public Obj.Factory getFactory(Tile t) {
-        return new ObjTileDownloadable.Factory(t, this);
-    }
-
-    public String getTileURLString(Tile tile) {
-        return getBaseUrl() + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY + Source.EXT + apiKey;
-    }
-
-    private String getBaseUrl() {
-        return urls[random.nextInt(urls.length)];
-    }
-
-    public static boolean isDownloadBackgroundSource(Source source) {
-        return (source == MAPNIK || source == OPEN_TOPO_MAP || source == OPEN_CYCLE_MAP);
-    }
-
-    public final static DownloadSource MAPNIK =
-            new DownloadSource("Mapnik",
-                    Source.OPAQUE,
-                    "https://a.tile.openstreetmap.org/",
-                    "https://b.tile.openstreetmap.org/",
-                    "https://c.tile.openstreetmap.org/") {
-
-                @Override
-                public boolean filterBitmap() {
-                    return true;
-                }
-            };
-
-
-    public final static DownloadSource OPEN_TOPO_MAP =
-            new DownloadSource("OpenTopoMap",
-                    Source.OPAQUE,
-                    "https://a.tile.opentopomap.org/",
-                    "https://b.tile.opentopomap.org/",
-                    "https://c.tile.opentopomap.org/") {
-
-                @Override
-                public boolean filterBitmap() {
-                    return true;
-                }
-            };
-
-    public final static DownloadSource OPEN_CYCLE_MAP =
-            new DownloadSource("OpenCycleMap",
-                    "?apikey=4fc8425f35f44f11a59407ef5de1e2c2",
-                    Source.OPAQUE,
-                    "https://tile.thunderforest.com/cycle/") {
-
-                @Override
-                public boolean filterBitmap() {
-                    return true;
-                }
-            };
-
-    public final static DownloadSource TRAIL_MTB =
-            new DownloadSource("TrailMTB",
-                    Source.TRANSPARENT,
-                    "https://tile.waymarkedtrails.org/mtb/");
-
-    public final static DownloadSource TRAIL_SKATING =
-            new DownloadSource("TrailSkating",
-                    Source.TRANSPARENT,
-                    "https://tile.waymarkedtrails.org/skating/");
-
-    public final static DownloadSource TRAIL_HIKING =
-            new DownloadSource("TrailHiking",
-                    Source.TRANSPARENT,
-                    "https://tile.waymarkedtrails.org/hiking/");
-
-    public final static DownloadSource TRAIL_CYCLING =
-            new DownloadSource("TrailCycling",
-                    Source.TRANSPARENT,
-                    "https://tile.waymarkedtrails.org/cycling/");
-
-    // https://wiki.openstreetmap.org/wiki/Openptmap Seems to be gone
-    // Use https://www.öpnvkarte.de/ instead
-    public final static DownloadSource TRANSPORT_OVERLAY =
-            new DownloadSource("OePNVKarte",
-                    5, 16,
-                    Source.OPAQUE,
-                    "https://tileserver.memomaps.de/tilegen/");
 }

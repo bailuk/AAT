@@ -1,95 +1,83 @@
-package ch.bailu.aat_lib.service.render;
+package ch.bailu.aat_lib.service.render
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.preferences.OnPreferencesChanged
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
+import ch.bailu.aat_lib.preferences.map.SolidRendererThreads.Companion.set
+import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
+import ch.bailu.foc.FocFactory
+import org.mapsforge.core.model.Tile
+import javax.annotation.Nonnull
 
-import java.util.ConcurrentModificationException;
+class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsForgeDirectory) :
+    VirtualService(), OnPreferencesChanged, RenderServiceInterface {
+    private val stheme = SolidRenderTheme(sdirectory, focFactory)
+    private val scaleFactor = SolidScaleFactor(sdirectory.getStorage())
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory;
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
-import ch.bailu.aat_lib.preferences.map.SolidRendererThreads;
-import ch.bailu.aat_lib.preferences.map.SolidScaleFactor;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
-import ch.bailu.foc.FocFactory;
-
-public final class RenderService  extends VirtualService
-        implements OnPreferencesChanged, RenderServiceInterface {
-
-
-    private final SolidMapsForgeDirectory sdirectory;
-    private final SolidRenderTheme stheme;
-    private final SolidScaleFactor scaleFactor;
-
-    private final Configuration configuration = new Configuration();
-    private final Caches caches = new Caches();
+    private val configuration = Configuration()
+    private val caches = Caches()
 
 
-    public RenderService(FocFactory focFactory, SolidMapsForgeDirectory sdirectory) {
-
-        this.sdirectory = sdirectory;
-        this.stheme = new SolidRenderTheme(sdirectory, focFactory);
-        this.scaleFactor = new SolidScaleFactor(sdirectory.getStorage());
-
-        sdirectory.getStorage().register(this);
-        reconfigureRenderer();
+    init {
+        sdirectory.getStorage().register(this)
+        reconfigureRenderer()
     }
 
 
-    private void reconfigureRenderer() {
-        SolidRendererThreads.set();
+    private fun reconfigureRenderer() {
+        set()
 
-        var themeID = stheme.getValueAsThemeID();
-        var tileCache = caches.get(themeID);
+        val themeID = stheme.valueAsThemeID
+        val tileCache = caches.get(themeID)
 
         configuration.reconfigure(
-                sdirectory.getValueAsFile(),
-                tileCache,
-                stheme.getValueAsRenderTheme(),
-                themeID,
-                scaleFactor.getScaleFactor());
+            sdirectory.getValueAsFile(),
+            tileCache,
+            stheme.valueAsRenderTheme,
+            themeID,
+            scaleFactor.scaleFactor
+        )
 
-        reSchedule(tileCache);
+        reSchedule(tileCache)
     }
 
-    private void reSchedule(Cache cache) {
+    private fun reSchedule(cache: Cache) {
         try {
-            for (var tile : cache.getTiles()) {
-                configuration.lockToRenderer(tile);
+            for (tile in cache.tiles) {
+                configuration.lockToRenderer(tile)
             }
-        } catch (ConcurrentModificationException e) {
-            AppLog.e(this, e);
+        } catch (e: ConcurrentModificationException) {
+            e(this, e)
         }
     }
 
-    public void lockToRenderer(ObjTileMapsForge o) {
-        caches.lockToRenderer(o);
-        configuration.lockToRenderer(o);
+    override fun lockToRenderer(objTileMapsForge: ObjTileMapsForge) {
+        caches.lockToRenderer(objTileMapsForge)
+        configuration.lockToRenderer(objTileMapsForge)
     }
 
 
-    public void freeFromRenderer(ObjTileMapsForge o) {
-        caches.freeFromRenderer(o);
+    override fun freeFromRenderer(objTileMapsForge: ObjTileMapsForge) {
+        caches.freeFromRenderer(objTileMapsForge)
     }
 
-    public void close() {
-        sdirectory.getStorage().unregister(this);
-        configuration.destroy();
+    override fun close() {
+        sdirectory.getStorage().unregister(this)
+        configuration.destroy()
     }
 
 
-    @Override
-    public void onPreferencesChanged(@Nonnull StorageInterface s, @Nonnull String key) {
+    override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
-            reconfigureRenderer();
+            reconfigureRenderer()
         }
     }
 
-    public boolean supportsTile(Tile t) {
-        return configuration.supportsTile(t);
+    override fun supportsTile(tile: Tile): Boolean {
+        return configuration.supportsTile(tile)
     }
 }
