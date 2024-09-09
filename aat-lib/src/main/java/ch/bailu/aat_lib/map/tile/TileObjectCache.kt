@@ -17,7 +17,7 @@ open class TileObjectCache : Closeable {
     fun isInCache(fileId: String): Boolean {
         for (i in 0 until tiles.size()) {
             val tile = tiles[i]
-            if (tile is ObjTile && fileId == tile.id) {
+            if (tile is ObjTile && fileId == tile.getID()) {
                 return true
             }
         }
@@ -79,7 +79,7 @@ open class TileObjectCache : Closeable {
         get() {
             for (i in 0 until tiles.size()) {
                 if (tiles[i] != null) {
-                    if (tiles[i]?.isReadyAndLoaded != true) return false
+                    if (tiles[i]?.isReadyAndLoaded() != true) return false
                 }
             }
             return true

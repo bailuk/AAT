@@ -62,7 +62,7 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
                         self.syncBitmap.set(self.imageFile, 0, false)
                         size = self.syncBitmap.getSize()
                     } catch (e: Exception) {
-                        self.exception = e
+                        self.setException(e)
                     }
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,

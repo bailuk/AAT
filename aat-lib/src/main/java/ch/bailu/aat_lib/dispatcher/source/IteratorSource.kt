@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
@@ -71,7 +72,7 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
     class FollowFile(private val appContext: AppContext) : IteratorSource(
         appContext
     ) {
-        private var handle = ObjNull.NULL
+        private var handle: Obj = ObjNull
         override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorFollowFile(appContext)
         }
@@ -85,7 +86,7 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
         override fun onPauseWithService() {
             appContext.broadcaster.unregister(onChangedInCache)
             handle.free()
-            handle = ObjNull.NULL
+            handle = ObjNull
             super.onPauseWithService()
         }
 
@@ -104,9 +105,9 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
                 if (h is ObjGpx) {
                     handle.free()
                     handle = h
-                    if (handle.isReadyAndLoaded) info[0] = GpxFileWrapper(
-                        handle.file,
-                        (handle as ObjGpx).gpxList
+                    if (handle.isReadyAndLoaded()) info[0] = GpxFileWrapper(
+                        handle.getFile(),
+                        (handle as ObjGpx).getGpxList()
                     )
                 } else {
                     h.free()

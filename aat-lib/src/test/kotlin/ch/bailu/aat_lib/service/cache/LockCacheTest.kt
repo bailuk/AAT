@@ -78,28 +78,28 @@ class LockCacheTest {
         cache.add(obj2)
         cache.add(obj3)
 
-        assertEquals("3", cache[0]!!.id)
-        assertEquals("2", cache[1]!!.id)
+        assertEquals("3", cache[0]!!.getID())
+        assertEquals("2", cache[1]!!.getID())
 
         assertEquals(2, cache.size())
 
         cache.use(1)
         cache.add(obj1)
 
-        assertEquals("1", cache[0]!!.id)
-        assertEquals("2", cache[1]!!.id)
+        assertEquals("1", cache[0]!!.getID())
+        assertEquals("2", cache[1]!!.getID())
 
         cache.ensureCapacity(4)
         assertEquals(2, cache.size())
 
-        assertEquals("1", cache[0]!!.id)
-        assertEquals("2", cache[1]!!.id)
+        assertEquals("1", cache[0]!!.getID())
+        assertEquals("2", cache[1]!!.getID())
 
         cache.add(obj3)
         assertEquals(3, cache.size())
 
-        assertEquals("1", cache[0]!!.id)
-        assertEquals("2", cache[1]!!.id)
-        assertEquals("3", cache[2]!!.id)
+        assertEquals("1", cache[0]!!.getID())
+        assertEquals("2", cache[1]!!.getID())
+        assertEquals("3", cache[2]!!.getID())
     }
 }

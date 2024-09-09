@@ -28,15 +28,10 @@ class ObjTileMapsForge(
 
     override fun onChanged(id: String, sc: AppContext) {}
 
-
     fun onRendered(fromRenderer: TileBitmap?) {
         bitmap.set(fromRenderer)
-        appContext.broadcaster.broadcast(
-            AppBroadcaster.FILE_CHANGED_INCACHE,
-            id
-        )
+        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
     }
-
 
     override fun onRemove(sc: AppContext) {
         appContext.services.getRenderService().freeFromRenderer(this@ObjTileMapsForge)
@@ -44,11 +39,10 @@ class ObjTileMapsForge(
         super.onRemove(sc)
     }
 
-
     override fun getSize(): Long {
         DEFAULT_SIZE = getSize(bitmap, DEFAULT_SIZE)
 
-        return if (isLoaded) {
+        return if (isLoaded()) {
             DEFAULT_SIZE
         } else {
             DEFAULT_SIZE * 4

@@ -20,7 +20,7 @@ open class ImageObjectView(
     scontext.getContext()
 ) {
     private var isAttached = false
-    private var handle = ObjNull.NULL
+    private var handle: Obj = ObjNull
     private var idToLoad: String? = null
     private var factoryToLoad: Obj.Factory? = null
     fun setImageObject() {
@@ -70,7 +70,7 @@ open class ImageObjectView(
 
     private fun freeImageHandle() {
         handle.free()
-        handle = ObjNull.NULL
+        handle = ObjNull
     }
 
     public override fun onAttachedToWindow() {
@@ -96,8 +96,8 @@ open class ImageObjectView(
 
         if (imageHandle.hasException()) {
             resetImage()
-        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded) {
-            setImageBitmap(androidBitmap(imageHandle.bitmap))
+        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded()) {
+            setImageBitmap(androidBitmap(imageHandle.getBitmap()))
         }
     }
 

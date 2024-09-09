@@ -1,77 +1,72 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable
+import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
+class ObjTileElevationColor(id: String, b: MapTileInterface, t: Tile, split: Int) :
+    ObjTileElevation(id, b, t, split) {
+    override fun fillBuffer(
+        buffer: IntArray,
+        raster: Raster,
+        subTile: SubTile,
+        dem: DemProvider
+    ) {
+        val dim = dem.dim.DIM
+        val bitmapDim = subTile.pixelDim()
 
-public final class ObjTileElevationColor extends ObjTileElevation {
+        var c = 0
+        var oldLine = -1
+        var color = 0
 
-    public ObjTileElevationColor(String id, MapTileInterface b, Tile t, int _split) {
-        super(id, b, t, _split);
-    }
+        for (la in subTile.laSpan.firstPixelIndex()..subTile.laSpan.lastPixelIndex()) {
+            val line = raster.toLaRaster[la] * dim
+            var offset = -1
 
-    @Override
-    public void fillBuffer(int[] buffer, Raster raster, SubTile subTile, DemProvider dem) {
-        final int dim = dem.getDim().DIM;
-        final int bitmap_dim = subTile.pixelDim();
+            if (oldLine != line) {
+                for (lo in subTile.loSpan.firstPixelIndex()..subTile.loSpan.lastPixelIndex()) {
+                    val newOffset = raster.toLoRaster[lo]
 
-        int c=0;
-        int old_line=-1;
-        int color=0;
-
-        for (int la = subTile.laSpan.firstPixelIndex(); la <= subTile.laSpan.lastPixelIndex(); la++) {
-
-            final int line = raster.toLaRaster[la]*dim;
-            int offset = -1;
-
-            if (old_line != line) {
-
-
-                for (int lo = subTile.loSpan.firstPixelIndex(); lo <= subTile.loSpan.lastPixelIndex(); lo++) {
-                    final int new_offset=raster.toLoRaster[lo];
-
-                    if (new_offset != offset) {
-                        offset = new_offset;
-                        color = AltitudeColorTable.instance().getColor(dem.getElevation(line + offset));
+                    if (newOffset != offset) {
+                        offset = newOffset
+                        color = AltitudeColorTable.instance()
+                            .getColor(dem.getElevation(line + offset).toInt())
                     }
 
-                    buffer[c]=color;
-                    c++;
+                    buffer[c] = color
+                    c++
                 }
             } else {
-                copyLine(buffer, c-bitmap_dim, c);
-                c+=bitmap_dim;
+                copyLine(buffer, c - bitmapDim, c)
+                c += bitmapDim
             }
 
-            old_line=line;
+            oldLine = line
         }
     }
 
-    private void copyLine(int[] buffer, int sourceIndex, int destinationIndex) {
-        final int nextLine = destinationIndex;
+    private fun copyLine(buffer: IntArray, sourceIndex: Int, destinationIndex: Int) {
+        var sourceIndex = sourceIndex
+        var destinationIndex = destinationIndex
+        val nextLine = destinationIndex
 
-        for (; sourceIndex < nextLine; sourceIndex++) {
-            buffer[destinationIndex] = buffer[sourceIndex];
-            destinationIndex++;
+        while (sourceIndex < nextLine) {
+            buffer[destinationIndex] = buffer[sourceIndex]
+            destinationIndex++
+            sourceIndex++
         }
     }
 
-    public static class Factory extends Obj.Factory {
-        private static final int SPLIT=0;
-        private final Tile mapTile;
-
-        public Factory(Tile t) {
-            mapTile=t;
+    class Factory(private val mapTile: Tile) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileElevationColor(id, appContext.createMapTile(), mapTile, SPLIT)
         }
 
-
-        @Override
-        public Obj factory(String id, AppContext ac) {
-            return  new ObjTileElevationColor(id, ac.createMapTile(), mapTile,SPLIT);
+        companion object {
+            private const val SPLIT = 0
         }
     }
 }

@@ -67,7 +67,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     override fun isReadyAndLoaded(): Boolean {
-        val loaded = isLoaded
+        val loaded = isLoaded()
         val notLoadable = !isLoadable
         return loaded || notLoadable
     }

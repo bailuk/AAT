@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.GpxInformationProvider
 import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
@@ -12,7 +13,7 @@ import ch.bailu.foc.Foc
 
 class EditorHelper(private val appContext: AppContext) :
     GpxInformationProvider {
-    private var handle = ObjNull.NULL
+    private var handle: Obj = ObjNull
     var infoID = 0
         private set
     var file: Foc = Foc.FOC_NULL

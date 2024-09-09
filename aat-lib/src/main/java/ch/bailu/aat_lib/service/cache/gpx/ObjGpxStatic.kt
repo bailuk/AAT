@@ -1,237 +1,211 @@
-package ch.bailu.aat_lib.service.cache.gpx;
+package ch.bailu.aat_lib.service.cache.gpx
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointLinkedNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.gpx.linked_list.Node;
-import ch.bailu.aat_lib.preferences.SolidAutopause;
-import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
-import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
-import ch.bailu.aat_lib.util.IndexedMap;
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointLinkedNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.linked_list.Node
+import ch.bailu.aat_lib.preferences.SolidAutopause
+import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause
+import ch.bailu.aat_lib.preferences.presets.SolidPreset.Companion.getPresetFromFile
+import ch.bailu.aat_lib.service.background.FileTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.OnObject
+import ch.bailu.aat_lib.service.elevation.Dem3Status
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
+import ch.bailu.aat_lib.util.IndexedMap
+import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
+import ch.bailu.foc.Foc
 
-public final class ObjGpxStatic extends ObjGpx implements ElevationUpdaterClient {
+class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUpdaterClient {
+    private var gpxList = GpxList.NULL_TRACK
+    private var readyAndLoaded = false
+    private val file: Foc
 
-
-    private GpxList gpxList = GpxList.NULL_TRACK;
-    private boolean readyAndLoaded = false;
-    private final Foc file;
-
-    public ObjGpxStatic(String id, AppContext appContext) {
-        super(id);
-        appContext.getServices().getCacheService().addToBroadcaster(this);
-
-        file = appContext.toFoc(id);
+    init {
+        appContext.services.getCacheService().addToBroadcaster(this)
+        file = appContext.toFoc(id)
     }
 
-    @Override
-    public void onInsert(AppContext appContext) {
-        reload(appContext);
+    override fun onInsert(appContext: AppContext) {
+        reload(appContext)
     }
 
-    @Override
-    public void onRemove(final AppContext appContext) {
-        appContext.getServices().insideContext(()-> appContext.getServices().getElevationService().cancelElevationUpdates(ObjGpxStatic.this));
+    override fun onRemove(appContext: AppContext) {
+        appContext.services.insideContext {
+            appContext.services.getElevationService().cancelElevationUpdates(
+                this@ObjGpxStatic
+            )
+        }
     }
 
-    @Override
-    public Foc getFile() {
-        return file;
+    override fun getFile(): Foc {
+        return file
     }
 
-    private void reload(final AppContext appContext) {
-        appContext.getServices().getBackgroundService().process(new FileLoader(file));
+    private fun reload(appContext: AppContext) {
+        appContext.services.getBackgroundService().process(FileLoader(file))
     }
 
-    public boolean isReadyAndLoaded() {
-        return readyAndLoaded;
+    override fun isReadyAndLoaded(): Boolean {
+        return readyAndLoaded
     }
 
-    @Override
-    public long getSize() {
-        return gpxList.getPointList().size() *
+    override fun getSize(): Long {
+        return gpxList.pointList.size() *
                 (GpxPoint.SIZE_IN_BYTES +
                         GpxPointLinkedNode.SIZE_IN_BYTES +
-                        Node.SIZE_IN_BYTES);
+                        Node.SIZE_IN_BYTES)
     }
 
-    private void setGpxList(GpxList list) {
-        readyAndLoaded = true;
-        gpxList = list;
+    private fun setGpxList(list: GpxList) {
+        readyAndLoaded = true
+        gpxList = list
     }
 
-    public GpxList getGpxList() {
-        return gpxList;
+    override fun getGpxList(): GpxList {
+        return gpxList
     }
 
-    public static class Factory extends Obj.Factory {
-
-        @Override
-        public Obj factory(String id, AppContext appContext) {
-            return new ObjGpxStatic(id, appContext);
+    class Factory : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjGpxStatic(id, appContext)
         }
     }
 
-    @Override
-    public void onDownloaded(String id, String url,  AppContext appContext) {
-        if (id.equals(getID())) {
-            reload(appContext);
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
+        if (id == getID()) {
+            reload(appContext)
         }
     }
 
-    @Override
-    public void onChanged(String id, AppContext appContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 
+    val srtmTileCoordinates: Array<Dem3Coordinates>
+        get() {
+            val f = SrtmTileCollector()
+            f.walkTrack(gpxList)
 
-    public Dem3Coordinates[] getSrtmTileCoordinates() {
-
-        SrtmTileCollector f = new SrtmTileCollector();
-        f.walkTrack(gpxList);
-
-        final Dem3Coordinates[] r=new Dem3Coordinates[f.coordinates.size()];
-        for (int i=0; i<f.coordinates.size(); i++) {
-            r[i]=f.coordinates.getValueAt(i);
+            val r = arrayOfNulls<Dem3Coordinates>(f.coordinates.size())
+            for (i in 0 until f.coordinates.size()) {
+                r[i] = f.coordinates.getValueAt(i)
+            }
+            return r as Array<Dem3Coordinates>
         }
-        return r;
+
+
+    override fun updateFromSrtmTile(appContext: AppContext, srtm: Dem3Tile) {
+        ListUpdater(srtm).walkTrack(gpxList)
+
+        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, toString())
     }
 
-
-
-    @Override
-    public void updateFromSrtmTile(AppContext appContext, Dem3Tile srtm) {
-        new ListUpdater(srtm).walkTrack(gpxList);
-
-        appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, toString());
-
-    }
-
-    private static class ListUpdater extends GpxListWalker {
-        private final Dem3Tile tile;
-
-        public ListUpdater(Dem3Tile s) {
-            tile=s;
+    private class ListUpdater(private val tile: Dem3Tile) : GpxListWalker() {
+        override fun doList(l: GpxList): Boolean {
+            return tile.status == Dem3Status.VALID
         }
 
-        @Override
-        public boolean doList(GpxList l) {
-            return tile.getStatus() == Dem3Status.VALID;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            return true;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
-        }
-
-        @Override
-        public void doPoint(GpxPointNode point) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
-                Dem3Coordinates coordinates = new Dem3Coordinates(point.getLatitudeE6(), point.getLongitudeE6());
-                if (tile.hashCode()== coordinates.hashCode()) {
-                    point.setAltitude(tile.getElevation(point.getLatitudeE6(), point.getLongitudeE6()));
+        override fun doPoint(point: GpxPointNode) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+                val coordinates = Dem3Coordinates(point.getLatitudeE6(), point.getLongitudeE6())
+                if (tile.hashCode() == coordinates.hashCode()) {
+                    point.setAltitude(
+                        tile.getElevation(
+                            point.getLatitudeE6(),
+                            point.getLongitudeE6()
+                        ).toDouble()
+                    )
                 }
             }
         }
     }
 
-    private static class SrtmTileCollector extends GpxListWalker {
+    private class SrtmTileCollector : GpxListWalker() {
+        val coordinates: IndexedMap<String, Dem3Coordinates> = IndexedMap()
 
-        public final IndexedMap<String, Dem3Coordinates> coordinates = new IndexedMap<>();
-
-        @Override
-        public boolean doList(GpxList l) {
-            return true;
+        override fun doList(l: GpxList): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            return true;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public void doPoint(GpxPointNode point) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
-                final Dem3Coordinates c = new Dem3Coordinates(point);
-                coordinates.put(c.toString(), c);
+        override fun doPoint(point: GpxPointNode) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+                val c = Dem3Coordinates(point)
+                coordinates.put(c.toString(), c)
             }
         }
     }
 
-    private static class FileLoader extends FileTask {
-        public FileLoader(Foc f) {
-            super(f);
+    private class FileLoader(file: Foc) : FileTask(file) {
+        override fun bgOnProcess(appContext: AppContext): Long {
+            val size = longArrayOf(0)
 
-        }
+            object : OnObject(appContext, getID(), ObjGpxStatic::class.java) {
+                override fun run(handle: Obj) {
+                    val owner = handle as ObjGpxStatic
 
-        @Override
-        public long bgOnProcess(final AppContext appContext) {
-            final long[] size = {0};
+                    size[0] = load(appContext, owner)
 
-            new OnObject(appContext, getID(), ObjGpxStatic.class) {
-                @Override
-                public void run(Obj handle) {
-                    ObjGpxStatic owner = (ObjGpxStatic) handle;
+                    appContext.services.getElevationService().requestElevationUpdates(
+                        owner,
+                        owner.srtmTileCoordinates
+                    )
 
-                    size[0] = load(appContext, owner);
-
-                    appContext.getServices().getElevationService().requestElevationUpdates(owner,
-                            owner.getSrtmTileCoordinates());
-
-                    appContext.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID());
-
+                    appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
                 }
-            };
-            return size[0];
+            }
+            return size[0]
         }
 
-        private long load(AppContext appContext, ObjGpxStatic handle) {
-            long size = 0;
+        private fun load(appContext: AppContext, handle: ObjGpxStatic): Long {
+            var size: Long = 0
 
-            GpxListReader reader = new GpxListReader(
-                    getThreadControl(),
-                    getFile(),
-                    getAutoPause(appContext, SolidPreset.getPresetFromFile(getFile())));
+            val reader = GpxListReader(
+                threadControl,
+                getFile(),
+                getAutoPause(appContext, getPresetFromFile(getFile()))
+            )
 
-            handle.setException(reader.getException());
+            handle.setException(reader.exception)
 
             if (canContinue()) {
-                handle.setGpxList(reader.getGpxList());
-                size = handle.getSize();
+                handle.setGpxList(reader.gpxList)
+                size = handle.getSize()
             }
 
 
-            return size;
+            return size
         }
 
-        private AutoPause getAutoPause(AppContext appContext, int preset) {
-            SolidAutopause spause = new SolidPostprocessedAutopause(appContext.getStorage(), preset);
-            return new AutoPause.Time(
-                    spause.getTriggerSpeed(),
-                    spause.getTriggerLevelMillis());
+        private fun getAutoPause(appContext: AppContext, preset: Int): AutoPause {
+            val spause: SolidAutopause = SolidPostprocessedAutopause(appContext.storage, preset)
+            return AutoPause.Time(
+                spause.triggerSpeed,
+                spause.triggerLevelMillis
+            )
         }
     }
 }

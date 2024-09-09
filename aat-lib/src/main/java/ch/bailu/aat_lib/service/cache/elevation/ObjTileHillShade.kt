@@ -1,148 +1,129 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.elevation.tile.DemDimension
+import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex
+import ch.bailu.aat_lib.service.elevation.tile.DemProvider
+import ch.bailu.aat_lib.service.elevation.tile.DemSplitter
+import ch.bailu.aat_lib.service.elevation.tile.MultiCell
+import ch.bailu.aat_lib.service.elevation.tile.MultiCell8
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.elevation.tile.DemDimension;
-import ch.bailu.aat_lib.service.elevation.tile.DemGeoToIndex;
-import ch.bailu.aat_lib.service.elevation.tile.DemProvider;
-import ch.bailu.aat_lib.service.elevation.tile.DemSplitter;
-import ch.bailu.aat_lib.service.elevation.tile.MultiCell;
-import ch.bailu.aat_lib.service.elevation.tile.MultiCell8;
+class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileElevation(id, ti, t, splitFromZoom(t.zoomLevel.toInt())) {
+    private var table: ObjHillShadeColorTable? = null
 
-public final class ObjTileHillshade extends ObjTileElevation {
+    override fun onInsert(appContext: AppContext) {
+        table = appContext.services.getCacheService().getObject(
+            ObjHillShadeColorTable.ID,
+            ObjHillShadeColorTable.FACTORY
+        ) as ObjHillShadeColorTable
 
-    private ObjHillshadeColorTable table;
-
-    public ObjTileHillshade(String id, MapTileInterface ti,  Tile t) {
-        super(id, ti, t, splitFromZoom(t.zoomLevel));
+        super.onInsert(appContext)
     }
 
 
-    @Override
-    public void onInsert(AppContext sc) {
-        table=(ObjHillshadeColorTable)
-                sc.getServices().getCacheService().getObject(
-                        ObjHillshadeColorTable.ID,
-                        ObjHillshadeColorTable.FACTORY);
-
-        super.onInsert(sc);
-
-    }
+    override val isInitialized: Boolean
+        get() = table!!.isReadyAndLoaded() && super.isInitialized
 
 
-
-    @Override
-    public boolean isInitialized() {
-        return table.isReadyAndLoaded() && super.isInitialized();
-    }
-
-
-    @Override
-    public void onChanged(String id, AppContext sc) {
-        if (ObjHillshadeColorTable.ID.equals(id)) {
-            requestElevationUpdates(sc);
+    override fun onChanged(id: String, appContext: AppContext) {
+        if (ObjHillShadeColorTable.ID == id) {
+            requestElevationUpdates(appContext)
         }
-
     }
 
-    @Override
-    public void onRemove(AppContext sc) {
-        super.onRemove(sc);
-        table.free();
-    }
-
-
-
-    @Override
-    public DemGeoToIndex factoryGeoToIndex(DemDimension dim) {
-        return new DemGeoToIndex(dim, true);
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
+        table?.free()
     }
 
 
-    @Override
-    public DemProvider factorySplitter(DemProvider dem) {
-        return new DemSplitter(dem);
+    override fun factoryGeoToIndex(dim: DemDimension): DemGeoToIndex {
+        return DemGeoToIndex(dim, true)
     }
-    public MultiCell factoryMultiCell(DemProvider dem) {
+
+
+    override fun factorySplitter(dem: DemProvider): DemProvider {
+        return DemSplitter(dem)
+    }
+
+    private fun factoryMultiCell(dem: DemProvider): MultiCell {
         //return MultiCell.factory(dem);
-        return new MultiCell8(dem);
+        return MultiCell8(dem)
     }
 
 
+    override fun fillBuffer(
+        bitmap: IntArray,
+        raster: Raster,
+        subTile: SubTile,
+        demtile: DemProvider
+    ) {
+        val demtileDim = demtile.dim.DIM
+        val bitmapDim = subTile.pixelDim()
 
-    @Override
-    public void fillBuffer(int[] bitmap, Raster raster, SubTile subTile, DemProvider demtile) {
-        final int demtile_dim = demtile.getDim().DIM;
-        final int bitmap_dim = subTile.pixelDim();
+        var color = 0
+        var index = 0
+        var oldLine = -1
 
-        int color=0;
-        int index=0;
-        int old_line=-1;
+        val multiCell = factoryMultiCell(demtile)
 
-        final MultiCell mcell = factoryMultiCell(demtile);
+        for (la in subTile.laSpan.firstPixelIndex()..subTile.laSpan.lastPixelIndex()) {
+            val line = raster.toLaRaster[la] * demtileDim
 
-        for (int la = subTile.laSpan.firstPixelIndex(); la <= subTile.laSpan.lastPixelIndex(); la++) {
-            final int line = raster.toLaRaster[la]*demtile_dim;
+            if (oldLine != line) {
+                var oldOffset = -1
 
-            if (old_line != line) {
-                int old_offset = -1;
+                for (lo in subTile.loSpan.firstPixelIndex()..subTile.loSpan.lastPixelIndex()) {
+                    val offset = raster.toLoRaster[lo]
 
-                for (int lo = subTile.loSpan.firstPixelIndex(); lo <= subTile.loSpan.lastPixelIndex(); lo++) {
-                    final int offset = raster.toLoRaster[lo];
+                    if (oldOffset != offset) {
+                        oldOffset = offset
 
-                    if (old_offset != offset) {
-                        old_offset = offset;
-
-                        mcell.set(line + offset);
-                        color = table.getColor(mcell);
+                        multiCell.set(line + offset)
+                        color = table!!.getColor(multiCell)
                     }
 
-                    bitmap[index] = color;
-                    index++;
+                    bitmap[index] = color
+                    index++
                 }
             } else {
-                copyLine(bitmap, index - bitmap_dim, index);
-                index += bitmap_dim;
+                copyLine(bitmap, index - bitmapDim, index)
+                index += bitmapDim
             }
 
-            old_line = line;
+            oldLine = line
         }
     }
 
-    private void copyLine(int[] buffer, int cs, int cd) {
-        final int next_line=cd;
+    private fun copyLine(buffer: IntArray, cs: Int, cd: Int) {
+        var cs = cs
+        var cd = cd
+        val nextLine = cd
 
-        for (; cs < next_line; cs++) {
-            buffer[cd]=buffer[cs];
-            cd++;
+        while (cs < nextLine) {
+            buffer[cd] = buffer[cs]
+            cd++
+            cs++
         }
     }
 
 
-
-    private static int splitFromZoom(int zoom) {
-        int split = 0;
-        if (zoom > 11) {
-            split++;
+    class Factory(private val mapTile: Tile) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileHillShade(id, appContext.createMapTile(), mapTile)
         }
-
-        return split;
     }
 
-
-    public static final class Factory extends Obj.Factory {
-        private final Tile mapTile;
-
-        public Factory(Tile t) {
-            mapTile=t;
-        }
-
-        @Override
-        public Obj factory(String id, AppContext sc) {
-            return  new ObjTileHillshade(id, sc.createMapTile(), mapTile);
+    companion object {
+        private fun splitFromZoom(zoom: Int): Int {
+            var split = 0
+            if (zoom > 11) {
+                split++
+            }
+            return split
         }
     }
 }

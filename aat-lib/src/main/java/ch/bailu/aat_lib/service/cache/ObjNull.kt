@@ -1,23 +1,12 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import ch.bailu.aat_lib.app.AppContext;
+import ch.bailu.aat_lib.app.AppContext
 
-public final class ObjNull extends Obj {
-
-    public final static Obj NULL = new ObjNull();
-
-    protected ObjNull() {
-        super(ObjNull.class.getSimpleName());
+object ObjNull : Obj(ObjNull::class.java.simpleName) {
+    override fun getSize(): Long {
+        return MIN_SIZE.toLong()
     }
 
-    @Override
-    public long getSize() {
-        return Obj.MIN_SIZE;
-    }
-
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
-
-    @Override
-    public void onChanged(String id, AppContext sc) {}
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onChanged(id: String, sc: AppContext) {}
 }

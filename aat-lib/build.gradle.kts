@@ -1,3 +1,5 @@
+import kotlinx.coroutines.awaitAll
+
 plugins {
     id ("java-library")
     id ("com.android.lint")
@@ -75,6 +77,10 @@ dependencies {
 
 
 tasks {
+    compileKotlin {
+        dependsOn(":ci:property2config")
+        dependsOn(":ci:generateStrings")
+    }
     withType(AbstractCompile::class) {
         dependsOn(":ci:property2config")
         dependsOn(":ci:generateStrings")

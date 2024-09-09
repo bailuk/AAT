@@ -54,13 +54,13 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
         }
 
 
-    abstract fun fillBuffer(bitmap: IntArray?, raster: Raster?, span: SubTile?, demtile: DemProvider?)
+    abstract fun fillBuffer(bitmap: IntArray, raster: Raster, span: SubTile, demtile: DemProvider)
 
     override fun onInsert(appContext: AppContext) {
         appContext.services.getCacheService().addToBroadcaster(this)
 
         if (!raster.isInitialized) {
-            appContext.services.getBackgroundService().process(RasterInitializer(id))
+            appContext.services.getBackgroundService().process(RasterInitializer(getID()))
         }
     }
 
@@ -93,7 +93,7 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
 
     override fun updateFromSrtmTile(appContext: AppContext, tile: Dem3Tile) {
         appContext.services.getBackgroundService()
-            .process(SubTilePainter(appContext.services, id, tile))
+            .process(SubTilePainter(appContext.services, getID(), tile))
     }
 
 

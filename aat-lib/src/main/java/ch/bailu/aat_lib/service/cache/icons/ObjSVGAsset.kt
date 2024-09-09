@@ -1,144 +1,104 @@
-package ch.bailu.aat_lib.service.cache.icons;
+package ch.bailu.aat_lib.service.cache.icons
 
-import org.mapsforge.core.graphics.Bitmap;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.map.tile.MapTileInterface
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.OnObject
+import ch.bailu.foc.Foc
+import org.mapsforge.core.graphics.Bitmap
+import java.io.InputStream
 
-import java.io.InputStream;
+class ObjSVGAsset(id: String, private val name: String, private val size: Int) : ObjImageAbstract(id) {
+    private var bitmap: MapTileInterface? = null
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.map.tile.MapTileInterface;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.OnObject;
-import ch.bailu.foc.Foc;
-
-public final class ObjSVGAsset extends ObjImageAbstract {
-
-    private MapTileInterface bitmap = null;
-
-    private final String name;
-    private final int size;
-
-    public ObjSVGAsset(String id, String name, int size) {
-        super(id);
-        this.name = name;
-        this.size = size;
+    override fun onInsert(appContext: AppContext) {
+        load(appContext.services)
     }
 
-
-    @Override
-    public void onInsert(AppContext sc){
-        load(sc.getServices());
+    private fun load(sc: ServicesInterface) {
+        sc.getBackgroundService().process(SvgLoader(getID()))
     }
 
-    private void load(ServicesInterface sc) {
-        sc.getBackgroundService().process(new SvgLoader(getID()));
-    }
-
-    @Override
-    public Bitmap getBitmap() {
-        var b = bitmap;
+    override fun getBitmap(): Bitmap? {
+        val b = bitmap
         if (b != null) {
-            return b.getBitmap();
+            return b.getBitmap()
         }
-        return null;
+        return null
     }
 
+    override fun getSize(): Long {
+        var result: Long = 0
 
-    @Override
-    public long getSize() {
-        long result = 0;
-
-        var b = bitmap;
+        val b = bitmap
         if (b != null) {
-            result = b.getSize();
+            result = b.getSize()
         }
 
-        if (result == 0) {
-            result = Obj.MIN_SIZE;
+        if (result == 0L) {
+            result = MIN_SIZE.toLong()
         }
 
-        return result;
+        return result
     }
 
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
 
-    @Override
-    public void onChanged(String id, AppContext sc) {}
+    override fun onChanged(id: String, sc: AppContext) {}
 
-    @Override
-    public boolean isReadyAndLoaded() {
-        return getBitmap() != null;
+    override fun isReadyAndLoaded(): Boolean {
+        return getBitmap() != null
     }
 
-    @Override
-    public void onRemove(AppContext sc) {
-        super.onRemove(sc);
-        var b = bitmap;
-        if (b != null) {
-            b.free();
-        }
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
+        val b = bitmap
+        b?.free()
     }
 
-    public static class Factory extends Obj.Factory {
-        private final String name;
-        private final int size;
-
-        public Factory(String n, int s) {
-            name = n;
-            size = s;
-        }
-
-        @Override
-        public Obj factory(String id, AppContext sc) {
-            return new ObjSVGAsset(id, name, size);
+    class Factory(private val name: String, private val size: Int) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjSVGAsset(id, name, size)
         }
     }
 
-    public static String toID(String name, int size) {
-        if (name != null && !name.isEmpty())
-            return ObjSVGAsset.class.getSimpleName() + "/" + name + "/" + size;
+    private class SvgLoader(private val id: String) : BackgroundTask() {
+        override fun bgOnProcess(appContext: AppContext): Long {
+            val size = longArrayOf(0)
 
-        return null;
-    }
+            object : OnObject(appContext, id, ObjSVGAsset::class.java) {
+                override fun run(obj: Obj) {
+                    val self = obj as ObjSVGAsset
 
-    private static class SvgLoader extends BackgroundTask  {
-        private final String ID;
-        public SvgLoader(String id) {
-            ID = id;
-        }
-
-        @Override
-        public long bgOnProcess(final AppContext sc) {
-            final long[] size = {0};
-
-            new OnObject(sc, ID, ObjSVGAsset.class) {
-                @Override
-                public void run(Obj obj) {
-                    ObjSVGAsset self = (ObjSVGAsset) obj;
-
-                    InputStream input = null;
+                    var input: InputStream? = null
                     if (self.bitmap == null) {
-                        self.bitmap = sc.createMapTile();
+                        self.bitmap = appContext.createMapTile()
                     }
 
                     try {
-                        input =  sc.getAssets().toFoc(self.name).openR();
-                        self.bitmap.setSVG(sc.getAssets().toFoc(self.name), self.size, true);
-                        size[0] = self.size;
-
-                    } catch (Exception e) {
-                        self.setException(e);
+                        input = appContext.assets.toFoc(self.name).openR()
+                        self.bitmap?.setSVG(appContext.assets.toFoc(self.name), self.size, true)
+                        size[0] = self.size.toLong()
+                    } catch (e: Exception) {
+                        self.setException(e)
                     } finally {
-                        Foc.close(input);
+                        Foc.close(input)
                     }
 
-                    sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
+                    appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, id)
                 }
-            };
-            return size[0];
+            }
+            return size[0]
+        }
+    }
+
+    companion object {
+        fun toID(name: String, size: Int): String {
+            if (name.isNotEmpty()) return ObjSVGAsset::class.java.simpleName + "/" + name + "/" + size
+            return ""
         }
     }
 }

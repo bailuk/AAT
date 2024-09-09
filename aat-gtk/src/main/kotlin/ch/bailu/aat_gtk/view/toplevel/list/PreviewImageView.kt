@@ -24,8 +24,8 @@ class PreviewImageView(private val appContext: AppContext): TargetInterface, Att
 
 
     private var idToLoad: String? = null
-    private var factoryToLoad: Obj.Factory? = null
-    private var handle: Obj = ObjNull.NULL
+    private var factoryToLoad: Obj.Factory = Obj.Factory()
+    private var handle: Obj = ObjNull
 
     fun setFilePath(fileID: Foc) {
         val file = appContext.summaryConfig.getPreviewFile(fileID)
@@ -40,8 +40,8 @@ class PreviewImageView(private val appContext: AppContext): TargetInterface, Att
         setFilePath(info.getFile())
     }
 
-    private fun setImageObject(ID: String?, factory: Obj.Factory?) {
-        idToLoad = ID
+    private fun setImageObject(id: String, factory: Obj.Factory) {
+        idToLoad = id
         factoryToLoad = factory
         loadAndDisplayImage()
     }
@@ -57,16 +57,16 @@ class PreviewImageView(private val appContext: AppContext): TargetInterface, Att
                 resetImage()
             }
             this.idToLoad = null
-            factoryToLoad = null
+            factoryToLoad = Obj.Factory()
         }
     }
 
     private fun freeImageHandle() {
         handle.free()
-        handle = ObjNull.NULL
+        handle = ObjNull
     }
 
-    private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
+    private fun loadImage(id: String, factory: Obj.Factory): Boolean {
         var result = false
         appContext.services.insideContext {
             val handle = appContext.services.getCacheService().getObject(id, factory)
@@ -84,8 +84,8 @@ class PreviewImageView(private val appContext: AppContext): TargetInterface, Att
         val imageHandle = handle
         if (imageHandle.hasException()) {
             resetImage()
-        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded) {
-            val gtkBitmap = imageHandle.bitmap
+        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded()) {
+            val gtkBitmap = imageHandle.getBitmap()
             if (gtkBitmap is GtkBitmap) {
                 val pixbuf = Gdk.pixbufGetFromSurface(gtkBitmap.surface, 0, 0, gtkBitmap.width, gtkBitmap.height)
                 image.setFromPixbuf(pixbuf)

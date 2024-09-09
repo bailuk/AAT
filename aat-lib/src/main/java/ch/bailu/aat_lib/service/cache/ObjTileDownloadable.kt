@@ -19,16 +19,16 @@ class ObjTileDownloadable(id: String, sc: AppContext, t: Tile, private val sourc
 
     private fun download(sc: AppContext) {
         val url = source.getTileURLString(getTile())
-        sc.services.getBackgroundService().process(FileDownloader(url, file, sc))
+        sc.services.getBackgroundService().process(FileDownloader(url, getFile(), sc))
     }
 
     private fun isScheduled(sc: ServicesInterface): Boolean {
-        return sc.getBackgroundService().findTask(file) != null
+        return sc.getBackgroundService().findTask(getFile()) != null
     }
 
     override fun reDownload(sc: AppContext) {
         if (isDownloadable && !isScheduled(sc.services)) {
-            file.rm()
+            getFile().rm()
             download(sc)
         }
     }

@@ -50,7 +50,7 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
             )
 
             if (mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL && id == sourceID &&
-                tile.isLoaded
+                tile.isLoaded()
             ) {
                 sc.services.getBackgroundService().process(save)
             }
@@ -82,7 +82,7 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
     }
 
     override fun isLoaded(): Boolean {
-        return tile.isLoaded
+        return tile.isLoaded()
     }
 
     override fun getSize(): Long {

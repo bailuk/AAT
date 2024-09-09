@@ -8,10 +8,9 @@ import ch.bailu.aat_lib.map.tile.MapTileInterface
 import org.mapsforge.core.graphics.Style
 
 class NodeBitmap private constructor(radius: Int, res: AppDensity, context: AppContext) {
-    val tileBitmap: MapTileInterface
+    val tileBitmap: MapTileInterface = context.createMapTile()
 
     init {
-        tileBitmap = context.createMapTile()
         val strokeWidth = res.toPixelInt(STROKE_WIDTH.toFloat())
         val hSize = radius + strokeWidth
         val size = hSize * 2

@@ -1,214 +1,209 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import java.util.HashMap;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.BroadcastData.getFile
+import ch.bailu.aat_lib.util.MemSize
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.BroadcastData;
-import ch.bailu.aat_lib.service.cache.Obj.Factory;
-import ch.bailu.aat_lib.util.MemSize;
-
-
-public final class ObjectTable  {
-    private final static int INITIAL_CAPACITY = 1000;
-
-    private long limit = MemSize.MB;
-    private long totalMemorySize = 0;
+class ObjectTable {
+    private var limit = MemSize.MB
+    private var totalMemorySize: Long = 0
 
 
-    private static final class Container {
-        public static final Container NULL = new Container(ObjNull.NULL);
+    private class Container(val obj: Obj) {
+        var size: Long = obj.getSize()
 
-        public final Obj obj;
-        public long size;
-
-        public Container(Obj o) {
-            obj = o;
-            size = o.getSize();
+        companion object {
+            val NULL: Container = Container(ObjNull)
         }
     }
 
-    private final HashMap<String, Container> hashMap = new HashMap<>(INITIAL_CAPACITY);
+    private val hashMap = HashMap<String, Container>(INITIAL_CAPACITY)
 
-
-    public synchronized Obj getHandle(String key, AppContext sc) {
-        Obj obj=getFromCache(key);
+    @Synchronized
+    fun getHandle(key: String, sc: AppContext): Obj {
+        var obj = getFromCache(key)
 
         if (obj == null) {
-            obj = ObjNull.NULL;
+            obj = ObjNull
         }
 
-        obj.lock(sc);
-        return obj;
+        obj.lock(sc)
+        return obj
     }
 
 
-    public synchronized Obj getHandle(String id, Factory factory, CacheService self) {
-        Obj h =  getHandle(id, factory, self.appContext);
-        trim(self);
-        return h;
+    @Synchronized
+    fun getHandle(id: String, factory: Obj.Factory, self: CacheService): Obj {
+        val h = getHandle(id, factory, self.appContext)
+        trim(self)
+        return h
     }
 
 
-
-    public synchronized Obj getHandle(String id, Factory factory, AppContext appContext) {
-        Obj h=getFromCache(id);
+    @Synchronized
+    fun getHandle(id: String, factory: Obj.Factory, appContext: AppContext): Obj {
+        var h = getFromCache(id)
 
         if (h == null) {
-            h = factory.factory(id, appContext);
+            h = factory.factory(id, appContext)
 
-            putIntoCache(h);
+            putIntoCache(h)
 
-            h.lock(appContext);
-            h.onInsert(appContext);
-
+            h.lock(appContext)
+            h.onInsert(appContext)
         } else {
-            h.lock(appContext);
+            h.lock(appContext)
         }
-        return h;
+        return h
     }
 
 
-    private synchronized void putIntoCache(Obj obj) {
-
-        hashMap.put(obj.toString(),new Container(obj));
-        totalMemorySize += obj.getSize();
+    @Synchronized
+    private fun putIntoCache(obj: Obj) {
+        hashMap[obj.toString()] = Container(obj)
+        totalMemorySize += obj.getSize()
     }
 
 
-    private synchronized Obj getFromCache(String key) {
-        Container c = hashMap.get(key);
-        if (c != null)
-            return c.obj;
+    @Synchronized
+    private fun getFromCache(key: String): Obj? {
+        val c = hashMap[key]
+        if (c != null) return c.obj
 
-        return null;
+        return null
     }
 
 
-    private synchronized boolean updateSize(String id) {
-        Container c = hashMap.get(id);
+    @Synchronized
+    private fun updateSize(id: String): Boolean {
+        val c = hashMap[id]
 
-        if (c != null ) {
-            long oSize = c.size;
-            long nSize = c.obj.getSize();
+        if (c != null) {
+            val oSize = c.size
+            val nSize = c.obj.getSize()
 
-            totalMemorySize -= oSize;
-            c.size = nSize;
-            totalMemorySize += nSize;
+            totalMemorySize -= oSize
+            c.size = nSize
+            totalMemorySize += nSize
 
-            return nSize > oSize;
+            return nSize > oSize
         }
-        return false;
+        return false
     }
 
 
-
-    public void onObjectChanged(CacheService self, String...objs) {
-        if (updateSize(toID(objs)))
-            trim(self);
-
+    fun onObjectChanged(self: CacheService, vararg objs: String) {
+        if (updateSize(toID(*objs))) trim(self)
     }
 
 
-    private String toID(String... objs) {
-        return BroadcastData.getFile(objs);
+    private fun toID(vararg objs: String): String {
+        return getFile(objs)
     }
 
 
-
-    public synchronized void limit(CacheService self, long l) {
-        limit = l;
-        trim(self);
+    @Synchronized
+    fun limit(self: CacheService, l: Long) {
+        limit = l
+        trim(self)
     }
 
 
-    private void trim(CacheService self) {
+    private fun trim(self: CacheService) {
         while ((totalMemorySize > limit) && removeOldest(self));
     }
 
 
-
-    private boolean removeOldest(CacheService self) {
-        return removeFromTable(findOldest(), self);
+    private fun removeOldest(self: CacheService): Boolean {
+        return removeFromTable(findOldest(), self)
     }
 
 
-    public void close(CacheService self)  {
-        for (Container current : hashMap.values()) {
-            current.obj.onRemove(self.appContext);
+    fun close(self: CacheService) {
+        for (current in hashMap.values) {
+            current.obj.onRemove(self.appContext)
         }
-        hashMap.clear();
+        hashMap.clear()
     }
 
 
-    private synchronized boolean removeFromTable(String id, CacheService self) {
-        Container remove = hashMap.get(id);
+    @Synchronized
+    private fun removeFromTable(id: String, self: CacheService): Boolean {
+        val remove = hashMap[id]
 
-        if (remove !=null && !remove.obj.isLocked()) {
-            self.broadcaster.delete(remove.obj);
-            hashMap.remove(id);
-            totalMemorySize -= remove.size;
-            remove.obj.onRemove(self.appContext);
-            return true;
+        if (remove != null && !remove.obj.isLocked()) {
+            self.broadcaster.delete(remove.obj)
+            hashMap.remove(id)
+            totalMemorySize -= remove.size
+            remove.obj.onRemove(self.appContext)
+            return true
         }
-        return false;
+        return false
     }
 
 
+    @Synchronized
+    private fun findOldest(): String {
+        var oldest = Container.NULL
+        oldest.obj.access()
 
-
-    private synchronized String findOldest() {
-        Container oldest = new Container(ObjNull.NULL);
-        oldest.obj.access();
-
-        for (Container current : hashMap.values()) {
+        for (current in hashMap.values) {
             if ((!current.obj.isLocked()) && (current.obj.getAccessTime() < oldest.obj.getAccessTime())) {
-                oldest = current;
+                oldest = current
             }
         }
 
-        return oldest.obj.getID();
+        return oldest.obj.getID()
     }
 
 
-    public synchronized void appendStatusText(StringBuilder builder) {
+    @Synchronized
+    fun appendStatusText(builder: StringBuilder) {
+        builder.append("<p>Runtime:")
 
-        builder.append("<p>Runtime:");
+        builder.append("<br>Maximum memory: ")
+        MemSize.describe(builder, Runtime.getRuntime().maxMemory())
+        builder.append("<br>Total memory: ")
+        MemSize.describe(builder, Runtime.getRuntime().totalMemory())
+        builder.append("<br>Free memory: ")
+        MemSize.describe(builder, Runtime.getRuntime().freeMemory())
+        builder.append("<br>Used memory: ")
+        MemSize.describe(
+            builder,
+            Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()
+        )
+        builder.append("</p>")
 
-        builder.append("<br>Maximum memory: ");
-        MemSize.describe(builder, Runtime.getRuntime().maxMemory());
-        builder.append("<br>Total memory: ");
-        MemSize.describe(builder, Runtime.getRuntime().totalMemory());
-        builder.append("<br>Free memory: ");
-        MemSize.describe(builder, Runtime.getRuntime().freeMemory());
-        builder.append("<br>Used memory: ");
-        MemSize.describe(builder, Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory());
-        builder.append("</p>");
-
-        builder.append("<p> FileCache:");
-        builder.append("<br>Used: ");
-        MemSize.describe(builder, totalMemorySize);
-        builder.append("<br>Limit: ");
-        MemSize.describe(builder, limit);
-        builder.append("<br>Free: ");
-        MemSize.describe(builder, limit-totalMemorySize);
-        builder.append("</p>");
+        builder.append("<p> FileCache:")
+        builder.append("<br>Used: ")
+        MemSize.describe(builder, totalMemorySize)
+        builder.append("<br>Limit: ")
+        MemSize.describe(builder, limit)
+        builder.append("<br>Free: ")
+        MemSize.describe(builder, limit - totalMemorySize)
+        builder.append("</p>")
 
 
-        int locked=0,free=0;
+        var locked = 0
+        var free = 0
 
-        for (Container current : hashMap.values()) {
-            if (current.obj.isLocked()) locked++;
-            else free++;
+        for (current in hashMap.values) {
+            if (current.obj.isLocked()) locked++
+            else free++
         }
 
-        builder.append("<br>LOCKED cache entries: ");
-        builder.append(locked);
+        builder.append("<br>LOCKED cache entries: ")
+        builder.append(locked)
 
-        builder.append("<br>FREE cache entries: ");
-        builder.append(free);
+        builder.append("<br>FREE cache entries: ")
+        builder.append(free)
 
-        builder.append("<br>TOTAL cache entries: ");
-        builder.append(hashMap.size());
-        builder.append("</p>");
+        builder.append("<br>TOTAL cache entries: ")
+        builder.append(hashMap.size)
+        builder.append("</p>")
+    }
+
+    companion object {
+        private const val INITIAL_CAPACITY = 1000
     }
 }

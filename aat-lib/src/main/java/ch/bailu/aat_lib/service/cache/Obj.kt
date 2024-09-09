@@ -1,109 +1,91 @@
-package ch.bailu.aat_lib.service.cache;
+package ch.bailu.aat_lib.service.cache
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.logger.AppLog.w
+import ch.bailu.foc.Foc
+import ch.bailu.foc.FocName
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.foc.Foc;
-import ch.bailu.foc.FocName;
-
-
-public abstract class Obj implements ObjBroadcastReceiver {
-
-    public static final int MIN_SIZE=100;
-
-    private final String ID;
-
-    private long accessTime=System.currentTimeMillis();
-    private int lock=0;
-
-    private Exception exception = null;
-
-    public Obj(String id) {
-        ID=id;
-    }
-
+abstract class Obj(private val id: String) : ObjBroadcastReceiver {
+    private var accessTime = System.currentTimeMillis()
+    private var lock = 0
+    private var exception: Exception? = null
 
     @Nonnull
-    @Override
-    public String toString() {
-        return ID;
+    override fun toString(): String {
+        return id
     }
 
-
-    public String getID() {
-        return ID;
+    fun getID(): String {
+        return id
     }
 
-    public Foc getFile() {
-        AppLog.w(this, "Default implementation of getFile() called!");
-        return new FocName(ID);
+    open fun getFile(): Foc {
+        w(this, "Default implementation of getFile() called!")
+        return FocName(id)
     }
 
-
-    protected void setException(Exception e) {
-        exception = e;
+    protected fun setException(e: Exception?) {
+        exception = e
     }
 
-
-    public boolean hasException() {
-        return exception != null;
+    fun hasException(): Boolean {
+        return exception != null
     }
 
-
-    public Exception getException() {
-        return exception;
+    fun getException(): Exception? {
+        return exception
     }
 
-
-    public boolean isLocked() {
-        return lock > 0;
+    fun isLocked(): Boolean {
+        return lock > 0
     }
 
+    open fun onInsert(appContext: AppContext) {}
+    open fun onRemove(appContext: AppContext) {}
 
-    public void onInsert(AppContext appContext) {}
-    public void onRemove(AppContext appContext) {}
-
-
-    public synchronized void lock(AppContext appContext) {
-        lock++;
-        access();
+    @Synchronized
+    fun lock(appContext: AppContext) {
+        lock++
+        access()
     }
 
-    public synchronized void free() {
-        lock--;
+    @Synchronized
+    fun free() {
+        lock--
     }
 
-
-    public boolean isReadyAndLoaded() {
-        return true;
+    open fun isReadyAndLoaded(): Boolean {
+        return true
     }
 
-
-    public boolean isLoaded() {
-        return isReadyAndLoaded() || hasException();
+    open fun isLoaded(): Boolean {
+        return isReadyAndLoaded() || hasException()
     }
 
+    abstract fun getSize(): Long
 
-    public abstract long getSize();
-
-    public synchronized void access() {
-        accessTime=System.currentTimeMillis();
+    @Synchronized
+    open fun access() {
+        accessTime = System.currentTimeMillis()
     }
 
-    public synchronized long getAccessTime() {
-        return accessTime;
+    @Synchronized
+    fun getAccessTime(): Long {
+        return accessTime
     }
 
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
+    override fun hashCode(): Int {
+        return toString().hashCode()
     }
 
-    public static class Factory {
-        public Obj factory(String id, AppContext appContext) {
-            return ObjNull.NULL;
+    open class Factory {
+        open fun factory(id: String, appContext: AppContext): Obj {
+            return ObjNull
         }
+    }
+
+    companion object {
+        const val MIN_SIZE: Int = 100
     }
 }

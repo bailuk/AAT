@@ -1,41 +1,30 @@
-package ch.bailu.aat_lib.service.cache.gpx;
+package ch.bailu.aat_lib.service.cache.gpx
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.service.cache.Obj
 
+abstract class ObjGpx(id: String) : Obj(id) {
+    abstract fun getGpxList(): GpxList
 
-public abstract class ObjGpx extends Obj {
+    companion object {
+        @JvmField
+        val NULL: ObjGpx = object : ObjGpx(ObjGpx::class.java.simpleName) {
+            override fun getSize(): Long {
+                return MIN_SIZE.toLong()
+            }
 
-    public ObjGpx(String id) {
-        super(id);
+            override fun onChanged(id: String, sc: AppContext) {}
+
+            override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+
+            override fun getGpxList(): GpxList {
+                return GpxList.NULL_TRACK
+            }
+
+            override fun isReadyAndLoaded(): Boolean {
+                return true
+            }
+        }
     }
-
-    public abstract GpxList getGpxList();
-
-
-    public static final ObjGpx NULL = new ObjGpx(ObjGpx.class.getSimpleName()) {
-
-        @Override
-        public long getSize() {
-            return MIN_SIZE;
-        }
-
-        @Override
-        public void onChanged(String id, AppContext sc) {}
-
-        @Override
-        public void onDownloaded(String id, String url, AppContext sc) {}
-
-        @Override
-        public GpxList getGpxList() {
-            return GpxList.NULL_TRACK;
-        }
-
-        @Override
-        public boolean isReadyAndLoaded() {
-            return true;
-        }
-
-    };
 }

@@ -35,7 +35,7 @@ open class FileSource(
     }
 
     private val onChangedInCache = BroadcastReceiver { args: Array<out String> ->
-        if (BroadcastData.has(args, gpxHandler.get().id)) {
+        if (BroadcastData.has(args, gpxHandler.get().getID())) {
             requestUpdate()
         }
     }

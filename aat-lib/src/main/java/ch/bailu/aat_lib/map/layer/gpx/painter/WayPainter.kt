@@ -34,7 +34,7 @@ class WayPainter(private val mcontext: MapContext,
                 node.point,
                 iconSize
             )
-            result = i?.bitmap
+            result = i?.getBitmap()
         }
         return result
     }

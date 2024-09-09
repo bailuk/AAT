@@ -5,7 +5,7 @@ import org.mapsforge.core.model.Tile;
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.service.cache.Obj;
 import ch.bailu.aat_lib.service.cache.elevation.ObjTileElevationColor;
-import ch.bailu.aat_lib.service.cache.elevation.ObjTileHillshade;
+import ch.bailu.aat_lib.service.cache.elevation.ObjTileHillShade;
 
 public class ElevationSource {
 
@@ -46,7 +46,7 @@ public class ElevationSource {
 
                 @Override
                 public Obj.Factory getFactory(Tile mt) {
-                    return  new ObjTileHillshade.Factory(mt);
+                    return  new ObjTileHillShade.Factory(mt);
                 }
 
             };

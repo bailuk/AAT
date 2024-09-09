@@ -39,7 +39,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     private val onListLoaded: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val handle = listHandle
-            if (handle != null && AppIntent.hasFile(intent, handle.id)) {
+            if (handle != null && AppIntent.hasFile(intent, handle.getID())) {
                 updateList()
             }
         }
@@ -77,7 +77,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
             busy.stopWaiting()
         } else {
             handle.syncList(list)
-            if (handle.isReadyAndLoaded) busy.stopWaiting() else busy.startWaiting()
+            if (handle.isReadyAndLoaded()) busy.stopWaiting() else busy.startWaiting()
         }
         listView.onChanged()
     }

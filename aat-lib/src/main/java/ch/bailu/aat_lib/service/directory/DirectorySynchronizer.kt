@@ -201,9 +201,9 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
             if (!canContinue) {
                 terminate()
-            } else if (handle != null && handle.isReadyAndLoaded) {
+            } else if (handle != null && handle.isReadyAndLoaded()) {
                 try {
-                    addGpxSummaryToDatabase(handle.id, handle.gpxList)
+                    addGpxSummaryToDatabase(handle.getID(), handle.getGpxList())
                     setState(StateLoadPreview())
                 } catch (e: Exception) {
                     terminate(e)
@@ -267,9 +267,9 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     /////////////////////////////////////////////////////////////////////////////////////////////
     private inner class StateLoadPreview : State() {
         override fun start() {
-            val gpxFile = appContext.toFoc(pendingHandle!!.id)
+            val gpxFile = appContext.toFoc(pendingHandle!!.getID())
             val previewImageFile = appContext.summaryConfig.getPreviewFile(gpxFile)
-            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.gpxList)
+            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.getGpxList())
             try {
                 val p = appContext.createMapPreview(info, previewImageFile)
                 setPendingPreviewGenerator(p)

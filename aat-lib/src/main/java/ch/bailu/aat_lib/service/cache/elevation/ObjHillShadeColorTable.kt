@@ -1,172 +1,165 @@
-package ch.bailu.aat_lib.service.cache.elevation;
+package ch.bailu.aat_lib.service.cache.elevation
 
-import ch.bailu.aat_lib.service.elevation.tile.MultiCell;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.cache.Obj;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.elevation.tile.MultiCell
+import kotlin.math.atan
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.sin
+import kotlin.math.sqrt
 
-public final class ObjHillshadeColorTable extends Obj {
+class ObjHillShadeColorTable : Obj(ID) {
+    private val table = Array(TABLE_DIM) { ByteArray(TABLE_DIM) }
 
-    public final static String ID= ObjHillshadeColorTable.class.getSimpleName();
+    private var isInitialized = false
 
-    private final static int MAX_DARKNES=50;
-    private final static int TABLE_DIM=500;
-    private final static int TABLE_HDIM=TABLE_DIM/2;
-    private final static int TABLE_SIZE=TABLE_DIM*TABLE_DIM;
+    override fun onInsert(appContext: AppContext) {
+        appContext.services.getBackgroundService().process(TableInitializer())
+    }
 
-    private final static int MIN_DELTA=-250;
-    private final static int MAX_DELTA=240;
+    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
 
-    private static final int COLOR=50;
-    private static final int GRAY=(COLOR << 16) | (COLOR << 8) | COLOR;
+    override fun onChanged(id: String, sc: AppContext) {}
 
-    private final byte[][] table=new byte[TABLE_DIM][TABLE_DIM];
+    override fun isReadyAndLoaded(): Boolean {
+        return isInitialized
+    }
 
-    public ObjHillshadeColorTable() {
-        super(ID);
+    override fun getSize(): Long {
+        return TABLE_SIZE.toLong()
     }
 
 
-    private boolean isInitialized=false;
+    fun getColor(multiCell: MultiCell): Int {
+        val x = deltaToIndex(cutDelta(multiCell.delta_zx()))
+        val y = deltaToIndex(cutDelta(multiCell.delta_zy()))
+        val alpha = table[x][y].toInt() and 0xFF
 
-    @Override
-    public void onInsert(AppContext sc) {
-        sc.getServices().getBackgroundService().process(new TableInitializer());
+        return (alpha shl 24) or GRAY
     }
 
-    @Override
-    public void onDownloaded(String id, String url, AppContext sc) {}
+    private inner class TableInitializer : BackgroundTask() {
+        override fun bgOnProcess(sc: AppContext): Long {
+            for (x in 0 until TABLE_DIM) {
+                for (y in 0 until TABLE_DIM) {
+                    table[x][y] = hillShade(indexToDelta(x), indexToDelta(y))
+                }
+            }
 
-    @Override
-    public void onChanged(String id, AppContext sc) {}
+            isInitialized = true
+            sc.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
 
-    @Override
-    public boolean isReadyAndLoaded() {
-        return isInitialized;
+            return TABLE_SIZE.toLong()
+        }
+
+        private fun hillShade(dzx: Float, dzy: Float): Byte {
+            val slope = slopeRad(dzx.toDouble(), dzy.toDouble())
+
+            var shade = (255.0 * ((ZENITH_COS * cos(slope)) +
+                    (ZENITH_SIN * sin(slope) * cos(
+                        AZIMUTH_RAD - aspectRad(
+                            dzx.toDouble(),
+                            dzy.toDouble()
+                        )
+                    )))).toInt()
+
+
+            shade = (255 - MAX_DARKNESS.coerceAtLeast(shade))
+            return shade.toByte()
+        }
+
+
+        private fun slopeRad(dzx: Double, dzy: Double): Double {
+            return atan(sqrt(dzx * dzx + dzy * dzy))
+        }
+
+
+        private fun aspectRad(dzx: Double, dzy: Double): Double {
+            var ret = 0.0
+
+            if (dzx != 0.0) {
+                ret = atan2(dzy, -1.0 * dzx)
+
+                if (ret < 0) {
+                    ret += DOUBLE_PI
+                }
+            } else {
+                if (dzy > 0) {
+                    ret = HALF_PI
+                } else if (dzy < 0) {
+                    ret = ONEHALF_PI
+                }
+            }
+            return ret
+        }
     }
 
 
-    public long getSize() {
-        return TABLE_SIZE;
-    }
+    companion object {
+        @JvmField
+        val ID: String = ObjHillShadeColorTable::class.java.simpleName
 
+        private const val MAX_DARKNESS = 50
+        private const val TABLE_DIM = 500
+        private const val TABLE_HDIM = TABLE_DIM / 2
+        private const val TABLE_SIZE = TABLE_DIM * TABLE_DIM
 
-    private static float indexToDelta(int i) {
-        return (i-TABLE_HDIM) / 100f;
-    }
+        private const val MIN_DELTA = -250
+        private const val MAX_DELTA = 240
 
-    private static int deltaToIndex(int d) {
-        return (d+TABLE_HDIM);
-    }
+        private const val COLOR = 50
+        private const val GRAY = (COLOR shl 16) or (COLOR shl 8) or COLOR
 
-
-    private static int cutDelta(int d) {
-        d=Math.max(MIN_DELTA, d);
-        d=Math.min(MAX_DELTA, d);
-        return d;
-    }
-
-
-    public int getColor(final MultiCell mcell) {
-        final int x=deltaToIndex(cutDelta(mcell.delta_zx()));
-        final int y=deltaToIndex(cutDelta(mcell.delta_zy()));
-        final int alpha=table[x][y] & 0xFF;
-
-        return (alpha << 24) | GRAY;
-    }
-
-
-    private final class TableInitializer extends BackgroundTask {
         /**
          * Source:
          * http://edndoc.esri.com/arcobjects/9.2/net/shared/geoprocessing/spatial_analyst_tools/how_hillshade_works.htm
          */
+        private const val ALTITUDE_DEG = 45.0
 
-        private static final double ALTITUDE_DEG=45f;
+        private const val AZIMUTH_DEG = 315.0
+        private const val AZIMUTH_MATH = 360f - AZIMUTH_DEG + 90f
+        private const val ZENITH_DEG = (90.0 - ALTITUDE_DEG)
+        private const val DOUBLE_PI = Math.PI * 2.0
+        private const val HALF_PI = Math.PI / 2.0
+        private const val ONEHALF_PI = DOUBLE_PI - HALF_PI
 
-        private static final double AZIMUTH_DEG=315f;
-        private static final double AZIMUTH_MATH = 360f - AZIMUTH_DEG + 90f;
-        private        final double AZIMUTH_RAD = Math.toRadians(AZIMUTH_MATH);
+        private val AZIMUTH_RAD = Math.toRadians(AZIMUTH_MATH)
 
-        private static final double ZENITH_DEG=(90d-ALTITUDE_DEG);
-        private        final double ZENITH_RAD=Math.toRadians(ZENITH_DEG);
-        private        final double ZENITH_COS=Math.cos(ZENITH_RAD);
-        private        final double ZENITH_SIN=Math.sin(ZENITH_RAD);
-
-
-        private final static double DOUBLE_PI=Math.PI*2d;
-        private final static double HALF_PI=Math.PI/2d;
-        private final static double ONEHALF_PI=DOUBLE_PI-HALF_PI;
+        private val ZENITH_RAD = Math.toRadians(ZENITH_DEG)
+        private val ZENITH_COS = cos(ZENITH_RAD)
+        private val ZENITH_SIN = sin(ZENITH_RAD)
 
 
-        @Override
-        public long bgOnProcess(AppContext sc) {
-            for (int x=0; x<TABLE_DIM; x++) {
-                for (int y=0; y<TABLE_DIM; y++) {
-                    table[x][y]=hillshade(indexToDelta(x), indexToDelta(y));
-                }
+
+        private fun indexToDelta(i: Int): Float {
+            return (i - TABLE_HDIM) / 100f
+        }
+
+        private fun deltaToIndex(d: Int): Int {
+            return (d + TABLE_HDIM)
+        }
+
+
+        private fun cutDelta(d: Int): Int {
+            var d = d
+            d = max(MIN_DELTA.toDouble(), d.toDouble())
+                .toInt()
+            d = min(MAX_DELTA.toDouble(), d.toDouble())
+                .toInt()
+            return d
+        }
+
+
+        @JvmField
+        val FACTORY: Factory = object : Factory() {
+            override fun factory(id: String, sc: AppContext): Obj {
+                return ObjHillShadeColorTable()
             }
-
-            isInitialized = true;
-            sc.getBroadcaster().broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID);
-
-            return TABLE_SIZE;
         }
-
-
-        private byte hillshade(float dzx, float dzy) {
-
-            final double slope=slope_rad(dzx, dzy);
-
-            int
-                    shade = (int) (255d * (( ZENITH_COS * Math.cos(slope) ) +
-                    ( ZENITH_SIN * Math.sin(slope) * Math.cos(AZIMUTH_RAD - aspect_rad(dzx, dzy)) ) ));
-
-
-            shade = 255-Math.max(MAX_DARKNES, shade);
-
-
-            return (byte) shade;
-        }
-
-
-        private double slope_rad(final double dzx, final double dzy) {
-            return Math.atan(Math.sqrt(dzx*dzx + dzy*dzy));
-        }
-
-
-        private double aspect_rad(final double dzx, final double dzy) {
-            double ret=0f;
-
-            if (dzx!=0) {
-                ret = Math.atan2(dzy, -1d*dzx);
-
-                if (ret < 0) {
-
-                    ret = DOUBLE_PI + ret;
-                }
-
-            } else {
-                if (dzy > 0) {
-                    ret = HALF_PI;
-
-                } else if (dzy < 0) {
-                    ret = ONEHALF_PI;
-                }
-            }
-            return ret;
-        }
-
-
     }
-
-
-    public static final Factory FACTORY = new Obj.Factory() {
-
-        @Override
-        public Obj factory(String id, AppContext sc) {
-            return  new ObjHillshadeColorTable();
-        }
-    };
 }

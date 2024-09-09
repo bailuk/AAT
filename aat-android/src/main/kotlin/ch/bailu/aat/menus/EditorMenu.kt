@@ -73,8 +73,8 @@ class EditorMenu(
                         Obj.Factory()
                     )
                     if (handle is ObjGpx) {
-                        if (handle.isReadyAndLoaded) {
-                            editor.attach(handle.gpxList)
+                        if (handle.isReadyAndLoaded()) {
+                            editor.attach(handle.getGpxList())
                         }
                     }
                     handle.free()

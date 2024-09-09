@@ -33,7 +33,7 @@ class SaveTileTask(private val sourceID: String, target: Foc) : FileTask(target)
                     AppBroadcaster.FILE_CHANGED_ONDISK,
                     getFile().toString(), sourceID
                 )
-                size = self.size
+                size = self.getSize()
             } catch (e: Exception) {
                 w(this, e)
             } finally {
