@@ -45,7 +45,7 @@ abstract class Obj(private val id: String) : ObjBroadcastReceiver {
     open fun onRemove(appContext: AppContext) {}
 
     @Synchronized
-    fun lock(appContext: AppContext) {
+    fun lock() {
         lock++
         access()
     }

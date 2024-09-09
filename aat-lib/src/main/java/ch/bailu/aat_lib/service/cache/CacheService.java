@@ -42,7 +42,7 @@ public final class CacheService extends VirtualService implements CacheServiceIn
     }
 
     public Obj getObject(String id) {
-        return table.getHandle(id, appContext);
+        return table.getHandle(id);
     }
 
     @Override

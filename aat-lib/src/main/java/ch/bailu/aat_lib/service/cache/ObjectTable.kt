@@ -20,14 +20,14 @@ class ObjectTable {
     private val hashMap = HashMap<String, Container>(INITIAL_CAPACITY)
 
     @Synchronized
-    fun getHandle(key: String, sc: AppContext): Obj {
+    fun getHandle(key: String): Obj {
         var obj = getFromCache(key)
 
         if (obj == null) {
             obj = ObjNull
         }
 
-        obj.lock(sc)
+        obj.lock()
         return obj
     }
 
@@ -49,10 +49,10 @@ class ObjectTable {
 
             putIntoCache(h)
 
-            h.lock(appContext)
+            h.lock()
             h.onInsert(appContext)
         } else {
-            h.lock(appContext)
+            h.lock()
         }
         return h
     }
