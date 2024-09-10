@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.util.extensions.ellipsize
 import ch.bailu.aat_lib.util.net.URX
 import ch.bailu.foc.Foc
 import java.io.IOException
@@ -73,7 +74,7 @@ open class DownloadTask(
             }
 
         } catch (e: Exception) {
-            AppLog.e(this, e, ToDo.translate("GET '$url': failed" ))
+            AppLog.e(this, e, ToDo.translate("GET '${url.toString().ellipsize(50)}': failed" ))
 
         } finally {
             Foc.close(output)

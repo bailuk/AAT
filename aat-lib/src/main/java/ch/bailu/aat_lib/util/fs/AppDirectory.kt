@@ -33,7 +33,7 @@ object AppDirectory {
     const val FILE_NOMINATIM = "nominatim.xml"
 
     const val DIR_OVERPASS = "query/overpass"
-    const val FILE_OVERPASS = "overpass.osm"
+    const val FILE_OVERPASS = "overpass.xml"
 
     const val DIR_POI = "query/poi"
     const val FILE_POI = "poi.gpx"
@@ -73,7 +73,7 @@ object AppDirectory {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private const val MAX_TRY = 99
     const val GPX_EXTENSION = ".gpx"
-    const val OSM_EXTENSION = ".osm"
+    const val OSM_EXTENSION = ".xml"
 
     @Throws(IOException::class)
     fun generateUniqueFilePath(directory: Foc, prefix: String, extension: String): Foc {
