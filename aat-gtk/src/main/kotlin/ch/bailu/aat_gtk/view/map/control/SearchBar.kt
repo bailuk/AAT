@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.ellipsize
+import ch.bailu.aat_lib.util.extensions.ellipsize
 import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.search.SearchModel
 import ch.bailu.aat_gtk.controller.UiControllerInterface

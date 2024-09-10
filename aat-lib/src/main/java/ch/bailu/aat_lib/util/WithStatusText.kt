@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.util;
+package ch.bailu.aat_lib.util
 
-public interface WithStatusText {
-    void appendStatusText(StringBuilder builder);
+interface WithStatusText {
+    fun appendStatusText(builder: StringBuilder)
 }

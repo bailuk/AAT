@@ -1,13 +1,5 @@
-package ch.bailu.aat_gtk.lib.extensions
+package ch.bailu.aat_lib.util.extensions
 
-import ch.bailu.gtk.gtk.Widget
-
-fun Widget.margin(margin: Int) {
-    this.marginEnd    = margin
-    this.marginStart  = margin
-    this.marginTop    = margin
-    this.marginBottom = margin
-}
 
 fun String.ellipsize(max: Int = 30): String {
     if (this.length <= max) return this

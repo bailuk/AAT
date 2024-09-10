@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.search
 
 import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.gtk.gtk.*
 import ch.bailu.gtk.type.Str

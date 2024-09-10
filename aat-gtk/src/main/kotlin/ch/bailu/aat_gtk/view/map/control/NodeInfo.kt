@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.html.MarkupBuilderGpx

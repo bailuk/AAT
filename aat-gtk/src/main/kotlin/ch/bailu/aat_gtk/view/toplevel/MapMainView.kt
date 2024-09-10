@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar

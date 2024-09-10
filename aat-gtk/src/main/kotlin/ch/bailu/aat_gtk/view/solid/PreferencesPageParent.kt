@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.gtk.adw.PreferencesGroup
 import ch.bailu.gtk.adw.PreferencesPage
 import ch.bailu.gtk.gtk.Widget

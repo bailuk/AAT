@@ -5,7 +5,14 @@ import ch.bailu.aat.util.AppPermission
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.resources.ToDo
 
-class LocationPermissionInfoView(context: Context, theme: UiTheme) : PermissionInfoView(context, theme) {
+class LocationPermissionInfoView(context: Context, theme: UiTheme)
+    : PermissionInfoView(context, theme) {
+
+    init {
+        setOnClickListener {
+            updateText(getPermissionText())
+        }
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()

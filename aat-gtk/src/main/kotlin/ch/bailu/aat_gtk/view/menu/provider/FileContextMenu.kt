@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
+import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.dialog.FileDeleteDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.app.AppContext

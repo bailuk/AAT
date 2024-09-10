@@ -7,16 +7,13 @@ import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import java.lang.StringBuilder
 
 class MockCacheService : CacheServiceInterface {
-    override fun appendStatusText(builder: StringBuilder?) {
-        TODO("Not yet implemented")
+    override fun appendStatusText(builder: StringBuilder) {
     }
 
     override fun onLowMemory() {
-        TODO("Not yet implemented")
     }
 
     override fun close() {
-        TODO("Not yet implemented")
     }
 
     override fun getObject(path: String, factory: Obj.Factory): Obj {

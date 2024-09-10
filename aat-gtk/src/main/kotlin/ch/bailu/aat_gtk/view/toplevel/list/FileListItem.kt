@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.gpx.information.GpxInformation

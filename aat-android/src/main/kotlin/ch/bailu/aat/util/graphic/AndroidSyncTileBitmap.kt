@@ -115,7 +115,7 @@ class AndroidSyncTileBitmap : MapTileInterface {
     override fun setBuffer(buffer: IntArray, interR: Rect) {
         initBitmap()
         val b = androidBitmap
-        b?.setPixels(buffer, 0, interR.width(), interR.left, interR.top, interR.width(), interR.height())
+        b?.setPixels(buffer, 0, interR.width, interR.left, interR.top, interR.width, interR.height)
     }
 
     private fun initBitmap() {

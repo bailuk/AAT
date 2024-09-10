@@ -121,12 +121,12 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
 
     private fun paintSubTile(subTile: SubTile, dem3Tile: Dem3Tile): Long {
         val interR = subTile.toRect()
-        val buffer = IntArray(interR.width() * interR.height())
+        val buffer = IntArray(interR.width * interR.height)
         fillBuffer(buffer, raster, subTile, split(dem3Tile))
 
         bitmap.setBuffer(buffer, interR)
 
-        return interR.width().toLong() * interR.height() * 2
+        return interR.width.toLong() * interR.height * 2
     }
 
     fun bgOnProcessInitializer(a: AppContext): Long {
