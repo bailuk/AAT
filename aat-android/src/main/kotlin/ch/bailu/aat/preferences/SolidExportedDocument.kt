@@ -14,9 +14,9 @@ class SolidExportedDocument(storage: StorageInterface) : SolidString(storage, KE
         const val LIMIT_MILLIS = 30 * 1000 // 1/2 minute
     }
 
-    override fun setValue(string: String) {
+    override fun setValue(v: String) {
         time.setValue(System.currentTimeMillis())
-        super.setValue(string)
+        super.setValue(v)
     }
 
     fun setDocument(file: Foc) {

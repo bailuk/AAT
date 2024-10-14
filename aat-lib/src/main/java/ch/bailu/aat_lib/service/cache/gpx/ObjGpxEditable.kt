@@ -26,8 +26,8 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         sc.services.getCacheService().addToBroadcaster(this)
     }
 
-    override fun onInsert(sc: AppContext) {
-        val handle = sc.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
+    override fun onInsert(appContext: AppContext) {
+        val handle = appContext.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
         currentHandle = if (handle is ObjGpx) {
             handle
         } else {
@@ -36,7 +36,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         editor.loadIntoEditor(currentHandle.getGpxList())
     }
 
-    override fun onRemove(sc: AppContext) {
+    override fun onRemove(appContext: AppContext) {
         currentHandle.free()
         currentHandle = NULL
     }
@@ -49,8 +49,8 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         return MIN_SIZE.toLong()
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
-    override fun onChanged(id: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {
         if (id == _file.path) {
             editor.loadIntoEditor(currentHandle.getGpxList())
         }
@@ -170,11 +170,11 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             modified(true)
         }
 
-        override fun saveTo(destDir: Foc) {
+        override fun saveTo(path: Foc) {
             val prefix = AppDirectory.parsePrefix(getFile())
             try {
                 val file = AppDirectory.generateUniqueFilePath(
-                    destDir,
+                    path,
                     prefix,
                     AppDirectory.GPX_EXTENSION
                 )
@@ -210,8 +210,8 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
     }
 
     class Factory(private val file: Foc) : Obj.Factory() {
-        override fun factory(id: String, sc: AppContext): Obj {
-            return ObjGpxEditable(id, file, sc)
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjGpxEditable(id, file, appContext)
         }
     }
 

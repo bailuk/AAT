@@ -58,9 +58,11 @@ class LocationService(
 
 
     @Synchronized
-    override fun setPresetIndex(i: Int) {
-        presetIndex = i
-        onPreferencesChanged(sprovider.getStorage(), SolidPreset.KEY, presetIndex)
+    override fun setPresetIndex(presetIndex: Int) {
+        this.presetIndex = presetIndex
+        onPreferencesChanged(sprovider.getStorage(), SolidPreset.KEY,
+            this.presetIndex
+        )
     }
 
 

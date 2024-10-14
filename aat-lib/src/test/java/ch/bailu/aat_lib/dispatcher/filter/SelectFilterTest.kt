@@ -12,10 +12,8 @@ class SelectFilterTest {
     fun test() {
         val usageTracker = SelectableUsageTracker()
         var observedInfoID = 0
-        var observedGpxInformation = GpxInformation.NULL
 
-        val target = SelectFilter({ infoID, information ->
-            observedGpxInformation = information
+        val target = SelectFilter({ infoID, _ ->
             observedInfoID = infoID
         }, usageTracker)
 

@@ -11,13 +11,13 @@ import org.mapsforge.core.graphics.Bitmap
 
 class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInterface) : ObjImageAbstract(imageFile.path) {
 
-    override fun onInsert(sc: AppContext) {
-        load(sc.services)
-        sc.services.getCacheService().addToBroadcaster(this)
+    override fun onInsert(appContext: AppContext) {
+        load(appContext.services)
+        appContext.services.getCacheService().addToBroadcaster(this)
     }
 
-    override fun onRemove(sc: AppContext) {
-        super.onRemove(sc)
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
         syncBitmap.free()
     }
 
@@ -43,13 +43,13 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
         }
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
         if (id == toString()) {
-            load(sc.services)
+            load(appContext.services)
         }
     }
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
     private class BitmapLoader(f: Foc) : FileTask(f) {
 
         override fun bgOnProcess(appContext: AppContext): Long {

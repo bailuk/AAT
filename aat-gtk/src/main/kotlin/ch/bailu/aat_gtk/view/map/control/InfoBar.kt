@@ -55,7 +55,7 @@ class InfoBar(app: Application,
         nodeInfo.hide()
     }
 
-    override fun onNodeSelected(IID: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
+    override fun onNodeSelected(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         nodeInfo.displayNode(info, node, index)
     }
 }

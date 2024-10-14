@@ -17,7 +17,7 @@ interface EditorInterface {
     fun isModified(): Boolean
 
     fun getSelected(): GpxPointNode?
-    fun select(p: GpxPointNode)
+    fun select(point: GpxPointNode)
 
     fun saveTo(path: Foc)
     fun clear()
@@ -55,7 +55,7 @@ interface EditorInterface {
                 return null
             }
 
-            override fun select(p: GpxPointNode) {}
+            override fun select(point: GpxPointNode) {}
 
             override fun saveTo(path: Foc) {}
 
@@ -67,7 +67,7 @@ interface EditorInterface {
 
             override fun inverse() {}
 
-            override fun attach(file: GpxList) {}
+            override fun attach(toAttach: GpxList) {}
 
             override fun fix() {}
 

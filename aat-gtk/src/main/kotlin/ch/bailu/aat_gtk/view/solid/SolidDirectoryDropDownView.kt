@@ -29,7 +29,7 @@ class SolidDirectoryDropDownView(appContext: AppContext)
         indexFromSolid()
 
         dropDown.onNotify {
-            AppLog.d(SolidDirectoryQuery@this, it.name.toString())
+            AppLog.d(this, it.name.toString())
 
             if ("selected" == it.name.toString()) { // Property "selected" has changed
                 solidDirectoryQuery.setValue(directories[dropDown.selected].file.path)

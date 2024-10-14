@@ -26,7 +26,7 @@ import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
 import ch.bailu.aat_lib.util.WithStatusText
 
-class OneService : AbsService(), ServiceContext {
+class OneService : AbsService() {
     private var location: LocationService? = null
     private var tracker: TrackerService? = null
     private var background: BackgroundServiceInterface? = null

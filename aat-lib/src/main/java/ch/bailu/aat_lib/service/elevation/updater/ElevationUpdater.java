@@ -6,19 +6,18 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.service.elevation.Dem3Status;
 import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
 import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
 
 public final class ElevationUpdater implements Closeable {
-
-
     private final PendingUpdatesMap pendingUpdates = new PendingUpdatesMap();
 
     private final AppContext appContext;
@@ -47,12 +46,8 @@ public final class ElevationUpdater implements Closeable {
         }
     };
 
-
-
-
-
     public synchronized void requestElevationUpdates(ElevationUpdaterClient e,
-                                                     Dem3Coordinates[] coordinates) {
+                                                     List<Dem3Coordinates> coordinates) {
         for (Dem3Coordinates c : coordinates) {
             addObject(c, e);
         }

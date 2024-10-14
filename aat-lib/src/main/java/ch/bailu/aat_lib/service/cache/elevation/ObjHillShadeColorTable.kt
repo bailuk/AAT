@@ -22,9 +22,9 @@ class ObjHillShadeColorTable : Obj(ID) {
         appContext.services.getBackgroundService().process(TableInitializer())
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 
     override fun isReadyAndLoaded(): Boolean {
         return isInitialized
@@ -44,7 +44,7 @@ class ObjHillShadeColorTable : Obj(ID) {
     }
 
     private inner class TableInitializer : BackgroundTask() {
-        override fun bgOnProcess(sc: AppContext): Long {
+        override fun bgOnProcess(appContext: AppContext): Long {
             for (x in 0 until TABLE_DIM) {
                 for (y in 0 until TABLE_DIM) {
                     table[x][y] = hillShade(indexToDelta(x), indexToDelta(y))
@@ -52,7 +52,7 @@ class ObjHillShadeColorTable : Obj(ID) {
             }
 
             isInitialized = true
-            sc.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
+            appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
 
             return TABLE_SIZE.toLong()
         }
@@ -145,19 +145,17 @@ class ObjHillShadeColorTable : Obj(ID) {
         }
 
 
-        private fun cutDelta(d: Int): Int {
-            var d = d
-            d = max(MIN_DELTA.toDouble(), d.toDouble())
-                .toInt()
-            d = min(MAX_DELTA.toDouble(), d.toDouble())
-                .toInt()
-            return d
+        private fun cutDelta(delta: Int): Int {
+            var result = delta
+            result = max(MIN_DELTA.toDouble(), result.toDouble()).toInt()
+            result = min(MAX_DELTA.toDouble(), result.toDouble()).toInt()
+            return result
         }
 
 
         @JvmField
         val FACTORY: Factory = object : Factory() {
-            override fun factory(id: String, sc: AppContext): Obj {
+            override fun factory(id: String, appContext: AppContext): Obj {
                 return ObjHillShadeColorTable()
             }
         }

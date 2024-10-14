@@ -16,8 +16,8 @@ class HandleStack(private val limit: Int = DEFAULT_LIMIT) {
         insert(handle)
     }
 
-    fun close(i: Int) {
-        var i = i
+    fun close(size: Int) {
+        var i = size
         while (remove() != null);
         while (i > 0) {
             queue.offerFirst(BackgroundTask.NULL)

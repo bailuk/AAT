@@ -53,7 +53,7 @@ class MockServices : ServicesInterface {
         TODO("Not yet implemented")
     }
 
-    override fun lock(simpleName: String) {
+    override fun lock(resource: String) {
         TODO("Not yet implemented")
     }
 
@@ -61,6 +61,6 @@ class MockServices : ServicesInterface {
         return true
     }
 
-    override fun free(simpleName: String) {}
+    override fun free(resource: String) {}
     override fun free() {}
 }

@@ -58,11 +58,11 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
     override fun fillBuffer(
         bitmap: IntArray,
         raster: Raster,
-        subTile: SubTile,
+        span: SubTile,
         demtile: DemProvider
     ) {
         val demtileDim = demtile.dim.DIM
-        val bitmapDim = subTile.pixelDim()
+        val bitmapDim = span.pixelDim()
 
         var color = 0
         var index = 0
@@ -70,13 +70,13 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
 
         val multiCell = factoryMultiCell(demtile)
 
-        for (la in subTile.laSpan.firstPixelIndex()..subTile.laSpan.lastPixelIndex()) {
+        for (la in span.laSpan.firstPixelIndex()..span.laSpan.lastPixelIndex()) {
             val line = raster.toLaRaster[la] * demtileDim
 
             if (oldLine != line) {
                 var oldOffset = -1
 
-                for (lo in subTile.loSpan.firstPixelIndex()..subTile.loSpan.lastPixelIndex()) {
+                for (lo in span.loSpan.firstPixelIndex()..span.loSpan.lastPixelIndex()) {
                     val offset = raster.toLoRaster[lo]
 
                     if (oldOffset != offset) {
@@ -98,9 +98,9 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
         }
     }
 
-    private fun copyLine(buffer: IntArray, cs: Int, cd: Int) {
-        var cs = cs
-        var cd = cd
+    private fun copyLine(buffer: IntArray, copySrc: Int, copyDst: Int) {
+        var cs = copySrc
+        var cd = copyDst
         val nextLine = cd
 
         while (cs < nextLine) {

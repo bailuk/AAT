@@ -22,8 +22,8 @@ interface ServicesInterface {
     fun getRenderService(): RenderServiceInterface
     fun getTileRemoverService(): TileRemoverService
 
-    fun lock(simpleName: String)
-    fun free(simpleName: String)
+    fun lock(resource: String)
+    fun free(resource: String)
 
     fun lock(): Boolean
     fun free()

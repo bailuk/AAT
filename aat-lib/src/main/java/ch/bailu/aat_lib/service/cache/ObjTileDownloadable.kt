@@ -9,11 +9,11 @@ import org.mapsforge.core.model.Tile
 class ObjTileDownloadable(id: String, sc: AppContext, t: Tile, private val source: DownloadSource) : ObjTileCacheOnly(
     id, sc, t, source) {
 
-    override fun onInsert(sc: AppContext) {
+    override fun onInsert(appContext: AppContext) {
         if (isLoadable) {
-            load(sc.services)
-        } else if (isDownloadable && !isScheduled(sc.services) && !fileExists()) {
-            download(sc)
+            load(appContext.services)
+        } else if (isDownloadable && !isScheduled(appContext.services) && !fileExists()) {
+            download(appContext)
         }
     }
 
@@ -41,9 +41,9 @@ class ObjTileDownloadable(id: String, sc: AppContext, t: Tile, private val sourc
     private class FileDownloader(source: String, target: Foc, val appContext: AppContext) :
         DownloadTask(source, target, appContext.downloadConfig) {
 
-        override fun bgOnProcess(sc: AppContext): Long {
+        override fun bgOnProcess(appContext: AppContext): Long {
             if (isInCache) {
-                return super.bgOnProcess(sc)
+                return super.bgOnProcess(appContext)
             }
             return 0
         }

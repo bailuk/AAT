@@ -118,7 +118,6 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
         return size
     }
 
-
     private fun paintSubTile(subTile: SubTile, dem3Tile: Dem3Tile): Long {
         val interR = subTile.toRect()
         val buffer = IntArray(interR.width * interR.height)

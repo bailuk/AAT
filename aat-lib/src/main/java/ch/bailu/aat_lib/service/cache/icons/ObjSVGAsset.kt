@@ -45,9 +45,9 @@ class ObjSVGAsset(id: String, private val name: String, private val size: Int) :
         return result
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 
     override fun isReadyAndLoaded(): Boolean {
         return getBitmap() != null

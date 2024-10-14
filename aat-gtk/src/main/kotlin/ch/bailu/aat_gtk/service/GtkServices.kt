@@ -54,8 +54,8 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
         return lazyLocationService
     }
 
-    override fun lock(simpleName: String) {}
-    override fun free(simpleName: String) {}
+    override fun lock(resource: String) {}
+    override fun free(resource: String) {}
     override fun lock(): Boolean {
         return true
     }

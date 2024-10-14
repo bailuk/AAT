@@ -89,17 +89,19 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
 
     override fun onChanged(id: String, appContext: AppContext) {}
 
-    val srtmTileCoordinates: Array<Dem3Coordinates>
-        get() {
-            val f = SrtmTileCollector()
-            f.walkTrack(gpxList)
+    private fun getSrtmTileCoordinates(): List<Dem3Coordinates> {
+        val f = SrtmTileCollector()
+        f.walkTrack(gpxList)
 
-            val r = arrayOfNulls<Dem3Coordinates>(f.coordinates.size())
-            for (i in 0 until f.coordinates.size()) {
-                r[i] = f.coordinates.getValueAt(i)
-            }
-            return r as Array<Dem3Coordinates>
+        val result = ArrayList<Dem3Coordinates>()
+        for (i in 0 until f.coordinates.size()) {
+            val item = f.coordinates.getValueAt(i)
+
+            if (item is Dem3Coordinates)
+                result.add(item)
         }
+        return result
+    }
 
 
     override fun updateFromSrtmTile(appContext: AppContext, srtm: Dem3Tile) {
@@ -171,7 +173,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
 
                     appContext.services.getElevationService().requestElevationUpdates(
                         owner,
-                        owner.srtmTileCoordinates
+                        owner.getSrtmTileCoordinates()
                     )
 
                     appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())

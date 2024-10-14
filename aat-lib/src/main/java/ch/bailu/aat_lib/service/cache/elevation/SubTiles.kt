@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.util.IndexedMap
 
 class SubTiles {
     private val subTiles = IndexedMap<Dem3Coordinates, SubTile>()
-    private var coordinates: Array<Dem3Coordinates?>? = null
+    private var coordinates = ArrayList<Dem3Coordinates>()
     private var inUse = 0
 
     @Synchronized
@@ -31,17 +31,23 @@ class SubTiles {
     }
 
     @Synchronized
-    fun toSrtmCoordinates(): Array<Dem3Coordinates?> {
-        if (coordinates == null || coordinates!!.size != subTiles.size()) {
-            coordinates = arrayOfNulls(subTiles.size())
-
-            for (i in 0 until subTiles.size()) {
-                coordinates!![i] = subTiles.getValueAt(i)!!.coordinates
-            }
-        }
-        return coordinates!!
+    fun toSrtmCoordinates(): List<Dem3Coordinates> {
+        updateCoordinatesCache()
+        return coordinates
     }
 
+    private fun updateCoordinatesCache() {
+        if (coordinates.size != subTiles.size()) {
+            val newCoordinates = ArrayList<Dem3Coordinates>()
+            for (i in 0 until subTiles.size()) {
+                val item = subTiles.getValueAt(i)?.coordinates
+                if (item is Dem3Coordinates) {
+                    newCoordinates.add(item)
+                }
+            }
+            coordinates = newCoordinates
+        }
+    }
 
     @Synchronized
     fun generateSubTileList(laSpan: ArrayList<Span>, loSpan: ArrayList<Span>) {
@@ -52,12 +58,10 @@ class SubTiles {
         }
     }
 
-
     private fun put(la: Span, lo: Span) {
         val subTile = SubTile(la, lo)
         subTiles.put(subTile.coordinates, subTile)
     }
-
 
     @Synchronized
     fun take(coordinates: Dem3Coordinates): SubTile? {
@@ -69,7 +73,6 @@ class SubTiles {
         }
         return r
     }
-
 
     @Synchronized
     fun done() {

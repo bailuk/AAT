@@ -2,11 +2,11 @@ package ch.bailu.aat_lib.lib.filter_list
 
 class FilterList : AbsFilterList<AbsListItem>() {
 
-    override fun showElement(listEntry: AbsListItem, keyList: KeyList): Boolean {
+    override fun showElement(filterList: AbsListItem, keyList: KeyList): Boolean {
         return if (keyList.isEmpty) {
-            listEntry.isSelected() || listEntry.isSummary()
+            filterList.isSelected() || filterList.isSummary()
         } else {
-            listEntry.isSelected() || listEntry.getKeys().fits(keyList)
+            filterList.isSelected() || filterList.getKeys().fits(keyList)
         }
     }
 }

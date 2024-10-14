@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapColor.getColorFromIID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
@@ -18,7 +18,7 @@ abstract class GpxLayer : MapLayerInterface, TargetInterface {
 
     override fun drawForeground(mcontext: MapContext) {}
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxList = info.getGpxList() ?: GpxList.NULL_ROUTE
+        gpxList = info.getGpxList()
         colorFromIID = getColorFromIID(iid)
     }
 

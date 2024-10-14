@@ -56,12 +56,9 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
 
     private fun grabService(binder: IBinder) {
         if (binder is CommonBinder) {
-
             val service = binder.service
-            if (service is ServiceContext) {
-                this.service = service
-                service.lock(ServiceLink::class.java.simpleName)
-            }
+            this.service = service
+            service.lock(ServiceLink::class.java.simpleName)
         }
     }
 
@@ -135,13 +132,13 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
     }
 
     @Synchronized
-    override fun lock(simpleName: String) {
-        if (isUp) getService()?.lock(simpleName)
+    override fun lock(resource: String) {
+        if (isUp) getService()?.lock(resource)
     }
 
     @Synchronized
-    override fun free(simpleName: String) {
-        if (isUp) getService()?.free(simpleName)
+    override fun free(resource: String) {
+        if (isUp) getService()?.free(resource)
     }
 
     override fun close() {

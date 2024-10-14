@@ -32,12 +32,12 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     override fun reDownload(sc: AppContext) {}
-    override fun onInsert(sc: AppContext) {
-        if (isLoadable) load(sc.services)
+    override fun onInsert(appContext: AppContext) {
+        if (isLoadable) load(appContext.services)
     }
 
-    override fun onRemove(sc: AppContext) {
-        super.onRemove(sc)
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
         bitmap.free()
     }
 
@@ -51,9 +51,9 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
             return file.isFile && file.canRead()
         }
 
-    override fun onDownloaded(id: String, u: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
         if (Objects.equals(id, getID()) && isLoadable) {
-            load(sc.services)
+            load(appContext.services)
         }
     }
 
@@ -72,7 +72,7 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
         return loaded || notLoadable
     }
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
     override fun getSize(): Long {
         return bitmap.getSize()
     }
@@ -110,8 +110,8 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     class Factory(private val tile: Tile, private val source: Source) : Obj.Factory() {
-        override fun factory(id: String, cs: AppContext): Obj {
-            return ObjTileCacheOnly(id, cs, tile, source)
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileCacheOnly(id, appContext, tile, source)
         }
     }
 }

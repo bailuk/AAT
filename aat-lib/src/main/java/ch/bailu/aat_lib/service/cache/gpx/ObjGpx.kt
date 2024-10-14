@@ -14,9 +14,9 @@ abstract class ObjGpx(id: String) : Obj(id) {
                 return MIN_SIZE.toLong()
             }
 
-            override fun onChanged(id: String, sc: AppContext) {}
+            override fun onChanged(id: String, appContext: AppContext) {}
 
-            override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+            override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
 
             override fun getGpxList(): GpxList {
                 return GpxList.NULL_TRACK

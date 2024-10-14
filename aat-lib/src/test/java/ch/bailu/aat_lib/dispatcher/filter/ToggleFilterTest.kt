@@ -12,10 +12,8 @@ class ToggleFilterTest {
     fun test() {
         val usageTracker = SelectableUsageTracker()
         var observedInfoID = 0
-        var observedGpxInformation = GpxInformation.NULL
 
-        val target = ToggleFilter({ infoID, information ->
-            observedGpxInformation = information
+        val target = ToggleFilter({ infoID, _ ->
             observedInfoID = infoID
 
         }, InfoID.FILE_VIEW, usageTracker)

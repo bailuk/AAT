@@ -14,7 +14,6 @@ import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 class AttributesCollector {
     private var lastLog = System.currentTimeMillis()
 
-
     private val collectors = arrayOf(
         Collector(
             InfoID.HEART_RATE_SENSOR, HeartRateAttributes.KEY_INDEX_BPM,
@@ -38,7 +37,6 @@ class AttributesCollector {
 
         StepsTotalCollector()
     )
-
 
     fun collect(sensorServiceInterface: SensorServiceInterface): GpxAttributes {
         var attr: GpxAttributes? = null
@@ -64,23 +62,20 @@ class AttributesCollector {
     ) {
         private var lastInfo: GpxInformation? = null
 
-
         fun collect(
             sensorServiceInterface: SensorServiceInterface,
             target: GpxAttributes?,
             time: Long
         ): GpxAttributes? {
-            var target = target
+            var result = target
             val source = sensorServiceInterface.getInformationOrNull(infoID)
 
             if (source != null && source !== lastInfo) {
                 lastInfo = source
-
-                target = addAttribute(target, source, keyIndex, time)
+                result = addAttribute(result, source, keyIndex, time)
             }
-            return target
+            return result
         }
-
 
         protected fun addAttribute(
             target: GpxAttributes?,
@@ -88,11 +83,11 @@ class AttributesCollector {
             keyIndex: Int,
             time: Long
         ): GpxAttributes? {
-            var target = target
+            var result = target
             if (source != null && (time - source.getTimeStamp()) < maxAge) {
-                target = addAttribute(target, source.getAttributes(), keyIndex)
+                result = addAttribute(result, source.getAttributes(), keyIndex)
             }
-            return target
+            return result
         }
 
         protected fun addAttribute(
@@ -100,11 +95,11 @@ class AttributesCollector {
             source: GpxAttributes,
             keyIndex: Int
         ): GpxAttributes? {
-            var target = target
+            var result = target
             if (source.hasKey(keyIndex)) {
-                target = addAttributeHaveKey(getTargetNotNull(target), source, keyIndex)
+                result = addAttributeHaveKey(getTargetNotNull(result), source, keyIndex)
             }
-            return target
+            return result
         }
 
         protected open fun addAttributeHaveKey(

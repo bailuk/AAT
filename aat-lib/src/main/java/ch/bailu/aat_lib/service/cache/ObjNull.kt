@@ -7,6 +7,6 @@ object ObjNull : Obj(ObjNull::class.java.simpleName) {
         return MIN_SIZE.toLong()
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
 }

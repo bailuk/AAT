@@ -19,7 +19,7 @@ abstract class AbsFilterList<T> {
         }
     }
 
-    abstract fun showElement(t: T, keyList: KeyList): Boolean
+    abstract fun showElement(filterList: T, keyList: KeyList): Boolean
 
     fun add(t: T) {
         all.add(t)

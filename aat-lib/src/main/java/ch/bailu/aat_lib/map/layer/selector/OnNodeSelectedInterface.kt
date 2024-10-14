@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.gpx.GpxPointNode
 
 interface OnNodeSelectedInterface {
     fun onNodeSelected(
-        IID: Int,
+        iid: Int,
         info: GpxInformation,
         node: GpxPointNode,
         index: Int

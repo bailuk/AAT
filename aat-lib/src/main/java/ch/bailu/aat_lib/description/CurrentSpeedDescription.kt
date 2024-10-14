@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.information.GpxInformation
-import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
@@ -68,13 +68,11 @@ class CurrentSpeedDescription(storage: StorageInterface) : SpeedDescription(stor
 
     private fun setSpeedFromLastPoint(info: GpxInformation): Boolean {
         val track = info.getGpxList()
-        if (track != null) {
-            if (track.pointList.size() > 0) {
-                val delta = info.getGpxList().pointList.last
-                if (delta is GpxDeltaInterface) {
-                    setCache(delta.getSpeed())
-                    return true
-                }
+        if (track.pointList.size() > 0) {
+            val delta = info.getGpxList().pointList.last
+            if (delta is GpxDeltaInterface) {
+                setCache(delta.getSpeed())
+                return true
             }
         }
         return false

@@ -30,21 +30,21 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
         save = SaveTileTask(sourceID, cachedImageFile)
     }
 
-    override fun onInsert(sc: AppContext) {
+    override fun onInsert(appContext: AppContext) {
         tile = if (isLoadable) {
-            sc.services.getCacheService().getObject(cachedID, cachedFactory) as ObjTile
+            appContext.services.getCacheService().getObject(cachedID, cachedFactory) as ObjTile
         } else {
-            sc.services.getCacheService().getObject(sourceID, sourceFactory) as ObjTile
+            appContext.services.getCacheService().getObject(sourceID, sourceFactory) as ObjTile
         }
-        sc.services.getCacheService().addToBroadcaster(this)
+        appContext.services.getCacheService().addToBroadcaster(this)
     }
 
     private val isLoadable: Boolean
         get() = cachedImageFile.exists()
 
-    override fun onChanged(id: String, sc: AppContext) {
+    override fun onChanged(id: String, appContext: AppContext) {
         if (id == tile.toString()) {
-            sc.broadcaster.broadcast(
+            appContext.broadcaster.broadcast(
                 AppBroadcaster.FILE_CHANGED_INCACHE,
                 toString()
             )
@@ -52,7 +52,7 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
             if (mapTile.zoomLevel <= MIN_SAVE_ZOOM_LEVEL && id == sourceID &&
                 tile.isLoaded()
             ) {
-                sc.services.getBackgroundService().process(save)
+                appContext.services.getBackgroundService().process(save)
             }
         }
     }
@@ -62,7 +62,7 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
         super.access()
     }
 
-    override fun onRemove(cs: AppContext) {
+    override fun onRemove(appContext: AppContext) {
         tile.free()
     }
 
@@ -89,15 +89,15 @@ class ObjTileCached(id: String, sc: AppContext, private val mapTile: Tile, sourc
         return MIN_SIZE.toLong()
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
 
     override fun getFile(): Foc {
         return cachedImageFile
     }
 
     class Factory(private val tile: Tile, private val source: Source) : Obj.Factory() {
-        override fun factory(id: String, cs: AppContext): Obj {
-            return ObjTileCached(id, cs, tile, source)
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileCached(id, appContext, tile, source)
         }
     }
 

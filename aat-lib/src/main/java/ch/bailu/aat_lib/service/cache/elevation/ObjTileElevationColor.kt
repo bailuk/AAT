@@ -10,37 +10,37 @@ import org.mapsforge.core.model.Tile
 class ObjTileElevationColor(id: String, b: MapTileInterface, t: Tile, split: Int) :
     ObjTileElevation(id, b, t, split) {
     override fun fillBuffer(
-        buffer: IntArray,
+        bitmap: IntArray,
         raster: Raster,
-        subTile: SubTile,
-        dem: DemProvider
+        span: SubTile,
+        demtile: DemProvider
     ) {
-        val dim = dem.dim.DIM
-        val bitmapDim = subTile.pixelDim()
+        val dim = demtile.dim.DIM
+        val bitmapDim = span.pixelDim()
 
         var c = 0
         var oldLine = -1
         var color = 0
 
-        for (la in subTile.laSpan.firstPixelIndex()..subTile.laSpan.lastPixelIndex()) {
+        for (la in span.laSpan.firstPixelIndex()..span.laSpan.lastPixelIndex()) {
             val line = raster.toLaRaster[la] * dim
             var offset = -1
 
             if (oldLine != line) {
-                for (lo in subTile.loSpan.firstPixelIndex()..subTile.loSpan.lastPixelIndex()) {
+                for (lo in span.loSpan.firstPixelIndex()..span.loSpan.lastPixelIndex()) {
                     val newOffset = raster.toLoRaster[lo]
 
                     if (newOffset != offset) {
                         offset = newOffset
                         color = AltitudeColorTable.instance()
-                            .getColor(dem.getElevation(line + offset).toInt())
+                            .getColor(demtile.getElevation(line + offset).toInt())
                     }
 
-                    buffer[c] = color
+                    bitmap[c] = color
                     c++
                 }
             } else {
-                copyLine(buffer, c - bitmapDim, c)
+                copyLine(bitmap, c - bitmapDim, c)
                 c += bitmapDim
             }
 
@@ -49,14 +49,14 @@ class ObjTileElevationColor(id: String, b: MapTileInterface, t: Tile, split: Int
     }
 
     private fun copyLine(buffer: IntArray, sourceIndex: Int, destinationIndex: Int) {
-        var sourceIndex = sourceIndex
-        var destinationIndex = destinationIndex
-        val nextLine = destinationIndex
+        var si = sourceIndex
+        var di = destinationIndex
+        val nextLine = di
 
-        while (sourceIndex < nextLine) {
-            buffer[destinationIndex] = buffer[sourceIndex]
-            destinationIndex++
-            sourceIndex++
+        while (si < nextLine) {
+            buffer[di] = buffer[si]
+            di++
+            si++
         }
     }
 
