@@ -4,14 +4,17 @@ import ch.bailu.aat_gtk.config.Strings.appIdName
 
 object Environment {
 
-    val userHome: String = System.getProperty("user.home")
-    val configDirectory = run {
-        val xdgConfigHome: String? = System.getenv("XDG_CONFIG_HOME")?.trim()
+    private val userHome = System.getProperty("user.home")
 
-        if (xdgConfigHome is String && xdgConfigHome.isNotEmpty()) {
-            "$xdgConfigHome/$appIdName"
-        } else {
-            "$userHome/.config/$appIdName"
+    val configHome = getEnv("XDG_CONFIG_HOME", "$userHome/.config/$appIdName")
+    val dataHome   = getEnv("XDG_DATA_HOME"  , "$userHome/aat_data")
+    val cacheHome  = getEnv("XDG_CACHE_HOME" , "$userHome/.cache/$appIdName")
+
+    private fun getEnv(name: String, fallBack: String): String {
+        val result: String? = System.getenv(name)?.trim()
+        if (result is String && result.isNotEmpty()) {
+            return result
         }
+        return fallBack
     }
 }

@@ -11,7 +11,7 @@ import java.util.prefs.Preferences
 class GtkStorage : StorageInterface {
     companion object {
         private val node = run {
-            System.setProperty("java.util.prefs.userRoot", Environment.configDirectory)
+            System.setProperty("java.util.prefs.userRoot", Environment.configHome)
             Preferences.userRoot().node(Strings.appPreferencesNode)
         }
 
