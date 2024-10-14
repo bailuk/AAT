@@ -16,8 +16,11 @@ class SolidOsmFeaturesList(c: Context) : SolidBoolean(
     }
 
     fun getList(cacheService: CacheServiceInterface): ObjMapFeatures {
-        var id = ObjMapFeatures.ID_SMALL
-        if (isEnabled) id = ObjMapFeatures.ID_FULL
+        val id = if (isEnabled) {
+            ObjMapFeatures.ID_FULL
+        } else {
+            ObjMapFeatures.ID_SMALL
+        }
         return cacheService.getObject(id, ObjMapFeatures.Factory(id)) as ObjMapFeatures
     }
 

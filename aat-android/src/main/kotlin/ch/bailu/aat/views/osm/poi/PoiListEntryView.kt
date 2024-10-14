@@ -37,7 +37,7 @@ class PoiListEntryView(context: Context, onSelected: OnSelected, theme: UiTheme)
 
     fun set(item: PoiListItem) {
         listItem = item
-        if (item.isSummary) {
+        if (item.isSummary()) {
             checkBox.visibility = GONE
             checkBox.text = ""
             textView.text = item.title
@@ -45,7 +45,7 @@ class PoiListEntryView(context: Context, onSelected: OnSelected, theme: UiTheme)
         } else {
             textView.visibility = GONE
             textView.text = ""
-            checkBox.isChecked = item.isSelected
+            checkBox.isChecked = item.isSelected()
             checkBox.text = item.title
             checkBox.visibility = VISIBLE
         }

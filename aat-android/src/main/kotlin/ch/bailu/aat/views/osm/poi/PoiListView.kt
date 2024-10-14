@@ -65,7 +65,7 @@ class PoiListView(context: Context, private val list: FilterList, private val th
         }
 
         override fun getItemId(position: Int): Long {
-            return list.getFromVisible(position).id.toLong()
+            return list.getFromVisible(position).getID().toLong()
         }
 
         override fun getItemViewType(position: Int): Int {

@@ -30,8 +30,8 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
 
     private var listHandle: ObjMapFeatures? = null
 
-    private val busy: BusyIndicator = BusyIndicator(context)
-    private val slist: SolidOsmFeaturesList = SolidOsmFeaturesList(context)
+    private val busy = BusyIndicator(context)
+    private val slist = SolidOsmFeaturesList(context)
     private val list = FilterList()
     private val listView = MapFeaturesListView(scontext, list)
 
@@ -113,7 +113,9 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     }
 
     private fun getListHandle() {
-        scontext.insideContext { listHandle = slist.getList(scontext.getCacheService()) }
+        scontext.insideContext {
+            listHandle = slist.getList(scontext.getCacheService())
+        }
         updateList()
     }
 

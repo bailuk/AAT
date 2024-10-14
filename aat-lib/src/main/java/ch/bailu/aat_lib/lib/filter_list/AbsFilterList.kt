@@ -1,68 +1,50 @@
-package ch.bailu.aat_lib.lib.filter_list;
+package ch.bailu.aat_lib.lib.filter_list
 
-import java.util.ArrayList;
+abstract class AbsFilterList<T> {
+    private val visible = ArrayList<T>(100)
+    private val all = ArrayList<T>(100)
 
-public abstract class AbsFilterList<T> {
-    private final ArrayList<T> visible = new ArrayList<>(100);
-    private final ArrayList<T> all = new ArrayList<>(100);
+    private var filterKeys = KeyList()
 
-    private KeyList filterKeys = new KeyList();
-
-    public void filter(String s) {
-        filterKeys = new KeyList(s);
-        filterAll();
+    fun filter(s: String) {
+        filterKeys = KeyList(s)
+        filterAll()
     }
 
-    public void filterAll() {
-        visible.clear();
+    fun filterAll() {
+        visible.clear()
 
-        for (T t: all) {
-            if (showElement(t, filterKeys))
-                visible.add(t);
+        for (t in all) {
+            if (showElement(t, filterKeys)) visible.add(t)
         }
     }
 
-    public void filterMore() {
-        for (int i = visible.size()-1; i > -1; i--) {
-            if (!showElement(visible.get(i), filterKeys))
-                visible.remove(i);
-        }
+    abstract fun showElement(t: T, keyList: KeyList): Boolean
+
+    fun add(t: T) {
+        all.add(t)
+
+        if (showElement(t, filterKeys)) visible.add(t)
     }
 
-    private void showAll() {
-        if (visible.size() != all.size()) {
-            visible.clear();
-            visible.addAll(all);
-        }
+    fun getFromAll(index: Int): T {
+        return all[index]
     }
 
-    public abstract boolean showElement(T t, KeyList keyList);
-
-    public void add(T t) {
-        all.add(t);
-
-        if (showElement(t, filterKeys))
-            visible.add(t);
+    fun getFromVisible(index: Int): T {
+        return visible[index]
     }
 
-    public T getFromAll(int index) {
-        return all.get(index);
+    fun clear() {
+        visible.clear()
+        all.clear()
     }
 
-    public T getFromVisible(int index) {
-        return visible.get(index);
+    fun sizeVisible(): Int {
+        return visible.size
     }
 
-
-    public void clear() {
-        visible.clear();
-        all.clear();
-    }
-
-    public int sizeVisible() {
-        return visible.size();
-    }
-    public int sizeAll() {
-        return all.size();
+    fun sizeAll(): Int {
+        return all.size
     }
 }

@@ -73,7 +73,7 @@ class ObjMapFeatures(id: String) : Obj(id) {
             val keyList = getKeyList(id)
 
             MapFeaturesParser(appContext.assets, { file ->
-                    keyList.isEmpty || keyList.hasKey(file.lowercase())
+                    keyList.isEmpty || keyList.hasKey(file)
                 },
                 { parser ->
                     val d = MapFeaturesListItem(parser)

@@ -52,16 +52,16 @@ class PoiView(
 
     private val listView = PoiListView(context, filterList, theme).apply {
         setOnTextSelected { item: AbsListItem, _: OnSelected.Action?, _: String? ->
-            if (item.isSummary) {
-                filterView.setText(item.summaryKey)
+            if (item.isSummary()) {
+                filterView.setText(item.getSummaryKey())
             } else {
-                item.isSelected = !item.isSelected
+                item.setSelected(!item.isSelected())
                 filterList.filterAll()
                 onChanged()
             }
         }
-
     }
+
     private val sdatabase: SolidPoiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext)
 
     init {
@@ -104,7 +104,7 @@ class PoiView(
             for (i in 0 until filterList.sizeVisible()) {
                 val item = filterList.getFromVisible(i)
 
-                if (item.isSelected && item is PoiListItem) {
+                if (item.isSelected() && item is PoiListItem) {
                     export.add(item.category)
                 }
             }

@@ -1,99 +1,73 @@
-package ch.bailu.aat_lib.lib.filter_list;
+package ch.bailu.aat_lib.lib.filter_list
 
 
-import java.util.ArrayList;
-import java.util.Locale;
-
-public class KeyList {
-    public static final int MIN_KEY_LENGTH = 3;
-
-    private final ArrayList<String> keys = new ArrayList<>(10);
-
-    public KeyList(String s) {
-        addKeys(s);
+class KeyList(keys: String = "") {
+    companion object {
+        const val MIN_KEY_LENGTH: Int = 3
+        val REGEX = "[ =.;:/]".toRegex()
     }
 
-    public KeyList() {}
+    private val keys = ArrayList<String>(10)
 
-    public void addKeys(String s) {
-        addKeys(s.split("[ =.;:/]"));
+    init {
+        addKeys(keys)
     }
 
-    private void addKeys(String[] s) {
-        for (String k : s) {
-            addKey(k);
+    fun addKeys(s: String) {
+        addKeys(s.split(REGEX).dropLastWhile { it.isEmpty() }.toTypedArray())
+    }
+
+    private fun addKeys(s: Array<String>) {
+        for (k in s) {
+            addKey(k)
         }
     }
 
-    private void addKey(String k) {
-        if (k.length() >= MIN_KEY_LENGTH) {
-            k = k.toLowerCase(Locale.ROOT);
+    private fun addKey(key: String) {
+        if (key.length >= MIN_KEY_LENGTH) {
+            val k = key.lowercase()
             if (!hasKey(k)) {
-                keys.add(k);
+                keys.add(k)
             }
         }
     }
 
-    public boolean hasKey(String k) {
-        return hasKey(k, keys.size());
-    }
-    private boolean hasKey(String k, int limit) {
-        limit = Math.min(keys.size(), limit);
-
-        for (int i=0; i < limit ; i++) {
-            if (keys.get(i).equals(k)) return true;
+    fun hasKey(key: String): Boolean {
+        keys.forEach {
+            if (it == key.lowercase()) return true
         }
-
-        return false;
+        return false
     }
 
-
-
-    public boolean fits(KeyList list) {
-        for (String k : list.keys)
-            if (!fits(k)) return false;
-
-        return true;
+    fun fits(list: KeyList): Boolean {
+        for (k in list.keys) if (!fits(k)) return false
+        return true
     }
 
-    private boolean fits(String k) {
-        for (String x : keys) {
-            if (x.contains(k)) return true;
+    private fun fits(k: String): Boolean {
+        for (x in keys) {
+            if (x.contains(k)) return true
         }
-        return false;
+        return false
     }
 
-    public void addKeys(KeyList list) {
-        final int limit = keys.size();
+    val isEmpty: Boolean
+        get() = keys.isEmpty()
 
-        for (String k : list.keys) {
-            addKey(k, limit);
+    fun length(): Int {
+        var l = 0
+        for (k in keys) {
+            l += k.length
         }
+        return l
     }
 
-    private void addKey(String k, int limit) {
-        if (!hasKey(k, limit))
-            keys.add(k);
+    fun size(): Int {
+        return keys.size
     }
 
-    public boolean isEmpty() {
-        return keys.isEmpty();
-    }
-
-    public int length() {
-        int l = 0;
-        for (String k : keys) {
-            l+=k.length();
-        }
-        return l;
-    }
-
-    public int size() {
-        return keys.size();
-    }
-
-    public String getKey(int i) {
-        if (keys.size() > i) return keys.get(i);
-        else return "";
+    fun getKey(i: Int): String {
+        return if (keys.size > i) keys[i]
+        else ""
     }
 }
