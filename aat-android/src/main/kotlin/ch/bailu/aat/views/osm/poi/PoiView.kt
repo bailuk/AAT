@@ -83,8 +83,6 @@ class PoiView(
         return SolidStringView(context, sdatabase, theme)
     }
 
-
-
     private fun filterList(string: String) {
         filterList.filter(string)
         listView.onChanged()

@@ -82,7 +82,7 @@ class PoiList(
         val export = ArrayList<PoiCategory>(10)
         for (i in 0 until filterList.sizeVisible()) {
             val e = filterList.getFromVisible(i) as PoiListItem
-            if (e.isSelected) {
+            if (e.isSelected()) {
                 export.add(e.category)
             }
         }

@@ -40,8 +40,8 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
     }
 
     private val poiList = PoiList(sdatabase, selected) {
-        if (it.isSummary) {
-            searchEntry.asEditable().setText(it.summaryKey)
+        if (it.isSummary()) {
+            searchEntry.asEditable().setText(it.getSummaryKey())
         }
     }
 
