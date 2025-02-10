@@ -19,7 +19,7 @@ jobs:
         java-version: 17
 
     - name: Install dependencies
-      run: apt-get -y install libgio-2.0-dev-bin
+      run: sudo apt-get -y install libgio-2.0-dev-bin
 
     - name: Build with Gradle
       run: ./gradlew build
