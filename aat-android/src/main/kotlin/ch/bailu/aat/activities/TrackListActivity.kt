@@ -5,7 +5,7 @@ import ch.bailu.aat.R
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.description.DateDescription
+import ch.bailu.aat_lib.description.DateDescriptionCompact
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.NameDescription
@@ -19,7 +19,7 @@ import ch.bailu.foc_android.FocAndroidFactory
 class TrackListActivity : AbsGpxListActivity() {
     override val gpxListItemData: Array<ContentDescription>
         get() = arrayOf(
-            DateDescription(),
+            DateDescriptionCompact(),
             DistanceDescription(appContext.storage),
             AverageSpeedDescription(appContext.storage),
             TimeDescription(),

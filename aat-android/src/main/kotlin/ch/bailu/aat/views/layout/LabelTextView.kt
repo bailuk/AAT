@@ -22,8 +22,7 @@ open class LabelTextView(
         context,
         labelText,
         theme
-    ) {
-    }
+    )
 
     init {
         orientation = VERTICAL

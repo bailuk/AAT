@@ -26,7 +26,6 @@ class GpxListEntryView(
     private var file = FocAndroid.NULL
     private fun addViewWeight(v: View) {
         v.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f)
-        v.setBackgroundColor(Color.RED)
         addView(v)
     }
 
