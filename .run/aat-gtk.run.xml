@@ -6,7 +6,7 @@
     <module name="AAT.aat-gtk.main" />
     <shortenClasspath name="NONE" />
     <method v="2">
-      <option name="MakeProject" enabled="true" />
+      <option name="Make" enabled="true" />
     </method>
   </configuration>
 </component>
