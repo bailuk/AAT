@@ -9,11 +9,7 @@ import ch.bailu.aat_lib.preferences.SolidAutopause
 
 class GpxListAttributes(vararg attr: GpxSubAttributes) :
     GpxSubAttributes(keysFromSubAttributes(attr)) {
-    private val attributes: Array<out GpxSubAttributes>
-
-    init {
-        attributes = attr
-    }
+    private val attributes: Array<out GpxSubAttributes> = attr
 
     override fun get(keyIndex: Int): String {
         for (attr in attributes) {
@@ -83,7 +79,6 @@ class GpxListAttributes(vararg attr: GpxSubAttributes) :
                 )
             )
         }
-
 
         @JvmStatic
         fun factoryTrack(autoPause: AutoPause): GpxListAttributes {

@@ -9,10 +9,9 @@ import ch.bailu.aat_lib.map.MapColor
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 class AttributesView(context: Context, storage: StorageInterface) : HtmlTextView(context), TargetInterface {
-    private val markupBuilder: MarkupBuilderGpx
+    private val markupBuilder: MarkupBuilderGpx = MarkupBuilderGpx(storage)
 
     init {
-        markupBuilder = MarkupBuilderGpx(storage)
         enableAutoLink()
         setPadding(10, 10, 10, 10)
     }

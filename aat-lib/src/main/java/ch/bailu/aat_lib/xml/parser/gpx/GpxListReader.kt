@@ -9,7 +9,9 @@ import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryTrack
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.service.background.ThreadControl
+import ch.bailu.aat_lib.xml.parser.BOM
 import ch.bailu.aat_lib.xml.parser.XmlParser
+import ch.bailu.aat_lib.xml.parser.scanner.Scanner
 import ch.bailu.aat_lib.xml.parser.util.OnParsedInterface
 import ch.bailu.foc.Foc
 import java.io.IOException
@@ -19,9 +21,9 @@ class GpxListReader private constructor(
     inputFile: Foc,
     trackAttributes: GpxListAttributes
 ) {
-    private val way: OnParsed
-    private val track: OnParsed
-    private val route: OnParsed
+    private val way: OnParsed = OnParsed(GpxType.WAY, GpxListAttributes.NULL)
+    private val track: OnParsed = OnParsed(GpxType.TRACK, trackAttributes)
+    private val route: OnParsed = OnParsed(GpxType.ROUTE, factoryRoute())
 
     private var parsedPointAccess: GpxPointInterface = GpxPoint.NULL
 
@@ -32,9 +34,6 @@ class GpxListReader private constructor(
     constructor(c: ThreadControl, inputFile: Foc, autoPause: AutoPause) : this(c, inputFile, factoryTrack(autoPause))
 
     init {
-        track = OnParsed(GpxType.TRACK, trackAttributes)
-        way = OnParsed(GpxType.WAY, GpxListAttributes.NULL)
-        route = OnParsed(GpxType.ROUTE, factoryRoute())
         try {
             val parser = XmlParser(inputFile)
             parsedPointAccess = parser
@@ -56,12 +55,8 @@ class GpxListReader private constructor(
         }
 
     private inner class OnParsed(type: GpxType, attr: GpxListAttributes) : OnParsedInterface {
-        val gpxList: GpxList
+        val gpxList: GpxList = GpxList(type, attr)
         private var haveNewSegment = true
-
-        init {
-            gpxList = GpxList(type, attr)
-        }
 
         fun hasContent(): Boolean {
             return gpxList.pointList.size() > 0

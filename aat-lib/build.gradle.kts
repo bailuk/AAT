@@ -25,7 +25,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 dependencies {
     val focVersion : String by project
     api("com.github.bailuk.foc:foc:$focVersion")
-    //api("ch.bailu:foc:$focVersion")
+    testImplementation("com.github.bailuk.foc:foc-extended:$focVersion")
 
     val mapsForgeVersion: String by project
 

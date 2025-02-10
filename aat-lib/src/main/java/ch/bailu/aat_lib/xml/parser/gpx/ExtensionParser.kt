@@ -17,10 +17,9 @@ class ExtensionParser : TagParser(GpxConstants.QNAME_EXTENSIONS) {
 
     @Throws(IOException::class, XmlPullParserException::class)
     override fun parseTags(parser: XmlPullParser, scanner: Scanner): Boolean {
-        return tag.parse(parser, scanner) || gpxtpx.parse(parser, scanner) || gpxTag.parse(
-            parser,
-            scanner
-        )
+        return tag.parse(parser, scanner) ||
+                gpxtpx.parse(parser, scanner) ||
+                gpxTag.parse(parser, scanner)
     }
 
     override fun parsed(parser: XmlPullParser, scanner: Scanner) {}
