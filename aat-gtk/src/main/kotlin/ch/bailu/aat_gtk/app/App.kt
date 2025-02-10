@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.app
 
+import ch.bailu.aat_gtk.config.Environment
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
@@ -39,6 +40,11 @@ private fun setup() {
     AppConfig.setInstance(GtkAppConfig)
     RuntimeInfo.startLogging()
     AppLog.set(BroadcastLoggerFactory(GtkAppContext.broadcaster, PrintLnLoggerFactory()))
+
+    AppLog.d(Environment, "configHome: ${Environment.configHome}")
+    AppLog.d(Environment, "cacheHome: ${Environment.cacheHome}")
+    AppLog.d(Environment, "dataHome: ${Environment.dataHome}")
+
     AppGraphicFactory.set(GtkGraphicFactory.INSTANCE)
     PreferenceLoadDefaults(GtkAppContext)
 }
