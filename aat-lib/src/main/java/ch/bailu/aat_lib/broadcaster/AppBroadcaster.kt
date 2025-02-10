@@ -33,4 +33,9 @@ object AppBroadcaster {
      * Error level namespace for message broadcaster
      */
     const val LOG_ERROR = NAME_SPACE + "LOG_ERROR"
+
+    /**
+     * App permission has probably been updated
+     */
+    const val PERMISSION_UPDATED = NAME_SPACE + "PERMISSION_UPDATED"
 }

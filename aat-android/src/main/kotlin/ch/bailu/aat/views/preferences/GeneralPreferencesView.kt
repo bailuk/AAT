@@ -22,6 +22,7 @@ import ch.bailu.aat_lib.preferences.location.SolidProvideAltitude
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages
+import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.foc_android.FocAndroidFactory
 
 class GeneralPreferencesView(acontext: ActivityContext, theme: UiTheme) :
@@ -89,6 +90,11 @@ class GeneralPreferencesView(acontext: ActivityContext, theme: UiTheme) :
         acontext.dispatcher.addTarget(scan, InfoID.SENSORS)
         acontext.dispatcher.addTarget(updateConnection, InfoID.SENSORS)
         acontext.dispatcher.addTarget(sensors, InfoID.SENSORS)
+
+        add(TitleView(acontext, ToDo.translate("App permissions"), theme))
+        add(CheckPermissionsView(acontext.appContext,acontext, theme))
+        add(RequestPermissionsView(acontext, theme))
+
         add(TitleView(acontext, R.string.files, theme))
         add(SolidDirectoryViewSAF(acontext, SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context)), theme))
         add(SolidDirectoryViewSAF(acontext, SolidExternalDirectory(acontext), theme))
