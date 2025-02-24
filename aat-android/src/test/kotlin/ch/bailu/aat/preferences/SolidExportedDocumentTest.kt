@@ -1,6 +1,6 @@
 package ch.bailu.aat.preferences
 
-import ch.bailu.foc.FocFile
+import ch.bailu.foc.FocName
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
@@ -57,7 +57,8 @@ class SolidExportedDocumentTest {
 
         assertEquals(false, exportedDocument.isExportAllowed(testFile1))
 
-        exportedDocument.setDocument(FocFile(testFile1))
+        // FocFile changes UNIX path to Windows path on Windows therefore use FocName
+        exportedDocument.setDocument(FocName(testFile1))
 
         assertEquals(true, exportedDocument.isExportAllowed(testFile1))
         assertEquals(false, exportedDocument.isExportAllowed(testFileEmpty))
