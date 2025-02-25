@@ -7,6 +7,18 @@
     "org.freedesktop.Sdk.Extension.openjdk17"
   ],
   "command": "aat.sh",
+  "finish-args": [
+    "--share=network",
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--device=dri",
+    "--system-talk-name=org.freedesktop.GeoClue2",
+    "--env=GIO_EXTRA_MODULES=/app/lib/gio/modules",
+    "--env=JAVA_HOME=/app/jre",
+    "--env=LIBO_FLATPAK=1",
+    "--env=PATH=/app/jre/bin:/app/bin:/usr/bin"
+  ],
   "modules": [
     {
       "name": "openjdk",
@@ -22,7 +34,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "branch": "ea6ccd376c343a588c59dc14c3eb73aed74dd73a"
+          "commit": "2b80fd55add8040fe79782fdc739d97f53fc8171"
         },
         "gradle-sources.json"
       ],
@@ -39,19 +51,5 @@
         "install -Dm644 aat-gtk/gresource/icons/scalable/apps/ch.bailu.aat.svg /app/share/icons/hicolor/scalable/apps/ch.bailu.aat.svg"
       ]
     }
-  ],
-  "finish-args": [
-    "--share=network",
-    "--share=ipc",
-    "--socket=wayland",
-    "--socket=fallback-x11",
-    "--device=dri",
-    "--system-talk-name=org.freedesktop.GeoClue2",
-    "--env=GIO_EXTRA_MODULES=/app/lib/gio/modules",
-    "--env=JAVA_HOME=/app/jre",
-    "--env=LIBO_FLATPAK=1",
-    "--env=PATH=/app/bin:/app/jre/bin",
-    "--filesystem=~/.config/aat-gtk",
-    "--filesystem=~/.java/.userPrefs/ch/bailu/aat"
   ]
 }

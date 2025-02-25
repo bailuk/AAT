@@ -1,8 +1,8 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.lib.extensions.ellipsizeStart
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.util.Directory
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.dialog.FileDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile

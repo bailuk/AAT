@@ -126,7 +126,7 @@ class GtkSyncTileBitmap : MapTileInterface {
         val dstLines = surface.height
         val dstPixelSize = dstPixelsPerLine * dstLines
         val dstPixelOffset = srcRect.left
-        val srcPixelsPerLine = srcRect.width()
+        val srcPixelsPerLine = srcRect.width
         val srcPixelSize = src.size
 
         var srcLine = 0

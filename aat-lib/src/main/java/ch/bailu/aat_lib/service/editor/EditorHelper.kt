@@ -1,17 +1,19 @@
 package ch.bailu.aat_lib.service.editor
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationProvider
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformationProvider
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 
-class EditorHelper(private val appContext: AppContext) : GpxInformationProvider {
-    private var handle = ObjNull.NULL
+class EditorHelper(private val appContext: AppContext) :
+    GpxInformationProvider {
+    private var handle: Obj = ObjNull
     var infoID = 0
         private set
     var file: Foc = Foc.FOC_NULL
@@ -23,6 +25,7 @@ class EditorHelper(private val appContext: AppContext) : GpxInformationProvider 
         edit(draft, InfoID.EDITOR_DRAFT)
     }
 
+    @Deprecated("Editor should be able to edit any file, use edit(file: Foc)")
     fun editDraft() {
         edit(draft, InfoID.EDITOR_DRAFT)
         onResume()
@@ -40,7 +43,7 @@ class EditorHelper(private val appContext: AppContext) : GpxInformationProvider 
     }
 
     fun onResume() {
-        val newHandle = appContext.services.cacheService.getObject(
+        val newHandle = appContext.services.getCacheService().getObject(
             vID,
             ObjGpxEditable.Factory(file)
         )
@@ -67,7 +70,7 @@ class EditorHelper(private val appContext: AppContext) : GpxInformationProvider 
 
     fun save() {
         val editor = editor
-        if (editor.isModified) {
+        if (editor.isModified()) {
             editor.save()
         }
     }

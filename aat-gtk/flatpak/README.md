@@ -15,11 +15,8 @@ rm -rf build
 # Pin to commit (update flatpak manifest)
 ./flatpak-pin-commit.sh 
 
-# Create flatpak
+# Build, lint and install flatpak
 ./flatpak-create.sh
-
-# ...Or build install and test flathub-flatpak
-./flatpak-create-lint.sh 
 ```
 
 # Flatpak and gradle

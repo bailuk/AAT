@@ -3,7 +3,7 @@ package ch.bailu.aat.activities
 import android.content.Intent
 import android.os.Bundle
 import ch.bailu.aat.R
-import ch.bailu.aat.dispatcher.SensorSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat.preferences.SolidSAF
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.ui.theme.AppTheme
@@ -14,7 +14,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
 import ch.bailu.aat.views.preferences.MapPreferencesView
 import ch.bailu.aat.views.preferences.PresetPreferencesView
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPresetCount
@@ -35,7 +35,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
         spresetCount = SolidPresetCount(Storage(this))
         spresetCount?.register(this)
         createViews()
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }
 
     private fun createViews() {

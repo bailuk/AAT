@@ -2,9 +2,9 @@ package ch.bailu.aat_lib.service.cache.gpx
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.Broadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.Broadcaster
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
@@ -23,36 +23,36 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
     init {
         editor = GpxListEditor(sc.broadcaster)
-        sc.services.cacheService.addToBroadcaster(this)
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
-    override fun onInsert(sc: AppContext) {
-        val handle = sc.services.cacheService.getObject(_file.path, ObjGpxStatic.Factory())
+    override fun onInsert(appContext: AppContext) {
+        val handle = appContext.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
         currentHandle = if (handle is ObjGpx) {
             handle
         } else {
             NULL
         }
-        editor.loadIntoEditor(currentHandle.gpxList)
+        editor.loadIntoEditor(currentHandle.getGpxList())
     }
 
-    override fun onRemove(sc: AppContext) {
+    override fun onRemove(appContext: AppContext) {
         currentHandle.free()
         currentHandle = NULL
     }
 
     override fun isReadyAndLoaded(): Boolean {
-        return currentHandle.isReadyAndLoaded
+        return currentHandle.isReadyAndLoaded()
     }
 
     override fun getSize(): Long {
         return MIN_SIZE.toLong()
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
-    override fun onChanged(id: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {
         if (id == _file.path) {
-            editor.loadIntoEditor(currentHandle.gpxList)
+            editor.loadIntoEditor(currentHandle.getGpxList())
         }
     }
 
@@ -108,7 +108,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             modified = modified || m
             setVisibleTrackPoint(editor.selectedPoint)
             setVisibleTrackSegment(editor.list.getDelta())
-            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, id)
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
         }
 
         override fun isModified(): Boolean {
@@ -122,12 +122,22 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
         override fun save() {
             try {
-                GpxListWriter(editor.list, file).close()
+                GpxListWriter(editor.list, getFile()).close()
                 modified = false
-                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), id)
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
+                    .toString(), getID()
+                )
             } catch (e: Exception) {
                 e(this, e)
             }
+        }
+
+        override fun unload() {
+            loadIntoEditor(currentHandle.getGpxList())
+            modified =false
+            broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
+                .toString(), getID()
+            )
         }
 
         override fun inverse() {
@@ -160,18 +170,18 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             modified(true)
         }
 
-        override fun saveTo(destDir: Foc) {
-            val prefix = AppDirectory.parsePrefix(file)
+        override fun saveTo(path: Foc) {
+            val prefix = AppDirectory.parsePrefix(getFile())
             try {
                 val file = AppDirectory.generateUniqueFilePath(
-                    destDir,
+                    path,
                     prefix,
                     AppDirectory.GPX_EXTENSION
                 )
                 GpxListWriter(editor.list, file).close()
                 broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK,
-                    file.path, id
+                    file.path, getID()
                 )
             } catch (e: Exception) {
                 e(this, e)
@@ -190,7 +200,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
             return _file
         }
 
-        override fun isLoaded(): Boolean {
+        override fun getLoaded(): Boolean {
             return true
         }
 
@@ -200,13 +210,13 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
     }
 
     class Factory(private val file: Foc) : Obj.Factory() {
-        override fun factory(id: String, sc: AppContext): Obj {
-            return ObjGpxEditable(id, file, sc)
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjGpxEditable(id, file, appContext)
         }
     }
 
     override fun getGpxList(): GpxList {
-        return editor.gpxList
+        return editor.getGpxList()
     }
 
     companion object {

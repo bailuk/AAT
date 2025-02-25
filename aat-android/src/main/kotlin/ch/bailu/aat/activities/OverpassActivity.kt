@@ -4,10 +4,10 @@ import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.util.OverpassApi
 import ch.bailu.aat.util.ui.AppLayout
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat.views.osm.features.OsmFeaturesView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -26,8 +26,7 @@ class OverpassActivity : AbsOsmApiActivity() {
             mainView.add(createOsmFeaturesView(), 50)
             mainView
         } else {
-            val multiView =
-                MultiView(this, KEY)
+            val multiView = MultiView(this, KEY)
             this.multiView = multiView
             multiView.add(super.createNodeListView(contentView))
             multiView.add(createOsmFeaturesView())
@@ -40,7 +39,7 @@ class OverpassActivity : AbsOsmApiActivity() {
         val osmFeatures = OsmFeaturesView(serviceContext)
         osmFeatures.setOnTextSelected { e: AbsListItem, action: OnSelected.Action, variant: String ->
             if (action == OnSelected.Action.Filter) {
-                osmFeatures.setFilterText(e.summaryKey)
+                osmFeatures.setFilterText(e.getSummaryKey())
             } else if (action == OnSelected.Action.Edit) {
                 insertLine(variant)
             }

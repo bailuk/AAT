@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.view.graph
 
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.DrawingArea
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.type.Pointer
 
-class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
+class GraphView(private val plotter: Plotter) : TargetInterface {
     private val drawingArea = DrawingArea()
 
     private var _width = 0
@@ -95,7 +95,7 @@ class GraphView(private val plotter: Plotter) : OnContentUpdatedInterface {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        gpxCache = info.gpxList
+        gpxCache = info.getGpxList()
         repaint()
     }
 }

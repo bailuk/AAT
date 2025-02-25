@@ -2,10 +2,10 @@ package ch.bailu.aat_lib.service.directory;
 
 
 import ch.bailu.aat_lib.gpx.GpxBigDelta;
-import ch.bailu.aat_lib.gpx.GpxInformation;
+import ch.bailu.aat_lib.gpx.information.GpxInformation;
 import ch.bailu.aat_lib.gpx.GpxList;
 import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.InfoID;
+import ch.bailu.aat_lib.gpx.information.InfoID;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
@@ -64,7 +64,7 @@ public final class GpxInformationDbSummary extends GpxInformation {
     }
 
     @Override
-    public boolean isLoaded() {
+    public boolean getLoaded() {
         return true;
     }
 

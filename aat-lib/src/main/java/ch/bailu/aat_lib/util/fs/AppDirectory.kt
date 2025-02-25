@@ -33,7 +33,7 @@ object AppDirectory {
     const val FILE_NOMINATIM = "nominatim.xml"
 
     const val DIR_OVERPASS = "query/overpass"
-    const val FILE_OVERPASS = "overpass.osm"
+    const val FILE_OVERPASS = "overpass.xml" // Extension .osm is not compatible with Android SAF
 
     const val DIR_POI = "query/poi"
     const val FILE_POI = "poi.gpx"
@@ -41,9 +41,9 @@ object AppDirectory {
     const val DIR_CACHE = "cache"
     const val FILE_CACHE_DB = "summary.db"
     const val FILE_CACHE_MVDB = "summary.mv.db"
-    private const val DIR_EDIT = "overlay/draft"
+    const val DIR_EDIT = "overlay/draft"
     const val FILE_EDIT_BACKUP = "edit.txt"
-    private const val FILE_DRAFT = "draft.gpx"
+    const val FILE_DRAFT = "draft.gpx"
     const val FILE_SELECTION = "selection.txt"
     fun getEditorDraft(sdirectory: SolidDataDirectory): Foc {
         return getDataDirectory(sdirectory, DIR_EDIT).child(FILE_DRAFT)
@@ -73,7 +73,7 @@ object AppDirectory {
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private const val MAX_TRY = 99
     const val GPX_EXTENSION = ".gpx"
-    const val OSM_EXTENSION = ".osm"
+    const val OSM_EXTENSION = ".xml" // Extension .osm is not compatible with Android SAF
 
     @Throws(IOException::class)
     fun generateUniqueFilePath(directory: Foc, prefix: String, extension: String): Foc {

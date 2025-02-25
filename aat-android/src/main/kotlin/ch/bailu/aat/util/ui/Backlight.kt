@@ -8,9 +8,9 @@ import androidx.annotation.RequiresApi
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.presets.SolidBacklight
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
@@ -18,7 +18,7 @@ import java.io.Closeable
 
 
 class Backlight(private val activity: Activity, private val scontext: ServiceContext) :
-    OnContentUpdatedInterface, OnPreferencesChanged, Closeable {
+    TargetInterface, OnPreferencesChanged, Closeable {
     private val window: Window = activity.window
     private val spreset: SolidPreset = SolidPreset(Storage(scontext.getContext()))
     private var sbacklight: SolidBacklight
@@ -35,8 +35,8 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (state != info.state) {
-            state = info.state
+        if (state != info.getState()) {
+            state = info.getState()
             setBacklight()
         }
     }
@@ -58,7 +58,7 @@ class Backlight(private val activity: Activity, private val scontext: ServiceCon
     private val presetIndex: Int
         get() {
             val result = IntArray(1)
-            scontext.insideContext { result[0] = scontext.trackerService.presetIndex }
+            scontext.insideContext { result[0] = scontext.getTrackerService().getPresetIndex() }
             return result[0]
         }
 

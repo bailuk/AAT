@@ -7,7 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.LinearLayout
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList
 import ch.bailu.aat.services.ServiceContext
@@ -17,7 +17,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.views.busy.BusyIndicator
 import ch.bailu.aat.views.osm.EditTextTool
 import ch.bailu.aat.views.preferences.SolidCheckBox
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidString
@@ -30,8 +30,8 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
 
     private var listHandle: ObjMapFeatures? = null
 
-    private val busy: BusyIndicator = BusyIndicator(context)
-    private val slist: SolidOsmFeaturesList = SolidOsmFeaturesList(context)
+    private val busy = BusyIndicator(context)
+    private val slist = SolidOsmFeaturesList(context)
     private val list = FilterList()
     private val listView = MapFeaturesListView(scontext, list)
 
@@ -39,7 +39,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     private val onListLoaded: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val handle = listHandle
-            if (handle != null && AppIntent.hasFile(intent, handle.id)) {
+            if (handle != null && AppIntent.hasFile(intent, handle.getID())) {
                 updateList()
             }
         }
@@ -77,7 +77,7 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
             busy.stopWaiting()
         } else {
             handle.syncList(list)
-            if (handle.isReadyAndLoaded) busy.stopWaiting() else busy.startWaiting()
+            if (handle.isReadyAndLoaded()) busy.stopWaiting() else busy.startWaiting()
         }
         listView.onChanged()
     }
@@ -113,7 +113,9 @@ class OsmFeaturesView(private val scontext: ServiceContext) : LinearLayout(
     }
 
     private fun getListHandle() {
-        scontext.insideContext { listHandle = slist.getList(scontext.cacheService) }
+        scontext.insideContext {
+            listHandle = slist.getList(scontext.getCacheService())
+        }
         updateList()
     }
 

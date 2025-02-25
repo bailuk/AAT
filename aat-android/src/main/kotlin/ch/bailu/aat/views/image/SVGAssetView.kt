@@ -15,11 +15,11 @@ class SVGAssetView(private val scontext: ServiceContext, rid: Int) : ImageObject
     }
 
     fun setImageObject(key: Int, value: String) {
-        scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(key, value)) }
+        scontext.insideContext { setImageObject(scontext.getIconMapService().toAssetPath(key, value)) }
     }
 
     fun setImageObject(gpxPointNode: GpxPointNode) {
-        scontext.insideContext { setImageObject(scontext.iconMapService.toAssetPath(gpxPointNode)) }
+        scontext.insideContext { setImageObject(scontext.getIconMapService().toAssetPath(gpxPointNode)) }
     }
 
     private fun setImageObject(name: String?) {

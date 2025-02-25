@@ -18,6 +18,9 @@ jobs:
         distribution: 'temurin'
         java-version: 17
 
+    - name: Install dependencies
+      run: sudo apt-get -y install libglib2.0-dev
+
     - name: Build with Gradle
       run: ./gradlew build
 
@@ -25,14 +28,14 @@ jobs:
       run: ci/collect-artifacts.sh
 
     - name: Upload artifacts (gtk)
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: aat-gtk
         path: dist/gtk
         if-no-files-found: error
 
     - name: Upload artifacts (android)
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: aat-android
         path: dist/android

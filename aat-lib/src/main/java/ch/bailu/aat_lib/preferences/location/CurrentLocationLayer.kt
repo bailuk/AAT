@@ -2,9 +2,9 @@ package ch.bailu.aat_lib.preferences.location
 
 import ch.bailu.aat_lib.app.AppColor
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.lib.color.ARGB
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
@@ -17,7 +17,7 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterface) :
-    OnContentUpdatedInterface, MapLayerInterface {
+    TargetInterface, MapLayerInterface {
     private var center = GpxInformation.NULL
     private val paint: Paint = mcontext.draw().createPaint()
 
@@ -70,10 +70,10 @@ class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterf
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
     override fun drawInside(mcontext: MapContext) {
-        if (contains(center) && center.accuracy > 0) {
+        if (contains(center) && center.getAccuracy() > 0) {
             val pixel = mcontext.getMetrics().toPixel(center)
             val radius =
-                Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.accuracy))
+                Math.max(MIN_RADIUS, mcontext.getMetrics().distanceToPixel(center.getAccuracy()))
             paint.color = COLOR.colorFromTimeStamp(center.getTimeStamp())
             mcontext.draw().circle(pixel, radius, paint)
         }

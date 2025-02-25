@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
 class SensorInformation(private val attributes: GpxAttributes) : GpxInformation() {
     private val timeStamp = System.currentTimeMillis()

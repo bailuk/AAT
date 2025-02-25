@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.xml.parser.osm
 
-import ch.bailu.aat_lib.util.Objects
 import ch.bailu.aat_lib.xml.parser.scanner.Scanner
 import ch.bailu.aat_lib.xml.parser.skipTag
 import org.xmlpull.v1.XmlPullParser
@@ -45,16 +44,18 @@ abstract class TagParser(private val tag: String = "") {
 
     @Throws(XmlPullParserException::class)
     private fun begins(parser: XmlPullParser): Boolean {
-        return (parser.eventType == XmlPullParser.START_TAG
-                && (Objects.equals(parser.name, tag)))
+        if (parser.eventType == XmlPullParser.START_TAG) {
+            return tag.isEmpty() || parser.name == tag
+        }
+        return false
     }
 
     @Throws(XmlPullParserException::class)
     private fun ends(parser: XmlPullParser): Boolean {
-        return parser.eventType == XmlPullParser.END_DOCUMENT || parser.eventType == XmlPullParser.END_TAG && (Objects.equals(
-            parser.name,
-            tag
-        ))
+        if (parser.eventType == XmlPullParser.END_DOCUMENT || parser.eventType == XmlPullParser.END_TAG) {
+            return tag.isEmpty() || parser.name == tag
+        }
+        return false
     }
 
     companion object {

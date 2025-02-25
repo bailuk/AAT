@@ -3,24 +3,22 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.controller.UiControllerInterface
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.TrackerSplitButton
-import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.description.DescriptionLabelTextView
-import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.solid.SolidPresetComboView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.GpsStateDescription
 import ch.bailu.aat_lib.description.TrackerStateDescription
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.adw.Clamp
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 
-class CockpitPage(appContext: AppContext, uiController: UiController, dispatcher: Dispatcher) {
+class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, dispatcher: Dispatcher) {
     private val cockpitView = CockpitView(appContext).apply {addDefaults((dispatcher))}.scrolledWindow
 
     private val clamp = Clamp().apply {
@@ -33,18 +31,26 @@ class CockpitPage(appContext: AppContext, uiController: UiController, dispatcher
         margin(Layout.margin)
         append(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
+
+            append(Button().apply {
+                iconName = Icons.zoomFitBestSymbolic
+                onClicked {
+                    uiController.showMap()
+                    uiController.frameInMap(InfoID.TRACKER)
+                }
+            })
+            append(Button().apply {
+                iconName = Icons.findLocationSymbolic
+                onClicked {
+                    uiController.showMap()
+                    uiController.centerInMap(InfoID.TRACKER)
+                }
+            })
             append(Button().apply {
                 iconName = Icons.viewContinuousSymbolic
                 onClicked {
                     uiController.showDetail()
                     uiController.showInDetail(InfoID.TRACKER)
-                }
-            })
-            append(Button().apply {
-                iconName = Icons.zoomFitBestSymbolic
-                onClicked {
-                    uiController.showMap()
-                    SolidPositionLock(appContext.storage, GtkCustomMapView.DEFAULT_KEY).value = true
                 }
             })
         })

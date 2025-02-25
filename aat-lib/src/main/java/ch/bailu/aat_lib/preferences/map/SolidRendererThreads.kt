@@ -15,7 +15,6 @@ class SolidRendererThreads(storageInterface: StorageInterface) : SolidIndexList(
         return toDefaultString(values[index].toString(), index)
     }
 
-    
     override fun getLabel(): String {
         return Res.str().p_render_threads()
     }
@@ -28,20 +27,19 @@ class SolidRendererThreads(storageInterface: StorageInterface) : SolidIndexList(
         private val values = intArrayOf(numberOfBackgroundThreats(), 2, 3, 4, 1)
         fun numberOfBackgroundThreats(): Int {
             var result = numberOfCores() - 1
-            result = Math.min(result, 3)
-            result = Math.max(result, 1)
+            result = result.coerceAtMost(3)
+            result = result.coerceAtLeast(1)
             return result
         }
 
-        fun numberOfCores(): Int {
+        private fun numberOfCores(): Int {
             return try {
-                Math.max(Runtime.getRuntime().availableProcessors(), 1)
+                Runtime.getRuntime().availableProcessors().coerceAtLeast(1)
             } catch (e: Exception) {
                 1
             }
         }
 
-        @JvmStatic
         fun set() {
             Parameters.NUMBER_OF_THREADS = numberOfBackgroundThreats()
         }

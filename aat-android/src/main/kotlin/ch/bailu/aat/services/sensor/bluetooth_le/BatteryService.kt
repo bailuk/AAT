@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
 import android.bluetooth.BluetoothGattCharacteristic
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import java.util.UUID
 
 class BatteryService : ServiceInterface {

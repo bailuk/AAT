@@ -1,9 +1,10 @@
 package ch.bailu.aat_lib.service.background
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.ToDo
+import ch.bailu.aat_lib.util.extensions.ellipsize
 import ch.bailu.aat_lib.util.net.URX
 import ch.bailu.foc.Foc
 import java.io.IOException
@@ -31,26 +32,26 @@ open class DownloadTask(
         try {
             size = bgDownload()
             appContext.broadcaster.broadcast(
-                AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
+                AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
             )
         } catch (e: Exception) {
             logError(e)
-            file.rm()
+            getFile().rm()
         }
         return size
     }
 
     @Throws(IOException::class)
     protected fun bgDownload(): Long {
-        return download(source.toURL(), file)
+        return download(source.toURL(), getFile())
     }
 
     protected open fun logError(e: Exception?) {
-        AppLog.w(this, file.pathName)
+        AppLog.w(this, getFile().pathName)
         AppLog.w(this, e)
     }
 
-    
+
     override fun toString(): String {
         return source.toString()
     }
@@ -73,7 +74,7 @@ open class DownloadTask(
             }
 
         } catch (e: Exception) {
-            AppLog.e(this, e, ToDo.translate("GET '$url': failed" ))
+            AppLog.e(this, e, ToDo.translate("GET '${url.toString().ellipsize(50)}': failed" ))
 
         } finally {
             Foc.close(output)

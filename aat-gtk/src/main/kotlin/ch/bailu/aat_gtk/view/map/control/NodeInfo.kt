@@ -3,11 +3,15 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.margin
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
-import ch.bailu.gtk.gtk.*
+import ch.bailu.gtk.gtk.Align
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Label
+import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.type.Str
 
 class NodeInfo {
@@ -15,6 +19,7 @@ class NodeInfo {
 
     private val label = Label(Str.NULL).apply {
         margin(Layout.margin)
+        this.selectable = true
     }
 
     private val scrolled = ScrolledWindow().apply {
@@ -44,7 +49,6 @@ class NodeInfo {
         markupBuilder.appendInfo(info, index)
         markupBuilder.appendNode(node, info)
         markupBuilder.appendAttributes(node.getAttributes())
-
         label.setMarkup(markupBuilder.toString())
         markupBuilder.clear()
     }

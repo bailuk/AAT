@@ -3,20 +3,21 @@ package ch.bailu.aat_gtk.view.toplevel.list
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.controller.UiControllerInterface
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.GtkTimer
-import ch.bailu.aat_gtk.view.UiController
 import ch.bailu.aat_gtk.view.menu.MenuHelper
+import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -28,9 +29,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
-import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
 import ch.bailu.gtk.gtk.Spinner
@@ -41,7 +40,7 @@ import ch.bailu.gtk.type.Str
 
 class FileListPage(app: Application,
                    appContext: AppContext,
-                   private val uiController: UiController
+                   private val uiController: UiControllerInterface
 ) {
     private val descriptions = arrayOf(
         DateDescription(),
@@ -117,24 +116,7 @@ class FileListPage(app: Application,
         createActions(app)
     }
     private val logItems = SizeLog("FileListItem")
-
-    // TODO: reuse PopupButton?
-    private val menuButton = MenuButton().apply {
-        menuModel = overlayMenu.createMenu()
-        PopoverMenu(popover.cast()).apply {
-            val customWidgets = overlayMenu.createCustomWidgets()
-
-            customWidgets.forEach {
-                addChild(it.widget, it.id)
-            }
-
-            onShow {
-                customWidgets.forEach {
-                    it.update()
-                }
-            }
-        }
-    }
+    private val menuButton = PopupMenuButton(overlayMenu).apply { createActions(app) }.menuButton
 
     init {
         try {
@@ -183,9 +165,9 @@ class FileListPage(app: Application,
                         }
                     })
                     append(Button().apply {
-                        iconName = Icons.viewRefresh
+                        iconName = Icons.viewRefreshSymbolic
                         onClicked {
-                            appContext.services.directoryService.rescan()
+                            appContext.services.getDirectoryService().rescan()
                         }
                     })
                 })
@@ -207,6 +189,7 @@ class FileListPage(app: Application,
                 })
                 append(fileNameLabel.apply {
                     ellipsize = EllipsizeMode.START
+                    addCssClass("page-label")
                 })
             })
 
@@ -234,15 +217,13 @@ class FileListPage(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.frameInMap(iteratorSimple.info)
+            uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
 
     private fun selectAndEdit(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
-            uiController.showMap()
-            uiController.frameInMap(iteratorSimple.info)
             uiController.loadIntoEditor(iteratorSimple.info)
         }
     }
@@ -253,6 +234,7 @@ class FileListPage(app: Application,
             uiController.load(iteratorSimple.info)
             uiController.showMap()
             uiController.centerInMap(iteratorSimple.info)
+            uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
 
@@ -270,9 +252,9 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.info.file)
-            fileNameLabel.setLabel(iteratorSimple.info.file.name)
-            fileNameLabel.setTooltipText(iteratorSimple.info.file.toString())
+            overlayMenu.setFile(iteratorSimple.info.getFile())
+            fileNameLabel.setLabel(iteratorSimple.info.getFile().name)
+            fileNameLabel.setTooltipText(iteratorSimple.info.getFile().toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL

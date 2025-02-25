@@ -12,7 +12,7 @@ class SolidDate(storage: StorageInterface, key: String, private val label: Strin
 
 
     override fun getValueAsString(): String {
-        return f().LOCAL_DATE.format(getValue())
+        return f().localDate.format(getValue())
     }
 
 

@@ -1,11 +1,11 @@
 package ch.bailu.aat.services.sensor.list
 
 import android.content.Context
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.SensorStateAttributes
 import java.io.Closeable
@@ -50,13 +50,12 @@ class SensorList(private val context: Context) :  Closeable {
     }
 
     fun getInformation(iid: Int): GpxInformation? {
-        var i: GpxInformation? = null
         if (iid == InfoID.SENSORS) return Information(list)
         for (item in list) {
-            i = item.getInformation(iid)
+            val i = item.getInformation(iid)
             if (i != null) return i
         }
-        return i
+        return null
     }
 
     override fun close() {

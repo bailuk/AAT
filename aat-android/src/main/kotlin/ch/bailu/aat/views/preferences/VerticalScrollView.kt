@@ -15,10 +15,9 @@ import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.foc_android.FocAndroidFactory
 
 open class VerticalScrollView(context: Context) : ScrollView(context) {
-    private val layout: LinearLayout
+    private val layout: LinearLayout = LinearLayout(context)
 
     init {
-        layout = LinearLayout(context)
         layout.orientation = LinearLayout.VERTICAL
         addView(layout)
     }

@@ -48,7 +48,7 @@ class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: I
         enabledArray[i]!!.value = isChecked
     }
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_map()
     }
@@ -88,9 +88,9 @@ class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: I
             DownloadSource.MAPNIK,
             DownloadSource.OPEN_TOPO_MAP,
             DownloadSource.OPEN_CYCLE_MAP,
+            DownloadSource.TRANSPORT_OVERLAY,
             ElevationSource.ELEVATION_COLOR,
             ElevationSource.ELEVATION_HILLSHADE,
-            DownloadSource.TRANSPORT_OVERLAY,
             DownloadSource.TRAIL_SKATING,
             DownloadSource.TRAIL_HIKING,
             DownloadSource.TRAIL_MTB,

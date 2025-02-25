@@ -1,10 +1,10 @@
 package ch.bailu.aat_lib.service.directory
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.gpx.GpxFileWrapper
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
 import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
@@ -115,7 +115,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         override fun start() {
             backgroundTask?.apply {
                 appContext.broadcaster.broadcast(AppBroadcaster.DBSYNC_START)
-                appContext.services.backgroundService.process(this)
+                appContext.services.getBackgroundService().process(this)
             }
         }
 
@@ -183,7 +183,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             if (file == null) {
                 terminate()
             } else {
-                val h = appContext.services.cacheService.getObject(
+                val h = appContext.services.getCacheService().getObject(
                     file.path, ObjGpxStatic.Factory()
                 )
                 if (h is ObjGpx) {
@@ -201,9 +201,9 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
             if (!canContinue) {
                 terminate()
-            } else if (handle != null && handle.isReadyAndLoaded) {
+            } else if (handle != null && handle.isReadyAndLoaded()) {
                 try {
-                    addGpxSummaryToDatabase(handle.id, handle.gpxList)
+                    addGpxSummaryToDatabase(handle.getID(), handle.getGpxList())
                     setState(StateLoadPreview())
                 } catch (e: Exception) {
                     terminate(e)
@@ -267,9 +267,9 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     /////////////////////////////////////////////////////////////////////////////////////////////
     private inner class StateLoadPreview : State() {
         override fun start() {
-            val gpxFile = appContext.toFoc(pendingHandle!!.id)
+            val gpxFile = appContext.toFoc(pendingHandle!!.getID())
             val previewImageFile = appContext.summaryConfig.getPreviewFile(gpxFile)
-            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.gpxList)
+            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.getGpxList())
             try {
                 val p = appContext.createMapPreview(info, previewImageFile)
                 setPendingPreviewGenerator(p)
@@ -305,7 +305,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             AppLog.e(this, e)
         }
 
-        constructor() {}
+        constructor()
 
         override fun ping() {}
         override fun start() {

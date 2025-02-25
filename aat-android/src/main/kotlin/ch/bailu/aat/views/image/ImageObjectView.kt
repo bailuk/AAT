@@ -4,11 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.ImageView
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.map.To.androidBitmap
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.icons.ObjImageAbstract
@@ -20,16 +20,16 @@ open class ImageObjectView(
     scontext.getContext()
 ) {
     private var isAttached = false
-    private var handle = ObjNull.NULL
+    private var handle: Obj = ObjNull
     private var idToLoad: String? = null
-    private var factoryToLoad: Obj.Factory? = null
+    private var factoryToLoad: Obj.Factory = Obj.Factory()
     fun setImageObject() {
         idToLoad = null
-        factoryToLoad = null
+        factoryToLoad = Obj.Factory()
         resetImage()
     }
 
-    fun setImageObject(ID: String?, factory: Obj.Factory?) {
+    fun setImageObject(ID: String, factory: Obj.Factory) {
         idToLoad = ID
         factoryToLoad = factory
         loadAndDisplayImage()
@@ -46,7 +46,7 @@ open class ImageObjectView(
                 resetImage()
             }
             this.idToLoad = null
-            factoryToLoad = null
+            factoryToLoad = Obj.Factory()
         }
     }
 
@@ -54,10 +54,10 @@ open class ImageObjectView(
         if (defaultImageID != 0) setImageResource(defaultImageID) else setImageDrawable(null)
     }
 
-    private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
+    private fun loadImage(id: String, factory: Obj.Factory): Boolean {
         var result = false
         scontext.insideContext {
-            val h = scontext.cacheService.getObject(id, factory)
+            val h = scontext.getCacheService().getObject(id, factory)
             if (h is ObjImageAbstract) {
                 handle = h
                 result = true
@@ -70,7 +70,7 @@ open class ImageObjectView(
 
     private fun freeImageHandle() {
         handle.free()
-        handle = ObjNull.NULL
+        handle = ObjNull
     }
 
     public override fun onAttachedToWindow() {
@@ -96,8 +96,8 @@ open class ImageObjectView(
 
         if (imageHandle.hasException()) {
             resetImage()
-        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded) {
-            setImageBitmap(androidBitmap(imageHandle.bitmap))
+        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded()) {
+            setImageBitmap(androidBitmap(imageHandle.getBitmap()))
         }
     }
 

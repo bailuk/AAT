@@ -1,13 +1,17 @@
 package ch.bailu.aat_gtk.service.location
 
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.service.location.*
+import ch.bailu.aat_lib.service.location.LocationInformation
+import ch.bailu.aat_lib.service.location.LocationServiceInterface
+import ch.bailu.aat_lib.service.location.LocationStackChainedItem
+import ch.bailu.aat_lib.service.location.LocationStackItem
+import ch.bailu.aat_lib.service.location.MockLocationInformation
 import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
@@ -115,11 +119,11 @@ class ThreadedMockLocation(
         synchronized(lock) { super.passLocation(location) }
     }
 
-    override fun passState(s: Int) {
+    override fun passState(state: Int) {
         synchronized(lock) {
-            if (serviceState != s) {
-                serviceState = s
-                super.passState(s)
+            if (serviceState != state) {
+                serviceState = state
+                super.passState(state)
             }
         }
     }

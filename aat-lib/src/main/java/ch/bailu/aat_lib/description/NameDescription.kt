@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.resources.Res
 
 open class NameDescription : ContentDescription() {
@@ -24,6 +24,6 @@ open class NameDescription : ContentDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        updateName(info.file.name)
+        updateName(info.getFile().name)
     }
 }

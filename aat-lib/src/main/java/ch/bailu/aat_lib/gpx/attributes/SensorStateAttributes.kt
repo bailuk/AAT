@@ -7,7 +7,7 @@ class SensorStateAttributes(private val sensors: Int) : GpxAttributes() {
         if (keyIndex == KEY_SENSOR_COUNT) {
             return sensors.toString()
         } else if (keyIndex == KEY_SENSOR_OVERVIEW) {
-            return SensorState.getOverviewString()
+            return SensorState.overviewString
         }
         return NULL_VALUE
     }

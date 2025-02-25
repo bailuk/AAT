@@ -1,46 +1,51 @@
 package ch.bailu.aat_lib.dispatcher
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 
-class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
+class Dispatcher : DispatcherInterface {
     private val targets: MutableMap<Int, TargetList> = HashMap(10)
-    private val sources = ArrayList<ContentSourceInterface>(5)
-    private var updater = OnContentUpdatedInterface.NULL
-    override fun addTarget( target: OnContentUpdatedInterface, vararg iid: Int) {
-        for (i in iid) addSingleTarget(target, i)
+    private val sources = ArrayList<SourceInterface>(5)
+    private var updater = TargetInterface.NULL
+
+    override fun addTarget(target: TargetInterface, vararg iid: Int) {
+        for (i in iid) {
+            addSingleTarget(target, i)
+        }
     }
 
-    private fun addSingleTarget( t: OnContentUpdatedInterface, iid: Int) {
-        getTargetList(iid)!!.add(t)
+    private fun addSingleTarget(t: TargetInterface, iid: Int) {
+        getTargetList(iid).add(t)
     }
 
-    private fun getTargetList(iid: Int): TargetList? {
+    private fun getTargetList(iid: Int): TargetList {
         if (!targets.containsKey(iid)) {
             targets[iid] = TargetList()
         }
-        return targets[iid]
+        return targets[iid]!!
     }
 
-    override fun addSource(source: ContentSourceInterface) {
+    override fun addSource(source: SourceInterface) {
         sources.add(source)
         source.setTarget(this)
     }
 
-    fun onPause() {
-        updater = OnContentUpdatedInterface.NULL
+    override fun onPauseWithService() {
+        updater = TargetInterface.NULL
         for (source in sources) {
-            source.onPause()
+            source.onPauseWithService()
         }
     }
 
-    fun onResume() {
+    override fun onResumeWithService() {
         updater = ON
         for (source in sources) {
-            source.onResume()
+            source.onResumeWithService()
         }
         requestUpdate()
     }
+
+    override fun onDestroy() {}
 
     override fun requestUpdate() {
         for (source in sources) source.requestUpdate()
@@ -50,7 +55,7 @@ class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
         updater.onContentUpdated(iid, info)
     }
 
-    private val ON: OnContentUpdatedInterface = object : OnContentUpdatedInterface {
+    private val ON: TargetInterface = object : TargetInterface {
         override fun onContentUpdated(iid: Int,  info: GpxInformation) {
             update(iid, iid, info)
             update(InfoID.ALL, iid, info)
@@ -60,5 +65,19 @@ class Dispatcher : DispatcherInterface, OnContentUpdatedInterface {
             val l = targets[listID]
             l?.onContentUpdated(infoID, info)
         }
+    }
+}
+
+
+private class TargetList : TargetInterface {
+    private val targets = ArrayList<TargetInterface>(10)
+    override fun onContentUpdated(iid: Int,  info: GpxInformation) {
+        for (target in targets) {
+            target.onContentUpdated(iid, info)
+        }
+    }
+
+    fun add(t: TargetInterface) {
+        targets.add(t)
     }
 }

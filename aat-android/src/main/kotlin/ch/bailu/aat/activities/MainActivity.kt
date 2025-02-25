@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.app.ActivitySwitcher
-import ch.bailu.aat.dispatcher.SensorSource
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
@@ -13,14 +12,13 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.LabelTextView
-import ch.bailu.aat.views.msg.permission.DataDirectoryPermissionInfoView
-import ch.bailu.aat.views.msg.permission.LocationPermissionInfoView
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.SensorSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
@@ -46,17 +44,8 @@ class MainActivity : ActivityContext() {
     private fun createViews() {
         val contentView = ContentView(this, theme)
         contentView.add(createButtonBar())
-        contentView.add(permissionInfo())
         contentView.addW(createActionList())
         setContentView(contentView)
-    }
-
-    private fun permissionInfo(): View {
-        return LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(LocationPermissionInfoView(this@MainActivity, theme))
-            addView(DataDirectoryPermissionInfoView(this@MainActivity, appContext.dataDirectory, theme))
-        }
     }
 
     private fun createActionList(): View {
@@ -70,9 +59,9 @@ class MainActivity : ActivityContext() {
     }
 
     private fun createDispatcher() {
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }
 
     private fun createButtonBar(): LinearLayout {
@@ -87,14 +76,12 @@ class MainActivity : ActivityContext() {
     }
 
     private fun labelFactory(s: ActivitySwitcher.Entry): ActivityLabel {
-        if (s.activityClass == TrackListActivity::class.java) {
-            return PresetDirectoryLabel(s)
-        } else if (s.activityClass == OverlayListActivity::class.java) {
-            return InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY)
-        } else if (s.activityClass == ExternalListActivity::class.java) {
-            return ExternalDirectoryLabel(s)
+        return when (s.activityClass) {
+            TrackListActivity::class.java -> PresetDirectoryLabel(s)
+            OverlayListActivity::class.java -> InternalDirectoryLabel(s, AppDirectory.DIR_OVERLAY)
+            ExternalListActivity::class.java -> ExternalDirectoryLabel(s)
+            else -> ActivityLabel(s)
         }
-        return ActivityLabel(s)
     }
 
     private open inner class ActivityLabel(theme: UiTheme, s: ActivitySwitcher.Entry) :

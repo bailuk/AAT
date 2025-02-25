@@ -1,10 +1,10 @@
 package ch.bailu.aat_gtk.view.toplevel.list
 
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.ListItem
@@ -60,9 +60,9 @@ class FileListItem(appContext: AppContext, listItem: ListItem, private val descr
 
         labels[0].setLabel(title)
         labels[1].setText(infoText)
-        labels[2].setText(info.file.name)
+        labels[2].setText(info.getFile().name)
 
-        previewImageView.setFilePath(info.file)
+        previewImageView.setFilePath(info.getFile())
         previewImageView.onAttached()
     }
 

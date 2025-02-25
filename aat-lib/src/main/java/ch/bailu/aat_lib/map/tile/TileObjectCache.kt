@@ -14,27 +14,14 @@ open class TileObjectCache : Closeable {
      * @param fileId id (path) of file that might be inside the cache
      * @return true if object corresponding to  fileId is in cache else return false
      */
-    fun isInCache(fileId: String?): Boolean {
-        if (fileId != null) {
-            val hash = fileId.hashCode()
-            for (i in 0 until tiles.size()) {
-                val o = tiles[i]
-                if (o != null && hash == tiles[i].hashCode()) {
-                    return true
-                }
+    fun isInCache(fileId: String): Boolean {
+        for (i in 0 until tiles.size()) {
+            val tile = tiles[i]
+            if (tile is ObjTile && fileId == tile.getID()) {
+                return true
             }
         }
         return false
-    }
-
-    @Synchronized
-    operator fun get(string: String): ObjTile? {
-        for (i in 0 until tiles.size()) {
-            if (tiles[i].toString() == string) {
-                return tiles.use(i)
-            }
-        }
-        return null
     }
 
     /**
@@ -47,7 +34,8 @@ open class TileObjectCache : Closeable {
     @Synchronized
     operator fun get(tile: Tile): ObjTile? {
         for (i in 0 until tiles.size()) {
-            if (compare(tile, tiles[i]!!.tile)) {
+            val other = tiles[i]
+            if (other is ObjTile && compare(other.getTile(), tile)) {
                 return tiles.use(i)
             }
         }
@@ -55,7 +43,7 @@ open class TileObjectCache : Closeable {
     }
 
     @Synchronized
-    open fun put(handle: ObjTile?) {
+    open fun put(handle: ObjTile) {
         tiles.add(handle)
     }
 
@@ -91,7 +79,7 @@ open class TileObjectCache : Closeable {
         get() {
             for (i in 0 until tiles.size()) {
                 if (tiles[i] != null) {
-                    if (tiles[i]?.isReadyAndLoaded != true) return false
+                    if (tiles[i]?.isReadyAndLoaded() != true) return false
                 }
             }
             return true
@@ -100,7 +88,7 @@ open class TileObjectCache : Closeable {
     companion object {
         private const val INITIAL_CAPACITY = 5
         val NULL: TileObjectCache = object : TileObjectCache() {
-            override fun put(handle: ObjTile?) {}
+            override fun put(handle: ObjTile) {}
         }
 
         fun compare(a: Tile, b: Tile): Boolean {

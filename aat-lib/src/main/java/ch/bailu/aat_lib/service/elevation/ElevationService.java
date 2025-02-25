@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.service.elevation;
 
+import java.util.List;
+
 import ch.bailu.aat_lib.app.AppContext;
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
 import ch.bailu.aat_lib.service.VirtualService;
@@ -20,7 +22,7 @@ public final class ElevationService extends VirtualService implements ElevationP
     }
 
     @Override
-    public void requestElevationUpdates(ElevationUpdaterClient e, Dem3Coordinates[] c) {
+    public void requestElevationUpdates(ElevationUpdaterClient e, List<Dem3Coordinates> c) {
         updater.requestElevationUpdates(e, c);
     }
 

@@ -28,7 +28,7 @@ abstract class OsmApiConfiguration {
     fun isTaskRunning(scontext: ServicesInterface): Boolean {
         var running = false
         scontext.insideContext {
-            val background = scontext.backgroundService
+            val background = scontext.getBackgroundService()
             running = background.findTask(resultFile) != null
         }
         return running
@@ -36,7 +36,7 @@ abstract class OsmApiConfiguration {
 
     fun stopTask(scontext: ServicesInterface) {
         scontext.insideContext {
-            val background = scontext.backgroundService
+            val background = scontext.getBackgroundService()
             val task: FileTask? = background.findTask(resultFile)
             task?.stopProcessing()
         }

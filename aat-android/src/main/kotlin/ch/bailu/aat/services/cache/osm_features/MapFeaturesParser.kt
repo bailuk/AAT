@@ -27,7 +27,7 @@ class MapFeaturesParser(
 
     init {
         assets.toFoc(MAP_FEATURES_ASSET).foreach { child: Foc ->
-            if (onParseFile(child.toString())) {
+            if (onParseFile(child.name)) {
                 try {
                     parseFeatures(child)
                 } catch (e: IOException) {

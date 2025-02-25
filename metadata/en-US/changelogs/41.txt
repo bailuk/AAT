@@ -1,0 +1,11 @@
+v1.27 (41)
+
+- Android: Add file permission support for Android API 30
+- Android: Show Information about missing permission
+- Android: Fix Overpass file extension not compatible with SAF
+- Android: Fix Overpass error message too long
+- Android: Fix Overpass show map features when "All" is not checked
+- GTK: Improve default configuration
+- GTK: Tracker overlay auto enabled
+- GTK: Fix Map-tile downloads on big screen
+- Make Node info selectable and copy paste-able

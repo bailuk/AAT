@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.service.directory
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -69,7 +69,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private fun openAndQuery() {
         val fileOnOldPosition = ""
         val oldPosition = 0
-        appContext.services.directoryService.openDir(sdirectory.getValueAsFile())
+        appContext.services.getDirectoryService().openDir(sdirectory.getValueAsFile())
         updateResultFromSelection()
         moveToOldPosition(oldPosition, fileOnOldPosition)
     }
@@ -77,10 +77,11 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     override fun query() {
         var fileOnOldPosition = ""
         var oldPosition = 0
-        if (resultSet != null) {
-            oldPosition = resultSet!!.position
-            fileOnOldPosition = info.file.path
-            resultSet!!.close()
+        val resultSet = resultSet
+        if (resultSet is DbResultSet) {
+            oldPosition = resultSet.position
+            fileOnOldPosition = info.getFile().path
+            resultSet.close()
         }
         updateResultFromSelection()
         moveToOldPosition(oldPosition, fileOnOldPosition)
@@ -89,9 +90,9 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private fun updateResultFromSelection() {
         try {
             selection = sdirectory.createSelectionString()
-            resultSet = appContext.services.directoryService.query(selection)
+            resultSet = appContext.services.getDirectoryService().query(selection)
         } catch (e: Exception) {
-            e(this, e.javaClass.simpleName)
+            AppLog.e(this, e.javaClass.simpleName)
         }
     }
 

@@ -64,8 +64,8 @@ class MapFeaturesListView(private val scontext: ServiceContext, private val list
         override fun onItemClick(arg0: AdapterView<*>?, view: View, index: Int, arg3: Long) {
             val listEntry = list.getFromVisible(index)
             if (listEntry is MapFeaturesListItem) {
-                if (listEntry.isSummary) {
-                    onSelected.onSelected(listEntry, OnSelected.Action.Filter, listEntry.summaryKey)
+                if (listEntry.isSummary()) {
+                    onSelected.onSelected(listEntry, OnSelected.Action.Filter, listEntry.getSummaryKey())
                 } else onSelected.onSelected(listEntry, OnSelected.Action.Edit, listEntry.defaultQuery)
             }
         }
@@ -75,7 +75,7 @@ class MapFeaturesListView(private val scontext: ServiceContext, private val list
         }
 
         override fun getItemId(position: Int): Long {
-            return list.getFromVisible(position).id.toLong()
+            return list.getFromVisible(position).getID().toLong()
         }
 
         override fun getItemViewType(position: Int): Int {

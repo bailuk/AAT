@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.view.ViewGroup
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import java.io.Closeable
 
 class BusyViewControlDbSync(parent: ViewGroup) : BusyViewControlIID(parent), Closeable {

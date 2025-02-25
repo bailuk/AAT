@@ -1,12 +1,14 @@
 package ch.bailu.aat_lib.map.layer.gpx
 
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.GpxInformationCache
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformationCache
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
+import ch.bailu.aat_lib.map.layer.gpx.legend.GpxLegendLayer
+import ch.bailu.aat_lib.map.layer.gpx.legend.NullLegendWalker
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.preferences.map.SolidLayerType
@@ -17,10 +19,10 @@ class GpxDynLayer(
     storage: StorageInterface,
     private val mcontext: MapContext,
     private val services: ServicesInterface
-) : MapLayerInterface, OnContentUpdatedInterface {
+) : MapLayerInterface, TargetInterface {
     private val infoCache = GpxInformationCache()
-    private var gpxOverlay: GpxLayer? = null
-    private var legendOverlay: GpxLayer? = null
+    private var gpxOverlay: GpxLayer = TrackLayer(mcontext)
+    private var legendOverlay: GpxLayer = GpxLegendLayer(NullLegendWalker())
     private val slegend: SolidLegend = SolidLegend(storage, mcontext.getSolidKey())
     private val solidLayerType = SolidLayerType(storage)
     private var forceReconfigure = true
@@ -33,8 +35,8 @@ class GpxDynLayer(
     }
 
     override fun drawInside(mcontext: MapContext) {
-        gpxOverlay?.drawInside(mcontext)
-        legendOverlay?.drawInside(mcontext)
+        gpxOverlay.drawInside(mcontext)
+        legendOverlay.drawInside(mcontext)
     }
 
     override fun drawForeground(mcontext: MapContext) {}
@@ -50,7 +52,7 @@ class GpxDynLayer(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        infoCache[iid] = info
+        infoCache.set(iid, info)
         if (forceReconfigure || type !== toType(info)) {
             forceReconfigure = false
             type = toType(info)
@@ -84,10 +86,8 @@ class GpxDynLayer(
     override fun onDetached() {}
 
     companion object {
-        private fun toType(i: GpxInformation?): GpxType {
-            return if (i != null && i.gpxList != null) {
-                i.gpxList.getDelta().getType()
-            } else GpxType.NONE
+        private fun toType(i: GpxInformation): GpxType {
+            return i.getGpxList().getDelta().getType()
         }
     }
 }

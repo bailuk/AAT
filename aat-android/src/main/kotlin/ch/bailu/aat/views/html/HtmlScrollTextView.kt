@@ -4,24 +4,17 @@ import android.content.Context
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.preferences.VerticalScrollView
 
-class HtmlScrollTextView(context: Context) : VerticalScrollView(context) {
-    val textView: HtmlTextView
+class HtmlScrollTextView(context: Context, text: String = "") : VerticalScrollView(context) {
+    val textView: HtmlTextView = HtmlTextView(context)
 
     init {
-        textView = HtmlTextView(context)
         add(textView)
-    }
-
-    constructor(context: Context, text: String) : this(context) {
         setHtmlText(text)
+        textView.setTextIsSelectable(true)
     }
 
     fun setHtmlText(text: String) {
         textView.setHtmlText(text)
-    }
-
-    fun enableAutoLink() {
-        textView.enableAutoLink()
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {

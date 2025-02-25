@@ -30,11 +30,11 @@ class WayPainter(private val mcontext: MapContext,
     private fun getNodeIconSVG(node: TwoNodes.PixelNode): Bitmap? {
         var result: Bitmap? = null
         services.insideContext {
-            val i = services.iconMapService.getIconSVG(
+            val i = services.getIconMapService().getIconSVG(
                 node.point,
                 iconSize
             )
-            result = i?.bitmap
+            result = i?.getBitmap()
         }
         return result
     }

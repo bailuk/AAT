@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.map.layer.selector
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxNodeFinder
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.map.MapColor
@@ -22,7 +22,7 @@ abstract class AbsNodeSelectorLayer(
     s: StorageInterface,
     mc: MapContext,
     private val pos: Position
-) : MapLayerInterface, OnContentUpdatedInterface, EdgeViewInterface {
+) : MapLayerInterface, TargetInterface, EdgeViewInterface {
 
     private val squareSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_SIZE.toFloat())
     private val squareHSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_HSIZE.toFloat())
@@ -99,7 +99,7 @@ abstract class AbsNodeSelectorLayer(
 
             if (info is GpxInformation && infoID is Int) {
                 val finder = GpxNodeFinder(centerBounding)
-                finder.walkTrack(info.gpxList)
+                finder.walkTrack(info.getGpxList())
 
                 if (finder.haveNode()) {
                     selectedNode = finder.node
@@ -127,7 +127,7 @@ abstract class AbsNodeSelectorLayer(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
+        if (info.getLoaded()) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

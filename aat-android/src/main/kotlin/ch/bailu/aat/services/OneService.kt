@@ -4,7 +4,7 @@ import android.content.Context
 import ch.bailu.aat.app.AndroidAppContext
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider
 import ch.bailu.aat.services.sensor.SensorService
-import ch.bailu.aat.services.tileremover.TileRemoverService
+import ch.bailu.aat_lib.service.tileremover.TileRemoverService
 import ch.bailu.aat.services.tracker.StatusIcon
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.map.SolidRendererThreads
@@ -26,7 +26,7 @@ import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
 import ch.bailu.aat_lib.util.WithStatusText
 
-class OneService : AbsService(), ServiceContext {
+class OneService : AbsService() {
     private var location: LocationService? = null
     private var tracker: TrackerService? = null
     private var background: BackgroundServiceInterface? = null
@@ -90,7 +90,7 @@ class OneService : AbsService(), ServiceContext {
             location = LocationService(
                 AndroidSolidLocationProvider(this),
                 appContext.broadcaster,
-                sensorService
+                getSensorService()
             )
         }
         return location!!
@@ -112,7 +112,7 @@ class OneService : AbsService(), ServiceContext {
     override fun getCacheService(): CacheServiceInterface {
         if (cache == null) {
             cache = CacheService(appContext)
-            elevationService
+            getElevationService()
         }
         return cache!!
     }

@@ -13,9 +13,9 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.util.IndexedMap
 
 class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) : ControlBarLayer(
     mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
-), OnContentUpdatedInterface {
+), TargetInterface {
 
     private val buttonPlus: View
     private val buttonMinus: View
@@ -61,7 +61,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
 
                 if (info is GpxInformation) {
                     mcontext.getMapView().frameBounding(info.getBoundingBox())
-                    AppLog.i(v.context, info.file.name)
+                    AppLog.i(v.context, info.getFile().name)
                 }
             }
         }
@@ -77,7 +77,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
             val info = infoCache.getValueAt(boundingCycle)
             if (info is GpxInformation) {
                 if (info.getBoundingBox().hasBounding()
-                    || info.gpxList.pointList.size() > 0
+                    || info.getGpxList().pointList.size() > 0
                 ) return true
             }
         }
@@ -85,7 +85,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) {
+        if (info.getLoaded()) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

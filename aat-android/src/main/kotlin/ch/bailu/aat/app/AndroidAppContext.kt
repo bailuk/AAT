@@ -1,7 +1,7 @@
 package ch.bailu.aat.app
 
 import android.content.Context
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.map.AndroidTilePainter
 import ch.bailu.aat.map.mapsforge.MapsForgePreview
 import ch.bailu.aat.preferences.Storage
@@ -14,7 +14,7 @@ import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
 import ch.bailu.aat.util.sql.AndroidDbConnection
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface

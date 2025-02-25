@@ -5,11 +5,17 @@ import java.text.DecimalFormat
 
 class FF private constructor() {
     @JvmField
-    val LOCAL_DATE_TIME = DateFormat.getDateTimeInstance(
+    val localDateTime: DateFormat = DateFormat.getDateTimeInstance(
         DateFormat.LONG, DateFormat.LONG
     )
+    val localDateTimeCompact: DateFormat = DateFormat.getDateTimeInstance(
+        DateFormat.LONG, DateFormat.SHORT
+    )
+
     @JvmField
-    val LOCAL_DATE = DateFormat.getDateInstance()
+    val localDate: DateFormat = DateFormat.getDateInstance()
+
+
     @JvmField
     val N = DecimalFormat("0")
     @JvmField

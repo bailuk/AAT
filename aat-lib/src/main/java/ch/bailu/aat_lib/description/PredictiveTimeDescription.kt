@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 
 class PredictiveTimeDescription : TimeDescription() {
     private var time: Long = 0
@@ -21,7 +21,7 @@ class PredictiveTimeDescription : TimeDescription() {
         super.onContentUpdated(iid, info)
         val endTime = info.getEndTime()
         time = info.getTimeDelta()
-        if (info.state != StateID.ON) {
+        if (info.getState() != StateID.ON) {
             timePaused = time
         } else if (timePaused != time && endTime > 0) {
             time += System.currentTimeMillis() - endTime

@@ -8,11 +8,7 @@ import ch.bailu.aat_lib.preferences.SolidFile
 
 class SolidDirectoryDialog(private val acontext: Activity, sdirectory: SolidFile) :
     SolidStringDialog(acontext, sdirectory) {
-    private val saf: SolidSAF
-
-    init {
-        saf = SolidSAF(sdirectory)
-    }
+    private val saf: SolidSAF = SolidSAF(sdirectory)
 
     override fun buildExtraSelection(context: Context, sel: ArrayList<String>) {
         super.buildExtraSelection(context, sel)

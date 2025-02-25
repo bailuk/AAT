@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.View
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxEditable
@@ -34,7 +34,7 @@ class EditorNodeViewLayer(appContext: AppContext,
     }
 
     override fun getSelectedNode(): GpxPointNode? {
-        return editorSource.editor.selected
+        return editorSource.editor.getSelected()
     }
 
     override fun setSelectedNode(
@@ -65,7 +65,7 @@ class EditorNodeViewLayer(appContext: AppContext,
         setHtmlText(markupBuilder)
     }
 
-    override fun onClick(v: View) {
+    override fun onClick(v: View?) {
         if (editorSource.isEditing) {
             startNodeDetailActivity(ObjGpxEditable.getVirtualID(editorSource.file))
         } else {

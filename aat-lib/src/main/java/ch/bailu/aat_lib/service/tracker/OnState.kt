@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.service.tracker
 
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.resources.Res
 import java.io.IOException
 
@@ -27,12 +27,12 @@ class OnState(tracker: TrackerInternals) : State(tracker) {
         if (internal.isReadyForAutoPause) {
             internal.setState(AutoPauseState(internal))
         } else {
-            val l = internal.services.locationService
+            val l = internal.services.getLocationService()
             try {
                 val newLocation = l.getLoggableLocationOrNull(location)
                 if (newLocation != null) {
                     location = newLocation
-                    val attr = attributes.collect(internal.services.sensorService)
+                    val attr = attributes.collect(internal.services.getSensorService())
                     internal.logger.log(location, attr)
                 }
             } catch (e: IOException) {

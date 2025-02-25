@@ -13,7 +13,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     }
 }
 
-
 task<JavaExec>("property2config") {
     dependsOn(tasks.named("build"))
     description = "Generate configuration class from gradle property"
@@ -28,7 +27,6 @@ task<JavaExec>("generateStrings") {
     mainClass.set("generate_strings.MainKt")
     workingDir(project.rootDir)
 }
-
 
 task<JavaExec>("generateImageMapping") {
     dependsOn(":aat-android:processReleaseResources")

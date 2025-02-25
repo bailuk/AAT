@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import ch.bailu.aat.R
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat.services.tileremover.SelectedTileDirectoryInfo
+import ch.bailu.aat_lib.service.tileremover.SelectedTileDirectoryInfo
 import ch.bailu.aat.util.ui.AppDialog
 
 class RemoveTilesMenu(private val scontext: ServiceContext, private val acontext: Activity) :

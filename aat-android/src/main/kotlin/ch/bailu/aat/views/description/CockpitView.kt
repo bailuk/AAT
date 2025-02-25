@@ -11,7 +11,7 @@ import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.description.HeartRateDescription
 import ch.bailu.aat_lib.description.PowerDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.view.cockpit.Layouter
 

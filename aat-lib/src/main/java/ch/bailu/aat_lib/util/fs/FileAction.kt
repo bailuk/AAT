@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.util.fs
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -13,7 +13,7 @@ import java.io.IOException
 object FileAction {
     fun rescanDirectory(context: AppContext, file: Foc) {
         if (isParentActive(context, file)) {
-            context.services.directoryService.rescan()
+            context.services.getDirectoryService().rescan()
         }
     }
 
@@ -25,7 +25,7 @@ object FileAction {
 
     fun reloadPreview(context: AppContext, file: Foc) {
         if (isParentActive(context, file)) {
-            context.services.directoryService.deleteEntry(file)
+            context.services.getDirectoryService().deleteEntry(file)
         }
     }
 
@@ -64,7 +64,8 @@ object FileAction {
     fun copyToDir(context: AppContext, src: Foc, destDir: Foc) {
         try {
             copyToDest(context, src, destDir.child(src.name))
-        } catch (e: IOException) {
+        } catch (e: Exception) {
+            // Android SAF backend can throw any exception (like IllegalArgumentException)
             AppLog.e(context, e)
         }
     }

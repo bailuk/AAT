@@ -2,7 +2,7 @@ package ch.bailu.aat.util
 
 import ch.bailu.aat.util.fs.TextBackup
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 import ch.bailu.aat_lib.service.background.BackgroundTask
@@ -20,7 +20,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 val size = bgDownload()
                 TextBackup.write(queryFile, queryString)
                 appContext.broadcaster.broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK, file.toString(), source.toString()
+                    AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
                 )
                 size
             } catch (e: Exception) {
@@ -33,7 +33,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
     override fun startTask(appContext: AppContext) {
         appContext.services.insideContext {
             try {
-                val background = appContext.services.backgroundService
+                val background = appContext.services.getBackgroundService()
                 val query: String = queryString
                 val url = getUrl(query)
                 task = ApiQueryTask(

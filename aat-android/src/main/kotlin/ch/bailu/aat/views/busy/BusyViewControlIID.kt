@@ -1,11 +1,11 @@
 package ch.bailu.aat.views.busy
 
 import android.view.ViewGroup
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 
-open class BusyViewControlIID(parent: ViewGroup) : BusyViewControl(parent), OnContentUpdatedInterface {
+open class BusyViewControlIID(parent: ViewGroup) : BusyViewControl(parent), TargetInterface {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.isLoaded) stopWaiting(iid) else startWaiting(iid)
+        if (info.getLoaded()) stopWaiting(iid) else startWaiting(iid)
     }
 }

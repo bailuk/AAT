@@ -5,9 +5,9 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPointNode
-import ch.bailu.aat_lib.gpx.StateID
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
@@ -20,12 +20,12 @@ import ch.bailu.foc_android.FocAndroid
 /**
  * TODO move to lib and merge with ThreadedMockLocation
  */
-class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem(i), Runnable {
+class MockLocation(context: Context, next: LocationStackItem) : LocationStackChainedItem(next), Runnable {
     private var list: GpxList = GpxList(GpxType.TRACK, GpxListAttributes.NULL)
     private var node: GpxPointNode? = null
     private var state = StateID.NO_SERVICE
     private var interval = INTERVAL
-    private val file: Foc
+    private val file: Foc = FocAndroid.factory(context, SolidMockLocationFile(Storage(context)).getValueAsString())
 
     private val timer: AndroidTimer = AndroidTimer()
 
@@ -34,7 +34,6 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
     }
 
     init {
-        file = FocAndroid.factory(c, SolidMockLocationFile(Storage(c)).getValueAsString())
         list = GpxListReader(file, AutoPause.NULL).gpxList
         timer.kick(INTERVAL, this)
         passState(StateID.WAIT)
@@ -48,10 +47,15 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
         if (sendLocation()) {
             kickTimer()
         } else {
-            node = list.pointList.first as GpxPointNode
-            if (sendLocation()) {
-                passState(StateID.ON)
-                kickTimer()
+            val firstNode = list.pointList.first
+            if (firstNode is GpxPointNode) {
+                node = firstNode
+                if (sendLocation()) {
+                    passState(StateID.ON)
+                    kickTimer()
+                } else {
+                    passState(StateID.OFF)
+                }
             } else {
                 passState(StateID.OFF)
             }
@@ -61,7 +65,7 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
     private fun sendLocation(): Boolean {
         val currentNode = node
         if (currentNode != null) {
-            passLocation(MockLocationInformation(file, state, node))
+            passLocation(MockLocationInformation(file, state, currentNode))
 
             val nextNode = currentNode.next
             if (nextNode is GpxPointNode) {
@@ -83,10 +87,10 @@ class MockLocation(c: Context, i: LocationStackItem?) : LocationStackChainedItem
         }
     }
 
-    override fun passState(s: Int) {
-        if (state != s) {
-            state = s
-            super.passState(s)
+    override fun passState(state: Int) {
+        if (this.state != state) {
+            this.state = state
+            super.passState(state)
         }
     }
 }

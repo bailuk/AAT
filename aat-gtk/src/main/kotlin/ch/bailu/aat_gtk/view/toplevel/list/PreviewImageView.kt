@@ -2,11 +2,11 @@ package ch.bailu.aat_gtk.view.toplevel.list
 
 import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.BroadcastData
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjBitmap
@@ -17,15 +17,15 @@ import ch.bailu.gtk.gdk.Gdk
 import ch.bailu.gtk.gtk.Image
 import org.mapsforge.map.gtk.graphics.GtkBitmap
 
-class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInterface, Attachable {
+class PreviewImageView(private val appContext: AppContext): TargetInterface, Attachable {
     val image = Image().apply {
         pixelSize = MapsForgePreview.BITMAP_SIZE/2
     }
 
 
     private var idToLoad: String? = null
-    private var factoryToLoad: Obj.Factory? = null
-    private var handle: Obj = ObjNull.NULL
+    private var factoryToLoad: Obj.Factory = Obj.Factory()
+    private var handle: Obj = ObjNull
 
     fun setFilePath(fileID: Foc) {
         val file = appContext.summaryConfig.getPreviewFile(fileID)
@@ -37,11 +37,11 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setFilePath(info.file)
+        setFilePath(info.getFile())
     }
 
-    private fun setImageObject(ID: String?, factory: Obj.Factory?) {
-        idToLoad = ID
+    private fun setImageObject(id: String, factory: Obj.Factory) {
+        idToLoad = id
         factoryToLoad = factory
         loadAndDisplayImage()
     }
@@ -57,19 +57,19 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
                 resetImage()
             }
             this.idToLoad = null
-            factoryToLoad = null
+            factoryToLoad = Obj.Factory()
         }
     }
 
     private fun freeImageHandle() {
         handle.free()
-        handle = ObjNull.NULL
+        handle = ObjNull
     }
 
-    private fun loadImage(id: String, factory: Obj.Factory?): Boolean {
+    private fun loadImage(id: String, factory: Obj.Factory): Boolean {
         var result = false
         appContext.services.insideContext {
-            val handle = appContext.services.cacheService.getObject(id, factory)
+            val handle = appContext.services.getCacheService().getObject(id, factory)
             if (handle is ObjImageAbstract) {
                 this.handle = handle
                 result = true
@@ -84,8 +84,8 @@ class PreviewImageView(private val appContext: AppContext): OnContentUpdatedInte
         val imageHandle = handle
         if (imageHandle.hasException()) {
             resetImage()
-        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded) {
-            val gtkBitmap = imageHandle.bitmap
+        } else if (imageHandle is ObjImageAbstract && imageHandle.isReadyAndLoaded()) {
+            val gtkBitmap = imageHandle.getBitmap()
             if (gtkBitmap is GtkBitmap) {
                 val pixbuf = Gdk.pixbufGetFromSurface(gtkBitmap.surface, 0, 0, gtkBitmap.width, gtkBitmap.height)
                 image.setFromPixbuf(pixbuf)

@@ -9,14 +9,14 @@ import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat_lib.logger.AppLog
 import java.util.Date
 
-abstract class AbsService : Service() {
+abstract class AbsService : Service(), ServiceContext {
     private var creations = 0
     private var startTime: Long = 0
     private var up = false
     private var lock = 0
 
     @Synchronized
-    fun lock(): Boolean {
+    override fun lock(): Boolean {
         if (up) {
             lock++
             try {
@@ -30,7 +30,7 @@ abstract class AbsService : Service() {
     }
 
     @Synchronized
-    fun free() {
+    override fun free() {
         if (up) {
             lock--
             if (lock == 0) {
@@ -55,14 +55,14 @@ abstract class AbsService : Service() {
     }
 
     @Synchronized
-    fun lock(resource: String) {
+    override fun lock(resource: String) {
         if (locks.add(resource)) {
             lock()
         }
     }
 
     @Synchronized
-    fun free(resource: String) {
+    override fun free(resource: String) {
         if (locks.remove(resource)) free()
     }
 
@@ -101,7 +101,7 @@ abstract class AbsService : Service() {
         return START_STICKY
     }
 
-    open fun appendStatusText(builder: StringBuilder) {
+    override fun appendStatusText(builder: StringBuilder) {
         builder.append("<h1>")
         builder.append(javaClass.simpleName)
         builder.append("</h1>")

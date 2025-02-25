@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Context
 import ch.bailu.aat.R
 import ch.bailu.aat.services.sensor.Connector
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes
 import ch.bailu.aat_lib.gpx.attributes.SensorInformation
 import kotlin.math.roundToInt

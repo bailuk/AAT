@@ -6,7 +6,8 @@ if [ -z "$1" ]; then
 fi
 
 files=./*.uxf
-# java -Dsun.java2d.xrender=f -jar /home/bailuk/umlet/Umlet/umlet.jar
+
 for file in $files; do
 	java -jar $1/umlet.jar -action=convert -format=svg -filename=$file
 done
+

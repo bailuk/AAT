@@ -7,7 +7,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import ch.bailu.aat.services.AbsService.CommonBinder
-import ch.bailu.aat.services.tileremover.TileRemoverService
+import ch.bailu.aat_lib.service.tileremover.TileRemoverService
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.IconMapServiceInterface
 import ch.bailu.aat_lib.service.background.BackgroundServiceInterface
@@ -56,12 +56,9 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
 
     private fun grabService(binder: IBinder) {
         if (binder is CommonBinder) {
-
             val service = binder.service
-            if (service is ServiceContext) {
-                this.service = service
-                service.lock(ServiceLink::class.java.simpleName)
-            }
+            this.service = service
+            service.lock(ServiceLink::class.java.simpleName)
         }
     }
 
@@ -149,44 +146,44 @@ abstract class ServiceLink(private val context: Context) : ServiceContext, Servi
     }
 
     override fun getTrackerService(): TrackerServiceInterface {
-        return getService()!!.trackerService
+        return getService()!!.getTrackerService()
     }
 
     override fun getLocationService(): LocationServiceInterface {
-        return getService()!!.locationService
+        return getService()!!.getLocationService()
     }
 
     override fun getBackgroundService(): BackgroundServiceInterface {
-        return getService()!!.backgroundService
+        return getService()!!.getBackgroundService()
     }
 
     override fun getCacheService(): CacheServiceInterface {
-        return getService()!!.cacheService
+        return getService()!!.getCacheService()
     }
 
     override fun getElevationService(): ElevationServiceInterface {
-        return getService()!!.elevationService
+        return getService()!!.getElevationService()
     }
 
     override fun getIconMapService(): IconMapServiceInterface {
-        return getService()!!.iconMapService
+        return getService()!!.getIconMapService()
     }
 
     override fun getDirectoryService(): DirectoryServiceInterface {
-        return getService()!!.directoryService
+        return getService()!!.getDirectoryService()
     }
 
     override fun getRenderService(): RenderServiceInterface {
-        return getService()!!.renderService
+        return getService()!!.getRenderService()
     }
 
-    
+
     override fun getTileRemoverService(): TileRemoverService {
         return getService()!!.getTileRemoverService()
     }
 
     override fun getSensorService(): SensorServiceInterface {
-        return getService()!!.sensorService
+        return getService()!!.getSensorService()
     }
 
     override fun startForeground(id: Int, notification: Notification) {

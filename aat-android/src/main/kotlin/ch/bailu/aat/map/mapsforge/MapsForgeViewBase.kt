@@ -6,7 +6,7 @@ import ch.bailu.aat.map.MapDensity
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.LifeCycleInterface
+import ch.bailu.aat_lib.lifecycle.LifeCycleInterface
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.map.layer.LayerWrapper

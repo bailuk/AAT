@@ -14,7 +14,7 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
 import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.background.DownloadConfig

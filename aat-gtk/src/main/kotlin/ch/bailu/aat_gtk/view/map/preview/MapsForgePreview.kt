@@ -3,10 +3,10 @@ package ch.bailu.aat_gtk.view.map.preview
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.app.AppGraphicFactory
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.lib.color.ColorInterface
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
@@ -58,7 +58,7 @@ class MapsForgePreview(private val appContext: AppContext,
         // Interface
         // attachLayers()
         gpxLayer.onContentUpdated(InfoID.FILE_VIEW, info)
-        frameBounding(info.gpxList.getDelta().getBoundingBox())
+        frameBounding(info.getGpxList().getDelta().getBoundingBox())
         mapPosition = model.mapViewPosition.mapPosition
 
         val tileSize = model.displayModel.tileSize

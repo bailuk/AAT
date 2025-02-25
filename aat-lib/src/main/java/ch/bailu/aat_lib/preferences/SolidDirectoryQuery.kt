@@ -6,8 +6,6 @@ import ch.bailu.foc.FocFactory
 
 class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : SolidFile(storage, KEY_DIR_DIRECTORY, focFactory) {
 
-    // FIXME wrong default is set on first application start
-
     fun containsKey(key: String): Boolean {
         return key.contains(getValueAsString())
     }

@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.dispatcher
 
-import ch.bailu.aat_lib.dispatcher.BroadcastReceiver
-import ch.bailu.aat_lib.dispatcher.Broadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.glib.Glib
 import java.util.concurrent.ConcurrentLinkedQueue
@@ -26,7 +26,6 @@ class GtkBroadcaster : Broadcaster {
         val observers = signals[action]?.toTypedArray()
 
         if (observers != null) {
-            // TODO AppLog.d(this, "Current Thread is ${Thread.currentThread().name}")
             if (broadcastQueue.offer(BroadcastEntry(observers, arrayOf(*args)))) {
                 Glib.idleAdd(onSourceFunc, null)
             } else {

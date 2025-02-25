@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.resources.Res
 
 abstract class StateDescription : ContentDescription() {
@@ -24,6 +24,6 @@ abstract class StateDescription : ContentDescription() {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        state = info.state
+        state = info.getState()
     }
 }

@@ -15,12 +15,10 @@ import java.io.IOException
 
 class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualService(),
     WithStatusText, IconMapServiceInterface {
-    private val map: IconMap
-    private val cache: IconCache
+    private val map: IconMap = IconMap()
+    private val cache: IconCache = IconCache(sc)
 
     init {
-        cache = IconCache(sc)
-        map = IconMap()
         try {
             val mapFile = focFactory.toFoc(SVG_MAP_FILE)
             IconMapParser(mapFile, map)
@@ -62,7 +60,7 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
         return null
     }
 
-    fun close() {
+    override fun close() {
         cache.close()
     }
 

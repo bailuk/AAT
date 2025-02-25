@@ -1,3 +1,5 @@
+import kotlinx.coroutines.awaitAll
+
 plugins {
     id ("java-library")
     id ("com.android.lint")
@@ -23,7 +25,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 dependencies {
     val focVersion : String by project
     api("com.github.bailuk.foc:foc:$focVersion")
-    //api("ch.bailu:foc:$focVersion")
+    testImplementation("com.github.bailuk.foc:foc-extended:$focVersion")
 
     val mapsForgeVersion: String by project
 
@@ -65,10 +67,20 @@ dependencies {
      * https://github.com/google/open-location-code
      */
     implementation("com.google.openlocationcode:openlocationcode:1.0.4")
+
+    /**
+     *  https://mvnrepository.com/artifact/com.google.guava/guava
+     *  For HtmlEscapers
+     */
+    implementation("com.google.guava:guava:33.3.0-jre")
 }
 
 
 tasks {
+    compileKotlin {
+        dependsOn(":ci:property2config")
+        dependsOn(":ci:generateStrings")
+    }
     withType(AbstractCompile::class) {
         dependsOn(":ci:property2config")
         dependsOn(":ci:generateStrings")

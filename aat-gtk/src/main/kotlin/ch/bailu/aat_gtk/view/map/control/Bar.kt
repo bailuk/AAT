@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.map.control
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.gtk.gtk.Align

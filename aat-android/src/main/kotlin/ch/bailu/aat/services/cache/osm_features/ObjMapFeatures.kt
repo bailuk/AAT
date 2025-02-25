@@ -2,7 +2,7 @@ package ch.bailu.aat.services.cache.osm_features
 
 import ch.bailu.aat.preferences.map.SolidOsmFeaturesList.Companion.getKeyList
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.lib.filter_list.AbsFilterList
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.service.background.BackgroundTask
@@ -31,13 +31,13 @@ class ObjMapFeatures(id: String) : Obj(id) {
 
     private val list: List = List()
 
-    override fun onInsert(sc: AppContext) {
-        super.onInsert(sc)
-        sc.services.backgroundService.process(ListLoader(id))
+    override fun onInsert(appContext: AppContext) {
+        super.onInsert(appContext)
+        appContext.services.getBackgroundService().process(ListLoader(getID()))
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {}
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
     override fun getSize(): Long {
         return size
     }
@@ -50,18 +50,18 @@ class ObjMapFeatures(id: String) : Obj(id) {
         return isLoaded
     }
 
-    class ListLoader(private val ID: String) : BackgroundTask() {
+    class ListLoader(private val id: String) : BackgroundTask() {
         private var doBroadcast = 0
 
         override fun bgOnProcess(appContext: AppContext): Long {
             var size = 0L
 
-            object : OnObject(appContext, ID, ObjMapFeatures::class.java) {
+            object : OnObject(appContext, id, ObjMapFeatures::class.java) {
                 override fun run(handle: Obj) {
                     if (handle is ObjMapFeatures) {
                         parseMapFeatures(appContext, handle)
                         handle.isLoaded = true
-                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
+                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, id)
                         size = handle.size
                     }
                 }
@@ -70,10 +70,10 @@ class ObjMapFeatures(id: String) : Obj(id) {
         }
 
         private fun parseMapFeatures(appContext: AppContext, handle: ObjMapFeatures) {
-            val keyList = getKeyList(ID)
+            val keyList = getKeyList(id)
 
             MapFeaturesParser(appContext.assets, { file ->
-                    keyList.isEmpty || keyList.hasKey(file.lowercase())
+                    keyList.isEmpty || keyList.hasKey(file)
                 },
                 { parser ->
                     val d = MapFeaturesListItem(parser)
@@ -82,15 +82,15 @@ class ObjMapFeatures(id: String) : Obj(id) {
                     doBroadcast++
                     if (doBroadcast > 10) {
                         doBroadcast = 0
-                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, ID)
+                        appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, id)
                 }
             })
         }
     }
 
-    class Factory(val ID: String) : Obj.Factory() {
-        override fun factory(id: String, cs: AppContext): Obj {
-            return ObjMapFeatures(ID)
+    class Factory(val id: String) : Obj.Factory() {
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjMapFeatures(this.id)
         }
     }
 

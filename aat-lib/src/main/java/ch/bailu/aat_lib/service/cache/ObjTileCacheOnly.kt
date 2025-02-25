@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.cache
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.map.tile.source.Source
@@ -15,15 +15,12 @@ import org.mapsforge.core.model.Tile
 
 open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, s: Source) :
     ObjTile(id) {
-    private val file: Foc
-    private val bitmap: MapTileInterface
-    private val source: Source
+    private val file: Foc = sc.toFoc(id)
+    private val bitmap: MapTileInterface = sc.createMapTile()
+    private val source: Source = s
 
     init {
-        file = sc.toFoc(id)
-        source = s
-        bitmap = sc.createMapTile()
-        sc.services.cacheService.addToBroadcaster(this)
+        sc.services.getCacheService().addToBroadcaster(this)
     }
 
     override fun getTileBitmap(): TileBitmap? {
@@ -35,12 +32,12 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     override fun reDownload(sc: AppContext) {}
-    override fun onInsert(sc: AppContext) {
-        if (isLoadable) load(sc.services)
+    override fun onInsert(appContext: AppContext) {
+        if (isLoadable) load(appContext.services)
     }
 
-    override fun onRemove(sc: AppContext) {
-        super.onRemove(sc)
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
         bitmap.free()
     }
 
@@ -54,9 +51,9 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
             return file.isFile && file.canRead()
         }
 
-    override fun onDownloaded(id: String, u: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
         if (Objects.equals(id, getID()) && isLoadable) {
-            load(sc.services)
+            load(appContext.services)
         }
     }
 
@@ -66,16 +63,16 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     protected fun load(sc: ServicesInterface) {
-        sc.backgroundService.process(TileLoaderTask(file))
+        sc.getBackgroundService().process(TileLoaderTask(file))
     }
 
     override fun isReadyAndLoaded(): Boolean {
-        val loaded = isLoaded
+        val loaded = isLoaded()
         val notLoadable = !isLoadable
         return loaded || notLoadable
     }
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
     override fun getSize(): Long {
         return bitmap.getSize()
     }
@@ -84,25 +81,26 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
         return file
     }
 
-    private class TileLoaderTask(f: Foc?) : FileTask(f) {
+    private class TileLoaderTask(f: Foc) : FileTask(f) {
         override fun bgOnProcess(appContext: AppContext): Long {
             val size = longArrayOf(0)
-            object : OnObject(appContext, file.toString(), ObjTileCacheOnly::class.java) {
+            object : OnObject(appContext, getFile().toString(), ObjTileCacheOnly::class.java) {
                 override fun run(handle: Obj) {
                     val tile = handle as ObjTileCacheOnly
                     try {
                         tile.bitmap.set(
-                            file,
+                            getFile(),
                             SolidTileSize.DEFAULT_TILESIZE,
                             tile.source.isTransparent
                         )
                     } catch (e : Exception) {
+                        AppLog.e(this, getFile().toString())
                         AppLog.e(this, e)
                     }
 
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,
-                        file.toString()
+                        getFile().toString()
                     )
                     size[0] = tile.bitmap.getSize()
                 }
@@ -112,8 +110,8 @@ open class ObjTileCacheOnly(id: String, sc: AppContext, private val tile: Tile, 
     }
 
     class Factory(private val tile: Tile, private val source: Source) : Obj.Factory() {
-        override fun factory(id: String, cs: AppContext): Obj {
-            return ObjTileCacheOnly(id, cs, tile, source)
+        override fun factory(id: String, appContext: AppContext): Obj {
+            return ObjTileCacheOnly(id, appContext, tile, source)
         }
     }
 }

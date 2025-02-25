@@ -25,8 +25,10 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
     override fun inflate(menu: Menu) {
         val c = scontext.getContext()
 
-        start = add(menu,R.string.tracker_start) { scontext.insideContext { scontext.trackerService.onStartStop() }}.apply { setIcon(R.drawable.media_playback_start_inverse) }
-        pause = add(menu, R.string.tracker_pause) {scontext.insideContext { scontext.trackerService.onPauseResume() }}.apply { setIcon(R.drawable.media_playback_pause_inverse) }
+        start = add(menu,R.string.tracker_start) { scontext.insideContext { scontext.getTrackerService()
+            .onStartStop() }}.apply { setIcon(R.drawable.media_playback_start_inverse) }
+        pause = add(menu, R.string.tracker_pause) {scontext.insideContext { scontext.getTrackerService()
+            .onPauseResume() }}.apply { setIcon(R.drawable.media_playback_pause_inverse) }
 
         add(menu, R.string.p_backlight_title) {
             SolidIndexListDialog(
@@ -50,7 +52,7 @@ class OptionsMenu(private val scontext: ServiceContext) : AbsMenu() {
         get() = scontext.getContext().getString(R.string.app_sname)
 
     override fun prepare(menu: Menu) {
-        scontext.insideContext { updateMenuText(scontext.trackerService) }
+        scontext.insideContext { updateMenuText(scontext.getTrackerService()) }
     }
 
     private fun updateMenuText(state: StateInterface) {

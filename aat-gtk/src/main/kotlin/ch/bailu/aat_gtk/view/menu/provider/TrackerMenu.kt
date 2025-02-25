@@ -3,7 +3,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 import ch.bailu.aat_gtk.view.TrackerButtonStartStop
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.dispatcher.Dispatcher
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.gtk.gio.Menu

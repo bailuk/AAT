@@ -5,15 +5,15 @@ import ch.bailu.aat.R
 import ch.bailu.aat.services.ServiceContext
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.layout.LabelTextView
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
-import ch.bailu.aat_lib.gpx.InfoID
-import ch.bailu.aat_lib.gpx.StateID
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.service.sensor.SensorState
 
 class ConnectToSensorsView(private val scontext: ServiceContext, theme: UiTheme) : LabelTextView(
     scontext.getContext(), scontext.getContext().getString(R.string.sensor_connect), theme
-), View.OnClickListener, OnContentUpdatedInterface {
+), View.OnClickListener, TargetInterface {
     private var busy = ""
 
     init {
@@ -23,16 +23,16 @@ class ConnectToSensorsView(private val scontext: ServiceContext, theme: UiTheme)
     }
 
     private fun setText() {
-        setText(SensorState.getOverviewString() + " " + busy)
+        setText("${SensorState.overviewString} $busy")
     }
 
     override fun onClick(v: View) {
-        scontext.insideContext { scontext.sensorService.updateConnections() }
+        scontext.insideContext { scontext.getSensorService().updateConnections() }
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         if (iid == InfoID.SENSORS) {
-            busy = if (info.state == StateID.WAIT) context.getString(R.string.gps_wait) else ""
+            busy = if (info.getState() == StateID.WAIT) context.getString(R.string.gps_wait) else ""
             setText()
         }
     }

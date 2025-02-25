@@ -12,10 +12,13 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
-import ch.bailu.aat_lib.description.EditorSource
-import ch.bailu.aat_lib.dispatcher.CurrentLocationSource
-import ch.bailu.aat_lib.dispatcher.OverlaysSource
-import ch.bailu.aat_lib.dispatcher.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
+import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.util.Objects
@@ -27,7 +30,7 @@ class MapActivity : AbsKeepScreenOnActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val edit = EditorSource(appContext)
+        val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView =
             ContentView(this, AppTheme.cockpit)
         val map = createMap(edit)
@@ -56,14 +59,14 @@ class MapActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createMap(edit: EditorSource): MapViewInterface {
-        return MapFactory.DEF(this, SOLID_KEY).map(edit, createButtonBar())
+        return MapFactory.createDefaultMapView(this, SOLID_KEY).map(edit, createButtonBar())
     }
 
     private fun createDispatcher(edit: EditorSource) {
-        addSource(edit)
-        addSource(TrackerSource(serviceContext, appContext.broadcaster))
-        addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        addSource(OverlaysSource(appContext))
+        dispatcher.addSource(edit)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
     }
 
     private fun createButtonBar(): ControlBar {

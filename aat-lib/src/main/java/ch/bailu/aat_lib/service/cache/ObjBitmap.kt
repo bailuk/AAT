@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.cache
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.FileTask
@@ -11,18 +11,18 @@ import org.mapsforge.core.graphics.Bitmap
 
 class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInterface) : ObjImageAbstract(imageFile.path) {
 
-    override fun onInsert(sc: AppContext) {
-        load(sc.services)
-        sc.services.cacheService.addToBroadcaster(this)
+    override fun onInsert(appContext: AppContext) {
+        load(appContext.services)
+        appContext.services.getCacheService().addToBroadcaster(this)
     }
 
-    override fun onRemove(sc: AppContext) {
-        super.onRemove(sc)
+    override fun onRemove(appContext: AppContext) {
+        super.onRemove(appContext)
         syncBitmap.free()
     }
 
     private fun load(sc: ServicesInterface) {
-        sc.backgroundService.process(BitmapLoader(imageFile))
+        sc.getBackgroundService().process(BitmapLoader(imageFile))
     }
 
     override fun getSize(): Long {
@@ -43,13 +43,13 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
         }
     }
 
-    override fun onDownloaded(id: String, url: String, sc: AppContext) {
+    override fun onDownloaded(id: String, url: String, appContext: AppContext) {
         if (id == toString()) {
-            load(sc.services)
+            load(appContext.services)
         }
     }
 
-    override fun onChanged(id: String, sc: AppContext) {}
+    override fun onChanged(id: String, appContext: AppContext) {}
     private class BitmapLoader(f: Foc) : FileTask(f) {
 
         override fun bgOnProcess(appContext: AppContext): Long {
@@ -62,7 +62,7 @@ class ObjBitmap(private val imageFile: Foc, private val syncBitmap: MapTileInter
                         self.syncBitmap.set(self.imageFile, 0, false)
                         size = self.syncBitmap.getSize()
                     } catch (e: Exception) {
-                        self.exception = e
+                        self.setException(e)
                     }
                     appContext.broadcaster.broadcast(
                         AppBroadcaster.FILE_CHANGED_INCACHE,

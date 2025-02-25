@@ -3,11 +3,11 @@ package ch.bailu.aat.services.sensor.bluetooth_le
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import ch.bailu.aat.dispatcher.AndroidBroadcaster
+import ch.bailu.aat.broadcaster.AndroidBroadcaster
 import ch.bailu.aat.services.ServiceContext
-import ch.bailu.aat_lib.dispatcher.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.gpx.GpxDeltaHelper
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import java.io.Closeable
 import kotlin.math.roundToInt
@@ -25,10 +25,10 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
     private var previousLocation: GpxPointInterface? = null
     private val onLocationChanged: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val newLocation = scontext.locationService.getLoggableLocationOrNull(currentLocation)
+            val newLocation = scontext.getLocationService().getLoggableLocationOrNull(currentLocation)
             if (newLocation != null) {
                 currentLocation = newLocation
-                if (currentLocation.accuracy <= MIN_ACCURACY && revolution.isInitialized) {
+                if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized) {
                     if (previousLocation == null) {
                         reset(currentLocation)
                     } else {

@@ -28,7 +28,7 @@ class ElevationLayer(services: ServicesInterface, storage: StorageInterface?) : 
     private fun drawElevation(sc: ServicesInterface, mc: MapContext, zoom: Int, point: LatLong) {
         if (zoom > MIN_ZOOM_LEVEL) {
             sc.insideContext {
-                val ele = sc.elevationService.getElevation(point.latitudeE6, point.longitudeE6)
+                val ele = sc.getElevationService().getElevation(point.latitudeE6, point.longitudeE6)
                 mc.draw().textBottom(altitudeDescription.getValueUnit(ele.toFloat()), 2)
             }
         }

@@ -38,23 +38,23 @@ import ch.bailu.aat_lib.description.PauseDescription
 import ch.bailu.aat_lib.description.TimeApDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
-import ch.bailu.aat_lib.gpx.InfoID
+import ch.bailu.aat_lib.gpx.information.InfoID
 
 class FileContentActivity : AbsFileContentActivity() {
 
     override fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup {
-        map = MapFactory.DEF(this, SOLID_KEY).content(editorSource)
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).content(editorSource)
 
         val summary = VerticalScrollView(this)
         summary.addAllContent(
-            this, getSummaryData(this), AppTheme.trackContent,
+            dispatcher, getSummaryData(this), AppTheme.trackContent,
             InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 
         summary.add(createAttributesView())
 
         val graph: View = GraphViewFactory.all(
-            appContext, this, this, THEME,
+            appContext, this, dispatcher, THEME,
             InfoID.FILE_VIEW, InfoID.EDITOR_OVERLAY
         )
 

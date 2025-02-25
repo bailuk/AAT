@@ -18,7 +18,7 @@ object To {
         }
     }
 
-    fun androidBitmap(b: Bitmap): android.graphics.Bitmap {
+    fun androidBitmap(b: Bitmap?): android.graphics.Bitmap {
         return AndroidGraphicFactory.getBitmap(b)
     }
 

@@ -11,8 +11,8 @@ import ch.bailu.aat.util.ui.AndroidAppDensity
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
-import ch.bailu.aat_lib.dispatcher.OnContentUpdatedInterface
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.general.SolidUnit
@@ -26,7 +26,7 @@ class GraphView(
     private val appContext: AppContext,
     plotter: Plotter,
     private val theme: UiTheme
-) : ViewGroup(context), OnContentUpdatedInterface, PlotterConfig {
+) : ViewGroup(context), TargetInterface, PlotterConfig {
     private val density: AndroidAppDensity = AndroidAppDensity(getContext())
     private var gpxCache = GpxList.NULL_TRACK
     private var nodeIndex = -1
@@ -53,7 +53,7 @@ class GraphView(
     }
 
     fun onContentUpdated(info: GpxInformation, index: Int) {
-        gpxCache = info.gpxList
+        gpxCache = info.getGpxList()
         nodeIndex = index
         invalidate()
     }
@@ -115,7 +115,7 @@ class GraphView(
 
     fun setVisibility(info: GpxInformation) {
         visibility =
-            if (info.isLoaded && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
+            if (info.getLoaded() && info.getType() == GpxType.ROUTE || info.getType() == GpxType.TRACK) {
                 VISIBLE
             } else {
                 GONE

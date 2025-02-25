@@ -5,7 +5,7 @@ import android.view.View
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.gpx.GpxInformation
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.html.MarkupBuilder
 import ch.bailu.aat_lib.html.MarkupBuilderGpx
@@ -34,7 +34,7 @@ abstract class AbsNodeViewLayer(
     override fun setSelectedNode(iid: Int, info: GpxInformation, node: GpxPointNode, index: Int) {
         infoView.setBackgroundColorFromIID(iid)
         val limit = GpxVisibleLimit(mcontext)
-        limit.walkTrack(info.gpxList)
+        limit.walkTrack(info.getGpxList())
         setGraph(info, index, limit.firstPoint, limit.lastPoint)
     }
 
