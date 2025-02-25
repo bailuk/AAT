@@ -50,6 +50,23 @@
     <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
     <releases>
+        <release version="1.27" date="2025-02-25">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.27</url>
+            <description>
+                <p>v1.27 (41)</p>
+                <ul>
+                    <li>Android: Add file permission support for Android API 30</li>
+                    <li>Android: Show Information about missing permission</li>
+                    <li>Android: Fix Overpass file extension not compatible with SAF</li>
+                    <li>Android: Fix Overpass error message too long</li>
+                    <li>Android: Fix Overpass show map features when "All" is not checked</li>
+                    <li>GTK: Improve default configuration</li>
+                    <li>GTK: Tracker overlay auto enabled</li>
+                    <li>GTK: Fix Map-tile downloads on big screen</li>
+                    <li>Make Node info selectable and copy paste-able</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.26" date="2024-07-15">
             <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.26</url>
             <description>
