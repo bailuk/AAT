@@ -1,13 +1,10 @@
-package ch.bailu.aat.util.fs
+package ch.bailu.aat_lib.util.fs
 
 import ch.bailu.aat_lib.xml.parser.util.Stream
 import ch.bailu.foc.Foc
 import java.io.IOException
 import java.io.OutputStreamWriter
 
-/**
- * TODO move to lib
- */
 class TextBackup(private val file: Foc) {
     companion object {
         const val MAX_FILE_SIZE = 200

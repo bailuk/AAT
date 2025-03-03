@@ -1,4 +1,4 @@
-package ch.bailu.aat.util
+package ch.bailu.aat_lib.util
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -9,13 +9,11 @@ import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.Locale
 
-abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi() {
+abstract class OverpassApi(context: AppContext) : DownloadApi() {
     private val overlay = SolidOverpassOverlay(context.dataDirectory)
 
     final override val apiName: String
         get() = overlay.getLabel()
-
-    private val bounding: String = toString(b)
 
     override val urlStart: String
         get() = "$URL…"
@@ -34,9 +32,10 @@ abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi(
      * @throws UnsupportedEncodingException if UTF-8 is not supported by the URLEncoder
      */
     @Throws(UnsupportedEncodingException::class)
-    override fun getUrl(query: String): String {
+    override fun getUrl(query: String, bounding: BoundingBoxE6): String {
         val queries = query.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val url = StringBuilder()
+        val bounding = toString(bounding)
         url.setLength(0)
         url.append(URL)
         for (q in queries) {
@@ -62,9 +61,10 @@ abstract class OverpassApi(context: AppContext, b: BoundingBoxE6) : DownloadApi(
         return url.toString()
     }
 
-    override fun getUrlPreview(query: String): String {
+    override fun getUrlPreview(query: String, bounding: BoundingBoxE6): String {
         val queries = query.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         val url = StringBuilder()
+        val bounding = toString(bounding)
         url.setLength(0)
         url.append(URL)
         url.append('\n')

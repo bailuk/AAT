@@ -29,6 +29,11 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
         }
     }
 
+    val poiApi = object: PoiApi(GtkAppContext) {
+        override val selectedCategories
+            get() = poiList.getSelectedCategories()
+    }
+
     init {
         sdatabase.register(onPreferencesChanged)
     }
@@ -63,14 +68,8 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
     }
 
     fun loadList() {
-        val poiApi = object: PoiApi(GtkAppContext, controller.getMapBounding()) {
-            override val selectedCategories
-                get() = poiList.getSelectedCategories()
-        }
-
-        poiApi.startTask(GtkAppContext)
+        poiApi.startTask(GtkAppContext, controller.getMapBounding())
         poiList.writeSelected()
-
     }
 
     fun onDestroy() {

@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.util.Timer
 import ch.bailu.aat_lib.util.sql.DbConnection
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
+import ch.bailu.foc.FocName
 import org.mapsforge.poi.storage.PoiPersistenceManager
 
 class MockAppContext : AppContext {
@@ -50,7 +51,7 @@ class MockAppContext : AppContext {
     override val downloadConfig: DownloadConfig
         get() = TODO("Not yet implemented")
     override val dataDirectory: SolidDataDirectory
-        get() = TODO("Not yet implemented")
+        get() = SolidDataDirectory(MockSolidDataDirectory(MockStorage(), this), this)
     override val assets: FocFactory
         get() = TODO("Not yet implemented")
     override val mapDirectory: SolidMapsForgeDirectory
@@ -70,6 +71,6 @@ class MockAppContext : AppContext {
     }
 
     override fun toFoc(string: String?): Foc {
-        TODO("Not yet implemented")
+        return FocName(string)
     }
 }

@@ -2,7 +2,7 @@ package ch.bailu.aat.activities
 
 import android.view.View
 import android.widget.LinearLayout
-import ch.bailu.aat.util.OverpassApi
+import ch.bailu.aat_lib.util.OverpassApi
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
@@ -10,7 +10,6 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat.views.osm.features.OsmFeaturesView
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
@@ -60,8 +59,8 @@ class OverpassActivity : AbsOsmApiActivity() {
         super.onPause()
     }
 
-    public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : OverpassApi(appContext, boundingBox) {
+    public override fun createApiConfiguration(): OsmApiConfiguration {
+        return object : OverpassApi(appContext) {
             override val queryString: String
                 get() = editorView.toString()
         }

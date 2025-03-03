@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import ch.bailu.aat.R
 import ch.bailu.aat.menus.ResultFileMenu
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat.util.fs.TextBackup
+import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
@@ -31,6 +31,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private var list: NodeListView? = null
     protected var configuration: OsmApiConfiguration? = null
         private set
+    private var boundingBox: BoundingBoxE6 = BoundingBoxE6()
 
     protected var editorView: OsmApiEditorView? = null
 
@@ -41,7 +42,8 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        configuration = createApiConfiguration(AppIntent.getBoundingBox(intent))
+        boundingBox = AppIntent.getBoundingBox(intent)
+        configuration = createApiConfiguration()
         setContentView(createContentView())
 
         val configuration = configuration
@@ -110,6 +112,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private fun createEditorView(): View {
         val editorView = OsmApiEditorView(
             this,
+            boundingBox,
             configuration!!,
             theme
         )
@@ -123,7 +126,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         return bar
     }
 
-    protected abstract fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration
+    protected abstract fun createApiConfiguration(): OsmApiConfiguration
     protected abstract fun addCustomButtons(bar: MainControlBar)
     override fun onClick(view: View) {
         if (view === download) {
@@ -138,7 +141,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
             if (isTaskRunning(serviceContext)) {
                 stopTask(serviceContext)
             } else {
-                startTask(appContext)
+                startTask(appContext, boundingBox)
             }
         }
     }

@@ -23,8 +23,8 @@ class PoiActivity : AbsOsmApiActivity() {
         private val KEY = PoiActivity::class.java.simpleName
     }
 
-    public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : PoiApi(appContext, boundingBox) {
+    public override fun createApiConfiguration(): OsmApiConfiguration {
+        return object : PoiApi(appContext) {
             override val selectedCategories: ArrayList<PoiCategory>
                 get() {
                     poiView?.saveSelected(queryFile)

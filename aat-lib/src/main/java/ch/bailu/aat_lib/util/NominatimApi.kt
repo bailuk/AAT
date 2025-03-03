@@ -1,4 +1,4 @@
-package ch.bailu.aat.util
+package ch.bailu.aat_lib.util
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -7,10 +7,9 @@ import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
-abstract class NominatimApi(context: AppContext, boundingBox: BoundingBoxE6) : DownloadApi() {
+abstract class NominatimApi(context: AppContext) : DownloadApi() {
     private val overlay = SolidNominatimOverlay(context.dataDirectory)
 
-    private val bounding: String
     override val urlStart = "https://nominatim.openstreetmap.org/search?q="
     override val fileExtension = ".xml"
 
@@ -23,28 +22,24 @@ abstract class NominatimApi(context: AppContext, boundingBox: BoundingBoxE6) : D
     override val baseDirectory: Foc
         get() = overlay.directory
 
-    init {
-        bounding = toString(boundingBox)
-    }
-
-    override fun getUrlPreview(query: String): String {
+    override fun getUrlPreview(query: String, bounding: BoundingBoxE6): String {
         val url = StringBuilder()
         url.setLength(0)
         url.append(urlStart)
         url.append(query)
         url.append(POST)
-        url.append(bounding)
+        url.append(toString(bounding))
         return url.toString()
     }
 
     @Throws(UnsupportedEncodingException::class)
-    override fun getUrl(query: String): String {
+    override fun getUrl(query: String, bounding: BoundingBoxE6): String {
         val url = StringBuilder()
         url.setLength(0)
         url.append(urlStart)
         url.append(URLEncoder.encode(query.replace('\n', ' '), "UTF-8"))
         url.append(POST)
-        url.append(bounding)
+        url.append(toString(bounding))
         return url.toString()
     }
 

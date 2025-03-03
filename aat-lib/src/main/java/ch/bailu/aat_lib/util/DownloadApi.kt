@@ -1,12 +1,13 @@
-package ch.bailu.aat.util
+package ch.bailu.aat_lib.util
 
-import ch.bailu.aat.util.fs.TextBackup
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.DownloadTask
+import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
@@ -30,12 +31,12 @@ abstract class DownloadApi : OsmApiConfiguration() {
         }
     }
 
-    override fun startTask(appContext: AppContext) {
+    override fun startTask(appContext: AppContext, bounding: BoundingBoxE6) {
         appContext.services.insideContext {
             try {
                 val background = appContext.services.getBackgroundService()
                 val query: String = queryString
-                val url = getUrl(query)
+                val url = getUrl(query, bounding)
                 task = ApiQueryTask(
                     appContext,
                     url,
