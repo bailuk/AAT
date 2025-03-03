@@ -27,8 +27,9 @@
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom-out-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/zoom_original_inverse.svg</file>
-        <file preprocess="xml-stripblanks">icons/scalable/actions/view-refresh-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/actions/edit-select-all-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/view-refresh-symbolic.svg</file>
+        <file preprocess="xml-stripblanks">icons/scalable/actions/go-next-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/scalable/apps/ch.bailu.aat.svg</file>
     </gresource>
 </gresources>

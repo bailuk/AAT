@@ -3,12 +3,10 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_lib.util.extensions.ellipsize
 import ch.bailu.aat_gtk.search.SearchController
 import ch.bailu.aat_gtk.search.SearchModel
-import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_lib.map.edge.Position
-import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.extensions.ellipsize
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
@@ -22,7 +20,7 @@ import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 import org.mapsforge.core.model.LatLong
 
-class SearchBar(private val uiController: UiControllerInterface, private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
+class SearchBar(private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
     private val searchModel = SearchModel()
     private val searchController = SearchController(searchModel)
 
@@ -31,7 +29,6 @@ class SearchBar(private val uiController: UiControllerInterface, private val app
         add(Box(Orientation.HORIZONTAL, Layout.margin).apply {
             append(createNominatimWidget())
             append(Separator(Orientation.VERTICAL))
-            append(createOfflinePoiWidget())
         })
 
     }
@@ -72,15 +69,6 @@ class SearchBar(private val uiController: UiControllerInterface, private val app
                     menuModel = createMenuModel(it)
                 }
             })
-        }
-    }
-
-    private fun createOfflinePoiWidget(): Widget {
-        return Button().apply {
-            setLabel(Res.str().p_mapsforge_poi())
-            onClicked {
-                uiController.showPoi()
-            }
         }
     }
 }

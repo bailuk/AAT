@@ -1,8 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
-import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.controller.UiControllerInterface
@@ -12,6 +10,7 @@ import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
 import ch.bailu.aat_gtk.view.map.control.EditorStatusLabel
 import ch.bailu.aat_gtk.view.map.control.InfoBar
+import ch.bailu.aat_gtk.view.map.control.LeafletBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
 import ch.bailu.aat_gtk.view.map.control.SearchBar
@@ -32,7 +31,6 @@ import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
-import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
 
@@ -65,23 +63,19 @@ class MapMainView(
         dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
     }
 
-    private val searchBar = SearchBar(uiController, app) {map.setCenter(it)}
+    private val searchBar = SearchBar(app) {map.setCenter(it)}
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
     private val editorBar = EditorBar(app, nodeInfo, statusLabel, map.getMContext(), appContext.services, editor, editableOverlayList)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
     init {
-        overlay.addOverlay(Button().apply {
-            addCssClass(Strings.mapControl)
-            iconName = Icons.goPreviousSymbolic
-            onClicked {
-                uiController.hideMap()
+        overlay.addOverlay(LeafletBar(uiController).layout.apply {
+                halign = Align.END
+                valign = Align.START
+                margin(Layout.margin)
             }
-            halign = Align.END
-            valign = Align.START
-            margin(Layout.margin)
-        })
+        )
 
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
