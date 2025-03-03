@@ -23,7 +23,6 @@ abstract class AbsFilterList<T> {
 
     fun add(t: T) {
         all.add(t)
-
         if (showElement(t, filterKeys)) visible.add(t)
     }
 
