@@ -6,6 +6,7 @@ import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 
 class LayerWrapper(
@@ -13,7 +14,7 @@ class LayerWrapper(
     private val mcontext: MapContext,
     private val layer: MapLayerInterface
 ) : Layer() {
-    override fun draw(bounding: BoundingBox, zoom: Byte, canvas: Canvas, topLeftPoint: Point) {
+    override fun draw(bounding: BoundingBox, zoom: Byte, canvas: Canvas, topLeftPoint: Point, rotation: Rotation) {
         services.insideContext { layer.drawInside(mcontext) }
     }
 

@@ -11,6 +11,7 @@ import ch.bailu.aat_lib.map.TwoNodes
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 
 class GtkMapContext(private val mapView: GtkCustomMapView, val key: String, nodeBitmap: NodeBitmap, appDensity: AppDensity): Layer(), MapContext {
@@ -38,7 +39,7 @@ class GtkMapContext(private val mapView: GtkCustomMapView, val key: String, node
         return mapView
     }
 
-    override fun draw(boundingBox: BoundingBox, zoomLevel: Byte, canvas: Canvas, topLeftPoint: Point) {
+    override fun draw(boundingBox: BoundingBox, zoomLevel: Byte, canvas: Canvas, topLeftPoint: Point, rotation: Rotation) {
         metrics.init(boundingBox, zoomLevel, canvas.dimension, topLeftPoint)
         draw.init(canvas, metrics)
     }

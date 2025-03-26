@@ -20,7 +20,7 @@ import org.mapsforge.core.model.MapPosition
 import org.mapsforge.core.util.LatLongUtils
 import org.mapsforge.map.android.view.MapView
 import org.mapsforge.map.layer.Layer
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 
 open class MapsForgeViewBase(
     appContext: AppContext,
@@ -73,7 +73,7 @@ open class MapsForgeViewBase(
     }
 
     override fun reDownloadTiles() {}
-    override fun getMapViewPosition(): IMapViewPosition {
+    override fun getMapViewPosition(): MapViewPosition {
         return model.mapViewPosition
     }
 

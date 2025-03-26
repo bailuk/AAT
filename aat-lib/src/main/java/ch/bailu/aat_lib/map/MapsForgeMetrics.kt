@@ -11,6 +11,7 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.core.util.MercatorProjection
 import org.mapsforge.map.util.MapPositionUtil
 import org.mapsforge.map.view.MapView
@@ -46,7 +47,7 @@ class MapsForgeMetrics(private val mapView: MapView, private val density: AppDen
     fun init(d: Dimension) {
         val pos = mapView.model.mapViewPosition.mapPosition
         init(
-            MapPositionUtil.getBoundingBox(pos, d, tileSize),
+            MapPositionUtil.getBoundingBox(pos, Rotation.NULL_ROTATION, tileSize, d, 0f, 0f),
             mapView.model.mapViewPosition.zoomLevel,
             d,
             MapPositionUtil.getTopLeftPoint(pos, d, tileSize)

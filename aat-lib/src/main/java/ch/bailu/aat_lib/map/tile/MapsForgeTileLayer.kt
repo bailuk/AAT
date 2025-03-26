@@ -11,6 +11,7 @@ import org.mapsforge.core.graphics.Paint
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.model.common.Observer
 import org.mapsforge.map.util.LayerUtil
@@ -29,7 +30,7 @@ class MapsForgeTileLayer(
         tileProvider.addObserver(this)
     }
 
-    override fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point) {
+    override fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point, rotation: Rotation) {
         synchronized(tileProvider) {
             services.insideContext {
                 if (detachAttach(zoom.toInt())) {

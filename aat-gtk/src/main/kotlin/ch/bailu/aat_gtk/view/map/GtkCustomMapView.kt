@@ -29,7 +29,7 @@ import org.mapsforge.core.util.Parameters
 import org.mapsforge.map.gtk.graphics.GtkGraphicContext
 import org.mapsforge.map.gtk.view.MapView
 import org.mapsforge.map.layer.Layer
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 import org.mapsforge.map.model.common.Observer
 
 open class GtkCustomMapView (
@@ -162,7 +162,7 @@ open class GtkCustomMapView (
         stack.reDownloadTiles()
     }
 
-    override fun getMapViewPosition(): IMapViewPosition {
+    override fun getMapViewPosition(): MapViewPosition {
         return model.mapViewPosition
     }
 

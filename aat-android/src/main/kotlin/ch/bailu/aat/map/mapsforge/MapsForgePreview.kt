@@ -26,6 +26,7 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.MapPosition
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.util.LayerUtil
 import org.mapsforge.map.util.MapPositionUtil
 import org.mapsforge.map.view.FrameBuffer
@@ -58,7 +59,7 @@ class MapsForgePreview(context: Context, private val appContext: AppContext, inf
         mapPosition = model.mapViewPosition.mapPosition
 
         val tileSize = model.displayModel.tileSize
-        bounding = MapPositionUtil.getBoundingBox(mapPosition, DIM, tileSize)
+        bounding = MapPositionUtil.getBoundingBox(mapPosition, Rotation.NULL_ROTATION, tileSize, DIM, 0f, 0f)
         tlPoint = MapPositionUtil.getTopLeftPoint(mapPosition, DIM, tileSize)
         preLoadTiles()
     }
@@ -108,7 +109,7 @@ class MapsForgePreview(context: Context, private val appContext: AppContext, inf
             val canvas = bitmap.getCanvas()
             bitmap.getBitmap()?.setBackgroundColor(ColorInterface.BLACK)
             for (layer in layerManager.layers) {
-                layer.draw(bounding, mapPosition.zoomLevel, canvas, tlPoint)
+                layer.draw(bounding, mapPosition.zoomLevel, canvas, tlPoint, Rotation.NULL_ROTATION)
             }
         }
         return bitmap

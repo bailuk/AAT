@@ -4,6 +4,8 @@ import java.io.File
 
 fun main() {
     val inputFiles = listOf(
+        "aat-android/build/intermediates/runtime_symbol_list/debug/processDebugResources/R.txt",
+        "aat-android/build/intermediates/runtime_symbol_list/release/processReleaseResources/R.txt",
         "aat-android/build/intermediates/runtime_symbol_list/release/R.txt",
         "aat-android/build/intermediates/runtime_symbol_list/debug/R.txt"
     )
