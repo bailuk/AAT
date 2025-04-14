@@ -30,7 +30,6 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.foc.Foc
