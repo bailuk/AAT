@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
+import ch.bailu.gtk.gtk.ScrollablePolicy
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
 import ch.bailu.gtk.lib.bridge.ListIndex
