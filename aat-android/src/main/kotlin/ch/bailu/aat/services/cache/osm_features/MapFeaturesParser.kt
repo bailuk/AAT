@@ -1,7 +1,7 @@
 package ch.bailu.aat.services.cache.osm_features
 
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.xml.parser.util.Stream
+import ch.bailu.aat_lib.file.xml.parser.util.Stream
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import java.io.IOException

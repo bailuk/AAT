@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.search
 
+import ch.bailu.aat_lib.file.json.SearchModel
 import org.mapsforge.core.model.LatLong
 
 class SearchController(private val searchModel: SearchModel) {

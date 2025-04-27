@@ -22,7 +22,7 @@ import ch.bailu.aat_lib.service.elevation.ElevationProvider
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.foc.Foc
 
 class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUpdaterClient {
@@ -163,13 +163,13 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
 
     private class FileLoader(file: Foc) : FileTask(file) {
         override fun bgOnProcess(appContext: AppContext): Long {
-            val size = longArrayOf(0)
+            var size = 0L
 
             object : OnObject(appContext, getID(), ObjGpxStatic::class.java) {
                 override fun run(handle: Obj) {
                     val owner = handle as ObjGpxStatic
 
-                    size[0] = load(appContext, owner)
+                    size = load(appContext, owner)
 
                     appContext.services.getElevationService().requestElevationUpdates(
                         owner,
@@ -179,13 +179,13 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
                     appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
                 }
             }
-            return size[0]
+            return size
         }
 
         private fun load(appContext: AppContext, handle: ObjGpxStatic): Long {
-            var size: Long = 0
+            var size = 0L
 
-            val reader = GpxListReader(
+            val reader = GpxListReaderXml(
                 threadControl,
                 getFile(),
                 getAutoPause(appContext, getPresetFromFile(getFile()))

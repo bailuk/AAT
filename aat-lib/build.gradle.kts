@@ -32,6 +32,9 @@ dependencies {
 
     api ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
 
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.12.1")
+
     // Notnull annotation
     // https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations
     api("com.github.spotbugs:spotbugs-annotations:4.9.3")

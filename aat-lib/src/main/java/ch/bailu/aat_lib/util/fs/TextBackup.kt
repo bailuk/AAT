@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.util.fs
 
-import ch.bailu.aat_lib.xml.parser.util.Stream
+import ch.bailu.aat_lib.file.xml.parser.util.Stream
 import ch.bailu.foc.Foc
 import java.io.IOException
 import java.io.OutputStreamWriter

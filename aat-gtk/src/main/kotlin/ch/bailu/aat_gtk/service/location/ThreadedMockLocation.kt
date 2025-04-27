@@ -12,7 +12,7 @@ import ch.bailu.aat_lib.service.location.LocationServiceInterface
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
 import ch.bailu.aat_lib.service.location.LocationStackItem
 import ch.bailu.aat_lib.service.location.MockLocationInformation
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 
@@ -102,7 +102,7 @@ class ThreadedMockLocation(
         }
 
         private fun loadTrack(foc: Foc) : Node? {
-            val list = GpxListReader(foc , AutoPause.NULL).gpxList
+            val list = GpxListReaderXml(foc , AutoPause.NULL).gpxList
             return list.pointList.first
         }
     }

@@ -1,0 +1,73 @@
+{
+  "hints": {
+    "visited_nodes.sum": 22,
+    "visited_nodes.average": 22.0
+  },
+  "info": {
+    "copyrights": [
+      "GraphHopper",
+      "OpenStreetMap contributors"
+    ],
+    "took": 1,
+    "road_data_timestamp": "2025-04-25T03:00:00Z"
+  },
+  "paths": [
+    {
+      "distance": 155.957,
+      "weight": 34.429577,
+      "time": 40379,
+      "transfers": 0,
+      "points_encoded": true,
+      "points_encoded_multiplier": 100000.0,
+      "bbox": [
+        8.505115,
+        47.405259,
+        8.506149,
+        47.406426
+      ],
+      "points": "czi`H_d|r@FIkAmA[WaC}A",
+      "instructions": [
+        {
+          "distance": 6.455,
+          "heading": 136.26,
+          "sign": 0,
+          "interval": [
+            0,
+            1
+          ],
+          "text": "Continue",
+          "time": 1936,
+          "street_name": ""
+        },
+        {
+          "distance": 149.502,
+          "sign": -2,
+          "interval": [
+            1,
+            4
+          ],
+          "text": "Turn left",
+          "time": 38443,
+          "street_name": ""
+        },
+        {
+          "distance": 0.0,
+          "sign": 4,
+          "last_heading": 26.040931788695918,
+          "interval": [
+            4,
+            4
+          ],
+          "text": "Arrive at destination",
+          "time": 0,
+          "street_name": ""
+        }
+      ],
+      "legs": [],
+      "details": {},
+      "ascend": 2.87646484375,
+      "descend": 0.0,
+      "snapped_waypoints": "czi`H_d|r@aFmE"
+    }
+  ]
+}

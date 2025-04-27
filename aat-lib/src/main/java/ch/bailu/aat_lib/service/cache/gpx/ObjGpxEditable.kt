@@ -14,7 +14,7 @@ import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.aat_lib.service.editor.GpxEditor
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import ch.bailu.aat_lib.xml.writer.GpxListWriter
+import ch.bailu.aat_lib.file.xml.writer.GpxListWriter
 import ch.bailu.foc.Foc
 
 class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjGpx(_id) {
@@ -122,7 +122,10 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
         override fun save() {
             try {
-                GpxListWriter(editor.list, getFile()).close()
+                _root_ide_package_.ch.bailu.aat_lib.file.xml.writer.GpxListWriter(
+                    editor.list,
+                    getFile()
+                ).close()
                 modified = false
                 broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, getFile()
                     .toString(), getID()
@@ -178,7 +181,8 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
                     prefix,
                     AppDirectory.GPX_EXTENSION
                 )
-                GpxListWriter(editor.list, file).close()
+                _root_ide_package_.ch.bailu.aat_lib.file.xml.writer.GpxListWriter(editor.list, file)
+                    .close()
                 broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK,
                     file.path, getID()

@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.coordinates
 
 import ch.bailu.aat_lib.description.FF
-import ch.bailu.aat_lib.xml.parser.util.DoubleScanner
-import ch.bailu.aat_lib.xml.parser.util.Stream
+import ch.bailu.aat_lib.file.xml.parser.util.DoubleScanner
+import ch.bailu.aat_lib.file.xml.parser.util.Stream
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
@@ -127,7 +127,6 @@ class BoundingBoxE6 {
         return latNorthE6 > latSouthE6 && lonEastE6 > lonWestE6
     }
 
-    
     override fun toString(): String {
         val f = FF.f()
         return f.N2.format((latNorthE6 / 1e6f).toDouble()) + "," +

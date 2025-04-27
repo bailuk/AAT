@@ -1,16 +1,16 @@
 package ch.bailu.aat_lib.search.poi
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.file.xml.writer.WayWriter
+import ch.bailu.aat_lib.file.xml.writer.WayWriterOsmTags
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import ch.bailu.aat_lib.xml.writer.WayWriter
-import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags
 import ch.bailu.foc.Foc
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.poi.storage.ExactMatchPoiCategoryFilter

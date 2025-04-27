@@ -1,0 +1,228 @@
+{
+  "code": "Ok",
+  "routes": [
+    {
+      "legs": [
+        {
+          "steps": [
+            {
+              "geometry": "czi`H_d|r@CD",
+              "maneuver": {
+                "bearing_after": 315,
+                "bearing_before": 0,
+                "location": [
+                  8.505115,
+                  47.405301
+                ],
+                "type": "depart"
+              },
+              "mode": "cycling",
+              "driving_side": "right",
+              "name": "",
+              "intersections": [
+                {
+                  "out": 0,
+                  "entry": [
+                    true
+                  ],
+                  "bearings": [
+                    315
+                  ],
+                  "location": [
+                    8.505115,
+                    47.405301
+                  ]
+                }
+              ],
+              "weight": 7.6,
+              "duration": 7.6,
+              "distance": 3.1
+            },
+            {
+              "geometry": "gzi`Hyc|r@EEe@m@UWYUqCiBCC",
+              "maneuver": {
+                "bearing_after": 39,
+                "bearing_before": 315,
+                "location": [
+                  8.505086,
+                  47.405321
+                ],
+                "modifier": "right",
+                "type": "turn"
+              },
+              "mode": "cycling",
+              "driving_side": "right",
+              "name": "Wolfgang-Pauli-Strasse",
+              "intersections": [
+                {
+                  "out": 0,
+                  "in": 1,
+                  "entry": [
+                    true,
+                    false,
+                    true,
+                    true
+                  ],
+                  "bearings": [
+                    45,
+                    135,
+                    225,
+                    315
+                  ],
+                  "location": [
+                    8.505086,
+                    47.405321
+                  ]
+                }
+              ],
+              "weight": 43,
+              "duration": 43,
+              "distance": 156.7
+            },
+            {
+              "geometry": "yaj`Hij|r@BE@G",
+              "maneuver": {
+                "bearing_after": 126,
+                "bearing_before": 26,
+                "location": [
+                  8.506128,
+                  47.406533
+                ],
+                "modifier": "right",
+                "type": "turn"
+              },
+              "mode": "cycling",
+              "driving_side": "right",
+              "name": "",
+              "intersections": [
+                {
+                  "out": 1,
+                  "in": 2,
+                  "entry": [
+                    true,
+                    true,
+                    false,
+                    true
+                  ],
+                  "bearings": [
+                    30,
+                    135,
+                    210,
+                    300
+                  ],
+                  "location": [
+                    8.506128,
+                    47.406533
+                  ]
+                }
+              ],
+              "weight": 7.4,
+              "duration": 7.4,
+              "distance": 6.9
+            },
+            {
+              "geometry": "saj`Hwj|r@@?JH",
+              "maneuver": {
+                "bearing_after": 205,
+                "bearing_before": 126,
+                "location": [
+                  8.506199,
+                  47.406496
+                ],
+                "modifier": "right",
+                "type": "turn"
+              },
+              "mode": "cycling",
+              "driving_side": "right",
+              "name": "",
+              "intersections": [
+                {
+                  "out": 1,
+                  "in": 2,
+                  "entry": [
+                    true,
+                    true,
+                    false
+                  ],
+                  "bearings": [
+                    30,
+                    210,
+                    315
+                  ],
+                  "location": [
+                    8.506199,
+                    47.406496
+                  ]
+                }
+              ],
+              "weight": 5.2,
+              "duration": 5.2,
+              "distance": 8.6
+            },
+            {
+              "geometry": "eaj`Hmj|r@",
+              "maneuver": {
+                "bearing_after": 0,
+                "bearing_before": 207,
+                "location": [
+                  8.506148,
+                  47.406427
+                ],
+                "type": "arrive"
+              },
+              "mode": "cycling",
+              "driving_side": "right",
+              "name": "",
+              "intersections": [
+                {
+                  "in": 0,
+                  "entry": [
+                    true
+                  ],
+                  "bearings": [
+                    27
+                  ],
+                  "location": [
+                    8.506148,
+                    47.406427
+                  ]
+                }
+              ],
+              "weight": 0,
+              "duration": 0,
+              "distance": 0
+            }
+          ],
+          "summary": "Wolfgang-Pauli-Strasse",
+          "weight": 63.2,
+          "duration": 63.2,
+          "distance": 175.3
+        }
+      ],
+      "weight_name": "duration",
+      "weight": 63.2,
+      "duration": 63.2,
+      "distance": 175.3
+    }
+  ],
+  "waypoints": [
+    {
+      "hint": "nQ8dgJXpCoMTAAAAJwAAAAAAAAAAAAAAvKdHQKAe0EAAAAAAAAAAABMAAAAnAAAAAAAAAAAAAADfEQAAG8eBAPVY0wIZx4EA81jTAgAAfwgRLH-6",
+      "distance": 0.268727534,
+      "name": "",
+      "location": [
+        8.505115,
+        47.405301
+      ]
+    },
+    {
+      "hint": "lukKg4hbH5udAAAAMAAAAOMCAAAEAAAA7vfRQfY5-0AajPZCim87P50AAAAwAAAA4wIAAAQAAADfEQAAJMuBAFtd0wIUy4EAYF3TAgYArwERLH-6",
+      "distance": 1.329053339,
+      "name": "",
+      "location": [
+        8.506148,
+        47.406427
+      ]
+    }
+  ]
+}

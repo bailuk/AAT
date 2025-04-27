@@ -39,9 +39,6 @@ dependencies {
     implementation("org.mapsforge:mapsforge-poi-awt:$mapsForgeVersion")
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
 
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.12.1")
-
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 

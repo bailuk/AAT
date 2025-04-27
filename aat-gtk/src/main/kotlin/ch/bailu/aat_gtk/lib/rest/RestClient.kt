@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.lib.rest
 
-import ch.bailu.aat_gtk.lib.json.Json
+import ch.bailu.aat_lib.lib.json.parser.Json
 import ch.bailu.gtk.glib.Glib
 import okhttp3.*
 import java.io.File

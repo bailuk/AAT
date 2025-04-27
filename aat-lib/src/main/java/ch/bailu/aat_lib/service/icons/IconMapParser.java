@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.service.icons;
 import java.io.IOException;
 
 import ch.bailu.aat_lib.gpx.attributes.Keys;
-import ch.bailu.aat_lib.xml.parser.util.Stream;
+import ch.bailu.aat_lib.file.xml.parser.util.Stream;
 import ch.bailu.foc.Foc;
 
 
