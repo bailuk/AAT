@@ -17,3 +17,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - CI: Update java-gtk to 0.6.0
 - CI: Update mapsforge-gtk to 0.5.0
 - GTK: OfflinePoi as leaflet page
+- LIB: Read Results-Files from OSM Routing APIs (Valhalla, GraphHopper and OSRM)

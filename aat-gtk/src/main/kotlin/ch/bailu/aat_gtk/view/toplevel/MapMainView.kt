@@ -4,16 +4,17 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
 import ch.bailu.aat_gtk.view.map.control.EditorStatusLabel
 import ch.bailu.aat_gtk.view.map.control.InfoBar
-import ch.bailu.aat_gtk.view.map.control.LeafletBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
+import ch.bailu.aat_gtk.view.map.control.NavigationViewBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
 import ch.bailu.aat_gtk.view.map.control.SearchBar
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
@@ -29,8 +30,9 @@ import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
-import ch.bailu.gtk.gtk.Align
 import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.gtk.Window
 
@@ -42,9 +44,10 @@ class MapMainView(
     uiController: UiControllerInterface,
     editor: EditorSourceInterface,
     window: Window)
-    : Attachable {
+    : Attachable, NavigationViewChanged {
 
     val map = GtkCustomMapView(appContext, dispatcher)
+    val box = Box(Orientation.VERTICAL, 0)
     val overlay = Overlay()
 
     private val overlayList = ArrayList<OverlayContainer>().apply {
@@ -69,13 +72,10 @@ class MapMainView(
     private val editorBar = EditorBar(app, nodeInfo, statusLabel, map.getMContext(), appContext.services, editor, editableOverlayList)
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
+    private val navigationViewBar = NavigationViewBar(uiController)
+
     init {
-        overlay.addOverlay(LeafletBar(uiController).layout.apply {
-                halign = Align.END
-                valign = Align.START
-                margin(Layout.margin)
-            }
-        )
+        overlay.addOverlay(navigationViewBar.layout)
 
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
@@ -122,6 +122,11 @@ class MapMainView(
 
     fun showEditor() {
         edgeControl.show(Position.LEFT)
+    }
+
+    override fun onNavigationViewChanged(navigationView: NavigationView) {
+        navigationViewBar.leftButton.visible = navigationView.leftCollapsed
+        navigationViewBar.rightButton.visible = navigationView.rightCollapsed
     }
 }
 

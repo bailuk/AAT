@@ -15,6 +15,7 @@ import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -35,7 +36,6 @@ import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
-import ch.bailu.gtk.adw.Leaflet
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
@@ -49,16 +49,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private val editorSource = EditorSource(appContext, usageTrackers)
     private val customFileSource = FileViewSource(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
-
-    // leaflet containing map and cockpit
-    private val leaflet = Leaflet().apply {
-        // To not disturbing map scrolling
-        canNavigateBack = false
-        canNavigateForward = false
-
-        hexpand = true
-        vexpand = true
-    }
 
     private val overlay = Overlay()
     private val messageOverlay = MessageOverlay()
@@ -85,19 +75,24 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
 
+    private val navigationView = NavigationView(window)
+
     init {
         overlay.child = Box(Orientation.VERTICAL, 0).apply {
-            append(leaflet)
+            append(navigationView.navigationSplitViewL1)
         }
 
-        leaflet.append(mainPage.layout)
-        leaflet.append(mapView.overlay)
-        leaflet.append(poiView.layout)
+        navigationView.setLeftSidebar(mainPage.layout, "")
+        navigationView.setContent(mapView.overlay, "")
+        navigationView.setRightSidebar(poiView.layout, "")
+
+        navigationView.observe(mainPage)
+        navigationView.observe(mapView)
 
         setupDispatcher(dispatcher)
         TrackerOverlayOnOffController(appContext.storage, dispatcher)
 
-        leaflet.visibleChild = mainPage.layout
+        navigationView.showLeftSidebar()
 
         var blockCloseRequest = true
 
@@ -137,11 +132,11 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun showMap() {
-        leaflet.visibleChild = mapView.overlay
+        navigationView.showContent()
     }
 
     override fun showPoi() {
-        leaflet.visibleChild = poiView.layout
+        navigationView.showRightSidebar()
     }
 
     override fun frameInMap(info: GpxInformation) {
@@ -180,13 +175,13 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun showCockpit() {
-        leaflet.visibleChild = mainPage.layout
+        navigationView.showLeftSidebar()
         mainPage.showCockpit()
 
     }
 
     override fun showDetail() {
-        leaflet.visibleChild = mainPage.layout
+        navigationView.showLeftSidebar()
         mainPage.showDetail()
     }
 
@@ -232,7 +227,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun hideMap() {
-        leaflet.visibleChild = mainPage.layout
+        navigationView.showLeftSidebar()
     }
 
     override fun getName(iid: Int): String {

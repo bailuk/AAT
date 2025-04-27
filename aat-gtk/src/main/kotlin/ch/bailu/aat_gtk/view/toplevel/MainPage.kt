@@ -6,6 +6,8 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
@@ -23,7 +25,7 @@ class MainPage(appContext: AppContext,
                controller: UiControllerInterface,
                app: Application, window: ApplicationWindow,
                dispatcher: Dispatcher,
-               usageTrackers: UsageTrackers) {
+               usageTrackers: UsageTrackers) : NavigationViewChanged {
 
     private val showMapButton = Button().apply {
         setLabel(Res.str().p_map())
@@ -40,6 +42,8 @@ class MainPage(appContext: AppContext,
         packStart(MainMenuButton(window, dispatcher, controller).apply {
             createActions(app)
         }.menuButton)
+        this.showEndTitleButtons = true
+        this.showStartTitleButtons = true
     }
 
     val stackView = StackView(SOLID_KEY).apply {
@@ -80,5 +84,9 @@ class MainPage(appContext: AppContext,
         val pageIdCockpit  = Icons.incCockpitSymbolic
         val pageIdFileList = Icons.viewListSymbolic
         val pageIdDetail   = Icons.viewContinuousSymbolic
+    }
+
+    override fun onNavigationViewChanged(navigationView: NavigationView) {
+        showMapButton.visible = navigationView.leftCollapsed
     }
 }

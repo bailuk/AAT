@@ -68,14 +68,23 @@ tasks {
     }
 }
 
-
 tasks.register<Exec>("generateGResource") {
     setWorkingDir("gresource")
     setCommandLine("./generate.sh")
 }
 
+// Force byte code compatibility to Java 17 (61)
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
 
 tasks {
+    // Force byte code compatibility to Java 17 (61)
+    compileJava {
+        options.release.set(17)
+    }
     build {
         dependsOn(shadowJar)
     }

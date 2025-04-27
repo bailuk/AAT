@@ -1,9 +1,7 @@
 package ch.bailu.aat_gtk.view.search
 
 import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
@@ -13,6 +11,7 @@ import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.Clamp
+import ch.bailu.gtk.adw.HeaderBar
 import ch.bailu.gtk.gtk.ApplicationWindow
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
@@ -25,11 +24,6 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
 
     private var poiHandle: Obj = ObjNull
 
-    private val showMapButton = Button().apply {
-        setLabel(Res.str().p_map())
-        onClicked { controller.showMap() }
-    }
-
     private val loadButton = Button.newWithLabelButton(Res.str().load()).apply {
         onClicked {
             spinner.start()
@@ -40,14 +34,11 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
     private val spinner = Spinner()
     private val countLabel = Label(Str.NULL)
 
-    private val headerBar = Box(Orientation.HORIZONTAL, 0).apply {
-        addCssClass(Strings.linked)
-        append(showMapButton)
-        append(loadButton)
-        append(spinner)
-        append(countLabel)
+    private val headerBar = HeaderBar().apply {
+        packEnd(countLabel)
+        packEnd(spinner)
+        packEnd(loadButton)
     }
-
     init {
         appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_ONDISK) { args: Array<out String> ->
             val handle = poiHandle
@@ -69,7 +60,6 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
     private val poiView = PoiView(controller, app, window)
 
     val layout = Box(Orientation.VERTICAL, 0).apply {
-        margin(Layout.margin)
         append(headerBar)
         append(Clamp().apply {
             maximumSize = Layout.stackWidth
