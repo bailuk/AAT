@@ -6,7 +6,7 @@ import ch.bailu.foc_extended.FocResource
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TestGpxListReaderJson {
+class GpxListReaderJsonTest {
 
     @Test
     fun testGraphHopper() {

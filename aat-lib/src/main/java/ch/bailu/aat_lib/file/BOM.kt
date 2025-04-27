@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.file.xml.parser
+package ch.bailu.aat_lib.file
 
 import ch.bailu.foc.Foc
 import java.io.BufferedReader

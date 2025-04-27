@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.file.xml.parser
 
+import ch.bailu.aat_lib.file.BOM
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.file.xml.parser.gpx.GpxBuilderInterface
 import ch.bailu.aat_lib.file.xml.parser.scanner.Scanner
