@@ -3,6 +3,8 @@ package ch.bailu.aat_lib.service.cache.gpx
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.file.FileType
+import ch.bailu.aat_lib.file.json.GpxListReaderJson
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListWalker
 import ch.bailu.aat_lib.gpx.GpxPoint
@@ -183,6 +185,32 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
         }
 
         private fun load(appContext: AppContext, handle: ObjGpxStatic): Long {
+            try {
+                val fileType = FileType(getFile())
+                if (fileType.isJSON) {
+                    return loadJSON(handle)
+                } else if (fileType.isXML) {
+                    return loadXML(appContext, handle)
+                }
+            } catch (e: Exception) {
+                handle.setException(e)
+            }
+            return 0L
+        }
+
+        private fun loadJSON(handle: ObjGpxStatic): Long {
+            var size = 0L
+            val reader = GpxListReaderJson(getFile())
+            handle.setException(reader.exception)
+
+            if (canContinue()) {
+                handle.setGpxList(reader.gpxList)
+                size = handle.getSize()
+            }
+            return size
+        }
+
+        private fun loadXML(appContext: AppContext, handle: ObjGpxStatic): Long {
             var size = 0L
 
             val reader = GpxListReaderXml(
@@ -197,7 +225,6 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
                 handle.setGpxList(reader.gpxList)
                 size = handle.getSize()
             }
-
 
             return size
         }

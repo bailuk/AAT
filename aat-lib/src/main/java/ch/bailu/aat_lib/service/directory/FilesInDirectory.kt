@@ -5,11 +5,7 @@ import java.util.NavigableMap
 import java.util.TreeMap
 
 class FilesInDirectory(directory: Foc) {
-    private val files: NavigableMap<String, Foc>
-
-    init {
-        files = getFileList(directory)
-    }
+    private val files: NavigableMap<String, Foc> = getFileList(directory)
 
     fun findItem(name: String): Foc? {
         return files[name]

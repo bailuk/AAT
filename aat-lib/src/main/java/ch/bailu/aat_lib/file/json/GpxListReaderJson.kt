@@ -15,26 +15,35 @@ import ch.bailu.foc.Foc
 
 class GpxListReaderJson(inputFile: Foc) {
     val gpxList = GpxList(GpxType.ROUTE, GpxListAttributes.factoryRoute())
+    var exception: Exception? = null
+        private set
 
     private var haveNewSegment = true
 
     init {
-        val jsonContent = inputFile.openR().readBytes().toString(Charsets.UTF_8)
-        val jsonMap = Json.parse(jsonContent)
+        try {
+            inputFile.openR().use {
+                val jsonContent = it.readBytes().toString(Charsets.UTF_8)
+                val jsonMap = Json.parse(jsonContent)
+                val time = inputFile.lastModified()
 
-        parseValhalla(jsonMap)
-        parseGraphHopper(jsonMap)
-        parseOSRM(jsonMap)
+                parseValhalla(jsonMap, time)
+                parseGraphHopper(jsonMap, time)
+                parseOSRM(jsonMap, time)
+            }
+        } catch (e: Exception) {
+            exception = e
+        }
     }
 
-    private fun parseOSRM(jsonMap: JsonMap) {
+    private fun parseOSRM(jsonMap: JsonMap, time: Long) {
+        var time = time
         jsonMap.map("routes") { routes ->
             haveNewSegment = true
             routes.map("legs") { legs ->
                 legs.map("steps") { steps ->
-                    var time = 0L
                     steps.number("duration") { duration ->
-                        time = (duration * 1000.0).toLong()
+                        time += (duration * 1000.0).toLong()
                     }
                     steps.map("maneuver") { maneuver ->
                         var first = true
@@ -55,31 +64,31 @@ class GpxListReaderJson(inputFile: Foc) {
         }
     }
 
-    private fun parseGraphHopper(jsonMap: JsonMap) {
+    private fun parseGraphHopper(jsonMap: JsonMap, time: Long) {
         jsonMap.map("paths") { paths ->
             haveNewSegment = true
             paths.string("points") { points ->
                 PolylineDecoder(points) { la, lo ->
-                    append(LatLongE6(la / 1e5, lo / 1e5))
+                    append(LatLongE6(la / 1e5, lo / 1e5), time)
                 }
             }
         }
     }
 
-    private fun parseValhalla(jsonMap: JsonMap) {
+    private fun parseValhalla(jsonMap: JsonMap, time: Long) {
         jsonMap.map("trip") { trip ->
             haveNewSegment = true
             trip.map("legs") { legs ->
                 legs.string("shape") { shape ->
                     PolylineDecoder(shape) { la, lo ->
-                        append(LatLongE6(la, lo))
+                        append(LatLongE6(la, lo), time)
                     }
                 }
             }
         }
     }
 
-    private fun append(latLong: LatLongInterface, time: Long = 0, gpxAttributes: GpxAttributes = GpxAttributesNull()) {
+    private fun append(latLong: LatLongInterface, time: Long, gpxAttributes: GpxAttributes = GpxAttributesNull()) {
         append(GpxPoint(latLong, 0f, time), gpxAttributes)
     }
 
