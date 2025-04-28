@@ -30,7 +30,6 @@ class NavigationView(applicationWindow: ApplicationWindow) {
         } catch (e: UnsatisfiedLinkError) {
             AppLog.w(this, "Adw->NavigationSplitView->get_sidebar_position: Available since: 1.7")
         }
-
     }
 
     val navigationSplitViewL1 = NavigationSplitView().apply {
@@ -89,7 +88,7 @@ class NavigationView(applicationWindow: ApplicationWindow) {
         breakpointBin.addBreakpoint(breakpoint)
 
         breakpointBin.child = navigationSplitViewL2
-        return NavigationPage(breakpointBin, "")
+        return NavigationPage(breakpointBin, "").apply { canPop = false }
     }
 
     fun showLeftSidebar() {
@@ -108,15 +107,15 @@ class NavigationView(applicationWindow: ApplicationWindow) {
     }
 
     fun setLeftSidebar(widget: Widget, title: String) {
-        navigationSplitViewL1.sidebar = NavigationPage(widget, title)
+        navigationSplitViewL1.sidebar = NavigationPage(widget, title).apply { canPop = false }
     }
 
     fun setRightSidebar(widget: Widget, title: String) {
-        navigationSplitViewL2.sidebar = NavigationPage(widget, title)
+        navigationSplitViewL2.sidebar = NavigationPage(widget, title).apply { canPop = false }
     }
 
     fun setContent(widget: Widget, title: String) {
-        navigationSplitViewL2.content = NavigationPage(widget, title)
+        navigationSplitViewL2.content = NavigationPage(widget, title).apply { canPop = false }
     }
 
     companion object {

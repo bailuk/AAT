@@ -2,6 +2,8 @@ package ch.bailu.aat_gtk.view.search
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.UiControllerInterface
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastData
@@ -20,9 +22,15 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.type.Str
 
-class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Application, window: ApplicationWindow) {
+class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Application, window: ApplicationWindow) :
+    NavigationViewChanged {
 
     private var poiHandle: Obj = ObjNull
+
+    private val showMapButton = Button().apply {
+        setLabel(Res.str().p_map())
+        onClicked { controller.showMap() }
+    }
 
     private val loadButton = Button.newWithLabelButton(Res.str().load()).apply {
         onClicked {
@@ -35,9 +43,11 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
     private val countLabel = Label(Str.NULL)
 
     private val headerBar = HeaderBar().apply {
-        packEnd(countLabel)
-        packEnd(spinner)
-        packEnd(loadButton)
+        packEnd(showMapButton)
+        packStart(loadButton)
+        packStart(spinner)
+        packStart(countLabel)
+        showBackButton = false
     }
     init {
         appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_ONDISK) { args: Array<out String> ->
@@ -66,5 +76,9 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
             child = poiView.layout
         })
         hexpand = false
+    }
+
+    override fun onNavigationViewChanged(navigationView: NavigationView) {
+        showMapButton.visible = navigationView.rightCollapsed
     }
 }

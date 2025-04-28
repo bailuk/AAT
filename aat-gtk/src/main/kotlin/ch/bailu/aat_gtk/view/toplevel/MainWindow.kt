@@ -88,6 +88,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
         navigationView.observe(mainPage)
         navigationView.observe(mapView)
+        navigationView.observe(poiView)
 
         setupDispatcher(dispatcher)
         TrackerOverlayOnOffController(appContext.storage, dispatcher)
