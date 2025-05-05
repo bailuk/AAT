@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.lifecycle.LifeCycleInterface
+import ch.bailu.aat_lib.logger.Validator
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -89,11 +90,12 @@ open class GtkCustomMapView (
 
     private fun frameBounding(bounding: BoundingBox) {
         val dimension = model.mapViewDimension.dimension
-        if (dimension != null) {
+        if (Validator.validateNotNull(dimension, "Map is not initialized")) {
             val zoom: Byte = zoomForBounds(bounding, dimension)
             val position = MapPosition(bounding.centerPoint, zoom)
             model.mapViewPosition.mapPosition = position
         }
+
     }
 
     private fun zoomForBounds(bounding: BoundingBox, dimension: Dimension): Byte {

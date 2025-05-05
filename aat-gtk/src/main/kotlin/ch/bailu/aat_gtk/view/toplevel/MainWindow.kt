@@ -36,6 +36,7 @@ import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
+import ch.bailu.gtk.glib.Glib
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
@@ -134,6 +135,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     override fun showMap() {
         navigationView.showContent()
+
+        // Flush UI
+        while (Glib.mainContextDefault().iteration(false)) {}
     }
 
     override fun showPoi() {

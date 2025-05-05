@@ -1,8 +1,10 @@
-package ch.bailu.aat_lib.preferences.dispatcher.usage
+package ch.bailu.aat_lib.dispatcher.source.usage
 
 import ch.bailu.aat_lib.dispatcher.usage.UsageTracker
 import ch.bailu.aat_lib.gpx.information.InfoID
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class UsageTrackerTest {
