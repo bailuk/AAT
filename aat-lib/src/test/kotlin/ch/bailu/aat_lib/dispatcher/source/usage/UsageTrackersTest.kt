@@ -17,27 +17,15 @@ class UsageTrackersTest {
         var observed = 0
 
         usageTrackers.observe { observed++ }
+        assertEquals(1, observed)
 
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
+
 
         val tracker1 = usageTrackers.createTracker()
+        assertEquals(2, observed)
+
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
-
-        tracker1.setEnabled(InfoID.FILE_VIEW, false)
-        assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
-
-
-        tracker1.setEnabled(InfoID.FILE_VIEW, true)
-        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
-
-
-        val tracker2 = usageTrackers.createTracker()
-        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
 
 
         tracker1.setEnabled(InfoID.FILE_VIEW, false)
@@ -45,9 +33,24 @@ class UsageTrackersTest {
         assertEquals(2, observed)
 
 
-        tracker2.setEnabled(InfoID.FILE_VIEW, true)
+        tracker1.setEnabled(InfoID.FILE_VIEW, true)
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertEquals(3, observed)
+
+
+        val tracker2 = usageTrackers.createTracker()
+        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(4, observed)
+
+
+        tracker1.setEnabled(InfoID.FILE_VIEW, false)
+        assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(5, observed)
+
+
+        tracker2.setEnabled(InfoID.FILE_VIEW, true)
+        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(6, observed)
     }
 
     @Test
@@ -56,42 +59,43 @@ class UsageTrackersTest {
         var observed = 0
 
         usageTrackers.observe { observed++ }
+        assertEquals(1, observed)
 
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
 
         val tracker1 = usageTrackers.createTracker()
+        assertEquals(2, observed)
+
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
-
-        tracker1.setEnabled(InfoID.FILE_VIEW, false)
-        assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
-
-
-        tracker1.setEnabled(InfoID.FILE_VIEW, true)
-        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
-
-
-        val tracker2 = usageTrackers.createSelectableUsageTracker()
-        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
-
 
         tracker1.setEnabled(InfoID.FILE_VIEW, false)
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertEquals(2, observed)
 
 
-        tracker2.select(InfoID.FILE_VIEW)
+        tracker1.setEnabled(InfoID.FILE_VIEW, true)
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertEquals(3, observed)
+
+
+        val tracker2 = usageTrackers.createSelectableUsageTracker()
+        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(4, observed)
+
+
+        tracker1.setEnabled(InfoID.FILE_VIEW, false)
+        assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(5, observed)
+
+
+        tracker2.select(InfoID.FILE_VIEW)
+        assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(6, observed)
 
         tracker2.select(InfoID.OVERLAY)
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertTrue(usageTrackers.isEnabled(InfoID.OVERLAY))
-        assertEquals(5, observed)
+        assertEquals(8, observed)
     }
 
 
@@ -101,22 +105,23 @@ class UsageTrackersTest {
         var observed = 0
 
         usageTrackers.observe { observed++ }
+        assertEquals(1, observed)
 
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
 
         val tracker1 = usageTrackers.createTracker()
+        assertEquals(2, observed)
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
+
 
         tracker1.setEnabled(InfoID.FILE_VIEW, false)
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
+        assertEquals(2, observed)
 
 
         tracker1.setEnabled(InfoID.FILE_VIEW, true)
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
+        assertEquals(3, observed)
 
 
         val storage = MockStorage()
@@ -124,16 +129,18 @@ class UsageTrackersTest {
             InfoID.FILE_VIEW,
             InfoID.OVERLAY
         )
+        assertEquals(4, observed)
+
         val solidOverlayFileView = SolidOverlayFileEnabled(storage, InfoID.FILE_VIEW)
         val solidOverlayOverlay = SolidOverlayFileEnabled(storage, InfoID.OVERLAY)
 
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
+        assertEquals(4, observed)
 
 
         tracker1.setEnabled(InfoID.FILE_VIEW, false)
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(2, observed)
+        assertEquals(5, observed)
 
         assertEquals(0, storage.mockIntValue)
         assertFalse(tracker2.isEnabled(InfoID.FILE_VIEW))
@@ -142,13 +149,13 @@ class UsageTrackersTest {
         assertEquals(1, storage.mockIntValue)
         assertTrue(tracker2.isEnabled(InfoID.FILE_VIEW))
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(3, observed)
+        assertEquals(6, observed)
 
         solidOverlayFileView.value = false
         solidOverlayOverlay.value = true
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertTrue(usageTrackers.isEnabled(InfoID.OVERLAY))
-        assertEquals(5, observed)
+        assertEquals(8, observed)
     }
 
     @Test
@@ -167,21 +174,22 @@ class UsageTrackersTest {
             InfoID.OVERLAY
         )
         usageTrackers.observe { observed++ }
+        assertEquals(1, observed)
 
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertTrue(overlayUsageTracker.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(0, observed)
+
 
         solidOverlayFileView.value = false
         assertFalse(overlayUsageTracker.isEnabled(InfoID.FILE_VIEW))
         assertFalse(usageTrackers.isEnabled(InfoID.FILE_VIEW))
-        assertEquals(1, observed)
+        assertEquals(2, observed)
 
         solidOverlayFileView.value = true
         solidOverlayOverlay.value = false
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
         assertFalse(usageTrackers.isEnabled(InfoID.OVERLAY))
-        assertEquals(3, observed)
+        assertEquals(4, observed)
 
 
         solidOverlayFileView.value = false
@@ -189,5 +197,6 @@ class UsageTrackersTest {
         selectableUsageTracker.select(InfoID.FILE_VIEW)
 
         assertTrue(usageTrackers.isEnabled(InfoID.FILE_VIEW))
+        assertEquals(6, observed)
     }
 }

@@ -18,27 +18,34 @@ class UsageTrackers : UsageTrackerInterface {
 
     override fun observe(onChanged: ()->Unit) {
         observers.add(onChanged)
+        propagate()
     }
 
     fun createTracker(): UsageTracker {
         val result = UsageTracker()
-        result.observe { observers.forEach { it() } }
+        result.observe { propagate() }
         usageTrackers.add(result)
+        propagate()
         return result
     }
 
     fun createOverlayUsageTracker(storageInterface: StorageInterface, vararg infoIDs: Int): OverlayUsageTracker {
         val result = OverlayUsageTracker(storageInterface, *infoIDs)
-        result.observe { observers.forEach { it() } }
+        result.observe { propagate() }
         usageTrackers.add(result)
+        propagate()
         return result
     }
 
     fun createSelectableUsageTracker(): SelectableUsageTracker {
         val result = SelectableUsageTracker()
-        result.observe { observers.forEach { it() } }
+        result.observe { propagate() }
         usageTrackers.add(result)
+        propagate()
         return result
+    }
 
+    private fun propagate() {
+        observers.forEach { it() }
     }
 }

@@ -28,8 +28,8 @@ open class FileSource(
         usageTracker.observe {
             setEnabled(usageTracker.isEnabled(iid))
         }
-        setEnabled(usageTracker.isEnabled(iid))
     }
+
     override fun setTarget(target: TargetInterface) {
         this.target = target
     }
