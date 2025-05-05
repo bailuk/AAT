@@ -5,7 +5,7 @@ object Configuration {
     const val acraVersion = "5.12.0"
     const val appWebsite = "https://github.com/bailuk/AAT"
     const val appLongName = "AAT Activity Tracker"
-    const val mapsForgeGtkVersion = "9a48542"
+    const val mapsForgeGtkVersion = "7601625"
     const val appName = "AAT"
     const val appContact = "aat@bailu.ch"
     const val mapsForgeVersion = "0.24.1"

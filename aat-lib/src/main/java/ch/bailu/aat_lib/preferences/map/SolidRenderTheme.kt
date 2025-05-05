@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.preferences.map
 
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.FocFactory
@@ -25,8 +26,10 @@ class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, 
         get() = toThemeName(valueAsThemeID)
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        list.add(MapsforgeThemes.DEFAULT.toString())
-        list.add(MapsforgeThemes.OSMARENDER.toString())
+        MapsforgeThemes.entries.forEach {
+            list.add(it.name)
+        }
+
         val maps = mapsForgeDirectory.getValueAsFile()
         addByExtension(list, maps, EXTENSION)
         addByExtensionIncludeSubdirectories(list, maps, EXTENSION)
@@ -46,32 +49,33 @@ class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, 
         }
 
         private fun toThemeID(name: String): String {
-            return if (name == MapsforgeThemes.DEFAULT.toString()) {
-                name
-            } else if (name == MapsforgeThemes.OSMARENDER.toString()) {
-                name
-            } else {
-                try {
-                    ExternalRenderTheme(File(name))
-                    name
-                } catch (e1: FileNotFoundException) {
-                    MapsforgeThemes.DEFAULT.toString()
+            MapsforgeThemes.entries.forEach {
+                if (name == it.name) {
+                    return name
                 }
             }
+            try {
+                ExternalRenderTheme(File(name))
+                return name
+            } catch (e: FileNotFoundException) {
+                AppLog.w(this, e)
+            }
+            return MapsforgeThemes.DEFAULT.toString()
         }
 
         fun toRenderTheme(name: String): XmlRenderTheme {
-            return if (name == MapsforgeThemes.DEFAULT.toString()) {
-                MapsforgeThemes.DEFAULT
-            } else if (name == MapsforgeThemes.OSMARENDER.toString()) {
-                MapsforgeThemes.OSMARENDER
-            } else {
-                try {
-                    ExternalRenderTheme(File(name))
-                } catch (e1: FileNotFoundException) {
-                    MapsforgeThemes.DEFAULT
+            MapsforgeThemes.entries.forEach {
+                if (name == it.name) {
+                    return it
                 }
             }
+
+            try {
+                return ExternalRenderTheme(File(name))
+            } catch (e: FileNotFoundException) {
+                AppLog.w(this, e)
+            }
+            return MapsforgeThemes.DEFAULT
         }
     }
 }

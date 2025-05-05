@@ -37,6 +37,7 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
     init {
         sdatabase.register(onPreferencesChanged)
     }
+
     private val searchEntry = SearchEntry().apply {
         onSearchChanged {
             updateList(Editable(cast()).text.toString())

@@ -309,7 +309,6 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
         override fun ping() {}
         override fun start() {
-            AppLog.d(this, "state terminate")
             appContext.broadcaster.unregister(onFileChanged)
             database?.close()
             setPendingGpxHandle(null)

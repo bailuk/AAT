@@ -5,6 +5,10 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 
 ## Next
 
+- GTK: Replace deprecated Leaflet with NavigationSplitView 
+- GTK: Fix crash on startup when using GTK property-access
+- GTK: Fix framing and selecting of current track and overlays
+- GTK: Fix offset of bounding box in POI-Query 
 - CI: Update gradle `./gradlew wrapper --gradle-version 8.13`
 - CI: Update gradle shadow plugin to version 8.3.6
 - CI: Update gson to 2.12.1
