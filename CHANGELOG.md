@@ -5,6 +5,8 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 
 ## Next
 
+- GTK: Fix crash when accessing freed resources in preferences dialog
+- LIB: Support Motorider Theme
 - GTK: Replace deprecated Leaflet with NavigationSplitView 
 - GTK: Fix crash on startup when using GTK property-access
 - GTK: Fix framing and selecting of current track and overlays

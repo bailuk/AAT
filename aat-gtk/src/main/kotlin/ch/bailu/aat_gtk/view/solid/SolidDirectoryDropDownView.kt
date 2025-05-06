@@ -35,6 +35,10 @@ class SolidDirectoryDropDownView(appContext: AppContext)
 
         dropDown.showArrow = false
         solidDirectoryQuery.register(this)
+
+        dropDown.onDestroy {
+            solidDirectoryQuery.unregister(this)
+        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

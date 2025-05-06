@@ -36,7 +36,7 @@ object PreferencesDialog {
                 }
             }
         }
-        window?.show()
+        window?.present()
     }
 
     fun showMap(app: Application, appContext: AppContext) {

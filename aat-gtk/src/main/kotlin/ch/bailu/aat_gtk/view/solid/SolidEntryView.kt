@@ -25,6 +25,11 @@ class SolidEntryView (private val solid: AbsSolidType) : OnPreferencesChanged{
         editable.onChanged {
             solid.setValueFromString(entry.buffer.text.toString())
         }
+
+        solid.register(this)
+        entry.onDestroy {
+            solid.unregister(this)
+        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

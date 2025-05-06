@@ -37,6 +37,10 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean) : OnPreferencesCha
             solid.value = it
             true
         }
+
+        toggle.onDestroy {
+            solid.getStorage().unregister(this)
+        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
