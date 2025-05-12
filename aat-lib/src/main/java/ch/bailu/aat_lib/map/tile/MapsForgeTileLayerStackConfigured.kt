@@ -21,8 +21,8 @@ abstract class MapsForgeTileLayerStackConfigured(
 ) {
     private val stheme: SolidRenderTheme = SolidRenderTheme(scontext.mapDirectory, scontext)
     private val stiles = SolidMapTileStack(stheme)
-    private val scacheHS = SolidEnableTileCache.MapsForge(scontext.storage)
-    private val scacheMF = SolidEnableTileCache.HillShade(scontext.storage)
+    private val scacheHS = SolidEnableTileCache.HillShade(scontext.storage)
+    private val scacheMF = SolidEnableTileCache.MapsForge(scontext.storage)
 
     init {
         initLayers()

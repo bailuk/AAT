@@ -32,8 +32,11 @@ import ch.bailu.aat_lib.map.layer.selector.NodeSelectorLayer
 import ch.bailu.aat_lib.preferences.location.CurrentLocationLayer
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.EventSequenceState
+import ch.bailu.gtk.gtk.GestureSwipe
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
+import ch.bailu.gtk.gtk.PropagationPhase
 import ch.bailu.gtk.gtk.Window
 
 class MapMainView(
@@ -43,8 +46,8 @@ class MapMainView(
     usageTrackers: UsageTrackers,
     uiController: UiControllerInterface,
     editor: EditorSourceInterface,
-    window: Window)
-    : Attachable, NavigationViewChanged {
+    window: Window
+) : Attachable, NavigationViewChanged {
 
     val map = GtkCustomMapView(appContext, dispatcher)
     val box = Box(Orientation.VERTICAL, 0)
@@ -59,24 +62,49 @@ class MapMainView(
         }
     }
 
-    private val editableOverlayList = OverlayController.createEditableOverlayControllers(appContext.storage, uiController)
+    private val editableOverlayList =
+        OverlayController.createEditableOverlayControllers(appContext.storage, uiController)
 
     private val nodeInfo = NodeInfo()
     private val statusLabel = EditorStatusLabel().apply {
         dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
     }
 
-    private val searchBar = SearchBar(app) {map.setCenter(it)}
+    private val searchBar = SearchBar(app) { map.setCenter(it) }
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
-    private val infoBar = InfoBar(app, nodeInfo, uiController, map.getMContext(), appContext.storage, appContext, window)
-    private val editorBar = EditorBar(app, nodeInfo, statusLabel, map.getMContext(), appContext.services, editor, editableOverlayList)
+    private val infoBar = InfoBar(
+        app,
+        nodeInfo,
+        uiController,
+        map.getMContext(),
+        appContext.storage,
+        appContext,
+        window
+    )
+    private val editorBar = EditorBar(
+        app,
+        nodeInfo,
+        statusLabel,
+        map.getMContext(),
+        appContext.services,
+        editor,
+        editableOverlayList
+    )
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
     private val navigationViewBar = NavigationViewBar(uiController)
 
     init {
         overlay.addOverlay(navigationViewBar.layout)
+        overlay.addController(GestureSwipe().apply {
+            // This is to prevent propagation of events to NavigationSplitView
+            // TODO Consider adding this to MapView
+            onSwipe { _, _ ->
+                setState(EventSequenceState.CLAIMED)
 
+            }
+            propagationPhase = PropagationPhase.BUBBLE
+        })
         dispatcher.addTarget(navigationBar, InfoID.ALL)
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
@@ -85,17 +113,29 @@ class MapMainView(
         overlayList.forEach { map.add(it.gpxLayer) }
 
         map.add(edgeControl)
-        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.LEFT).apply {
-            observe(editorBar)
-            dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
-            edgeControl.add(this)
-        })
+        map.add(
+            NodeSelectorLayer(
+                appContext.services,
+                appContext.storage,
+                map.getMContext(),
+                Position.LEFT
+            ).apply {
+                observe(editorBar)
+                dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
+                edgeControl.add(this)
+            })
 
-        map.add(NodeSelectorLayer(appContext.services, appContext.storage, map.getMContext(), Position.RIGHT).apply {
-            observe(infoBar)
-            dispatcher.addTarget(this, InfoID.ALL)
-            edgeControl.add(this)
-        })
+        map.add(
+            NodeSelectorLayer(
+                appContext.services,
+                appContext.storage,
+                map.getMContext(),
+                Position.RIGHT
+            ).apply {
+                observe(infoBar)
+                dispatcher.addTarget(this, InfoID.ALL)
+                edgeControl.add(this)
+            })
 
         overlay.child = map.drawingArea
         addBar(searchBar)
@@ -136,7 +176,8 @@ private class OverlayContainer(
     uiController: UiControllerInterface,
     map: GtkCustomMapView,
     dispatcher: DispatcherInterface,
-    usageTracker: UsageTrackerInterface): OverlayControllerInterface {
+    usageTracker: UsageTrackerInterface
+) : OverlayControllerInterface {
 
     val overlayController = OverlayController(appContext.storage, uiController, iid)
     val gpxLayer = GpxDynLayer(appContext.storage, map.getMContext(), appContext.services)

@@ -1,67 +1,67 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public final class MultiCell8 extends MultiCell {
+class MultiCell8(private val demProvider: DemProvider) : MultiCell() {
     /**
-     *      a  b  c
-     *      d [e] f
-     *      g  h  i
+     * a  b  c
+     * d [e] f
+     * g  h  i
      *
-     *      only works with double offset mode
+     * only works with double offset mode
      */
+    private var A = 0
+    private var B = 0
+    private var C = 0
+    private var D = 0
+    private var F = 0
+    private var G = 0
+    private var H = 0
+    private var I = 0
+    private var dzx = 0
+    private var dzy = 0
 
-    private int A,B,C,D,F,G,H,I;
-    private int dzx, dzy;
+    private val dim = demProvider.dim.DIM
+    private val totalCellSize = Math.round(demProvider.cellsize * 8f)
 
-    private final DemProvider demtile;
-    private final int dim;
-    private final int total_cellsize;
+    override fun set(e: Int) {
+        val f = e + 1
+        val h = e + dim
+        val i = h + 1
+        val g = h - 1
 
-    public MultiCell8(final DemProvider dem) {
-        demtile=dem;
-        dim = dem.getDim().DIM;
-        total_cellsize=Math.round(dem.getCellsize()*8f);
+        val d = e - 1
+        val b = e - dim
+        val c = b + 1
+        val a = b - 1
+
+        A = demProvider.getElevation(a).toInt()
+        B = demProvider.getElevation(b).toInt()
+        C = demProvider.getElevation(c).toInt()
+        D = demProvider.getElevation(d).toInt()
+        F = demProvider.getElevation(f).toInt()
+        G = demProvider.getElevation(g).toInt()
+        H = demProvider.getElevation(h).toInt()
+        I = demProvider.getElevation(i).toInt()
+
+        dzx = setDeltaZX()
+        dzy = setDeltaZY()
     }
 
-    public void set(final int e) {
-        final int f=e+1;
-        final int h=e+dim;
-        final int i=h+1;
-        final int g=h-1;
-
-        final int d=e-1;
-        final int b=e-dim;
-        final int c=b+1;
-        final int a=b-1;
-
-        A=demtile.getElevation(a);
-        B=demtile.getElevation(b);
-        C=demtile.getElevation(c);
-        D=demtile.getElevation(d);
-        F=demtile.getElevation(f);
-        G=demtile.getElevation(g);
-        H=demtile.getElevation(h);
-        I=demtile.getElevation(i);
-
-        dzx=_delta_zx();
-        dzy=_delta_zy();
-    }
-
-    public int delta_zx() {
-        return dzx;
+    override fun deltaZX(): Int {
+        return dzx
     }
 
 
-    public int delta_zy() {
-        return dzy;
+    override fun deltaZY(): Int {
+        return dzy
     }
 
-    private int _delta_zx() {
-        final int sum = (C + 2*F + I) - (A + 2*D + G);
-        return  (sum * 100)  / total_cellsize;
+    private fun setDeltaZX(): Int {
+        val sum = (C + 2 * F + I) - (A + 2 * D + G)
+        return (sum * 100) / totalCellSize
     }
 
-    private int _delta_zy() {
-        final int sum = (G + 2*H + I) - (A + 2*B + C);
-        return (sum *100)  / total_cellsize;
+    private fun setDeltaZY(): Int {
+        val sum = (G + 2 * H + I) - (A + 2 * B + C)
+        return (sum * 100) / totalCellSize
     }
 }

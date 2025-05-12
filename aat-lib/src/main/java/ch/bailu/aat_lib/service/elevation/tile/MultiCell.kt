@@ -1,23 +1,21 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public abstract class MultiCell {
+abstract class MultiCell {
+    abstract fun set(e: Int)
+    abstract fun deltaZX(): Int
+    abstract fun deltaZY(): Int
 
-    public abstract void set(final int e);
-    public abstract int delta_zx();
-    public abstract int delta_zy();
-
-    public static MultiCell factory(DemProvider dem) {
-        if (dem.inverseLatitude()==true && dem.inverseLongitude()==false) { // NE
-            return new MultiCell4NE(dem);
-
-        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==false) { // SE{
-            return new MultiCell4SE(dem);
-
-        } else if (dem.inverseLatitude()==false && dem.inverseLongitude()==true) { // SW{
-            return new MultiCell4SW(dem);
-
-        } else { // NW
-            return new MultiCell4NW(dem);
+    companion object {
+        fun factory(dem: DemProvider): MultiCell {
+            return if (dem.inverseLatitude() && !dem.inverseLongitude()) { // NE
+                MultiCell4NE(dem)
+            } else if (!dem.inverseLatitude() && !dem.inverseLongitude()) { // SE{
+                MultiCell4SE(dem)
+            } else if (!dem.inverseLatitude() && dem.inverseLongitude()) { // SW{
+                MultiCell4SW(dem)
+            } else { // NW
+                MultiCell4NW(dem)
+            }
         }
     }
 }
