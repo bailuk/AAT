@@ -15,7 +15,7 @@ class HillShadeColorTable {
     init {
         for (x in table.indices) {
             for (y in table.indices) {
-                table[x][y] = hillShade(indexToDelta(x), indexToDelta(y))
+                table[x][y] = hillShadeColor(indexToDelta(x), indexToDelta(y))
             }
         }
     }
@@ -49,17 +49,31 @@ class HillShadeColorTable {
         return ret
     }
 
-    private fun hillShade(dzx: Double, dzy: Double): Int {
+    /**
+     * Cairo expects pre-multiplied alpha. Else there will be pixel corruption when
+     * saving images.
+     */
+    private fun preMultipliedAlpha(alpha: Int, color: Int): Int {
+        return ((color * alpha).toDouble() / 255.0).toInt()
+    }
+
+    private fun hillShadeColor(dzx: Double, dzy: Double): Int {
+        val alpha = hillShadeAlpha(dzx, dzy, ALPHA_LIMIT)
+        val color = preMultipliedAlpha(alpha, COLOR)
+        return ARGB(alpha, color, color, color).toInt()
+    }
+
+    private fun hillShadeAlpha(dzx: Double, dzy: Double, limit: Int): Int {
         val slope = slopeRad(dzx, dzy)
-        var shade = (255.0 * ((ZENITH_COS * cos(slope)) +
+        var shade = (limit * ((ZENITH_COS * cos(slope)) +
                 (ZENITH_SIN * sin(slope) * cos(AZIMUTH_RAD - aspectRad(dzx, dzy))))).toInt()
 
-        shade = Limit.clamp(255 - shade, 0, MAX_DARKNESS)
-        return ARGB(shade, COLOR, COLOR, COLOR).toInt()
+        return Limit.clamp(limit - shade, 0, MAX_DARKNESS)
     }
 
     companion object {
-        private const val DELTA_SCALE = 100.0
+        private const val ALPHA_LIMIT = 175
+        private const val DELTA_SCALE = 50.0
         private const val MAX_DARKNESS = 255
         private const val TABLE_DIM = 500
         private const val TABLE_HDIM = TABLE_DIM / 2
@@ -89,7 +103,7 @@ class HillShadeColorTable {
         }
 
         private fun deltaToIndex(delta: Int): Int {
-            return Limit.clamp(delta + TABLE_HDIM, 0, TABLE_DIM-1)
+            return Limit.clamp(delta, TABLE_HDIM * -1, TABLE_HDIM-1) + TABLE_HDIM
         }
     }
 }
