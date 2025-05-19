@@ -5,6 +5,8 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 
 ## Next
 
+- LIB: HillShade fixes
+- GTK: Fix alpha on saved HillShade tiles
 - GTK: Fix crash when accessing freed resources in preferences dialog
 - LIB: Support Motorider Theme
 - GTK: Replace deprecated Leaflet with NavigationSplitView 

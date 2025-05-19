@@ -66,17 +66,16 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
         overlay.addOverlay(messageOverlay.box)
     }
+    private val navigationView = NavigationView(window)
 
     private val mainPage = MainPage(appContext, this, app, window, dispatcher, usageTrackers)
 
     private val poiView = PoiPage(appContext,this, app, window)
-    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, ).apply {
+    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, navigationView).apply {
         overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
         onAttached()
     }
 
-
-    private val navigationView = NavigationView(window)
 
     init {
         overlay.child = Box(Orientation.VERTICAL, 0).apply {
@@ -88,7 +87,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         navigationView.setRightSidebar(poiView.layout, "")
 
         navigationView.observe(mainPage)
-        navigationView.observe(mapView)
         navigationView.observe(poiView)
 
         setupDispatcher(dispatcher)
@@ -135,6 +133,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     override fun showMap() {
         navigationView.showContent()
+        mapView.showMainBar()
 
         // Flush UI
         while (Glib.mainContextDefault().iteration(false)) {}

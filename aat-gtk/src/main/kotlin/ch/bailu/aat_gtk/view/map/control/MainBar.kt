@@ -3,7 +3,10 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.search.SearchController
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.file.json.SearchModel
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.util.extensions.ellipsize
@@ -18,30 +21,59 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
-import org.mapsforge.core.model.LatLong
 
-class SearchBar(private val app: Application, centerMap: (LatLong)-> Unit): Bar(Position.TOP) {
+class MainBar(private val app: Application, controller: UiControllerInterface) : Bar(Position.TOP),
+    NavigationViewChanged {
     private val searchModel = SearchModel()
     private val searchController = SearchController(searchModel)
+    private val leftNavigationButton = Button().apply {
+        addCssClass(Strings.mapControl)
+        iconName = Icons.goPreviousSymbolic
+        onClicked {
+            controller.hideMap()
+        }
+    }
+
+    private val rightNavigationButton = Button().apply {
+        setLabel("POI")
+        onClicked {
+            controller.showPoi()
+        }
+    }
+
+    private val leftSeparator = Separator(Orientation.VERTICAL)
+    private val rightSeparator = Separator(Orientation.VERTICAL)
 
     init {
-        searchController.centerMap = centerMap
-        add(Box(Orientation.HORIZONTAL, Layout.margin).apply {
-            append(createNominatimWidget())
-            append(Separator(Orientation.VERTICAL))
-        })
+        searchController.centerMap = { pos ->
+            controller.centerInMap(pos)
+        }
 
+        add(Box(Orientation.HORIZONTAL, Layout.margin).apply {
+            append(leftNavigationButton)
+            append(leftSeparator)
+            append(createNominatimWidget())
+            append(rightSeparator)
+            append(rightNavigationButton)
+        })
+    }
+
+    override fun onNavigationViewChanged(navigationView: NavigationView) {
+        leftSeparator.visible = navigationView.leftCollapsed
+        leftNavigationButton.visible = navigationView.leftCollapsed
+        rightSeparator.visible = navigationView.rightCollapsed
+        rightNavigationButton.visible = navigationView.rightCollapsed
     }
 
     private fun createMenuModel(searchModel: SearchModel): Menu {
         val menu = Menu()
-         searchModel.forEachIndexed { index, name, latLong ->
-             menu.append(name.ellipsize(), "app.slot$index")
-             ActionHandler.get(app,"slot$index").apply {
-                 disconnectSignals()
-                 onActivate { _ -> searchController.centerMap(latLong) }
-             }
-         }
+        searchModel.forEachIndexed { index, name, latLong ->
+            menu.append(name.ellipsize(), "app.slot$index")
+            ActionHandler.get(app, "slot$index").apply {
+                disconnectSignals()
+                onActivate { _ -> searchController.centerMap(latLong) }
+            }
+        }
         return menu
     }
 

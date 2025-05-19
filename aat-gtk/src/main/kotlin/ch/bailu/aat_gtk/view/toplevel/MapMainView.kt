@@ -10,11 +10,9 @@ import ch.bailu.aat_gtk.view.map.control.EditorBar
 import ch.bailu.aat_gtk.view.map.control.EditorStatusLabel
 import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
-import ch.bailu.aat_gtk.view.map.control.NavigationViewBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
-import ch.bailu.aat_gtk.view.map.control.SearchBar
+import ch.bailu.aat_gtk.view.map.control.MainBar
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
-import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
@@ -46,8 +44,9 @@ class MapMainView(
     usageTrackers: UsageTrackers,
     uiController: UiControllerInterface,
     editor: EditorSourceInterface,
-    window: Window
-) : Attachable, NavigationViewChanged {
+    window: Window,
+    navigationView: NavigationView
+) : Attachable {
 
     val map = GtkCustomMapView(appContext, dispatcher)
     val box = Box(Orientation.VERTICAL, 0)
@@ -70,7 +69,7 @@ class MapMainView(
         dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
     }
 
-    private val searchBar = SearchBar(app) { map.setCenter(it) }
+    private val mainBar = MainBar(app, uiController)
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(
         app,
@@ -92,10 +91,8 @@ class MapMainView(
     )
     private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
 
-    private val navigationViewBar = NavigationViewBar(uiController)
-
     init {
-        overlay.addOverlay(navigationViewBar.layout)
+        navigationView.observe(mainBar)
         overlay.addController(GestureSwipe().apply {
             // This is to prevent propagation of events to NavigationSplitView
             // TODO Consider adding this to MapView
@@ -138,13 +135,15 @@ class MapMainView(
             })
 
         overlay.child = map.drawingArea
-        addBar(searchBar)
+        addBar(mainBar)
         addBar(navigationBar)
         addBar(infoBar)
         addBar(editorBar)
 
         overlay.addOverlay(nodeInfo.box)
         overlay.addOverlay(statusLabel.box)
+
+        showMainBar()
     }
 
     private fun addBar(bar: Bar) {
@@ -164,9 +163,8 @@ class MapMainView(
         edgeControl.show(Position.LEFT)
     }
 
-    override fun onNavigationViewChanged(navigationView: NavigationView) {
-        navigationViewBar.leftButton.visible = navigationView.leftCollapsed
-        navigationViewBar.rightButton.visible = navigationView.rightCollapsed
+    fun showMainBar() {
+        edgeControl.show(Position.TOP)
     }
 }
 
