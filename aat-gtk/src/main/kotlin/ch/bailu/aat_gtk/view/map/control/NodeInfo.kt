@@ -24,12 +24,11 @@ class NodeInfo {
 
     private val scrolled = ScrolledWindow().apply {
         child = label
-        setSizeRequest(Layout.windowWidth-Layout.barSize*2-Layout.margin*2,Layout.windowHeight/5)
+        setSizeRequest(Layout.windowWidth-Layout.barSize*2,Layout.windowHeight/5)
     }
 
     val box = Box(Orientation.VERTICAL,0).apply {
         addCssClass(Strings.mapControl)
-        margin(Layout.margin)
         append(scrolled)
         valign = Align.START
         halign = Align.CENTER

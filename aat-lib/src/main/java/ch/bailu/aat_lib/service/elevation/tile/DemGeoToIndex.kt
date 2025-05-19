@@ -1,68 +1,58 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public final class DemGeoToIndex {
-    private final int DOFFSET;
-    private final int LAST_INDEX;
-    private final DemDimension dim;
+import kotlin.math.abs
 
+/**
+ * Translate GeoLocations (latitude or longitude) to the correct index
+ * of a DEM Tile
+ */
+class DemGeoToIndex (private val dim: DemDimension, hasDoubleOffset: Boolean = false) {
+    private val offset : Int
+    private val lastIndex : Int
 
-    public DemGeoToIndex(DemDimension _dim) {
-        this(_dim, false);
-    }
-
-    public DemGeoToIndex(DemDimension _dim, boolean doffset) {
-        dim = _dim;
-
-        if (doffset) {
-            DOFFSET=dim.OFFSET;
-            LAST_INDEX=dim.DIM-1-dim.OFFSET-DOFFSET;
+    init {
+        if (hasDoubleOffset) {
+            offset = dim.offset
+            lastIndex = dim.dimension - 1 - (dim.offset * 2)
         } else {
-            DOFFSET=0;
-            LAST_INDEX=dim.DIM-1-dim.OFFSET;
+            offset = 0
+            lastIndex = dim.dimension - 1 - dim.offset
         }
     }
 
+    fun toIndex(laE6: Int, loE6: Int): Int {
+        val x = toXIndex(loE6)
+        val y = toYIndex(laE6)
 
-    public boolean hasDoubleOffset() {
-        return DOFFSET != 0;
+        return (y * dim.dimension + x)
     }
 
-    public int toPos(int laE6, int loE6) {
-        final int x=toXPos(loE6);
-        final int y=toYPos(laE6);
-
-        return (y*dim.DIM + x);
+    fun toXIndex(loE6: Int): Int {
+        if (loE6 < 0) return dim.dimension + inverse(toIndex(loE6))
+        return offset + toIndex(loE6)
     }
 
+    fun toYIndex(laE6: Int): Int {
+        // Positive value: offset is in first row (index starts with 1)
+        if (laE6 > 0) return dim.offset + inverse(toIndex(laE6))
 
-    public int toXPos(int loE6) {
-        if (loE6<0) return dim.OFFSET + inverse(toPos(loE6));
-        return DOFFSET + toPos(loE6);
+        // Negative value: offset is in last column (index starts with 0)
+        return offset + toIndex(laE6)
     }
 
-
-    public int toYPos(int laE6) {
-        if (laE6 >0)
-            return dim.OFFSET + inverse(toPos(laE6)); // offset is in first row (index starts with 1)
-        return DOFFSET + toPos(laE6); // offset is in last column (index starts with 0)
+    /**
+     * Scales fraction of decimal coordinate to last index
+     * Returns 0-lastIndex
+     */
+    private fun toIndex(coordinateE6: Int): Int {
+        val coordinate : Double = abs(coordinateE6.toDouble()) / 1e6
+        val integer: Int = coordinate.toInt()
+        val fraction: Double = (coordinate - integer)
+        val x = fraction * lastIndex // we use last index!!!
+        return Math.round(x).toInt()
     }
 
-
-    private int toPos(int cE6) {
-        double c = Math.abs(cE6);
-
-        c = c / 1e6d;
-
-        final double deg = (int)c;
-
-        final double min  = (c-deg);
-        final double x = min * LAST_INDEX; // we use last index!!!
-
-        return (int)Math.round(x);
+    private fun inverse(v: Int): Int {
+        return lastIndex - v
     }
-
-    private int inverse(int v) {
-        return LAST_INDEX-v;
-    }
-
 }

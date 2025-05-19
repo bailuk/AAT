@@ -61,7 +61,7 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
         span: SubTile,
         demtile: DemProvider
     ) {
-        val demTileDim = demtile.dim.DIM
+        val demTileDim = demtile.getDimension().dimension
         val bitmapDim = span.pixelDim()
 
         var color = 0

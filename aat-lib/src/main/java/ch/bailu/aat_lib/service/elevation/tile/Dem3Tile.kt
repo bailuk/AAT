@@ -1,18 +1,15 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.service.elevation.Dem3Lock
+import ch.bailu.aat_lib.service.elevation.Dem3Status
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.preferences.map.SolidDem3Directory;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.background.BackgroundTask;
-import ch.bailu.aat_lib.service.elevation.Dem3Lock;
-import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.foc.Foc;
-
-public final class Dem3Tile implements ElevationProvider, DemProvider {
-
+class Dem3Tile : ElevationProvider, DemProvider {
     /**
      * SRTM
      *
@@ -49,100 +46,90 @@ public final class Dem3Tile implements ElevationProvider, DemProvider {
      *
      * Source: http://wiki.openstreetmap.org/wiki/SRTM
      */
+    private var coordinates = Dem3Coordinates(0,0)
+    private val status = Dem3Status()
+    private val array = Dem3Array()
+    private val lock = Dem3Lock()
 
-
-    private final ch.bailu.aat_lib.service.elevation.tile.Dem3Coordinates coordinates = new ch.bailu.aat_lib.service.elevation.tile.Dem3Coordinates();
-    private final Dem3Status status = new Dem3Status();
-    private final Dem3Array array = new Dem3Array();
-    private final Dem3Lock lock = new Dem3Lock();
-
-
-    private BackgroundTask loader = BackgroundTask.NULL;
+    private var loader = BackgroundTask.NULL
 
     @Nonnull
-    @Override
-    public String toString() {
-        return coordinates.coordinates.toString();
+    override fun toString(): String {
+        return coordinates.toString()
     }
 
 
-    @Override
-    public int hashCode() {
-        return coordinates.coordinates.hashCode();
+    override fun hashCode(): Int {
+        return coordinates.hashCode()
     }
 
-    public void reload(ServicesInterface sc, SolidDem3Directory solidDem3Directory) {
-        load(sc, coordinates.coordinates, solidDem3Directory);
+    fun reload(sc: ServicesInterface, solidDem3Directory: SolidDem3Directory) {
+        load(sc, coordinates, solidDem3Directory)
     }
 
-    public  synchronized void load(ServicesInterface sc, Dem3Coordinates c, SolidDem3Directory solidDem3Directory) {
-        if (!lock.isLocked()) {
-            loader.stopProcessing();
+    @Synchronized
+    fun load(service: ServicesInterface, newCoordinates: Dem3Coordinates, solidDem3Directory: SolidDem3Directory) {
+        if (!lock.isLocked) {
+            loader.stopProcessing()
 
-            synchronized (array) {
-                status.setStatus(Dem3Status.LOADING);
-                coordinates.coordinates = c;
+            synchronized(array) {
+                status.status = Dem3Status.LOADING
+                coordinates = newCoordinates
 
-                Foc file = solidDem3Directory.toFile(c);
-                loader = new Dem3LoaderTask(file, array, status);
-
-                sc.getBackgroundService().process(loader);
+                val file = solidDem3Directory.toFile(coordinates)
+                loader = Dem3LoaderTask(file, array, status)
+                service.getBackgroundService().process(loader)
             }
         }
     }
 
-    public Dem3Coordinates getCoordinates() {
-        return coordinates.coordinates;
+    fun getCoordinates(): Dem3Coordinates {
+        return coordinates
     }
 
-    public synchronized boolean isLocked() {
-        return lock.isLocked();
+    @get:Synchronized
+    val isLocked: Boolean
+        get() = lock.isLocked
+
+    @Synchronized
+    fun lock(o: Any?) {
+        lock.lock(o)
     }
 
-    public synchronized void lock(Object o) {
-        lock.lock(o);
+    @Synchronized
+    fun free(o: Any?) {
+        lock.free(o)
     }
 
-    public synchronized void free(Object o) {
-        lock.free(o);
-    }
-
-    public int getStatus() {
-        return status.getStatus();
+    fun getStatus(): Int {
+        return status.status
     }
 
 
-    @Override
-    public short getElevation(int index) {
-        return array.getElevation(index);
+    override fun getElevation(index: Int): Short {
+        return array.getElevation(index)
     }
 
-    @Override
-    public DemDimension getDim() {
-        return array.getDim();
+    override fun getDimension(): DemDimension {
+        return Dem3Array.dem3Dimension
     }
 
-    @Override
-    public float getCellsize() {
-        return coordinates.getCellsize();
+    override fun getCellDistance(): Float {
+        return coordinates.getCellDistance()
     }
 
-    @Override
-    public boolean inverseLatitude() {
-        return coordinates.inverseLatitude();
+    override fun hasInverseLatitude(): Boolean {
+        return coordinates.hasInverseLatitude()
     }
 
-    @Override
-    public boolean inverseLongitude() {
-        return coordinates.inverseLongitude();
+    override fun hasInverseLongitude(): Boolean {
+        return coordinates.hasInverseLongitude()
     }
 
-    @Override
-    public short getElevation(int laE6, int loE6) {
-        return array.getElevation(laE6, loE6);
+    override fun getElevation(laE6: Int, loE6: Int): Short {
+        return array.getElevation(laE6, loE6)
     }
 
-    public long getTimeStamp() {
-        return status.getStamp();
-    }
+    val timeStamp: Long
+        get() = status.stamp
 }

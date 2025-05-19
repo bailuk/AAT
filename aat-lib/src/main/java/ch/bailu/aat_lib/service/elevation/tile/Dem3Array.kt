@@ -1,31 +1,24 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public final class Dem3Array {
-    private static final int DEM3_BUFFER_DIM=1201;
-    private static final int DEM3_BUFFER_OFFSET=1;
-    public static final DemDimension DIMENSION=
-            new DemDimension(DEM3_BUFFER_DIM, DEM3_BUFFER_OFFSET);
+import ch.bailu.aat_lib.util.Limit
 
-    protected final byte[] data = new byte[DEM3_BUFFER_DIM * DEM3_BUFFER_DIM * 2];
-    private final DemGeoToIndex toIndex = new DemGeoToIndex(DIMENSION);
+class Dem3Array {
+    val data: ByteArray = ByteArray(DEM3_BUFFER_DIM * DEM3_BUFFER_DIM * 2)
+    private val toIndex = DemGeoToIndex(dem3Dimension)
 
-
-
-
-    public DemDimension getDim() {
-        return DIMENSION;
+    fun getElevation(laE6: Int, loE6: Int): Short {
+        return getElevation(toIndex.toIndex(laE6, loE6))
     }
 
-
-    public short getElevation(int laE6, int loE6) {
-        return getElevation(toIndex.toPos(laE6, loE6));
+    fun getElevation(index: Int): Short {
+        val index = Limit.clamp(index * 2, 0, data.size-2)
+        val x = ((data[index].toInt() shl 8) or (data[index + 1].toInt() and 0xFF)).toShort()
+        return x
     }
 
-    public short getElevation(int index) {
-        index = index *2;
-
-        final short x = (short) ((data[index] << 8) | (data[index+1]&0xFF));
-        return x;
+    companion object {
+        private const val DEM3_BUFFER_DIM = 1201
+        private const val DEM3_BUFFER_OFFSET = 1
+        val dem3Dimension: DemDimension = DemDimension(DEM3_BUFFER_DIM, DEM3_BUFFER_OFFSET)
     }
-
 }

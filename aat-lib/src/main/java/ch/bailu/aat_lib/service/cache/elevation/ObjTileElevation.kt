@@ -49,7 +49,7 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
 
     private val geoToIndex: DemGeoToIndex
         get() {
-            val dim = split(Dem3Tile.NULL).dim
+            val dim = split(DemProvider.NULL).getDimension()
             return factoryGeoToIndex(dim)
         }
 
@@ -106,15 +106,13 @@ abstract class ObjTileElevation(id: String, private val bitmap: MapTileInterface
         var size: Long = 0
 
         if (this.isInitialized) {
-            val subTile = subTiles.take(dem3Tile.coordinates)
-
-            if (subTile != null) {
+            val subTile = subTiles.take(dem3Tile.getCoordinates())
+            if (subTile is SubTile) {
                 size = paintSubTile(subTile, dem3Tile)
 
                 subTiles.done()
             }
         }
-
         return size
     }
 

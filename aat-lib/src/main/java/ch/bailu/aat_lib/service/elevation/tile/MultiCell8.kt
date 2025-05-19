@@ -19,8 +19,8 @@ class MultiCell8(private val demProvider: DemProvider) : MultiCell() {
     private var dzx = 0
     private var dzy = 0
 
-    private val dim = demProvider.dim.DIM
-    private val totalCellSize = Math.round(demProvider.cellsize * 8f)
+    private val dim = demProvider.getDimension().dimension
+    private val totalCellDistance = Math.round(demProvider.getCellDistance() * 8f)
 
     override fun set(e: Int) {
         val f = e + 1
@@ -57,11 +57,11 @@ class MultiCell8(private val demProvider: DemProvider) : MultiCell() {
 
     private fun setDeltaZX(): Int {
         val sum = (C + 2 * F + I) - (A + 2 * D + G)
-        return (sum * 100) / totalCellSize
+        return (sum * 100) / totalCellDistance
     }
 
     private fun setDeltaZY(): Int {
         val sum = (G + 2 * H + I) - (A + 2 * B + C)
-        return (sum * 100) / totalCellSize
+        return (sum * 100) / totalCellDistance
     }
 }

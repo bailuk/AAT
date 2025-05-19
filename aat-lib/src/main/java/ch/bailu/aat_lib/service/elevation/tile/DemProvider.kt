@@ -1,43 +1,41 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public interface DemProvider {
+interface DemProvider {
+    /**
+     * Elevation at a specific index in the elevation matrix
+     */
+    fun getElevation(index: Int): Short
 
+    fun getDimension(): DemDimension
 
-    short getElevation(int index);
-    DemDimension getDim();
+    /**
+     * Distance in meter across a row/line
+     */
+    fun getCellDistance(): Float
+    fun hasInverseLatitude(): Boolean
+    fun hasInverseLongitude(): Boolean
 
-    float getCellsize();
+    companion object {
+        val NULL: DemProvider = object : DemProvider {
+            override fun getElevation(index: Int): Short {
+                return 0
+            }
 
-    boolean inverseLatitude();
-    boolean inverseLongitude();
+            override fun getDimension(): DemDimension {
+                return Dem3Array.dem3Dimension
+            }
 
+            override fun getCellDistance(): Float {
+                return 50f
+            }
 
-    DemProvider NULL = new DemProvider() {
+            override fun hasInverseLatitude(): Boolean {
+                return false
+            }
 
-        @Override
-        public short getElevation(int index) {
-            return 0;
+            override fun hasInverseLongitude(): Boolean {
+                return false
+            }
         }
-
-        @Override
-        public DemDimension getDim() {
-            return Dem3Array.DIMENSION;
-        }
-
-        @Override
-        public float getCellsize() {
-            return 50;
-        }
-
-        @Override
-        public boolean inverseLatitude() {
-            return false;
-        }
-
-        @Override
-        public boolean inverseLongitude() {
-            return false;
-        }
-
-    };
+    }
 }

@@ -7,11 +7,11 @@ abstract class MultiCell {
 
     companion object {
         fun factory(dem: DemProvider): MultiCell {
-            return if (dem.inverseLatitude() && !dem.inverseLongitude()) { // NE
+            return if (dem.hasInverseLatitude() && !dem.hasInverseLongitude()) { // NE
                 MultiCell4NE(dem)
-            } else if (!dem.inverseLatitude() && !dem.inverseLongitude()) { // SE{
+            } else if (!dem.hasInverseLatitude() && !dem.hasInverseLongitude()) { // SE{
                 MultiCell4SE(dem)
-            } else if (!dem.inverseLatitude() && dem.inverseLongitude()) { // SW{
+            } else if (!dem.hasInverseLatitude() && dem.hasInverseLongitude()) { // SW{
                 MultiCell4SW(dem)
             } else { // NW
                 MultiCell4NW(dem)

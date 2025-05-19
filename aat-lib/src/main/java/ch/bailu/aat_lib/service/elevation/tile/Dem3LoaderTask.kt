@@ -1,71 +1,45 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-import java.util.zip.ZipInputStream;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.service.background.FileTask
+import ch.bailu.aat_lib.service.elevation.Dem3Status
+import ch.bailu.foc.Foc
+import java.util.zip.ZipInputStream
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.logger.AppLog;
-import ch.bailu.aat_lib.service.background.FileTask;
-import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.foc.Foc;
-
-public final class Dem3LoaderTask extends FileTask {
-
-    private final Dem3Array array;
-    private final Dem3Status status;
-
-    public Dem3LoaderTask(Foc f, Dem3Array a, Dem3Status s) {
-        super(f);
-        array = a;
-        status = s;
-    }
-
-
-    @Override
-    public long bgOnProcess(AppContext appContext) {
-        ZipInputStream zip = null;
-
-
-        synchronized (array) {
+class Dem3LoaderTask(f: Foc, private val array: Dem3Array, private val status: Dem3Status) :
+    FileTask(f) {
+    override fun bgOnProcess(appContext: AppContext): Long {
+        synchronized(array) {
             try {
-                zip = new ZipInputStream(getFile().openR());
+                ZipInputStream(getFile().openR()).use {
+                    var total = 0
+                    it.nextEntry
 
+                    do {
+                        val count = it.read(array.data, total, array.data.size - total)
+                        total += count
+                    } while (count > 0 && total < array.data.size && canContinue())
 
-                int total = 0;
-
-                zip.getNextEntry();
-
-                int count;
-
-                do {
-                    count = zip.read(array.data, total, array.data.length - total);
-                    total += count;
-
-                } while (count > 0 && total < array.data.length && canContinue());
-
-
-                if (canContinue()) {
-                    status.setStatus(Dem3Status.VALID);
+                    if (canContinue()) {
+                        status.status = Dem3Status.VALID
+                    }
                 }
-
-            } catch (Exception e) {
-
-
-                AppLog.w(this, e.getMessage());
-                status.setStatus(Dem3Status.EMPTY);
+            } catch (e: Exception) {
+                AppLog.w(this, e.message)
+                status.status = Dem3Status.EMPTY
             }
-
-            Foc.close(zip);
         }
 
+        if (status.status == Dem3Status.VALID || status.status == Dem3Status.EMPTY) {
+            appContext.broadcaster.broadcast(
+                AppBroadcaster.FILE_CHANGED_INCACHE, getFile().toString()
+            )
 
-        if (status.getStatus() == Dem3Status.VALID || status.getStatus() == Dem3Status.EMPTY) {
-            appContext.getBroadcaster().broadcast(
-                    AppBroadcaster.FILE_CHANGED_INCACHE, getFile().toString());
-
-            return array.data.length;
+            return array.data.size.toLong()
         }
 
-        return 0;
+        return 0
     }
 }

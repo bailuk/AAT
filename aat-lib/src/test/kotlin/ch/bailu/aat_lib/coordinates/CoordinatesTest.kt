@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.coordinates
 
 import ch.bailu.aat_lib.app.AppConfig
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -50,14 +49,14 @@ class CoordinatesTest {
         var sla = WGS84Coordinates.Sexagesimal(la)
         var slo = WGS84Coordinates.Sexagesimal(lo)
 
-        Assertions.assertEquals(lalo.getLatitudeE6().toFloat(), sla.toE6().toFloat(), 0f)
-        Assertions.assertEquals(lalo.getLongitudeE6().toFloat(), slo.toE6().toFloat(), 0f)
+        assertEquals(lalo.getLatitudeE6().toFloat(), sla.toE6().toFloat(), 0f)
+        assertEquals(lalo.getLongitudeE6().toFloat(), slo.toE6().toFloat(), 0f)
 
         sla = WGS84Coordinates.Sexagesimal(sla.degree, sla.minute, sla.second)
         slo = WGS84Coordinates.Sexagesimal(slo.degree, slo.minute, slo.second)
 
-        Assertions.assertEquals(lalo.getLatitudeE6().toFloat(), sla.toE6().toFloat(), 0f)
-        Assertions.assertEquals(lalo.getLongitudeE6().toFloat(), slo.toE6().toFloat(), 0f)
+        assertEquals(lalo.getLatitudeE6().toFloat(), sla.toE6().toFloat(), 0f)
+        assertEquals(lalo.getLongitudeE6().toFloat(), slo.toE6().toFloat(), 0f)
     }
 
 
@@ -70,11 +69,11 @@ class CoordinatesTest {
 
         val c = CH1903Coordinates(LatLongE6(la, lo))
 
-        Assertions.assertEquals(700000, c.easting)
-        Assertions.assertEquals(100000, c.northing)
+        assertEquals(700000, c.easting)
+        assertEquals(100000, c.northing)
 
-        Assertions.assertEquals(la.toFloat(), c.toLatLongE6().getLatitudeE6().toFloat(), 5f)
-        Assertions.assertEquals(lo.toFloat(), c.toLatLongE6().getLongitudeE6().toFloat(), 5f)
+        assertEquals(la.toFloat(), c.toLatLongE6().getLatitudeE6().toFloat(), 5f)
+        assertEquals(lo.toFloat(), c.toLatLongE6().getLongitudeE6().toFloat(), 5f)
 
 
         val sla = WGS84Coordinates.Sexagesimal(c.toLatLong().latitude)
@@ -82,13 +81,13 @@ class CoordinatesTest {
 
         //           ⇒ λ = 8° 43' 49.80" φ = 46° 02' 38.86"
         // aus NAVREF: λ = 8° 43' 49.79" φ = 46° 02' 38.87"    h = 650.60 m=
-        Assertions.assertEquals(8, slo.degree)
-        Assertions.assertEquals(43, slo.minute)
-        Assertions.assertEquals(49.80, slo.second, 0.005)
+        assertEquals(8, slo.degree)
+        assertEquals(43, slo.minute)
+        assertEquals(49.80, slo.second, 0.005)
 
-        Assertions.assertEquals(46, sla.degree)
-        Assertions.assertEquals(2, sla.minute)
-        Assertions.assertEquals(38.86, sla.second, 0.005)
+        assertEquals(46, sla.degree)
+        assertEquals(2, sla.minute)
+        assertEquals(38.86, sla.second, 0.005)
     }
 
     @Test
@@ -113,27 +112,27 @@ class CoordinatesTest {
         val u1 = UTMCoordinates(la, lo)
         val u2 = UTMCoordinates(easting, northing, ezone, nzone)
 
-        Assertions.assertEquals(easting, u1.easting)
-        Assertions.assertEquals(northing, u1.northing)
+        assertEquals(easting, u1.easting)
+        assertEquals(northing, u1.northing)
 
-        Assertions.assertEquals(la, u1.toLatLong().latitude, 0.0001)
-        Assertions.assertEquals(lo, u1.toLatLong().longitude, 0.0001)
+        assertEquals(la, u1.toLatLong().latitude, 0.0001)
+        assertEquals(lo, u1.toLatLong().longitude, 0.0001)
 
-        Assertions.assertEquals(nzone, u1.northingZone)
-        Assertions.assertEquals(ezone, u1.eastingZone)
+        assertEquals(nzone, u1.northingZone)
+        assertEquals(ezone, u1.eastingZone)
 
-        Assertions.assertEquals(la < 0, u1.isInSouthernHemisphere)
+        assertEquals(la < 0, u1.isInSouthernHemisphere)
 
-        Assertions.assertEquals(easting, u2.easting)
-        Assertions.assertEquals(northing, u2.northing)
+        assertEquals(easting, u2.easting)
+        assertEquals(northing, u2.northing)
 
-        Assertions.assertEquals(la, u2.toLatLong().latitude, 0.0001)
-        Assertions.assertEquals(lo, u2.toLatLong().longitude, 0.0001)
+        assertEquals(la, u2.toLatLong().latitude, 0.0001)
+        assertEquals(lo, u2.toLatLong().longitude, 0.0001)
 
-        Assertions.assertEquals(nzone, u2.northingZone)
-        Assertions.assertEquals(ezone, u2.eastingZone)
+        assertEquals(nzone, u2.northingZone)
+        assertEquals(ezone, u2.eastingZone)
 
-        Assertions.assertEquals(la < 0, u2.isInSouthernHemisphere)
+        assertEquals(la < 0, u2.isInSouthernHemisphere)
     }
 
     @Test
@@ -210,92 +209,92 @@ class CoordinatesTest {
         val c2 = CH1903Coordinates(easting, northing)
         val c3 = CH1903Coordinates(la, lo)
 
-        Assertions.assertEquals(
+        assertEquals(
             loE6.toFloat(),
             c1.toLatLongE6().getLongitudeE6().toFloat(),
             CH1903Coordinates.LO_PRECISION.toE6().toFloat()
         )
-        Assertions.assertEquals(
+        assertEquals(
             laE6.toFloat(),
             c1.toLatLongE6().getLatitudeE6().toFloat(),
             CH1903Coordinates.LA_PRECISION.toE6().toFloat()
         )
 
-        Assertions.assertEquals(la, c1.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.decimal)
-        Assertions.assertEquals(
+        assertEquals(la, c1.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.decimal)
+        assertEquals(
             lo,
             c1.toLatLong().longitude,
             CH1903Coordinates.LO_PRECISION.decimal
         )
 
-        Assertions.assertEquals(
+        assertEquals(
             loE6.toFloat(),
             c2.toLatLongE6().getLongitudeE6().toFloat(),
             CH1903Coordinates.LO_PRECISION.toE6().toFloat()
         )
-        Assertions.assertEquals(
+        assertEquals(
             laE6.toFloat(),
             c2.toLatLongE6().getLatitudeE6().toFloat(),
             CH1903Coordinates.LA_PRECISION.toE6().toFloat()
         )
 
-        Assertions.assertEquals(la, c2.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.decimal)
-        Assertions.assertEquals(
+        assertEquals(la, c2.toLatLong().latitude, CH1903Coordinates.LA_PRECISION.decimal)
+        assertEquals(
             lo,
             c2.toLatLong().longitude,
             CH1903Coordinates.LO_PRECISION.decimal
         )
 
-        Assertions.assertEquals(
+        assertEquals(
             loE6.toFloat(),
             c3.toLatLongE6().getLongitudeE6().toFloat(),
             CH1903Coordinates.LO_PRECISION.toE6().toFloat()
         )
-        Assertions.assertEquals(
+        assertEquals(
             laE6.toFloat(),
             c3.toLatLongE6().getLatitudeE6().toFloat(),
             CH1903Coordinates.LA_PRECISION.toE6().toFloat()
         )
 
-        Assertions.assertEquals(la, c3.toLatLong().latitude, 0.0001)
-        Assertions.assertEquals(lo, c3.toLatLong().longitude, 0.0001)
+        assertEquals(la, c3.toLatLong().latitude, 0.0001)
+        assertEquals(lo, c3.toLatLong().longitude, 0.0001)
 
 
-        Assertions.assertEquals(c1.northing, c2.northing)
-        Assertions.assertEquals(c1.easting, c2.easting)
-        Assertions.assertEquals(c3.easting, c2.easting)
-        Assertions.assertEquals(c3.northing, c2.northing)
+        assertEquals(c1.northing, c2.northing)
+        assertEquals(c1.easting, c2.easting)
+        assertEquals(c3.easting, c2.easting)
+        assertEquals(c3.northing, c2.northing)
 
-        Assertions.assertEquals(northing, c1.northing)
-        Assertions.assertEquals(easting, c1.easting)
+        assertEquals(northing, c1.northing)
+        assertEquals(easting, c1.easting)
 
-        Assertions.assertEquals(northing, c2.northing)
-        Assertions.assertEquals(easting, c2.easting)
+        assertEquals(northing, c2.northing)
+        assertEquals(easting, c2.easting)
 
-        Assertions.assertEquals(northing, c3.northing)
-        Assertions.assertEquals(easting, c3.easting)
+        assertEquals(northing, c3.northing)
+        assertEquals(easting, c3.easting)
 
-        Assertions.assertEquals(c1.toLatLong().latitude, c2.toLatLong().latitude, 0.0001)
-        Assertions.assertEquals(c1.toLatLong().longitude, c2.toLatLong().longitude, 0.0001)
+        assertEquals(c1.toLatLong().latitude, c2.toLatLong().latitude, 0.0001)
+        assertEquals(c1.toLatLong().longitude, c2.toLatLong().longitude, 0.0001)
     }
 
     @Test
     fun testDem3() {
         var coord = Dem3Coordinates(0, 0)
-        Assertions.assertEquals(0, coord.getLatitudeE6())
-        Assertions.assertEquals(0, coord.getLongitudeE6())
-        Assertions.assertEquals("N00E000", coord.toString())
+        assertEquals(0, coord.getLatitudeE6())
+        assertEquals(0, coord.getLongitudeE6())
+        assertEquals("N00E000", coord.toString())
 
         coord = Dem3Coordinates(-0.2, 0.2)
-        Assertions.assertEquals(-1000000, coord.getLatitudeE6())
-        Assertions.assertEquals(0, coord.getLongitudeE6())
-        Assertions.assertEquals("S01E000", coord.toString())
+        assertEquals(-1000000, coord.getLatitudeE6())
+        assertEquals(0, coord.getLongitudeE6())
+        assertEquals("S01E000", coord.toString())
 
 
         coord = Dem3Coordinates(-0.2, -0.2)
-        Assertions.assertEquals(-1000000, coord.getLatitudeE6())
-        Assertions.assertEquals(-1000000, coord.getLongitudeE6())
-        Assertions.assertEquals("S01W001", coord.toString())
+        assertEquals(-1000000, coord.getLatitudeE6())
+        assertEquals(-1000000, coord.getLongitudeE6())
+        assertEquals("S01W001", coord.toString())
     }
 
     companion object {

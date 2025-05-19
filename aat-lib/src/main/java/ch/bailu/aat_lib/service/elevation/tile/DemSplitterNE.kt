@@ -1,44 +1,37 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public final class DemSplitterNE extends DemSplitter {
+class DemSplitterNE(p: DemProvider) : DemSplitter(p) {
+    override fun getElevation(index: Int): Short {
+        val row = index / getDimension().dimension
+        val col = index % getDimension().dimension
 
-    public DemSplitterNE(DemProvider p) {
-        super(p);
-    }
+        val parentRow = row / 2
+        val parentCol = col / 2
 
-    @Override
-    public short getElevation(int index) {
-        final int row = index / dim;
-        final int col = index % dim;
+        val parentIndex = parentRow * getParentDimension().dimension + parentCol
 
-        final int parent_row=row/2;
-        final int parent_col=col/2;
+        val rowMode = row % 2
+        val colMode = col % 2
 
-        final int parent_index=parent_row*parent_dim + parent_col;
+        val sum: Int
+        var div = 2
 
-        final int row_mode=row % 2;
-        final int col_mode=col % 2;
+        val C = getParent().getElevation(parentIndex).toInt()
 
-        int sum;
-        int div=2;
-
-        final int C = parent.getElevation(parent_index);
-
-        if (row_mode+col_mode == 0) { // a
-            final int a = parent.getElevation(parent_index - parent_dim);
-            sum = C + a;
-
-        } else if (row_mode==0) {    // b
-            final int b = parent.getElevation(parent_index - parent_dim + 1);
-            sum = C + b;
-        } else if (col_mode==0) {    // c
-            sum=C;
-            div=1;
+        if (rowMode + colMode == 0) { // a
+            val a = getParent().getElevation(parentIndex - getParentDimension().dimension).toInt()
+            sum = C + a
+        } else if (rowMode == 0) {    // b
+            val b =
+                getParent().getElevation(parentIndex - getParentDimension().dimension + 1).toInt()
+            sum = C + b
+        } else if (colMode == 0) {    // c
+            sum = C
+            div = 1
         } else {                     // d
-            final int d = parent.getElevation(parent_index + 1);
-            sum = C + d;
-
+            val d = getParent().getElevation(parentIndex + 1).toInt()
+            sum = C + d
         }
-        return (short)(sum / div);
+        return (sum / div).toShort()
     }
 }

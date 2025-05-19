@@ -1,27 +1,20 @@
-package ch.bailu.aat_lib.service.elevation.tile;
+package ch.bailu.aat_lib.service.elevation.tile
 
-public final class DemSplitterSE extends DemSplitter {
+class DemSplitterSE(p: DemProvider) : DemSplitter(p) {
+    override fun getElevation(index: Int): Short {
+        val row = index / getDimension().dimension
+        val col = index % getDimension().dimension
 
+        val parentRow = row / 2
+        val parentCol = col / 2
 
-    public DemSplitterSE(DemProvider p) {
-        super(p);
-    }
+        val parentIndex = parentRow * getParentDimension().dimension + parentCol
 
-    @Override
-    public short getElevation(int index) {
-        final int row = index / dim;
-        final int col = index % dim;
+        val rowMode = row % 2
+        val colMode = col % 2
 
-        final int parent_row=row/2;
-        final int parent_col=col/2;
-
-        final int parent_index=parent_row*parent_dim + parent_col;
-
-        final int row_mode=row % 2;
-        final int col_mode=col % 2;
-
-        float sum;
-        final float div=2;
+        val sum: Float
+        val div = 2f
 
         /*
            a b
@@ -31,20 +24,21 @@ public final class DemSplitterSE extends DemSplitter {
            [1,0] [1,1]
 
          */
-        final int A = parent.getElevation(parent_index);
-        if (row_mode+col_mode == 0) { // a
-            sum = A+A;
-        } else if (row_mode==0) {    // b
-            final int b = parent.getElevation(parent_index + 1);
-            sum = A + b;
-        } else if (col_mode==0) {    // c
-            final int c = parent.getElevation(parent_index+parent_dim);
-            sum=A+c;
+        val A = getParent().getElevation(parentIndex).toInt()
+        if (rowMode + colMode == 0) { // a
+            sum = (A + A).toFloat()
+        } else if (rowMode == 0) {    // b
+            val b = getParent().getElevation(parentIndex + 1).toInt()
+            sum = (A + b).toFloat()
+        } else if (colMode == 0) {    // c
+            val c = getParent().getElevation(parentIndex + getParentDimension().dimension).toInt()
+            sum = (A + c).toFloat()
         } else {                     // d
-            final int d = parent.getElevation(parent_index +parent_dim+ 1);
-            sum = A+d;
+            val d =
+                getParent().getElevation(parentIndex + getParentDimension().dimension + 1).toInt()
+            sum = (A + d).toFloat()
         }
 
-        return (short)Math.round(sum / div);
+        return Math.round(sum / div).toShort()
     }
 }

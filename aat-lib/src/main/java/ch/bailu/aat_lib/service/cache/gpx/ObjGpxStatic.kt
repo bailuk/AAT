@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
 import ch.bailu.aat_lib.file.FileType
 import ch.bailu.aat_lib.file.json.GpxListReaderJson
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListWalker
 import ch.bailu.aat_lib.gpx.GpxPoint
@@ -24,7 +25,6 @@ import ch.bailu.aat_lib.service.elevation.ElevationProvider
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.foc.Foc
 
 class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUpdaterClient {
@@ -114,7 +114,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
 
     private class ListUpdater(private val tile: Dem3Tile) : GpxListWalker() {
         override fun doList(l: GpxList): Boolean {
-            return tile.status == Dem3Status.VALID
+            return tile.getStatus() == Dem3Status.VALID
         }
 
         override fun doSegment(segment: GpxSegmentNode): Boolean {

@@ -12,8 +12,8 @@ class MultiCell4NE(private val demProvider: DemProvider) : MultiCell() {
     private var dzx = 0
     private var dzy = 0
 
-    private val dim = demProvider.dim.DIM
-    private val totalCellSize = Math.round(demProvider.cellsize * 4f)
+    private val dim = demProvider.getDimension().dimension
+    private val totalCellDistance = Math.round(demProvider.getCellDistance() * 4f)
 
     override fun set(x: Int) {
         setCell(x)
@@ -43,11 +43,11 @@ class MultiCell4NE(private val demProvider: DemProvider) : MultiCell() {
 
     private fun setDeltaZX() {
         val sum = ((b + d) - (a + c))
-        dzx =  (sum * 100) / totalCellSize
+        dzx =  (sum * 100) / totalCellDistance
     }
 
     private fun setDeltaZY() {
         val sum = ((c + d) - (b + a))
-        dzy = (sum * 100) / totalCellSize
+        dzy = (sum * 100) / totalCellDistance
     }
 }
