@@ -25,10 +25,10 @@ class WGS84Layer(services: ServicesInterface, storage: StorageInterface) : MapLa
         return false
     }
 
-    private fun drawCoordinates(clayer: MapContext, point: LatLong) {
+    private fun drawCoordinates(mapContext: MapContext, point: LatLong) {
         val f = f()
-        clayer.draw().textBottom(WGS84Coordinates(point).toString(), 1)
-        clayer.draw()
+        mapContext.draw().textBottom(WGS84Coordinates(point).toString(), 1)
+        mapContext.draw()
             .textBottom(f.N6.format(point.latitude) + "/" + f.N6.format(point.getLongitude()), 0)
     }
 

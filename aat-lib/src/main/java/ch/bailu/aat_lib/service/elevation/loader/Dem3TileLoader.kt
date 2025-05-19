@@ -1,141 +1,113 @@
-package ch.bailu.aat_lib.service.elevation.loader;
+package ch.bailu.aat_lib.service.elevation.loader
+
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastData.getFile
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
+import ch.bailu.aat_lib.service.background.DownloadTask
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
+import ch.bailu.aat_lib.util.Timer
+import java.io.Closeable
 
 
-import org.jetbrains.annotations.NotNull;
+class Dem3TileLoader(
+    private val appContext: AppContext,
+    private val timer: Timer,
+    private val tiles: Dem3Tiles
+) :
+    Closeable {
+    private var pending: Dem3Coordinates? = null
 
-import java.io.Closeable;
+    private val sdownload = SolidDem3EnableDownload(appContext.storage)
 
-import javax.annotation.Nonnull;
-
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.broadcaster.BroadcastData;
-import ch.bailu.aat_lib.broadcaster.BroadcastReceiver;
-import ch.bailu.aat_lib.preferences.OnPreferencesChanged;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload;
-import ch.bailu.aat_lib.service.background.DownloadTask;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-import ch.bailu.aat_lib.util.Timer;
-import ch.bailu.foc.Foc;
-
-public final class Dem3TileLoader implements Closeable {
-    private static final long MILLIS = 2000;
-
-    private final AppContext appContext;
-    private final Dem3Tiles tiles;
-
-    private Dem3Coordinates pending = null;
-
-    private final Timer timer;
-
-    private final SolidDem3EnableDownload sdownload;
-
-    public Dem3TileLoader(AppContext appContext, Timer timer, Dem3Tiles tiles) {
-        this.timer = timer;
-        this.tiles = tiles;
-        this.appContext = appContext;
-        this.appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_ONDISK, onFileDownloaded);
-
-        this.sdownload = new SolidDem3EnableDownload(appContext.getStorage());
-        this.sdownload.register(onPreferencesChanged);
-    }
-
-    private final Runnable timeout = () -> {
+    private val timeout = Runnable {
         if (havePending()) {
-            loadOrDownloadPending();
-            stopTimer();
+            loadOrDownloadPending()
+            stopTimer()
         }
-    };
+    }
 
-    private final BroadcastReceiver onFileDownloaded = new BroadcastReceiver() {
-        @Override
-        public void onReceive(@NotNull String... args) {
-            String id = BroadcastData.getFile(args);
-            Dem3Tile tile = tiles.get(id);
-
-            if (tile != null) {
-                tile.reload(appContext.getServices(), appContext.getDem3Directory());
-            }
+    private val onFileDownloaded =
+        BroadcastReceiver { args ->
+            val id = getFile(args)
+            val tile = tiles.get(id)
+            tile?.reload(appContext.services, appContext.dem3Directory)
         }
-    };
 
-    private final OnPreferencesChanged onPreferencesChanged = new OnPreferencesChanged() {
-        @Override
-        public void onPreferencesChanged(@Nonnull StorageInterface storage, @Nonnull String key) {
-            if (sdownload.hasKey(key) && sdownload.getValue()) {
-                tiles.removeEmpty(); // Reset for re-download
-            }
-        }
-    };
+    init {
+        appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_ONDISK, onFileDownloaded)
+    }
 
-    private void loadOrDownloadPending() {
-        final Dem3Coordinates toLoad = pending;
-        pending = null;
+    private fun loadOrDownloadPending() {
+        val toLoad = pending
+        pending = null
 
-        if (toLoad != null) {
-            loadNow(toLoad);
+        if (toLoad is Dem3Coordinates) {
+            loadNow(toLoad)
 
-            if (sdownload.getValue()) {
-                downloadNow(toLoad);
+            if (sdownload.value) {
+                downloadNow(toLoad)
             }
         }
     }
 
-    public Dem3Tile loadNow(Dem3Coordinates coordinates) {
-        if (havePending()) cancelPending();
-        return loadIntoOldestSlot(coordinates);
+    fun loadNow(coordinates: Dem3Coordinates): Dem3Tile? {
+        if (havePending()) cancelPending()
+        return loadIntoOldestSlot(coordinates)
     }
 
-    private Dem3Tile loadIntoOldestSlot(Dem3Coordinates coordinates) {
+    private fun loadIntoOldestSlot(coordinates: Dem3Coordinates): Dem3Tile? {
         if (!tiles.have(coordinates)) {
-            final Dem3Tile slot = tiles.getOldestProcessed();
+            val slot = tiles.oldestProcessed
 
-            if (slot != null && !slot.isLocked()) {
-                slot.load(appContext.getServices(), coordinates,  appContext.getDem3Directory());
+            if (slot != null && !slot.isLocked) {
+                slot.load(appContext.services, coordinates, appContext.dem3Directory)
             }
         }
 
-        return tiles.get(coordinates);
+        return tiles.get(coordinates)
     }
 
-    public void loadOrDownloadLater(Dem3Coordinates coordinates) {
+    fun loadOrDownloadLater(coordinates: Dem3Coordinates?) {
         if (pending == null) { // first BitmapRequest
-            startTimer();
+            startTimer()
         }
-        pending = coordinates;
+        pending = coordinates
     }
 
-    public void cancelPending() {
-        pending = null;
-        stopTimer();
+    fun cancelPending() {
+        pending = null
+        stopTimer()
     }
 
-    private boolean havePending() {
-        return pending != null;
+    private fun havePending(): Boolean {
+        return pending != null
     }
 
-    private void startTimer() {
-        timer.cancel();
-        timer.kick(MILLIS, timeout);
+    private fun startTimer() {
+        timer.cancel()
+        timer.kick(MILLIS, timeout)
     }
 
-    private void stopTimer() {
-        timer.cancel();
+    private fun stopTimer() {
+        timer.cancel()
     }
 
-    private void downloadNow(Dem3Coordinates c) {
-        Foc file = appContext.getDem3Directory().toFile(c);
+    private fun downloadNow(c: Dem3Coordinates) {
+        val file = appContext.dem3Directory.toFile(c)
         if (!file.exists()) {
-            DownloadTask handle = new DownloadTask(c.toURL(), file, appContext.getDownloadConfig());
-            appContext.getServices().getBackgroundService().process(handle);
+            val handle = DownloadTask(c.toURL(), file, appContext.downloadConfig)
+            appContext.services.getBackgroundService().process(handle)
         }
     }
 
-    @Override
-    public void close() {
-        appContext.getBroadcaster().unregister(onFileDownloaded);
-        sdownload.unregister(onPreferencesChanged);
+    override fun close() {
+        appContext.broadcaster.unregister(onFileDownloaded)
+    }
+
+    companion object {
+        private const val MILLIS: Long = 2000
     }
 }

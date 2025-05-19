@@ -1,75 +1,55 @@
-package ch.bailu.aat_lib.service.elevation.updater;
+package ch.bailu.aat_lib.service.elevation.updater
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
 
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
+class PendingUpdatesMap {
+    private val map = HashMap<Dem3Coordinates, ArrayList<ElevationUpdaterClient>>()
 
-public final class PendingUpdatesMap {
-    private final HashMap<Dem3Coordinates,ArrayList<ElevationUpdaterClient>> map =
-            new HashMap<>();
+    fun add(coordinates: Dem3Coordinates, elevationUpdater: ElevationUpdaterClient) {
+        var elevationUpdaterClients = map[coordinates]
 
-
-
-    public void add(Dem3Coordinates c , ElevationUpdaterClient e) {
-        ArrayList<ElevationUpdaterClient> l = map.get(c);
-
-        if (l==null) {
-            l = new ArrayList<>(10);
-            map.put(c, l);
+        if (elevationUpdaterClients == null) {
+            elevationUpdaterClients = ArrayList(10)
+            map[coordinates] = elevationUpdaterClients
         }
 
-        if (!l.contains(e)) {
-            l.add(e);
+        if (!elevationUpdaterClients.contains(elevationUpdater)) {
+            elevationUpdaterClients.add(elevationUpdater)
         }
     }
 
-
-    public void remove(Dem3Coordinates s) {
-        map.remove(s);
+    fun remove(coordinates: Dem3Coordinates) {
+        map.remove(coordinates)
     }
 
 
-    public void removeIfEmpty(Dem3Coordinates s) {
-        ArrayList<ElevationUpdaterClient> l = map.get(s);
+    private fun removeIfEmpty(coordinates: Dem3Coordinates) {
+        val elevationUpdaterClients = map[coordinates]
 
-        if (l == null || l.isEmpty()) {
-            remove(s);
+        if (elevationUpdaterClients.isNullOrEmpty()) {
+            remove(coordinates)
         }
     }
 
-
-    public void remove(ElevationUpdaterClient e) {
-
-        for (ArrayList<ElevationUpdaterClient> l : map.values()) {
-            if (l != null) {
-                l.remove(e);
-            }
+    fun remove(elevationUpdaterClient: ElevationUpdaterClient) {
+        for (elevationUpdaterClients in map.values) {
+            elevationUpdaterClients?.remove(elevationUpdaterClient)
         }
-
-        removeAllEmpty();
+        removeAllEmpty()
     }
 
-    private void removeAllEmpty() {
-
-        Iterator<Dem3Coordinates> c = coordinates();
-
-        while (c.hasNext()) {
-            removeIfEmpty(c.next());
+    private fun removeAllEmpty() {
+        val coordinatesIterator = coordinates()
+        while (coordinatesIterator.hasNext()) {
+            removeIfEmpty(coordinatesIterator.next())
         }
     }
 
-
-
-    public Iterator<Dem3Coordinates> coordinates() {
-        return new HashSet<>(map.keySet()).iterator();
+    fun coordinates(): Iterator<Dem3Coordinates> {
+        return HashSet(map.keys).iterator()
     }
 
-
-    public ArrayList<ElevationUpdaterClient> get(Dem3Coordinates c) {
-        return map.get(c);
+    fun get(coordinates: Dem3Coordinates): ArrayList<ElevationUpdaterClient>? {
+        return map[coordinates]
     }
 }

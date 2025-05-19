@@ -1,117 +1,101 @@
-package ch.bailu.aat_lib.service.elevation.updater;
+package ch.bailu.aat_lib.service.elevation.updater
+
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.service.elevation.Dem3Status
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles
+import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
+import java.io.Closeable
 
 
-import org.jetbrains.annotations.NotNull;
+class ElevationUpdater(
+    private val appContext: AppContext,
+    private val loader: Dem3Loader,
+    private val tiles: Dem3Tiles
+) :
+    Closeable {
+    private val pendingUpdates = PendingUpdatesMap()
 
-import java.io.Closeable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster;
-import ch.bailu.aat_lib.broadcaster.BroadcastReceiver;
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.service.elevation.Dem3Status;
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
-import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile;
-
-public final class ElevationUpdater implements Closeable {
-    private final PendingUpdatesMap pendingUpdates = new PendingUpdatesMap();
-
-    private final AppContext appContext;
-
-    private final Dem3Loader loader;
-    private final Dem3Tiles tiles;
-
-    public ElevationUpdater(AppContext appContext, Dem3Loader d, Dem3Tiles t) {
-        this.appContext = appContext;
-        tiles = t;
-        loader = d;
-
-        this.appContext.getBroadcaster().register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged);
-    }
-
-    private final BroadcastReceiver onFileChanged = new BroadcastReceiver() {
-        @Override
-        public void onReceive(@NotNull String... args) {
-            String id = args[0];
-
-            synchronized(ElevationUpdater.this) {
+    private val onFileChanged =
+        BroadcastReceiver { args ->
+            val id = args[0]
+            synchronized(this@ElevationUpdater) {
                 if (tiles.have(id)) {
-                    requestElevationUpdates();
+                    requestElevationUpdates()
                 }
             }
         }
-    };
 
-    public synchronized void requestElevationUpdates(ElevationUpdaterClient e,
-                                                     List<Dem3Coordinates> coordinates) {
-        for (Dem3Coordinates c : coordinates) {
-            addObject(c, e);
+    init {
+        appContext.broadcaster.register(AppBroadcaster.FILE_CHANGED_INCACHE, onFileChanged)
+    }
+
+    @Synchronized
+    fun requestElevationUpdates(
+        e: ElevationUpdaterClient,
+        coordinates: List<Dem3Coordinates>
+    ) {
+        for (c in coordinates) {
+            addObject(c, e)
         }
 
-        requestElevationUpdates();
+        requestElevationUpdates()
     }
 
-    public  synchronized void requestElevationUpdates() {
-        updateClients();
-        loadTiles();
+    @Synchronized
+    fun requestElevationUpdates() {
+        updateClients()
+        loadTiles()
     }
 
-    public  synchronized void cancelElevationUpdates(ElevationUpdaterClient e) {
-        pendingUpdates.remove(e);
+    @Synchronized
+    fun cancelElevationUpdates(e: ElevationUpdaterClient) {
+        pendingUpdates.remove(e)
     }
 
-
-    private void addObject(Dem3Coordinates c, ElevationUpdaterClient e) {
-        pendingUpdates.add(c, e);
+    private fun addObject(c: Dem3Coordinates, e: ElevationUpdaterClient) {
+        pendingUpdates.add(c, e)
     }
 
-
-    private void loadTiles() {
-        Iterator<Dem3Coordinates> coordinates = pendingUpdates.coordinates();
-        while(coordinates.hasNext() && loader.requestDem3Tile(coordinates.next()));
+    private fun loadTiles() {
+        val coordinates = pendingUpdates.coordinates()
+        while (coordinates.hasNext() && loader.requestDem3Tile(coordinates.next()));
     }
 
-
-
-    private void updateClients() {
-        int t=0;
-        Dem3Tile tile;
-        while ((tile=tiles.get(t)) != null) {
-            updateClients(tile);
-            t++;
-        }
+    private fun updateClients() {
+        var t = 0
+        do {
+            val tile = tiles.get(t++)
+            if (tile is Dem3Tile) {
+                updateClients(tile)
+            }
+        } while(tile is Dem3Tile)
     }
 
-
-    private void updateClients(Dem3Tile tile) {
-
-        tile.lock(this);
+    private fun updateClients(tile: Dem3Tile) {
+        tile.lock()
 
         if (tile.getStatus() == Dem3Status.VALID) {
-            ArrayList<ElevationUpdaterClient> l = pendingUpdates.get(tile.getCoordinates());
+            val elevationUpdaterClients = pendingUpdates.get(tile.getCoordinates())
 
-            if (l != null) {
-                for (ElevationUpdaterClient e : l) {
-                    e.updateFromSrtmTile(appContext, tile);
+            if (elevationUpdaterClients != null) {
+                for (e in elevationUpdaterClients) {
+                    e.updateFromSrtmTile(appContext, tile)
                 }
             }
         }
 
         if (tile.getStatus() == Dem3Status.VALID || tile.getStatus() == Dem3Status.EMPTY) {
-            pendingUpdates.remove(tile.getCoordinates());
+            pendingUpdates.remove(tile.getCoordinates())
         }
 
-        tile.free(this);
+        tile.free()
     }
 
-
-    @Override
-    public  void close() {
-        appContext.getBroadcaster().unregister(onFileChanged);
+    override fun close() {
+        appContext.broadcaster.unregister(onFileChanged)
     }
-
 }

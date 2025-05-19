@@ -1,47 +1,43 @@
-package ch.bailu.aat_lib.service.elevation;
+package ch.bailu.aat_lib.service.elevation
 
-import java.util.List;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.service.VirtualService
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader
+import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdater
+import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.coordinates.Dem3Coordinates;
-import ch.bailu.aat_lib.service.VirtualService;
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Loader;
-import ch.bailu.aat_lib.service.elevation.loader.Dem3Tiles;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdater;
-import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient;
+class ElevationService(appContext: AppContext) : VirtualService(),
+    ElevationProvider, ElevationServiceInterface {
+    private val updater: ElevationUpdater
+    private val loader: Dem3Loader
 
-public final class ElevationService extends VirtualService implements ElevationProvider, ElevationServiceInterface {
-
-    private final ElevationUpdater updater;
-    private final Dem3Loader loader;
-
-    public ElevationService(AppContext appContext) {
-        Dem3Tiles tiles = new Dem3Tiles();
-        loader = new Dem3Loader(appContext, appContext.createTimer(), tiles);
-        updater = new ElevationUpdater(appContext, loader, tiles);
+    init {
+        val tiles = Dem3Tiles()
+        loader = Dem3Loader(appContext, appContext.createTimer(), tiles)
+        updater = ElevationUpdater(appContext, loader, tiles)
     }
 
-    @Override
-    public void requestElevationUpdates(ElevationUpdaterClient e, List<Dem3Coordinates> c) {
-        updater.requestElevationUpdates(e, c);
+    override fun requestElevationUpdates(e: ElevationUpdaterClient, c: List<Dem3Coordinates>) {
+        updater.requestElevationUpdates(e, c)
     }
 
-    public void requestElevationUpdates() {
-        updater.requestElevationUpdates();
+    override fun requestElevationUpdates() {
+        updater.requestElevationUpdates()
     }
 
 
-    public void cancelElevationUpdates(ElevationUpdaterClient e) {
-        updater.cancelElevationUpdates(e);
+    override fun cancelElevationUpdates(e: ElevationUpdaterClient) {
+        updater.cancelElevationUpdates(e)
     }
 
-    @Override
-    public short getElevation(int laE6, int loE6) {
-        return loader.getElevation(laE6, loE6);
+    override fun getElevation(laE6: Int, loE6: Int): Short {
+        return loader.getElevation(laE6, loE6)
     }
 
-    public void close() {
-        updater.close();
-        loader.close();
+    override fun close() {
+        updater.close()
+        loader.close()
     }
 }

@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
 
 class SubTilePainter(private val scontext: ServicesInterface, private val iid: String, private val tile: Dem3Tile) : BackgroundTask() {
     override fun onInsert() {
-        tile.lock(this)
+        tile.lock()
     }
 
 
@@ -29,7 +29,7 @@ class SubTilePainter(private val scontext: ServicesInterface, private val iid: S
     }
 
     override fun onRemove() {
-        tile.free(this)
+        tile.free()
         scontext.insideContext { scontext.getElevationService().requestElevationUpdates() }
     }
 }

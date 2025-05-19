@@ -1,25 +1,17 @@
-package ch.bailu.aat_lib.service.elevation;
+package ch.bailu.aat_lib.service.elevation
 
-public final class Dem3Status {
+class Dem3Status {
+    var status: Int = EMPTY
+        set(s) {
+            field = s
+            if (s == LOADING) stamp = System.currentTimeMillis()
+        }
+    var stamp: Long = System.currentTimeMillis()
+        private set
 
-    public static final int LOADING =1;
-    public static final int VALID=2;
-    public static final int EMPTY=3;
-
-    private int status = EMPTY;
-    private long stamp = System.currentTimeMillis();
-
-
-    public long getStamp() {
-        return stamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int s) {
-        status = s;
-        if (s == LOADING) stamp = System.currentTimeMillis();
+    companion object {
+        const val LOADING: Int = 1
+        const val VALID: Int = 2
+        const val EMPTY: Int = 3
     }
 }

@@ -1,7 +1,9 @@
-package ch.bailu.aat_lib.service.elevation;
+package ch.bailu.aat_lib.service.elevation
 
-public interface ElevationProvider {
-    int NULL_ALTITUDE=0;
+interface ElevationProvider {
+    fun getElevation(laE6: Int, loE6: Int): Short
 
-    short getElevation(int laE6, int loE6);
+    companion object {
+        const val NULL_ALTITUDE: Int = 0
+    }
 }

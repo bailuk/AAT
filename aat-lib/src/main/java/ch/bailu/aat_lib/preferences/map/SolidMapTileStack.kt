@@ -87,6 +87,7 @@ class SolidMapTileStack private constructor(srender: SolidRenderTheme, preset: I
             MapsForgeSource.MAPSFORGE,
             DownloadSource.MAPNIK,
             DownloadSource.OPEN_TOPO_MAP,
+            DownloadSource.CYCLE_OSM_MAP,
             DownloadSource.OPEN_CYCLE_MAP,
             DownloadSource.TRANSPORT_OVERLAY,
             ElevationSource.ELEVATION_COLOR,

@@ -12,6 +12,8 @@ class Dem3LoaderTask(f: Foc, private val array: Dem3Array, private val status: D
     FileTask(f) {
     override fun bgOnProcess(appContext: AppContext): Long {
         synchronized(array) {
+            array.data.fill(0)
+
             try {
                 ZipInputStream(getFile().openR()).use {
                     var total = 0
@@ -19,11 +21,18 @@ class Dem3LoaderTask(f: Foc, private val array: Dem3Array, private val status: D
 
                     do {
                         val count = it.read(array.data, total, array.data.size - total)
-                        total += count
+                        if (count > 0) {
+                            total += count
+                        }
                     } while (count > 0 && total < array.data.size && canContinue())
 
                     if (canContinue()) {
-                        status.status = Dem3Status.VALID
+                        if (total == array.data.size) {
+                            status.status = Dem3Status.VALID
+                        } else {
+                            throw RuntimeException("${getFile().name}:  $total of ${array.data.size} bytes read")
+                            status.status = Dem3Status.EMPTY
+                        }
                     }
                 }
             } catch (e: Exception) {
