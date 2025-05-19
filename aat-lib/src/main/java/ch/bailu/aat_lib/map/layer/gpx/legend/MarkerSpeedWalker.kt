@@ -8,13 +8,9 @@ import ch.bailu.aat_lib.gpx.GpxSegmentNode
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 class MarkerSpeedWalker(storage: StorageInterface?) : LegendWalker() {
-    private val description: SpeedDescription
+    private val description: SpeedDescription = CurrentSpeedDescription(storage!!)
     var speed = 0f
     private var samples = 0
-
-    init {
-        description = CurrentSpeedDescription(storage!!)
-    }
 
     override fun doList(track: GpxList): Boolean {
         speed = 0f

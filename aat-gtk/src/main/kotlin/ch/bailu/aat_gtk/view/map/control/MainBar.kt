@@ -49,7 +49,7 @@ class MainBar(private val app: Application, controller: UiControllerInterface) :
             controller.centerInMap(pos)
         }
 
-        add(Box(Orientation.HORIZONTAL, Layout.margin).apply {
+        add(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
             append(leftNavigationButton)
             append(leftSeparator)
             append(createNominatimWidget())

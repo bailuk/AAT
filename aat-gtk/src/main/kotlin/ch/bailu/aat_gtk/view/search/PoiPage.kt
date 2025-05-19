@@ -72,7 +72,7 @@ class PoiPage(appContext: AppContext, controller: UiControllerInterface, app: Ap
     val layout = Box(Orientation.VERTICAL, 0).apply {
         append(headerBar)
         append(Clamp().apply {
-            maximumSize = Layout.stackWidth
+            maximumSize = Layout.STACK_WITH
             child = poiView.layout
         })
         hexpand = false

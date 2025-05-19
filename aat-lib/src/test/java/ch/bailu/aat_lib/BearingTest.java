@@ -21,8 +21,8 @@ public class BearingTest {
 
     /**
      * Compared with results from
-     * https://rechneronline.de/geo-coordinates/#distance
-     * https://www.igismap.com/map-tool/bearing-angle
+     * <a href="https://rechneronline.de/geo-coordinates/#distance">...</a>
+     * <a href="https://www.igismap.com/map-tool/bearing-angle">...</a>
      */
     @Test
     public void testBearing() {

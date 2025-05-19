@@ -2,7 +2,10 @@ package ch.bailu.aat_lib.lib.color;
 
 public class ARGB implements ColorInterface {
 
-    private int a,r,g,b;
+    private final int a;
+    private final int r;
+    private final int g;
+    private final int b;
 
     public ARGB(int color) {
         a = (color >> 24) & 0xff;

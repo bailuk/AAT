@@ -6,7 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ch.bailu.aat_lib.description.FF_GPX;
+import ch.bailu.aat_lib.description.Format;
 import ch.bailu.aat_lib.gpx.GpxConstants;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 import ch.bailu.aat_lib.gpx.interfaces.GpxType;
@@ -17,7 +17,7 @@ public abstract class GpxWriter {
 
     private final BufferedWriter output;
 
-    protected final FF_GPX f = FF_GPX.f();
+    protected final Format f = Format.f();
 
 
     public GpxWriter(Foc file) throws IOException, SecurityException {
@@ -69,7 +69,7 @@ public abstract class GpxWriter {
     protected void writeTimeStamp(long time) throws IOException {
         writeString(
                 "<" + GpxConstants.QNAME_TIME + ">"
-                        + f.TIME.format(time) +
+                        + f.dateFormat.format(time) +
                         "</" + GpxConstants.QNAME_TIME + ">");
     }
 

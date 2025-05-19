@@ -19,12 +19,11 @@ class AddOverlayDialog(
         dialog.show()
     }
 
-    constructor(context: Context, file: Foc) : this(
+    constructor(context: Context, file: Foc) : this (
         context, SolidCustomOverlayList(
             Storage(context), FocAndroidFactory(context)
         ), file
-    ) {
-    }
+    )
 
     override fun onClick(dialog: DialogInterface, index: Int) {
         slist[index].setValueFromFile(file)

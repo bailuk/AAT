@@ -53,7 +53,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
     }
 
     fun add(widget: Widget) {
-        widget.margin(Layout.margin)
+        widget.margin(Layout.MARGIN)
         box.append(widget)
     }
 

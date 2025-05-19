@@ -22,7 +22,7 @@ object FileIntent {
 
     private fun toExportedUri(context: Context, file: Foc): Uri {
         SolidExportedDocument(Storage(context)).setDocument(file)
-        var result = if (file.path.startsWith("content:/")) {
+        val result = if (file.path.startsWith("content:/")) {
             Uri.parse(file.path)
         } else {
             val url = "content://${AppConfig.getInstance().appId}.gpx$file"

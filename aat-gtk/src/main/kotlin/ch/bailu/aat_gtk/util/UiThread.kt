@@ -21,11 +21,11 @@ object UiThread {
         }
     }
 
-    fun isUi(): Boolean {
+    private fun isUi(): Boolean {
         return "main" == Thread.currentThread().name
     }
 
-    fun idleAdd(function: () -> Unit) {
+    private fun idleAdd(function: () -> Unit) {
         Glib.idleAdd({ _, _ ->
             function()
             false

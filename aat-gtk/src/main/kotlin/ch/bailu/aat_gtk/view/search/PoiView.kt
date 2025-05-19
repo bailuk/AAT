@@ -51,14 +51,14 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
         }
     }
 
-    val layout = Box(Orientation.VERTICAL, Layout.margin).apply {
+    val layout = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
 
-        margin(Layout.margin)
+        margin(Layout.MARGIN)
 
         append(SolidDirectorySelectorView(sdatabase, app, window).layout)
         append(Separator(Orientation.HORIZONTAL).apply {
-            marginBottom = Layout.margin*2
-            marginTop = Layout.margin*2
+            marginBottom = Layout.MARGIN*2
+            marginTop = Layout.MARGIN*2
         })
         append(searchEntry)
         append(poiList.scrolled)

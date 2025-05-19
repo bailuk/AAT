@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.elevation.tile
 
 abstract class MultiCell {
-    abstract fun set(e: Int)
+    abstract fun set(x: Int)
     abstract fun deltaZX(): Int
     abstract fun deltaZY(): Int
 

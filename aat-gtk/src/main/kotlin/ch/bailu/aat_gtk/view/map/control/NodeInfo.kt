@@ -18,13 +18,13 @@ class NodeInfo {
     private val markupBuilder = MarkupBuilderGpx(GtkAppContext.storage, PangoMarkupConfig)
 
     private val label = Label(Str.NULL).apply {
-        margin(Layout.margin)
+        margin(Layout.MARGIN)
         this.selectable = true
     }
 
     private val scrolled = ScrolledWindow().apply {
         child = label
-        setSizeRequest(Layout.windowWidth-Layout.barSize*2,Layout.windowHeight/5)
+        setSizeRequest(Layout.WINDOW_WIDTH-Layout.BAR_SIZE*2,Layout.WINDOW_HEIGHT/5)
     }
 
     val box = Box(Orientation.VERTICAL,0).apply {

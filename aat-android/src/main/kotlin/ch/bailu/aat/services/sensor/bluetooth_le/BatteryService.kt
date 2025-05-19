@@ -8,8 +8,7 @@ class BatteryService : ServiceInterface {
     override var isValid = false
         private set
 
-    var batteryLevelPercentage = 0
-        private set
+    private var batteryLevelPercentage = 0
 
     override fun close() {}
 

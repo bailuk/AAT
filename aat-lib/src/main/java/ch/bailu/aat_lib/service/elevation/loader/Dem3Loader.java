@@ -51,7 +51,7 @@ public final class Dem3Loader implements Closeable, ElevationProvider {
 
     /**
      * Load the dem3 tile containing altitude for specific coordinates
-     * @param coordinates
+     * @param coordinates load tile for this coordinates
      * @return true if is loaded, false if is pending
      */
     public boolean requestDem3Tile(Dem3Coordinates coordinates) {

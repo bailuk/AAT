@@ -19,12 +19,8 @@ class StepCounterSensor(c: Context, item: SensorListItem, sensor: Sensor) : Inte
     private var first: Sample = Sample.NULL
     private val samples = Array(SAMPLES) { Sample.NULL }
     private var index = 0
-    private val broadcaster: Broadcaster
+    private val broadcaster: Broadcaster = Broadcaster(c, InfoID.STEP_COUNTER_SENSOR)
     private var information: GpxInformation? = null
-
-    init {
-        broadcaster = Broadcaster(c, InfoID.STEP_COUNTER_SENSOR)
-    }
 
     override fun onSensorChanged(event: SensorEvent) {
         val attr = StepCounterAttributes()

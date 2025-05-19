@@ -39,7 +39,7 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
         val pressure = getPressure(event)
         hypsometric.setPressure(pressure.toDouble())
         information = Information(hypsometric.altitude, pressure)
-        AndroidBroadcaster.broadcast(context, changedAction)
+        AndroidBroadcaster.broadcast(context, CHANGE_ACTION)
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
@@ -110,7 +110,7 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
     }
 
     companion object {
-        private val changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR
+        private const val CHANGE_ACTION = AppBroadcaster.SENSOR_CHANGED + InfoID.BAROMETER_SENSOR
         fun getPressure(event: SensorEvent): Float {
             return if (event.values.isNotEmpty()) {
                 event.values[0]

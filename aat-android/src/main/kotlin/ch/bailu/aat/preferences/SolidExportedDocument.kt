@@ -20,7 +20,7 @@ class SolidExportedDocument(storage: StorageInterface) : SolidString(storage, KE
     }
 
     fun setDocument(file: Foc) {
-        setValue(file.path);
+        setValue(file.path)
     }
 
     fun isExportAllowed(path: String): Boolean {

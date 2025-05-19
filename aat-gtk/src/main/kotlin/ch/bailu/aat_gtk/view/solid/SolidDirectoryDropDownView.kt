@@ -57,7 +57,7 @@ class SolidDirectoryDropDownView(appContext: AppContext)
 
     private fun limitWidth(text: String, limit: Int): String {
         if (text.length > limit) {
-            return text.substring(0, limit-2) + "…";
+            return text.substring(0, limit-2) + "…"
         }
         return text
     }

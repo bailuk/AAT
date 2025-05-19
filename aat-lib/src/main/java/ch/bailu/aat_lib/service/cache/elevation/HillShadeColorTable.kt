@@ -65,7 +65,7 @@ class HillShadeColorTable {
 
     private fun hillShadeAlpha(dzx: Double, dzy: Double, limit: Int): Int {
         val slope = slopeRad(dzx, dzy)
-        var shade = (limit * ((ZENITH_COS * cos(slope)) +
+        val shade = (limit * ((ZENITH_COS * cos(slope)) +
                 (ZENITH_SIN * sin(slope) * cos(AZIMUTH_RAD - aspectRad(dzx, dzy))))).toInt()
 
         return Limit.clamp(limit - shade, 0, MAX_DARKNESS)

@@ -72,7 +72,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     private val poiView = PoiPage(appContext,this, app, window)
     private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, navigationView).apply {
-        overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
+        overlay.setSizeRequest(Layout.MAP_WIN_WITH, Layout.WINDOW_MIN_SIZE)
         onAttached()
     }
 

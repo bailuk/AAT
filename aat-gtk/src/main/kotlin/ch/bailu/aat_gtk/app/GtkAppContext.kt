@@ -50,14 +50,6 @@ object GtkAppContext: AppContext {
         return H2DbConnection()
     }
 
-    private class Preview: MapPreviewInterface {
-        override fun isReady(): Boolean {
-            return true
-        }
-        override fun generateBitmapFile() {}
-        override fun onDestroy() {}
-    }
-
     override fun createMapPreview(info: GpxInformation, previewImageFile: Foc): MapPreviewInterface {
         return MapsForgePreview(this, info, previewImageFile)
     }

@@ -76,7 +76,7 @@ class GraphView(private val plotter: Plotter) : TargetInterface {
 
     private var redrawNeeded = false
 
-    fun repaint() {
+    private fun repaint() {
         /**
          * Repaint requests are coming from the main (UI) thread as well as from
          * the layer manager worker thread.

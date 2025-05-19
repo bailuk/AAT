@@ -18,7 +18,7 @@ import org.mapsforge.map.view.MapView
 
 class MockMapView : MapView {
     var mockDimension = Dimension(0,0)
-    var mockModel = Model().apply {
+    private var mockModel = Model().apply {
         frameBufferModel.mapPosition = MapPosition(LatLong(0.0,0.0), 14)
     }
 

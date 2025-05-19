@@ -5,5 +5,4 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault
 import ch.bailu.foc.FocFactory
 
 class MockSolidDataDirectory(storageInterface: StorageInterface, focFactory: FocFactory):
-    SolidDataDirectoryDefault(storageInterface, focFactory) {
-}
+    SolidDataDirectoryDefault(storageInterface, focFactory)

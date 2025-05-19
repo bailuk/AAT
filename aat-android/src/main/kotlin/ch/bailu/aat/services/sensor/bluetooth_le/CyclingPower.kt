@@ -16,33 +16,20 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
     private var isCadenceSensor = false
     private val cadence = Revolution()
     private val speed = Revolution()
-    private val wheelCircumference: WheelCircumference
+    private val wheelCircumference: WheelCircumference = WheelCircumference(c, speed)
     private var information = GpxInformation.NULL
 
     override var isValid = false
         private set
-    private val connectorPower: Connector
-    private val connectorSpeed: Connector
-    private val connectorCadence: Connector
-    private val broadcasterPower: Broadcaster
-    private val broadcasterSpeed: Broadcaster
-    private val broadcasterCadence: Broadcaster
-    private val namePower: String
-    private val nameSpeed: String
-    private val nameCadence: String
-
-    init {
-        wheelCircumference = WheelCircumference(c, speed)
-        connectorPower = Connector(c.getContext(), InfoID.POWER_SENSOR)
-        connectorCadence = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
-        connectorSpeed = Connector(c.getContext(), InfoID.SPEED_SENSOR)
-        broadcasterPower = Broadcaster(c.getContext(), InfoID.POWER_SENSOR)
-        broadcasterCadence = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
-        broadcasterSpeed = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
-        namePower = c.getContext().getString(R.string.sensor_power)
-        nameSpeed = c.getContext().getString(R.string.sensor_speed)
-        nameCadence = c.getContext().getString(R.string.sensor_cadence)
-    }
+    private val connectorPower: Connector = Connector(c.getContext(), InfoID.POWER_SENSOR)
+    private val connectorSpeed: Connector = Connector(c.getContext(), InfoID.SPEED_SENSOR)
+    private val connectorCadence: Connector = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
+    private val broadcasterPower: Broadcaster = Broadcaster(c.getContext(), InfoID.POWER_SENSOR)
+    private val broadcasterSpeed: Broadcaster = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
+    private val broadcasterCadence: Broadcaster = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
+    private val namePower: String = c.getContext().getString(R.string.sensor_power)
+    private val nameSpeed: String = c.getContext().getString(R.string.sensor_speed)
+    private val nameCadence: String = c.getContext().getString(R.string.sensor_cadence)
 
     override fun close() {
         connectorPower.close()

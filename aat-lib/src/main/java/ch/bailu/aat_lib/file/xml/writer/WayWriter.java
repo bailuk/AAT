@@ -30,8 +30,8 @@ public class WayWriter extends GpxWriter {
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {
         writeString("\t");
         writeBeginElementStart(GpxConstants.QNAME_WAY_POINT);
-        writeParameter(GpxConstants.QNAME_LATITUDE, f.N6.format(tp.getLatitude()));
-        writeParameter(GpxConstants.QNAME_LONGITUDE, f.N6.format(tp.getLongitude()));
+        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()));
+        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()));
 
         writeBeginElementEnd();
 
@@ -49,7 +49,7 @@ public class WayWriter extends GpxWriter {
     private void writeAltitude(GpxPointInterface tp) throws IOException {
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
             writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-            writeString(f.N.format(tp.getAltitude()));
+            writeString(f.decimal1.format(tp.getAltitude()));
             writeEndElement(GpxConstants.QNAME_ALTITUDE);
         }
     }

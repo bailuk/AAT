@@ -99,7 +99,7 @@ class BoundingBoxE6 {
         return containsLongitude(b.lonEastE6) || containsLongitude(b.lonWestE6)
     }
 
-    fun containsLongitude(lo: Int): Boolean {
+    private fun containsLongitude(lo: Int): Boolean {
         return lo > lonWestE6 && lo < lonEastE6
     }
 

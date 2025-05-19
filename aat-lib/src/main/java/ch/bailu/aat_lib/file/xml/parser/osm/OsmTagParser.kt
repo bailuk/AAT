@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.file.xml.parser.scanner.Scanner
 import org.xmlpull.v1.XmlPullParser
 import java.io.IOException
 
-class OsmTagParser : TagParser(_root_ide_package_.ch.bailu.aat_lib.file.xml.parser.osm.OsmConstants.T_TAG) {
+class OsmTagParser : TagParser(OsmConstants.T_TAG) {
     override fun parseText(parser: XmlPullParser, scanner: Scanner) {}
 
     @Throws(IOException::class)
@@ -15,9 +15,9 @@ class OsmTagParser : TagParser(_root_ide_package_.ch.bailu.aat_lib.file.xml.pars
         var v = ""
 
         parser.parseAttributes { name, value ->
-            if (equals(name, _root_ide_package_.ch.bailu.aat_lib.file.xml.parser.osm.OsmConstants.A_KEY)) {
+            if (equals(name, OsmConstants.A_KEY)) {
                 k = value
-            } else if (equals(name, _root_ide_package_.ch.bailu.aat_lib.file.xml.parser.osm.OsmConstants.A_VALUE)) {
+            } else if (equals(name, OsmConstants.A_VALUE)) {
                 v = value
             }
         }

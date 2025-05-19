@@ -17,11 +17,10 @@ import ch.bailu.aat_lib.view.cockpit.Layouter
 
 class CockpitView(context: Context, private val theme: UiTheme) : ViewGroup(context) {
     private val layouter: Layouter
-    private val storage: StorageInterface
+    private val storage: StorageInterface = Storage(context)
     private val contentDescriptions = ArrayList<ContentDescription>()
 
     init {
-        storage = Storage(context)
         theme.background(this)
         layouter = Layouter(
             contentDescriptions

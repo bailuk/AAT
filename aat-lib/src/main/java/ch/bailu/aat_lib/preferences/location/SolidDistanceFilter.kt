@@ -8,16 +8,12 @@ import ch.bailu.aat_lib.resources.Res
 
 
 class SolidDistanceFilter(storage: StorageInterface, i: Int) : SolidIndexList(storage, KEY + i) {
-    private val sunit: SolidUnit
-
-    init {
-        sunit = SolidUnit(storage)
-    }
+    private val sunit: SolidUnit = SolidUnit(storage)
 
     val minDistance: Float
         get() = VALUE_LIST[index]
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_distance_filter()
     }

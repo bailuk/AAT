@@ -8,14 +8,8 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.model.LatLong
 
-class ElevationLayer(services: ServicesInterface, storage: StorageInterface?) : MapLayerInterface {
-    private val altitudeDescription: AltitudeDescription
-    private val services: ServicesInterface
-
-    init {
-        altitudeDescription = AltitudeDescription(storage!!)
-        this.services = services
-    }
+class ElevationLayer(private val services: ServicesInterface, storage: StorageInterface?) : MapLayerInterface {
+    private val altitudeDescription: AltitudeDescription = AltitudeDescription(storage!!)
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
     override fun drawInside(mcontext: MapContext) {}

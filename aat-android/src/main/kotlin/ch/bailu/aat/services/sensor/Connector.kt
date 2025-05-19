@@ -25,7 +25,7 @@ class Connector(private val context: Context, private val iid: Int) : Closeable 
     }
 
     private fun broadcast() {
-        AndroidBroadcaster.broadcast(context, changedAction)
+        AndroidBroadcaster.broadcast(context, CHANGE_ACTION)
     }
 
     override fun close() {
@@ -34,12 +34,12 @@ class Connector(private val context: Context, private val iid: Int) : Closeable 
             SensorState.disconnect(iid)
 
             // just disconnected try reconnect
-            AndroidBroadcaster.broadcast(context, disconnectedAction)
+            AndroidBroadcaster.broadcast(context, DISCONNECT_ACTION)
         }
     }
 
     companion object {
-        private val changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS
-        private val disconnectedAction = AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS
+        private const val CHANGE_ACTION = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS
+        private const val DISCONNECT_ACTION = AppBroadcaster.SENSOR_DISCONNECTED + InfoID.SENSORS
     }
 }

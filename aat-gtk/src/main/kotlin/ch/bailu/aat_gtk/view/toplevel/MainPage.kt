@@ -57,7 +57,7 @@ class MainPage(appContext: AppContext,
             append(headerBar)
             append(stackView.viewSwitcherBar)
             append(Clamp().apply {
-                maximumSize = Layout.stackWidth
+                maximumSize = Layout.STACK_WITH
                 child = stackView.viewStack
             })
     }

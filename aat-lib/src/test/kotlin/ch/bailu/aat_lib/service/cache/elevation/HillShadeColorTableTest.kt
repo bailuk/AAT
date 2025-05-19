@@ -12,9 +12,15 @@ class HillShadeColorTableTest {
         val table = HillShadeColorTable()
 
         val color = ARGB(table.getColor(multiCell(0,0)))
-        assertEquals(50, color.red())
-        assertEquals(50, color.green())
-        assertEquals(50, color.blue())
+
+        val col = preMultipliedAlpha(color.alpha(),50)
+        assertEquals(col, color.red())
+        assertEquals(col, color.green())
+        assertEquals(col, color.blue())
+    }
+
+    private fun preMultipliedAlpha(alpha: Int, color: Int): Int {
+        return ((color * alpha).toDouble() / 255.0).toInt()
     }
 
     companion object {

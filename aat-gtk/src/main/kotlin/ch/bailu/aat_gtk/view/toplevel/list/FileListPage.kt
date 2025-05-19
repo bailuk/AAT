@@ -48,8 +48,8 @@ class FileListPage(app: Application,
         AverageSpeedDescription(appContext.storage),
         TimeDescription())
 
-    val vbox = Box(Orientation.VERTICAL, Layout.margin).apply {
-        margin(Layout.margin)
+    val vbox = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
+        margin(Layout.MARGIN)
     }
 
     private val fileCountLabel = Label(Str.NULL)
@@ -150,7 +150,7 @@ class FileListPage(app: Application,
                 }
             }
 
-            vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
+            vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     addCssClass(Strings.linked)
                     append(
@@ -179,7 +179,7 @@ class FileListPage(app: Application,
                 append(fileCountLabel)
             })
 
-            vbox.append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
+            vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)
                     append(trackCenterButton)

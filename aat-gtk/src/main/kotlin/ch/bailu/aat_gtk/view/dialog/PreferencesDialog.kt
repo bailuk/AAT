@@ -28,7 +28,7 @@ object PreferencesDialog {
                     add(ActivityPreferencesPage(appContext.storage, i).page)
                 }
 
-                setDefaultSize(Layout.windowWidth, Layout.windowHeight)
+                setDefaultSize(Layout.WINDOW_WIDTH, Layout.WINDOW_HEIGHT)
 
                 onDestroy {
                     window?.disconnectSignals()

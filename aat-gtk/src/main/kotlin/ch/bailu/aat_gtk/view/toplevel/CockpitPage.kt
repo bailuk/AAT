@@ -22,13 +22,13 @@ class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, d
     private val cockpitView = CockpitView(appContext).apply {addDefaults((dispatcher))}.scrolledWindow
 
     private val clamp = Clamp().apply {
-        maximumSize = Layout.windowHeight
+        maximumSize = Layout.WINDOW_HEIGHT
         asOrientable().orientation = Orientation.VERTICAL
         child = cockpitView
     }
 
-    private val buttons = Box(Orientation.HORIZONTAL, Layout.margin).apply {
-        margin(Layout.margin)
+    private val buttons = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
+        margin(Layout.MARGIN)
         append(Box(Orientation.HORIZONTAL, 0).apply {
             addCssClass(Strings.linked)
 
@@ -62,7 +62,7 @@ class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, d
         append(DescriptionLabelTextView(GpsStateDescription()).apply { dispatcher.addTarget(this, InfoID.LOCATION) }.layout)
     }
 
-    val box = Box(Orientation.VERTICAL, Layout.margin).apply {
+    val box = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
         val preset = SolidPresetComboView()
         dispatcher.addTarget(preset, InfoID.TRACKER)
 

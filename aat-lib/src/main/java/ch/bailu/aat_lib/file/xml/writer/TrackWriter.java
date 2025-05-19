@@ -29,13 +29,13 @@ public class TrackWriter extends GpxWriter {
     public void writeTrackPoint(GpxPointInterface tp) throws IOException {
         writeString("\t");
         writeBeginElementStart(GpxConstants.QNAME_TRACK_POINT);
-        writeParameter(GpxConstants.QNAME_LATITUDE, f.N6.format(tp.getLatitude()));
-        writeParameter(GpxConstants.QNAME_LONGITUDE, f.N6.format(tp.getLongitude()));
+        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()));
+        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()));
 
         writeBeginElementEnd();
 
         writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-        writeString(f.N1.format(tp.getAltitude()));
+        writeString(f.decimal2.format(tp.getAltitude()));
         writeEndElement(GpxConstants.QNAME_ALTITUDE);
 
         writeTimeStamp(tp.getTimeStamp());

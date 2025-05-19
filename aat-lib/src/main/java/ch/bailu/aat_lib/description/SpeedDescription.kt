@@ -4,11 +4,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 
 abstract class SpeedDescription(storage: StorageInterface) : FloatDescription() {
-    private val sunit: SolidUnit
-
-    init {
-        sunit = SolidUnit(storage)
-    }
+    private val sunit: SolidUnit = SolidUnit(storage)
 
     override fun getUnit(): String {
         return sunit.speedUnit

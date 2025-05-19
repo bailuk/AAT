@@ -8,12 +8,12 @@ import ch.bailu.aat_lib.resources.Res
 class SolidMissingTrigger(storage: StorageInterface, i: Int) : SolidStaticIndexList(
     storage, KEY + i, labels
 ) {
-    val triggerSeconds: Int
+    private val triggerSeconds: Int
         get() = VALUE_LIST[index]
     val triggerMillis: Int
         get() = triggerSeconds * 1000
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_missing_trigger()
     }

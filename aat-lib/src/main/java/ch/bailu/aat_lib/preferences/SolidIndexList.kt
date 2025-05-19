@@ -1,11 +1,7 @@
 package ch.bailu.aat_lib.preferences
 
 abstract class SolidIndexList(storage: StorageInterface, key: String) : AbsSolidType() {
-    private val sindex: SolidInteger
-
-    init {
-        sindex = SolidInteger(storage, key)
-    }
+    private val sindex: SolidInteger = SolidInteger(storage, key)
 
     abstract fun length(): Int
     protected abstract fun getValueAsString(index: Int): String

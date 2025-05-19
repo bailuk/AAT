@@ -5,7 +5,7 @@ import java.util.HashMap;
 import ch.bailu.aat_lib.util.WithStatusText;
 
 public final class IconMap implements WithStatusText {
-    public class Icon {
+    public static class Icon {
         public final String svg;
 
         public Icon(String file_name) {
@@ -14,7 +14,7 @@ public final class IconMap implements WithStatusText {
     }
 
     private final HashMap<Integer, HashMap<String, Icon>> key_list =
-            new HashMap<Integer, HashMap<String, Icon>>();
+            new HashMap<>();
 
 
     public void add(int key, String value, String file_name) {

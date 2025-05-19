@@ -28,8 +28,8 @@ class DetailViewPage(
     private val selectedLabel = Label("").apply { addCssClass("page-label") }
 
     val box = Box(Orientation.VERTICAL, 0).apply {
-        append(Box(Orientation.HORIZONTAL, Layout.margin).apply {
-            margin(Layout.margin)
+        append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
+            margin(Layout.MARGIN)
 
             append(Box(Orientation.HORIZONTAL, 0).apply {
                 addCssClass(Strings.linked)

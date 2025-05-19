@@ -7,11 +7,7 @@ import ch.bailu.aat_lib.resources.Res
 abstract class SolidAutopause protected constructor(
     storage: StorageInterface, key: String, preset: Int) : SolidIndexList(storage, key + preset
 ) {
-    private val sunit: SolidUnit
-
-    init {
-        sunit = SolidUnit(storage)
-    }
+    private val sunit: SolidUnit = SolidUnit(storage)
 
     val triggerSpeed: Float
         get() = SPEED_VALUES[index]

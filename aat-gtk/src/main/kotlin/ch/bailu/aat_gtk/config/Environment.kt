@@ -8,7 +8,7 @@ object Environment {
     private val userHome = System.getProperty("user.home")
 
     val configHome = getEnv("XDG_CONFIG_HOME", "$userHome/.config", appIdName)
-    val dataHome   = getEnv("XDG_DATA_HOME"  , "$userHome", AppDirectory.DIR_AAT_DATA)
+    val dataHome   = getEnv("XDG_DATA_HOME"  , userHome, AppDirectory.DIR_AAT_DATA)
     val cacheHome  = getEnv("XDG_CACHE_HOME" , "$userHome/.cache", appIdName)
 
     private fun getEnv(name: String, fallBack: String, subdir: String): String {

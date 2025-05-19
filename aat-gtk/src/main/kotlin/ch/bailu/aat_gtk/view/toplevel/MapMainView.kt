@@ -89,7 +89,7 @@ class MapMainView(
         editor,
         editableOverlayList
     )
-    private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.barSize)
+    private val edgeControl = EdgeControlLayer(map.getMContext(), Layout.BAR_SIZE)
 
     init {
         navigationView.observe(mainBar)

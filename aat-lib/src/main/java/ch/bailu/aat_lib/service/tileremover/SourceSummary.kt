@@ -73,9 +73,7 @@ class SourceSummary(override val name: String) : SourceSummaryInterface {
 
         other as SourceSummary
 
-        if (name != other.name) return false
-
-        return true
+        return name == other.name
     }
 
 }

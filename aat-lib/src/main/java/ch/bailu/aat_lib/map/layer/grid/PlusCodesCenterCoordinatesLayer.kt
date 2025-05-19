@@ -12,13 +12,8 @@ class PlusCodesCenterCoordinatesLayer(
     services: ServicesInterface,
     storage: StorageInterface
 ) : MapLayerInterface {
-    private val elevation: ElevationLayer
-    private val crosshair: Crosshair
-
-    init {
-        elevation = ElevationLayer(services, storage)
-        crosshair = Crosshair()
-    }
+    private val elevation: ElevationLayer = ElevationLayer(services, storage)
+    private val crosshair: Crosshair = Crosshair()
 
     override fun drawForeground(mcontext: MapContext) {
         val point = mcontext.getMapView().getMapViewPosition().center

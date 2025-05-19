@@ -12,10 +12,10 @@ class PolyLineTest {
         val los = arrayOf(-120.2, -120.95, -126.453)
 
         var index = 0
-        PolylineDecoder("_p~iF~ps|U_ulLnnqC_mqNvxq`@", { la, lo ->
+        PolylineDecoder("_p~iF~ps|U_ulLnnqC_mqNvxq`@") { la, lo ->
             Assertions.assertEquals(las[index], la / 1e5)
             Assertions.assertEquals(los[index++], lo / 1e5)
-        })
+        }
         Assertions.assertEquals(3, index)
     }
 }

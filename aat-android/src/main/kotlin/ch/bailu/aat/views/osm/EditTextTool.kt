@@ -13,12 +13,10 @@ import ch.bailu.aat.views.bar.ControlBar
 class EditTextTool(val edit: EditText, orientation: Int, theme: UiTheme) : LinearLayout(
     edit.context
 ), View.OnClickListener {
-    val bar: ControlBar
-    private val clearText: ImageButtonViewGroup
+    val bar: ControlBar = ControlBar(context, orientation, theme, 6)
+    private val clearText: ImageButtonViewGroup = bar.addImageButton(R.drawable.edit_clear_all_inverse)
 
     init {
-        bar = ControlBar(context, orientation, theme, 6)
-        clearText = bar.addImageButton(R.drawable.edit_clear_all_inverse)
         clearText.setOnClickListener(this)
         ToolTip.set(clearText, R.string.tt_nominatim_clear)
         setOrientation(HORIZONTAL)

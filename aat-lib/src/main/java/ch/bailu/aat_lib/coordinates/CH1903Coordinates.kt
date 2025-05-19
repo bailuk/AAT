@@ -43,7 +43,7 @@ class CH1903Coordinates : MeterCoordinates {
         toCH1903(la, lo)
     }
 
-    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude()) {}
+    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude())
     constructor(point: LatLongInterface) {
         toCH1903(
             point.getLatitudeE6().toDouble() / 1e6,

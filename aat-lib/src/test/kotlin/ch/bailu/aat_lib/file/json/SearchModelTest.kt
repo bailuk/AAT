@@ -7,7 +7,7 @@ import org.mapsforge.core.model.LatLong
 
 class SearchModelTest {
 
-    val jsonContent = "{\n" +
+    private val jsonContent = "{\n" +
             "  \"result\": [\n" +
             "    {\n" +
             "      \"place_id\": 84487585,\n" +

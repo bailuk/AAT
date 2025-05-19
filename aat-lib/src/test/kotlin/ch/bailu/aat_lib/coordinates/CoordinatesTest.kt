@@ -142,7 +142,7 @@ class CoordinatesTest {
 
     @Test
     fun testBern() {
-        testCH1903Coordinate(600000, 200000, 46.9510827861504654, 7.4386324175389165)
+        testCH1903Coordinate(600000, 200000, 46.951082786150465, 7.4386324175389165)
         testUTMCoordinate(381851, 5200553, 32, 'T', 46.94798, 7.44743)
     }
 

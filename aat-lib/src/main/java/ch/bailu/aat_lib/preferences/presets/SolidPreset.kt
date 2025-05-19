@@ -18,12 +18,12 @@ class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return smet(index).getValueAsString()
     }
 
-    
+
     override fun getValueAsString(): String {
         return smet().getValueAsString()
     }
 
-    fun smet(): SolidMET {
+    private fun smet(): SolidMET {
         return smet(index)
     }
 
@@ -35,7 +35,7 @@ class SolidPreset(storage: StorageInterface) : SolidIndexList(storage, KEY) {
         return super.hasKey(key) || smet().hasKey(key)
     }
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_preset()
     }

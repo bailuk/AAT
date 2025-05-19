@@ -24,9 +24,9 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     private val services: Array<ServiceInterface>
     private val context: Context = c.getContext()
 
-    private var device: BluetoothDevice
-    private var sensorList: SensorList
-    private var item: SensorListItem
+    private var device: BluetoothDevice = d
+    private var sensorList: SensorList = l
+    private var item: SensorListItem = i
 
     private var gatt: BluetoothGatt?
     private var closed = false
@@ -34,9 +34,6 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     private val scanningTimeout = AndroidTimer()
 
     init {
-        sensorList = l
-        item = i
-        device = d
         services = arrayOf(
             CyclingPower(c),
             CscService(c),

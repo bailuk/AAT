@@ -6,11 +6,7 @@ import ch.bailu.aat_lib.gpx.GpxSegmentNode
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 class PointAltitudeWalker(storage: StorageInterface?) : LegendWalker() {
-    private val description: DistanceDescription
-
-    init {
-        description = DistanceDescription(storage!!)
-    }
+    private val description: DistanceDescription = DistanceDescription(storage!!)
 
     override fun doMarker(marker: GpxSegmentNode): Boolean {
         return legendContext!!.isVisible(marker.getBoundingBox())

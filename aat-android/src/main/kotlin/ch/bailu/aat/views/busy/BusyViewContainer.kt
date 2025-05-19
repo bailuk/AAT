@@ -5,11 +5,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 
 class BusyViewContainer(context: Context) : FrameLayout(context) {
-    private val busy: BusyView
+    private val busy: BusyView = BusyView(context)
     private var orientation = BOTTOM_RIGHT
 
     init {
-        busy = BusyView(context)
         addView(busy, LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
     }
 

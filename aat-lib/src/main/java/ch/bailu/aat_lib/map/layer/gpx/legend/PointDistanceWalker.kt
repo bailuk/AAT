@@ -8,12 +8,8 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 
 class PointDistanceWalker(storage: StorageInterface, private val resetAfterDraw: Boolean) :
     LegendWalker() {
-    private val description: DistanceDescription
+    private val description: DistanceDescription = DistanceDescription(storage)
     private var distance = 0f
-
-    init {
-        description = DistanceDescription(storage)
-    }
 
     override fun doList(track: GpxList): Boolean {
         distance = 0f
