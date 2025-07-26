@@ -29,3 +29,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - Android: Fix layout adaption on fold-devices
 - Gtk: Fix current track not always updated in detail view
 - Gtk: Fix invisible nodes are getting selected in map view
+- Gtk: Show tracker controller buttons in map view

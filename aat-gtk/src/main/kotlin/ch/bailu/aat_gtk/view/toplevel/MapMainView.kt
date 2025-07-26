@@ -70,7 +70,7 @@ class MapMainView(
         dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
     }
 
-    private val mainBar = MainBar(app, uiController)
+    private val mainBar = MainBar(app, uiController, appContext.services, dispatcher)
     private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
     private val infoBar = InfoBar(
         app,
