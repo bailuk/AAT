@@ -1,7 +1,8 @@
 package ch.bailu.aat_lib.map.layer.selector
 
-import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -12,8 +13,9 @@ class NodeSelectorLayer(
     services: ServicesInterface,
     s: StorageInterface,
     mc: MapContext,
-    pos: Position
-) : AbsNodeSelectorLayer(services, s, mc, pos) {
+    pos: Position,
+    usageTracker: UsageTrackerInterface
+) : AbsNodeSelectorLayer(services, s, mc, pos, usageTracker) {
 
     private val observers: ArrayList<OnNodeSelectedInterface> = ArrayList()
 

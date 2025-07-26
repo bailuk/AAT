@@ -28,3 +28,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - LIB: Read Results-Files from OSM Routing APIs (Valhalla, GraphHopper and OSRM)
 - Android: Fix layout adaption on fold-devices
 - Gtk: Fix current track not always updated in detail view
+- Gtk: Fix invisible nodes are getting selected in map view

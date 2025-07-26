@@ -2,9 +2,10 @@ package ch.bailu.aat_lib.map.layer.selector
 
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.GpxNodeFinder
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapColor
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.EdgeViewInterface
@@ -21,7 +22,8 @@ abstract class AbsNodeSelectorLayer(
     private val services: ServicesInterface,
     s: StorageInterface,
     mc: MapContext,
-    private val pos: Position
+    private val pos: Position,
+    private val usageTracker: UsageTrackerInterface
 ) : MapLayerInterface, TargetInterface, EdgeViewInterface {
 
     private val squareSize = mc.getMetrics().getDensity().toPixelInt(SQUARE_SIZE.toFloat())
@@ -127,7 +129,7 @@ abstract class AbsNodeSelectorLayer(
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.getLoaded()) {
+        if (info.getLoaded() && usageTracker.isEnabled(iid)) {
             infoCache.put(iid, info)
         } else {
             infoCache.remove(iid)

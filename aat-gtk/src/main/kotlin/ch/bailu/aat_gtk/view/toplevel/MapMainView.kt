@@ -9,14 +9,15 @@ import ch.bailu.aat_gtk.view.map.control.Bar
 import ch.bailu.aat_gtk.view.map.control.EditorBar
 import ch.bailu.aat_gtk.view.map.control.EditorStatusLabel
 import ch.bailu.aat_gtk.view.map.control.InfoBar
+import ch.bailu.aat_gtk.view.map.control.MainBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
-import ch.bailu.aat_gtk.view.map.control.MainBar
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -52,12 +53,12 @@ class MapMainView(
     val box = Box(Orientation.VERTICAL, 0)
     val overlay = Overlay()
 
-    private val overlayList = ArrayList<OverlayContainer>().apply {
-        val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
-        val usageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
+    private val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
+    private val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
+    private val overlayList = ArrayList<OverlayContainer>().apply {
         infoIDs.forEach {
-            add(OverlayContainer(it, appContext, uiController, map, dispatcher, usageTracker))
+            add(OverlayContainer(it, appContext, uiController, map, dispatcher, overlayUsageTracker))
         }
     }
 
@@ -115,7 +116,8 @@ class MapMainView(
                 appContext.services,
                 appContext.storage,
                 map.getMContext(),
-                Position.LEFT
+                Position.LEFT,
+                UsageTrackerAlwaysEnabled()
             ).apply {
                 observe(editorBar)
                 dispatcher.addTarget(this, InfoID.EDITOR_OVERLAY)
@@ -127,7 +129,8 @@ class MapMainView(
                 appContext.services,
                 appContext.storage,
                 map.getMContext(),
-                Position.RIGHT
+                Position.RIGHT,
+                overlayUsageTracker
             ).apply {
                 observe(infoBar)
                 dispatcher.addTarget(this, InfoID.ALL)
