@@ -27,3 +27,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - GTK: OfflinePoi as leaflet page
 - LIB: Read Results-Files from OSM Routing APIs (Valhalla, GraphHopper and OSRM)
 - Android: Fix layout adaption on fold-devices
+- Gtk: Fix current track not always updated in detail view

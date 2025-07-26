@@ -1,8 +1,8 @@
 package ch.bailu.aat_gtk.view.graph
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig

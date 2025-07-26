@@ -5,13 +5,25 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.broadcaster.Broadcaster
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.ServicesInterface
 
-class TrackerSource(private val services: ServicesInterface, private val broadcaster: Broadcaster) :
-    SourceInterface {
+class TrackerSource(
+    private val services: ServicesInterface,
+    private val broadcaster: Broadcaster,
+    usageTracker: UsageTrackerInterface
+) :
+    SourceInterface
+{
     private var target = TargetInterface.NULL
+
+    init {
+        usageTracker.observe {
+            requestUpdate()
+        }
+    }
 
     override fun setTarget(target: TargetInterface) {
         this.target = target

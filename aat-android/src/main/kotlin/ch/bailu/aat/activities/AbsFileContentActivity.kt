@@ -22,6 +22,7 @@ import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
@@ -89,14 +90,14 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         )
         this.fileOperation = fileOperation
         bar.addButton(fileOperation)
-        bar.setOrientation(LinearLayout.HORIZONTAL)
+        bar.orientation = LinearLayout.HORIZONTAL
         bar.addOnClickListener(this)
     }
 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
 
     private fun createDispatcher() {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(editorSource)

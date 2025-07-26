@@ -25,12 +25,6 @@ class EditorHelper(private val appContext: AppContext) :
         edit(draft, InfoID.EDITOR_DRAFT)
     }
 
-    @Deprecated("Editor should be able to edit any file, use edit(file: Foc)")
-    fun editDraft() {
-        edit(draft, InfoID.EDITOR_DRAFT)
-        onResume()
-    }
-
     fun edit(file: Foc) {
         edit(file, InfoID.EDITOR_OVERLAY)
         onResume()

@@ -245,7 +245,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private fun setupDispatcher(dispatcher: Dispatcher) {
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
+        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))
         dispatcher.addSource(customFileSource)
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
