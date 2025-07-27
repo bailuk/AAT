@@ -16,7 +16,7 @@ open class MemberParser @JvmOverloads constructor(tag: String = "member") : TagP
         parser.parseAttributes { name, value ->
             if (equals(name, "ref")) {
                 scanner.id.scan(value)
-                val point = scanner.referencer[scanner.id.int]
+                val point = scanner.referencer[scanner.id.value]
                 if (point != null) {
                     scanner.referencer.bounding.add(point)
                     scanner.referencer.resolved++

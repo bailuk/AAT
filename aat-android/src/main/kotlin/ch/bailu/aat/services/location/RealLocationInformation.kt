@@ -24,8 +24,8 @@ open class RealLocationInformation(private val location: Location, private val s
         return location.speed
     }
 
-    override fun getAltitude(): Double {
-        return location.altitude
+    override fun getAltitude(): Float {
+        return location.altitude.toFloat()
     }
 
     override fun getLatitude(): Double {
@@ -72,7 +72,7 @@ open class RealLocationInformation(private val location: Location, private val s
         return getTimeStamp()
     }
 
-    override fun setAltitude(altitude: Double) {
-        location.altitude = altitude
+    override fun setAltitude(altitude: Float) {
+        location.altitude = altitude.toDouble()
     }
 }

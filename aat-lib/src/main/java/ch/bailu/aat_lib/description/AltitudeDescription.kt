@@ -4,7 +4,6 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
-import java.text.DecimalFormat
 
 open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescription() {
     private val unit = SolidUnit(storageInterface)
@@ -20,10 +19,8 @@ open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescri
         return getValue(cache)
     }
 
-
-    fun getValue(v: Float): String {
-        val f = unit.altitudeFactor
-        return f0.format((v * f).toDouble())
+    fun getValue(value: Float): String {
+        return FormatDisplay.f().decimal1.format(value * unit.altitudeFactor)
     }
 
     fun getValueUnit(v: Float): String {
@@ -31,10 +28,10 @@ open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescri
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        setCache(info.getAltitude().toFloat())
+        setCache(info.getAltitude())
     }
 
-    companion object {
-        private val f0 = DecimalFormat("0")
+    fun getAltitudeDescription(value: Float): String {
+        return getValue(value) + " " + unit.altitudeUnit
     }
 }

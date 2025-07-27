@@ -3,7 +3,11 @@ package ch.bailu.aat_lib.file.xml.parser.util
 import java.io.IOException
 
 class DoubleScanner(private val baseExponent: Int) : AbsScanner() {
-    var int = 0
+    var value = 0
+
+    fun asFloat(): Float {
+        return value.toFloat() / exp_table[baseExponent].toFloat()
+    }
 
     @Throws(IOException::class)
     override fun scan(stream: Stream) {
@@ -37,7 +41,7 @@ class DoubleScanner(private val baseExponent: Int) : AbsScanner() {
             stream.read()
         }
         if (negative) fraction = 0 - fraction
-        int = fraction * exp_table[exponent] //Math.pow(10, exponent);
+        value = fraction * exp_table[exponent] //Math.pow(10, exponent);
     }
 
     companion object {

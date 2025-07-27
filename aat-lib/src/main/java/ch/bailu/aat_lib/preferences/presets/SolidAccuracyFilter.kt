@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.preferences.presets
 
-import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.description.FormatDisplay.Companion.f
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
@@ -13,7 +13,7 @@ class SolidAccuracyFilter(storage: StorageInterface, index: Int) : SolidIndexLis
     val minAccuracy: Float
         get() = VALUE_LIST[index]
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_accuracy_filter()
     }
@@ -23,7 +23,7 @@ class SolidAccuracyFilter(storage: StorageInterface, index: Int) : SolidIndexLis
     }
 
     public override fun getValueAsString(index: Int): String {
-        return if (index == 0) Res.str().off() else (f().N2.format(
+        return if (index == 0) Res.str().off() else (f().decimal2.format(
             (VALUE_LIST[index] * sunit.altitudeFactor).toDouble()
         )
                 + sunit.altitudeUnit)

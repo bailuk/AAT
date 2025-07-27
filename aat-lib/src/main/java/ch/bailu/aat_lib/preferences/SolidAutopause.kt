@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.preferences
 
-import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.description.FormatDisplay
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
 
@@ -24,7 +24,7 @@ abstract class SolidAutopause protected constructor(
 
     public override fun getValueAsString(index: Int): String {
         return if (index == 0) Res.str().off() else "< " +
-                f().N2.format(
+                FormatDisplay.f().decimal2.format(
                     (SPEED_VALUES[index] * sunit.speedFactor).toDouble()
                 ) +
                 sunit.speedUnit + " - " +

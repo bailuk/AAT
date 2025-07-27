@@ -27,7 +27,7 @@ open class WayParser @JvmOverloads constructor(tag: String = "way") : TagParser(
         parser.parseAttributes { name, value ->
             if (equals(name, "id")) {
                 scanner.id.scan(value)
-                scanner.referencer.id = scanner.id.int
+                scanner.referencer.id = scanner.id.value
             }
         }
     }
@@ -50,8 +50,8 @@ open class WayParser @JvmOverloads constructor(tag: String = "way") : TagParser(
     private fun rememberRelation(scanner: Scanner) {
         val b = scanner.referencer.bounding
         val c = b.center
-        scanner.latitude.int = c.getLatitudeE6()
-        scanner.longitude.int = c.getLongitudeE6()
+        scanner.latitude.value = c.getLatitudeE6()
+        scanner.longitude.value = c.getLongitudeE6()
         scanner.referencer.put(scanner.referencer.id, c)
     }
 }

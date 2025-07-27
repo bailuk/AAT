@@ -74,8 +74,8 @@ class BarometerSensor(private val context: Context, item: SensorListItem, sensor
             return attributes
         }
 
-        override fun getAltitude(): Double {
-            return altitude
+        override fun getAltitude(): Float {
+            return altitude.toFloat()
         }
 
         override fun getTimeStamp(): Long {

@@ -106,8 +106,8 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
     }
 
 
-    override fun updateFromSrtmTile(appContext: AppContext, srtm: Dem3Tile) {
-        ListUpdater(srtm).walkTrack(gpxList)
+    override fun updateFromSrtmTile(appContext: AppContext, tile: Dem3Tile) {
+        ListUpdater(tile).walkTrack(gpxList)
 
         appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, toString())
     }
@@ -126,7 +126,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
         }
 
         override fun doPoint(point: GpxPointNode) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 val coordinates = Dem3Coordinates(point.getLatitudeE6(), point.getLongitudeE6())
                 if (tile.hashCode() == coordinates.hashCode()) {
                     point.setAltitude(
@@ -156,7 +156,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
         }
 
         override fun doPoint(point: GpxPointNode) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 val c = Dem3Coordinates(point)
                 coordinates.put(c.toString(), c)
             }

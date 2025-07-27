@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.coordinates
 
-import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.description.FormatDisplay
 import ch.bailu.aat_lib.file.xml.parser.util.DoubleScanner
 import ch.bailu.aat_lib.file.xml.parser.util.Stream
 import org.mapsforge.core.model.BoundingBox
@@ -44,13 +44,13 @@ class BoundingBoxE6 {
         val parser = DoubleScanner(6)
         try {
             parser.scan(stream)
-            val s = parser.int
+            val s = parser.value
             parser.scan(stream)
-            val n = parser.int
+            val n = parser.value
             parser.scan(stream)
-            val w = parser.int
+            val w = parser.value
             parser.scan(stream)
-            val e = parser.int
+            val e = parser.value
             add(n, e, s, w)
         } catch (e: IOException) {
             e.printStackTrace()
@@ -128,11 +128,11 @@ class BoundingBoxE6 {
     }
 
     override fun toString(): String {
-        val f = FF.f()
-        return f.N2.format((latNorthE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((lonWestE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((latSouthE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((lonEastE6 / 1e6f).toDouble())
+        val f = FormatDisplay.f()
+        return f.decimal2.format((latNorthE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((lonWestE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((latSouthE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((lonEastE6 / 1e6f).toDouble())
     }
 
     val latitudeSpanE6: Int

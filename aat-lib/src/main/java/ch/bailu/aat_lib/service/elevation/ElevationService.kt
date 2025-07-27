@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdater
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 
 class ElevationService(appContext: AppContext) : VirtualService(),
-    ElevationProvider, ElevationServiceInterface {
+    ElevationServiceInterface {
     private val updater: ElevationUpdater
     private val loader: Dem3Loader
 
@@ -19,8 +19,8 @@ class ElevationService(appContext: AppContext) : VirtualService(),
         updater = ElevationUpdater(appContext, loader, tiles)
     }
 
-    override fun requestElevationUpdates(e: ElevationUpdaterClient, c: List<Dem3Coordinates>) {
-        updater.requestElevationUpdates(e, c)
+    override fun requestElevationUpdates(client: ElevationUpdaterClient, dem3Coordinates: List<Dem3Coordinates>) {
+        updater.requestElevationUpdates(client, dem3Coordinates)
     }
 
     override fun requestElevationUpdates() {
@@ -28,8 +28,8 @@ class ElevationService(appContext: AppContext) : VirtualService(),
     }
 
 
-    override fun cancelElevationUpdates(e: ElevationUpdaterClient) {
-        updater.cancelElevationUpdates(e)
+    override fun cancelElevationUpdates(client: ElevationUpdaterClient) {
+        updater.cancelElevationUpdates(client)
     }
 
     override fun getElevation(laE6: Int, loE6: Int): Short {

@@ -22,14 +22,14 @@ class MultiCell8(private val demProvider: DemProvider) : MultiCell() {
     private val dim = demProvider.getDimension().dimension
     private val totalCellDistance = Math.round(demProvider.getCellDistance() * 8f)
 
-    override fun set(e: Int) {
-        val f = e + 1
-        val h = e + dim
+    override fun set(x: Int) {
+        val f = x + 1
+        val h = x + dim
         val i = h + 1
         val g = h - 1
 
-        val d = e - 1
-        val b = e - dim
+        val d = x - 1
+        val b = x - dim
         val c = b + 1
         val a = b - 1
 

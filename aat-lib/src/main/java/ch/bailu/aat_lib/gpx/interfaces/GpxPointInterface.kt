@@ -4,7 +4,7 @@ import ch.bailu.aat_lib.coordinates.LatLongInterface
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 
 interface GpxPointInterface : LatLongInterface {
-    fun getAltitude(): Double
+    fun getAltitude(): Float
     override fun getLongitude(): Double
     override fun getLatitude(): Double
     fun getTimeStamp(): Long

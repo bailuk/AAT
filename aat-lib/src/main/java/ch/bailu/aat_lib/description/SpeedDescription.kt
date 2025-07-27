@@ -13,11 +13,11 @@ abstract class SpeedDescription(storage: StorageInterface) : FloatDescription() 
     override fun getValue(): String {
         val speedFactor = sunit.speedFactor
         val speed = cache* speedFactor
-        return FF.f().N1.format(speed.toDouble())
+        return FormatDisplay.f().decimal1.format(speed.toDouble())
     }
 
     fun getSpeedDescription(value: Float): String {
         setCache(value)
-        return getValue() + getUnit()
+        return getValue() + " " + getUnit()
     }
 }

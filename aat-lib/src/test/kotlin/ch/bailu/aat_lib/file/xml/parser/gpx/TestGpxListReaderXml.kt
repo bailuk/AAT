@@ -46,9 +46,11 @@ class TestGpxListReaderXml {
         Assertions.assertEquals(47.791209, first.getLatitude())
         Assertions.assertEquals(7.901156, first.getLongitude())
         Assertions.assertEquals(1711804688000, first.getTimeStamp())
+        Assertions.assertEquals(543.7f, first.getAltitude())
 
         Assertions.assertEquals(47.791209, second.getLatitude())
         Assertions.assertEquals(7.901157, second.getLongitude())
         Assertions.assertEquals(1711801089000, second.getTimeStamp())
+        Assertions.assertEquals(544.0f, second.getAltitude())
     }
 }

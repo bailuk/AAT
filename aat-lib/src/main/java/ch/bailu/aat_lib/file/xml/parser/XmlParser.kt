@@ -49,15 +49,15 @@ class XmlParser(file: Foc) : GpxBuilderInterface {
     }
 
     override fun getLatitudeE6(): Int {
-        return scanner.latitude.int
+        return scanner.latitude.value
     }
 
     override fun getLongitudeE6(): Int {
-        return scanner.longitude.int
+        return scanner.longitude.value
     }
 
-    override fun getAltitude(): Double {
-        return scanner.altitude.int.toDouble()
+    override fun getAltitude(): Float {
+        return scanner.altitude.asFloat()
     }
 
     override fun getTimeStamp(): Long {

@@ -49,14 +49,14 @@ abstract class PoiApi(context: AppContext) : OsmApiConfiguration() {
         return ""
     }
 
-    override fun startTask(appContext: AppContext, bounding: BoundingBoxE6) {
+    override fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6) {
         val categories = selectedCategories
         val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).getValueAsString()
         appContext.services.insideContext {
             task.stopProcessing()
             task = PoiToGpxTask(
                 resultFile,
-                bounding.toBoundingBox(),
+                boundingBoxE6.toBoundingBox(),
                 categories,
                 poiDatabase
             )

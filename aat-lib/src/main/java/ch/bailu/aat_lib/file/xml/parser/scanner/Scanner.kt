@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.file.xml.parser.util.OnParsedInterface
 class Scanner(time: Long) {
     val latitude: DoubleScanner = DoubleScanner(6)
     val longitude: DoubleScanner = DoubleScanner(6)
-    val altitude: DoubleScanner = DoubleScanner(0)
+    val altitude: DoubleScanner = DoubleScanner(1)
     val id: DoubleScanner = DoubleScanner(0)
 
     @JvmField

@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.coordinates
 
-import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.description.FormatDisplay
 import ch.bailu.aat_lib.exception.IllegalCodeException
 import org.mapsforge.core.model.LatLong
 
@@ -123,11 +123,10 @@ class UTMCoordinates : MeterCoordinates {
         return toLatLong(eastingDouble, northingDouble, eastingZone, isInSouthernHemisphere)
     }
 
-    
     override fun toString(): String {
         return ("Z " + eastingZone + northingZone
-                + ", E " + FF.f().N3_3.format((eastingDouble.toFloat() / 1000f).toDouble())
-                + ", N " + FF.f().N3_3.format((northingDouble.toFloat() / 1000f).toDouble()))
+                + ", E " + FormatDisplay.f().decimal3_3.format((eastingDouble.toFloat() / 1000f).toDouble())
+                + ", N " + FormatDisplay.f().decimal3_3.format((northingDouble.toFloat() / 1000f).toDouble()))
     }
 
     private fun arcLengthOfMeridian(la: Double): Double {

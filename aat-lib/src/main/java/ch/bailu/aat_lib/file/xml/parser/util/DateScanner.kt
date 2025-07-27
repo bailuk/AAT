@@ -6,11 +6,11 @@ import java.util.GregorianCalendar
 import java.util.TimeZone
 
 class DateScanner(var timeMillis: Long) : AbsScanner() {
-    private var localOffsetMillis: Long = 0
+    private var localOffsetMillis = 0L
     private val minute: IntegerScanner = IntegerScanner()
     private val hour: IntegerScanner = IntegerScanner()
     private val seconds: DoubleScanner = DoubleScanner(3)
-    private var utcDateMillis: Long = 0
+    private var utcDateMillis = 0L
     private val dateBuffer = IntArray(10)
     private val localTimeZone: TimeZone = TimeZone.getTimeZone(Calendar.getInstance().timeZone.id)
     private val utcDate: Calendar = GregorianCalendar()
@@ -59,7 +59,7 @@ class DateScanner(var timeMillis: Long) : AbsScanner() {
         hour.scan(stream)
         minute.scan(stream)
         seconds.scan(stream)
-        timeMillis = seconds.int.toLong()
+        timeMillis = seconds.value.toLong()
         timeMillis += (minute.integer * 60 * 1000).toLong()
         timeMillis += (hour.integer * 60 * 60 * 1000).toLong()
         timeMillis += utcDateMillis

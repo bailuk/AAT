@@ -31,3 +31,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - Gtk: Fix invisible nodes are getting selected in map view
 - Gtk: Show tracker controller buttons in map view
 - Lib: Fix infinite loop when parsing broken GPX-files (Issue #174)
+- Lib: Fix ignoring altitude precision when reading and displaying tracks

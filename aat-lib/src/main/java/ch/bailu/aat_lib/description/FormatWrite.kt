@@ -7,30 +7,27 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class Format private constructor() {
+class FormatWrite private constructor() {
     @JvmField
     val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ROOT)
     @JvmField
-    val decimal1 = DecimalFormat("0", DecimalFormatSymbols(Locale.ROOT))
-    @JvmField
-    val decimal2 = DecimalFormat("0.0", DecimalFormatSymbols(Locale.ROOT))
+    val decimal1 = DecimalFormat("0.0", DecimalFormatSymbols(Locale.ROOT))
     @JvmField
     val decimal6 = DecimalFormat("0.000000", DecimalFormatSymbols(Locale.ROOT))
 
     init {
-        val UTC = TimeZone.getTimeZone("UTC")
-        dateFormat.timeZone = UTC
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 
     companion object {
-        private val F: ThreadLocal<Format> = object : ThreadLocal<Format>() {
-            public override fun initialValue(): Format {
-                return Format()
+        private val F: ThreadLocal<FormatWrite> = object : ThreadLocal<FormatWrite>() {
+            public override fun initialValue(): FormatWrite {
+                return FormatWrite()
             }
         }
 
         @JvmStatic
-        fun f(): Format {
+        fun f(): FormatWrite {
             return F.get()
         }
     }

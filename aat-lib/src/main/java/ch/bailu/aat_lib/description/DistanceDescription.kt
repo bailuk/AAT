@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.description
 
-import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.description.FormatDisplay.Companion.f
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
@@ -8,7 +8,7 @@ import ch.bailu.aat_lib.resources.Res
 import java.util.Objects
 
 open class DistanceDescription(storage: StorageInterface) : FloatDescription() {
-    private val format = arrayOf(f().N3, f().N2, f().N1, f().N)
+    private val format = arrayOf(f().decimal3, f().decimal2, f().decimal1, f().decimal0)
     private val unit: SolidUnit
 
     init {
@@ -41,18 +41,15 @@ open class DistanceDescription(storage: StorageInterface) : FloatDescription() {
 
     fun getDistanceDescription(distance: Float): String {
         val nonSI = distance * unit.distanceFactor
-        return if (nonSI < 1) getAltitudeDescription(distance.toDouble()) else f().N.format(nonSI.toDouble()) + " " + unit.distanceUnit
+        return if (nonSI < 1) getShortDistanceDescription(distance) else f().decimal0.format(nonSI) + " " + unit.distanceUnit
     }
 
     fun getDistanceDescriptionN1(distance: Float): String {
         val nonSI = distance * unit.distanceFactor
-        return if (nonSI < 1) getAltitudeDescription(distance.toDouble()) else f().N1.format(nonSI.toDouble()) + " " + unit.distanceUnit
+        return if (nonSI < 1) getShortDistanceDescription(distance) else f().decimal1.format(nonSI) + " " + unit.distanceUnit
     }
 
-    fun getAltitudeDescription(value: Double): String {
-        return f().N.format(
-            value * unit.altitudeFactor
-        ) +
-                unit.altitudeUnit
+    private fun getShortDistanceDescription(value: Float): String {
+        return f().decimal0.format(value * unit.altitudeFactor) + " " + unit.altitudeUnit
     }
 }

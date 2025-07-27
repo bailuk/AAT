@@ -35,8 +35,8 @@ class NodeParser : TagParser("node") {
     @Throws(IOException::class)
     override fun parsed(parser: XmlPullParser, scanner: Scanner) {
         scanner.referencer.put(
-            scanner.id.int,
-            LatLongE6(scanner.latitude.int, scanner.longitude.int)
+            scanner.id.value,
+            LatLongE6(scanner.latitude.value, scanner.longitude.value)
         )
         scanner.wayPointParsed()
     }
