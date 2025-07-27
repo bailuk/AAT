@@ -214,9 +214,9 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
             var size = 0L
 
             val reader = GpxListReaderXml(
-                threadControl,
                 getFile(),
-                getAutoPause(appContext, getPresetFromFile(getFile()))
+                getAutoPause(appContext, getPresetFromFile(getFile())),
+                threadControl
             )
 
             handle.setException(reader.exception)

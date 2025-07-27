@@ -1,5 +1,7 @@
 package ch.bailu.aat_lib.file.xml.parser.gpx
 
+import ch.bailu.aat_lib.file.xml.parser.XmlParser
+import ch.bailu.aat_lib.file.xml.parser.util.OnParsedInterface
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
@@ -9,27 +11,22 @@ import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes.Companion.factoryTrack
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.service.background.ThreadControl
-import ch.bailu.aat_lib.file.xml.parser.XmlParser
-import ch.bailu.aat_lib.file.xml.parser.util.OnParsedInterface
 import ch.bailu.foc.Foc
 import java.io.IOException
 
-class GpxListReaderXml private constructor(
-    private val threadControl: ThreadControl,
+class GpxListReaderXml (
     inputFile: Foc,
-    trackAttributes: GpxListAttributes
+    autoPause: AutoPause,
+    private val threadControl: ThreadControl = ThreadControl.KEEP_ON
 ) {
     private val way: OnParsed = OnParsed(GpxType.WAY, GpxListAttributes.NULL)
-    private val track: OnParsed = OnParsed(GpxType.TRACK, trackAttributes)
+    private val track: OnParsed = OnParsed(GpxType.TRACK, factoryTrack(autoPause))
     private val route: OnParsed = OnParsed(GpxType.ROUTE, factoryRoute())
 
     private var parsedPointAccess: GpxPointInterface = GpxPoint.NULL
 
     var exception: Exception? = null
         private set
-
-    constructor(inputFile: Foc, autoPause: AutoPause) : this(ThreadControl.KEEP_ON, inputFile, autoPause)
-    constructor(c: ThreadControl, inputFile: Foc, autoPause: AutoPause) : this(c, inputFile, factoryTrack(autoPause))
 
     init {
         try {
