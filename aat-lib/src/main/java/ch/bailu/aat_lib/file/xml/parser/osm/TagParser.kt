@@ -52,10 +52,13 @@ abstract class TagParser(private val tag: String = "") {
 
     @Throws(XmlPullParserException::class)
     private fun ends(parser: XmlPullParser): Boolean {
-        if (parser.eventType == XmlPullParser.END_DOCUMENT || parser.eventType == XmlPullParser.END_TAG) {
-            return tag.isEmpty() || parser.name == tag
+        return if (parser.eventType == XmlPullParser.END_DOCUMENT) {
+            true
+        } else if (parser.eventType == XmlPullParser.END_TAG) {
+            tag.isEmpty() || parser.name == tag
+        } else {
+            false
         }
-        return false
     }
 
     companion object {
