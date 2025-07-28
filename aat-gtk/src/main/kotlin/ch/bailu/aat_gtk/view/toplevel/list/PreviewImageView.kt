@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.broadcaster.BroadcastData
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjBitmap
@@ -16,7 +17,9 @@ import ch.bailu.foc.Foc
 import ch.bailu.gtk.gdk.Gdk
 import ch.bailu.gtk.gtk.Image
 import org.mapsforge.map.gtk.graphics.GtkBitmap
+import java.io.IOException
 
+// TODO merge PreviewImageView and PreviewView
 class PreviewImageView(private val appContext: AppContext): TargetInterface, Attachable {
     val image = Image().apply {
         pixelSize = MapsForgePreview.BITMAP_SIZE/2
@@ -28,8 +31,13 @@ class PreviewImageView(private val appContext: AppContext): TargetInterface, Att
     private var handle: Obj = ObjNull
 
     fun setFilePath(fileID: Foc) {
-        val file = appContext.summaryConfig.getPreviewFile(fileID)
-        setPreviewPath(file)
+        try {
+            val file = appContext.summaryConfig.getPreviewFile(fileID)
+            setPreviewPath(file)
+        } catch (e: IOException) {
+            AppLog.e(this, e)
+        }
+
     }
 
     private fun setPreviewPath(file: Foc) {
