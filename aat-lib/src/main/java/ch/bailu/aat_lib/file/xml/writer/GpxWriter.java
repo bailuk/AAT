@@ -97,6 +97,7 @@ public abstract class GpxWriter {
         writeString(" ");
         writeString(pname);
         writeString("=\"");
+        // TODO replace this with own function (XmlEscaper)
         writeString(StringEscapeUtils.escapeXml10(pvalue));
         writeString("\"");
     }

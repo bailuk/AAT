@@ -48,8 +48,10 @@ dependencies {
     /**
      *  https://mvnrepository.com/artifact/org.apache.commons/commons-text
      *  To escape html
+     *  FIXME: Do not update as newer versions are not compatible with old Android versions
+     *         Consider replacing XML and HTML escaping with own function
      */
-    implementation("org.apache.commons:commons-text:1.13.0")
+    implementation("org.apache.commons:commons-text:1.9")
 
     val jupiterVersion: String by project
 
