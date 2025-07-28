@@ -8,7 +8,7 @@ import java.io.IOException
 class EleParser : TagParser("ele") {
     @Throws(IOException::class)
     public override fun parseText(parser: XmlPullParser, scanner: Scanner) {
-        scanner.altitude.scan(parser.text)
+        scanner.elevation.scan(parser.text)
     }
 
     override fun parseAttributes(parser: XmlPullParser, scanner: Scanner) {}

@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.file.xml.parser.gpx
 
+import ch.bailu.aat_lib.gpx.GpxListArray
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.gpx.attributes.Keys
@@ -52,5 +53,30 @@ class TestGpxListReaderXml {
         Assertions.assertEquals(7.901157, second.getLongitude())
         Assertions.assertEquals(1711801089000, second.getTimeStamp())
         Assertions.assertEquals(544.0f, second.getAltitude())
+    }
+
+    @Test
+    fun testElevation() {
+        val reader = GpxListReaderXml(FocResource("test-ele.gpx"), AutoPause.NULL)
+
+        val listArray = GpxListArray(reader.gpxList)
+
+        Assertions.assertEquals(12, reader.gpxList.pointList.size())
+        Assertions.assertEquals(12, listArray.size())
+        Assertions.assertEquals(0, listArray.index)
+
+        Assertions.assertEquals(1660139521000, reader.gpxList.getDelta().getStartTime())
+
+        Assertions.assertEquals(541.6f, listArray.get().getAltitude())
+        Assertions.assertEquals(541.6f, listArray[1].getAltitude())
+        Assertions.assertEquals(541.7f, listArray[2].getAltitude())
+        Assertions.assertEquals(541.0f, listArray[3].getAltitude())
+        Assertions.assertEquals(541.0f, listArray[4].getAltitude())
+
+        // No rounding
+        Assertions.assertEquals(541.9f, listArray[5].getAltitude())
+
+        // TODO How to handle missing <ele> values? Use 0f instead of previous value?
+        Assertions.assertEquals(541.8f, listArray[listArray.size()-1].getAltitude())
     }
 }

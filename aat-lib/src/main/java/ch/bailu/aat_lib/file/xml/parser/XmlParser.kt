@@ -57,7 +57,7 @@ class XmlParser(file: Foc) : GpxBuilderInterface {
     }
 
     override fun getAltitude(): Float {
-        return scanner.altitude.asFloat()
+        return scanner.elevation.asFloat()
     }
 
     override fun getTimeStamp(): Long {
