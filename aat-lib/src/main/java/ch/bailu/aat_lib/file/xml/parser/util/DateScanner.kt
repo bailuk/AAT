@@ -5,6 +5,11 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.TimeZone
 
+/**
+ * Scan ISO-8601 date-time in UTC. This is standard for GPX.
+ * If the UTC extension is missing local time is assumed.
+ * This is to support old non-standard GPX files from AAT.
+ */
 class DateScanner(var timeMillis: Long) : AbsScanner() {
     private var localOffsetMillis = 0L
     private val minute: IntegerScanner = IntegerScanner()
@@ -31,6 +36,7 @@ class DateScanner(var timeMillis: Long) : AbsScanner() {
         if (dateNeedsRescan) scanDate()
         if (stream.haveA('T'.code)) scanTime(stream)
         if (!stream.haveA('Z'.code)) {
+            // Hack to support non-standard GPX files
             timeMillis -= localOffsetMillis
         }
     }
