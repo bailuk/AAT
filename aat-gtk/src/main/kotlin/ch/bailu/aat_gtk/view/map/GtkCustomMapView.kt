@@ -20,7 +20,9 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.util.Limit
+import ch.bailu.aat_lib.util.Point
 import ch.bailu.gtk.cairo.Context
+import ch.bailu.gtk.gtk.GestureClick
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.LatLong
@@ -80,9 +82,26 @@ open class GtkCustomMapView (
                 }
             }
         })
+
+        // Mapsforge does only propagate click events that have latitude and longitude
+        // but we are only interested in pixels (including those that are outside the visible map)
+        drawingArea.addController(GestureClick().apply {
+            var singleClick = false
+            onPressed { i, _, _ ->  singleClick = i == 1 }
+            onStopped { singleClick = false }
+            onReleased { i, x, y ->
+                if (i == 1 && singleClick) {
+                    val point = Point(x, y)
+                    for (layer in layers) {
+                        if (layer.onTap(point)) {
+                            break
+                        }
+                    }
+                }
+            }
+        })
         onAttached()
     }
-
 
     override fun frameBounding(boundingBox: BoundingBoxE6) {
         frameBounding(boundingBox.toBoundingBox())

@@ -32,3 +32,4 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - Gtk: Show tracker controller buttons in map view
 - Lib: Fix infinite loop when parsing broken GPX-files (Issue #174)
 - Lib: Fix ignoring altitude precision when reading and displaying tracks
+- Android: Fix map border does not always receive click events
