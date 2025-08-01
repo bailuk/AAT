@@ -21,6 +21,7 @@ object AppHtml {
                 Html.FROM_HTML_MODE_LEGACY or Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
             Html.fromHtml(source, flags, imageGetter, CODE_TAG_HANDLER)
         } else {
+            // FIXME this will not add new line to list items
             Html.fromHtml(source, imageGetter, CODE_TAG_HANDLER)
         }
     }
