@@ -1,7 +1,7 @@
 v1.28 (42)
 
-- Android & GTK: Fix map border does not always receive click events
-- Android & GTK: Fix preview image generation (wrong bounding in draw function)
+- Android and GTK: Fix map border does not always receive click events
+- Android and GTK: Fix preview image generation (wrong bounding in draw function)
 - Android: Fix layout adaption on fold-devices
 - Android: Fix null pointer exception when scanning BT-devices
 - CI: Update acra to 5.12.0
