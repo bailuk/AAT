@@ -4,10 +4,8 @@ plugins {
     application
 
     // https://imperceptiblethoughts.com/shadow/getting-started
-    id("com.gradleup.shadow") version "8.3.6"
-
-    // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm")
+    id("com.gradleup.shadow")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 tasks.test {

@@ -29,6 +29,13 @@
   },
   {
     "type": "file",
+    "url": "https://dl.google.com/android/maven2/com/android/application/com.android.application.gradle.plugin/8.8.2/com.android.application.gradle.plugin-8.8.2.pom",
+    "sha256": "54a49f69ee41919f39f00a7d74be36e686189801237002b520e28fc770092c2d",
+    "dest": "maven-local/com/android/application/com.android.application.gradle.plugin/8.8.2",
+    "dest-filename": "com.android.application.gradle.plugin-8.8.2.pom"
+  },
+  {
+    "type": "file",
     "url": "https://dl.google.com/android/maven2/com/android/databinding/baseLibrary/8.8.2/baseLibrary-8.8.2.jar",
     "sha256": "794113709dab21b06c262b3795e73cb708fbacae61715f34361e1af6237a1870",
     "dest": "maven-local/com/android/databinding/baseLibrary/8.8.2",
@@ -40,6 +47,13 @@
     "sha256": "6e3fc1574342395d1b41011f5392bcfa5dcb00549a6ab9444bc2e163a55dd2a1",
     "dest": "maven-local/com/android/databinding/baseLibrary/8.8.2",
     "dest-filename": "baseLibrary-8.8.2.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://dl.google.com/android/maven2/com/android/lint/com.android.lint.gradle.plugin/8.8.2/com.android.lint.gradle.plugin-8.8.2.pom",
+    "sha256": "d5d8c626b897a28f26597ae6fd4c1b678d7ba70d0c297a0b25027a16722ff4e7",
+    "dest": "maven-local/com/android/lint/com.android.lint.gradle.plugin/8.8.2",
+    "dest-filename": "com.android.lint.gradle.plugin-8.8.2.pom"
   },
   {
     "type": "file",
@@ -2738,6 +2752,13 @@
   },
   {
     "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlin/android/org.jetbrains.kotlin.android.gradle.plugin/2.1.20/org.jetbrains.kotlin.android.gradle.plugin-2.1.20.pom",
+    "sha256": "c967697eb83205c45153c86d79a662f1c4b66a01cdee9f7fdd07bb934029a135",
+    "dest": "maven-local/org/jetbrains/kotlin/android/org.jetbrains.kotlin.android.gradle.plugin/2.1.20",
+    "dest-filename": "org.jetbrains.kotlin.android.gradle.plugin-2.1.20.pom"
+  },
+  {
+    "type": "file",
     "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlin/fus-statistics-gradle-plugin/2.1.20/fus-statistics-gradle-plugin-2.1.20-gradle85.jar",
     "sha256": "6674f29755d326addc756a2fdcabf2bb602f00004a0ed2db669da3df4e848006",
     "dest": "maven-local/org/jetbrains/kotlin/fus-statistics-gradle-plugin/2.1.20",
@@ -2756,6 +2777,13 @@
     "sha256": "a1103a70a6f8ffc1084ddc081b24bab26a5644972f9ccd141b8994d9f5054478",
     "dest": "maven-local/org/jetbrains/kotlin/fus-statistics-gradle-plugin/2.1.20",
     "dest-filename": "fus-statistics-gradle-plugin-2.1.20.pom"
+  },
+  {
+    "type": "file",
+    "url": "https://plugins.gradle.org/m2/org/jetbrains/kotlin/jvm/org.jetbrains.kotlin.jvm.gradle.plugin/2.1.20/org.jetbrains.kotlin.jvm.gradle.plugin-2.1.20.pom",
+    "sha256": "abc4c3875e3f97553a176a90f51788ec0f5eae8e1d26423ea8ebdbf8aa6a1786",
+    "dest": "maven-local/org/jetbrains/kotlin/jvm/org.jetbrains.kotlin.jvm.gradle.plugin/2.1.20",
+    "dest-filename": "org.jetbrains.kotlin.jvm.gradle.plugin-2.1.20.pom"
   },
   {
     "type": "file",
@@ -3480,7 +3508,7 @@
   },
   {
     "type": "file",
-    "url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-map/0.24.1/mapsforge-map-0.24.1.pom",
+    "url": "https://plugins.gradle.org/m2/org/mapsforge/mapsforge-map/0.24.1/mapsforge-map-0.24.1.pom",
     "sha256": "a60f963b17f11e100d69f8a0f72f7ee53519e11832151e4f179b73c624f22128",
     "dest": "maven-local/org/mapsforge/mapsforge-map/0.24.1",
     "dest-filename": "mapsforge-map-0.24.1.pom"
@@ -3543,7 +3571,7 @@
   },
   {
     "type": "file",
-    "url": "https://repo1.maven.org/maven2/org/mapsforge/mapsforge-poi-awt/0.24.1/mapsforge-poi-awt-0.24.1.pom",
+    "url": "https://plugins.gradle.org/m2/org/mapsforge/mapsforge-poi-awt/0.24.1/mapsforge-poi-awt-0.24.1.pom",
     "sha256": "e6ffbcd9333d3c9f27843a0c4c905904b4bff89013764d6f6d140ce3c0a9d004",
     "dest": "maven-local/org/mapsforge/mapsforge-poi-awt/0.24.1",
     "dest-filename": "mapsforge-poi-awt-0.24.1.pom"

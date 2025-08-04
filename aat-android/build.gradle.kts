@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -79,7 +79,6 @@ dependencies {
      */
     val focVersion: String by project
     implementation("com.github.bailuk.foc:foc-android:$focVersion")
-
 
     /*
             Automatic MapsForge integration as described here:

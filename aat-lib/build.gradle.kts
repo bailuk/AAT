@@ -3,9 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id ("java-library")
     id ("com.android.lint")
-
-    // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
