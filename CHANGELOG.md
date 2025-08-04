@@ -33,4 +33,5 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 - Lib: Fix infinite loop when parsing broken GPX-files (Issue #174)
 - Lib: Fix ignoring altitude precision when reading and displaying tracks
 - Android & GTK: Fix map border does not always receive click events
-- Android & GTK: Fix preview image generation (wrong bounding in draw function) 
+- Android & GTK: Fix preview image generation (wrong bounding in draw function)
+- Android: Fix null pointer exception when scanning BT-devices

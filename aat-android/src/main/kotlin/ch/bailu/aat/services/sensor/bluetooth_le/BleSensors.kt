@@ -60,7 +60,8 @@ class BleSensors(private val scontext: ServiceContext, private val sensorList: S
 
     @Synchronized
     fun foundDevice(device: BluetoothDevice) {
-        val item = sensorList.add(device.address, device.name)
+        val displayName = device.name ?: device.address
+        val item = sensorList.add(device.address, displayName)
         if (item.isUnscannedOrScanning) {
             BleSensor(scontext, device, sensorList, item)
         }
