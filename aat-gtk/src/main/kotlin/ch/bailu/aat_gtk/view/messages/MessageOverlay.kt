@@ -8,8 +8,8 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 
 class MessageOverlay {
-    val box = Box(Orientation.VERTICAL, Layout.margin).apply {
-        margin(Layout.margin)
+    val box = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
+        margin(Layout.MARGIN)
         marginBottom = 50
         valign = Align.END
         halign = Align.CENTER

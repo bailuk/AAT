@@ -27,7 +27,7 @@ fun main() {
 
     app.onActivate {
         val dispatcher = Dispatcher()
-        MainWindow(app, GtkAppContext, dispatcher).window.show()
+        MainWindow(app, GtkAppContext, dispatcher).window.present()
         dispatcher.onResumeWithService()
     }
 

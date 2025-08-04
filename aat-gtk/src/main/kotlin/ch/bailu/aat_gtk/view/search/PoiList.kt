@@ -70,6 +70,7 @@ class PoiList(
 
     fun readList() {
         FilterListUtil.readList(filterList, GtkAppContext, sdatabase.getValueAsString(), selected)
+        filterList.filterAll()
         listIndex.size = filterList.sizeVisible()
     }
 
@@ -79,14 +80,14 @@ class PoiList(
     }
 
     fun getSelectedCategories(): ArrayList<PoiCategory> {
-        val export = ArrayList<PoiCategory>(10)
-        for (i in 0 until filterList.sizeVisible()) {
-            val e = filterList.getFromVisible(i) as PoiListItem
+        val result = ArrayList<PoiCategory>(10)
+        for (i in 0 until filterList.sizeAll()) {
+            val e = filterList.getFromAll(i) as PoiListItem
             if (e.isSelected()) {
-                export.add(e.category)
+                result.add(e.category)
             }
         }
-        return export
+        return result
     }
 
     fun writeSelected() {

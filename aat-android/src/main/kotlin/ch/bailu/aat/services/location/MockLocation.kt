@@ -13,7 +13,7 @@ import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.service.location.LocationStackChainedItem
 import ch.bailu.aat_lib.service.location.LocationStackItem
 import ch.bailu.aat_lib.service.location.MockLocationInformation
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroid
 
@@ -34,7 +34,7 @@ class MockLocation(context: Context, next: LocationStackItem) : LocationStackCha
     }
 
     init {
-        list = GpxListReader(file, AutoPause.NULL).gpxList
+        list = GpxListReaderXml(file, AutoPause.NULL).gpxList
         timer.kick(INTERVAL, this)
         passState(StateID.WAIT)
     }

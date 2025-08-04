@@ -17,28 +17,26 @@ class Raster {
     var isInitialized: Boolean = false
         private set
 
-
+    /**
+     * Initialize subTiles (add all possible tiles to list)
+     * @param subTiles Result parameter: Empty list that will be initialized after return
+     */
     @Synchronized
-    fun initialize(tile: Tile, geoToIndex: DemGeoToIndex, tiles: SubTiles) {
+    fun initialize(tile: Tile, geoToIndex: DemGeoToIndex, subTiles: SubTiles) {
         if (!this.isInitialized) {
             val laSpan = ArrayList<Span>(5)
             val loSpan = ArrayList<Span>(5)
 
             initializeWGS84Raster(laSpan, loSpan, tile)
             initializeIndexRaster(geoToIndex)
-            tiles.generateSubTileList(laSpan, loSpan)
+            subTiles.generateSubTileList(laSpan, loSpan)
 
             this.isInitialized = true
         }
     }
 
-
     // 1. pixel to latitude
-    private fun initializeWGS84Raster(
-        laSpan: ArrayList<Span>,
-        loSpan: ArrayList<Span>,
-        tile: Tile
-    ) {
+    private fun initializeWGS84Raster(laSpan: ArrayList<Span>, loSpan: ArrayList<Span>, tile: Tile) {
         val tileR = getTileR(tile)
 
         val tl = pixelToGeo(
@@ -54,8 +52,7 @@ class Raster {
         )
 
         val laDiff = (br.latitudeE6 - tl.latitudeE6).toFloat()
-        val loDiff =
-            (br.longitudeE6 - tl.longitudeE6).toFloat() //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
+        val loDiff = (br.longitudeE6 - tl.longitudeE6).toFloat() //-1.2 - -1.5 = 0.3  //1.5 - 1.2 = 0.3
 
 
         var la = tl.latitudeE6.toFloat()
@@ -90,8 +87,8 @@ class Raster {
     // 2. pixel to dem index
     private fun initializeIndexRaster(toIndex: DemGeoToIndex) {
         for (i in 0 until SolidTileSize.DEFAULT_TILESIZE) {
-            toLaRaster[i] = toIndex.toYPos(toLaRaster[i])
-            toLoRaster[i] = toIndex.toXPos(toLoRaster[i])
+            toLaRaster[i] = toIndex.toYIndex(toLaRaster[i])
+            toLoRaster[i] = toIndex.toXIndex(toLoRaster[i])
         }
     }
 

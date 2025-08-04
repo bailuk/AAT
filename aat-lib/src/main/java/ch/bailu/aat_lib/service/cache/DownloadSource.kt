@@ -58,7 +58,7 @@ open class DownloadSource(private val name: String, private val apiKey: String, 
 
 
         fun isDownloadBackgroundSource(source: Source): Boolean {
-            return (source === MAPNIK || source === OPEN_TOPO_MAP || source === OPEN_CYCLE_MAP)
+            return (source === MAPNIK || source === OPEN_TOPO_MAP || source === OPEN_CYCLE_MAP || source === CYCLE_OSM_MAP)
         }
 
         val MAPNIK: DownloadSource = object : DownloadSource(
@@ -73,6 +73,17 @@ open class DownloadSource(private val name: String, private val apiKey: String, 
             }
         }
 
+        val CYCLE_OSM_MAP: DownloadSource = object : DownloadSource(
+            "CyclOSM",
+            OPAQUE,
+            "https://a.tile-cyclosm.openstreetmap.fr/cyclosm/",
+            "https://b.tile-cyclosm.openstreetmap.fr/cyclosm/",
+            "https://c.tile-cyclosm.openstreetmap.fr/cyclosm/",
+        ) {
+            override fun filterBitmap(): Boolean {
+                return true
+            }
+        }
 
         val OPEN_TOPO_MAP: DownloadSource = object : DownloadSource(
             "OpenTopoMap",

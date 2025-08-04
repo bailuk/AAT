@@ -61,7 +61,7 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
         span: SubTile,
         demtile: DemProvider
     ) {
-        val demtileDim = demtile.dim.DIM
+        val demTileDim = demtile.getDimension().dimension
         val bitmapDim = span.pixelDim()
 
         var color = 0
@@ -71,7 +71,7 @@ class ObjTileHillShade(id: String, ti: MapTileInterface, t: Tile) : ObjTileEleva
         val multiCell = factoryMultiCell(demtile)
 
         for (la in span.laSpan.firstPixelIndex()..span.laSpan.lastPixelIndex()) {
-            val line = raster.toLaRaster[la] * demtileDim
+            val line = raster.toLaRaster[la] * demTileDim
 
             if (oldLine != line) {
                 var oldOffset = -1

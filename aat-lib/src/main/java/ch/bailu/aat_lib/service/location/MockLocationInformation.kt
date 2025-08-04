@@ -74,8 +74,7 @@ class MockLocationInformation(file: Foc, state: Int, node: GpxPointNode) : Locat
         return getTimeStamp()
     }
 
-    override fun setAltitude(altitude: Double) {
-    }
+    override fun setAltitude(altitude: Float) {}
 
     override fun getAccuracy(): Float {
         return 5f

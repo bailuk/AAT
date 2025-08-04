@@ -12,7 +12,7 @@ class PoiListItemView(listItem: ListItem) {
 
     init {
         listItem.child = Box(Orientation.HORIZONTAL, 0).apply {
-            margin(Layout.margin)
+            margin(Layout.MARGIN)
             append(label)
             append(checkBox)
         }

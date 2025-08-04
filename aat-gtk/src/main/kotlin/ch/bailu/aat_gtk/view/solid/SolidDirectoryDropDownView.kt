@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -29,8 +28,6 @@ class SolidDirectoryDropDownView(appContext: AppContext)
         indexFromSolid()
 
         dropDown.onNotify {
-            AppLog.d(this, it.name.toString())
-
             if ("selected" == it.name.toString()) { // Property "selected" has changed
                 solidDirectoryQuery.setValue(directories[dropDown.selected].file.path)
             }
@@ -38,6 +35,10 @@ class SolidDirectoryDropDownView(appContext: AppContext)
 
         dropDown.showArrow = false
         solidDirectoryQuery.register(this)
+
+        dropDown.onDestroy {
+            solidDirectoryQuery.unregister(this)
+        }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
@@ -56,7 +57,7 @@ class SolidDirectoryDropDownView(appContext: AppContext)
 
     private fun limitWidth(text: String, limit: Int): String {
         if (text.length > limit) {
-            return text.substring(0, limit-2) + "…";
+            return text.substring(0, limit-2) + "…"
         }
         return text
     }

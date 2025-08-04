@@ -3,7 +3,7 @@ package ch.bailu.aat.views.osm
 import android.content.Context
 import android.text.InputType
 import android.widget.EditText
-import ch.bailu.aat.util.fs.TextBackup
+import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc

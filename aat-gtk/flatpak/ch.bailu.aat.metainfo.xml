@@ -50,6 +50,44 @@
     <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
     <releases>
+        <release version="1.28" date="2025-08-04">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.28</url>
+            <description>
+                <p>v1.28 (42)</p>
+                <ul>
+                    <li>Android and GTK: Fix map border does not always receive click events</li>
+                    <li>Android and GTK: Fix preview image generation (wrong bounding in draw function)</li>
+                    <li>Android: Fix layout adaption on fold-devices</li>
+                    <li>Android: Fix null pointer exception when scanning BT-devices</li>
+                    <li>CI: Update acra to 5.12.0</li>
+                    <li>CI: Update android gradle plugin to 8.8.2</li>
+                    <li>CI: Update gradle `./gradlew wrapper --gradle-version 8.13`</li>
+                    <li>CI: Update gradle shadow plugin to version 8.3.6</li>
+                    <li>CI: Update gson to 2.12.1</li>
+                    <li>CI: Update java-GTK to 0.6.0</li>
+                    <li>CI: Update JUnit (Jupiter) to 5.12.1</li>
+                    <li>CI: Update Kotlin to 2.1.20</li>
+                    <li>CI: Update MapsForge to 0.24.1</li>
+                    <li>CI: Update mapsforge-GTK to 0.5.0</li>
+                    <li>CI: Update spotbugs-annotations to 4.9.3</li>
+                    <li>GTK: Fix alpha on saved HillShade tiles</li>
+                    <li>GTK: Fix crash on startup when using GTK property-access</li>
+                    <li>GTK: Fix crash when accessing freed resources in preferences dialog</li>
+                    <li>GTK: Fix current track not always updated in detail view</li>
+                    <li>GTK: Fix framing and selecting of current track and overlays</li>
+                    <li>GTK: Fix invisible nodes are getting selected in map view</li>
+                    <li>GTK: Fix offset of bounding box in POI-Query</li>
+                    <li>GTK: OfflinePoi as leaflet page</li>
+                    <li>GTK: Replace deprecated Leaflet with NavigationSplitView</li>
+                    <li>GTK: Show tracker controller buttons in map view</li>
+                    <li>Lib: Fix ignoring altitude precision when reading and displaying tracks</li>
+                    <li>Lib: Fix infinite loop when parsing broken GPX-files (Issue #174)</li>
+                    <li>Lib: HillShade fixes</li>
+                    <li>Lib: Read Results-Files from OSM Routing APIs (Valhalla, GraphHopper and OSRM)</li>
+                    <li>Lib: Support Motorider Theme</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.27" date="2025-02-25">
             <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.27</url>
             <description>

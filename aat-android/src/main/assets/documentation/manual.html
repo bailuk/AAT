@@ -2,19 +2,35 @@
 
 <h2>Main view</h2>
 
-<p>When starting AAT the first time it shows the <strong>main view</strong> with a list of sub-views you can open. The first 3 entries are <strong>"Cockpit A, Cockpit B, and Map"</strong> if you have one of these open you can cycle through them with the down arrow. The right arrow switches trough the different pages of the view.</p>
+<p>When starting <strong>AAT-Android</strong> the first time it shows the <strong>main view</strong> with a list of sub-views you can open. </p>
+
+<p>The first 3 entries are <strong>"Cockpit A, Cockpit B, and Map"</strong>. </p>
+
+<p>Use the right arrow to switch trough the different pages of the view.</p>
 
 <h2>Map view (and full screen map)</h2>
 
-<p><strong>Tap the edges of the map view, to get extra functionality</strong>. <br>
-Top edge:    Cycle trough cockpit views. <br>
-Left edge:   Edit current track or <code>draft.gpx</code>. <br>
-Right edge:  Configure map, select grid, map search, import/export of center location. <br>
-Bottom edge: Zoom in and out, lock to current position, frame tracks.  </p>
+<p><strong>Tap the edges of the map view, to get extra functionality</strong>:</p>
+
+<ul>
+<li>Top edge: Cycle trough cockpit views.</li>
+<li>Left edge: Edit current track or <code>draft.gpx</code>.</li>
+<li>Right edge: Configure map, select grid, map search, import/export of center location.</li>
+<li>Bottom edge: Zoom in and out, lock to current position, frame tracks.</li>
+</ul>
 
 <h2>Display recorded track</h2>
 
-<p>Once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file. <em>Here you can for example select this track for one of the 4 overlay slots.</em> You can display any recorded track by taping the text area of the list entry. (Always go back to the list with the phones back button). In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
+<p>Once you have stopped the tracker go back to the <strong>main view</strong> with your phones back button. 
+Then select <strong>Track list</strong> to show a list of all recorded GPX tracks. </p>
+
+<p>Every track has a preview image if you tap on this image, you'll get a context menu for this GPX-file.
+<em>Here you can for example select this track for one of the 4 overlay slots.</em></p>
+
+<p>You can display any recorded track by taping the text area of the list entry.
+(Always go back to the list with the phones back button). </p>
+
+<p>In the track view there are again different pages (graph, summary and map) and you can cycle trough all tracks with the up and down arrow.</p>
 
 <p>There are different pages in the <strong>Track list</strong> view (Access them with &lt; &#8230; > ). These pages offer <strong>a map as an alternative to the track list</strong>, <strong>summary information</strong> and <strong>filter options</strong>.</p>
 
@@ -49,16 +65,27 @@ Bottom edge: Zoom in and out, lock to current position, frame tracks.  </p>
 
 <h1>Where to find files?</h1>
 
-<p>AAT lets you create and view files in GPX format. These files are exchangeable with many other applications. They can also be edited in a text editor. 
-These and other files are stored in subdirectories of the data directory. You can choose the location of the data directory from the settings.
-The structure of the data directory is as follows: </p>
+<p>AAT lets you create and view files in GPX format. These files are exchangeable with many other applications.
+They can also be edited in a text editor. 
+These and other files are stored in subdirectories of the data directory. </p>
+
+<p>Storing data in <code>/aat_data</code> is preferred by AAT. This needs special permission but makes it easier to access and share files.</p>
+
+<p>With limited permission <strong>AAT-Android</strong> will store files in <code>/Android/data/ch.bailu.aat/</code> which is private space for the application and a standard on Android. This is also managed somehow by Android <em>which means that files there are getting deleted when uninstalling AAT</em>.</p>
+
+<p>On <strong>AAT-GTK</strong> the location of the data directory is either <code>~/aat_data</code> or <code>~/.config/aat-gtk</code>.</p>
+
+<p>You can choose any location for the data directory in the preferences: <code>Preferences-&gt;General/System/Data directory</code>.</p>
+
+<p>The structure (subdirectories) of the data directory is as follows: </p>
 
 <ul>
-<li><code>aat_data/activity[0-4]</code> - tracked activities</li>
-<li><code>aat_data/log</code>           - activity that gets tracked at the moment</li>
-<li><code>aat_data/query</code>         - search results from OSM-Nominatim, OSM-Overpass and offline POI </li>
-<li><code>aat_data/overlay</code>       - GPX-files that can be used as overlays: Routes, way-points, search results&#8230;</li>
-<li><code>aat_data/dem3</code>          - cached <a href="https://bailu.ch/dem3/">Digital elevation data files </a></li>
+<li><code>aat_data/activity[0-4]</code> : tracked activities</li>
+<li><code>aat_data/log</code>           : activity that gets tracked at the moment</li>
+<li><code>aat_data/query</code>         : search results from OSM-Nominatim, OSM-Overpass and offline POI </li>
+<li><code>aat_data/overlay</code>       : GPX-files that can be used as overlays: Routes, way-points, search results&#8230;</li>
+<li><code>aat_data/dem3</code>          : cached <a href="https://bailu.ch/dem3/">Digital elevation data files </a></li>
+<li><code>aat_data/maps</code>          : alternative location for offline maps</li>
 </ul>
 
 <h1>Calculating calories</h1>
@@ -67,25 +94,59 @@ The structure of the data directory is as follows: </p>
 MET stands for <a href="https://en.wikipedia.org/wiki/Metabolic_equivalent">metabolic equivalent</a>. The higher the value, the more energy you would use
 for this specific activity. A complete list of activities and MET values can be found <a href="https://sites.google.com/site/compendiumofphysicalactivities/Activity-Categories">here</a>.</p>
 
-<p>Both MET and weight can be provided in the settings dialog. The MET value is leading the activity's name. For example: <code>6.8 bicycling, leisure, moderate effort</code></p>
+<p>Both MET and weight can be provided in the settings dialog. The MET value is leading the activity's name. 
+For example: <code>6.8 bicycling, leisure, moderate effort</code></p>
+
+<h1>AAT-Android and permissions</h1>
+
+<p>Some features like <strong>GPS-tracking</strong>, accessing <strong>shared storage</strong> and accessing <strong>sensor-devices</strong> need extra permission. 
+This needed permissions are different on different Android versions.</p>
+
+<p>AAT-Android tries to aquire all those permissions on the first application start.</p>
+
+<p>To acquire permissions later open <code>Preferences-&gt;General/System-&gt;App permission</code>.
+There you find an overview of missing permissions and a button to request permissions.</p>
+
+<p>Some permissions can only be enabled manually in the Android settings: <code>App Info -&gt; Permissions -&gt; &#8230; -&gt; All permissions</code></p>
+
+<p><strong>Some important permissions</strong></p>
+
+<p>(Naming might be different on different Android versions)</p>
+
+<ul>
+<li><code>Location permission (allow all the time)</code>, <code>access location in the background</code> and <code>use precise location</code>: GPS-Tracking only works if those are enabled. If tracking stops working when AAT-Android is in the background then some of these permissions are missing.</li>
+<li><code>Notifications (all notifications)</code>: To display tracker status in the top bar.</li>
+<li><code>Read heart rate</code>, <code>connect to paired BT devices</code>, <code>discover and pair nearby BT devices</code> and many more: To access BT and other sensors.</li>
+</ul>
+
+<p><strong>Shared storage</strong></p>
+
+<p>On some Android versions Storage Access Framework (SAF) is needed to access shared storage locations.
+SAF is token based and the token has to be renewed under some conditions like after rebooting the device.
+To use SAF just select <code>Pick (SAF)&#8230;</code> in the location menu found with some preferences. Example: <code>Preferences-&gt;General/System/Data directory-&gt;Pick (SAF)&#8230;</code> and then select a directory.</p>
+
+<p>On other Android versions access to shared storage can be acquired by selecting <code>Preferences-&gt;General/System-&gt;App permission-&gt;Request permissions</code> and then enable <code>Allow access to manage all files</code></p>
 
 <h1>Contribution</h1>
 
 <h2>Issues and feedback</h2>
 
-<p>For questions, feedback and bug reports <a href="https://github.com/bailuk/AAT/issues">report an issue</a> or send an e-mail to aat@bailu.ch</p>
+<ul>
+<li><a href="https://github.com/bailuk/AAT/issues">Report an issue</a></li>
+<li><a href="https://github.com/bailuk/AAT/discussions">Start a discussion</a></li>
+</ul>
 
 <h2>Translation</h2>
 
-<p>You can open a pull request or send me your translation as e-mail or publish them as an issue report.</p>
+<p>Open a pull request on GitHub to update or add translations.</p>
 
 <h3>File tree structure</h3>
 
-<p>Resources (like text and icons) are located in <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res">app/src/main/res</a>. </p>
-
-<p>English text strings are in this file: <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values/strings.xml">/app/src/main/res/values/strings.xml</a></p>
-
-<p>German translations are in this file: <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values-de/strings.xml">/app/src/main/res/values-de/strings.xml</a></p>
+<ul>
+<li>Resources (like text and icons) are located in <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res">app/src/main/res</a>. </li>
+<li>English text strings are in this file: <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values/strings.xml">/app/src/main/res/values/strings.xml</a></li>
+<li>German translations are in this file: <a href="https://github.com/bailuk/AAT/blob/stage/aat-android/src/main/res/values-de/strings.xml">/app/src/main/res/values-de/strings.xml</a></li>
+</ul>
 
 <h3>Modify</h3>
 

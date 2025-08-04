@@ -27,7 +27,7 @@ class EditorMenu(
 ) : AbsMenu() {
 
     override fun inflate(menu: Menu) {
-        add(menu, R.string.edit_save,) { editor.save() }
+        add(menu, R.string.edit_save) { editor.save() }
         add(menu, R.string.edit_save_copy) { saveCopy() }
         add(menu, R.string.edit_save_copy_to) { saveCopyTo() }
         add(menu, R.string.edit_inverse) { editor.inverse() }

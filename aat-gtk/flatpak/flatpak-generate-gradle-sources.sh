@@ -40,9 +40,9 @@ gradle_target="aat-gtk:build"
 
 # The maven repos:
 REPO_BASEURL=(
+  'https://plugins.gradle.org/m2/'
   'https://repo1.maven.org/maven2/'
   'https://dl.google.com/android/maven2/'
-  'https://plugins.gradle.org/m2/'
   'https://jitpack.io/'
 )
 

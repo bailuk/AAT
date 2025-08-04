@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -59,7 +60,7 @@ class MainActivity : ActivityContext() {
     }
 
     private fun createDispatcher() {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }

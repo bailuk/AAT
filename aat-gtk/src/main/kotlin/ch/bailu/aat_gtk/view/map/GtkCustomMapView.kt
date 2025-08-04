@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.lifecycle.LifeCycleInterface
+import ch.bailu.aat_lib.logger.Validator
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.MapViewInterface
@@ -19,7 +20,9 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.util.Limit
+import ch.bailu.aat_lib.util.Point
 import ch.bailu.gtk.cairo.Context
+import ch.bailu.gtk.gtk.GestureClick
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.LatLong
@@ -29,7 +32,7 @@ import org.mapsforge.core.util.Parameters
 import org.mapsforge.map.gtk.graphics.GtkGraphicContext
 import org.mapsforge.map.gtk.view.MapView
 import org.mapsforge.map.layer.Layer
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 import org.mapsforge.map.model.common.Observer
 
 open class GtkCustomMapView (
@@ -79,9 +82,26 @@ open class GtkCustomMapView (
                 }
             }
         })
+
+        // Mapsforge does only propagate click events that have latitude and longitude
+        // but we are only interested in pixels (including those that are outside the visible map)
+        drawingArea.addController(GestureClick().apply {
+            var singleClick = false
+            onPressed { i, _, _ ->  singleClick = i == 1 }
+            onStopped { singleClick = false }
+            onReleased { i, x, y ->
+                if (i == 1 && singleClick) {
+                    val point = Point(x, y)
+                    for (layer in layers) {
+                        if (layer.onTap(point)) {
+                            break
+                        }
+                    }
+                }
+            }
+        })
         onAttached()
     }
-
 
     override fun frameBounding(boundingBox: BoundingBoxE6) {
         frameBounding(boundingBox.toBoundingBox())
@@ -89,11 +109,12 @@ open class GtkCustomMapView (
 
     private fun frameBounding(bounding: BoundingBox) {
         val dimension = model.mapViewDimension.dimension
-        if (dimension != null) {
+        if (Validator.validateNotNull(dimension, "Map is not initialized")) {
             val zoom: Byte = zoomForBounds(bounding, dimension)
             val position = MapPosition(bounding.centerPoint, zoom)
             model.mapViewPosition.mapPosition = position
         }
+
     }
 
     private fun zoomForBounds(bounding: BoundingBox, dimension: Dimension): Byte {
@@ -162,7 +183,7 @@ open class GtkCustomMapView (
         stack.reDownloadTiles()
     }
 
-    override fun getMapViewPosition(): IMapViewPosition {
+    override fun getMapViewPosition(): MapViewPosition {
         return model.mapViewPosition
     }
 

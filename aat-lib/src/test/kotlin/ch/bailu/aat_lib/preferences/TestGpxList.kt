@@ -27,7 +27,7 @@ class TestGpxList {
             latLong.longitude,
             (gpxList.pointList.last as GpxPointNode?)!!.getLongitude()
         )
-        Assertions.assertEquals(450.0, (gpxList.pointList.last as GpxPointNode?)!!.getAltitude())
+        Assertions.assertEquals(450f, (gpxList.pointList.last as GpxPointNode?)!!.getAltitude())
         Assertions.assertEquals(time, (gpxList.pointList.last as GpxPointNode?)!!.getTimeStamp())
         gpxList.appendToNewSegment(tp, GpxListAttributes.factoryTrackList())
         Assertions.assertEquals(
@@ -38,7 +38,7 @@ class TestGpxList {
             latLong.longitude,
             (gpxList.pointList.last as GpxPointNode?)!!.getLongitude()
         )
-        Assertions.assertEquals(450.0, (gpxList.pointList.last as GpxPointNode?)!!.getAltitude())
+        Assertions.assertEquals(450f, (gpxList.pointList.last as GpxPointNode?)!!.getAltitude())
         Assertions.assertEquals(time, (gpxList.pointList.last as GpxPointNode?)!!.getTimeStamp())
     }
 
@@ -53,7 +53,7 @@ class TestGpxList {
         info.setVisibleTrackPoint(gpxList.pointList.last as GpxPointNode?)
         Assertions.assertEquals(latLong.latitude, info.getLatitude())
         Assertions.assertEquals(latLong.longitude, info.getLongitude())
-        Assertions.assertEquals(450.0, info.getAltitude())
+        Assertions.assertEquals(450f, info.getAltitude())
         Assertions.assertEquals(time, info.getTimeStamp())
     }
 }

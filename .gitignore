@@ -86,3 +86,6 @@ maven-local
 # nix-shell
 /aat-android/sdk
 /shell.nix
+
+# Kotlin
+.kotlin

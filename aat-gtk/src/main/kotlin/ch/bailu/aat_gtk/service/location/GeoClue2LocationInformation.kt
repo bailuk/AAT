@@ -9,7 +9,7 @@ import org.mapsforge.core.model.LatLong
 class GeoClue2LocationInformation(location: Location, private val _state: Int): LocationInformation() {
 
     private val _location = LatLong(location.latitude, location.longitude)
-    private var _altitude = location.altitude
+    private var _altitude = location.altitude.toFloat()
     private val _speed = location.speed.toFloat()
     private val _provider = FocName("GeoClue2")
     private val _accuracy = location.accuracy.toFloat()
@@ -31,7 +31,7 @@ class GeoClue2LocationInformation(location: Location, private val _state: Int): 
         return _speed
     }
 
-    override fun getAltitude(): Double {
+    override fun getAltitude(): Float {
         return _altitude
     }
 
@@ -79,7 +79,7 @@ class GeoClue2LocationInformation(location: Location, private val _state: Int): 
         return _timestamp
     }
 
-    override fun setAltitude(altitude: Double) {
+    override fun setAltitude(altitude: Float) {
         _altitude = altitude
     }
 }

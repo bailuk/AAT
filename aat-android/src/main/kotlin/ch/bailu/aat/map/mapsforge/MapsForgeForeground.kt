@@ -27,13 +27,8 @@ class MapsForgeForeground(
     private val layers: ArrayList<MapLayerInterface>
 ) : MapContext {
 
-    private val draw: AndroidDraw
-    private val metrics: MapsForgeMetrics
-
-    init {
-        metrics = MapsForgeMetrics(mapView, d)
-        draw = AndroidDraw(mcontext.getMetrics().getDensity(), appContext)
-    }
+    private val draw: AndroidDraw = AndroidDraw(mcontext.getMetrics().getDensity(), appContext)
+    private val metrics: MapsForgeMetrics = MapsForgeMetrics(mapView, d)
 
     fun dispatchDraw(services: ServicesInterface, canvas: Canvas) {
         services.insideContext {

@@ -60,8 +60,8 @@ class GpxPoint : GpxPointInterface {
         return longitude
     }
 
-    override fun getAltitude(): Double {
-        return altitude.toDouble()
+    override fun getAltitude(): Float {
+        return altitude
     }
 
     fun setAltitude(e: Float) {

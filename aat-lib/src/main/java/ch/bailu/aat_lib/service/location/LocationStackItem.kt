@@ -3,7 +3,6 @@ package ch.bailu.aat_lib.service.location
 import ch.bailu.aat_lib.preferences.OnPresetPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import java.io.Closeable
-import javax.annotation.Nonnull
 
 abstract class LocationStackItem : Closeable, OnPresetPreferencesChanged {
     abstract fun passState(state: Int)

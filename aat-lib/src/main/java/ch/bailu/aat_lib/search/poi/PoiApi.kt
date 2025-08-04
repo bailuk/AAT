@@ -1,16 +1,16 @@
 package ch.bailu.aat_lib.search.poi
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.file.xml.writer.WayWriter
+import ch.bailu.aat_lib.file.xml.writer.WayWriterOsmTags
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import ch.bailu.aat_lib.xml.writer.WayWriter
-import ch.bailu.aat_lib.xml.writer.WayWriterOsmTags
 import ch.bailu.foc.Foc
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.poi.storage.ExactMatchPoiCategoryFilter
@@ -20,7 +20,7 @@ import org.mapsforge.poi.storage.PoiPersistenceManager
 import org.mapsforge.poi.storage.PointOfInterest
 import java.io.IOException
 
-abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) : OsmApiConfiguration() {
+abstract class PoiApi(context: AppContext) : OsmApiConfiguration() {
     private val overlay = SolidPoiOverlay(context.dataDirectory)
     private var task = BackgroundTask.NULL
 
@@ -36,7 +36,7 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override val apiName: String
         get() = overlay.getLabel()
 
-    override fun getUrl(query: String): String {
+    override fun getUrl(query: String, bounding: BoundingBoxE6): String {
         return ""
     }
 
@@ -45,18 +45,18 @@ abstract class PoiApi(context: AppContext, private val bounding: BoundingBoxE6) 
     override val baseDirectory: Foc
         get() = overlay.directory
 
-    override fun getUrlPreview(query: String): String {
+    override fun getUrlPreview(query: String, bounding: BoundingBoxE6): String {
         return ""
     }
 
-    override fun startTask(appContext: AppContext) {
+    override fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6) {
         val categories = selectedCategories
         val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).getValueAsString()
         appContext.services.insideContext {
             task.stopProcessing()
             task = PoiToGpxTask(
                 resultFile,
-                bounding.toBoundingBox(),
+                boundingBoxE6.toBoundingBox(),
                 categories,
                 poiDatabase
             )

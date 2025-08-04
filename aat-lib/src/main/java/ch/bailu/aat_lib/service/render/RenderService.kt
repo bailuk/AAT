@@ -71,7 +71,7 @@ class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsFor
 
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (sdirectory.hasKey(key) || stheme.hasKey(key)) {
+        if (sdirectory.hasKey(key) || stheme.hasKey(key) || scaleFactor.hasKey(key)) {
             reconfigureRenderer()
         }
     }

@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.service.cache
 
-import ch.bailu.aat_lib.logger.AppLog
 import java.io.Closeable
 
 class LockCache<E : Obj?>(capacity: Int) : Closeable {
@@ -61,7 +60,6 @@ class LockCache<E : Obj?>(capacity: Int) : Closeable {
 
     fun ensureCapacity(capacity: Int) {
         if (capacity > objects.size) {
-            AppLog.d(this, "Grow capacity from ${objects.size} to $capacity")
             resizeCache(capacity)
         }
     }

@@ -19,13 +19,11 @@ abstract class InternalSensorSDK23(
 ) : SensorEventListener, SensorInterface {
 
     override val name: String = InternalSensorsSDK23.toName(sensor)
-    private val address: String
+    private val address: String = InternalSensorsSDK23.toAddress(sensor)
     private var registered = false
-    private val connector: Connector
+    private val connector: Connector = Connector(context, iid)
 
     init {
-        address = InternalSensorsSDK23.toAddress(sensor)
-        connector = Connector(context, iid)
         if (item.lock(this)) {
             item.state = SensorItemState.CONNECTING
             item.state = SensorItemState.CONNECTED

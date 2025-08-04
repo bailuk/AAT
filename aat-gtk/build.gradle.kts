@@ -1,19 +1,11 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     application
 
     // https://imperceptiblethoughts.com/shadow/getting-started
-    id("com.github.johnrengelman.shadow")
-
-    // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm")
-}
-
-java.sourceCompatibility = JavaVersion.VERSION_11
-java.targetCompatibility = JavaVersion.VERSION_11
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+    id("com.gradleup.shadow")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 tasks.test {
@@ -44,9 +36,8 @@ dependencies {
     val mapsForgeGtkVersion: String by project
     implementation("org.mapsforge:mapsforge-poi-awt:$mapsForgeVersion")
     implementation("com.github.bailuk:mapsforge-gtk:${mapsForgeGtkVersion}")
-    // implementation("org.mapsforge:mapsforge-map-gtk:SNAPSHOT")
 
-    implementation("com.google.code.gson:gson:2.10.1")
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     /**
@@ -55,7 +46,8 @@ dependencies {
      *   https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
      *
      */
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    val jupiterVersion: String by project
+    testImplementation("org.junit.jupiter:junit-jupiter:$jupiterVersion")
 }
 
 val appMainClass = "ch.bailu.aat_gtk.app.AppKt"
@@ -74,14 +66,23 @@ tasks {
     }
 }
 
-
-task<Exec>("generateGResource") {
+tasks.register<Exec>("generateGResource") {
     setWorkingDir("gresource")
     setCommandLine("./generate.sh")
 }
 
+// Force byte code compatibility to Java 17 (61)
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
 
 tasks {
+    // Force byte code compatibility to Java 17 (61)
+    compileJava {
+        options.release.set(17)
+    }
     build {
         dependsOn(shadowJar)
     }

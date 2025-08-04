@@ -19,10 +19,9 @@ class GpxList(type: GpxType, attr: GpxListAttributes) {
     }
 
     private val list = SegmentedList(GPX_SEGMENT_FACTORY)
-    private val delta: GpxBigDelta
+    private val delta: GpxBigDelta = GpxBigDelta(attr)
 
     init {
-        delta = GpxBigDelta(attr)
         delta.setType(type)
     }
 

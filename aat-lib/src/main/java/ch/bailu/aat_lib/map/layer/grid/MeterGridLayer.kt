@@ -11,13 +11,9 @@ import org.mapsforge.core.model.LatLong
 
 abstract class MeterGridLayer(storage: StorageInterface) : MapLayerInterface {
     private val grid = GridMetricScaler()
-    private val distanceDescription: DistanceDescription
+    private val distanceDescription: DistanceDescription = DistanceDescription(storage)
     private var ttext = ""
     private var btext = ""
-
-    init {
-        distanceDescription = DistanceDescription(storage)
-    }
 
     override fun drawForeground(mcontext: MapContext) {
         mcontext.draw().textTop(ttext, 1)

@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.view.map.control
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
-import ch.bailu.aat_gtk.view.menu.PopupMenuButtonOverlay
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_gtk.view.solid.SolidImageButton
 import ch.bailu.aat_lib.dispatcher.TargetInterface

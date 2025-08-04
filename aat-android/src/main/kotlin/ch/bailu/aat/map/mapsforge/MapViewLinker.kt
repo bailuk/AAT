@@ -1,15 +1,15 @@
 package ch.bailu.aat.map.mapsforge
 
 import ch.bailu.aat_lib.map.MapViewInterface
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 
 /**
  * Link to map views together.
  * Passive map takes zoom and position from active map
  */
 class MapViewLinker(active: MapViewInterface, passive: MapsForgeViewBase) {
-    private val active: IMapViewPosition = active.getMapViewPosition()
-    private val passive: IMapViewPosition = passive.getMapViewPosition()
+    private val active: MapViewPosition = active.getMapViewPosition()
+    private val passive: MapViewPosition = passive.getMapViewPosition()
     private val onChange: ()->Unit = {
         setCenter()
         setZoom()

@@ -4,8 +4,8 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 class MockStorage : StorageInterface {
-    var mockIntValue: Int = 0
-    var mockStringValue = ""
+    private var mockIntValue: Int = 0
+    private var mockStringValue = ""
     var mockLongValue: Long = 0L
 
 

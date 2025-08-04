@@ -1,0 +1,85 @@
+package ch.bailu.aat_lib.file.xml.parser.gpx
+
+import ch.bailu.aat_lib.gpx.GpxListArray
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.attributes.Keys
+import ch.bailu.foc_extended.FocResource
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+
+class TestGpxListReaderXml {
+
+    @Test
+    fun testReader() {
+        val reader = GpxListReaderXml(FocResource("test.gpx"), AutoPause.NULL)
+        Assertions.assertEquals(1855, reader.gpxList.pointList.size())
+
+        val attributes = reader.gpxList.getDelta().getAttributes()
+        Assertions.assertEquals(15, attributes.size())
+
+        Assertions.assertEquals(false, attributes.hasKey(Keys.toIndex("SomeRandomKey")))
+
+        val key = Keys.toIndex("StepRate")
+        Assertions.assertEquals(true, attributes.hasKey(key))
+        Assertions.assertEquals(0, attributes.getAsInteger(key))
+
+        val key2 = Keys.toIndex("TotalSteps")
+        Assertions.assertEquals(true, attributes.hasKey(key2))
+        Assertions.assertEquals(2959, attributes.getAsInteger(key2))
+
+        val key3 = Keys.toIndex("MaxStepsRate")
+        Assertions.assertEquals(true, attributes.hasKey(key3))
+        Assertions.assertEquals(122, attributes.getAsInteger(key3))
+
+    }
+
+    @Test
+    fun testBrokenGpx() {
+        val reader = GpxListReaderXml(FocResource("test-broken.gpx"), AutoPause.NULL)
+
+        val first = reader.gpxList.pointList.first as GpxPointNode
+        val second = reader.gpxList.pointList.last as GpxPointNode
+
+        Assertions.assertEquals(2, reader.gpxList.pointList.size())
+        Assertions.assertEquals(1711804688000, reader.gpxList.getDelta().getStartTime())
+
+        Assertions.assertEquals(47.791209, first.getLatitude())
+        Assertions.assertEquals(7.901156, first.getLongitude())
+        Assertions.assertEquals(1711804688000, first.getTimeStamp())
+        Assertions.assertEquals(543.7f, first.getAltitude())
+
+        Assertions.assertEquals(47.791209, second.getLatitude())
+        Assertions.assertEquals(7.901157, second.getLongitude())
+
+        // Because of the missing UTC ending this will fall back to local time.
+        // This can't be tested reliable because value is system dependant.
+        // Assertions.assertEquals(1711801089000, second.getTimeStamp())
+        Assertions.assertEquals(544.0f, second.getAltitude())
+    }
+
+    @Test
+    fun testElevation() {
+        val reader = GpxListReaderXml(FocResource("test-ele.gpx"), AutoPause.NULL)
+
+        val listArray = GpxListArray(reader.gpxList)
+
+        Assertions.assertEquals(12, reader.gpxList.pointList.size())
+        Assertions.assertEquals(12, listArray.size())
+        Assertions.assertEquals(0, listArray.index)
+
+        Assertions.assertEquals(1660139521000, reader.gpxList.getDelta().getStartTime())
+
+        Assertions.assertEquals(541.6f, listArray.get().getAltitude())
+        Assertions.assertEquals(541.6f, listArray[1].getAltitude())
+        Assertions.assertEquals(541.7f, listArray[2].getAltitude())
+        Assertions.assertEquals(541.0f, listArray[3].getAltitude())
+        Assertions.assertEquals(541.0f, listArray[4].getAltitude())
+
+        // No rounding
+        Assertions.assertEquals(541.9f, listArray[5].getAltitude())
+
+        // TODO How to handle missing <ele> values? Use 0f instead of previous value?
+        Assertions.assertEquals(541.8f, listArray[listArray.size()-1].getAltitude())
+    }
+}

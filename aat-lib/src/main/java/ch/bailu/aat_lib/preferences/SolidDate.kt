@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.preferences
 
-import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.description.FormatDisplay
 
 class SolidDate(storage: StorageInterface, key: String, private val label: String) : SolidLong(storage, key) {
 
@@ -12,7 +12,7 @@ class SolidDate(storage: StorageInterface, key: String, private val label: Strin
 
 
     override fun getValueAsString(): String {
-        return f().localDate.format(getValue())
+        return FormatDisplay.f().localDate.format(getValue())
     }
 
 

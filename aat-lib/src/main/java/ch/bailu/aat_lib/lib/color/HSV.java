@@ -5,11 +5,11 @@ import ch.bailu.aat_lib.util.Limit;
 public class HSV implements ColorInterface{
 
 
-    private int alpha;
+    private final int alpha;
     private double H,S,V;
 
     /**
-     * http://www.easyrgb.com/en/math.php#text20
+     * <a href="http://www.easyrgb.com/en/math.php#text20">...</a>
      * @param color a color
      */
     public HSV(ColorInterface color) {

@@ -23,8 +23,7 @@ class OlcCoordinates : Coordinates {
         code,
         reference.getLatitude(),
         reference.getLongitude()
-    ) {
-    }
+    )
 
     constructor(code: String, la: Double, lo: Double) {
         val olc = OpenLocationCode(code)
@@ -43,7 +42,7 @@ class OlcCoordinates : Coordinates {
         olc = OpenLocationCode(c.getLatitude(), c.getLongitude())
     }
 
-    
+
     override fun toString(): String {
         return olc.code
     }

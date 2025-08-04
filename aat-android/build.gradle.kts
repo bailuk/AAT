@@ -1,6 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -23,7 +25,7 @@ android {
         targetSdk = 33
 
         // Version Code can not be taken from from variable (f-droid version checker fail)
-        versionCode = 41
+        versionCode = 42
         versionName = appVersionName
         applicationId = appId
     }
@@ -55,10 +57,15 @@ android {
         sourceCompatibility(JavaVersion.VERSION_11)
         targetCompatibility(JavaVersion.VERSION_11)
     }
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-        }
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
+
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
@@ -72,7 +79,6 @@ dependencies {
      */
     val focVersion: String by project
     implementation("com.github.bailuk.foc:foc-android:$focVersion")
-
 
     /*
             Automatic MapsForge integration as described here:

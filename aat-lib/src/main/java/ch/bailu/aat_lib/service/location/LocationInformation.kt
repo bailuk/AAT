@@ -12,5 +12,5 @@ abstract class LocationInformation : GpxInformation() {
     abstract fun isFromGPS(): Boolean
     abstract fun getCreationTime(): Long
 
-    abstract fun setAltitude(altitude: Double)
+    abstract fun setAltitude(altitude: Float)
 }

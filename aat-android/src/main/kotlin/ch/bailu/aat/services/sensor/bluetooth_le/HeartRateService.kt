@@ -21,15 +21,9 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
     private var information: GpxInformation? = null
     override var isValid = false
         private set
-    private val connector: Connector
-    private val broadcaster: Broadcaster
-    private val name: String
-
-    init {
-        connector = Connector(c, InfoID.HEART_RATE_SENSOR)
-        broadcaster = Broadcaster(c, InfoID.HEART_RATE_SENSOR)
-        name = c.getString(R.string.sensor_heart_rate)
-    }
+    private val connector: Connector = Connector(c, InfoID.HEART_RATE_SENSOR)
+    private val broadcaster: Broadcaster = Broadcaster(c, InfoID.HEART_RATE_SENSOR)
+    private val name: String = c.getString(R.string.sensor_heart_rate)
 
     override fun discovered(c: BluetoothGattCharacteristic, execute: Executor): Boolean {
         val sid = c.service.uuid

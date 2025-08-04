@@ -1,8 +1,8 @@
 package ch.bailu.aat_gtk.view.graph
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.view.graph.LabelInterface
 import ch.bailu.aat_lib.view.graph.Plotter
 import ch.bailu.aat_lib.view.graph.PlotterConfig
@@ -76,7 +76,7 @@ class GraphView(private val plotter: Plotter) : TargetInterface {
 
     private var redrawNeeded = false
 
-    fun repaint() {
+    private fun repaint() {
         /**
          * Repaint requests are coming from the main (UI) thread as well as from
          * the layer manager worker thread.

@@ -32,13 +32,9 @@ abstract class MaxSpeed : GpxSubAttributes(KEYS) {
     }
 
     class Samples @JvmOverloads constructor(samples: Int = 5) : MaxSpeed() {
-        private val speeds: FloatArray
+        private val speeds: FloatArray = FloatArray(Math.max(samples, 1))
         private var i = 0
         private var maximum = 0f
-
-        init {
-            speeds = FloatArray(Math.max(samples, 1))
-        }
 
         override fun get(): Float {
             return maximum

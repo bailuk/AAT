@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.model.DisplayModel
 import org.mapsforge.map.view.MapView
@@ -42,7 +43,7 @@ open class MapsForgeTileLayerStack(private val scontext: ServicesInterface) : La
         mapView.setZoomLevelMax(maxZoom.toByte())
     }
 
-    override fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point) {
+    override fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point, rotation: Rotation) {
         scontext.insideContext { layers.draw(box, zoom, c, tlp) }
     }
 
@@ -104,7 +105,7 @@ open class MapsForgeTileLayerStack(private val scontext: ServicesInterface) : La
         @Synchronized
         fun draw(box: BoundingBox, zoom: Byte, c: Canvas, tlp: Point) {
             for (l in layers) {
-                l.draw(box, zoom, c, tlp)
+                l.draw(box, zoom, c, tlp, Rotation.NULL_ROTATION)
             }
         }
 

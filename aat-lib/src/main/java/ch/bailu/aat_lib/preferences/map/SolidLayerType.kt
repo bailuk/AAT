@@ -22,14 +22,14 @@ class SolidLayerType(storage: StorageInterface) : SolidIndexList(storage, KEY) {
     }
 
     fun createTrackLayer(mcontext: MapContext, iid: Int): GpxLayer {
-        if (index == 0 || iid < InfoID.OVERLAY) {
-            return TrackLayer(mcontext)
+        return if (index == 0 || iid < InfoID.OVERLAY) {
+            TrackLayer(mcontext)
         } else if (index == 1) {
-            return RouteLayer(mcontext)
+            RouteLayer(mcontext)
         } else if (index == 2) {
-            return TrackOverlayLayer(mcontext)
+            TrackOverlayLayer(mcontext)
         } else {
-            return TrackOverlayLayerShadow(mcontext)
+            TrackOverlayLayerShadow(mcontext)
         }
     }
 

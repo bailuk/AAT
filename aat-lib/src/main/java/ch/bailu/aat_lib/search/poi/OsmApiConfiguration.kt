@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.search.poi
 
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -11,14 +12,14 @@ abstract class OsmApiConfiguration {
     abstract val apiName: String
 
     @Throws(UnsupportedEncodingException::class)
-    abstract fun getUrl(query: String): String
+    abstract fun getUrl(query: String, bounding: BoundingBoxE6): String
 
     abstract val urlStart: String
     abstract val baseDirectory: Foc
     abstract val fileExtension: String
-    abstract fun getUrlPreview(query: String): String
+    abstract fun getUrlPreview(query: String, bounding: BoundingBoxE6): String
 
-    abstract fun startTask(appContext: AppContext)
+    abstract fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6)
 
     abstract val resultFile: Foc
 

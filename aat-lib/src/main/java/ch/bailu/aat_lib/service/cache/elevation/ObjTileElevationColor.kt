@@ -15,7 +15,7 @@ class ObjTileElevationColor(id: String, b: MapTileInterface, t: Tile, split: Int
         span: SubTile,
         demtile: DemProvider
     ) {
-        val dim = demtile.dim.DIM
+        val dim = demtile.getDimension().dimension
         val bitmapDim = span.pixelDim()
 
         var c = 0

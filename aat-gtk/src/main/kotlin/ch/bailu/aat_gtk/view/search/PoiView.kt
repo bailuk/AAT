@@ -29,9 +29,15 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
         }
     }
 
+    val poiApi = object: PoiApi(GtkAppContext) {
+        override val selectedCategories
+            get() = poiList.getSelectedCategories()
+    }
+
     init {
         sdatabase.register(onPreferencesChanged)
     }
+
     private val searchEntry = SearchEntry().apply {
         onSearchChanged {
             updateList(Editable(cast()).text.toString())
@@ -45,14 +51,14 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
         }
     }
 
-    val layout = Box(Orientation.VERTICAL, Layout.margin).apply {
+    val layout = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
 
-        margin(Layout.margin)
+        margin(Layout.MARGIN)
 
         append(SolidDirectorySelectorView(sdatabase, app, window).layout)
         append(Separator(Orientation.HORIZONTAL).apply {
-            marginBottom = Layout.margin*2
-            marginTop = Layout.margin*2
+            marginBottom = Layout.MARGIN*2
+            marginTop = Layout.MARGIN*2
         })
         append(searchEntry)
         append(poiList.scrolled)
@@ -63,14 +69,8 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
     }
 
     fun loadList() {
-        val poiApi = object: PoiApi(GtkAppContext, controller.getMapBounding()) {
-            override val selectedCategories
-                get() = poiList.getSelectedCategories()
-        }
-
-        poiApi.startTask(GtkAppContext)
+        poiApi.startTask(GtkAppContext, controller.getMapBounding())
         poiList.writeSelected()
-
     }
 
     fun onDestroy() {

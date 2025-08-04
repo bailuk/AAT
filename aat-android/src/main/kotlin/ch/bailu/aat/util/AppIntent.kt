@@ -11,10 +11,6 @@ object AppIntent {
     const val EXTRA_MESSAGE = "source"
     private val KEYS = arrayOf("file", "source", "c", "d", "e", "f")
 
-    fun setUrl(intent: Intent, url: String?) {
-        intent.putExtra(EXTRA_URL, url)
-    }
-
     @JvmStatic
     fun getUrl(intent: Intent): String? {
         return intent.getStringExtra(EXTRA_URL)

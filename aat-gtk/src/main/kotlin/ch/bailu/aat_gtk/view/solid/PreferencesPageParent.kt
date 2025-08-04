@@ -36,7 +36,7 @@ open class PreferencesPageParent(title: String, name: String) {
 
 
     fun add(view: Widget) {
-        view.margin(Layout.margin)
+        view.margin(Layout.MARGIN)
         newGroup.add(view)
     }
 }

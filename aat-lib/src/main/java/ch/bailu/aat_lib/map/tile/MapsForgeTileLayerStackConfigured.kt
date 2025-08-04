@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.map.tile.source.ElevationSource
 import ch.bailu.aat_lib.map.tile.source.MapsForgeSource
 import ch.bailu.aat_lib.map.tile.source.Source
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache.MapsForge
+import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.service.cache.DownloadSource
@@ -21,8 +21,8 @@ abstract class MapsForgeTileLayerStackConfigured(
 ) {
     private val stheme: SolidRenderTheme = SolidRenderTheme(scontext.mapDirectory, scontext)
     private val stiles = SolidMapTileStack(stheme)
-    private val scacheHS = MapsForge(scontext.storage)
-    private val scacheMF = MapsForge(scontext.storage)
+    private val scacheHS = SolidEnableTileCache.HillShade(scontext.storage)
+    private val scacheMF = SolidEnableTileCache.MapsForge(scontext.storage)
 
     init {
         initLayers()

@@ -5,6 +5,7 @@ import android.view.View
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.html.MarkupBuilder
@@ -18,7 +19,7 @@ abstract class AbsNodeViewLayer(
     appContext: AppContext,
     context: Context,
     private val mcontext: MapContext
-) : AbsNodeSelectorLayer(appContext.services, appContext.storage, mcontext, Position.BOTTOM),
+) : AbsNodeSelectorLayer(appContext.services, appContext.storage, mcontext, Position.BOTTOM, UsageTrackerAlwaysEnabled()),
     View.OnLongClickListener, View.OnClickListener {
     private val infoView: NodeInfoView = NodeInfoView(appContext, context)
     protected val markupBuilder: MarkupBuilderGpx = MarkupBuilderGpx(appContext.storage)

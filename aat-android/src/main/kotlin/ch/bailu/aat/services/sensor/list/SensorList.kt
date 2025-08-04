@@ -14,7 +14,7 @@ class SensorList(private val context: Context) :  Closeable {
     private val list = ArrayList<SensorListItem>(10)
 
     companion object {
-        private val changedAction = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS
+        private const val CHANGE_ACTION = AppBroadcaster.SENSOR_CHANGED + InfoID.SENSORS
     }
 
     init {
@@ -46,7 +46,7 @@ class SensorList(private val context: Context) :  Closeable {
     }
 
     fun broadcast() {
-        AndroidBroadcaster.broadcast(context, changedAction)
+        AndroidBroadcaster.broadcast(context, CHANGE_ACTION)
     }
 
     fun getInformation(iid: Int): GpxInformation? {

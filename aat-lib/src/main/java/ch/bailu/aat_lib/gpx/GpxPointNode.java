@@ -20,7 +20,7 @@ public abstract class GpxPointNode extends Node implements GpxDeltaPointInterfac
     }
 
     @Override
-    public double getAltitude() {
+    public float getAltitude() {
         return point.getAltitude();
     }
 

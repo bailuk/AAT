@@ -86,7 +86,7 @@ if [ "$option_install" = "" ]; then
 
   echo "create '${desktop}'"
   $copy aat-gtk/flatpak/ch.bailu.aat.desktop "${tor}${desktop}"
-  $cmd sed -i "'s+Exec.*+Exec=java -jar ${data}/${app}.jar+'" ${desktop}
+  $cmd sed -i "\"s+Exec.*+Exec=sh -c 'java -jar ${data}/${app}.jar > ${data}/${app}.log 2>\&1'+\"" ${desktop}
 
   $cmd "chmod 700 ${desktop}" || exit 1
 fi

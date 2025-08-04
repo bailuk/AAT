@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.map
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import org.mapsforge.core.model.LatLong
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 
 interface MapViewInterface {
     fun frameBounding(boundingBox: BoundingBoxE6)
@@ -15,5 +15,5 @@ interface MapViewInterface {
     fun setZoomLevel(z: Byte)
     fun setCenter(gpsLocation: LatLong)
     fun reDownloadTiles()
-    fun getMapViewPosition(): IMapViewPosition
+    fun getMapViewPosition(): MapViewPosition
 }

@@ -5,6 +5,7 @@ import ch.bailu.foc.Foc
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Point
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.core.model.Tile
 import org.mapsforge.map.datastore.MapDataStore
 import org.mapsforge.map.datastore.MultiMapDataStore
@@ -138,7 +139,7 @@ class Renderer(renderTheme: XmlRenderTheme, cache: TileCache, files: ArrayList<F
     }
 
 
-    override fun draw(b: BoundingBox, z: Byte, c: Canvas, t: Point) {}
+    override fun draw(b: BoundingBox, z: Byte, c: Canvas, t: Point, rotation: Rotation) {}
 
     fun supportsTile(tile: Tile): Boolean {
         val mapDataStore = mapDataStore

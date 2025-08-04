@@ -6,11 +6,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 
 class SolidTileSize(storage: StorageInterface, density: AppDensity) : SolidIndexList(storage, KEY) {
-    private val tileSizeDP: Int
-
-    init {
-        tileSizeDP = density.toPixelInt(DEFAULT_TILESIZE.toFloat())
-    }
+    private val tileSizeDP: Int = density.toPixelInt(DEFAULT_TILESIZE.toFloat())
 
     val tileSize: Int
         get() {

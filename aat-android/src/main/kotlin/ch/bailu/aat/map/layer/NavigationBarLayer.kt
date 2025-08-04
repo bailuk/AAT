@@ -26,15 +26,13 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
     mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
 ), TargetInterface {
 
-    private val buttonPlus: View
-    private val buttonMinus: View
+    private val buttonPlus: View = bar.addImageButton(R.drawable.zoom_in)
+    private val buttonMinus: View = bar.addImageButton(R.drawable.zoom_out)
     private val buttonFrame: View
     private val infoCache = IndexedMap<Int, GpxInformation>()
     private var boundingCycle = 0
 
     init {
-        buttonPlus = bar.addImageButton(R.drawable.zoom_in)
-        buttonMinus = bar.addImageButton(R.drawable.zoom_out)
         val lock = bar.addSolidIndexButton(
             SolidPositionLock(Storage(context), mcontext.getSolidKey())
         )

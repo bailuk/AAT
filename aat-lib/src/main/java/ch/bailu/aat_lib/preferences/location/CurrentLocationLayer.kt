@@ -31,10 +31,9 @@ class CurrentLocationLayer(private val mcontext: MapContext, d: DispatcherInterf
         private val r = ShortArray(STEPS)
         private val g = ShortArray(STEPS)
         private val b = ShortArray(STEPS)
-        private val rgb: ARGB
+        private val rgb: ARGB = ARGB(c)
 
         init {
-            rgb = ARGB(c)
             val max = Math.max(rgb.red(), Math.max(rgb.green(), rgb.blue()))
             fill(rgb.red(), max, r)
             fill(rgb.green(), max, g)

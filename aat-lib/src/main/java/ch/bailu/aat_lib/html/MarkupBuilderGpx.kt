@@ -38,7 +38,7 @@ class MarkupBuilderGpx @JvmOverloads constructor(
             append(speed.getLabel(), speed.getSpeedDescription(n.getSpeed()))
             appendNl()
         }
-        append(altitude.getLabel(), distance.getAltitudeDescription(n.getAltitude()))
+        append(altitude.getLabel(), altitude.getAltitudeDescription(n.getAltitude()))
         appendNl()
     }
 

@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.preferences.location
 
-import ch.bailu.aat_lib.description.FF.Companion.f
+import ch.bailu.aat_lib.description.FormatDisplay
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
@@ -8,16 +8,12 @@ import ch.bailu.aat_lib.resources.Res
 
 
 class SolidDistanceFilter(storage: StorageInterface, i: Int) : SolidIndexList(storage, KEY + i) {
-    private val sunit: SolidUnit
-
-    init {
-        sunit = SolidUnit(storage)
-    }
+    private val sunit: SolidUnit = SolidUnit(storage)
 
     val minDistance: Float
         get() = VALUE_LIST[index]
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_distance_filter()
     }
@@ -29,7 +25,7 @@ class SolidDistanceFilter(storage: StorageInterface, i: Int) : SolidIndexList(st
     public override fun getValueAsString(index: Int): String {
         if (index == 0) return Res.str().off()
         if (index == length() - 1) Res.str().auto()
-        return (f().N2.format((VALUE_LIST[index] * sunit.altitudeFactor).toDouble())
+        return (FormatDisplay.f().decimal2.format((VALUE_LIST[index] * sunit.altitudeFactor).toDouble())
                 + sunit.altitudeUnit)
     }
 

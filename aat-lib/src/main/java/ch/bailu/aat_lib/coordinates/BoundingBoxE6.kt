@@ -1,8 +1,8 @@
 package ch.bailu.aat_lib.coordinates
 
-import ch.bailu.aat_lib.description.FF
-import ch.bailu.aat_lib.xml.parser.util.DoubleScanner
-import ch.bailu.aat_lib.xml.parser.util.Stream
+import ch.bailu.aat_lib.description.FormatDisplay
+import ch.bailu.aat_lib.file.xml.parser.util.DoubleScanner
+import ch.bailu.aat_lib.file.xml.parser.util.Stream
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
@@ -44,13 +44,13 @@ class BoundingBoxE6 {
         val parser = DoubleScanner(6)
         try {
             parser.scan(stream)
-            val s = parser.int
+            val s = parser.value
             parser.scan(stream)
-            val n = parser.int
+            val n = parser.value
             parser.scan(stream)
-            val w = parser.int
+            val w = parser.value
             parser.scan(stream)
-            val e = parser.int
+            val e = parser.value
             add(n, e, s, w)
         } catch (e: IOException) {
             e.printStackTrace()
@@ -99,7 +99,7 @@ class BoundingBoxE6 {
         return containsLongitude(b.lonEastE6) || containsLongitude(b.lonWestE6)
     }
 
-    fun containsLongitude(lo: Int): Boolean {
+    private fun containsLongitude(lo: Int): Boolean {
         return lo > lonWestE6 && lo < lonEastE6
     }
 
@@ -127,13 +127,12 @@ class BoundingBoxE6 {
         return latNorthE6 > latSouthE6 && lonEastE6 > lonWestE6
     }
 
-    
     override fun toString(): String {
-        val f = FF.f()
-        return f.N2.format((latNorthE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((lonWestE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((latSouthE6 / 1e6f).toDouble()) + "," +
-                f.N2.format((lonEastE6 / 1e6f).toDouble())
+        val f = FormatDisplay.f()
+        return f.decimal2.format((latNorthE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((lonWestE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((latSouthE6 / 1e6f).toDouble()) + "," +
+                f.decimal2.format((lonEastE6 / 1e6f).toDouble())
     }
 
     val latitudeSpanE6: Int
@@ -148,6 +147,28 @@ class BoundingBoxE6 {
         latSouthE6 = validate(latSouthE6, MIN_LA, MAX_LA)
         lonEastE6 = validate(lonEastE6, MIN_LO, MAX_LO)
         lonWestE6 = validate(lonWestE6, MIN_LO, MAX_LO)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BoundingBoxE6
+
+        if (latNorthE6 != other.latNorthE6) return false
+        if (lonEastE6 != other.lonEastE6) return false
+        if (latSouthE6 != other.latSouthE6) return false
+        if (lonWestE6 != other.lonWestE6) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = latNorthE6
+        result = 31 * result + lonEastE6
+        result = 31 * result + latSouthE6
+        result = 31 * result + lonWestE6
+        return result
     }
 
     companion object {

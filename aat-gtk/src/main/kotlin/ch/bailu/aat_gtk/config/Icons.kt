@@ -31,6 +31,7 @@ object Icons {
     val zoomOutSymbolic = Str("zoom-out-symbolic")
     val zoomOriginal = Str("zoom_original")
     val zoomOriginalInverse = Str("zoom_original_inverse")
-    val viewRefreshSymbolic = Str("view-refresh-symbolic")
     val editSelectAllSymbolic = Str("edit-select-all-symbolic")
+    val viewRefreshSymbolic = Str("view-refresh-symbolic")
+    val goNextSymbolic = Str("go-next-symbolic")
 }

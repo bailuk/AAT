@@ -6,14 +6,12 @@ import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 
 class GpxDatabase @JvmOverloads constructor(
-    database: DbConnection,
+    private val database: DbConnection,
     path: String,
     private val keys: Array<String> = GpxDbConfiguration.KEY_LIST
 ) : AbsDatabase() {
-    private val database: DbConnection
 
     init {
-        this.database = database
         this.database.open(path, GpxDbConfiguration.DB_VERSION)
     }
 

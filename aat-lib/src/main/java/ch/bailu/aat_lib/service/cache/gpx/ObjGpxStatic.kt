@@ -3,6 +3,9 @@ package ch.bailu.aat_lib.service.cache.gpx
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
+import ch.bailu.aat_lib.file.FileType
+import ch.bailu.aat_lib.file.json.GpxListReaderJson
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListWalker
 import ch.bailu.aat_lib.gpx.GpxPoint
@@ -22,7 +25,6 @@ import ch.bailu.aat_lib.service.elevation.ElevationProvider
 import ch.bailu.aat_lib.service.elevation.tile.Dem3Tile
 import ch.bailu.aat_lib.service.elevation.updater.ElevationUpdaterClient
 import ch.bailu.aat_lib.util.IndexedMap
-import ch.bailu.aat_lib.xml.parser.gpx.GpxListReader
 import ch.bailu.foc.Foc
 
 class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUpdaterClient {
@@ -104,15 +106,15 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
     }
 
 
-    override fun updateFromSrtmTile(appContext: AppContext, srtm: Dem3Tile) {
-        ListUpdater(srtm).walkTrack(gpxList)
+    override fun updateFromSrtmTile(appContext: AppContext, tile: Dem3Tile) {
+        ListUpdater(tile).walkTrack(gpxList)
 
         appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, toString())
     }
 
     private class ListUpdater(private val tile: Dem3Tile) : GpxListWalker() {
         override fun doList(l: GpxList): Boolean {
-            return tile.status == Dem3Status.VALID
+            return tile.getStatus() == Dem3Status.VALID
         }
 
         override fun doSegment(segment: GpxSegmentNode): Boolean {
@@ -124,7 +126,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
         }
 
         override fun doPoint(point: GpxPointNode) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 val coordinates = Dem3Coordinates(point.getLatitudeE6(), point.getLongitudeE6())
                 if (tile.hashCode() == coordinates.hashCode()) {
                     point.setAltitude(
@@ -154,7 +156,7 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
         }
 
         override fun doPoint(point: GpxPointNode) {
-            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE.toDouble()) {
+            if (point.getAltitude() == ElevationProvider.NULL_ALTITUDE) {
                 val c = Dem3Coordinates(point)
                 coordinates.put(c.toString(), c)
             }
@@ -163,13 +165,13 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
 
     private class FileLoader(file: Foc) : FileTask(file) {
         override fun bgOnProcess(appContext: AppContext): Long {
-            val size = longArrayOf(0)
+            var size = 0L
 
             object : OnObject(appContext, getID(), ObjGpxStatic::class.java) {
                 override fun run(handle: Obj) {
                     val owner = handle as ObjGpxStatic
 
-                    size[0] = load(appContext, owner)
+                    size = load(appContext, owner)
 
                     appContext.services.getElevationService().requestElevationUpdates(
                         owner,
@@ -179,16 +181,42 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
                     appContext.broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_INCACHE, getID())
                 }
             }
-            return size[0]
+            return size
         }
 
         private fun load(appContext: AppContext, handle: ObjGpxStatic): Long {
-            var size: Long = 0
+            try {
+                val fileType = FileType(getFile())
+                if (fileType.isJSON) {
+                    return loadJSON(handle)
+                } else if (fileType.isXML) {
+                    return loadXML(appContext, handle)
+                }
+            } catch (e: Exception) {
+                handle.setException(e)
+            }
+            return 0L
+        }
 
-            val reader = GpxListReader(
-                threadControl,
+        private fun loadJSON(handle: ObjGpxStatic): Long {
+            var size = 0L
+            val reader = GpxListReaderJson(getFile())
+            handle.setException(reader.exception)
+
+            if (canContinue()) {
+                handle.setGpxList(reader.gpxList)
+                size = handle.getSize()
+            }
+            return size
+        }
+
+        private fun loadXML(appContext: AppContext, handle: ObjGpxStatic): Long {
+            var size = 0L
+
+            val reader = GpxListReaderXml(
                 getFile(),
-                getAutoPause(appContext, getPresetFromFile(getFile()))
+                getAutoPause(appContext, getPresetFromFile(getFile())),
+                threadControl
             )
 
             handle.setException(reader.exception)
@@ -197,7 +225,6 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
                 handle.setGpxList(reader.gpxList)
                 size = handle.getSize()
             }
-
 
             return size
         }

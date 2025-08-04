@@ -7,10 +7,9 @@ import ch.bailu.aat.util.ui.AndroidAppDensity
 import ch.bailu.aat.util.ui.theme.AppTheme.padding
 
 open class ImageButtonViewGroup(context: Context, image_res: Int) : FrameLayout(context) {
-    private val imageView: ImageView
+    private val imageView: ImageView = ImageView(context)
 
     init {
-        imageView = ImageView(context)
         imageView.setImageResource(image_res)
         imageView.isClickable = false
         addView(imageView, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))

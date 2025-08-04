@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.coordinates
 
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates.Sexagesimal
-import ch.bailu.aat_lib.description.FF
+import ch.bailu.aat_lib.description.FormatDisplay
 import ch.bailu.aat_lib.exception.IllegalCodeException
 import ch.bailu.aat_lib.logger.AppLog
 import org.mapsforge.core.model.LatLong
@@ -43,7 +43,7 @@ class CH1903Coordinates : MeterCoordinates {
         toCH1903(la, lo)
     }
 
-    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude()) {}
+    constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude())
     constructor(point: LatLongInterface) {
         toCH1903(
             point.getLatitudeE6().toDouble() / 1e6,
@@ -96,8 +96,8 @@ class CH1903Coordinates : MeterCoordinates {
     }
 
     override fun toString(): String {
-        return (FF.f().N3_3.format((northing.toFloat() / 1000f).toDouble()) + "/"
-                + FF.f().N3_3.format((easting.toFloat() / 1000f).toDouble()))
+        return (FormatDisplay.f().decimal3_3.format((northing.toFloat() / 1000f).toDouble()) + "/"
+                + FormatDisplay.f().decimal3_3.format((easting.toFloat() / 1000f).toDouble()))
     }
 
     companion object {

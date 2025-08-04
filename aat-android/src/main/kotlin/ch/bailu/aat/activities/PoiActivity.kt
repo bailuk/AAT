@@ -9,7 +9,6 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.poi.PoiView
 import ch.bailu.aat.views.preferences.TitleView
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 import ch.bailu.aat_lib.search.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -23,8 +22,8 @@ class PoiActivity : AbsOsmApiActivity() {
         private val KEY = PoiActivity::class.java.simpleName
     }
 
-    public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : PoiApi(appContext, boundingBox) {
+    public override fun createApiConfiguration(): OsmApiConfiguration {
+        return object : PoiApi(appContext) {
             override val selectedCategories: ArrayList<PoiCategory>
                 get() {
                     poiView?.saveSelected(queryFile)

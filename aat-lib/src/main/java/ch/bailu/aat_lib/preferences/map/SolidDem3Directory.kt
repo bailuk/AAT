@@ -10,12 +10,12 @@ import ch.bailu.foc.FocFactory
 
 abstract class SolidDem3Directory(storage: StorageInterface, focFactory: FocFactory) :
     SolidFile(storage, SolidDem3Directory::class.java.simpleName, focFactory) {
-    
+
     override fun getLabel(): String {
         return Res.str().p_dem_location()
     }
 
-    
+
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
@@ -25,7 +25,7 @@ abstract class SolidDem3Directory(storage: StorageInterface, focFactory: FocFact
         return r
     }
 
-    val defaultValue: String
+    private val defaultValue: String
         get() {
             var list = ArrayList<String>(5)
             list = buildSelection(list)

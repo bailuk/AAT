@@ -12,6 +12,6 @@ class SolidPostprocessedAutopause(storage: StorageInterface, preset: Int) : Soli
     }
 
     companion object {
-        protected const val KEY = "pautopause"
+        private const val KEY = "pautopause"
     }
 }

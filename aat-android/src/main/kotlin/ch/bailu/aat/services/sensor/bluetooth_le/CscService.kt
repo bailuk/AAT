@@ -24,26 +24,16 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
     private var isCadenceSensor = false
     private val cadence = Revolution()
     private val speed = Revolution()
-    private val wheelCircumference: WheelCircumference
+    private val wheelCircumference: WheelCircumference = WheelCircumference(c, speed)
     private var information = GpxInformation.NULL
     override var isValid = false
         private set
-    private val connectorSpeed: Connector
-    private val connectorCadence: Connector
-    private val broadcasterSpeed: Broadcaster
-    private val broadcasterCadence: Broadcaster
-    private val nameSpeed: String
-    private val nameCadence: String
-
-    init {
-        wheelCircumference = WheelCircumference(c, speed)
-        connectorCadence = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
-        connectorSpeed = Connector(c.getContext(), InfoID.SPEED_SENSOR)
-        broadcasterCadence = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
-        broadcasterSpeed = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
-        nameSpeed = c.getContext().getString(R.string.sensor_speed)
-        nameCadence = c.getContext().getString(R.string.sensor_cadence)
-    }
+    private val connectorSpeed: Connector = Connector(c.getContext(), InfoID.SPEED_SENSOR)
+    private val connectorCadence: Connector = Connector(c.getContext(), InfoID.CADENCE_SENSOR)
+    private val broadcasterSpeed: Broadcaster = Broadcaster(c.getContext(), InfoID.SPEED_SENSOR)
+    private val broadcasterCadence: Broadcaster = Broadcaster(c.getContext(), InfoID.CADENCE_SENSOR)
+    private val nameSpeed: String = c.getContext().getString(R.string.sensor_speed)
+    private val nameCadence: String = c.getContext().getString(R.string.sensor_cadence)
 
     @Suppress("DEPRECATION")
     override fun changed(c: BluetoothGattCharacteristic) {
@@ -94,7 +84,7 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
     }
 
     private fun readCscFeature(v: ByteArray) {
-        if (v.size > 0) {
+        if (v.isNotEmpty()) {
             val b = v[0]
             isCadenceSensor = isBitSet(b, BIT_CADENCE)
             isSpeedSensor = isBitSet(b, BIT_SPEED)

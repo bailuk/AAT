@@ -4,6 +4,7 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.MapPosition
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 import org.mapsforge.map.layer.LayerManager
 import org.mapsforge.map.model.Model
@@ -17,7 +18,7 @@ import org.mapsforge.map.view.MapView
 
 class MockMapView : MapView {
     var mockDimension = Dimension(0,0)
-    var mockModel = Model().apply {
+    private var mockModel = Model().apply {
         frameBufferModel.mapPosition = MapPosition(LatLong(0.0,0.0), 14)
     }
 
@@ -36,8 +37,8 @@ class MockMapView : MapView {
 
     override fun getBoundingBox(): BoundingBox? {
         return MapPositionUtil.getBoundingBox(
-            this.model.mapViewPosition.mapPosition,
-            dimension, this.model.displayModel.tileSize
+            this.model.mapViewPosition.mapPosition, Rotation.NULL_ROTATION, this.model.displayModel.tileSize,
+            dimension, 0f, 0f
         )
     }
 
@@ -61,7 +62,19 @@ class MockMapView : MapView {
         TODO("Not yet implemented")
     }
 
+    override fun getMapRotation(): Rotation {
+        return Rotation.NULL_ROTATION
+    }
+
     override fun getMapScaleBar(): MapScaleBar {
+        TODO("Not yet implemented")
+    }
+
+    override fun getMapViewCenterX(): Float {
+        TODO("Not yet implemented")
+    }
+
+    override fun getMapViewCenterY(): Float {
         TODO("Not yet implemented")
     }
 
@@ -73,6 +86,14 @@ class MockMapView : MapView {
         return mockModel
     }
 
+    override fun getOffsetX(): Float {
+        TODO("Not yet implemented")
+    }
+
+    override fun getOffsetY(): Float {
+        TODO("Not yet implemented")
+    }
+
     override fun getWidth(): Int {
         return mockDimension.width
     }
@@ -81,11 +102,23 @@ class MockMapView : MapView {
         TODO("Not yet implemented")
     }
 
+    override fun rotate(rotation: Rotation?) {
+        TODO("Not yet implemented")
+    }
+
     override fun setCenter(center: LatLong?) {
         TODO("Not yet implemented")
     }
 
     override fun setMapScaleBar(mapScaleBar: MapScaleBar?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setMapViewCenterX(mapViewCenterY: Float) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setMapViewCenterY(mapViewCenterY: Float) {
         TODO("Not yet implemented")
     }
 

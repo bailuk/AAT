@@ -17,7 +17,7 @@ abstract class PaceDescription(s: StorageInterface) : FloatDescription() {
 
     private fun getPaceTimeString(pace: Float): String {
         return if (sunit.index == SolidUnit.SI) {
-            FF.f().N1.format(pace.toDouble())
+            FormatDisplay.f().decimal1.format(pace.toDouble())
         } else format(pace)
     }
 

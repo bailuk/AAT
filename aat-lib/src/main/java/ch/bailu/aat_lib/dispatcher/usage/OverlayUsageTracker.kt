@@ -9,9 +9,9 @@ class OverlayUsageTracker(storage: StorageInterface, vararg infoIDs: Int): Usage
 
     init {
         storage.register { _, key ->
-            solids.forEach {
-                if (it.hasKey(key)) {
-                    usageTracker.setEnabled(it.infoID, it.isEnabled)
+            solids.forEach { solid ->
+                if (solid.hasKey(key)) {
+                    usageTracker.setEnabled(solid.infoID, solid.isEnabled)
                 }
             }
         }

@@ -14,6 +14,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.graphics.Canvas
 import org.mapsforge.core.model.BoundingBox
+import org.mapsforge.core.model.Rotation
 import org.mapsforge.map.layer.Layer
 
 /**
@@ -42,7 +43,8 @@ class MapsForgeContext(
         boundingBox: BoundingBox,
         zoomLevel: Byte,
         canvas: Canvas,
-        topLeftPoint: org.mapsforge.core.model.Point
+        topLeftPoint: org.mapsforge.core.model.Point,
+        rotation: Rotation
     ) {
         metrics.init(boundingBox, zoomLevel, canvas.dimension, topLeftPoint)
         draw.init(canvas, metrics)

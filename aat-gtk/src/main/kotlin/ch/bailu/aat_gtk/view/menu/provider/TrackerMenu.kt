@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.view.TrackerButtonStartStop
 import ch.bailu.aat_gtk.view.menu.MenuHelper
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -11,7 +11,7 @@ import ch.bailu.gtk.gtk.Application
 
 class TrackerMenu (
     private val services: ServicesInterface,
-    private val dispatcher: Dispatcher) :
+    private val dispatcher: DispatcherInterface) :
 MenuProvider {
 
     override fun createMenu(): Menu {

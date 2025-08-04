@@ -1,8 +1,6 @@
 plugins {
     application
-
-    // https://kotlinlang.org/docs/gradle.html#targeting-the-jvm
-    kotlin("jvm")
+    id("org.jetbrains.kotlin.jvm")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11

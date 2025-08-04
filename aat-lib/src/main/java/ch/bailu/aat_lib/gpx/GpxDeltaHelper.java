@@ -7,8 +7,6 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface;
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
 
 public class GpxDeltaHelper  {
-//    private static float rvalue_distance[] = new float[1];
-
     public static float getDistance(GpxPointInterface a, GpxPointInterface b) {
 
         return getDistance(
@@ -18,11 +16,9 @@ public class GpxDeltaHelper  {
 
     }
 
-
     public static float getDistance(LatLong a, LatLong b) {
         return (float) LatLongUtils.sphericalDistance(a, b);
     }
-
 
     public static float getAcceleration(GpxDeltaPointInterface a, GpxDeltaPointInterface b) {
         float deltaSpeed=b.getSpeed()-a.getSpeed();
@@ -52,9 +48,4 @@ public class GpxDeltaHelper  {
         float deltaT = getTimeDeltaMilli(a,b);
         return deltaT / 1000f;
     }
-
-//    public static BoundingBoxE6 getBoundingBoxE6(GpxPointInterface a, GpxPointInterface b) {
-//        return new BoundingBoxE6(a, b);
-//    }
-
 }

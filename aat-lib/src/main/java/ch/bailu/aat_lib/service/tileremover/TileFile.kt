@@ -19,13 +19,8 @@ class TileFile(
         }
     }
 
-    private val age: Long
-    private val size: Long
-
-    init {
-        age = file.lastModified()
-        size = file.length()
-    }
+    private val age: Long = file.lastModified()
+    private val size: Long = file.length()
 
     constructor(summary: Int, zoom: Short, x: Int, file: Foc) : this(
         summary,

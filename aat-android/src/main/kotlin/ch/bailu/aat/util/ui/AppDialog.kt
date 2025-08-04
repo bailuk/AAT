@@ -31,20 +31,18 @@ abstract class AppDialog {
     open fun onNeutralClick() {}
     fun displayYesNoDialog(activity: Activity, title: String, text: String) {
         val builder = AlertDialog.Builder(activity)
-        val dialog: Dialog
         builder.setTitle(title)
         builder.setMessage(text)
         builder.setCancelable(true)
         builder.setPositiveButton(activity.getString(R.string.dialog_yes), PositiveClickListener())
         builder.setNegativeButton(activity.getString(R.string.dialog_no), NegativeClickListener())
-        dialog = builder.create()
+        val dialog: Dialog = builder.create()
         dialog.setOwnerActivity(activity)
         dialog.show()
     }
 
     fun displayTextDialog(activity: Activity, title: String, edit: EditText) {
         val builder = AlertDialog.Builder(activity)
-        val dialog: Dialog
         builder.setTitle(title)
         builder.setView(edit)
         builder.setCancelable(true)
@@ -56,14 +54,13 @@ abstract class AppDialog {
             activity.getString(R.string.dialog_cancel),
             NegativeClickListener()
         )
-        dialog = builder.create()
+        val dialog: Dialog = builder.create()
         dialog.setOwnerActivity(activity)
         dialog.show()
     }
 
     fun displaySaveDiscardDialog(activity: Activity, title: String) {
         val builder = AlertDialog.Builder(activity)
-        val dialog: Dialog
         builder.setTitle(title)
         builder.setMessage(activity.getString(R.string.dialog_modified))
         builder.setCancelable(true)
@@ -76,7 +73,7 @@ abstract class AppDialog {
             activity.getString(R.string.dialog_cancel),
             NegativeClickListener()
         )
-        dialog = builder.create()
+        val dialog: Dialog = builder.create()
         dialog.setOwnerActivity(activity)
         dialog.show()
     }

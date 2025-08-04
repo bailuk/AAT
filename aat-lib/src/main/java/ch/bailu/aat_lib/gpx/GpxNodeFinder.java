@@ -39,7 +39,7 @@ public class GpxNodeFinder extends GpxListWalker {
 
     @Override
     public void doPoint(GpxPointNode point) {
-        if (haveNode() == false) {
+        if (!haveNode()) {
             if (bounding.contains(point)) {
                 node = point;
             } else {

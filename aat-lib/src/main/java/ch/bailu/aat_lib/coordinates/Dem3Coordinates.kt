@@ -16,19 +16,13 @@ import kotlin.math.floor
  * See http://viewfinderpanoramas.org/dem3 and https://bailu.ch/dem3 for details.
  */
 class Dem3Coordinates(la: Double, lo: Double) : Coordinates(), LatLongInterface {
-    private val la: Int
-    private val lo: Int
-    private val string: String
+    private val la: Int = floor(la).toInt()
+    private val lo: Int = floor(lo).toInt()
+    private val string = toLaString() + toLoString()
 
     constructor(la: Int, lo: Int) : this(la / 1e6, lo / 1e6)
     constructor(p: LatLongInterface) : this(p.getLatitudeE6(), p.getLongitudeE6())
     constructor(p: LatLong) : this(p.getLatitude(), p.getLongitude())
-
-    init {
-        this.la = floor(la).toInt()
-        this.lo = floor(lo).toInt()
-        string = toLaString() + toLoString()
-    }
 
     private fun toLaString(): String {
         return WGS84Coordinates.getLatitudeChar(la.toDouble()).toString() + f2.format(
@@ -46,7 +40,6 @@ class Dem3Coordinates(la: Double, lo: Double) : Coordinates(), LatLongInterface 
      *
      * @return A base string for a file name of a dem3 tile. Example: "N16E077"
      */
-
     override fun toString(): String {
         return string
     }
@@ -98,7 +91,6 @@ class Dem3Coordinates(la: Double, lo: Double) : Coordinates(), LatLongInterface 
     override fun toLatLong(): LatLong {
         return LatLong(la.toDouble(), lo.toDouble())
     }
-
 
     companion object {
         private const val BASE_URL = "https://bailu.ch/dem3/"

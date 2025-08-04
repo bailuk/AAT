@@ -8,18 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
-import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
-import org.mapsforge.core.model.LatLong
-import org.mapsforge.map.layer.Layer
-import org.mapsforge.map.layer.LayerManager
-import org.mapsforge.map.model.Model
-import org.mapsforge.map.scalebar.MapScaleBar
-import org.mapsforge.map.util.MapPositionUtil
-import org.mapsforge.map.util.MapViewProjection
-import org.mapsforge.map.view.FpsCounter
-import org.mapsforge.map.view.FrameBuffer
-import org.mapsforge.map.view.MapView
 
 class MapsForgeMetricsTest {
 

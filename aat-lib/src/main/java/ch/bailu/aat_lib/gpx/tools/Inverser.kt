@@ -8,13 +8,12 @@ import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 
 class Inverser(track: GpxList) {
-    val newList: GpxList
+    val newList: GpxList = GpxList(
+        track.getDelta().getType(),
+        GpxListAttributes.NULL
+    )
 
     init {
-        newList = GpxList(
-            track.getDelta().getType(),
-            GpxListAttributes.NULL
-        )
         val list = GpxListArray(track)
         val listInverse = GpxListArray(track)
         if (list.size() > 0) {

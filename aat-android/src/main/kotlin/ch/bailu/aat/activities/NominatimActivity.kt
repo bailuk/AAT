@@ -1,14 +1,13 @@
 package ch.bailu.aat.activities
 
-import ch.bailu.aat.util.NominatimApi
+import ch.bailu.aat_lib.util.NominatimApi
 import ch.bailu.aat.views.bar.MainControlBar
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
 class NominatimActivity : AbsOsmApiActivity() {
 
-    public override fun createApiConfiguration(boundingBox: BoundingBoxE6): OsmApiConfiguration {
-        return object : NominatimApi(appContext, boundingBox) {
+    public override fun createApiConfiguration(): OsmApiConfiguration {
+        return object : NominatimApi(appContext) {
             override val queryString: String
                 get() = editorView.toString()
         }

@@ -8,7 +8,7 @@ import android.bluetooth.le.ScanSettings
 import android.os.ParcelUuid
 
 class BleScanner internal constructor(sensors: BleSensors) : AbsBleScanner(sensors) {
-    private val adapter: BluetoothAdapter?
+    private val adapter: BluetoothAdapter = sensors.adapter
 
     private val callback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
@@ -27,21 +27,13 @@ class BleScanner internal constructor(sensors: BleSensors) : AbsBleScanner(senso
         .build()
     private val filters = ArrayList(listOf(hrFilter, cscFilter))
 
-    init {
-        adapter = sensors.adapter
-    }
-
     override fun start() {
-        if (adapter != null) {
-            val scanner = adapter.bluetoothLeScanner
-            scanner?.startScan(filters, settings, callback)
-        }
+        val scanner = adapter.bluetoothLeScanner
+        scanner?.startScan(filters, settings, callback)
     }
 
     override fun stop() {
-        if (adapter != null) {
-            val scanner = adapter.bluetoothLeScanner
-            scanner?.stopScan(callback)
-        }
+        val scanner = adapter.bluetoothLeScanner
+        scanner?.stopScan(callback)
     }
 }

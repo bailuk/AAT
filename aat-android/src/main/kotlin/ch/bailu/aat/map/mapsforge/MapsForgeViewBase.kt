@@ -1,6 +1,9 @@
 package ch.bailu.aat.map.mapsforge
 
 import android.content.Context
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.MotionEvent
 import android.view.View
 import ch.bailu.aat.map.MapDensity
 import ch.bailu.aat.preferences.Storage
@@ -14,13 +17,14 @@ import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.util.Point
 import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.MapPosition
 import org.mapsforge.core.util.LatLongUtils
 import org.mapsforge.map.android.view.MapView
 import org.mapsforge.map.layer.Layer
-import org.mapsforge.map.model.IMapViewPosition
+import org.mapsforge.map.model.MapViewPosition
 
 open class MapsForgeViewBase(
     appContext: AppContext,
@@ -47,13 +51,27 @@ open class MapsForgeViewBase(
         storage = Storage(context)
         mapScaleBar.isVisible = false
         setBuiltInZoomControls(false)
+
+        // Mapsforge does only propagate click events that have latitude and longitude
+        // but we are only interested in pixels (including those that are outside the visible map)
+        setGestureDetector(GestureDetector(context, object : SimpleOnGestureListener() {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                val point = Point(e.x, e.y)
+                for (layer in layers) {
+                    if (layer.onTap(point)) {
+                        return true
+                    }
+                }
+                return false
+            }
+        } ))
     }
 
     override fun onChange() {
         // Disable MapView.onChange to fix a speed bug in MapsForge
     }
 
-    override fun add(layer: MapLayerInterface) {
+    final override fun add(layer: MapLayerInterface) {
         val wrapper: Layer = if (layer is Layer) {
             layer
         } else {
@@ -73,7 +91,7 @@ open class MapsForgeViewBase(
     }
 
     override fun reDownloadTiles() {}
-    override fun getMapViewPosition(): IMapViewPosition {
+    override fun getMapViewPosition(): MapViewPosition {
         return model.mapViewPosition
     }
 

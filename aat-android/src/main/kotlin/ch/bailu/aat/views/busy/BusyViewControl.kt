@@ -5,11 +5,10 @@ import android.view.ViewGroup
 import ch.bailu.aat_lib.util.IndexedMap
 
 open class BusyViewControl(parent: ViewGroup) {
-    val busy: BusyViewContainer
+    val busy: BusyViewContainer = BusyViewContainer(parent.context)
     private val busyMap = IndexedMap<Int, Boolean>()
 
     init {
-        busy = BusyViewContainer(parent.context)
         parent.addView(
             busy,
             ViewGroup.LayoutParams(

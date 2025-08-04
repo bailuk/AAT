@@ -3,11 +3,13 @@ package ch.bailu.aat.util.ui
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Point
+import android.os.Build
 import android.view.Display
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 
 object AppLayout {
     private const val BIG_BUTTON_SIZE = 100
@@ -17,29 +19,36 @@ object AppLayout {
     private const val TABLET_BUTTON_COUNT = BACK_EXTRA_BUTTON_COUNT
     private val size = Point()
 
-    @Suppress("DEPRECATION")
     private fun updateMeasurement(context: Context) {
-        if (size.x == 0 || size.y == 0) {
-            val wm = context.getSystemService(Context.WINDOW_SERVICE)
-            if (wm is WindowManager) {
-                val display = wm.defaultDisplay
-                if (display is Display) {
-                    getSizeSDK13(display, size)
-                }
+        val wm = context.getSystemService(Context.WINDOW_SERVICE)
+        if (wm is WindowManager) {
+            if (Build.VERSION.SDK_INT >= 30) {
+                updateMeasurementSDK30(wm)
+            } else {
+                updateMeasurementSDK13(wm)
             }
         }
     }
 
     @Suppress("DEPRECATION")
-    private fun getSizeSDK13(display: Display, size: Point) {
-        display.getSize(size)
+    private fun updateMeasurementSDK13(wm: WindowManager) {
+        val display = wm.defaultDisplay
+        if (display is Display) {
+            display.getSize(size)
+        }
+    }
+
+    @RequiresApi(api = 30)
+    private fun updateMeasurementSDK30(wm: WindowManager) {
+        val metrics = wm.currentWindowMetrics
+        size.y = metrics.bounds.height()
+        size.x = metrics.bounds.width()
     }
 
     private fun getScreenSmallSide(context: Context): Int {
         updateMeasurement(context)
         return Math.min(size.x, size.y)
     }
-
 
     fun getOrientation(c: Context): Int {
         return c.resources.configuration.orientation

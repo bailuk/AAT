@@ -7,10 +7,9 @@ import ch.bailu.aat_lib.preferences.SolidIndexList
 
 class SolidIndexListDialog(context: Context, private val slist: SolidIndexList) : AbsSolidDialog(),
     DialogInterface.OnClickListener {
-    val dialog: AlertDialog.Builder
+    val dialog: AlertDialog.Builder = createDefaultDialog(context, slist)
 
     init {
-        dialog = createDefaultDialog(context, slist)
         dialog.setSingleChoiceItems(slist.getStringArray(), slist.index, this)
         dialog.create()
         dialog.show()

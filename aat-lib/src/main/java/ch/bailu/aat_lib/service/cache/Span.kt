@@ -14,13 +14,11 @@ class Span {
         lastPixel = -1
     }
 
-
     constructor(s: Span) {
         deg = s.deg
         firstPixel = s.firstPixel
         lastPixel = s.lastPixel
     }
-
 
     fun firstPixelIndex(): Int {
         return firstPixel
@@ -34,14 +32,12 @@ class Span {
         return deg
     }
 
-
     fun pixelDim(): Int {
-        if (deg > -1 && lastPixel >= firstPixel) {
+        if (lastPixel >= firstPixel) {
             return lastPixel - firstPixel + 1
         }
         return 0
     }
-
 
     fun incrementAndCopyIntoArray(spanArray: ArrayList<Span>, pixelIndex: Int, deg: Int) {
         lastPixel = pixelIndex
@@ -59,7 +55,6 @@ class Span {
     }
 
     companion object {
-        @JvmStatic
         fun toRect(laSpan: Span, loSpan: Span): Rect {
             val r = Rect()
             r.top = laSpan.firstPixel

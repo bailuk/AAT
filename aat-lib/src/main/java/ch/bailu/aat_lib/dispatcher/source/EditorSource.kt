@@ -39,6 +39,7 @@ class EditorSource(private val appContext: AppContext, usageTracker: UsageTracke
             requestUpdate()
         }
     }
+
     override fun requestUpdate() {
         sendUpdate(edit.infoID, edit.info)
     }

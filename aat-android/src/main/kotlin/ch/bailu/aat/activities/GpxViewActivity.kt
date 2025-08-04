@@ -122,7 +122,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
     }
 
     private fun createDispatcher() {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })

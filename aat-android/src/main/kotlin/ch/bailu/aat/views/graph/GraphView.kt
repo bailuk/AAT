@@ -24,7 +24,7 @@ import ch.bailu.aat_lib.view.graph.PlotterConfig
 class GraphView(
     context: Context,
     private val appContext: AppContext,
-    plotter: Plotter,
+    private val plotter: Plotter,
     private val theme: UiTheme
 ) : ViewGroup(context), TargetInterface, PlotterConfig {
     private val density: AndroidAppDensity = AndroidAppDensity(getContext())
@@ -32,10 +32,8 @@ class GraphView(
     private var nodeIndex = -1
     private val yLabel: LabelOverlay
     private val xLabel: LabelOverlay
-    private val plotter: Plotter
 
     init {
-        this.plotter = plotter
         setWillNotDraw(false)
         val sunit = SolidUnit(Storage(context))
         xLabel = LabelOverlay(context, Gravity.START or Gravity.BOTTOM)

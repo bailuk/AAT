@@ -28,11 +28,11 @@ object InformationUtil {
         }
     }
 
-    fun isOverlay(iid: Int): Boolean {
+    private fun isOverlay(iid: Int): Boolean {
         return iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS
     }
 
-    fun getOverlayIndex(iid: Int): Int {
+    private fun getOverlayIndex(iid: Int): Int {
         return iid - InfoID.OVERLAY + 1
     }
 

@@ -10,9 +10,10 @@ import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat.views.preferences.VerticalScrollView
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 
-class OsmApiEditorView(context: Context, osmApi: OsmApiConfiguration, theme: UiTheme) :
+class OsmApiEditorView(context: Context, private val bounding: BoundingBoxE6, osmApi: OsmApiConfiguration, theme: UiTheme) :
     LinearLayout(context) {
     private val editor: EditTextTool
     private val preview: TextView
@@ -33,7 +34,7 @@ class OsmApiEditorView(context: Context, osmApi: OsmApiConfiguration, theme: UiT
         inputMultiView.add(editor)
         inputMultiView.add(scroller)
         preview.setOnClickListener { inputMultiView.setNext() }
-        preview.text = osmApi.getUrlPreview(editor.edit.text.toString())
+        preview.text = osmApi.getUrlPreview(editor.edit.text.toString(), bounding)
         theme.content(preview)
         addView(createTitle(osmApi, theme))
         addView(inputMultiView)
@@ -65,7 +66,7 @@ class OsmApiEditorView(context: Context, osmApi: OsmApiConfiguration, theme: UiT
             layout.addView(b)
         }
         layout.setOnClickListener {
-            preview.text = osmApi.getUrlPreview(editor.edit.text.toString())
+            preview.text = osmApi.getUrlPreview(editor.edit.text.toString(), bounding)
             inputMultiView.setNext()
         }
         return layout

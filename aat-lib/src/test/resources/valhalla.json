@@ -1,0 +1,102 @@
+{
+  "trip": {
+    "locations": [
+      {
+        "type": "break",
+        "lat": 47.405299,
+        "lon": 8.505113,
+        "original_index": 0
+      },
+      {
+        "type": "break",
+        "lat": 47.406432,
+        "lon": 8.506132,
+        "original_index": 1
+      }
+    ],
+    "legs": [
+      {
+        "maneuvers": [
+          {
+            "type": 1,
+            "instruction": "Bike southeast.",
+            "verbal_succinct_transition_instruction": "Bike southeast. Then Turn left.",
+            "verbal_pre_transition_instruction": "Bike southeast. Then Turn left.",
+            "verbal_post_transition_instruction": "Continue for 10 meters.",
+            "bearing_after": 136,
+            "time": 2.0,
+            "length": 0.01,
+            "cost": 4.508,
+            "begin_shape_index": 0,
+            "end_shape_index": 1,
+            "verbal_multi_cue": true,
+            "travel_mode": "bicycle",
+            "travel_type": "hybrid"
+          },
+          {
+            "type": 15,
+            "instruction": "Turn left.",
+            "verbal_transition_alert_instruction": "Turn left.",
+            "verbal_succinct_transition_instruction": "Turn left.",
+            "verbal_pre_transition_instruction": "Turn left.",
+            "verbal_post_transition_instruction": "Continue for 200 meters.",
+            "bearing_before": 136,
+            "bearing_after": 35,
+            "time": 39.906,
+            "length": 0.149,
+            "cost": 78.718,
+            "begin_shape_index": 1,
+            "end_shape_index": 8,
+            "travel_mode": "bicycle",
+            "travel_type": "hybrid"
+          },
+          {
+            "type": 4,
+            "instruction": "You have arrived at your destination.",
+            "verbal_transition_alert_instruction": "You will arrive at your destination.",
+            "verbal_pre_transition_instruction": "You have arrived at your destination.",
+            "bearing_before": 27,
+            "time": 0.0,
+            "length": 0.0,
+            "cost": 0.0,
+            "begin_shape_index": 8,
+            "end_shape_index": 8,
+            "travel_mode": "bicycle",
+            "travel_type": "hybrid"
+          }
+        ],
+        "summary": {
+          "has_time_restrictions": false,
+          "has_toll": false,
+          "has_highway": false,
+          "has_ferry": false,
+          "min_lat": 47.405259,
+          "min_lon": 8.505086,
+          "max_lat": 47.406426,
+          "max_lon": 8.506148,
+          "time": 41.906,
+          "length": 0.159,
+          "cost": 83.226
+        },
+        "shape": "qoklyA{nbfOzBoDoN}NmGgGaCuBmCyBaHsEiQyKeLwH"
+      }
+    ],
+    "summary": {
+      "has_time_restrictions": false,
+      "has_toll": false,
+      "has_highway": false,
+      "has_ferry": false,
+      "min_lat": 47.405259,
+      "min_lon": 8.505086,
+      "max_lat": 47.406426,
+      "max_lon": 8.506148,
+      "time": 41.906,
+      "length": 0.159,
+      "cost": 83.226
+    },
+    "status_message": "Found route between points",
+    "status": 0,
+    "units": "kilometers",
+    "language": "en"
+  }
+}

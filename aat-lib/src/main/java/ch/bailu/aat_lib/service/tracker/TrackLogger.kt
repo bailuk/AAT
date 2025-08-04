@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.service.tracker
 
+import ch.bailu.aat_lib.file.xml.writer.GpxListWriter
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
@@ -13,7 +14,6 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import ch.bailu.aat_lib.xml.writer.GpxListWriter
 import ch.bailu.foc.Foc
 import java.io.IOException
 

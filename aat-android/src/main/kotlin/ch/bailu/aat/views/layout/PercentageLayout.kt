@@ -10,11 +10,7 @@ open class PercentageLayout (
     private val space: Int = DEFAULT_SPACE
 ) : ViewGroup(context) {
     private class Entry(val view: View, p: Int) {
-        val percentage: Int
-
-        init {
-            percentage = Math.max(p, 5)
-        }
+        val percentage: Int = Math.max(p, 5)
 
         fun getSize(parent_size: Int, p100: Int): Int {
             return parent_size * percentage / p100

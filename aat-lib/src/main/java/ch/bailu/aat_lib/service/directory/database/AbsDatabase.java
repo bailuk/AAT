@@ -15,17 +15,11 @@ public abstract class AbsDatabase implements Closeable{
 
 
     public static final AbsDatabase NULL_DATABASE = new AbsDatabase(){
-
-
         @Override
         public DbResultSet query(String selection) {return null;}
 
         @Override
         public void deleteEntry(Foc file) {}
-
-        @Override
-        public void close() {}
-
     };
 
     @Override

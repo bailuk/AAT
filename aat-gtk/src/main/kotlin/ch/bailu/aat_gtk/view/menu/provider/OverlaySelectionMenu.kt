@@ -25,7 +25,7 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
 
         return arrayOf(
             CustomWidget(
-                Box(Orientation.VERTICAL, Layout.margin).apply {
+                Box(Orientation.VERTICAL, Layout.MARGIN).apply {
                     overlays.forEach { controller ->
                         append(Box(Orientation.HORIZONTAL, 0).apply {
                             addCssClass(Strings.linked)

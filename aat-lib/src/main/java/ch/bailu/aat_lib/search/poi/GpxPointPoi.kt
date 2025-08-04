@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic
 import ch.bailu.aat_lib.gpx.attributes.Keys.Companion.toIndex
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
 import org.mapsforge.core.model.Tag
 import org.mapsforge.poi.storage.PointOfInterest
 
@@ -11,12 +12,12 @@ import org.mapsforge.poi.storage.PointOfInterest
 class GpxPointPoi(val poi: PointOfInterest) : GpxPointInterface {
     private val attributes: GpxAttributes = toAttributes(poi.tags)
 
-    override fun getAltitude(): Double {
-        if (attributes.hasKey(KEY_ELE)) return attributes[KEY_ELE].toDouble()
+    override fun getAltitude(): Float {
+        if (attributes.hasKey(KEY_ELE)) return attributes[KEY_ELE].toFloat()
 
-        if (attributes.hasKey(KEY_ALTITUDE)) return attributes[KEY_ALTITUDE].toDouble()
+        if (attributes.hasKey(KEY_ALTITUDE)) return attributes[KEY_ALTITUDE].toFloat()
 
-        return 0.0
+        return ElevationProvider.NULL_ALTITUDE
     }
 
     override fun getLongitude(): Double {

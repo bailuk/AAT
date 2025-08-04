@@ -98,7 +98,7 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
 
     private fun createDispatcher(edit: EditorSource) {
         dispatcher.addSource(edit)
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))

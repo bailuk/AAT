@@ -3,7 +3,6 @@ package ch.bailu.aat_gtk.view.toplevel
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.exit
-import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.TrackerOverlayOnOffController
@@ -11,13 +10,12 @@ import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.solid.SolidWindowSize
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
-import ch.bailu.aat_gtk.view.dialog.PoiDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.menu.MainMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
-import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
+import ch.bailu.aat_gtk.view.search.PoiPage
+import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -35,15 +33,11 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
-import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
-import ch.bailu.gtk.adw.HeaderBar
-import ch.bailu.gtk.adw.Leaflet
-import ch.bailu.gtk.adw.WindowTitle
+import ch.bailu.gtk.glib.Glib
 import ch.bailu.gtk.gtk.Box
-import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
@@ -52,41 +46,13 @@ import org.mapsforge.core.model.LatLong
 class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
     UiControllerInterface {
 
-    companion object {
-        val pageIdCockpit  = Icons.incCockpitSymbolic
-        val pageIdFileList = Icons.viewListSymbolic
-        val pageIdDetail   = Icons.viewContinuousSymbolic
-    }
-
-    private val showMapButton = Button().apply {
-        setLabel(Res.str().p_map())
-        onClicked {
-            leaflet.visibleChild = mapView.overlay
-        }
-    }
-
     private val usageTrackers = UsageTrackers()
     private val editorSource = EditorSource(appContext, usageTrackers)
     private val customFileSource = FileViewSource(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
 
-    private val headerBar = HeaderBar().apply {
-        titleWidget = WindowTitle(GtkAppConfig.appName, GtkAppConfig.appLongName)
-    }
-
-    private val stackPage = StackView(headerBar)
-
-    // leaflet containing map and cockpit
-    private val leaflet = Leaflet().apply {
-        canNavigateBack = false // Disturbs map scrolling
-        canNavigateForward = true
-        hexpand = true
-        vexpand = true
-    }
-
     private val overlay = Overlay()
     private val messageOverlay = MessageOverlay()
-
 
     val window = ApplicationWindow(app).apply {
         CSS.addProviderForDisplay(display, Strings.appCss)
@@ -100,39 +66,33 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
         overlay.addOverlay(messageOverlay.box)
     }
+    private val navigationView = NavigationView(window)
 
-    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, ).apply {
-        overlay.setSizeRequest(Layout.mapMinWidth, Layout.windowMinSize)
+    private val mainPage = MainPage(appContext, this, app, window, dispatcher, usageTrackers)
+
+    private val poiView = PoiPage(appContext,this, app, window)
+    private val mapView = MapMainView(app, appContext, dispatcher, usageTrackers, this, editorSource, window, navigationView).apply {
+        overlay.setSizeRequest(Layout.MAP_WIN_WITH, Layout.WINDOW_MIN_SIZE)
         onAttached()
     }
 
-    private val detailViewPage = DetailViewPage(this, dispatcher, usageTrackers.createSelectableUsageTracker())
 
     init {
         overlay.child = Box(Orientation.VERTICAL, 0).apply {
-            append(leaflet)
-
+            append(navigationView.navigationSplitViewL1)
         }
 
-        leaflet.append(stackPage.stackPage)
-        leaflet.append(mapView.overlay)
+        navigationView.setLeftSidebar(mainPage.layout, "")
+        navigationView.setContent(mapView.overlay, "")
+        navigationView.setRightSidebar(poiView.layout, "")
+
+        navigationView.observe(mainPage)
+        navigationView.observe(poiView)
 
         setupDispatcher(dispatcher)
         TrackerOverlayOnOffController(appContext.storage, dispatcher)
 
-        stackPage.addView(CockpitPage(appContext,this, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        stackPage.addView(FileListPage(app, appContext, this).vbox, pageIdFileList, Res.str().label_list())
-        stackPage.addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
-
-
-        leaflet.visibleChild = stackPage.stackPage
-
-        headerBar.packEnd(showMapButton)
-        headerBar.packStart(MainMenuButton(window, dispatcher, this).apply {
-            createActions(app)
-        }.menuButton)
-
-        stackPage.restore(appContext.storage)
+        navigationView.showLeftSidebar()
 
         var blockCloseRequest = true
 
@@ -140,7 +100,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             if (blockCloseRequest) {
                 clearEditor {
                     SolidWindowSize.writeSize(appContext.storage, window.width, window.height)
-                    stackPage.save(appContext.storage)
+                    mainPage.stackView.save(appContext.storage)
                     mapView.onDetached()
                     blockCloseRequest = false
                     window.close()
@@ -172,11 +132,15 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun showMap() {
-        leaflet.visibleChild = mapView.overlay
+        navigationView.showContent()
+        mapView.showMainBar()
+
+        // Flush UI
+        while (Glib.mainContextDefault().iteration(false)) {}
     }
 
     override fun showPoi() {
-        PoiDialog.show(this, app)
+        navigationView.showRightSidebar()
     }
 
     override fun frameInMap(info: GpxInformation) {
@@ -215,13 +179,14 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun showCockpit() {
-        leaflet.visibleChild = stackPage.stackPage
-        stackPage.showPage(pageIdCockpit)
+        navigationView.showLeftSidebar()
+        mainPage.showCockpit()
+
     }
 
     override fun showDetail() {
-        leaflet.visibleChild = stackPage.stackPage
-        stackPage.showPage(pageIdDetail)
+        navigationView.showLeftSidebar()
+        mainPage.showDetail()
     }
 
     override fun showPreferencesMap() {
@@ -234,7 +199,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
 
     override fun showFileList() {
         hideMap()
-        stackPage.showPage(pageIdFileList)
+        mainPage.showFileList()
     }
 
     override fun showPreferences() {
@@ -242,7 +207,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun showInDetail(iid: Int) {
-        detailViewPage.select(iid)
+        mainPage.showInDetail(iid)
     }
 
     override fun loadIntoEditor(info: GpxInformation) {
@@ -266,7 +231,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     }
 
     override fun hideMap() {
-        leaflet.visibleChild = stackPage.stackPage
+        navigationView.showLeftSidebar()
     }
 
     override fun getName(iid: Int): String {
@@ -280,7 +245,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private fun setupDispatcher(dispatcher: Dispatcher) {
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
-        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster))
+        dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))
         dispatcher.addSource(customFileSource)
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
@@ -289,7 +254,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }
 }
-
 
 private class MetaInfoCollector : TargetInterface {
     private val files = HashMap<Int, Foc>()

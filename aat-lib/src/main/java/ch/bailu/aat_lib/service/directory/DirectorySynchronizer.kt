@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 import java.io.Closeable
 import java.io.File
+import java.io.IOException
 
 class DirectorySynchronizer(private val appContext: AppContext, private val directory: Foc) :
     Closeable {
@@ -143,7 +144,11 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
         private fun removeFileFromDatabase(name: String) {
             val file = directory.child(name)
-            appContext.summaryConfig.getPreviewFile(file).rm()
+            try {
+                appContext.summaryConfig.getPreviewFile(file).rm()
+            } catch (e: IOException) {
+                AppLog.e(this, e)
+            }
             database?.deleteEntry(file)
         }
 
@@ -267,10 +272,10 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
     /////////////////////////////////////////////////////////////////////////////////////////////
     private inner class StateLoadPreview : State() {
         override fun start() {
-            val gpxFile = appContext.toFoc(pendingHandle!!.getID())
-            val previewImageFile = appContext.summaryConfig.getPreviewFile(gpxFile)
-            val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.getGpxList())
             try {
+                val gpxFile = appContext.toFoc(pendingHandle!!.getID())
+                val previewImageFile = appContext.summaryConfig.getPreviewFile(gpxFile)
+                val info: GpxInformation = GpxFileWrapper(gpxFile, pendingHandle!!.getGpxList())
                 val p = appContext.createMapPreview(info, previewImageFile)
                 setPendingPreviewGenerator(p)
                 state.ping()
@@ -309,7 +314,6 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
         override fun ping() {}
         override fun start() {
-            AppLog.d(this, "state terminate")
             appContext.broadcaster.unregister(onFileChanged)
             database?.close()
             setPendingGpxHandle(null)

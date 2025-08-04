@@ -15,15 +15,15 @@ enum class GpxType {
     companion object {
         fun toStrings(): Array<String> {
             val result = ArrayList<String>()
-            values().forEach { result.add(it.toString()) }
+            entries.forEach { result.add(it.toString()) }
             return result.toTypedArray()
         }
 
         @JvmStatic
         fun fromInteger(id: Int): GpxType {
             var checkedId = id
-            if (checkedId < 0 || checkedId >= values().size) checkedId = values().size - 1
-            return values()[checkedId]
+            if (checkedId < 0 || checkedId >= entries.size) checkedId = entries.size - 1
+            return entries[checkedId]
         }
     }
 }

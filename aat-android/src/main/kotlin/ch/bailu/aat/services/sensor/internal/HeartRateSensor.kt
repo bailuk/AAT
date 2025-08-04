@@ -15,14 +15,9 @@ import ch.bailu.aat_lib.gpx.attributes.SensorInformation
 @RequiresApi(api = 23)
 class HeartRateSensor(c: Context, item: SensorListItem, sensor: Sensor) :
     InternalSensorSDK23(c, item, sensor, InfoID.HEART_RATE_SENSOR) {
-    private val attributes: HeartRateAttributes
+    private val attributes: HeartRateAttributes = HeartRateAttributes()
     private var information: GpxInformation? = null
-    private val broadcaster: Broadcaster
-
-    init {
-        broadcaster = Broadcaster(c, InfoID.HEART_RATE_SENSOR)
-        attributes = HeartRateAttributes()
-    }
+    private val broadcaster: Broadcaster = Broadcaster(c, InfoID.HEART_RATE_SENSOR)
 
     override fun onSensorChanged(event: SensorEvent) {
         attributes.setBpm(toBpm(event))
