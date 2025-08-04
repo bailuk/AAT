@@ -149,6 +149,28 @@ class BoundingBoxE6 {
         lonWestE6 = validate(lonWestE6, MIN_LO, MAX_LO)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BoundingBoxE6
+
+        if (latNorthE6 != other.latNorthE6) return false
+        if (lonEastE6 != other.lonEastE6) return false
+        if (latSouthE6 != other.latSouthE6) return false
+        if (lonWestE6 != other.lonWestE6) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = latNorthE6
+        result = 31 * result + lonEastE6
+        result = 31 * result + latSouthE6
+        result = 31 * result + lonWestE6
+        return result
+    }
+
     companion object {
         private val MIN_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MIN)
         private val MAX_LA = LatLongE6.toE6(LatLongUtils.LATITUDE_MAX)

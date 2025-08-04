@@ -11,11 +11,11 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.Dimension
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.model.Point
-import org.mapsforge.core.model.Rotation
 import org.mapsforge.core.util.MercatorProjection
 import org.mapsforge.map.util.MapPositionUtil
 import org.mapsforge.map.view.MapView
 
+// TODO use BoundingBoxE6 (also extend BoundingBoxE6Test) here and always initialize all variables
 class MapsForgeMetrics(private val mapView: MapView, private val density: AppDensity) : MapMetrics {
     private var tl: Point? = null
     private var zoom: Byte = 0
@@ -47,7 +47,7 @@ class MapsForgeMetrics(private val mapView: MapView, private val density: AppDen
     fun init(d: Dimension) {
         val pos = mapView.model.mapViewPosition.mapPosition
         init(
-            MapPositionUtil.getBoundingBox(pos, Rotation.NULL_ROTATION, tileSize, d, 0f, 0f),
+            mapView.boundingBox,
             mapView.model.mapViewPosition.zoomLevel,
             d,
             MapPositionUtil.getTopLeftPoint(pos, d, tileSize)
