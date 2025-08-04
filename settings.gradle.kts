@@ -7,6 +7,14 @@ dependencyResolutionManagement {
         maven { url = uri("maven-local") }
     }
 }
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = uri("maven-local") }
+    }
+}
+
 include("ci")
 include("aat-lib")
 include("aat-gtk")
