@@ -1,27 +1,25 @@
-package ch.bailu.aat_lib.service.directory.database;
+package ch.bailu.aat_lib.service.directory.database
 
-import java.io.Closeable;
+import ch.bailu.aat_lib.util.sql.DbException
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
+import java.io.Closeable
 
-import ch.bailu.aat_lib.util.sql.DbException;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+interface DatabaseInterface : Closeable {
+    fun query(selection: String): DbResultSet?
 
-public abstract class AbsDatabase implements Closeable{
+    @Throws(DbException::class)
+    fun deleteEntry(file: Foc)
 
-    public abstract DbResultSet query(String selection);
+    override fun close() {}
 
+    companion object {
+        val NULL_DATABASE: DatabaseInterface = object : DatabaseInterface {
+            override fun query(selection: String): DbResultSet? {
+                return null
+            }
 
-    public abstract void deleteEntry(Foc file) throws DbException;
-
-
-    public static final AbsDatabase NULL_DATABASE = new AbsDatabase(){
-        @Override
-        public DbResultSet query(String selection) {return null;}
-
-        @Override
-        public void deleteEntry(Foc file) {}
-    };
-
-    @Override
-    public void close() {}
+            override fun deleteEntry(file: Foc) {}
+        }
+    }
 }

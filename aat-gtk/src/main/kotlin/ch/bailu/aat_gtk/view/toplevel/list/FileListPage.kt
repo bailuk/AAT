@@ -81,8 +81,8 @@ class FileListPage(app: Application,
     }
 
     private fun updateList() {
-        fileCountLabel.setLabel(iteratorSimple.count.toString())
-        if (listIndex.size != iteratorSimple.count) {
+        fileCountLabel.setLabel(iteratorSimple.getCount().toString())
+        if (listIndex.size != iteratorSimple.getCount()) {
             if (!listIsDirty) {
                 listIsDirty = true
                 updateLater()
@@ -94,7 +94,7 @@ class FileListPage(app: Application,
         updateTimer.kick(500) {
             if (listIsDirty) {
                 listIsDirty = false
-                val count = iteratorSimple.count
+                val count = iteratorSimple.getCount()
                 AppLog.d(this, "Update list, new size: $count")
                 listIndex.size = count
                 if (count == 0) {
@@ -136,7 +136,7 @@ class FileListPage(app: Application,
                     val index = ListIndex.toIndex(item)
 
                     iteratorSimple.moveToPosition(index)
-                    items[item]?.bind(iteratorSimple.info, index)
+                    items[item]?.bind(iteratorSimple.getInfo(), index)
                     if (item.selected) {
                         select(index)
                     }
@@ -214,9 +214,9 @@ class FileListPage(app: Application,
     private fun selectAndFrame(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showMap()
-            uiController.frameInMap(iteratorSimple.info)
+            uiController.frameInMap(iteratorSimple.getInfo())
             uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
@@ -224,16 +224,16 @@ class FileListPage(app: Application,
     private fun selectAndEdit(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.loadIntoEditor(iteratorSimple.info)
+            uiController.loadIntoEditor(iteratorSimple.getInfo())
         }
     }
 
     private fun selectAndCenter(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showMap()
-            uiController.centerInMap(iteratorSimple.info)
+            uiController.centerInMap(iteratorSimple.getInfo())
             uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
@@ -241,7 +241,7 @@ class FileListPage(app: Application,
     private fun selectAndDetail(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showDetail()
             uiController.showInDetail(InfoID.FILE_VIEW)
         }
@@ -252,9 +252,9 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.info.getFile())
-            fileNameLabel.setLabel(iteratorSimple.info.getFile().name)
-            fileNameLabel.setTooltipText(iteratorSimple.info.getFile().toString())
+            overlayMenu.setFile(iteratorSimple.getInfo().getFile())
+            fileNameLabel.setLabel(iteratorSimple.getInfo().getFile().name)
+            fileNameLabel.setTooltipText(iteratorSimple.getInfo().getFile().toString())
             menuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
@@ -264,6 +264,6 @@ class FileListPage(app: Application,
     }
 
     private fun isIndexValid(index: Int): Boolean {
-        return index > -1 && index < iteratorSimple.count
+        return index > -1 && index < iteratorSimple.getCount()
     }
 }

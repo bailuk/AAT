@@ -5,17 +5,17 @@ import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 
-class GpxDatabase @JvmOverloads constructor(
+class GpxDatabase (
     private val database: DbConnection,
     path: String,
     private val keys: Array<String> = GpxDbConfiguration.KEY_LIST
-) : AbsDatabase() {
+) : DatabaseInterface {
 
     init {
         this.database.open(path, GpxDbConfiguration.DB_VERSION)
     }
 
-    override fun query(selection: String?): DbResultSet {
+    override fun query(selection: String): DbResultSet {
         return database.query(
             "SELECT " + join(keys) + " FROM " + GpxDbConfiguration.TABLE + where(
                 selection
@@ -45,8 +45,8 @@ class GpxDatabase @JvmOverloads constructor(
     }
 
     companion object {
-        private fun where(selection: String?): String {
-            return if (selection != null && selection.length > 3) {
+        private fun where(selection: String): String {
+            return if (selection.isNotEmpty()) {
                 " WHERE $selection"
             } else ""
         }

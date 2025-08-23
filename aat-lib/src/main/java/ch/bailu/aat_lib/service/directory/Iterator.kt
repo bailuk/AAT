@@ -1,65 +1,52 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import java.io.Closeable;
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import java.io.Closeable
 
-import ch.bailu.aat_lib.gpx.information.GpxInformation;
-import ch.bailu.aat_lib.gpx.information.InfoID;
+abstract class Iterator : Closeable {
+    abstract fun getID(): Long
 
-public abstract class Iterator implements Closeable {
-    public static final Iterator NULL = new Iterator() {
-        @Override
-        public long getId() {
-            return 0;
+    open fun getInfoID(): Int {
+        return InfoID.FILE_VIEW
+    }
+
+    open fun moveToPrevious(): Boolean {
+        return false
+    }
+
+    open fun moveToNext(): Boolean {
+        return false
+    }
+
+    open fun moveToPosition(pos: Int): Boolean {
+        return false
+    }
+
+    open fun getCount(): Int {
+        return 0
+    }
+
+    open fun getPosition(): Int {
+        return 0
+    }
+
+    abstract fun getInfo(): GpxInformation
+
+    open fun query() {}
+    override fun close() {}
+
+    open fun setOnCursorChangedListener(listener: ()->Unit) {}
+
+    companion object {
+        val NULL: Iterator = object : Iterator() {
+            override fun getID(): Long {
+                return 0L
+            }
+
+            override fun getInfo(): GpxInformation {
+                return GpxInformation.NULL
+            }
         }
-
-        @Override
-        public GpxInformation getInfo() {
-            return GpxInformation.NULL;
-        }
-    };
-
-
-    public interface OnCursorChangedListener {
-        void onCursorChanged();
     }
-
-    public static final OnCursorChangedListener NULL_LISTENER = () -> {};
-
-
-    public abstract long getId();
-    public int getInfoID() {
-        return InfoID.FILE_VIEW;
-    }
-
-
-    public boolean moveToPrevious() {return false;}
-
-
-    public boolean moveToNext() {return false;}
-
-
-    public boolean moveToPosition(int pos) {return false;}
-
-
-    public int getCount() {
-        return 0;
-    }
-
-
-    public int getPosition() {
-        return 0;
-    }
-
-
-    public abstract GpxInformation getInfo();
-
-    public void query() {}
-
-
-    @Override
-    public void close() {}
-
-
-    public void setOnCursorChangedListener(OnCursorChangedListener l) {}
-
 }

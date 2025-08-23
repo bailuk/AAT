@@ -12,6 +12,7 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
+import ch.bailu.aat_lib.service.directory.database.DatabaseInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbResultSet
@@ -153,21 +154,25 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         }
 
         private fun compareFileSystemWithDatabase() {
-            val resultSet = database!!.query(null)
-            var r = resultSet.moveToFirst()
-            while (canContinue && r) {
-                val name = getFileName(resultSet)
-                val file = filesToAdd?.findItem(name)
-                if (file == null) {
-                    filesToRemove.add(name)
-                } else if (isFileInSync(file)) {
-                    filesToAdd?.pollItem(file)
-                } else {
-                    filesToRemove.add(name)
+            val resultSet = database?.query("")
+
+            if (resultSet is DbResultSet) {
+                var r = resultSet.moveToFirst()
+                while (canContinue && r) {
+
+                    val name = getFileName(resultSet)
+                    val file = filesToAdd?.findItem(name)
+                    if (file == null) {
+                        filesToRemove.add(name)
+                    } else if (isFileInSync(file)) {
+                        filesToAdd?.pollItem(file)
+                    } else {
+                        filesToRemove.add(name)
+                    }
+                    r = resultSet.moveToNext()
                 }
-                r = resultSet.moveToNext()
+                resultSet.close()
             }
-            resultSet.close()
         }
 
         private fun getFileName(resultSet: DbResultSet): String {

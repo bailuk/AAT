@@ -1,13 +1,13 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import ch.bailu.aat_lib.util.WithStatusText;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.util.WithStatusText
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
 
-public interface DirectoryServiceInterface extends WithStatusText {
-    DbResultSet query(String selection);
+interface DirectoryServiceInterface : WithStatusText {
+    fun query(selection: String): DbResultSet?
 
-    void openDir(Foc dir);
-    void rescan();
-    void deleteEntry(Foc file);
+    fun openDir(dir: Foc)
+    fun rescan()
+    fun deleteEntry(file: Foc)
 }

@@ -1,30 +1,26 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.information.GpxInformation;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
 
-public final class IteratorSimple extends IteratorAbstract {
-    private GpxInformation info = GpxInformation.NULL;
+class IteratorSimple(appContext: AppContext) : IteratorAbstract(appContext) {
+    private var info = GpxInformation.NULL
 
-    public IteratorSimple(AppContext appContext) {
-        super(appContext);
-        query();
+    init {
+        query()
     }
 
-    @Override
-    public GpxInformation getInfo() {
-        return info;
+    override fun getInfo(): GpxInformation {
+        return info
     }
 
-    @Override
-    public void onCursorChanged(DbResultSet cursor, Foc directory, String fid) {
-        if (cursor.getCount()>0) {
-            info = new GpxInformationDbEntry(cursor, directory);
+    override fun onCursorChanged(cursor: DbResultSet, directory: Foc, fileID: String) {
+        info = if (cursor.count > 0) {
+            GpxInformationDbEntry(cursor, directory)
         } else {
-            info = GpxInformation.NULL;
+            GpxInformation.NULL
         }
-
     }
 }
