@@ -1,106 +1,88 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.information.GpxInformation;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.gpx.interfaces.GpxType.Companion.fromInteger
+import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
 
-public final class GpxInformationDbEntry extends GpxInformation {
-    private final DbResultSet cursor;
-    private final Foc parent;
-
-    public GpxInformationDbEntry(DbResultSet c, Foc p) {
-        parent = p;
-        cursor = c;
+class GpxInformationDbEntry(private val cursor: DbResultSet, private val parent: Foc) :
+    GpxInformation() {
+    override fun getLoaded(): Boolean {
+        return false //isSupported();
     }
 
-    @Override
-    public boolean getLoaded() {
-        return false;//isSupported();
+    override fun getFile(): Foc {
+        val name = getString(GpxDbConfiguration.KEY_FILENAME)
+        return parent.child(name)
     }
 
-
-    @Override
-    public Foc getFile() {
-        String name = getString(GpxDbConfiguration.KEY_FILENAME);
-        return parent.child(name);
+    override fun getSpeed(): Float {
+        return getFloat(GpxDbConfiguration.KEY_AVG_SPEED)
     }
 
-    @Override
-    public float getSpeed() {
-        return getFloat(GpxDbConfiguration.KEY_AVG_SPEED);
+    override fun getDistance(): Float {
+        return getFloat(GpxDbConfiguration.KEY_DISTANCE)
     }
 
-    @Override
-    public float getDistance() {
-        return getFloat(GpxDbConfiguration.KEY_DISTANCE);
+    override fun getPause(): Long {
+        return getLong(GpxDbConfiguration.KEY_PAUSE)
     }
 
-    @Override
-    public long getPause() {
-        return getLong(GpxDbConfiguration.KEY_PAUSE);
-    }
+    val isValid: Boolean
+        get() = (!cursor.isClosed && cursor.position > -1 && cursor.position < cursor.count)
 
-    public boolean isValid() {
-        return (!cursor.isClosed() &&
-                cursor.getPosition() > -1 &&
-                cursor.getPosition() < cursor.getCount());
-    }
-
-    private String getString(String key) {
-        if (isValid()) {
-            return cursor.getString(key);
+    private fun getString(key: String): String {
+        if (isValid) {
+            return cursor.getString(key)
         }
-        return "";
+        return ""
     }
 
-    private long getLong(String key) {
-        if (isValid()) {
-            return cursor.getLong(key);
+    private fun getLong(key: String): Long {
+        if (isValid) {
+            return cursor.getLong(key)
         }
-        return 0;
+        return 0
     }
 
 
-    private float getFloat(String key) {
-        if (isValid()) {
-            return cursor.getFloat(key);
+    private fun getFloat(key: String): Float {
+        if (isValid) {
+            return cursor.getFloat(key)
         }
-        return 0f;
+        return 0f
     }
 
-    @Override
-    public long getTimeStamp() { return getStartTime();}
-
-    @Override
-    public long getStartTime() {
-        return getLong(GpxDbConfiguration.KEY_START_TIME);
+    override fun getTimeStamp(): Long {
+        return getStartTime()
     }
 
-    @Override
-    public long getTimeDelta() {
-        return getLong(GpxDbConfiguration.KEY_TOTAL_TIME);
+    override fun getStartTime(): Long {
+        return getLong(GpxDbConfiguration.KEY_START_TIME)
     }
 
-    @Override
-    public long getEndTime() {
-        return getLong(GpxDbConfiguration.KEY_END_TIME);
+    override fun getTimeDelta(): Long {
+        return getLong(GpxDbConfiguration.KEY_TOTAL_TIME)
     }
 
-    @Override
-    public BoundingBoxE6 getBoundingBox() {
-        return new BoundingBoxE6(
-                (int)getLong(GpxDbConfiguration.KEY_NORTH_BOUNDING),
-                (int)getLong(GpxDbConfiguration.KEY_EAST_BOUNDING),
-                (int)getLong(GpxDbConfiguration.KEY_SOUTH_BOUNDING),
-                (int)getLong(GpxDbConfiguration.KEY_WEST_BOUNDING));
+    override fun getEndTime(): Long {
+        return getLong(GpxDbConfiguration.KEY_END_TIME)
     }
 
-    @Override
-    public GpxType getType() {
-        int id = (int) getLong(GpxDbConfiguration.KEY_TYPE_ID);
-        return GpxType.fromInteger(id);
+    override fun getBoundingBox(): BoundingBoxE6 {
+        return BoundingBoxE6(
+            getLong(GpxDbConfiguration.KEY_NORTH_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.KEY_EAST_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.KEY_SOUTH_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.KEY_WEST_BOUNDING).toInt()
+        )
+    }
+
+    override fun getType(): GpxType {
+        val id = getLong(GpxDbConfiguration.KEY_TYPE_ID).toInt()
+        return fromInteger(id)
     }
 }

@@ -14,7 +14,7 @@ import ch.bailu.foc.Foc
 
 abstract class IteratorAbstract(private val appContext: AppContext) : Iterator(),
     OnPreferencesChanged {
-    private var onCursorChangedListener = NULL_LISTENER
+    private var onCursorChangedListener = { }
     private var resultSet: DbResultSet? = null
     private val sdirectory: SolidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
     private var selection = ""
@@ -26,8 +26,8 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         openAndQuery()
     }
 
-    override fun setOnCursorChangedListener(l: OnCursorChangedListener) {
-        onCursorChangedListener = l
+    override fun setOnCursorChangedListener(listner: () -> Unit) {
+        onCursorChangedListener = listner
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
@@ -39,18 +39,18 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     }
 
     override fun moveToPrevious(): Boolean {
-        return if (resultSet != null) resultSet!!.moveToPrevious() else false
+        return resultSet?.moveToPrevious() ?: false
     }
 
     override fun moveToNext(): Boolean {
-        return if (resultSet != null) resultSet!!.moveToNext() else false
+        return resultSet?.moveToNext() ?: false
     }
 
     override fun moveToPosition(pos: Int): Boolean {
-        return if (resultSet != null) resultSet!!.moveToPosition(pos) else false
+        return resultSet?.moveToPosition(pos) ?: false
     }
 
-    override fun getId(): Long {
+    override fun getID(): Long {
         resultSet?.apply {
             return getLong(GpxDbConfiguration.KEY_ID)
         }
@@ -58,14 +58,15 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     }
 
     override fun getCount(): Int {
-        return if (resultSet != null) resultSet!!.count else 0
+        return resultSet?.count ?: 0
     }
 
     override fun getPosition(): Int {
-        return if (resultSet != null) resultSet!!.position else -1
+        return resultSet?.position ?: -1
     }
 
-    abstract fun onCursorChanged(resultSet: DbResultSet?, directory: Foc?, fid: String?)
+    abstract fun onCursorChanged(resultSet: DbResultSet, directory: Foc, fileID: String)
+
     private fun openAndQuery() {
         val fileOnOldPosition = ""
         val oldPosition = 0
@@ -80,7 +81,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         val resultSet = resultSet
         if (resultSet is DbResultSet) {
             oldPosition = resultSet.position
-            fileOnOldPosition = info.getFile().path
+            fileOnOldPosition = getInfo().getFile().path
             resultSet.close()
         }
         updateResultFromSelection()
@@ -97,17 +98,18 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     }
 
     private fun moveToOldPosition(oldPosition: Int, fileOnOldPosition: String) {
-        if (resultSet != null) {
-            resultSet!!.moveToPosition(oldPosition)
+        val resultSet = resultSet
+        if (resultSet is DbResultSet) {
+            resultSet.moveToPosition(oldPosition)
             onCursorChanged(resultSet, sdirectory.getValueAsFile(), fileOnOldPosition)
-            onCursorChangedListener.onCursorChanged()
+            onCursorChangedListener()
         }
     }
 
     override fun close() {
-        if (resultSet != null) resultSet!!.close()
+        resultSet?.close()
         sdirectory.unregister(this)
         appContext.broadcaster.unregister(onSyncChanged)
-        onCursorChangedListener = NULL_LISTENER
+        onCursorChangedListener = { }
     }
 }

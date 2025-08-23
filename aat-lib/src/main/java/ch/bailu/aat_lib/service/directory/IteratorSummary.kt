@@ -1,33 +1,28 @@
-package ch.bailu.aat_lib.service.directory;
+package ch.bailu.aat_lib.service.directory
+
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
+import ch.bailu.aat_lib.util.sql.DbResultSet
+import ch.bailu.foc.Foc
 
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.gpx.information.GpxInformation;
-import ch.bailu.aat_lib.gpx.information.InfoID;
-import ch.bailu.aat_lib.util.sql.DbResultSet;
-import ch.bailu.foc.Foc;
+class IteratorSummary(appContext: AppContext) : IteratorAbstract(appContext) {
+    private var info = GpxInformation.NULL
 
-public final class IteratorSummary extends IteratorAbstract {
-
-    private GpxInformation info = GpxInformation.NULL;
-
-    public IteratorSummary(AppContext appContext) {
-        super(appContext);
-        query();
+    init {
+        query()
     }
 
-    @Override
-    public GpxInformation getInfo() {
-        return info;
+    override fun getInfo(): GpxInformation {
+        return info
     }
 
-    @Override
-    public int getInfoID() {
-            return InfoID.LIST_SUMMARY;
+    override fun getInfoID(): Int {
+        return InfoID.LIST_SUMMARY
     }
 
-    @Override
-    public void onCursorChanged(DbResultSet cursor, Foc directory, String fid) {
-            info = new GpxInformationDbSummary(directory, cursor);
+    override fun onCursorChanged(cursor: DbResultSet, directory: Foc, fileID: String) {
+        info = GpxInformationDbSummary(directory, cursor)
     }
 }
