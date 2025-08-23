@@ -22,12 +22,9 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
     }
 
     override fun close() {
-        val client = this.client
-        if (client is ClientProxy) {
-            client.disconnectSignals()
-            client.unref()
-            this.client = null
-        }
+        client?.disconnectSignals()
+        client?.unref()
+        this.client = null
     }
 
     init {
@@ -36,12 +33,12 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
             Simple.newWithThresholds(Str(appId), AccuracyLevel.EXACT, 0, 0, null,
                 { self, _ , res: AsyncResult, _ ->
                     try {
-                        val simple = Simple.newWithThresholdsFinishSimple(res)
-                        val client = simple.client
-                        client.ref()
-                        AppLog.d(this, "Client object: " + client.objectPath)
-                        client.onNotify { updateStateAndLocation(simple.location) }
-                        this.client = client
+                        val simple = getSimpleOrThrow(res)
+                        val clientProxy = getClientProxyOrThrow(simple)
+                        clientProxy.ref()
+                        AppLog.d(this, "Client object: " + getClientID(clientProxy))
+                        clientProxy.onNotify { updateStateAndLocation(simple.location) }
+                        this.client = clientProxy
                         updateStateAndLocation(simple.location)
                     } catch (e: java.lang.Exception) {
                         passState(StateID.NO_SERVICE)
@@ -53,6 +50,34 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
         } catch (e: java.lang.Exception) {
             passState(StateID.NO_SERVICE)
             AppLog.e(this, "Failed to initialize GeoClue2")
+        }
+    }
+
+    companion object {
+        private fun getClientProxyOrThrow(simple: Simple): ClientProxy {
+            val result: ClientProxy? = simple.client
+
+            if (result is ClientProxy) {
+                return result
+            }
+            throw Exception("Failed to create ClientProxy")
+        }
+
+        private fun getSimpleOrThrow(res: AsyncResult): Simple {
+            val result: Simple? = Simple.newWithThresholdsFinishSimple(res)
+            if (result is Simple) {
+                return result
+            }
+            throw Exception("Failed to create simple connection")
+        }
+
+        private fun getClientID(client: ClientProxy): String {
+            // client.objectPath might be null inside flatpak
+            val result: Str? = client.objectPath
+            if (result is Str && result.isNotNull) {
+                return result.toString()
+            }
+            return "unknown"
         }
     }
 }
