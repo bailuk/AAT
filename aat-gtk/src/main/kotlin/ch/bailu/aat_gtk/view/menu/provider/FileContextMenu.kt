@@ -33,11 +33,11 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(Res.str().edit_load_menu(), Strings.actionFileEdit)
-                append(Res.str().file_mock(), Strings.actionFileMock)
-                append(Res.str().file_rename(), Strings.actionFileRename)
-                append(Res.str().file_delete(), Strings.actionFileDelete)
-                append(Res.str().file_reload(), Strings.actionFileReload)
+                append(Res.str().edit_load_menu(), MenuHelper.toAppAction(Strings.ACTION_FILE_EDIT))
+                append(Res.str().file_mock(), MenuHelper.toAppAction(Strings.ACTION_FILE_MOCK))
+                append(Res.str().file_rename(), MenuHelper.toAppAction(Strings.ACTION_FILE_RENAME))
+                append(Res.str().file_delete(), MenuHelper.toAppAction(Strings.ACTION_FILE_DELETE))
+                append(Res.str().file_reload(), MenuHelper.toAppAction(Strings.ACTION_FILE_RELOAD))
             })
         }
     }
@@ -52,18 +52,18 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
 
     override fun createActions(app: Application) {
 
-        MenuHelper.setAction(app, Strings.actionFileMock) {
+        MenuHelper.setAction(app, Strings.ACTION_FILE_MOCK) {
             solidMock.setValue(file.path)
         }
-        MenuHelper.setAction(app, Strings.actionFileRename) {
+        MenuHelper.setAction(app, Strings.ACTION_FILE_RENAME) {
             rename(app)
         }
 
-        MenuHelper.setAction(app, Strings.actionFileDelete) {
+        MenuHelper.setAction(app, Strings.ACTION_FILE_DELETE) {
             delete(app)
         }
 
-        MenuHelper.setAction(app, Strings.actionFileReload) {
+        MenuHelper.setAction(app, Strings.ACTION_FILE_RELOAD) {
             FileAction.reloadPreview(appContext, file)
         }
     }

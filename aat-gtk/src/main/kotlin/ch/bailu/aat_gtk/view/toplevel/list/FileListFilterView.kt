@@ -39,14 +39,17 @@ class FileListFilterView(app: Application, appContext: AppContext) {
         onClicked { AppLog.d(this, "summaryDetail") }
     }
 
+    private val filterEntry = Entry().apply {
+        asEditable().onChanged {
+            solidDirectoryQuery.solidNameFilter.setValue(asEditable().text.toString())
+        }
+        asEditable().setText(solidDirectoryQuery.solidNameFilter.getValueAsString())
+        hexpand = true
+    }
+
     val box = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
         append(Box(Orientation.HORIZONTAL, 0).apply {
-            append(Entry().apply {
-                asEditable().onChanged {
-                    AppLog.d(this, asEditable().text.toString())
-                }
-                hexpand = true
-            })
+            append(filterEntry)
             append(summaryFrameButton)
             append(summaryCenterButton)
             append(summaryDetailButton)

@@ -59,7 +59,7 @@ open class VerticalScrollView(context: Context) : ScrollView(context) {
 
         val to = LinearLayout(context)
         to.addView(SolidCheckBox(context, sdirectory.useDateEnd, theme))
-        to.addView(SolidDateView(context, sdirectory.dateTo, theme))
+        to.addView(SolidDateView(context, sdirectory.dateEnd, theme))
         layout.addView(to)
     }
 }
