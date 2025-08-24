@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.preferences.file_list
 
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 
@@ -9,10 +10,10 @@ class SolidSortAttribute(storage: StorageInterface, key: String) : SolidIndexLis
 
     companion object {
         private val label = arrayOf (
-            ToDo.translate("Name"),
-            ToDo.translate("Distance"),
-            ToDo.translate("Start time"),
-            ToDo.translate("Total time"),
+            Res.str().name(),
+            Res.str().distance(),
+            Res.str().d_startdate(),
+            Res.str().time(),
         )
 
         private val sql = arrayOf (
@@ -33,5 +34,9 @@ class SolidSortAttribute(storage: StorageInterface, key: String) : SolidIndexLis
 
     fun getSqlStatement(): String {
         return sql[validate(index)]
+    }
+
+    override fun getLabel(): String {
+        return ToDo.translate("Sort by...")
     }
 }
