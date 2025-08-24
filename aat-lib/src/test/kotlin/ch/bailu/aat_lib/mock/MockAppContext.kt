@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Timer
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocName
@@ -31,7 +31,7 @@ class MockAppContext : AppContext {
     override val summaryConfig: SummaryConfig
         get() = TODO("Not yet implemented")
 
-    override fun createDataBase(): DbConnection {
+    override fun createDataBase(): DbConnectionInterface {
         TODO("Not yet implemented")
     }
 

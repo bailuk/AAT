@@ -1,120 +1,103 @@
-package ch.bailu.aat_lib.util.sql;
+package ch.bailu.aat_lib.util.sql
 
-import ch.bailu.aat_lib.logger.AppLog;
+import ch.bailu.aat_lib.logger.AppLog.e
 
-public class SaveDbResultSet implements DbResultSet {
-    private final DbResultSet resultSet;
-
-    public SaveDbResultSet(DbResultSet resultSet) {
-        this.resultSet = resultSet;
-
-    }
-    @Override
-    public boolean moveToFirst() {
+class SaveDbResultSet(private val resultSet: DbResultSet) : DbResultSet {
+    override fun moveToFirst(): Boolean {
         try {
-            return resultSet.moveToFirst();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.moveToFirst()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return false;
+        return false
     }
 
-    @Override
-    public boolean moveToNext() {
+    override fun moveToNext(): Boolean {
         try {
-            return resultSet.moveToNext();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.moveToNext()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return false;
+        return false
     }
 
-    @Override
-    public boolean moveToPrevious() {
+    override fun moveToPrevious(): Boolean {
         try {
-            return resultSet.moveToPrevious();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.moveToPrevious()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return false;
+        return false
     }
 
-    @Override
-    public boolean moveToPosition(int pos) {
+    override fun moveToPosition(pos: Int): Boolean {
         try {
-            return resultSet.moveToPosition(pos);
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.moveToPosition(pos)
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return false;
+        return false
     }
 
-    @Override
-    public int getPosition() {
+    override fun getPosition(): Int {
         try {
-            return resultSet.getPosition();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.getPosition()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return 0;
+        return 0
     }
 
-    @Override
-    public int getCount() {
+    override fun getCount(): Int {
         try {
-            return resultSet.getCount();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.getCount()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return 0;
+        return 0
     }
 
-    @Override
-    public String getString(String column) {
+    override fun getString(column: String): String {
         try {
-            return resultSet.getString(column);
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.getString(column)
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return "";
+        return ""
     }
 
-    @Override
-    public long getLong(String column) {
+    override fun getLong(column: String): Long {
         try {
-            return resultSet.getLong(column);
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.getLong(column)
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return 0L;
+        return 0L
     }
 
-    @Override
-    public float getFloat(String column) {
+    override fun getFloat(column: String): Float {
         try {
-            return resultSet.getFloat(column);
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.getFloat(column)
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return 0f;
+        return 0f
     }
 
-    @Override
-    public boolean isClosed() {
+    override fun isClosed(): Boolean {
         try {
-            return resultSet.isClosed();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            return resultSet.isClosed()
+        } catch (e: Exception) {
+            e(this, e)
         }
-        return true;
+        return true
     }
 
-    @Override
-    public void close() {
+    override fun close() {
         try {
-            resultSet.close();
-        } catch (Exception e) {
-            AppLog.e(this, e);
+            resultSet.close()
+        } catch (e: Exception) {
+            e(this, e)
         }
     }
 }

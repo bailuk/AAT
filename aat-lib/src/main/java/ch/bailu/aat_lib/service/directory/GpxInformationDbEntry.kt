@@ -15,24 +15,24 @@ class GpxInformationDbEntry(private val cursor: DbResultSet, private val parent:
     }
 
     override fun getFile(): Foc {
-        val name = getString(GpxDbConfiguration.KEY_FILENAME)
+        val name = getString(GpxDbConfiguration.ATTR_FILENAME)
         return parent.child(name)
     }
 
     override fun getSpeed(): Float {
-        return getFloat(GpxDbConfiguration.KEY_AVG_SPEED)
+        return getFloat(GpxDbConfiguration.ATTR_AVG_SPEED)
     }
 
     override fun getDistance(): Float {
-        return getFloat(GpxDbConfiguration.KEY_DISTANCE)
+        return getFloat(GpxDbConfiguration.ATTR_DISTANCE)
     }
 
     override fun getPause(): Long {
-        return getLong(GpxDbConfiguration.KEY_PAUSE)
+        return getLong(GpxDbConfiguration.ATTR_PAUSE)
     }
 
     val isValid: Boolean
-        get() = (!cursor.isClosed && cursor.position > -1 && cursor.position < cursor.count)
+        get() = (!cursor.isClosed() && cursor.getPosition() > -1 && cursor.getPosition() < cursor.getCount())
 
     private fun getString(key: String): String {
         if (isValid) {
@@ -61,28 +61,28 @@ class GpxInformationDbEntry(private val cursor: DbResultSet, private val parent:
     }
 
     override fun getStartTime(): Long {
-        return getLong(GpxDbConfiguration.KEY_START_TIME)
+        return getLong(GpxDbConfiguration.ATTR_START_TIME)
     }
 
     override fun getTimeDelta(): Long {
-        return getLong(GpxDbConfiguration.KEY_TOTAL_TIME)
+        return getLong(GpxDbConfiguration.ATTR_TOTAL_TIME)
     }
 
     override fun getEndTime(): Long {
-        return getLong(GpxDbConfiguration.KEY_END_TIME)
+        return getLong(GpxDbConfiguration.ATTR_END_TIME)
     }
 
     override fun getBoundingBox(): BoundingBoxE6 {
         return BoundingBoxE6(
-            getLong(GpxDbConfiguration.KEY_NORTH_BOUNDING).toInt(),
-            getLong(GpxDbConfiguration.KEY_EAST_BOUNDING).toInt(),
-            getLong(GpxDbConfiguration.KEY_SOUTH_BOUNDING).toInt(),
-            getLong(GpxDbConfiguration.KEY_WEST_BOUNDING).toInt()
+            getLong(GpxDbConfiguration.ATTR_NORTH_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.ATTR_EAST_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.ATTR_SOUTH_BOUNDING).toInt(),
+            getLong(GpxDbConfiguration.ATTR_WEST_BOUNDING).toInt()
         )
     }
 
     override fun getType(): GpxType {
-        val id = getLong(GpxDbConfiguration.KEY_TYPE_ID).toInt()
+        val id = getLong(GpxDbConfiguration.ATTR_TYPE_ID).toInt()
         return fromInteger(id)
     }
 }

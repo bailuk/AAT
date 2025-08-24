@@ -27,7 +27,7 @@ import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Timer
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
 import ch.bailu.foc_android.FocAssetFactory
@@ -45,7 +45,7 @@ class AndroidAppContext(private val context: Context, override val services: Ser
     override val summaryConfig: SummaryConfig
         get() =  AndroidSummaryConfig(context)
 
-    override fun createDataBase(): DbConnection {
+    override fun createDataBase(): DbConnectionInterface {
         return AndroidDbConnection(context)
     }
 

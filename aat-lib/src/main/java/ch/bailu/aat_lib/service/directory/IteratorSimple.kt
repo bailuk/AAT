@@ -17,7 +17,7 @@ class IteratorSimple(appContext: AppContext) : IteratorAbstract(appContext) {
     }
 
     override fun onCursorChanged(cursor: DbResultSet, directory: Foc, fileID: String) {
-        info = if (cursor.count > 0) {
+        info = if (cursor.getCount() > 0) {
             GpxInformationDbEntry(cursor, directory)
         } else {
             GpxInformation.NULL

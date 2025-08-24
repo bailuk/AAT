@@ -12,7 +12,6 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpxStatic
-import ch.bailu.aat_lib.service.directory.database.DatabaseInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbResultSet
@@ -86,7 +85,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
 
         private fun openDatabase(): GpxDatabase {
             val dbPath = appContext.summaryConfig.getDBPath(directory)
-            val query = arrayOf(GpxDbConfiguration.KEY_FILENAME)
+            val query = arrayOf(GpxDbConfiguration.ATTR_FILENAME)
             dbAccessTime = File(dbPath).lastModified()
             return GpxDatabase(appContext.createDataBase(), dbPath, query)
         }
@@ -154,7 +153,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         }
 
         private fun compareFileSystemWithDatabase() {
-            val resultSet = database?.query("")
+            val resultSet = database?.select("")
 
             if (resultSet is DbResultSet) {
                 var r = resultSet.moveToFirst()
@@ -176,7 +175,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         }
 
         private fun getFileName(resultSet: DbResultSet): String {
-            return resultSet.getString(GpxDbConfiguration.KEY_FILENAME)
+            return resultSet.getString(GpxDbConfiguration.ATTR_FILENAME)
         }
 
         private fun isFileInSync(file: Foc): Boolean {
@@ -236,31 +235,31 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
             summary: GpxBigDeltaInterface, keys: ArrayList<String>, values: ArrayList<String>
         ) {
             val bounding = summary.getBoundingBox()
-            keys.add(GpxDbConfiguration.KEY_FILENAME)
+            keys.add(GpxDbConfiguration.ATTR_FILENAME)
             values.add(filename)
-            keys.add(GpxDbConfiguration.KEY_AVG_SPEED)
+            keys.add(GpxDbConfiguration.ATTR_AVG_SPEED)
             values.add(summary.getSpeed().toString())
-            keys.add(GpxDbConfiguration.KEY_MAX_SPEED)
+            keys.add(GpxDbConfiguration.ATTR_MAX_SPEED)
             values.add(toNumber(summary.getAttributes()[MaxSpeed.INDEX_MAX_SPEED]))
-            keys.add(GpxDbConfiguration.KEY_DISTANCE)
+            keys.add(GpxDbConfiguration.ATTR_DISTANCE)
             values.add(summary.getDistance().toString())
-            keys.add(GpxDbConfiguration.KEY_START_TIME)
+            keys.add(GpxDbConfiguration.ATTR_START_TIME)
             values.add(summary.getStartTime().toString())
-            keys.add(GpxDbConfiguration.KEY_TOTAL_TIME)
+            keys.add(GpxDbConfiguration.ATTR_TOTAL_TIME)
             values.add(summary.getTimeDelta().toString())
-            keys.add(GpxDbConfiguration.KEY_END_TIME)
+            keys.add(GpxDbConfiguration.ATTR_END_TIME)
             values.add(summary.getEndTime().toString())
-            keys.add(GpxDbConfiguration.KEY_PAUSE)
+            keys.add(GpxDbConfiguration.ATTR_PAUSE)
             values.add(summary.getPause().toString())
-            keys.add(GpxDbConfiguration.KEY_TYPE_ID)
+            keys.add(GpxDbConfiguration.ATTR_TYPE_ID)
             values.add(summary.getType().toInteger().toString())
-            keys.add(GpxDbConfiguration.KEY_EAST_BOUNDING)
+            keys.add(GpxDbConfiguration.ATTR_EAST_BOUNDING)
             values.add(bounding.lonEastE6.toString())
-            keys.add(GpxDbConfiguration.KEY_WEST_BOUNDING)
+            keys.add(GpxDbConfiguration.ATTR_WEST_BOUNDING)
             values.add(bounding.lonWestE6.toString())
-            keys.add(GpxDbConfiguration.KEY_NORTH_BOUNDING)
+            keys.add(GpxDbConfiguration.ATTR_NORTH_BOUNDING)
             values.add(bounding.latNorthE6.toString())
-            keys.add(GpxDbConfiguration.KEY_SOUTH_BOUNDING)
+            keys.add(GpxDbConfiguration.ATTR_SOUTH_BOUNDING)
             values.add(bounding.latSouthE6.toString())
         }
     }

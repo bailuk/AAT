@@ -5,23 +5,23 @@ object GpxDbConfiguration {
 
     const val TABLE: String = "summary"
 
-    const val KEY_FILENAME: String = "filename"
-    const val KEY_DISTANCE: String = "distance"
-    const val KEY_MAX_SPEED: String = "max_speed"
-    const val KEY_AVG_SPEED: String = "avg_speed"
-    const val KEY_PAUSE: String = "pause"
-    const val KEY_TYPE_ID: String = "type"
+    const val ATTR_FILENAME: String = "filename"
+    const val ATTR_DISTANCE: String = "distance"
+    const val ATTR_MAX_SPEED: String = "max_speed"
+    const val ATTR_AVG_SPEED: String = "avg_speed"
+    const val ATTR_PAUSE: String = "pause"
+    const val ATTR_TYPE_ID: String = "type"
 
-    const val KEY_EAST_BOUNDING: String = "east"
-    const val KEY_WEST_BOUNDING: String = "west"
-    const val KEY_NORTH_BOUNDING: String = "north"
-    const val KEY_SOUTH_BOUNDING: String = "south"
+    const val ATTR_EAST_BOUNDING: String = "east"
+    const val ATTR_WEST_BOUNDING: String = "west"
+    const val ATTR_NORTH_BOUNDING: String = "north"
+    const val ATTR_SOUTH_BOUNDING: String = "south"
 
-    const val KEY_ID: String = "_id"
+    const val ATTR_ID: String = "_id"
 
-    const val KEY_START_TIME: String = "start_time"
-    const val KEY_END_TIME: String = "end_time"
-    const val KEY_TOTAL_TIME: String = "total_time"
+    const val ATTR_START_TIME: String = "start_time"
+    const val ATTR_END_TIME: String = "end_time"
+    const val ATTR_TOTAL_TIME: String = "total_time"
 
     private const val TYPE_FLOAT: String = "REAL"
     private const val TYPE_LONG: String = "BIGINT"
@@ -30,21 +30,21 @@ object GpxDbConfiguration {
     private const val TYPE_ID: String = "INTEGER PRIMARY KEY AUTOINCREMENT"
     private const val TYPE_ID_H2: String = "INTEGER PRIMARY KEY AUTO_INCREMENT"
 
-    val KEY_LIST: Array<String> = arrayOf(
-        KEY_ID,
-        KEY_FILENAME,
-        KEY_AVG_SPEED,
-        KEY_MAX_SPEED,
-        KEY_DISTANCE,
-        KEY_START_TIME,
-        KEY_TOTAL_TIME,
-        KEY_END_TIME,
-        KEY_PAUSE,
-        KEY_EAST_BOUNDING,
-        KEY_WEST_BOUNDING,
-        KEY_NORTH_BOUNDING,
-        KEY_SOUTH_BOUNDING,
-        KEY_TYPE_ID
+    val ATTR_LIST: Array<String> = arrayOf(
+        ATTR_ID,
+        ATTR_FILENAME,
+        ATTR_AVG_SPEED,
+        ATTR_MAX_SPEED,
+        ATTR_DISTANCE,
+        ATTR_START_TIME,
+        ATTR_TOTAL_TIME,
+        ATTR_END_TIME,
+        ATTR_PAUSE,
+        ATTR_EAST_BOUNDING,
+        ATTR_WEST_BOUNDING,
+        ATTR_NORTH_BOUNDING,
+        ATTR_SOUTH_BOUNDING,
+        ATTR_TYPE_ID
     )
 
     val TYPE_LIST: Array<String> = arrayOf(

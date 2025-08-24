@@ -1,36 +1,36 @@
 package ch.bailu.aat_lib.service.directory.database
 
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc
 
 class GpxDatabase (
-    private val database: DbConnection,
+    private val database: DbConnectionInterface,
     path: String,
-    private val keys: Array<String> = GpxDbConfiguration.KEY_LIST
-) : DatabaseInterface {
+    attributeList: Array<String> = GpxDbConfiguration.ATTR_LIST
+) : GpxDbInterface {
+
+    private val selectAll = "SELECT ${join(attributeList)} FROM ${GpxDbConfiguration.TABLE}"
 
     init {
         this.database.open(path, GpxDbConfiguration.DB_VERSION)
-    }
-
-    override fun query(selection: String): DbResultSet {
-        return database.query(
-            "SELECT " + join(keys) + " FROM " + GpxDbConfiguration.TABLE + where(
-                selection
-            ) + " ORDER BY " + GpxDbConfiguration.KEY_START_TIME + " DESC"
-        )
     }
 
     override fun close() {
         database.close()
     }
 
+    override fun select(extraStatement: String, vararg params: Any): DbResultSet {
+        AppLog.d(this, "$selectAll $extraStatement")
+        return database.query("$selectAll $extraStatement", *params)
+    }
+
     @Throws(DbException::class)
     override fun deleteEntry(file: Foc) {
         database.execSQL(
-            "DELETE FROM " + GpxDbConfiguration.TABLE + " WHERE " + GpxDbConfiguration.KEY_FILENAME + " = ?",
+            "DELETE FROM " + GpxDbConfiguration.TABLE + " WHERE " + GpxDbConfiguration.ATTR_FILENAME + " = ?",
             file.name
         )
     }

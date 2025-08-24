@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.DropDown

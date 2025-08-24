@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.util.Timer
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocFile
@@ -46,7 +46,7 @@ object GtkAppContext: AppContext {
         return focFactory.toFoc(string)
     }
 
-    override fun createDataBase(): DbConnection {
+    override fun createDataBase(): DbConnectionInterface {
         return H2DbConnection()
     }
 

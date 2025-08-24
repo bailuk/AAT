@@ -33,7 +33,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.IteratorSimple
