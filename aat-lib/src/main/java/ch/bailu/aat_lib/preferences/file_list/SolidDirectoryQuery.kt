@@ -50,11 +50,14 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
             Res.str().filter_geo()
         )
 
-    private val solidNameFilter: SolidString
+    val solidNameFilter: SolidString
         get() = SolidString(getStorage(), KEY_NAME_FILTER + getValueAsString())
 
-    private val solidSortOrder: SolidSortAttribute
+    val solidSortAttribute: SolidSortAttribute
         get() = SolidSortAttribute(getStorage(), KEY_SORT_ATTRIBUTE + getValueAsString())
+
+    val solidSortOrderDescend: SolidBoolean
+        get() = SolidBoolean(getStorage(), KEY_SORT_DESCEND + getValueAsString())
 
     fun createSelectionString(): String {
         // TODO replace
@@ -103,6 +106,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
         private const val KEY_BOUNDING_BOX = "BOX_"
         private const val KEY_NAME_FILTER = "NAME_FILTER_"
         private const val KEY_SORT_ATTRIBUTE = "SORT_ATTRIBUTE_"
+        private const val KEY_SORT_DESCEND = "SORT_DESCEND_"
         private const val DAY = (1000 * 60 * 60 * 24).toLong() // /* ms*sec*min*h = d
     }
 }

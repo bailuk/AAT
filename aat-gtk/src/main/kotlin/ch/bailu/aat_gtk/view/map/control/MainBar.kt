@@ -17,7 +17,6 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Editable
 import ch.bailu.gtk.gtk.Entry
 import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
@@ -92,14 +91,15 @@ class MainBar(private val app: Application, uiController: UiControllerInterface,
             val entry = Entry()
             append(entry.apply {
                 onActivate {
-                    searchController.search(Editable(cast()).text.toString())
+                    // When 'enter' was pressed
+                    searchController.search(asEditable().text.toString())
                 }
             })
 
             append(Button().apply {
                 iconName = Icons.editFindSymbolic
                 onClicked {
-                    searchController.search(Editable(entry.cast()).text.toString())
+                    searchController.search(entry.asEditable().text.toString())
                 }
             })
 

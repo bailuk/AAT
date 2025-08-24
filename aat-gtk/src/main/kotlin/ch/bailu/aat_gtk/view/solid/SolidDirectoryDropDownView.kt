@@ -20,7 +20,7 @@ class SolidDirectoryDropDownView(appContext: AppContext)
         val model = ArrayList<String ?>()
 
         model.addAll(directories.map {
-            limitWidth(it.name, 30) // TODO width limit should be handled by GTK (but how?)
+            limitWidth(it.name, 40) // TODO width limit should be handled by GTK (but how?)
         })
         model.add(null)
         dropDown = DropDown.newFromStringsDropDown(Strs(model.toTypedArray()))

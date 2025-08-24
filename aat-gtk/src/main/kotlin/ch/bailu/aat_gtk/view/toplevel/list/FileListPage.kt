@@ -4,15 +4,14 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.GtkTimer
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
@@ -32,7 +31,6 @@ import ch.bailu.gtk.gtk.ListView
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
-import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.pango.EllipsizeMode
@@ -52,7 +50,6 @@ class FileListPage(app: Application,
         margin(Layout.MARGIN)
     }
 
-    private val fileCountLabel = Label(Str.NULL)
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
         iconName = Icons.zoomFitBestSymbolic
@@ -69,6 +66,9 @@ class FileListPage(app: Application,
         onClicked { selectAndDetail(indexOfSelected) }
     }
 
+
+    private val fileListFilterView = FileListFilterView(app, appContext)
+
     private val listIndex = ListIndex()
 
     private var listIsDirty = false
@@ -81,7 +81,8 @@ class FileListPage(app: Application,
     }
 
     private fun updateList() {
-        fileCountLabel.setLabel(iteratorSimple.getCount().toString())
+        fileListFilterView.updateFileCount(iteratorSimple.getCount())
+
         if (listIndex.size != iteratorSimple.getCount()) {
             if (!listIsDirty) {
                 listIsDirty = true
@@ -107,16 +108,15 @@ class FileListPage(app: Application,
     private var indexOfSelected = -1
 
     private val items = HashMap<ListItem, FileListItem>()
-    private val overlayMenu = FileContextMenu(
+    private val fileContextMenu = FileContextMenu(
         appContext,
         SolidCustomOverlayList(
             appContext.storage,
             appContext
-        ), SolidMockLocationFile(appContext.storage)).apply {
-        createActions(app)
-    }
+        ), SolidMockLocationFile(appContext.storage))
+
     private val logItems = SizeLog("FileListItem")
-    private val menuButton = PopupMenuButton(overlayMenu).apply { createActions(app) }.menuButton
+    private val fileContextMenuButton = PopupMenuButton(fileContextMenu).apply { createActions(app) }.menuButton
 
     init {
         try {
@@ -171,20 +171,16 @@ class FileListPage(app: Application,
                         }
                     })
                 })
-                append(Spinner().apply {
-                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_DONE) { stop() }
-                    appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
-                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
-                })
-                append(fileCountLabel)
             })
+
+            vbox.append(fileListFilterView.box)
 
             vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)
                     append(trackCenterButton)
                     append(trackDetailButton)
-                    append(menuButton)
+                    append(fileContextMenuButton)
                     addCssClass(Strings.linked)
                 })
                 append(fileNameLabel.apply {
@@ -252,14 +248,14 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.getInfo().getFile())
+            fileContextMenu.setFile(iteratorSimple.getInfo().getFile())
             fileNameLabel.setLabel(iteratorSimple.getInfo().getFile().name)
             fileNameLabel.setTooltipText(iteratorSimple.getInfo().getFile().toString())
-            menuButton.sensitive = true
+            fileContextMenuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
             fileNameLabel.tooltipText = Str.NULL
-            menuButton.sensitive = false
+            fileContextMenuButton.sensitive = false
         }
     }
 

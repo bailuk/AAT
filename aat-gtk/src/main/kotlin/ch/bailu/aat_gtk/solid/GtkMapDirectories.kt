@@ -12,21 +12,21 @@ import ch.bailu.foc.FocFile
 class GtkMapDirectories(private val storageInterface: StorageInterface, private val focFactory: FocFactory): MapDirectories {
 
     companion object {
-        const val mapChild = "maps"
+        const val MAP_CHILD = "maps"
     }
 
     override fun getWellKnownMapDirs(): ArrayList<Foc> {
         val solidGtkDefaultDirectory = SolidGtkDefaultDirectory(storageInterface, focFactory)
         val result = ArrayList<Foc>()
 
-        solidGtkDefaultDirectory.buildSubDirectorySelection(ArrayList(), mapChild).forEach {
+        solidGtkDefaultDirectory.buildSubDirectorySelection(ArrayList(), MAP_CHILD).forEach {
             result.add(FocFile(it))
         }
         return result
     }
 
     override fun getDefault(): Foc {
-        return SolidGtkDefaultDirectory(storageInterface, focFactory).getValueAsFile().child(mapChild)
+        return SolidGtkDefaultDirectory(storageInterface, focFactory).getValueAsFile().child(MAP_CHILD)
     }
 
     override fun createSolidDirectory(): SolidMapsForgeDirectory {
