@@ -198,7 +198,7 @@ class FileListPage(app: Application,
             })
 
 
-            MenuHelper.setAction(app, Strings.actionFileEdit) {
+            MenuHelper.setAction(app, Strings.ACTION_FILE_EDIT) {
                 selectAndEdit(indexOfSelected)
             }
 

@@ -16,12 +16,27 @@ object Strings {
     const val appGResource = "/app.gresource"
 
     // Action names
-    const val actionFileEdit   = "app.fileEdit"
-    const val actionFileMock   = "app.fileMock"
-    const val actionFileRename = "app.fileRename"
-    const val actionFileDelete = "app.fileDelete"
-    const val actionFileReload = "app.fileReload"
+    const val ACTION_FILE_EDIT      = "fileEdit"
+    const val ACTION_FILE_MOCK      = "fileMock"
+    const val ACTION_FILE_RENAME    = "fileRename"
+    const val ACTION_FILE_DELETE    = "fileDelete"
+    const val ACTION_FILE_RELOAD    = "fileReload"
+    const val ACTION_SORT_DESCENT   = "sortDescent"
+    const val ACTION_SORT_ATTRIBUTE = "sortAttribute"
+    const val ACTION_SHOW_MAP       = "showMap"
+    const val ACTION_SHOW_COCKPIT   = "showCockpit"
+    const val ACTION_SHOW_TRACKS    = "showTracks"
+    const val ACTION_TRACK_INFO     = "trackInfo"
+    const val ACTION_SHOW_SETTINGS  = "showSettings"
+    const val ACTION_SHOW_ABOUT     = "showAbout"
+    const val ACTION_DUMP_RESOURCES = "dumpResources"
+    const val ACTION_LOCATION_COPY  = "locationCopy"
+    const val ACTION_LOCATION_PASTE = "locationPaste"
 
+
+    // Custom widgets
+    const val CUSTOM_TRACKER_BUTTON = "trackerButton"
+    const val CUSTOM_SORT_FILTER = "sortFilter"
 
     // Ids
     const val ID_CANCEL = "cancel"

@@ -8,15 +8,10 @@ import ch.bailu.gtk.lib.handler.action.ActionHandler
 
 object MenuHelper {
     fun setAction(app: Application, action: String, onActivate: ()->Unit) {
-        ActionHandler.get(app, toActionName(action)).apply {
+        ActionHandler.get(app, action).apply {
             disconnectSignals()
             onActivate(onActivate)
         }
-    }
-
-    private fun toActionName(action: String): String {
-        val parts = action.split(".")
-        return parts[parts.lastIndex]
     }
 
     fun createCustomItem(customId: String): MenuItem {
@@ -24,5 +19,13 @@ object MenuHelper {
             setAttribute("custom", null)
             setAttributeValue("custom", Variant.newStringVariant(customId))
         }
+    }
+
+    fun toAppAction(action: String): String {
+        return "app.${action}"
+    }
+
+    fun toAppAction(action: String, index: Int): String {
+        return "${toAppAction(action)}($index)"
     }
 }

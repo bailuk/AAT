@@ -33,7 +33,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
             Res.str().filter_date_start()
         )
 
-    val dateTo: SolidDate
+    val dateEnd: SolidDate
         get() = SolidDate(
             getStorage(),
             KEY_DATE_END + getValueAsString(),
@@ -80,7 +80,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
                 0
             }
             if (useDateEnd.value) {
-                end = dateTo.getValue()
+                end = dateEnd.getValue()
             } else {
                 end = System.currentTimeMillis() / DAY
                 end += 5

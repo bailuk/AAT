@@ -1,9 +1,10 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.menu.MenuHelper
-import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.SolidTypeInterface
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.resources.Res
@@ -15,7 +16,6 @@ import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.gtk.Orientation
-import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 import ch.bailu.gtk.type.Str
 
@@ -26,58 +26,89 @@ class FilterListContextMenu(private val solidDirectoryQuery: SolidDirectoryQuery
             val solidSortOrder = solidDirectoryQuery.solidSortAttribute
             appendSection(solidSortOrder.getLabel(), Menu().apply {
                 solidSortOrder.getStringArray().forEachIndexed { index, value ->
-                    append(value, "app.sort($index)")
+                    append(value, MenuHelper.toAppAction(Strings.ACTION_SORT_ATTRIBUTE, index))
                 }
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("Descend"), "app.sort_descent")
+                append(ToDo.translate("Descend"), MenuHelper.toAppAction(Strings.ACTION_SORT_DESCENT))
             })
             appendSection(Res.str().label_filter(), Menu().apply {
-                appendItem(MenuHelper.createCustomItem("SORT_FILTER"))
+                appendItem(MenuHelper.createCustomItem(Strings.CUSTOM_SORT_FILTER))
             })
 
         }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
+        val widgets = arrayOf(
+            SolidFilterWidget(solidDirectoryQuery.useGeo, solidDirectoryQuery.boundingBox, {
+                // solidDirectoryQuery.boundingBox = uiController.getMapBounding()
+            }),
+            SolidFilterWidget(solidDirectoryQuery.useDateStart, solidDirectoryQuery.dateStart, {
+                // Create date picker dialog
+                // display date picker dialog
+                // get date from date picker dialog
+            }),
+            SolidFilterWidget(solidDirectoryQuery.useDateEnd, solidDirectoryQuery.dateEnd, {
+                // Create date picker dialog
+                // display date picker dialog
+                // get date from date picker dialog
+            })
+        )
+
         return arrayOf(
             CustomWidget(
                 ListBox().apply {
-                    append(solidWidget(solidDirectoryQuery.boundingBox))
-                    append(solidWidget(solidDirectoryQuery.dateStart))
-                    append(solidWidget(solidDirectoryQuery.dateTo))
-                    onRowActivated { id ->
-                        AppLog.d(this, "row activated $id") }
+                    widgets.forEach { append(it.box) }
+                    onRowActivated { id -> widgets[id.index].onClicked() }
                 },
-                "SORT_FILTER",
+                Strings.CUSTOM_SORT_FILTER,
                 {
-
+                    widgets.forEach { it.update() }
                 }
             )
         )
     }
 
-    private fun solidWidget(solidTypeInterface: SolidTypeInterface): Widget {
-        return Box(Orientation.HORIZONTAL, 0).apply {
-            append(CheckButton())
+    private class SolidFilterWidget(private val solidCheckbox: SolidBoolean,
+                            private val solidValue: SolidTypeInterface,
+                            private val onClickedCallback: ()->Unit) {
+        private val checkButton = CheckButton().apply {
+            onToggled { solidCheckbox.value = active }
+        }
+        private val label = Label(Str.NULL).apply { xalign = 0f }
+        private val value = Label(Str.NULL).apply { xalign = 0f }
+        val box = Box(Orientation.HORIZONTAL, 0).apply {
+            append(checkButton)
             append(Box(Orientation.VERTICAL, 0).apply {
-                append(Label(solidTypeInterface.getLabel()).apply {
-                    xalign = 0f
-                })
-                append(Label("[${solidTypeInterface.getValueAsString()}]").apply {
-                    xalign = 0f
-                })
+                append(label)
+                append(value)
             })
             margin(Layout.MARGIN)
         }
-    }
-    override fun createActions(app: Application) {
-        ActionHandler.get(app, "sort", 0).onChange { value ->
-            AppLog.d(this, value.toString())
+
+        fun update() {
+            checkButton.active = solidCheckbox.value
+            label.setLabel(solidValue.getLabel())
+            value.setLabel(solidValue.getValueAsString())
         }
-        ActionHandler.get(app, "sort_descent", false).onToggle { value ->
-            AppLog.d(this, value.toString())
+
+        fun onClicked() {
+            onClickedCallback()
+        }
+
+        init {
+            update()
+        }
+    }
+
+    override fun createActions(app: Application) {
+        ActionHandler.get(app, Strings.ACTION_SORT_ATTRIBUTE, solidDirectoryQuery.solidSortAttribute.index).onChange { value ->
+            solidDirectoryQuery.solidSortAttribute.index = value
+        }
+        ActionHandler.get(app, Strings.ACTION_SORT_DESCENT, solidDirectoryQuery.solidSortOrderDescend.value).onToggle { value ->
+            solidDirectoryQuery.solidSortOrderDescend.value = value
         }
     }
 }
