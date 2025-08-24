@@ -58,19 +58,19 @@ class SolidBoundingBox(storage: StorageInterface, key: String, private val label
         val s = S.getValue()
         val w = W.getValue()
         return ("(("
-                + GpxDbConfiguration.KEY_NORTH_BOUNDING + " < " + n
-                + " AND " + GpxDbConfiguration.KEY_NORTH_BOUNDING + " > " + s
+                + GpxDbConfiguration.ATTR_NORTH_BOUNDING + " < " + n
+                + " AND " + GpxDbConfiguration.ATTR_NORTH_BOUNDING + " > " + s
                 + ") OR ("
-                + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " < " + n
-                + " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " > " + s
+                + GpxDbConfiguration.ATTR_SOUTH_BOUNDING + " < " + n
+                + " AND " + GpxDbConfiguration.ATTR_SOUTH_BOUNDING + " > " + s
                 + "))"
                 + " AND "
                 + "(("
-                + " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " > " + w
-                + " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " < " + e
+                + " AND " + GpxDbConfiguration.ATTR_EAST_BOUNDING + " > " + w
+                + " AND " + GpxDbConfiguration.ATTR_EAST_BOUNDING + " < " + e
                 + ") OR ("
-                + " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " > " + w
-                + " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " < " + e
+                + " AND " + GpxDbConfiguration.ATTR_WEST_BOUNDING + " > " + w
+                + " AND " + GpxDbConfiguration.ATTR_WEST_BOUNDING + " < " + e
                 + "))")
     }
 
@@ -79,10 +79,10 @@ class SolidBoundingBox(storage: StorageInterface, key: String, private val label
         val e = E.getValue()
         val s = S.getValue()
         val w = W.getValue()
-        return GpxDbConfiguration.KEY_NORTH_BOUNDING + " < " + n +
-                " AND " + GpxDbConfiguration.KEY_SOUTH_BOUNDING + " > " + s +
-                " AND " + GpxDbConfiguration.KEY_EAST_BOUNDING + " < " + e +
-                " AND " + GpxDbConfiguration.KEY_WEST_BOUNDING + " > " + w
+        return GpxDbConfiguration.ATTR_NORTH_BOUNDING + " < " + n +
+                " AND " + GpxDbConfiguration.ATTR_SOUTH_BOUNDING + " > " + s +
+                " AND " + GpxDbConfiguration.ATTR_EAST_BOUNDING + " < " + e +
+                " AND " + GpxDbConfiguration.ATTR_WEST_BOUNDING + " > " + w
     }
 
     override fun getToolTip(): String? {

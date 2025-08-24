@@ -36,7 +36,7 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
         private val iterator: Iterator
     ) : ListAdapter {
         override fun getCount(): Int {
-            return iterator.count
+            return iterator.getCount()
         }
 
         override fun getItem(position: Int): View? {
@@ -45,7 +45,7 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
 
         override fun getItemId(position: Int): Long {
             iterator.moveToPosition(position)
-            return iterator.id
+            return iterator.getID()
         }
 
         override fun getItemViewType(position: Int): Int {
@@ -61,7 +61,7 @@ class GpxListView(c: Context, private val data: Array<ContentDescription>) : Lis
 
             if (entry is GpxListEntryView) {
                 iterator.moveToPosition(position)
-                entry.onContentUpdated(iterator.infoID, iterator.info)
+                entry.onContentUpdated(iterator.getInfoID(), iterator.getInfo())
                 entry.themify(theme)
             }
             return entry

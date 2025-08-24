@@ -23,7 +23,7 @@ import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay
 import ch.bailu.aat_lib.service.directory.Iterator
@@ -131,14 +131,14 @@ class FileControlBarLayer(
             super.setSelectedNode(iid, info, node, index)
             SolidDirectoryQuery(Storage(acontext), FocAndroidFactory(acontext)).position.setValue(index)
             iterator.moveToPosition(index)
-            selectedFile = iterator.info.getFile()
+            selectedFile = iterator.getInfo().getFile()
             val file = selectedFile
             if (file is Foc) {
                 preview.setFilePath(file)
             }
-            markupBuilder.appendHeader(iterator.info.getFile().name)
+            markupBuilder.appendHeader(iterator.getInfo().getFile().name)
             for (d in summaryData) {
-                d.onContentUpdated(iterator.infoID, iterator.info)
+                d.onContentUpdated(iterator.getInfoID(), iterator.getInfo())
                 markupBuilder.appendNl(d)
             }
             setHtmlText(markupBuilder)

@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.preferences
 
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.general.SolidWeight
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock

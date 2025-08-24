@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbResultSet
@@ -33,7 +33,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key)) {
             openAndQuery()
-        } else if (sdirectory.containsKey(key) && selection != sdirectory.createSelectionString()) {
+        } else if (sdirectory.containsKey(key) /* TODO && selection != sdirectory.createSelectionString()*/) {
             query()
         }
     }
@@ -52,17 +52,17 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
 
     override fun getID(): Long {
         resultSet?.apply {
-            return getLong(GpxDbConfiguration.KEY_ID)
+            return getLong(GpxDbConfiguration.ATTR_ID)
         }
         return 0L
     }
 
     override fun getCount(): Int {
-        return resultSet?.count ?: 0
+        return resultSet?.getCount() ?: 0
     }
 
     override fun getPosition(): Int {
-        return resultSet?.position ?: -1
+        return resultSet?.getPosition() ?: -1
     }
 
     abstract fun onCursorChanged(resultSet: DbResultSet, directory: Foc, fileID: String)
@@ -80,7 +80,7 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         var oldPosition = 0
         val resultSet = resultSet
         if (resultSet is DbResultSet) {
-            oldPosition = resultSet.position
+            oldPosition = resultSet.getPosition()
             fileOnOldPosition = getInfo().getFile().path
             resultSet.close()
         }
@@ -90,10 +90,12 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
 
     private fun updateResultFromSelection() {
         try {
-            selection = sdirectory.createSelectionString()
-            resultSet = appContext.services.getDirectoryService().query(selection)
+            //val extraStatement = "ORDER BY ${GpxDbConfiguration.ATTR_DISTANCE} DESC"
+            //val extraStatement = "ORDER BY ${GpxDbConfiguration.ATTR_FILENAME} ASC"
+            val extraStatement = "WHERE ${GpxDbConfiguration.ATTR_FILENAME} LIKE ? ORDER BY ${GpxDbConfiguration.ATTR_AVG_SPEED} DESC"
+            resultSet = appContext.services.getDirectoryService().select(extraStatement, "%2025%")
         } catch (e: Exception) {
-            AppLog.e(this, e.javaClass.simpleName)
+            AppLog.e(this, e)
         }
     }
 

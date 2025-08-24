@@ -19,7 +19,7 @@ import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.directory.IteratorSimple

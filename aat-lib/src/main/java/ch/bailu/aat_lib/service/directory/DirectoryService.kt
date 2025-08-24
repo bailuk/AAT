@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.service.directory
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.service.VirtualService
-import ch.bailu.aat_lib.service.directory.database.DatabaseInterface
+import ch.bailu.aat_lib.service.directory.database.GpxDbInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
 import ch.bailu.aat_lib.util.fs.AFile.logErrorNoAccess
 import ch.bailu.aat_lib.util.sql.DbException
@@ -12,7 +12,7 @@ import ch.bailu.foc.FocName
 
 class DirectoryService(private val appContext: AppContext) : VirtualService(),
     DirectoryServiceInterface {
-    private var database: DatabaseInterface = DatabaseInterface.NULL_DATABASE
+    private var database: GpxDbInterface = GpxDbInterface.NULL_DATABASE
     private var directory: Foc = FocName("")
     private var synchronizer: DirectorySynchronizer? = null
 
@@ -32,7 +32,7 @@ class DirectoryService(private val appContext: AppContext) : VirtualService(),
         try {
             openDataBase(dbPath)
         } catch (e: Exception) {
-            database = DatabaseInterface.NULL_DATABASE
+            database = GpxDbInterface.NULL_DATABASE
         }
     }
 
@@ -42,8 +42,8 @@ class DirectoryService(private val appContext: AppContext) : VirtualService(),
         database = GpxDatabase(appContext.createDataBase(), dbPath)
     }
 
-    override fun query(selection: String): DbResultSet? {
-        return database.query(selection)
+    override fun select(extraSqlStatment: String, vararg params: Any): DbResultSet {
+        return database.select(extraSqlStatment, *params)
     }
 
     override fun deleteEntry(file: Foc) {

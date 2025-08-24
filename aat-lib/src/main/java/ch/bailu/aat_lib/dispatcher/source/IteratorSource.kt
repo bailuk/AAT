@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx

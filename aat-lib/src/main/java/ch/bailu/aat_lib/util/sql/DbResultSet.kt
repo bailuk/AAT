@@ -1,18 +1,17 @@
-package ch.bailu.aat_lib.util.sql;
+package ch.bailu.aat_lib.util.sql
 
-public interface DbResultSet {
-    boolean moveToFirst();
-    boolean moveToNext();
-    boolean moveToPrevious();
-    boolean moveToPosition(int pos);
+interface DbResultSet {
+    fun moveToFirst(): Boolean
+    fun moveToNext(): Boolean
+    fun moveToPrevious(): Boolean
+    fun moveToPosition(pos: Int): Boolean
 
-    int getPosition();
-    int getCount();
+    fun getPosition(): Int
+    fun getCount(): Int
+    fun getString(column: String): String
+    fun getLong(column: String): Long
+    fun getFloat(column: String): Float
+    fun isClosed(): Boolean
 
-    String getString(String column);
-    long getLong(String column);
-    float getFloat(String column);
-
-    boolean isClosed();
-    void close();
+    fun close()
 }
