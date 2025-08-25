@@ -3,6 +3,7 @@ package ch.bailu.aat_gtk.view.toplevel.list
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
+import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FilterListContextMenu
 import ch.bailu.aat_lib.app.AppContext
@@ -18,10 +19,10 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.type.Str
 
-class FileListFilterView(app: Application, appContext: AppContext) {
+class FileListFilterView(app: Application, appContext: AppContext, uiController: UiControllerInterface) {
     private val fileCountLabel = Label(Str.NULL)
     private val solidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
-    private val filterContextMenu = FilterListContextMenu(solidDirectoryQuery)
+    private val filterContextMenu = FilterListContextMenu(app.activeWindow, solidDirectoryQuery, uiController)
     private val filterListMenuButton = PopupMenuButton(filterContextMenu).apply { createActions(app) }.menuButton
 
     private val summaryFrameButton = Button().apply {

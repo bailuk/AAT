@@ -7,7 +7,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
 
-class SolidCheckMenu(private val solid: SolidCheckList): MenuProvider {
+class SolidCheckMenu(private val solid: SolidCheckList): MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(solid.getKey()))

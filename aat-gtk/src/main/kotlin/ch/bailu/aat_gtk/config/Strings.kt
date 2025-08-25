@@ -21,8 +21,6 @@ object Strings {
     const val ACTION_FILE_RENAME    = "fileRename"
     const val ACTION_FILE_DELETE    = "fileDelete"
     const val ACTION_FILE_RELOAD    = "fileReload"
-    const val ACTION_SORT_DESCENT   = "sortDescent"
-    const val ACTION_SORT_ATTRIBUTE = "sortAttribute"
     const val ACTION_SHOW_MAP       = "showMap"
     const val ACTION_SHOW_COCKPIT   = "showCockpit"
     const val ACTION_SHOW_TRACKS    = "showTracks"
@@ -33,10 +31,8 @@ object Strings {
     const val ACTION_LOCATION_COPY  = "locationCopy"
     const val ACTION_LOCATION_PASTE = "locationPaste"
 
-
     // Custom widgets
     const val CUSTOM_TRACKER_BUTTON = "trackerButton"
-    const val CUSTOM_SORT_FILTER = "sortFilter"
 
     // Ids
     const val ID_CANCEL = "cancel"

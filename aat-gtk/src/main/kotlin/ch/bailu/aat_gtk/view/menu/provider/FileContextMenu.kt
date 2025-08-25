@@ -24,7 +24,7 @@ import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
-class FileContextMenu(private val appContext: AppContext, private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProvider {
+class FileContextMenu(private val appContext: AppContext, private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {

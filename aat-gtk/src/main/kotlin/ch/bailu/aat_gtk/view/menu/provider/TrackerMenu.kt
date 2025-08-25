@@ -12,12 +12,12 @@ import ch.bailu.gtk.gtk.Application
 class TrackerMenu (
     private val services: ServicesInterface,
     private val dispatcher: DispatcherInterface) :
-MenuProvider {
+MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {
             appendSection(Res.str().tracker(), Menu().apply {
-                appendItem(MenuHelper.createCustomItem("tracker-button"))
+                appendItem(MenuHelper.createCustomItem(CUSTOM_ID_TRACKER_BUTTON))
             })
         }
     }
@@ -26,8 +26,12 @@ MenuProvider {
         val trackerButton = TrackerButtonStartStop(services)
         dispatcher.addTarget(trackerButton, InfoID.TRACKER)
 
-        return arrayOf(CustomWidget(trackerButton.button, "tracker-button") {})
+        return arrayOf(CustomWidget(trackerButton.button,  CUSTOM_ID_TRACKER_BUTTON) {})
     }
 
     override fun createActions(app: Application) {}
+
+    companion object {
+        private const val CUSTOM_ID_TRACKER_BUTTON = "tracker-button"
+    }
 }

@@ -1,33 +1,33 @@
 package ch.bailu.aat_gtk.view.menu
 
-import ch.bailu.aat_gtk.view.menu.provider.MenuProvider
+import ch.bailu.aat_gtk.view.menu.provider.MenuProviderInterface
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Popover
 import ch.bailu.gtk.gtk.PopoverMenu
 import ch.bailu.gtk.type.Str
 
-open class PopupMenuButton(private val menuProvider: MenuProvider) {
+open class PopupMenuButton(private val menuProvider: MenuProviderInterface): MenuButtonInterface {
     val menuButton = MenuButton().apply {
         menuModel = menuProvider.createMenu()
 
         Companion.setPopover(popover, menuProvider)
     }
 
-    fun createActions(app: Application) {
+    override fun createActions(app: Application) {
         menuProvider.createActions(app)
     }
 
-    fun setIcon(iconName: String) {
+    override fun setIcon(iconName: String) {
         menuButton.setIconName(iconName)
     }
 
-    fun setIcon(iconName: Str) {
+    override fun setIcon(iconName: Str) {
         menuButton.iconName = iconName
     }
 
     companion object {
-        fun setPopover(popover: Popover, menuProvider: MenuProvider) {
+        fun setPopover(popover: Popover, menuProvider: MenuProviderInterface) {
             PopoverMenu(popover.cast()).apply {
                 val customWidgets = menuProvider.createCustomWidgets()
                 customWidgets.forEach {
