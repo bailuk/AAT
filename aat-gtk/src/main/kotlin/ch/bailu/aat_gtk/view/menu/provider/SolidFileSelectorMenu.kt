@@ -16,7 +16,7 @@ import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.type.Str
 
 class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Window) :
-    MenuProvider {
+    MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {

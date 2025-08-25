@@ -7,7 +7,7 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 
-class EditorMenu(private val edit: EditorSourceInterface): MenuProvider {
+class EditorMenu(private val edit: EditorSourceInterface): MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
             append(Res.str().edit_save(), "app.editSave")
@@ -55,7 +55,6 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProvider {
         setAction(app, "editPreceding") { edit.editor.cutPreceding() }
     }
 
-
     private fun saveCopy() {
         // editor.edit.saveTo(file)
     }
@@ -63,7 +62,6 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProvider {
     private fun saveCopyTo() {
         // editor.edit.saveTo(destDirectory)
     }
-
 
     private fun attach() {
     }

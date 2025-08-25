@@ -13,7 +13,7 @@ import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 
-class LocationMenu : MenuProvider {
+class LocationMenu : MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
             append(Res.str().clipboard_copy(), MenuHelper.toAppAction(Strings.ACTION_LOCATION_COPY))

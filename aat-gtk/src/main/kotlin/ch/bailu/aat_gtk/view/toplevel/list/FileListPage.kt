@@ -67,7 +67,7 @@ class FileListPage(app: Application,
     }
 
 
-    private val fileListFilterView = FileListFilterView(app, appContext)
+    private val fileListFilterView = FileListFilterView(app, appContext, uiController)
 
     private val listIndex = ListIndex()
 

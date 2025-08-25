@@ -22,7 +22,7 @@ class AppMenu(private val window: Window,
               private val dispatcher: Dispatcher,
               private val uiController: UiControllerInterface
 ) :
-    MenuProvider {
+    MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {

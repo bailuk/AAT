@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
+class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {
