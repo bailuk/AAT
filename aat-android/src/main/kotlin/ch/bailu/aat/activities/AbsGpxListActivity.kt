@@ -90,7 +90,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         sdirectory?.apply {
             listView?.setSelection(position.getValue())
             register(this@AbsGpxListActivity)
-            setListBackgroundColor(createSelectionString().isNotEmpty())
+            setListBackgroundColor(isFilterEnabled())
         }
 
         super.onResumeWithService()
@@ -122,7 +122,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         sdirectory?.apply {
             if (containsKey(key)) {
-                setListBackgroundColor(createSelectionString().isNotEmpty())
+                setListBackgroundColor(createExtraStatement().isNotEmpty())
             }
         }
     }
