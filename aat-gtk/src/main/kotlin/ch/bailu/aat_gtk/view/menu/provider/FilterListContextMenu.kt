@@ -44,14 +44,21 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         val widgets = arrayOf(
-            SolidFilterWidget(solidDirectoryQuery.useGeo, solidDirectoryQuery.boundingBox, {
+            SolidFilterWidget(solidDirectoryQuery.useGeo, solidDirectoryQuery.boundingBox, { self ->
                 solidDirectoryQuery.boundingBox.value = uiControllerInterface.getMapBounding()
+                self.update()
             }),
-            SolidFilterWidget(solidDirectoryQuery.useDateStart, solidDirectoryQuery.dateStart, {
-                CalendarDialog.getDate(parent, solidDirectoryQuery.dateStart.getValue()) { solidDirectoryQuery.dateStart.setValue(it) }
+            SolidFilterWidget(solidDirectoryQuery.useDateStart, solidDirectoryQuery.dateStart, { self ->
+                CalendarDialog.getDate(parent, solidDirectoryQuery.dateStart.getValue()) {
+                    solidDirectoryQuery.dateStart.setValue(it)
+                    self.update()
+                }
             }),
-            SolidFilterWidget(solidDirectoryQuery.useDateEnd, solidDirectoryQuery.dateEnd, {
-                CalendarDialog.getDate(parent, solidDirectoryQuery.dateEnd.getValue()) { solidDirectoryQuery.dateEnd.setValue(it) }
+            SolidFilterWidget(solidDirectoryQuery.useDateEnd, solidDirectoryQuery.dateEnd, { self ->
+                CalendarDialog.getDate(parent, solidDirectoryQuery.dateEnd.getValue()) {
+                    solidDirectoryQuery.dateEnd.setValue(it)
+                    self.update()
+                }
             })
         )
 
@@ -71,7 +78,7 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
 
     private class SolidFilterWidget(private val solidCheckbox: SolidBoolean,
                             private val solidValue: SolidTypeInterface,
-                            private val onClickedCallback: (parent: Widget)->Unit) {
+                            private val onClickedCallback: (self: SolidFilterWidget)->Unit) {
         private val checkButton = CheckButton().apply {
             onToggled { solidCheckbox.value = active }
         }
@@ -93,7 +100,7 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
         }
 
         fun onClicked() {
-            onClickedCallback(box)
+            onClickedCallback(this)
         }
 
         init {
