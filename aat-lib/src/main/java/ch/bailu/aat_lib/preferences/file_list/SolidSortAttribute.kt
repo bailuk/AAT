@@ -10,17 +10,25 @@ class SolidSortAttribute(storage: StorageInterface, key: String) : SolidIndexLis
 
     companion object {
         private val label = arrayOf (
+            Res.str().d_startdate(),
             Res.str().name(),
             Res.str().distance(),
-            Res.str().d_startdate(),
             Res.str().time(),
+            Res.str().d_enddate(),
+            Res.str().speed(),
+            Res.str().maximum(),
+            Res.str().pause()
         )
 
-        private val sql = arrayOf (
-            ToDo.translate("ORDER BY ${GpxDbConfiguration.ATTR_FILENAME}"),
-            ToDo.translate("ORDER BY ${GpxDbConfiguration.ATTR_START_TIME}"),
-            ToDo.translate("ORDER BY ${GpxDbConfiguration.ATTR_DISTANCE}"),
-            ToDo.translate("ORDER BY ${GpxDbConfiguration.ATTR_TOTAL_TIME}"),
+        private val attribute = arrayOf (
+            GpxDbConfiguration.ATTR_START_TIME,
+            GpxDbConfiguration.ATTR_FILENAME,
+            GpxDbConfiguration.ATTR_DISTANCE,
+            GpxDbConfiguration.ATTR_TOTAL_TIME,
+            GpxDbConfiguration.ATTR_END_TIME,
+            GpxDbConfiguration.ATTR_AVG_SPEED,
+            GpxDbConfiguration.ATTR_MAX_SPEED,
+            GpxDbConfiguration.ATTR_PAUSE,
         )
     }
 
@@ -32,8 +40,8 @@ class SolidSortAttribute(storage: StorageInterface, key: String) : SolidIndexLis
         return label[validate(index)]
     }
 
-    fun getSqlStatement(): String {
-        return sql[validate(index)]
+    fun getAttributeName(): String {
+        return attribute[validate(index)]
     }
 
     override fun getLabel(): String {

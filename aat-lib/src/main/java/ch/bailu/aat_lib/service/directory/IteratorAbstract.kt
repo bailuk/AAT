@@ -17,7 +17,8 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     private var onCursorChangedListener = { }
     private var resultSet: DbResultSet? = null
     private val sdirectory: SolidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
-    private var selection = ""
+    private var extraStatement = sdirectory.createExtraStatement()
+    private var extraStatementParam = sdirectory.createExtraStatementParam()
     private val onSyncChanged = BroadcastReceiver { _: Array<out String> -> query() }
 
     init {
@@ -33,8 +34,14 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key)) {
             openAndQuery()
-        } else if (sdirectory.containsKey(key) /* TODO && selection != sdirectory.createSelectionString()*/) {
-            query()
+        } else if (sdirectory.containsKey(key)) {
+            val newExtraStatement = sdirectory.createExtraStatement()
+            val newExtraStatementParam = sdirectory.createExtraStatementParam()
+            if (extraStatement != newExtraStatement || extraStatementParam != newExtraStatementParam) {
+                extraStatement = newExtraStatement
+                extraStatementParam = newExtraStatementParam
+                query()
+            }
         }
     }
 
@@ -90,10 +97,13 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
 
     private fun updateResultFromSelection() {
         try {
-            //val extraStatement = "ORDER BY ${GpxDbConfiguration.ATTR_DISTANCE} DESC"
-            //val extraStatement = "ORDER BY ${GpxDbConfiguration.ATTR_FILENAME} ASC"
-            val extraStatement = "WHERE ${GpxDbConfiguration.ATTR_FILENAME} LIKE ? ORDER BY ${GpxDbConfiguration.ATTR_AVG_SPEED} DESC"
-            resultSet = appContext.services.getDirectoryService().select(extraStatement, "%2025%")
+            if (extraStatementParam.isEmpty()) {
+                resultSet = appContext.services.getDirectoryService()
+                    .select(extraStatement)
+            } else {
+                resultSet = appContext.services.getDirectoryService()
+                    .select(extraStatement, extraStatementParam)
+            }
         } catch (e: Exception) {
             AppLog.e(this, e)
         }

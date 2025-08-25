@@ -83,11 +83,9 @@ class FileListPage(app: Application,
     private fun updateList() {
         fileListFilterView.updateFileCount(iteratorSimple.getCount())
 
-        if (listIndex.size != iteratorSimple.getCount()) {
-            if (!listIsDirty) {
-                listIsDirty = true
-                updateLater()
-            }
+        if (!listIsDirty) {
+            listIsDirty = true
+            updateLater()
         }
     }
 

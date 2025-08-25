@@ -59,18 +59,52 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
     val solidSortOrderDescend: SolidBoolean
         get() = SolidBoolean(getStorage(), KEY_SORT_DESCEND + getValueAsString())
 
-    fun createSelectionString(): String {
-        // TODO replace
+    fun isFilterEnabled(): Boolean {
+        return useGeo.isEnabled || useDateEnd.isEnabled || useDateStart.isEnabled || solidNameFilter.getValueAsString().trim().isNotEmpty()
+    }
+
+    fun createExtraStatement(): String {
+        var delimiter = " WHERE "
+        val builder = StringBuilder()
+        arrayOf(createNameFilterStatement(), createDateFilterStatement(), createBoundingFilterStatement()).forEach {
+            if (it.isNotEmpty()) {
+                builder.append(delimiter)
+                builder.append(it)
+                delimiter = " AND "
+            }
+        }
+        builder.append(createSortStatement())
+        return builder.toString()
+    }
+
+    fun createExtraStatementParam(): String {
+        val filterName = solidNameFilter.getValueAsString().trim()
+        if (filterName.isNotEmpty()) {
+            return "%$filterName%"
+        }
         return ""
     }
 
-    private fun createSelectionStringBounding(): String {
+    private fun createSortStatement(): String {
+        val direction = if (solidSortOrderDescend.value) { "DESC" } else { "ASC" }
+        return " ORDER BY ${solidSortAttribute.getAttributeName()} $direction"
+    }
+    private fun createNameFilterStatement(): String {
+        val nameFilter = solidNameFilter.getValueAsString().trim()
+        return if (nameFilter.isNotEmpty()) {
+            "${GpxDbConfiguration.ATTR_FILENAME} like ?"
+        } else {
+            ""
+        }
+    }
+
+    private fun createBoundingFilterStatement(): String {
         return if (useGeo.value) {
             boundingBox.createSelectionStringInside()
         } else ""
     }
 
-    private fun createSelectionStringDate(): String {
+    private fun createDateFilterStatement(): String {
         var selection = ""
         if (useDateStart.value || useDateEnd.value) {
             var end: Long
