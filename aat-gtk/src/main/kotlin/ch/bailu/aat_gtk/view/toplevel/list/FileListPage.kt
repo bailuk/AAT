@@ -94,7 +94,6 @@ class FileListPage(app: Application,
             if (listIsDirty) {
                 listIsDirty = false
                 val count = iteratorSimple.getCount()
-                AppLog.d(this, "Update list, new size: $count")
                 listIndex.size = count
                 if (count == 0) {
                     select(-1)

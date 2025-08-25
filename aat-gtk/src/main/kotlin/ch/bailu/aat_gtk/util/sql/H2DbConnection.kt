@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.util.sql
 
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
 import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.aat_lib.util.sql.DbException
@@ -14,14 +13,13 @@ import java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE
 
 class H2DbConnection : DbConnectionInterface {
     private var connection: Connection? = null
-    private val dbSuffix = ".mv.db"
 
     override fun open(name: String, version: Int) {
         close()
         try {
             var dbName = name
-            if (name.endsWith(dbSuffix)) {
-                dbName = name.substring(0, name.length - dbSuffix.length)
+            if (name.endsWith(DB_SUFFIX)) {
+                dbName = name.substring(0, name.length - DB_SUFFIX.length)
             }
             connection = DriverManager.getConnection("jdbc:h2:${dbName}")
 
@@ -92,7 +90,6 @@ class H2DbConnection : DbConnectionInterface {
 
     private fun getPreparedStatement(sqlStatement: String, vararg params: Any): PreparedStatement {
         val connection = connection
-        AppLog.d(this, params.size.toString())
         if (connection != null) {
             val stmt = connection.prepareStatement(
                 sqlStatement,
@@ -101,7 +98,6 @@ class H2DbConnection : DbConnectionInterface {
             )
 
             for ((i, p) in params.withIndex()) {
-                AppLog.d(this, p.toString())
                 val index = i + 1
                 if (p is Int) {
                     stmt.setInt(index, p)
@@ -116,5 +112,9 @@ class H2DbConnection : DbConnectionInterface {
             return stmt
         }
         throw DbException("No connection")
+    }
+
+    companion object {
+        private const val DB_SUFFIX = ".mv.db"
     }
 }

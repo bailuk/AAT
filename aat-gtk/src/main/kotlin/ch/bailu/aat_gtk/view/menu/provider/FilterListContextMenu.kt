@@ -33,7 +33,7 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("Descend"), MenuHelper.toAppAction(ACTION_SORT_DESCENT))
+                append(ToDo.translate("Ascend"), MenuHelper.toAppAction(ACTION_SORT_ASCEND))
             })
             appendSection(Res.str().label_filter(), Menu().apply {
                 appendItem(MenuHelper.createCustomItem(CUSTOM_SORT_FILTER))
@@ -112,13 +112,13 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
         ActionHandler.get(app, ACTION_SORT_ATTRIBUTE, solidDirectoryQuery.solidSortAttribute.index).onChange { value ->
             solidDirectoryQuery.solidSortAttribute.index = value
         }
-        ActionHandler.get(app, ACTION_SORT_DESCENT, solidDirectoryQuery.solidSortOrderDescend.value).onToggle { value ->
-            solidDirectoryQuery.solidSortOrderDescend.value = value
+        ActionHandler.get(app, ACTION_SORT_ASCEND, solidDirectoryQuery.solidSortOrderAscend.value).onToggle { value ->
+            solidDirectoryQuery.solidSortOrderAscend.value = value
         }
     }
 
     companion object {
-        const val ACTION_SORT_DESCENT   = "sortDescent"
+        const val ACTION_SORT_ASCEND   = "sortAscend"
         const val ACTION_SORT_ATTRIBUTE = "sortAttribute"
         const val CUSTOM_SORT_FILTER = "sortFilter"
     }

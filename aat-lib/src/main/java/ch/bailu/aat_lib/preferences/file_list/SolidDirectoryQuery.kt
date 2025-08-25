@@ -56,8 +56,8 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
     val solidSortAttribute: SolidSortAttribute
         get() = SolidSortAttribute(getStorage(), KEY_SORT_ATTRIBUTE + getValueAsString())
 
-    val solidSortOrderDescend: SolidBoolean
-        get() = SolidBoolean(getStorage(), KEY_SORT_DESCEND + getValueAsString())
+    val solidSortOrderAscend: SolidBoolean
+        get() = SolidBoolean(getStorage(), KEY_SORT_ASCEND + getValueAsString())
 
     fun isFilterEnabled(): Boolean {
         return useGeo.isEnabled || useDateEnd.isEnabled || useDateStart.isEnabled || solidNameFilter.getValueAsString().trim().isNotEmpty()
@@ -86,7 +86,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
     }
 
     private fun createSortStatement(): String {
-        val direction = if (solidSortOrderDescend.value) { "DESC" } else { "ASC" }
+        val direction = if (solidSortOrderAscend.value) { "ASC" } else { "DESC" }
         return " ORDER BY ${solidSortAttribute.getAttributeName()} $direction"
     }
     private fun createNameFilterStatement(): String {
@@ -140,7 +140,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
         private const val KEY_BOUNDING_BOX = "BOX_"
         private const val KEY_NAME_FILTER = "NAME_FILTER_"
         private const val KEY_SORT_ATTRIBUTE = "SORT_ATTRIBUTE_"
-        private const val KEY_SORT_DESCEND = "SORT_DESCEND_"
+        private const val KEY_SORT_ASCEND = "SORT_ASCEND_"
         private const val DAY = (1000 * 60 * 60 * 24).toLong() // /* ms*sec*min*h = d
     }
 }
