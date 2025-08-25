@@ -49,16 +49,18 @@ class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, 
         }
 
         private fun toThemeID(name: String): String {
-            MapsforgeThemes.entries.forEach {
-                if (name == it.name) {
-                    return name
+            if (name.trim().isNotEmpty()) {
+                MapsforgeThemes.entries.forEach {
+                    if (name == it.name) {
+                        return name
+                    }
                 }
-            }
-            try {
-                ExternalRenderTheme(File(name))
-                return name
-            } catch (e: FileNotFoundException) {
-                AppLog.w(this, e)
+                try {
+                    ExternalRenderTheme(File(name))
+                    return name
+                } catch (e: FileNotFoundException) {
+                    AppLog.d(SolidRenderTheme.javaClass.simpleName, e.message)
+                }
             }
             return MapsforgeThemes.DEFAULT.toString()
         }

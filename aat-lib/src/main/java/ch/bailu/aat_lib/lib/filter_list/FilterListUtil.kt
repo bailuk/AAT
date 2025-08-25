@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.lib.filter_list
 
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.logger.AppLog.e
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
 import org.mapsforge.poi.storage.PoiCategoryManager
@@ -61,12 +61,14 @@ object FilterListUtil {
 
         try {
             filterList.clear()
-            persistenceManager = appContext.getPoiPersistenceManager(db)
-            val categoryManager = persistenceManager.categoryManager
-            readList(filterList, categoryManager)
-            readSelected(filterList, selected)
+            if (db.trim().isNotEmpty()) {
+                persistenceManager = appContext.getPoiPersistenceManager(db)
+                val categoryManager = persistenceManager.categoryManager
+                readList(filterList, categoryManager)
+                readSelected(filterList, selected)
+            }
         } catch (e: Exception) {
-            e(selected, "Load " + db + ": " + e.message)
+            AppLog.e(selected, "Load " + db + ": " + e.message)
         } finally {
             persistenceManager?.close()
         }

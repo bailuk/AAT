@@ -1,6 +1,5 @@
 package ch.bailu.aat_lib.service.directory.database
 
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
@@ -23,7 +22,6 @@ class GpxDatabase (
     }
 
     override fun select(extraStatement: String, vararg params: Any): DbResultSet {
-        AppLog.d(this, "$selectAll $extraStatement")
         return database.query("$selectAll $extraStatement", *params)
     }
 
