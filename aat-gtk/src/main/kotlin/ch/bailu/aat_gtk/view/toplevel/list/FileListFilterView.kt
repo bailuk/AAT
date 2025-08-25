@@ -45,7 +45,6 @@ class FileListFilterView(app: Application, appContext: AppContext, uiController:
             solidDirectoryQuery.solidNameFilter.setValue(asEditable().text.toString())
         }
         asEditable().setText(solidDirectoryQuery.solidNameFilter.getValueAsString())
-        hexpand = true
     }
 
     val box = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
@@ -63,10 +62,30 @@ class FileListFilterView(app: Application, appContext: AppContext, uiController:
             appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
             appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
         })
-        append(fileCountLabel)
+        append(fileCountLabel.apply {
+            hexpand = true
+        })
+    }
+
+
+    init {
+        solidDirectoryQuery.register { _, key ->
+            if (solidDirectoryQuery.containsKey(key)) {
+                setHighlighted()
+            }
+        }
+        setHighlighted()
     }
 
     fun updateFileCount(count: Int) {
         fileCountLabel.setLabel(count.toString())
+    }
+
+    private fun setHighlighted() {
+        if (solidDirectoryQuery.isFilterEnabled()) {
+            fileCountLabel.addCssClass("highlighted")
+        } else {
+            fileCountLabel.removeCssClass("highlighted")
+        }
     }
 }
