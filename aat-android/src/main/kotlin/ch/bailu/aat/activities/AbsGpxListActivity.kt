@@ -11,6 +11,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.busy.BusyViewControlDbSync
 import ch.bailu.aat.views.list.GpxListActivityContentView
+import ch.bailu.aat.views.list.GpxListFilterView
 import ch.bailu.aat.views.list.GpxListView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.TargetInterface
@@ -36,6 +37,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     private var listView: GpxListView? = null
     private var fileControlBar: FileControlBarLayer? = null
     private var busyControl: BusyViewControlDbSync? = null
+    private var listFilterView: GpxListFilterView? = null
 
     abstract fun displayFile()
 
@@ -57,6 +59,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         busyControl = contentView.busyControl
         listView = contentView.listView
         fileControlBar = contentView.fileControlBar
+        listFilterView = contentView.listFilterView
 
         setContentView(contentView.contentView)
         createDispatcher(contentView.busyControl)
@@ -119,8 +122,10 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     private fun setListBackgroundColor(hasFilter: Boolean) {
         if (hasFilter) {
             listView?.themify(filterTheme)
+            listFilterView?.themify(filterTheme)
         } else {
             listView?.themify(theme)
+            listFilterView?.themify(theme)
         }
     }
 }

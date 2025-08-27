@@ -40,14 +40,16 @@ class GpxListActivityContentView(private val acontext: AbsGpxListActivity, sdire
 
     val contentView = ContentView(acontext, theme)
     val busyControl = BusyViewControlDbSync(contentView)
+    val listFilterView = GpxListFilterView(acontext, acontext.dispatcher, sdirectory, theme)
     val listView = GpxListView(acontext, acontext.gpxListItemData).apply {
         onItemClickListener = acontext
     }
     val fileControlBar = FileControlBarLayer(acontext.appContext, map.getMContext(), acontext, acontext.appContext.summaryConfig).apply {
         map.add(this)
     }
+
     init {
-        listLayout.addView(GpxListFilterView(acontext, acontext.dispatcher, sdirectory, theme).layout)
+        listLayout.addView(listFilterView.layout)
         listLayout.addView(listView)
         acontext.registerForContextMenu(listView)
 
@@ -98,7 +100,7 @@ class GpxListActivityContentView(private val acontext: AbsGpxListActivity, sdire
         } else {
             val a = PercentageLayout(acontext)
             a.setOrientation(LinearLayout.HORIZONTAL)
-            a.add(listView, 50)
+            a.add(listLayout, 50)
             a.add(summary, 50)
             val b = PercentageLayout(acontext)
             b.add(a, 60)

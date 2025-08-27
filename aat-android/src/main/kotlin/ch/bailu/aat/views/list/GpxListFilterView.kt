@@ -1,7 +1,6 @@
 package ch.bailu.aat.views.list
 
 import android.content.Context
-import android.graphics.Typeface
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -19,6 +18,19 @@ class GpxListFilterView(
     sdirectory: SolidDirectoryQuery,
     theme: UiTheme
 ) {
+    private val fileCountLabel = TextView(context).apply {
+        theme.header(this)
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            setMargins(20, 0, 20, 0)
+        }
+        dispatcher.addTarget({ _, info ->
+            text = info.getGpxList().pointList.size().toString()
+        }, InfoID.LIST_SUMMARY)
+    }
+
     val layout = LinearLayout(context).apply {
         orientation = LinearLayout.HORIZONTAL
         theme.background(this)
@@ -45,18 +57,11 @@ class GpxListFilterView(
             })
         })
 
-        addView(TextView(context).apply {
-            theme.content(this)
-            setTypeface(null, Typeface.BOLD)
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(20, 0, 20, 0)
-            }
-            dispatcher.addTarget({ _, info ->
-                text = info.getGpxList().pointList.size().toString()
-            }, InfoID.LIST_SUMMARY)
-        })
+        addView(fileCountLabel)
     }
+
+    fun themify(theme: UiTheme) {
+        theme.header(fileCountLabel)
+    }
+
 }
