@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.view.TrackerSplitButton
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.dialog.About
@@ -21,43 +22,45 @@ class AppMenu(private val window: Window,
               private val dispatcher: Dispatcher,
               private val uiController: UiControllerInterface
 ) :
-    MenuProvider {
+    MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {
 
-            append(Res.str().intro_map(), "app.showMap")
-            append(Res.str().intro_cockpit(), "app.showCockpit")
-            append(Res.str().label_list(), "app.showTracks")
-            append(Res.str().label_detail(), "app.trackInfo")
+            append(Res.str().intro_map(), MenuHelper.toAppAction(Strings.ACTION_SHOW_MAP))
+            append(Res.str().intro_cockpit(), MenuHelper.toAppAction(Strings.ACTION_SHOW_COCKPIT))
+            append(Res.str().label_list(), MenuHelper.toAppAction(Strings.ACTION_SHOW_TRACKS))
+            append(Res.str().label_detail(), MenuHelper.toAppAction(Strings.ACTION_TRACK_INFO))
 
             appendSection(Res.str().tracker(), Menu().apply {
-                appendItem(MenuHelper.createCustomItem("tracker-button"))
+                appendItem(MenuHelper.createCustomItem(Strings.CUSTOM_TRACKER_BUTTON))
             })
             appendSection(Str.NULL, Menu().apply {
-                append(Res.str().intro_settings(), "app.showSettings")
-                append("${Res.str().intro_about()}…", "app.showAbout")
-                append(ToDo.translate("Dump resources"), "app.dumpResources")
+                append(Res.str().intro_settings(), MenuHelper.toAppAction(Strings.ACTION_SHOW_SETTINGS))
+                append("${Res.str().intro_about()}…", MenuHelper.toAppAction(Strings.ACTION_SHOW_ABOUT))
+                append(ToDo.translate("Dump resources"), MenuHelper.toAppAction(Strings.ACTION_DUMP_RESOURCES))
             })
         }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         val trackerButton = TrackerSplitButton(services, dispatcher)
-        return arrayOf(CustomWidget(trackerButton.button, "tracker-button") {})
+        return arrayOf(CustomWidget(trackerButton.button, Strings.CUSTOM_TRACKER_BUTTON) {})
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, "trackInfo") { uiController.showDetail() }
-        MenuHelper.setAction(app, "showMap") { uiController.showMap() }
-        MenuHelper.setAction(app, "showCockpit") { uiController.showCockpit() }
-        MenuHelper.setAction(app, "showTracks") { uiController.showFileList() }
-        MenuHelper.setAction(app, "showSettings") { uiController.showPreferences() }
-        MenuHelper.setAction(app, "showAbout") { About.show(window) }
-        MenuHelper.setAction(app, "dumpResources") {
+        MenuHelper.setAction(app, Strings.ACTION_TRACK_INFO) { uiController.showDetail() }
+        MenuHelper.setAction(app, Strings.ACTION_SHOW_MAP) { uiController.showMap() }
+        MenuHelper.setAction(app, Strings.ACTION_SHOW_COCKPIT) { uiController.showCockpit() }
+        MenuHelper.setAction(app, Strings.ACTION_SHOW_TRACKS) { uiController.showFileList() }
+        MenuHelper.setAction(app, Strings.ACTION_SHOW_SETTINGS) { uiController.showPreferences() }
+        MenuHelper.setAction(app, Strings.ACTION_SHOW_ABOUT) { About.show(window) }
+        MenuHelper.setAction(app, Strings.ACTION_DUMP_RESOURCES) {
             CallbackHandler.dump(System.out)
             SignalHandler.dump(System.out)
             ActionHandler.dump(System.out)
         }
     }
+
+    override fun updateActionValues(app: Application) {}
 }

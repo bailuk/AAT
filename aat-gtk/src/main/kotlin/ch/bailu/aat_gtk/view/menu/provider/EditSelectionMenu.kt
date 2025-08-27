@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
+class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
             appendItem(MenuHelper.createCustomItem(ID))
@@ -74,6 +74,7 @@ class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) 
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 
     companion object {
         private const val ID = "editable"

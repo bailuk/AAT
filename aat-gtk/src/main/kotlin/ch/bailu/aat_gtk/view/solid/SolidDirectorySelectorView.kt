@@ -17,7 +17,9 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
     private val hbox = Box(Orientation.HORIZONTAL, 5)
     private val entry = Entry()
 
-    private val fileSelectorMenu = SolidFileSelectorMenu(solid, window)
+    private val fileSelectorMenu = SolidFileSelectorMenu(solid, window).apply {
+        createActions(app)
+    }
 
     init {
         label.setText(solid.getLabel())
@@ -30,7 +32,6 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
 
         hbox.append(entry)
 
-        fileSelectorMenu.createActions(app) // Todo: is this the right place
         hbox.append(MenuButton().apply {
             menuModel = fileSelectorMenu.createMenu()
 

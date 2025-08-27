@@ -1,7 +1,6 @@
 package ch.bailu.aat_lib.service.elevation.tile
 
 import ch.bailu.aat_lib.coordinates.Dem3Coordinates
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.BackgroundTask
@@ -72,8 +71,6 @@ class Dem3Tile : ElevationProvider, DemProvider {
     fun load(service: ServicesInterface, newCoordinates: Dem3Coordinates, solidDem3Directory: SolidDem3Directory) {
         if (!lock.isLocked) {
             loader.stopProcessing()
-
-            AppLog.d(this, "Load: $coordinates")
 
             synchronized(array) {
                 status.status = Dem3Status.LOADING

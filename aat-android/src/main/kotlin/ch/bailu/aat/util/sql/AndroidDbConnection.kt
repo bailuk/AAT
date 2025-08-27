@@ -5,13 +5,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.aat_lib.util.sql.SaveDbResultSet
 import ch.bailu.aat_lib.util.sql.Sql
 
-class AndroidDbConnection(private val context: Context) : DbConnection {
+class AndroidDbConnection(private val context: Context) : DbConnectionInterface {
     private var database: SQLiteDatabase? = null
     private var needsUpdate = false
     override fun open(name: String, version: Int) {
@@ -32,7 +32,7 @@ class AndroidDbConnection(private val context: Context) : DbConnection {
         execSQL(
             Sql.getCreateTableExpression(
                 GpxDbConfiguration.TABLE,
-                GpxDbConfiguration.KEY_LIST,
+                GpxDbConfiguration.ATTR_LIST,
                 GpxDbConfiguration.TYPE_LIST
             )
         )

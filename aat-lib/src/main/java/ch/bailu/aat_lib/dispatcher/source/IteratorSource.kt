@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
@@ -16,8 +16,7 @@ import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.IteratorFollowFile
 import ch.bailu.aat_lib.service.directory.IteratorSummary
 
-abstract class IteratorSource(private val appContext: AppContext) : SourceInterface,
-    Iterator.OnCursorChangedListener {
+abstract class IteratorSource(private val appContext: AppContext) : SourceInterface {
     private val sdirectory: SolidDirectoryQuery =
         SolidDirectoryQuery(appContext.storage, appContext)
     private var iterator = Iterator.NULL
@@ -27,16 +26,12 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
         this.target = target
     }
 
-    override fun onCursorChanged() {
-        requestUpdate()
-    }
-
     override fun requestUpdate() {
-        target.onContentUpdated(iterator.infoID, info)
+        target.onContentUpdated(iterator.getInfoID(), info)
     }
 
     override fun getIID(): Int {
-        return iterator.infoID
+        return iterator.getInfoID()
     }
 
     override fun onPauseWithService() {
@@ -47,25 +42,25 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
     override fun onResumeWithService() {
         iterator = factoryIterator(appContext)
         iterator.moveToPosition(sdirectory.position.getValue())
-        iterator.setOnCursorChangedListener(this)
+        iterator.setOnCursorChangedListener( { requestUpdate() })
     }
 
     override fun onDestroy() {}
 
     abstract fun factoryIterator(appContext: AppContext): Iterator
     override fun getInfo(): GpxInformation {
-        return iterator.info
+        return iterator.getInfo()
     }
 
     fun moveToPrevious() {
-        if (!iterator.moveToPrevious()) iterator.moveToPosition(iterator.count - 1)
-        sdirectory.position.setValue(iterator.position)
+        if (!iterator.moveToPrevious()) iterator.moveToPosition(iterator.getPosition() - 1)
+        sdirectory.position.setValue(iterator.getPosition())
         requestUpdate()
     }
 
     fun moveToNext() {
         if (!iterator.moveToNext()) iterator.moveToPosition(0)
-        sdirectory.position.setValue(iterator.position)
+        sdirectory.position.setValue(iterator.getPosition())
         requestUpdate()
     }
 

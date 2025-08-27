@@ -4,22 +4,21 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.GtkTimer
+import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
 import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.directory.IteratorSimple
@@ -32,7 +31,6 @@ import ch.bailu.gtk.gtk.ListView
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ScrolledWindow
 import ch.bailu.gtk.gtk.SignalListItemFactory
-import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
 import ch.bailu.gtk.pango.EllipsizeMode
@@ -52,7 +50,6 @@ class FileListPage(app: Application,
         margin(Layout.MARGIN)
     }
 
-    private val fileCountLabel = Label(Str.NULL)
     private val fileNameLabel = Label(Str.NULL)
     private val trackFrameButton = Button().apply {
         iconName = Icons.zoomFitBestSymbolic
@@ -69,6 +66,9 @@ class FileListPage(app: Application,
         onClicked { selectAndDetail(indexOfSelected) }
     }
 
+
+    private val fileListFilterView = FileListFilterView(app, appContext, uiController)
+
     private val listIndex = ListIndex()
 
     private var listIsDirty = false
@@ -76,17 +76,17 @@ class FileListPage(app: Application,
 
     private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
+            AppLog.d(this, "onCursorChanged")
             updateList()
         }
     }
 
     private fun updateList() {
-        fileCountLabel.setLabel(iteratorSimple.count.toString())
-        if (listIndex.size != iteratorSimple.count) {
-            if (!listIsDirty) {
-                listIsDirty = true
-                updateLater()
-            }
+        fileListFilterView.updateFileCount(iteratorSimple.getCount())
+
+        if (!listIsDirty) {
+            listIsDirty = true
+            updateLater()
         }
     }
 
@@ -94,8 +94,7 @@ class FileListPage(app: Application,
         updateTimer.kick(500) {
             if (listIsDirty) {
                 listIsDirty = false
-                val count = iteratorSimple.count
-                AppLog.d(this, "Update list, new size: $count")
+                val count = iteratorSimple.getCount()
                 listIndex.size = count
                 if (count == 0) {
                     select(-1)
@@ -107,16 +106,15 @@ class FileListPage(app: Application,
     private var indexOfSelected = -1
 
     private val items = HashMap<ListItem, FileListItem>()
-    private val overlayMenu = FileContextMenu(
+    private val fileContextMenu = FileContextMenu(
         appContext,
         SolidCustomOverlayList(
             appContext.storage,
             appContext
-        ), SolidMockLocationFile(appContext.storage)).apply {
-        createActions(app)
-    }
+        ), SolidMockLocationFile(appContext.storage))
+
     private val logItems = SizeLog("FileListItem")
-    private val menuButton = PopupMenuButton(overlayMenu).apply { createActions(app) }.menuButton
+    private val fileContextMenuButton = PopupMenuButton(fileContextMenu).apply { createActions(app) }.menuButton
 
     init {
         try {
@@ -136,7 +134,7 @@ class FileListPage(app: Application,
                     val index = ListIndex.toIndex(item)
 
                     iteratorSimple.moveToPosition(index)
-                    items[item]?.bind(iteratorSimple.info, index)
+                    items[item]?.bind(iteratorSimple.getInfo(), index)
                     if (item.selected) {
                         select(index)
                     }
@@ -171,20 +169,16 @@ class FileListPage(app: Application,
                         }
                     })
                 })
-                append(Spinner().apply {
-                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_DONE) { stop() }
-                    appContext.broadcaster.register(AppBroadcaster.DB_SYNC_CHANGED) { start() }
-                    appContext.broadcaster.register(AppBroadcaster.DBSYNC_START) { start() }
-                })
-                append(fileCountLabel)
             })
+
+            vbox.append(fileListFilterView.box)
 
             vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)
                     append(trackCenterButton)
                     append(trackDetailButton)
-                    append(menuButton)
+                    append(fileContextMenuButton)
                     addCssClass(Strings.linked)
                 })
                 append(fileNameLabel.apply {
@@ -202,7 +196,7 @@ class FileListPage(app: Application,
             })
 
 
-            MenuHelper.setAction(app, Strings.actionFileEdit) {
+            MenuHelper.setAction(app, Strings.ACTION_FILE_EDIT) {
                 selectAndEdit(indexOfSelected)
             }
 
@@ -214,9 +208,9 @@ class FileListPage(app: Application,
     private fun selectAndFrame(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showMap()
-            uiController.frameInMap(iteratorSimple.info)
+            uiController.frameInMap(iteratorSimple.getInfo())
             uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
@@ -224,16 +218,16 @@ class FileListPage(app: Application,
     private fun selectAndEdit(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.loadIntoEditor(iteratorSimple.info)
+            uiController.loadIntoEditor(iteratorSimple.getInfo())
         }
     }
 
     private fun selectAndCenter(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showMap()
-            uiController.centerInMap(iteratorSimple.info)
+            uiController.centerInMap(iteratorSimple.getInfo())
             uiController.setOverlayEnabled(InfoID.FILE_VIEW, true)
         }
     }
@@ -241,7 +235,7 @@ class FileListPage(app: Application,
     private fun selectAndDetail(index: Int) {
         select(index)
         if (isIndexValid(indexOfSelected)) {
-            uiController.load(iteratorSimple.info)
+            uiController.load(iteratorSimple.getInfo())
             uiController.showDetail()
             uiController.showInDetail(InfoID.FILE_VIEW)
         }
@@ -252,18 +246,18 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            overlayMenu.setFile(iteratorSimple.info.getFile())
-            fileNameLabel.setLabel(iteratorSimple.info.getFile().name)
-            fileNameLabel.setTooltipText(iteratorSimple.info.getFile().toString())
-            menuButton.sensitive = true
+            fileContextMenu.setFile(iteratorSimple.getInfo().getFile())
+            fileNameLabel.setLabel(iteratorSimple.getInfo().getFile().name)
+            fileNameLabel.setTooltipText(iteratorSimple.getInfo().getFile().toString())
+            fileContextMenuButton.sensitive = true
         } else {
             fileNameLabel.label = Str.NULL
             fileNameLabel.tooltipText = Str.NULL
-            menuButton.sensitive = false
+            fileContextMenuButton.sensitive = false
         }
     }
 
     private fun isIndexValid(index: Int): Boolean {
-        return index > -1 && index < iteratorSimple.count
+        return index > -1 && index < iteratorSimple.getCount()
     }
 }

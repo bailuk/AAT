@@ -16,7 +16,7 @@ class MapMenu(
     mapDirectories: GtkMapDirectories,
     window: Window
 
-) : MenuProvider {
+) : MenuProviderInterface {
 
     private val srender = mapDirectories.createSolidRenderTheme()
     private val renderMenu = SolidFileSelectorMenu(srender, window)
@@ -50,4 +50,6 @@ class MapMenu(
         tilesMenu.createActions(app)
         offlineMenu.createActions(app)
     }
+
+    override fun updateActionValues(app: Application) {}
 }
