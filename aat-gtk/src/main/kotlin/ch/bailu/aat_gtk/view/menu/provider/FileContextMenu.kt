@@ -68,6 +68,8 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
         }
     }
 
+    override fun updateActionValues(app: Application) {}
+
     private fun delete(app: Application) {
         if (file.canWrite()) {
             FileDeleteDialog(app, file) { response ->

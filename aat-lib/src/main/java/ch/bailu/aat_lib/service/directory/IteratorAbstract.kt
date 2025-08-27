@@ -33,6 +33,8 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (sdirectory.hasKey(key)) {
+            extraStatement = sdirectory.createExtraStatement()
+            extraStatementParam = sdirectory.createExtraStatementParam()
             openAndQuery()
         } else if (sdirectory.containsKey(key)) {
             val newExtraStatement = sdirectory.createExtraStatement()

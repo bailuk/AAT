@@ -4,4 +4,5 @@ import ch.bailu.gtk.gtk.Application
 
 interface ActionProviderInterface {
     fun createActions(app: Application)
+    fun updateActionValues(app: Application)
 }

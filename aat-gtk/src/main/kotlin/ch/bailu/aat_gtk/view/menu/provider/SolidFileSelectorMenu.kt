@@ -62,6 +62,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
         }
     }
 
+    override fun updateActionValues(app: Application) {}
     private fun pathFromFile(file: Foc): String {
         return if (file.isFile) {
             file.parent().path

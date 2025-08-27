@@ -30,6 +30,7 @@ MenuProviderInterface {
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 
     companion object {
         private const val CUSTOM_ID_TRACKER_BUTTON = "tracker-button"

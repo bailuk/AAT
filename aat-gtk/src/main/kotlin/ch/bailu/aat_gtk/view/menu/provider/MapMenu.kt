@@ -50,4 +50,6 @@ class MapMenu(
         tilesMenu.createActions(app)
         offlineMenu.createActions(app)
     }
+
+    override fun updateActionValues(app: Application) {}
 }

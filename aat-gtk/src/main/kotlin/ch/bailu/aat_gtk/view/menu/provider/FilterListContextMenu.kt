@@ -9,7 +9,6 @@ import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.SolidTypeInterface
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.resources.ToDo
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
@@ -21,40 +20,42 @@ import ch.bailu.gtk.gtk.Widget
 import ch.bailu.gtk.lib.handler.action.ActionHandler
 import ch.bailu.gtk.type.Str
 
-class FilterListContextMenu(private val parent: Widget, private val solidDirectoryQuery: SolidDirectoryQuery, private val uiControllerInterface: UiControllerInterface) : MenuProviderInterface {
+class FilterListContextMenu(private val parent: Widget,
+                            private val solidDirectoryQuery: SolidDirectoryQuery,
+                            private val uiControllerInterface: UiControllerInterface)
+    : MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
-
-            val solidSortOrder = solidDirectoryQuery.solidSortAttribute
-            appendSection(solidSortOrder.getLabel(), Menu().apply {
-                solidSortOrder.getStringArray().forEachIndexed { index, value ->
+            val solidSortAttribute = solidDirectoryQuery.solidSortAttribute
+            val solidSortOrder = solidDirectoryQuery.solidSortOrderAscend
+            appendSection(solidSortAttribute.getLabel(), Menu().apply {
+                solidSortAttribute.getStringArray().forEachIndexed { index, value ->
                     append(value, MenuHelper.toAppAction(ACTION_SORT_ATTRIBUTE, index))
                 }
             })
 
             appendSection(Str.NULL, Menu().apply {
-                append(ToDo.translate("Ascend"), MenuHelper.toAppAction(ACTION_SORT_ASCEND))
+                append(solidSortOrder.getLabel(), MenuHelper.toAppAction(ACTION_SORT_ASCEND))
             })
             appendSection(Res.str().label_filter(), Menu().apply {
                 appendItem(MenuHelper.createCustomItem(CUSTOM_SORT_FILTER))
             })
-
         }
     }
 
     override fun createCustomWidgets(): Array<CustomWidget> {
         val widgets = arrayOf(
-            SolidFilterWidget(solidDirectoryQuery.useGeo, solidDirectoryQuery.boundingBox, { self ->
+            SolidFilterWidget( {solidDirectoryQuery.useGeo}, {solidDirectoryQuery.boundingBox}, { self ->
                 solidDirectoryQuery.boundingBox.value = uiControllerInterface.getMapBounding()
                 self.update()
             }),
-            SolidFilterWidget(solidDirectoryQuery.useDateStart, solidDirectoryQuery.dateStart, { self ->
+            SolidFilterWidget({solidDirectoryQuery.useDateStart}, {solidDirectoryQuery.dateStart}, { self ->
                 CalendarDialog.getDate(parent, solidDirectoryQuery.dateStart.getValue()) {
                     solidDirectoryQuery.dateStart.setValue(it)
                     self.update()
                 }
             }),
-            SolidFilterWidget(solidDirectoryQuery.useDateEnd, solidDirectoryQuery.dateEnd, { self ->
+            SolidFilterWidget({solidDirectoryQuery.useDateEnd}, {solidDirectoryQuery.dateEnd}, { self ->
                 CalendarDialog.getDate(parent, solidDirectoryQuery.dateEnd.getValue()) {
                     solidDirectoryQuery.dateEnd.setValue(it)
                     self.update()
@@ -76,11 +77,11 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
         )
     }
 
-    private class SolidFilterWidget(private val solidCheckbox: SolidBoolean,
-                            private val solidValue: SolidTypeInterface,
+    private class SolidFilterWidget(private val solidCheckbox: () -> SolidBoolean,
+                            private val solidValue: () -> SolidTypeInterface,
                             private val onClickedCallback: (self: SolidFilterWidget)->Unit) {
         private val checkButton = CheckButton().apply {
-            onToggled { solidCheckbox.value = active }
+            onToggled { solidCheckbox().value = active }
         }
         private val label = Label(Str.NULL).apply { xalign = 0f }
         private val value = Label(Str.NULL).apply { xalign = 0f }
@@ -94,9 +95,9 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
         }
 
         fun update() {
-            checkButton.active = solidCheckbox.value
-            label.setLabel(solidValue.getLabel())
-            value.setLabel(solidValue.getValueAsString())
+            checkButton.active = solidCheckbox().value
+            label.setLabel(solidValue().getLabel())
+            value.setLabel(solidValue().getValueAsString())
         }
 
         fun onClicked() {
@@ -115,6 +116,16 @@ class FilterListContextMenu(private val parent: Widget, private val solidDirecto
         ActionHandler.get(app, ACTION_SORT_ASCEND, solidDirectoryQuery.solidSortOrderAscend.value).onToggle { value ->
             solidDirectoryQuery.solidSortOrderAscend.value = value
         }
+    }
+
+    override fun updateActionValues(app: Application) {
+        ActionHandler
+            .get(app, ACTION_SORT_ATTRIBUTE, solidDirectoryQuery.solidSortAttribute.index)
+            .changeInteger(solidDirectoryQuery.solidSortAttribute.index)
+
+        ActionHandler
+            .get(app, ACTION_SORT_ASCEND, solidDirectoryQuery.solidSortOrderAscend.value)
+            .changeBoolean(solidDirectoryQuery.solidSortOrderAscend.value)
     }
 
     companion object {
