@@ -32,7 +32,8 @@ There is an Android and GTK variant. (The GTK variant is alpha software)
 ## Installation and Distribution
 
 - AAT for Android is available on [F-Droid](https://f-droid.org/repository/browse/?fdid=ch.bailu.aat)
-- GTK builds are available on this projects [release page](https://github.com/bailuk/AAT/releases)
+- GTK version is available on [Flathub](https://flathub.org/apps/ch.bailu.aat)
+- Builds are available on this projects [release page](https://github.com/bailuk/AAT/releases)
 
 
 ## Configuration and use
