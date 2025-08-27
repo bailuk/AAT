@@ -76,6 +76,7 @@ class FileListPage(app: Application,
 
     private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
+            AppLog.d(this, "onCursorChanged")
             updateList()
         }
     }

@@ -19,7 +19,7 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.type.Str
 
-class FileListFilterView(app: Application, appContext: AppContext, uiController: UiControllerInterface) {
+class FileListFilterView(private val app: Application, appContext: AppContext, uiController: UiControllerInterface) {
     private val fileCountLabel = Label(Str.NULL)
     private val solidDirectoryQuery = SolidDirectoryQuery(appContext.storage, appContext)
     private val filterContextMenu = FilterListContextMenu(app.activeWindow, solidDirectoryQuery, uiController)
@@ -44,7 +44,6 @@ class FileListFilterView(app: Application, appContext: AppContext, uiController:
         asEditable().onChanged {
             solidDirectoryQuery.solidNameFilter.setValue(asEditable().text.toString())
         }
-        asEditable().setText(solidDirectoryQuery.solidNameFilter.getValueAsString())
     }
 
     val box = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
@@ -70,18 +69,31 @@ class FileListFilterView(app: Application, appContext: AppContext, uiController:
 
     init {
         solidDirectoryQuery.register { _, key ->
-            if (solidDirectoryQuery.containsKey(key)) {
-                setHighlighted()
+            if (solidDirectoryQuery.hasKey(key)) {
+                updateFilterEntry()
+                updateHighlighted()
+                updateMenu()
+            } else if (solidDirectoryQuery.containsKey(key)) {
+                updateHighlighted()
             }
         }
-        setHighlighted()
+        updateHighlighted()
+        updateFilterEntry()
+    }
+
+    private fun updateMenu() {
+        filterContextMenu.updateActionValues(app)
+    }
+
+    private fun updateFilterEntry() {
+        filterEntry.asEditable().setText(solidDirectoryQuery.solidNameFilter.getValueAsStringNonDef().trim())
     }
 
     fun updateFileCount(count: Int) {
         fileCountLabel.setLabel(count.toString())
     }
 
-    private fun setHighlighted() {
+    private fun updateHighlighted() {
         if (solidDirectoryQuery.isFilterEnabled()) {
             fileCountLabel.addCssClass("highlighted")
         } else {

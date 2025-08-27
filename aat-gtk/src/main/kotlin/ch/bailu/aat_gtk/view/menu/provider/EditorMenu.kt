@@ -55,6 +55,8 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProviderInterface
         setAction(app, "editPreceding") { edit.editor.cutPreceding() }
     }
 
+    override fun updateActionValues(app: Application) {}
+
     private fun saveCopy() {
         // editor.edit.saveTo(file)
     }

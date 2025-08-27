@@ -36,4 +36,5 @@ class SolidCheckMenu(private val solid: SolidCheckList): MenuProviderInterface {
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 }

@@ -30,6 +30,8 @@ class LocationMenu : MenuProviderInterface {
     override fun createActions(app: Application) {
     }
 
+    override fun updateActionValues(app: Application) {}
+
     companion object {
         fun createActions(storageInterface: StorageInterface, app: Application, display: Display, uiController: UiControllerInterface) {
             val clipboard = ClipboardController(display)

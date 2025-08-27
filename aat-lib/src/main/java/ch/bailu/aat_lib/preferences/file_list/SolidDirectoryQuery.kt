@@ -57,10 +57,11 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
         get() = SolidSortAttribute(getStorage(), KEY_SORT_ATTRIBUTE + getValueAsString())
 
     val solidSortOrderAscend: SolidBoolean
-        get() = SolidBoolean(getStorage(), KEY_SORT_ASCEND + getValueAsString())
+        get() = SolidSortOrderAscend(getStorage(), KEY_SORT_ASCEND + getValueAsString())
 
     fun isFilterEnabled(): Boolean {
-        return useGeo.isEnabled || useDateEnd.isEnabled || useDateStart.isEnabled || solidNameFilter.getValueAsString().trim().isNotEmpty()
+        val filterName = solidNameFilter.getValueAsStringNonDef()
+        return useGeo.isEnabled || useDateEnd.isEnabled || useDateStart.isEnabled || filterName.trim().isNotEmpty()
     }
 
     fun createExtraStatement(): String {
@@ -78,7 +79,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
     }
 
     fun createExtraStatementParam(): String {
-        val filterName = solidNameFilter.getValueAsString().trim()
+        val filterName = solidNameFilter.getValueAsStringNonDef().trim()
         if (filterName.isNotEmpty()) {
             return "%$filterName%"
         }
@@ -90,7 +91,7 @@ class SolidDirectoryQuery(storage: StorageInterface, focFactory: FocFactory) : S
         return " ORDER BY ${solidSortAttribute.getAttributeName()} $direction"
     }
     private fun createNameFilterStatement(): String {
-        val nameFilter = solidNameFilter.getValueAsString().trim()
+        val nameFilter = solidNameFilter.getValueAsStringNonDef().trim()
         return if (nameFilter.isNotEmpty()) {
             "${GpxDbConfiguration.ATTR_FILENAME} like ?"
         } else {

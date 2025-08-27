@@ -74,6 +74,7 @@ class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) 
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 
     companion object {
         private const val ID = "editable"

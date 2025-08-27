@@ -32,4 +32,6 @@ open class PopupMenuButtonOverlay(private val menuProvider: MenuProviderInterfac
     override fun createActions(app: Application) {
         menuProvider.createActions(app)
     }
+
+    override fun updateActionValues(app: Application) {}
 }

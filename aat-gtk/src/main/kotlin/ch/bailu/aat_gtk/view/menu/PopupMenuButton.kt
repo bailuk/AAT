@@ -18,6 +18,10 @@ open class PopupMenuButton(private val menuProvider: MenuProviderInterface): Men
         menuProvider.createActions(app)
     }
 
+    override fun updateActionValues(app: Application) {
+        menuProvider.updateActionValues(app)
+    }
+
     override fun setIcon(iconName: String) {
         menuButton.setIconName(iconName)
     }
@@ -33,7 +37,8 @@ open class PopupMenuButton(private val menuProvider: MenuProviderInterface): Men
                 customWidgets.forEach {
                     addChild(it.widget, Str(it.id))
                 }
-                onShow { customWidgets.forEach { it.update() } }
+                onShow {
+                    customWidgets.forEach { it.update() } }
             }
         }
     }

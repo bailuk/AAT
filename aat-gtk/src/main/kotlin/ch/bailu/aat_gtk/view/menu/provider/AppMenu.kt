@@ -61,4 +61,6 @@ class AppMenu(private val window: Window,
             ActionHandler.dump(System.out)
         }
     }
+
+    override fun updateActionValues(app: Application) {}
 }
