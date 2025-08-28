@@ -25,6 +25,7 @@ import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
+import ch.bailu.gtk.gtk.GestureClick
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
@@ -189,7 +190,17 @@ class FileListPage(app: Application,
 
             vbox.append(ScrolledWindow().apply {
                 child = ListView(listIndex.inSelectionModel(), factory).apply {
-                    onActivate { selectAndFrame(it) }
+                    onActivate { select(it) }
+                    singleClickActivate = true
+
+                    addController(GestureClick().apply {
+                        button = 1
+                        onReleased { _, _, _ ->
+                            // first click is taken by onActivate
+                            // second click here
+                            selectAndFrame(indexOfSelected)
+                        }
+                    })
                 }
                 hexpand = true
                 vexpand = true
