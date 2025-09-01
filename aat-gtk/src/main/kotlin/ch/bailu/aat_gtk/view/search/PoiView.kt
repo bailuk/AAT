@@ -25,7 +25,7 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
         if (sdatabase.hasKey(key)) {
             poiList.writeSelected()
             poiList.readList()
-            updateList(Editable(searchEntry.cast()).text.toString())
+            updateList(searchEntry.asEditable().text.toString())
         }
     }
 

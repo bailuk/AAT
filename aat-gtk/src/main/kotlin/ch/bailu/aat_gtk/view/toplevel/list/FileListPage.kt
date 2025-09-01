@@ -31,6 +31,7 @@ import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.ScrolledWindow
+import ch.bailu.gtk.gtk.Separator
 import ch.bailu.gtk.gtk.SignalListItemFactory
 import ch.bailu.gtk.lib.bridge.ListIndex
 import ch.bailu.gtk.lib.util.SizeLog
@@ -172,7 +173,7 @@ class FileListPage(app: Application,
             })
 
             vbox.append(fileListFilterView.box)
-
+            vbox.append(Separator(Orientation.HORIZONTAL))
             vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
                     append(trackFrameButton)

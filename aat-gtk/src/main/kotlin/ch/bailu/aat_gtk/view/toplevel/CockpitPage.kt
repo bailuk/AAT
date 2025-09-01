@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.adw.Clamp
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Separator
 
 class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, dispatcher: Dispatcher) {
     private val cockpitView = CockpitView(appContext).apply {addDefaults((dispatcher))}.scrolledWindow
@@ -26,6 +27,7 @@ class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, d
 
         append(preset.layout)
         append(TrackerControllerView(appContext.services, dispatcher, uiController).box)
+        append(Separator(Orientation.HORIZONTAL))
         append(clamp)
     }
 }

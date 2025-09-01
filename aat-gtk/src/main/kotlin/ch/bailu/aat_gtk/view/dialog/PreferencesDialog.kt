@@ -4,9 +4,8 @@ import ch.bailu.aat_gtk.view.solid.ActivityPreferencesPage
 import ch.bailu.aat_gtk.view.solid.GeneralPreferencesPage
 import ch.bailu.aat_gtk.view.solid.MapPreferencesPage
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.general.SolidPresetCount
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.adw.PreferencesDialog
-import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
 
 object PreferencesDialog {
@@ -18,14 +17,10 @@ object PreferencesDialog {
 
                 add(GeneralPreferencesPage(app, app.activeWindow, appContext).page)
                 add(MapPreferencesPage(appContext, app, app.activeWindow).page)
-
-                val presetCount = SolidPresetCount(appContext.storage)
-
-                for(i in 0 until  presetCount.value) {
-                    add(ActivityPreferencesPage(appContext.storage, i).page)
-                }
+                add(ActivityPreferencesPage(appContext.storage).page)
 
                 onDestroy {
+                    AppLog.d(this, "TODO Cleanup")
                     window?.disconnectSignals()
                     window = null
                 }

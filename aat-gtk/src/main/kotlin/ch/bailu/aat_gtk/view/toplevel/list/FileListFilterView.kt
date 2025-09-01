@@ -13,9 +13,9 @@ import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Entry
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.SearchEntry
 import ch.bailu.gtk.gtk.Spinner
 import ch.bailu.gtk.type.Str
 
@@ -51,7 +51,7 @@ class FileListFilterView(private val app: Application, appContext: AppContext, u
         }
     }
 
-    private val filterEntry = Entry().apply {
+    private val filterEntry = SearchEntry().apply {
         asEditable().onChanged {
             solidDirectoryQuery.solidNameFilter.setValue(asEditable().text.toString())
         }
@@ -76,7 +76,6 @@ class FileListFilterView(private val app: Application, appContext: AppContext, u
             hexpand = true
         })
     }
-
 
     init {
         solidDirectoryQuery.register { _, key ->

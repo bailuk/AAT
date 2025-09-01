@@ -1,69 +1,35 @@
 package ch.bailu.aat_gtk.view.solid
 
+import ch.bailu.aat_gtk.config.Layout
+import ch.bailu.aat_gtk.util.extensions.margin
+import ch.bailu.aat_gtk.util.extensions.setTooltipText
+import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.SolidFileSelectorMenu
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.gtk.gtk.*
-import ch.bailu.gtk.type.Str
+import ch.bailu.gtk.adw.ActionRow
+import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Window
 
-class SolidDirectorySelectorView(private val solid: SolidFile, app: Application, window: Window) :
-    OnPreferencesChanged {
-    val layout = Box(Orientation.VERTICAL, 5)
-
-    private val label = Label(Str.NULL)
-
-    private val hbox = Box(Orientation.HORIZONTAL, 5)
-    private val entry = Entry()
-
-    private val fileSelectorMenu = SolidFileSelectorMenu(solid, window).apply {
-        createActions(app)
-    }
+class SolidDirectorySelectorView(private val solid: SolidFile, app: Application, window: Window) : OnPreferencesChanged {
+    val layout = ActionRow()
 
     init {
-        label.setText(solid.getLabel())
-        label.xalign = 0f
-
-        entry.hexpand = true
-
-        layout.append(label)
-        layout.append(hbox)
-
-        hbox.append(entry)
-
-        hbox.append(MenuButton().apply {
-            menuModel = fileSelectorMenu.createMenu()
-
-
-            PopoverMenu(popover.cast()).apply {
-                onShow {
-                    fileSelectorMenu.createCustomWidgets().forEach {
-                        addChild(it.widget, Str(it.id))
-                    }
-                }
-            }
+        layout.setTitle(solid.getLabel())
+        layout.setSubtitle(solid.getValueAsString())
+        layout.setTooltipText(solid)
+        layout.addSuffix(PopupMenuButton(SolidFileSelectorMenu(solid, window).apply {
+            createActions(app)
+        }).menuButton.apply {
+            margin(Layout.MARGIN)
         })
 
-        entry.overwriteMode = false
-        entry.asEditable().apply {
-            text = Str(solid.getValueAsString())
-
-            onChanged {
-                AppLog.d(this, text.toString())
-            }
-        }
-
         solid.register(this)
-
-        entry.onDestroy {
-            solid.unregister(this)
-        }
     }
-
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
-            entry.asEditable().text = Str(solid.getValueAsString())
+            layout.setSubtitle(solid.getValueAsString())
         }
     }
 }

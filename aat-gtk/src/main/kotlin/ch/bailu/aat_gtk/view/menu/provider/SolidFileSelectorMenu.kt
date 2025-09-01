@@ -1,13 +1,13 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.util.Directory
 import ch.bailu.aat_gtk.util.extensions.margin
-import ch.bailu.aat_gtk.view.dialog.FileDialog
+import ch.bailu.aat_gtk.util.extensions.toPathString
+import ch.bailu.aat_gtk.view.dialog.FileDialogBuilder
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.foc.Foc
+import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Label
@@ -48,26 +48,22 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
 
     override fun createActions(app: Application) {
         MenuHelper.setAction(app, "get${solid.getKey()}") {
-            FileDialog()
+            FileDialogBuilder()
+                .path(solid.getValueAsFile())
                 .title(solid.getLabel())
-                .path(pathFromFile(solid.getValueAsFile()))
-                .onResponse {
-                    if (it.isNotEmpty()) {
-                        solid.setValueFromString(it)
-                    }
-                }.show(window)
-            }
+                .selectFolder(window) {
+                    solid.setValueFromString(it.path)
+                }
+
+        }
         MenuHelper.setAction(app, "open${solid.getKey()}") {
-            Directory.openExternal(pathFromFile(solid.getValueAsFile()))
+            val pathString = solid.getValueAsFile().toPathString()
+            if (pathString.isNotEmpty()) {
+                Directory.openExternal(pathString)
+            }
         }
     }
 
     override fun updateActionValues(app: Application) {}
-    private fun pathFromFile(file: Foc): String {
-        return if (file.isFile) {
-            file.parent().path
-        } else {
-            file.path
-        }
-    }
+
 }

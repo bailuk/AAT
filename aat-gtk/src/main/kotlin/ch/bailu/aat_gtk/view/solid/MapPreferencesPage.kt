@@ -15,33 +15,41 @@ import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.gtk.adw.PreferencesGroup
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Window
 
 class MapPreferencesPage(appContext: AppContext, app: Application, window: Window) : PreferencesPageParent(Res.str().p_map(), "map") {
 
     init {
-        add(Res.str().p_map())
+        page.add(PreferencesGroup().apply {
+            setTitle(Res.str().p_map())
+            add(SolidIndexComboRowView(SolidTileSize(appContext.storage, GtkAppDensity())).layout)
 
-        val solidMapDirectory = SolidMapsForgeDirectory(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext))
+            add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
+            add(SolidIndexComboRowView(SolidLayerType(appContext.storage)).layout)
 
-        add(SolidIndexComboView(SolidTileSize(appContext.storage, GtkAppDensity())).layout)
+        })
 
-        add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
-        add(SolidIndexComboView(SolidLayerType(appContext.storage)).layout)
+        page.add(PreferencesGroup().apply {
+            val solidMapDirectory = SolidMapsForgeDirectory(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext))
+            setTitle(Res.str().p_offline_map())
+            add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)
+            add(SolidDirectorySelectorView(SolidMapsForgeMapFile(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext)), app, window).layout)
+            add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, appContext), app, window).layout)
+            add(SolidIndexComboRowView(SolidScaleFactor(appContext.storage)).layout)
+            add(SolidBooleanSwitchView(SolidEnableTileCache.MapsForge(appContext.storage)).layout)
+        })
 
-        add(Res.str().p_offline_map())
-        add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)
-        add(SolidDirectorySelectorView(SolidMapsForgeMapFile(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext)), app, window).layout)
-        add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, appContext), app, window).layout)
-        add(SolidIndexComboView(SolidScaleFactor(appContext.storage)).layout)
-        add(SolidBooleanSwitchView(SolidEnableTileCache.MapsForge(appContext.storage)).layout)
+        page.add(PreferencesGroup().apply {
+            setTitle(Res.str().p_dem())
+            add(SolidDirectorySelectorView(GtkSolidDem3Directory(appContext.storage, appContext), app, window).layout)
+            add(SolidBooleanSwitchView(SolidDem3EnableDownload(appContext.storage)).layout)
+        })
 
-        add(Res.str().p_dem())
-        add(SolidDirectorySelectorView(GtkSolidDem3Directory(appContext.storage, appContext), app, window).layout)
-        add(SolidBooleanSwitchView(SolidDem3EnableDownload(appContext.storage)).layout)
-
-        add(ElevationSource.ELEVATION_HILLSHADE.name)
-        add(SolidBooleanSwitchView(SolidEnableTileCache.HillShade(appContext.storage)).layout)
+        page.add(PreferencesGroup().apply {
+            setTitle(ElevationSource.ELEVATION_HILLSHADE.name)
+            add(SolidBooleanSwitchView(SolidEnableTileCache.HillShade(appContext.storage)).layout)
+        })
     }
 }

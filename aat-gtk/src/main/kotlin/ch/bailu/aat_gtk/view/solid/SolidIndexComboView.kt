@@ -5,16 +5,20 @@ import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.ComboBoxText
+import ch.bailu.gtk.gtk.DropDown
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
+import ch.bailu.gtk.type.Strs
 
 
 class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChanged {
     val layout = Box(Orientation.VERTICAL, 5)
     val label = Label(Str.NULL)
+    private var lockUpdate = false
 
-    private val combo = ComboBoxText()
+    // TODO update name if changed in preferences
+    private val combo = DropDown.newFromStringsDropDown(Strs.nullTerminated(solid.getStringArray()))
 
     init {
         label.setText(solid.getLabel())
@@ -23,21 +27,20 @@ class SolidIndexComboView(private val solid: SolidIndexList) : OnPreferencesChan
         layout.append(label)
         layout.append(combo)
 
-        val list = solid.getStringArray()
+        combo.selected = solid.index
 
-        for (index in 0 until solid.length()) {
-            combo.insertText(index, Str(list[index]))
-        }
-        combo.active = solid.index
-
-        combo.onChanged {
-            solid.index = combo.active
+        combo.onNotify {
+            if ("selected".equals(it.name.toString())) {
+                lockUpdate = true
+                solid.index = combo.selected
+                lockUpdate = false
+            }
         }
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (solid.hasKey(key)) {
-            combo.active = solid.index
+        if (!lockUpdate && solid.hasKey(key)) {
+            combo.selected = solid.index
         }
     }
 }
