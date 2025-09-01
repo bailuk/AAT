@@ -45,7 +45,7 @@ class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
     }
 
     override fun edit() {
-        val file = backupSource.info.getFile()
+        val file = backupSource.getInfo().getFile()
         if (!isEditing) {
             isEditing = true
             editorSource.edit(file)
@@ -64,7 +64,7 @@ class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
     }
 
     override fun getInfo(): GpxInformation {
-        return if (isEditing) editorSource.info else backupSource.info
+        return if (isEditing) editorSource.getInfo() else backupSource.getInfo()
     }
 
     override fun requestUpdate() {
@@ -92,7 +92,7 @@ class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
     }
 
     override val file: Foc
-        get() =  if (isEditing) editorSource.file else backupSource.info.getFile()
+        get() =  if (isEditing) editorSource.file else backupSource.getInfo().getFile()
 
     private fun requestNullUpdate(source: SourceInterface) {
         editorSource.sendUpdate(source.getIID(), GpxFileWrapper(file, GpxList.NULL_ROUTE))

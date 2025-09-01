@@ -23,6 +23,8 @@ object InformationUtil {
             ToDo.translate("Editor")
         } else if (iid == InfoID.FILE_VIEW) {
             ToDo.translate("Selected File")
+        } else if (iid == InfoID.LIST_SUMMARY) {
+            ToDo.translate("List Summary")
         } else {
             ""
         }
@@ -45,6 +47,7 @@ object InformationUtil {
             add(InfoID.FILE_VIEW)
             add(InfoID.EDITOR_OVERLAY)
             add(InfoID.TRACKER)
+            add(InfoID.LIST_SUMMARY)
         }
     }
 

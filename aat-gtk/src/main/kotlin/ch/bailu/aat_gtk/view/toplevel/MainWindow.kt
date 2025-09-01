@@ -24,6 +24,7 @@ import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
@@ -49,6 +50,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private val usageTrackers = UsageTrackers()
     private val editorSource = EditorSource(appContext, usageTrackers)
     private val customFileSource = FileViewSource(appContext, usageTrackers)
+    private val summarySource = IteratorSource.Summary(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
 
     private val overlay = Overlay()
@@ -247,6 +249,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))
         dispatcher.addSource(customFileSource)
+        dispatcher.addSource(summarySource)
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))

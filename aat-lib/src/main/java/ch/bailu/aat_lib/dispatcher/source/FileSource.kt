@@ -15,9 +15,7 @@ open class FileSource(
     private val context: AppContext,
     private val iid: Int,
     private val usageTracker: UsageTrackerInterface
-)
-    : SourceInterface
-{
+) : SourceInterface {
     private val gpxHandler = GpxHandler()
     private var lifeCycleEnabled = false
     private var trackEnabled = true
@@ -61,7 +59,7 @@ open class FileSource(
     }
 
     override fun getInfo(): GpxInformation {
-        return gpxHandler.info
+        return gpxHandler.getInfo()
     }
 
     open fun setFile(file: Foc) {
@@ -70,16 +68,16 @@ open class FileSource(
     }
 
     private fun setEnabled(enabled: Boolean) {
-            trackEnabled = enabled
-            if (lifeCycleEnabled && trackEnabled) {
-                gpxHandler.enable(context.services)
-            } else {
-                gpxHandler.disable()
-            }
-            requestUpdate()
+        trackEnabled = enabled
+        if (lifeCycleEnabled && trackEnabled) {
+            gpxHandler.enable(context.services)
+        } else {
+            gpxHandler.disable()
         }
+        requestUpdate()
+    }
 
     override fun requestUpdate() {
-        context.services.insideContext { target.onContentUpdated(iid, info) }
+        context.services.insideContext { target.onContentUpdated(iid, getInfo()) }
     }
 }

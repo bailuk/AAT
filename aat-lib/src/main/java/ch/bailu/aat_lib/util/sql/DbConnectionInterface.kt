@@ -10,5 +10,6 @@ interface DbConnectionInterface {
     @Throws(DbException::class)
     fun execSQL(sql: String, vararg params: Any)
 
+    @Throws(DbException::class)
     fun close()
 }

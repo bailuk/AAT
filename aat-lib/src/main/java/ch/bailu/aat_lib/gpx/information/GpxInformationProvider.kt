@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.gpx.information;
+package ch.bailu.aat_lib.gpx.information
 
-public interface GpxInformationProvider {
-    GpxInformation getInfo();
+interface GpxInformationProvider {
+    fun getInfo(): GpxInformation
 }

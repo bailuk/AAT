@@ -1,108 +1,85 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
 
-public class GpxDataWrapper implements GpxDeltaPointInterface, GpxBigDeltaInterface {
+open class GpxDataWrapper : GpxDeltaPointInterface, GpxBigDeltaInterface {
+    private var summary: GpxBigDeltaInterface = GpxBigDelta.NULL
+    private var point: GpxPointInterface = GpxPoint.NULL
 
-    private GpxBigDeltaInterface summary;
-    private GpxPointInterface point;
-
-    public GpxDataWrapper() {
-        setVisibleTrackSegment(GpxBigDelta.NULL);
-        setVisibleTrackPoint(GpxPoint.NULL);
+    fun setVisibleTrackSegment(s: GpxBigDeltaInterface) {
+        summary = s
     }
 
-    public void setVisibleTrackSegment(GpxBigDeltaInterface s) {
-        summary = s;
+    fun setVisibleTrackPoint(p: GpxPointInterface) {
+        point = p
     }
 
-    public void setVisibleTrackPoint(GpxPointInterface p) {
-        point = p;
+    override fun getLatitudeE6(): Int {
+        return point.getLatitudeE6()
     }
 
-
-    @Override
-    public int getLatitudeE6() {
-        return point.getLatitudeE6();
+    override fun getLongitudeE6(): Int {
+        return point.getLongitudeE6()
     }
 
-    @Override
-    public int getLongitudeE6() {
-        return point.getLongitudeE6();
+    override fun getSpeed(): Float {
+        return summary.getSpeed()
     }
 
-    @Override
-    public float getSpeed() {
-        return summary.getSpeed();
+    override fun getDistance(): Float {
+        return summary.getDistance()
     }
 
-    @Override
-    public float getDistance() {
-        return summary.getDistance();
+    override fun getStartTime(): Long {
+        return summary.getStartTime()
     }
 
-    @Override
-    public long getStartTime() {
-        return summary.getStartTime();
+    override fun getTimeDelta(): Long {
+        return summary.getTimeDelta()
     }
 
-    @Override
-    public long getTimeDelta() {
-        return summary.getTimeDelta();
+    override fun getPause(): Long {
+        return summary.getPause()
     }
 
-    @Override
-    public long getPause()  {
-        return summary.getPause();
+    override fun getAltitude(): Float {
+        return point.getAltitude()
     }
 
-    @Override
-    public float getAltitude() {
-        return point.getAltitude();
+    override fun getLatitude(): Double {
+        return point.getLatitude()
     }
 
-    @Override
-    public double getLatitude() {
-        return point.getLatitude();
+    override fun getLongitude(): Double {
+        return point.getLongitude()
     }
 
-    @Override
-    public double getLongitude() {
-        return point.getLongitude();
+    override fun getTimeStamp(): Long {
+        return point.getTimeStamp()
     }
 
-    @Override
-    public long getTimeStamp() {
-        return point.getTimeStamp();
+    override fun getAcceleration(): Float {
+        return summary.getAcceleration()
     }
 
-    @Override
-    public float getAcceleration() {
-        return summary.getAcceleration();
+    override fun getBoundingBox(): BoundingBoxE6 {
+        return summary.getBoundingBox()
     }
 
-    @Override
-    public BoundingBoxE6 getBoundingBox() {
-        return summary.getBoundingBox();
+    override fun getEndTime(): Long {
+        return summary.getEndTime()
     }
 
-    @Override
-    public long getEndTime() {
-        return summary.getEndTime();
+    override fun getType(): GpxType {
+        return summary.getType()
     }
 
-    @Override
-    public GpxType getType() {
-        return summary.getType();
-    }
-
-    @Override
-    public GpxAttributes getAttributes() {
-        return summary.getAttributes();
+    override fun getAttributes(): GpxAttributes {
+        return summary.getAttributes()
     }
 }

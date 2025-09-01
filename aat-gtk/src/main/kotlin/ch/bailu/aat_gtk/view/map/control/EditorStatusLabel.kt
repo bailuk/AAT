@@ -17,7 +17,7 @@ class EditorStatusLabel : TargetInterface {
     }
 
     val box = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
-        addCssClass(Strings.mapControl)
+        addCssClass(Strings.CSS_MAP_CONTROL)
         valign = Align.END
         halign = Align.CENTER
         append(fileNameLabel)

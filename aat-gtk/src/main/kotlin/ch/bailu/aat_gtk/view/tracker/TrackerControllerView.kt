@@ -26,7 +26,7 @@ class TrackerControllerView(services: ServicesInterface, dispatcher: DispatcherI
     private val buttons = Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
         margin(Layout.MARGIN)
         append(Box(Orientation.HORIZONTAL, 0).apply {
-            addCssClass(Strings.linked)
+            addCssClass(Strings.CSS_LINKED)
 
             append(Button().apply {
                 iconName = Icons.zoomFitBestSymbolic

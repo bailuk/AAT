@@ -8,7 +8,7 @@ import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FilterListContextMenu
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
-import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
@@ -27,17 +27,28 @@ class FileListFilterView(private val app: Application, appContext: AppContext, u
 
     private val summaryFrameButton = Button().apply {
         iconName = Icons.zoomFitBestSymbolic
-        onClicked { AppLog.d(this, "summaryFrame") }
+        onClicked {
+            uiController.frameInMap(InfoID.LIST_SUMMARY)
+            uiController.setOverlayEnabled(InfoID.LIST_SUMMARY, true)
+            uiController.showMap()
+        }
     }
 
     private val summaryCenterButton = Button().apply {
         iconName = Icons.findLocationSymbolic
-        onClicked { AppLog.d(this, "summaryCenter") }
+        onClicked {
+            uiController.centerInMap(InfoID.LIST_SUMMARY)
+            uiController.setOverlayEnabled(InfoID.LIST_SUMMARY, true)
+            uiController.showMap()
+        }
     }
 
     private val summaryDetailButton = Button().apply {
         iconName = Icons.viewContinuousSymbolic
-        onClicked { AppLog.d(this, "summaryDetail") }
+        onClicked {
+            uiController.showInDetail(InfoID.LIST_SUMMARY)
+            uiController.showDetail()
+        }
     }
 
     private val filterEntry = Entry().apply {
@@ -53,7 +64,7 @@ class FileListFilterView(private val app: Application, appContext: AppContext, u
             append(summaryCenterButton)
             append(summaryDetailButton)
             append(filterListMenuButton)
-            addCssClass(Strings.linked)
+            addCssClass(Strings.CSS_LINKED)
         })
 
         append(Spinner().apply {
@@ -95,9 +106,9 @@ class FileListFilterView(private val app: Application, appContext: AppContext, u
 
     private fun updateHighlighted() {
         if (solidDirectoryQuery.isFilterEnabled()) {
-            fileCountLabel.addCssClass("highlighted")
+            fileCountLabel.addCssClass(Strings.CSS_HIGHLIGHTED)
         } else {
-            fileCountLabel.removeCssClass("highlighted")
+            fileCountLabel.removeCssClass(Strings.CSS_HIGHLIGHTED)
         }
     }
 }

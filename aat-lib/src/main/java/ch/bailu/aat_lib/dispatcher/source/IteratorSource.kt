@@ -5,8 +5,11 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.GpxFileWrapper
 import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.ObjNull
@@ -16,22 +19,43 @@ import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.IteratorFollowFile
 import ch.bailu.aat_lib.service.directory.IteratorSummary
 
-abstract class IteratorSource(private val appContext: AppContext) : SourceInterface {
+abstract class IteratorSource(
+    private val appContext: AppContext,
+    private val iid: Int,
+    private val usageTracker: UsageTrackerInterface
+) : SourceInterface {
+
     private val sdirectory: SolidDirectoryQuery =
         SolidDirectoryQuery(appContext.storage, appContext)
     private var iterator = Iterator.NULL
     private var target = TargetInterface.NULL
+
+    private var trackEnabled = usageTracker.isEnabled(iid)
+
+    init {
+        usageTracker.observe {
+            if (trackEnabled != usageTracker.isEnabled(iid)) {
+                trackEnabled = usageTracker.isEnabled(iid)
+                if (trackEnabled) {
+                    onResumeWithService()
+                } else {
+                    onPauseWithService()
+                }
+            }
+            requestUpdate()
+        }
+    }
 
     override fun setTarget(target: TargetInterface) {
         this.target = target
     }
 
     override fun requestUpdate() {
-        target.onContentUpdated(iterator.getInfoID(), info)
+        target.onContentUpdated(iid, getInfo())
     }
 
     override fun getIID(): Int {
-        return iterator.getInfoID()
+        return iid
     }
 
     override fun onPauseWithService() {
@@ -40,9 +64,11 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
     }
 
     override fun onResumeWithService() {
-        iterator = factoryIterator(appContext)
-        iterator.moveToPosition(sdirectory.position.getValue())
-        iterator.setOnCursorChangedListener( { requestUpdate() })
+        if (trackEnabled) {
+            iterator = factoryIterator(appContext)
+            iterator.moveToPosition(sdirectory.position.getValue())
+            iterator.setOnCursorChangedListener({ requestUpdate() })
+        }
     }
 
     override fun onDestroy() {}
@@ -64,9 +90,8 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
         requestUpdate()
     }
 
-    class FollowFile(private val appContext: AppContext) : IteratorSource(
-        appContext
-    ) {
+    class FollowFile(private val appContext: AppContext) :
+        IteratorSource(appContext, InfoID.FILE_VIEW, UsageTrackerAlwaysEnabled()) {
         private var handle: Obj = ObjNull
         override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorFollowFile(appContext)
@@ -115,7 +140,8 @@ abstract class IteratorSource(private val appContext: AppContext) : SourceInterf
             get() = super.getInfo().getFile().toString()
     }
 
-    class Summary(appContext: AppContext) : IteratorSource(appContext) {
+    class Summary(appContext: AppContext, usageTracker: UsageTrackerInterface)
+        : IteratorSource(appContext, InfoID.LIST_SUMMARY, usageTracker) {
         override fun factoryIterator(appContext: AppContext): Iterator {
             return IteratorSummary(appContext)
         }

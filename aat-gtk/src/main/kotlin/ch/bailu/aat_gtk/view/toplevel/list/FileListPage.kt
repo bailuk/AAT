@@ -77,7 +77,6 @@ class FileListPage(app: Application,
 
     private val iteratorSimple = IteratorSimple(appContext).apply {
         setOnCursorChangedListener {
-            AppLog.d(this, "onCursorChanged")
             updateList()
         }
     }
@@ -151,7 +150,7 @@ class FileListPage(app: Application,
 
             vbox.append(Box(Orientation.HORIZONTAL, Layout.MARGIN).apply {
                 append(Box(Orientation.HORIZONTAL, 0).apply {
-                    addCssClass(Strings.linked)
+                    addCssClass(Strings.CSS_LINKED)
                     append(
                         SolidDirectoryDropDownView(appContext).dropDown.apply {
                             hexpand = true
@@ -180,7 +179,7 @@ class FileListPage(app: Application,
                     append(trackCenterButton)
                     append(trackDetailButton)
                     append(fileContextMenuButton)
-                    addCssClass(Strings.linked)
+                    addCssClass(Strings.CSS_LINKED)
                 })
                 append(fileNameLabel.apply {
                     ellipsize = EllipsizeMode.START

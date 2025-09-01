@@ -56,7 +56,10 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         } else {
             track.appendToCurrentSegment(GpxPoint(tp), attr)
         }
-        setVisibleTrackPoint(track.pointList.last as GpxPointNode?)
+        val node = track.pointList.last
+        if (node is GpxPointNode) {
+            setVisibleTrackPoint(node)
+        }
         writer.flushOutput()
     }
 

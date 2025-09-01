@@ -17,6 +17,7 @@ class GpxDatabase (
         this.database.open(path, GpxDbConfiguration.DB_VERSION)
     }
 
+    @Throws(DbException::class)
     override fun close() {
         database.close()
     }
@@ -43,12 +44,6 @@ class GpxDatabase (
     }
 
     companion object {
-        private fun where(selection: String): String {
-            return if (selection.isNotEmpty()) {
-                " WHERE $selection"
-            } else ""
-        }
-
         private fun repeat(what: String, times: Int): String {
             val builder = StringBuilder()
             var del = ""

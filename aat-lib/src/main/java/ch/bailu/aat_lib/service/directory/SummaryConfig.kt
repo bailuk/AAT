@@ -6,7 +6,7 @@ import java.io.IOException
 
 abstract class SummaryConfig {
     abstract fun getSummaryDir(dir: Foc): Foc
-    abstract fun getDBPath(dir: Foc): String
+    abstract fun getDatabasePath(dir: Foc): String
 
     @Throws(IOException::class)
     fun getPreviewFile(gpxFile: Foc): Foc {

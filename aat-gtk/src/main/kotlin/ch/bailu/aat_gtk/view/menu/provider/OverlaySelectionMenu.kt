@@ -28,7 +28,7 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
                 Box(Orientation.VERTICAL, Layout.MARGIN).apply {
                     overlays.forEach { controller ->
                         append(Box(Orientation.HORIZONTAL, 0).apply {
-                            addCssClass(Strings.linked)
+                            addCssClass(Strings.CSS_LINKED)
 
                             val checkButton = CheckButton().apply {
                                 setLabel(controller.getName())

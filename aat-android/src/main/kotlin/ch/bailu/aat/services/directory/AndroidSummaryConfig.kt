@@ -19,7 +19,7 @@ class AndroidSummaryConfig(private val context: Context) : SummaryConfig() {
         return summaryDir
     }
 
-    override fun getDBPath(dir: Foc): String {
+    override fun getDatabasePath(dir: Foc): String {
         return getSummaryDir(dir)
             .child(AppDirectory.FILE_CACHE_DB)
             .toString()

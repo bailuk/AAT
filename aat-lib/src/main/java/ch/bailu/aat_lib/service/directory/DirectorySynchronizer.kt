@@ -84,7 +84,7 @@ class DirectorySynchronizer(private val appContext: AppContext, private val dire
         }
 
         private fun openDatabase(): GpxDatabase {
-            val dbPath = appContext.summaryConfig.getDBPath(directory)
+            val dbPath = appContext.summaryConfig.getDatabasePath(directory)
             val query = arrayOf(GpxDbConfiguration.ATTR_FILENAME)
             dbAccessTime = File(dbPath).lastModified()
             return GpxDatabase(appContext.createDataBase(), dbPath, query)

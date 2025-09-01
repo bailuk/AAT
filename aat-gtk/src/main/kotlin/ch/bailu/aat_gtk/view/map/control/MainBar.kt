@@ -30,7 +30,7 @@ class MainBar(private val app: Application, uiController: UiControllerInterface,
     private val searchController = SearchController(searchModel)
     private val trackerControllerView = TrackerControllerView(services, dispatcher, uiController)
     private val leftNavigationButton = Button().apply {
-        addCssClass(Strings.mapControl)
+        addCssClass(Strings.CSS_MAP_CONTROL)
         iconName = Icons.goPreviousSymbolic
         onClicked {
             uiController.hideMap()
@@ -86,7 +86,7 @@ class MainBar(private val app: Application, uiController: UiControllerInterface,
 
     private fun createNominatimWidget(): Widget {
         return Box(Orientation.HORIZONTAL, 0).apply {
-            addCssClass(Strings.linked)
+            addCssClass(Strings.CSS_LINKED)
 
             val entry = Entry()
             append(entry.apply {

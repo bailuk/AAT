@@ -1,6 +1,7 @@
 package ch.bailu.aat_lib.service.directory
 
 import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.service.directory.database.GpxDbInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
@@ -15,6 +16,7 @@ class DirectoryService(private val appContext: AppContext) : VirtualService(),
     private var database: GpxDbInterface = GpxDbInterface.NULL_DATABASE
     private var directory: Foc = FocName("")
     private var synchronizer: DirectorySynchronizer? = null
+    private var openDatabasePath = ""
 
     override fun openDir(dir: Foc) {
         if (dir.mkdirs() && dir.canRead()) {
@@ -27,19 +29,34 @@ class DirectoryService(private val appContext: AppContext) : VirtualService(),
     }
 
     private fun open(dir: Foc) {
-        val dbPath = appContext.summaryConfig.getDBPath(dir)
-
+        val databasePath = appContext.summaryConfig.getDatabasePath(dir)
         try {
-            openDataBase(dbPath)
+            openDataBase(databasePath)
         } catch (e: Exception) {
-            database = GpxDbInterface.NULL_DATABASE
+            AppLog.e(this, e)
+            try {
+                closeDataBase()
+            } catch (e: Exception) {
+                AppLog.e(this, e)
+            }
         }
     }
 
+    private fun closeDataBase() {
+        val oldDatabase = database
+        database = GpxDbInterface.NULL_DATABASE
+        openDatabasePath = ""
+        oldDatabase.close()
+    }
+
     @Throws(DbException::class)
-    private fun openDataBase(dbPath: String) {
-        database.close()
-        database = GpxDatabase(appContext.createDataBase(), dbPath)
+    private fun openDataBase(databasePath: String) {
+        if (databasePath != openDatabasePath) {
+            val oldDatabase = database
+            database = GpxDatabase(appContext.createDataBase(), databasePath)
+            openDatabasePath = databasePath
+            oldDatabase.close()
+        }
     }
 
     override fun select(extraSqlStatment: String, vararg params: Any): DbResultSet {

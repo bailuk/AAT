@@ -17,9 +17,7 @@ import ch.bailu.foc.Foc
 
 class GpxInformationDbSummary(private val directory: Foc, cursor: DbResultSet) : GpxInformation() {
     private val list = GpxList(GpxType.WAY, factoryTrackList())
-
     private val maxSpeed: MaxSpeed = Raw2()
-
 
     init {
         val summary = GpxBigDelta(factoryTrackList())

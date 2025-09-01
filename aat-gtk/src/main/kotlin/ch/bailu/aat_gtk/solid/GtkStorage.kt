@@ -15,7 +15,7 @@ class GtkStorage : StorageInterface {
             Preferences.userRoot().node(Strings.appPreferencesNode)
         }
 
-        private val observers = ArrayList<OnPreferencesChanged>()
+        private var observers: List<OnPreferencesChanged> = emptyList()
 
         fun save() {
             try {
@@ -67,12 +67,12 @@ class GtkStorage : StorageInterface {
 
     override fun register(onPreferencesChanged: OnPreferencesChanged) {
         if (!observers.contains(onPreferencesChanged)) {
-            observers.add(onPreferencesChanged)
+            observers = observers + onPreferencesChanged
         }
     }
 
     override fun unregister(onPreferencesChanged: OnPreferencesChanged) {
-        observers.remove(onPreferencesChanged)
+        observers = observers - onPreferencesChanged
     }
 
     override fun isDefaultString(s: String): Boolean {
@@ -86,9 +86,9 @@ class GtkStorage : StorageInterface {
     private fun propagate(key: String) {
         try {
             node.sync()
-            for (l in observers) {
-                l.onPreferencesChanged(this, key)
-            }
+            // Dettach immutable list to safely loop trough it
+            val observers = observers
+            observers.forEach { it.onPreferencesChanged(this, key) }
         } catch (e: BackingStoreException) {
             AppLog.e(this, e)
         }

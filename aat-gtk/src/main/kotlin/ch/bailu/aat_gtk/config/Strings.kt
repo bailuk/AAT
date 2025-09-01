@@ -6,10 +6,11 @@ object Strings {
     const val appPreferencesNode = "ch/bailu/aat"
 
     // CSS
-    const val linked = "linked"
-    const val mapControl = "map-control"
-    const val numberView = "number-view"
-    const val numberViewWidth = "number-view-width-"
+    const val CSS_LINKED            = "linked"
+    const val CSS_MAP_CONTROL       = "map-control"
+    const val CSS_NUMBER_VIEW       = "number-view"
+    const val CSS_NUMBER_VIEW_WIDTH = "number-view-width-"
+    const val CSS_HIGHLIGHTED       = "highlighted"
 
     // Files
     const val appCss = "/app.css"
