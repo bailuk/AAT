@@ -10,3 +10,4 @@ GTK: List summary in detail view and as map overlay
 GTK: Responsive about dialog
 GTK: Responsive file operation dialogs
 GTK: Responsive preferences dialog
+GTK: Responsive file dialog
