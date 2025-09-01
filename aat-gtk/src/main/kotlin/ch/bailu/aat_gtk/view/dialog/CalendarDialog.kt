@@ -49,8 +49,6 @@ object CalendarDialog {
                 }
             }
 
-            //dialog.setTitle("Datum Wählen")
-
             dialog.child = Box(Orientation.VERTICAL, Layout.MARGIN).apply {
                 margin(Layout.MARGIN*2)
                 append(calendar)
