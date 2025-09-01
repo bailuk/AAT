@@ -59,8 +59,8 @@ class DirectoryService(private val appContext: AppContext) : VirtualService(),
         }
     }
 
-    override fun select(extraSqlStatment: String, vararg params: Any): DbResultSet {
-        return database.select(extraSqlStatment, *params)
+    override fun select(extraStatement: String, vararg params: Any): DbResultSet {
+        return database.select(extraStatement, *params)
     }
 
     override fun deleteEntry(file: Foc) {

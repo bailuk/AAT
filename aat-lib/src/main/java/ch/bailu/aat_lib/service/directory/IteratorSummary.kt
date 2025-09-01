@@ -22,7 +22,7 @@ class IteratorSummary(appContext: AppContext) : IteratorAbstract(appContext) {
         return InfoID.LIST_SUMMARY
     }
 
-    override fun onCursorChanged(cursor: DbResultSet, directory: Foc, fileID: String) {
-        info = GpxInformationDbSummary(directory, cursor)
+    override fun onCursorChanged(resultSet: DbResultSet, directory: Foc, fileID: String) {
+        info = GpxInformationDbSummary(directory, resultSet)
     }
 }

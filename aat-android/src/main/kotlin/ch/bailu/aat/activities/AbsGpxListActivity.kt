@@ -18,6 +18,7 @@ import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -69,7 +70,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     }
 
     private fun createDispatcher(busyControl: TargetInterface) {
-        dispatcher.addSource(IteratorSource.Summary(appContext))
+        dispatcher.addSource(IteratorSource.Summary(appContext, UsageTrackerAlwaysEnabled()))
         dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
         dispatcher.addTarget(busyControl, *InformationUtil.getOverlayInfoIdList().toIntArray())

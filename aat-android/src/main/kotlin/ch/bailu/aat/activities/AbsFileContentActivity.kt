@@ -121,7 +121,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         if (v === previousFile || v === nextFile) {
             changeFileAsk(v)
         } else if (v === fileOperation) {
-            currentFile?.apply { FileMenu(this@AbsFileContentActivity, info.getFile()).showAsPopup(this@AbsFileContentActivity, v) }
+            currentFile?.apply { FileMenu(this@AbsFileContentActivity, getInfo().getFile()).showAsPopup(this@AbsFileContentActivity, v) }
         }
     }
 

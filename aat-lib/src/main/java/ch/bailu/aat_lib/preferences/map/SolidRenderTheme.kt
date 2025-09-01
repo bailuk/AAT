@@ -59,7 +59,7 @@ class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, 
                     ExternalRenderTheme(File(name))
                     return name
                 } catch (e: FileNotFoundException) {
-                    AppLog.d(SolidRenderTheme.javaClass.simpleName, e.message)
+                    AppLog.d(SolidRenderTheme::class.java.simpleName, e.message)
                 }
             }
             return MapsforgeThemes.DEFAULT.toString()

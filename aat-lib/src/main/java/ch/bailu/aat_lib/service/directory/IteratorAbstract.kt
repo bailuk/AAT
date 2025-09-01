@@ -27,8 +27,8 @@ abstract class IteratorAbstract(private val appContext: AppContext) : Iterator()
         openAndQuery()
     }
 
-    override fun setOnCursorChangedListener(listner: () -> Unit) {
-        onCursorChangedListener = listner
+    override fun setOnCursorChangedListener(listener: () -> Unit) {
+        onCursorChangedListener = listener
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

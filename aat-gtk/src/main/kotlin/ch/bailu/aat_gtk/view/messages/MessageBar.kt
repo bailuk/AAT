@@ -8,7 +8,7 @@ import ch.bailu.gtk.type.Str
 class MessageBar(messageType: String, cssClass: String) {
     private val timer = GtkTimer()
     val label = Label(Str.NULL).apply {
-        hide()
+        visible = false
         addCssClass(cssClass)
         label
     }
@@ -17,9 +17,9 @@ class MessageBar(messageType: String, cssClass: String) {
         GtkAppContext.broadcaster.register(messageType) {
             if (it.size > 1) {
                 label.setText(it[1])
-                label.show()
+                label.visible = true
                 timer.cancel()
-                timer.kick(5000) { label.hide() }
+                timer.kick(5000) { label.visible = false }
             }
         }
     }
