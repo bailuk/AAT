@@ -10,8 +10,8 @@ import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitudeValue
 import ch.bailu.aat_lib.preferences.system.SolidCacheSize
 import ch.bailu.aat_lib.preferences.system.SolidStatusMessages
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.gtk.adw.Window
 import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Window
 
 class GeneralPreferencesPage(app: Application, window: Window, appContext: AppContext): PreferencesPageParent(Res.str().p_general(), "general") {
 

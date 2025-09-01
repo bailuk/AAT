@@ -8,17 +8,17 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.map.tile.source.ElevationSource
 import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache
+import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
-import ch.bailu.aat_lib.preferences.map.SolidLayerType
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
 import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.gtk.adw.PreferencesWindow
 import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Window
 
-class MapPreferencesPage(appContext: AppContext, app: Application, window: PreferencesWindow) : PreferencesPageParent(Res.str().p_map(), "map") {
+class MapPreferencesPage(appContext: AppContext, app: Application, window: Window) : PreferencesPageParent(Res.str().p_map(), "map") {
 
     init {
         add(Res.str().p_map())
