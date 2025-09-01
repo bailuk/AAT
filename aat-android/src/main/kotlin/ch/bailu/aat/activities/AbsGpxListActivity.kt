@@ -54,7 +54,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         val sdirectory = SolidDirectoryQuery(Storage(this), FocAndroidFactory(this)).apply {
             setValue(directory.path)
         }
-        AbsGpxListActivity@this.sdirectory = sdirectory
+        this.sdirectory = sdirectory
 
         val contentView = GpxListActivityContentView(this, sdirectory, theme, filterTheme)
         busyControl = contentView.busyControl

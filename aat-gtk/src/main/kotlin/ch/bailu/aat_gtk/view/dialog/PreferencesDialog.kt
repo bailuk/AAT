@@ -37,7 +37,7 @@ object PreferencesDialog {
     fun showMap(app: Application, appContext: AppContext) {
         show(app, appContext)
         val window = this.window
-        if (window is PreferencesWindow) {
+        if (window is PreferencesDialog) {
             window.setVisiblePageName("map")
         }
     }
