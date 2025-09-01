@@ -2,18 +2,18 @@ package ch.bailu.aat_gtk.view.menu.provider
 
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_gtk.view.dialog.FileDeleteDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
 import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_lib.util.fs.AFile
 import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
-import ch.bailu.gtk.adw.MessageDialog
+import ch.bailu.gtk.adw.AlertDialog
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
@@ -22,6 +22,7 @@ import ch.bailu.gtk.gtk.Entry
 import ch.bailu.gtk.gtk.Label
 import ch.bailu.gtk.gtk.ListBox
 import ch.bailu.gtk.gtk.Orientation
+import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.type.Str
 
 class FileContextMenu(private val appContext: AppContext, private val solid: SolidCustomOverlayList, private val solidMock: SolidMockLocationFile): MenuProviderInterface {
@@ -56,11 +57,11 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
             solidMock.setValue(file.path)
         }
         MenuHelper.setAction(app, Strings.ACTION_FILE_RENAME) {
-            rename(app)
+            rename(app.activeWindow)
         }
 
         MenuHelper.setAction(app, Strings.ACTION_FILE_DELETE) {
-            delete(app)
+            delete(app.activeWindow)
         }
 
         MenuHelper.setAction(app, Strings.ACTION_FILE_RELOAD) {
@@ -70,9 +71,9 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
 
     override fun updateActionValues(app: Application) {}
 
-    private fun delete(app: Application) {
+    private fun delete(window: Window) {
         if (file.canWrite()) {
-            FileDeleteDialog(app, file) { response ->
+            FileDeleteDialog(window, file) { response ->
                 if (Strings.ID_OK == response) {
                     file.rm()
                     FileAction.rescanDirectory(GtkAppContext, file)
@@ -84,10 +85,10 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
     }
 
 
-    private fun rename(app: Application) {
+    private fun rename(window: Window) {
         if (file.canWrite() && file.hasParent()) {
             val directory = file.parent()
-            val dialog = MessageDialog(app.activeWindow, Res.str().file_rename(), file.name)
+            val dialog = AlertDialog(Res.str().file_rename(), file.name)
             val entry = Entry()
             dialog.extraChild = entry
             dialog.addResponse(Strings.ID_CANCEL, Res.str().cancel())
@@ -101,7 +102,7 @@ class FileContextMenu(private val appContext: AppContext, private val solid: Sol
                     FileAction.rename(GtkAppContext, source, target)
                 }
             }
-            dialog.present()
+            dialog.present(window)
         }
     }
 
