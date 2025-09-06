@@ -305,9 +305,8 @@
     <string name ="tt_p_missing_trigger">Pause Automatique si le signal GPS est perdu pendant un certain laps de temps.</string>
 
     <!-- Errors -->
-    <string name="error_integer">Seuls les nombres entiers sont acceptés.\n\"%s\"</string>
+    <string name ="error_integer">Seuls les nombres entiers sont acceptés.</string>
     <string name ="error_integer_positive">Le poids doit être compris entre 1 et 999.</string>
-    <string name="error_long">Seuls les nombres sont autorisés.\n\"%s\"</string>
     <string name ="error_met">Le premier nombre doit être entre 0.0 et 20.0, suivi d\'un espace.</string>
 
 </resources>

@@ -20,7 +20,7 @@ open class SolidLong(private val storage: StorageInterface, private val key: Str
         val s = string.trim { it <= ' ' }
 
         if (!validate(s)) {
-            throw ValidationException(String.format(Res.str().error_long(), s))
+            throw ValidationException(Res.str().error_integer())
         } else {
             try {
                 setValue(s.toLong())

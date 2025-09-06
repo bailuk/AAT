@@ -492,11 +492,9 @@ open class Strings {
 
     open fun tt_p_missing_trigger(): String = "Set tracker to auto-pause if the GPS signal is lost for a certain period."
 
-    open fun error_integer(): String = "Wrong input, only integers are allowed.\n\"%s\""
+    open fun error_integer(): String = "Only integers are allowed."
 
     open fun error_integer_positive(): String = "Weight must be between 1 and 999."
-
-    open fun error_long(): String = "Wrong input, only numbers are allowed.\n\"%s\""
 
     open fun error_no_map_file(): String = "No map files found at "
 

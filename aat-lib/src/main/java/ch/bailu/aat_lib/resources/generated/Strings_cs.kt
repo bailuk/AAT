@@ -324,11 +324,9 @@ class Strings_cs : Strings() {
 
     override fun tt_p_preset_slots(): String = "Počet adresářů a obrazovek, které chcete použít pro správu záznamů."
 
-    override fun error_integer(): String = "Nesprávný vstup, povolena jsou pouze celá čísla.\n\"%s\""
+    override fun error_integer(): String = "Nesprávný vstup, povolena jsou pouze celá čísla."
 
     override fun error_integer_positive(): String = "Váha musí být mezi 1 a 999."
-
-    override fun error_long(): String = "Nesprávný vstup, povolena jsou pouze.\n\"%s\""
 
     override fun error_met(): String = "První číslo musí být mezi 0.0 a 20.0 s mezerou na konci."
 

@@ -21,6 +21,10 @@ class SolidBooleanSwitchView(private val solid: SolidBoolean): OnPreferencesChan
                 blockUpdate = false
             }
         }
+        layout.onDestroy {
+            layout.disconnectSignals()
+            solid.unregister(this)
+        }
         solid.getStorage().register(this)
     }
 

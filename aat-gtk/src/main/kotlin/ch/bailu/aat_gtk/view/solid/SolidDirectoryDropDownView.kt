@@ -37,7 +37,9 @@ class SolidDirectoryDropDownView(appContext: AppContext)
         solidDirectoryQuery.register(this)
 
         dropDown.onDestroy {
+            dropDown.disconnectSignals()
             solidDirectoryQuery.unregister(this)
+            // TODO free model
         }
     }
 

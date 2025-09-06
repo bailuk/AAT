@@ -1,7 +1,6 @@
 package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_gtk.util.extensions.setTooltipText
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidIndexList
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -17,19 +16,25 @@ class SolidIndexComboRowView(private val solid: SolidIndexList) : OnPreferencesC
         layout.setTitle(solid.getLabel())
 
         val strings = Strs.nullTerminated(solid.getStringArray())
-        layout.model = StringList(strings).asListModel()
+        val stringList = StringList(strings)
+        layout.model = stringList.asListModel()
 
-        layout.onActivate {
-            AppLog.d(this, "onActivate")
-        }
         layout.onNotify {
             if ("selected" == it.name.toString()) { // Property "selected" has changed
                 blockUpdate = true
-                solid.index = layout.index
+                solid.index = layout.selected
                 blockUpdate = false
             }
         }
+        layout.onDestroy {
+            layout.disconnectSignals()
+            solid.unregister(this)
+            strings.destroy()
+            stringList.unref()
+        }
         layout.setTooltipText(solid)
+        layout.selected = solid.index
+        solid.register(this)
     }
 
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

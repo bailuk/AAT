@@ -16,6 +16,7 @@ import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -34,6 +35,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
@@ -84,9 +86,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             append(navigationView.navigationSplitViewL1)
         }
 
-        navigationView.setLeftSidebar(mainPage.layout, "")
-        navigationView.setContent(mapView.overlay, "")
-        navigationView.setRightSidebar(poiView.layout, "")
+        navigationView.setLeftSidebar(mainPage.layout, Configuration.appName)
+        navigationView.setContent(mapView.overlay, Res.str().p_map())
+        navigationView.setRightSidebar(poiView.layout, Res.str().p_mapsforge_poi())
 
         navigationView.observe(mainPage)
         navigationView.observe(poiView)

@@ -24,7 +24,10 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
         }).menuButton.apply {
             margin(Layout.MARGIN)
         })
-
+        layout.onDestroy {
+            layout.disconnectSignals()
+            solid.unregister(this)
+        }
         solid.register(this)
     }
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {

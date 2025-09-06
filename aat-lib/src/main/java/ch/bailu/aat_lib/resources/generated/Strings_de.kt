@@ -300,11 +300,9 @@ class Strings_de : Strings() {
 
     override fun tt_p_preset_slots(): String = "Anzahl Verzeichnisse und Voreinstellungen um Tracks zu organisieren."
 
-    override fun error_integer(): String = "Falsche Eingabe, es sind nur Zahlen erlaubt.\n\"%s\""
+    override fun error_integer(): String = "Es sind nur Zahlen erlaubt."
 
     override fun error_integer_positive(): String = "Zahl muss zwischen 1 und 999 sein."
-
-    override fun error_long(): String = "Falsche Eingabe, es sind nur Zahlen erlaubt.\n\"%s\""
 
     override fun error_met(): String = "Die erste Zahl muss zwischen 0.0 und 20.0 sein, gefolgt von einem Leerzeichen."
 

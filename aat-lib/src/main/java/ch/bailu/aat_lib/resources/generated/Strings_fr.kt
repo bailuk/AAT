@@ -328,11 +328,9 @@ class Strings_fr : Strings() {
 
     override fun tt_p_missing_trigger(): String = "Pause Automatique si le signal GPS est perdu pendant un certain laps de temps."
 
-    override fun error_integer(): String = "Seuls les nombres entiers sont acceptés.\n\"%s\""
+    override fun error_integer(): String = "Seuls les nombres entiers sont acceptés."
 
     override fun error_integer_positive(): String = "Le poids doit être compris entre 1 et 999."
-
-    override fun error_long(): String = "Seuls les nombres sont autorisés.\n\"%s\""
 
     override fun error_met(): String = "Le premier nombre doit être entre 0.0 et 20.0, suivi d\'un espace."
 

@@ -7,6 +7,7 @@ object Strings {
 
     // CSS
     const val CSS_LINKED            = "linked"
+    const val CSS_ERROR             = "error"
     const val CSS_MAP_CONTROL       = "map-control"
     const val CSS_NUMBER_VIEW       = "number-view"
     const val CSS_NUMBER_VIEW_WIDTH = "number-view-width-"
