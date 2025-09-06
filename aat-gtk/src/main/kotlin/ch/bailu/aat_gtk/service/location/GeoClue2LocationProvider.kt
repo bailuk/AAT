@@ -47,9 +47,10 @@ class GeoClue2LocationProvider(item: LocationStackItem) : LocationStackChainedIt
                     self.unregister()
                 }, null
             )
-        } catch (e: java.lang.Exception) {
+        } catch (e: Throwable) {
             passState(StateID.NO_SERVICE)
-            AppLog.e(this, "Failed to initialize GeoClue2")
+            val message = e.message ?: "unknown error"
+            AppLog.e(this, "Failed to initialize GeoClue2: $message")
         }
     }
 
