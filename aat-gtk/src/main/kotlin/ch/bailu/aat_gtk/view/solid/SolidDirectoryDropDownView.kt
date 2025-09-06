@@ -2,8 +2,8 @@ package ch.bailu.aat_gtk.view.solid
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.DropDown
 import ch.bailu.gtk.type.Strs
@@ -17,13 +17,7 @@ class SolidDirectoryDropDownView(appContext: AppContext)
     val dropDown: DropDown
 
     init {
-        val model = ArrayList<String ?>()
-
-        model.addAll(directories.map {
-            limitWidth(it.name, 40) // TODO width limit should be handled by GTK (but how?)
-        })
-        model.add(null)
-        dropDown = DropDown.newFromStringsDropDown(Strs(model.toTypedArray()))
+        dropDown = DropDown.newFromStringsDropDown(createModel())
 
         indexFromSolid()
 
@@ -62,5 +56,12 @@ class SolidDirectoryDropDownView(appContext: AppContext)
             return text.substring(0, limit-2) + "…"
         }
         return text
+    }
+
+    private fun createModel(): Strs {
+        val array = directories.map {
+            limitWidth(it.name, 40) // TODO width limit should be handled by GTK (but how?)
+        }.toList().toTypedArray()
+        return Strs.nullTerminated(array)
     }
 }
