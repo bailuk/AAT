@@ -46,6 +46,6 @@ open class SolidInteger(private val storage: StorageInterface, private val key: 
 
     companion object {
         // only positive/negative Integers, any size allowed
-        private val VALIDATE = Regex("-?[1-9]\\d*")
+        private val VALIDATE = Regex("-?[0-9]\\d*")
     }
 }
