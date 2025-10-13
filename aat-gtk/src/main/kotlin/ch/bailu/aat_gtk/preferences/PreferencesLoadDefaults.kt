@@ -21,7 +21,7 @@ class PreferenceLoadDefaults(context: AppContext) {
     }
 
     private fun setDefaults(context: AppContext) {
-        val solidRenderTheme = SolidRenderTheme(context.mapDirectory, context)
+        val solidRenderTheme = SolidRenderTheme(context.mapDirectories.createSolidDirectory(), context)
         SolidMapTileStack(solidRenderTheme).setDefaults()
         SolidWeight(context.storage).setDefaults()
         SolidPositionLock(context.storage, GtkCustomMapView.DEFAULT_KEY).setDefaults()

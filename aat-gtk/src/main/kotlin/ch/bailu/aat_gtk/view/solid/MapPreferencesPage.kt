@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.map.tile.source.ElevationSource
 import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
 import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache
 import ch.bailu.aat_lib.preferences.map.SolidLayerType
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectoryHint
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
@@ -32,10 +32,10 @@ class MapPreferencesPage(appContext: AppContext, app: Application, window: Windo
         })
 
         page.add(PreferencesGroup().apply {
-            val solidMapDirectory = SolidMapsForgeDirectory(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext))
+            val solidMapDirectory = SolidMapsForgeDirectoryHint(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext))
             setTitle(Res.str().p_offline_map())
             add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)
-            add(SolidDirectorySelectorView(SolidMapsForgeMapFile(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext)), app, window).layout)
+            add(SolidDirectorySelectorView(SolidMapsForgeMapFile(solidMapDirectory, appContext), app, window).layout)
             add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, appContext), app, window).layout)
             add(SolidIndexComboRowView(SolidScaleFactor(appContext.storage)).layout)
             add(SolidBooleanSwitchView(SolidEnableTileCache.MapsForge(appContext.storage)).layout)

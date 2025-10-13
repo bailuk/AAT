@@ -19,7 +19,6 @@ import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -37,7 +36,6 @@ import org.mapsforge.poi.storage.PoiPersistenceManager
 class AndroidAppContext(private val context: Context, override val services: ServicesInterface) : AppContext {
     override val broadcaster = AndroidBroadcaster(context)
     override val assets = FocAssetFactory(context)
-
 
     override val storage: StorageInterface
         get() = Storage(context)
@@ -67,10 +65,7 @@ class AndroidAppContext(private val context: Context, override val services: Ser
     override val dataDirectory: SolidDataDirectory
         get() =  SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
 
-
-    override val mapDirectory: SolidMapsForgeDirectory
-        get() =  AndroidMapDirectories(context).createSolidDirectory()
-
+    override val mapDirectories     by lazy { AndroidMapDirectories(context) }
 
     override val tileCacheDirectory: SolidTileCacheDirectory
         get() =  AndroidSolidTileCacheDirectory(context)
@@ -81,7 +76,6 @@ class AndroidAppContext(private val context: Context, override val services: Ser
 
     override val tilePainter: TilePainter
         get() = AndroidTilePainter()
-
 
     override fun getPoiPersistenceManager(poiDatabase: String): PoiPersistenceManager {
         return AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase)

@@ -38,7 +38,7 @@ object GtkAppContext: AppContext {
     override val services           by lazy { GtkServices(this) }
     override val downloadConfig     by lazy { DownloadConfig(GtkAppConfig) }
     override val assets             by lazy { FocResourceFactory() }
-    override val mapDirectory       by lazy { GtkMapDirectories(storage, focFactory).createSolidDirectory() }
+    override val mapDirectories     by lazy { GtkMapDirectories(storage, focFactory) }
     override val tileCacheDirectory by lazy { GtkSolidTileCacheDirectory(storage, focFactory) }
     override val tilePainter        by lazy { GtkTilePainter() }
 

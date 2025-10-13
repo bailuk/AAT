@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.service.render
 
 import ch.bailu.aat_lib.logger.AppLog.e
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
+import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
 import ch.bailu.foc.Foc
@@ -44,7 +44,7 @@ class Configuration {
             mapFiles.add(dir)
         } else {
             dir.foreachFile { child: Foc ->
-                if (child.name.endsWith(SolidMapsForgeDirectory.EXTENSION)) {
+                if (child.name.endsWith(SolidMapsForgeMapFile.EXTENSION)) {
                     mapFiles.add(child)
                 }
             }

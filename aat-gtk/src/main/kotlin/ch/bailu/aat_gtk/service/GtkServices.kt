@@ -45,7 +45,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     private val lazyCacheService by lazy { CacheService(appContext) }
     private val lazyBackgroundService by lazy { BackgroundService(appContext, appContext.broadcaster, 5) }
     private val lazyDirectoryService by lazy { DirectoryService(appContext) }
-    private val lazyRenderService by lazy { RenderService(appContext, appContext.mapDirectory) }
+    private val lazyRenderService by lazy { RenderService(appContext, appContext.mapDirectories) }
 
     private val lazyElevationService by lazy { ElevationService(appContext) }
     private val lazyIconMapService by lazy { IconMapService(appContext.services, appContext.assets) }

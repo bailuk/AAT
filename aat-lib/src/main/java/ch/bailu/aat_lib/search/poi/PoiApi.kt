@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.file.xml.writer.WayWriter
 import ch.bailu.aat_lib.file.xml.writer.WayWriterOsmTags
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.preferences.SolidPoiDatabase
+import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.SolidPoiOverlay
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.FileTask
@@ -51,7 +51,7 @@ abstract class PoiApi(context: AppContext) : OsmApiConfiguration() {
 
     override fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6) {
         val categories = selectedCategories
-        val poiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext).getValueAsString()
+        val poiDatabase = SolidPoiDatabase(appContext.mapDirectories.createSolidDirectory(), appContext).getValueAsString()
         appContext.services.insideContext {
             task.stopProcessing()
             task = PoiToGpxTask(

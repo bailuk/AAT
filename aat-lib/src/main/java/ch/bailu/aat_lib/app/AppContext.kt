@@ -5,8 +5,8 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.MapDirectories
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -31,7 +31,7 @@ interface AppContext : FocFactory {
     val downloadConfig: DownloadConfig
     val dataDirectory: SolidDataDirectory
     val assets: FocFactory
-    val mapDirectory: SolidMapsForgeDirectory
+    val mapDirectories: MapDirectories
     val tileCacheDirectory: SolidTileCacheDirectory
     fun createTimer(): Timer
     val tilePainter: TilePainter

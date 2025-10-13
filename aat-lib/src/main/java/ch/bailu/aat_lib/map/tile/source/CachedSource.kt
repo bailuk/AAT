@@ -1,54 +1,38 @@
-package ch.bailu.aat_lib.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.ObjTileCached
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjTileCached;
+class CachedSource(private val source: Source) : Source() {
+    override val name: String
+        get() = "Cached" + source.name
 
-public class CachedSource extends Source {
-    private final Source source;
-
-    public CachedSource(Source s) {
-        source = s;
+    override fun getID(aTile: Tile, context: AppContext): String {
+        return "Cached" + source.getID(aTile, context)
     }
 
-    public String getName() {
-        return "Cached" + source.getName();
+    override val minimumZoomLevel: Int
+        get() = source.minimumZoomLevel
+
+    override val maximumZoomLevel: Int
+        get() = source.maximumZoomLevel
+
+    override val alpha: Int
+        get() = source.alpha
+
+
+    override fun getFactory(tile: Tile): Obj.Factory {
+        return ObjTileCached.Factory(tile, source)
     }
 
-    @Override
-    public String getID(Tile aTile, AppContext context) {
-        return "Cached" + source.getID(aTile, context);
+    override val isTransparent: Boolean
+        get() = source.isTransparent
+
+
+    companion object {
+        val CACHED_ELEVATION_HILLSHADE: CachedSource =
+            CachedSource(ElevationSource.ELEVATION_HILLSHADE)
     }
-
-    @Override
-    public int getMinimumZoomLevel() {
-        return source.getMinimumZoomLevel();
-    }
-
-    @Override
-    public int getMaximumZoomLevel() {
-        return source.getMaximumZoomLevel();
-    }
-
-    @Override
-    public int getAlpha() {
-        return source.getAlpha();
-    }
-
-
-    @Override
-    public Obj.Factory getFactory(Tile tile) {
-        return new ObjTileCached.Factory(tile, source);
-    }
-
-    @Override
-    public boolean isTransparent() {
-        return source.isTransparent();
-    }
-
-
-    public final static CachedSource CACHED_ELEVATION_HILLSHADE = new CachedSource(ElevationSource.ELEVATION_HILLSHADE);
 }
-

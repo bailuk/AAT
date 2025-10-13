@@ -46,7 +46,7 @@ class MapsForgePreview(context: Context, private val appContext: AppContext, inf
         layout(0, 0, BITMAP_SIZE, BITMAP_SIZE)
         model.mapViewDimension.dimension = DIM
         imageFile = out
-        provider = TileProvider(appContext, getSource(SolidRenderTheme(appContext.mapDirectory, appContext)))
+        provider = TileProvider(appContext, getSource(SolidRenderTheme(appContext.mapDirectories.createSolidDirectory(), appContext)))
 
         val tileLayer = MapsForgeTileLayer(appContext.services, provider, appContext.tilePainter)
         add(tileLayer)

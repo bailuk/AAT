@@ -17,7 +17,7 @@ import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
-import ch.bailu.aat_lib.preferences.SolidPoiDatabase
+import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.SolidString
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.search.poi.PoiListItem
@@ -46,8 +46,8 @@ class PoiView(
 
             override fun afterTextChanged(editable: Editable) {}
         })
-
     }
+
     private val filterList = FilterList()
 
     private val listView = PoiListView(context, filterList, theme).apply {
@@ -62,7 +62,7 @@ class PoiView(
         }
     }
 
-    private val sdatabase: SolidPoiDatabase = SolidPoiDatabase(appContext.mapDirectory, appContext)
+    private val sdatabase: SolidPoiDatabase = SolidPoiDatabase(appContext.mapDirectories.createSolidDirectory(), appContext)
 
     init {
         sdatabase.register(this)

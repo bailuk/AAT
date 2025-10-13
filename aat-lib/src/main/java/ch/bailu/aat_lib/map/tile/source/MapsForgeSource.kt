@@ -1,58 +1,39 @@
-package ch.bailu.aat_lib.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source
 
-import org.mapsforge.core.model.Tile;
-import org.mapsforge.map.rendertheme.internal.MapsforgeThemes;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
+import org.mapsforge.core.model.Tile
+import org.mapsforge.map.rendertheme.internal.MapsforgeThemes
 
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme;
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.ObjTileMapsForge;
+class MapsForgeSource(private val themeFile: String) : Source() {
+    override val name: String = "MF_" + SolidRenderTheme.toThemeName(themeFile)
 
-public class MapsForgeSource extends Source {
-    public final static Source MAPSFORGE = new MapsForgeSource(MapsforgeThemes.DEFAULT.name());
-
-    public static final String NAME = "Offline";
-    private final String themeFile;
-    public final String themeIdName;
-
-
-    public MapsForgeSource(String xmlThemeFile) {
-        themeFile = xmlThemeFile;
-        themeIdName = "MF_" + SolidRenderTheme.toThemeName(xmlThemeFile);
+    override fun getID(t: Tile, x: AppContext): String {
+        return genID(t, name)
     }
 
-    public String getName() {
-        return themeIdName;
+    override val minimumZoomLevel: Int
+        get() = 0
+
+    override val maximumZoomLevel: Int
+        get() = 19
+
+    override val isTransparent: Boolean
+        get() = false
+
+    override val alpha: Int
+        get() = OPAQUE
+
+
+    override fun getFactory(t: Tile): Obj.Factory {
+        return ObjTileMapsForge.Factory(t, themeFile)
     }
 
-    @Override
-    public String getID(Tile t, AppContext x) {
-        return genID(t, themeIdName);
-    }
+    companion object {
+        val MAPSFORGE: Source = MapsForgeSource(MapsforgeThemes.DEFAULT.name)
 
-    @Override
-    public int getMinimumZoomLevel() {
-        return 0;
-    }
-
-    @Override
-    public int getMaximumZoomLevel() {
-        return 19;
-    }
-
-    @Override
-    public boolean isTransparent() {
-        return false;
-    }
-
-    @Override
-    public int getAlpha() {
-        return OPAQUE;
-    }
-
-
-    @Override
-    public Obj.Factory getFactory(Tile t) {
-        return  new ObjTileMapsForge.Factory(t, themeFile);
+        const val NAME: String = "Offline"
     }
 }

@@ -1,36 +1,39 @@
-package ch.bailu.aat_lib.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.cache.Obj
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.cache.Obj;
+abstract class Source {
+    abstract val name: String
 
-public abstract class Source {
-    public final static String EXT = ".png";
+    abstract fun getID(aTile: Tile, context: AppContext): String
 
-    public final static int TRANSPARENT = 150;
-    public final static int OPAQUE = 255;
+    abstract val minimumZoomLevel: Int
+    abstract val maximumZoomLevel: Int
 
-    public abstract String getName();
-    public abstract String getID(Tile aTile, AppContext context);
+    abstract val isTransparent: Boolean
+    abstract val alpha: Int
 
-    public abstract int getMinimumZoomLevel();
-    public abstract int getMaximumZoomLevel();
-
-    public abstract boolean isTransparent();
-    public abstract int getAlpha();
-    public abstract Obj.Factory getFactory(Tile tile);
+    abstract fun getFactory(tile: Tile): Obj.Factory
 
 
-    public boolean filterBitmap() {return false;}
-
-    public static String genRelativeFilePath(final Tile tile, String name) {
-        return  genID(tile,name) +  EXT;
-
+    open fun filterBitmap(): Boolean {
+        return false
     }
 
-    public static String genID(Tile t, String name) {
-        return name + "/" + t.zoomLevel + "/" + t.tileX + "/" + t.tileY;
+    companion object {
+        const val EXT: String = ".png"
 
+        const val TRANSPARENT: Int = 150
+        const val OPAQUE: Int = 255
+
+        fun genRelativeFilePath(tile: Tile, name: String): String {
+            return genID(tile, name) + EXT
+        }
+
+        fun genID(t: Tile, name: String): String {
+            return name + "/" + t.zoomLevel + "/" + t.tileX + "/" + t.tileY
+        }
     }
 }

@@ -1,11 +1,12 @@
 package ch.bailu.aat_lib.preferences
 
+import ch.bailu.aat_lib.util.extensions.addUnique
 import ch.bailu.foc.Foc
 
 object SelectionList {
     fun addDr(dirs: ArrayList<Foc>, file: Foc) {
         if (file.canRead() && file.isDir) {
-            dirs.add(file)
+            dirs.addUnique(file)
         }
     }
 
@@ -15,12 +16,12 @@ object SelectionList {
 
     fun addRo(list: ArrayList<String>, check: Foc, file: Foc) {
         if (check.canOnlyRead()) {
-            list.add(file.toString())
+            list.addUnique(file.toString())
         }
     }
 
     fun addR(list: ArrayList<String>, file: Foc) {
-        if (file.canRead()) list.add(file.toString())
+        if (file.canRead()) list.addUnique(file.toString())
     }
 
     fun addSubdirectoriesR(list: ArrayList<String>, directory: Foc) {
@@ -33,7 +34,7 @@ object SelectionList {
 
     fun addW(list: ArrayList<String>, check: Foc, file: Foc) {
         if (check.canWrite()) {
-            list.add(file.toString())
+            list.addUnique(file.toString())
         }
     }
 }

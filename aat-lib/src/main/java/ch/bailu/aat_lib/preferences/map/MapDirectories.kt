@@ -9,7 +9,7 @@ import ch.bailu.foc.Foc
 interface MapDirectories {
     fun getWellKnownMapDirs(): ArrayList<Foc>
     fun getDefault(): Foc?
-    fun createSolidDirectory(): SolidMapsForgeDirectory
+    fun createSolidDirectory(): SolidMapsForgeDirectoryHint
     fun createSolidFile(): SolidMapsForgeMapFile
     fun createSolidRenderTheme(): SolidRenderTheme
 }

@@ -6,8 +6,8 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.MapDirectories
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -54,7 +54,7 @@ class MockAppContext : AppContext {
         get() = SolidDataDirectory(MockSolidDataDirectory(MockStorage(), this), this)
     override val assets: FocFactory
         get() = TODO("Not yet implemented")
-    override val mapDirectory: SolidMapsForgeDirectory
+    override val mapDirectories: MapDirectories
         get() = TODO("Not yet implemented")
     override val tileCacheDirectory: SolidTileCacheDirectory
         get() = TODO("Not yet implemented")

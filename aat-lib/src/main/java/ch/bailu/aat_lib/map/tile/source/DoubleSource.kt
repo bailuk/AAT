@@ -1,81 +1,61 @@
-package ch.bailu.aat_lib.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.aat_lib.service.cache.Obj
+import org.mapsforge.core.model.Tile
+import kotlin.math.max
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.ServicesInterface;
-import ch.bailu.aat_lib.service.cache.Obj;
+class DoubleSource(
+    private val scontext: ServicesInterface,
+    private val sourceA: Source,
+    private val sourceB: Source,
+    zoom: Int
+) :
+    Source() {
+    private val minZoomA =
+        max(zoom.toDouble(), sourceA.minimumZoomLevel.toDouble()).toInt()
 
-public class DoubleSource extends Source {
 
-    private final Source sourceA, sourceB;
-    private final int minZoomA;
+    override val name: String
+        get() = sourceA.name
 
-    private final ServicesInterface scontext;
-
-    public DoubleSource(ServicesInterface sc, Source a, Source b, int zoom) {
-        sourceA = a;
-        sourceB = b;
-
-        minZoomA = Math.max(zoom, a.getMinimumZoomLevel());
-
-        scontext = sc;
+    override fun getID(aTile: Tile, context: AppContext): String {
+        return decide(aTile).getID(aTile, context)
     }
 
 
-    @Override
-    public String getName() {
-        return sourceA.getName();
-    }
-
-    @Override
-    public String getID(Tile aTile, AppContext context) {
-        return decide(aTile).getID(aTile, context);
-    }
-
-
-    private Source decide(final Tile t) {
-        final Source[] r = {sourceB};
+    private fun decide(t: Tile): Source {
+        val r = arrayOf(sourceB)
 
         if (isZoomLevelSupportedA(t)) {
-            scontext.insideContext(() -> {
-                if (scontext.getRenderService().supportsTile(t))
-                    r[0] = sourceA;
-            });
+            scontext.insideContext {
+                if (scontext.getRenderService().supportsTile(t)) r[0] = sourceA
+            }
         }
 
-        return r[0];
+        return r[0]
+    }
+
+    fun isZoomLevelSupportedA(t: Tile): Boolean {
+        return (t.zoomLevel <= sourceA.maximumZoomLevel && t.zoomLevel >= minZoomA)
     }
 
 
-    public boolean isZoomLevelSupportedA(Tile t) {
-        return (t.zoomLevel <= sourceA.getMaximumZoomLevel() && t.zoomLevel >= minZoomA);
-    }
+    override val minimumZoomLevel: Int
+        get() = sourceB.minimumZoomLevel
+
+    override val maximumZoomLevel: Int
+        get() = sourceA.maximumZoomLevel
+
+    override val isTransparent: Boolean
+        get() = sourceA.isTransparent
+
+    override val alpha: Int
+        get() = sourceA.alpha
 
 
-    @Override
-    public int getMinimumZoomLevel() {
-        return sourceB.getMinimumZoomLevel();
-    }
-
-    @Override
-    public int getMaximumZoomLevel() {
-        return sourceA.getMaximumZoomLevel();
-    }
-
-    @Override
-    public boolean isTransparent() {
-        return sourceA.isTransparent();
-    }
-
-    @Override
-    public int getAlpha() {
-        return sourceA.getAlpha();
-    }
-
-
-    @Override
-    public Obj.Factory getFactory(Tile tile) {
-        return decide(tile).getFactory(tile);
+    override fun getFactory(tile: Tile): Obj.Factory {
+        return decide(tile).getFactory(tile)
     }
 }

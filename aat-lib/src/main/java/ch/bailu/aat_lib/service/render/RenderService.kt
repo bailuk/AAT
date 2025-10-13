@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.service.render
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
+import ch.bailu.aat_lib.preferences.map.MapDirectories
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidRendererThreads
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
@@ -12,20 +12,18 @@ import ch.bailu.aat_lib.service.cache.ObjTileMapsForge
 import ch.bailu.foc.FocFactory
 import org.mapsforge.core.model.Tile
 
-class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsForgeDirectory) :
+class RenderService(focFactory: FocFactory, private val mapDirectories: MapDirectories) :
     VirtualService(), OnPreferencesChanged, RenderServiceInterface {
-    private val stheme = SolidRenderTheme(sdirectory, focFactory)
-    private val scaleFactor = SolidScaleFactor(sdirectory.getStorage())
+    private val stheme = SolidRenderTheme(mapDirectories.createSolidDirectory(), focFactory)
+    private val scaleFactor = SolidScaleFactor(stheme.getStorage())
 
     private val configuration = Configuration()
     private val caches = Caches()
 
-
     init {
-        sdirectory.getStorage().register(this)
+        stheme.getStorage().register(this)
         reconfigureRenderer()
     }
-
 
     private fun reconfigureRenderer() {
         SolidRendererThreads.set()
@@ -34,7 +32,7 @@ class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsFor
         val tileCache = caches.get(themeID)
 
         configuration.reconfigure(
-            sdirectory.getValueAsFile(),
+            mapDirectories.createSolidFile().getValueAsFile(),
             tileCache,
             stheme.valueAsRenderTheme,
             themeID,
@@ -59,19 +57,17 @@ class RenderService(focFactory: FocFactory, private val sdirectory: SolidMapsFor
         configuration.lockToRenderer(objTileMapsForge)
     }
 
-
     override fun freeFromRenderer(objTileMapsForge: ObjTileMapsForge) {
         caches.freeFromRenderer(objTileMapsForge)
     }
 
     override fun close() {
-        sdirectory.getStorage().unregister(this)
+        stheme.getStorage().unregister(this)
         configuration.destroy()
     }
 
-
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
-        if (sdirectory.hasKey(key) || stheme.hasKey(key) || scaleFactor.hasKey(key)) {
+        if (mapDirectories.createSolidFile().hasKey(key) || stheme.hasKey(key) || scaleFactor.hasKey(key)) {
             reconfigureRenderer()
         }
     }

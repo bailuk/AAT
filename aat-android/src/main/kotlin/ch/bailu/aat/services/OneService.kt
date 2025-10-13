@@ -120,7 +120,7 @@ class OneService : AbsService() {
     @Synchronized
     override fun getRenderService(): RenderServiceInterface {
         if (render == null) {
-            render = RenderService(appContext, appContext.mapDirectory)
+            render = RenderService(appContext, appContext.mapDirectories)
         }
         return render!!
     }

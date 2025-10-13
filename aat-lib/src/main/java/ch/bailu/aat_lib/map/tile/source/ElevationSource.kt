@@ -1,93 +1,61 @@
-package ch.bailu.aat_lib.map.tile.source;
+package ch.bailu.aat_lib.map.tile.source
 
-import org.mapsforge.core.model.Tile;
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.service.cache.Obj
+import ch.bailu.aat_lib.service.cache.elevation.ObjTileElevationColor
+import ch.bailu.aat_lib.service.cache.elevation.ObjTileHillShade
+import org.mapsforge.core.model.Tile
 
-import ch.bailu.aat_lib.app.AppContext;
-import ch.bailu.aat_lib.service.cache.Obj;
-import ch.bailu.aat_lib.service.cache.elevation.ObjTileElevationColor;
-import ch.bailu.aat_lib.service.cache.elevation.ObjTileHillShade;
+object ElevationSource {
+    @JvmField
+    val ELEVATION_HILLSHADE: Source = object : Source() {
+        override val name: String = "Hillshade"
 
-public class ElevationSource {
+        override fun getID(t: Tile, x: AppContext): String {
+            return genID(t, name)
+        }
 
-    public final static Source ELEVATION_HILLSHADE =
-            new Source() {
+        override val minimumZoomLevel: Int
+            get() = 8
 
-                public static final String NAME ="Hillshade";
+        override val maximumZoomLevel: Int
+            get() = 14
 
-                public String getName() {
-                    return NAME;
-                }
-
-                @Override
-                public String getID(Tile t, AppContext x) {
-                    return genID(t, NAME);
-                }
-
-                @Override
-                public int getMinimumZoomLevel() {
-                    return 8;
-                }
-
-                @Override
-                public int getMaximumZoomLevel() {
-                    return 14;
-                }
-
-                @Override
-                public boolean isTransparent() {
-                    return true;
-                }
+        override val isTransparent: Boolean
+            get() = true
 
 
-                @Override
-                public int getAlpha() {
-                    return OPAQUE;
-                }
+        override val alpha: Int
+            get() = OPAQUE
 
-                @Override
-                public Obj.Factory getFactory(Tile mt) {
-                    return  new ObjTileHillShade.Factory(mt);
-                }
+        override fun getFactory(mt: Tile): Obj.Factory {
+            return ObjTileHillShade.Factory(mt)
+        }
+    }
 
-            };
+    val ELEVATION_COLOR: Source = object : Source() {
+        override val name: String
+            get() = "ElevationColor"
 
-    public final static Source ELEVATION_COLOR =
-            new Source() {
+        override fun getID(t: Tile, x: AppContext): String {
+            return genID(t, ObjTileElevationColor::class.java.simpleName)
+        }
 
-                public String getName() {
-                    return "ElevationColor";
-                }
+        override val minimumZoomLevel: Int
+            get() = ELEVATION_HILLSHADE.minimumZoomLevel
 
-                @Override
-                public String getID(Tile t, AppContext x) {
-                    return Source.genID(t, ObjTileElevationColor.class.getSimpleName());
-                }
+        override val maximumZoomLevel: Int
+            get() = ELEVATION_HILLSHADE.maximumZoomLevel
 
-                @Override
-                public int getMinimumZoomLevel() {
-                    return ELEVATION_HILLSHADE.getMinimumZoomLevel();
-                }
+        override val isTransparent: Boolean
+            get() = false
 
-                @Override
-                public int getMaximumZoomLevel() {
-                    return ELEVATION_HILLSHADE.getMaximumZoomLevel();
-                }
-
-                @Override
-                public boolean isTransparent() {
-                    return false;
-                }
-
-                @Override
-                public int getAlpha() {
-                    return 50;
-                }
+        override val alpha: Int
+            get() = 50
 
 
-                @Override
-                public Obj.Factory getFactory(Tile mt) {
-                    return  new ObjTileElevationColor.Factory(mt);
-                }
-
-            };
+        override fun getFactory(mt: Tile): Obj.Factory {
+            return ObjTileElevationColor.Factory(mt)
+        }
+    }
 }
