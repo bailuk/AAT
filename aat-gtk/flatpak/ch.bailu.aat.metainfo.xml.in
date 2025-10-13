@@ -40,6 +40,11 @@
       <display_length compare="ge">360</display_length>
     </requires>
 
+    <branding>
+        <color type="primary" scheme_preference="light">#cdab8f</color>
+        <color type="primary" scheme_preference="dark">#444563</color>
+    </branding>
+
     <screenshots>
         <screenshot type="default">
             <image>https://raw.githubusercontent.com/bailuk/AAT/258f466a53b6c4f184f86f9e348ac8a352d5c105/doc/screenshot-gtk.png</image>
