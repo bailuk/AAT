@@ -25,20 +25,20 @@ class DoubleSource(
     }
 
 
-    private fun decide(t: Tile): Source {
+    private fun decide(tile: Tile): Source {
         val r = arrayOf(sourceB)
 
-        if (isZoomLevelSupportedA(t)) {
+        if (isZoomLevelSupportedA(tile)) {
             scontext.insideContext {
-                if (scontext.getRenderService().supportsTile(t)) r[0] = sourceA
+                if (scontext.getRenderService().supportsTile(tile)) r[0] = sourceA
             }
         }
 
         return r[0]
     }
 
-    fun isZoomLevelSupportedA(t: Tile): Boolean {
-        return (t.zoomLevel <= sourceA.maximumZoomLevel && t.zoomLevel >= minZoomA)
+    private fun isZoomLevelSupportedA(tile: Tile): Boolean {
+        return (tile.zoomLevel <= sourceA.maximumZoomLevel && tile.zoomLevel >= minZoomA)
     }
 
 

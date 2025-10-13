@@ -10,6 +10,8 @@ import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.gtk.adw.ActionRow
 import ch.bailu.gtk.gtk.Application
+import ch.bailu.gtk.gtk.Box
+import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Window
 
 class SolidDirectorySelectorView(private val solid: SolidFile, app: Application, window: Window) : OnPreferencesChanged {
@@ -19,10 +21,11 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
         layout.setTitle(solid.getLabel())
         layout.setSubtitle(solid.getValueAsString())
         layout.setTooltipText(solid)
-        layout.addSuffix(PopupMenuButton(SolidFileSelectorMenu(solid, window).apply {
-            createActions(app)
-        }).menuButton.apply {
+        layout.addSuffix(Box(Orientation.VERTICAL, 0).apply {
             margin(Layout.MARGIN)
+            append(PopupMenuButton(SolidFileSelectorMenu(solid, window).apply {
+                createActions(app)
+            }).menuButton)
         })
         layout.onDestroy {
             layout.disconnectSignals()
@@ -30,6 +33,7 @@ class SolidDirectorySelectorView(private val solid: SolidFile, app: Application,
         }
         solid.register(this)
     }
+
     override fun onPreferencesChanged(storage: StorageInterface, key: String) {
         if (solid.hasKey(key)) {
             layout.setSubtitle(solid.getValueAsString())

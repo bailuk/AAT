@@ -1,6 +1,5 @@
 package ch.bailu.aat_gtk.view.solid
 
-import ch.bailu.aat_gtk.app.GtkAppDensity
 import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
@@ -13,7 +12,6 @@ import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectoryHint
 import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
-import ch.bailu.aat_lib.preferences.map.SolidTileSize
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.PreferencesGroup
 import ch.bailu.gtk.gtk.Application
@@ -24,11 +22,8 @@ class MapPreferencesPage(appContext: AppContext, app: Application, window: Windo
     init {
         page.add(PreferencesGroup().apply {
             setTitle(Res.str().p_map())
-            add(SolidIndexComboRowView(SolidTileSize(appContext.storage, GtkAppDensity())).layout)
-
             add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
             add(SolidIndexComboRowView(SolidLayerType(appContext.storage)).layout)
-
         })
 
         page.add(PreferencesGroup().apply {
