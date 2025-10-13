@@ -10,8 +10,8 @@ import org.mapsforge.map.rendertheme.internal.MapsforgeThemes
 class MapsForgeSource(private val themeFile: String) : Source() {
     override val name: String = "MF_" + SolidRenderTheme.toThemeName(themeFile)
 
-    override fun getID(t: Tile, x: AppContext): String {
-        return genID(t, name)
+    override fun getID(tile: Tile, context: AppContext): String {
+        return genID(tile, name)
     }
 
     override val minimumZoomLevel: Int
@@ -27,8 +27,8 @@ class MapsForgeSource(private val themeFile: String) : Source() {
         get() = OPAQUE
 
 
-    override fun getFactory(t: Tile): Obj.Factory {
-        return ObjTileMapsForge.Factory(t, themeFile)
+    override fun getFactory(tile: Tile): Obj.Factory {
+        return ObjTileMapsForge.Factory(tile, themeFile)
     }
 
     companion object {

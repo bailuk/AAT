@@ -20,8 +20,8 @@ class DoubleSource(
     override val name: String
         get() = sourceA.name
 
-    override fun getID(aTile: Tile, context: AppContext): String {
-        return decide(aTile).getID(aTile, context)
+    override fun getID(tile: Tile, context: AppContext): String {
+        return decide(tile).getID(tile, context)
     }
 
 

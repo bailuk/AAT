@@ -7,7 +7,7 @@ import org.mapsforge.core.model.Tile
 abstract class Source {
     abstract val name: String
 
-    abstract fun getID(aTile: Tile, context: AppContext): String
+    abstract fun getID(tile: Tile, context: AppContext): String
 
     abstract val minimumZoomLevel: Int
     abstract val maximumZoomLevel: Int

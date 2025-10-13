@@ -19,8 +19,8 @@ open class DownloadSource(override val name: String, private val apiKey: String,
         return getTileFile(genRelativeFilePath(tile, name), context.tileCacheDirectory).path
     }
 
-    override fun getFactory(t: Tile): Obj.Factory {
-        return ObjTileDownloadable.Factory(t, this)
+    override fun getFactory(tile: Tile): Obj.Factory {
+        return ObjTileDownloadable.Factory(tile, this)
     }
 
     fun getTileURLString(tile: Tile): String {

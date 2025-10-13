@@ -9,8 +9,8 @@ class CachedSource(private val source: Source) : Source() {
     override val name: String
         get() = "Cached" + source.name
 
-    override fun getID(aTile: Tile, context: AppContext): String {
-        return "Cached" + source.getID(aTile, context)
+    override fun getID(tile: Tile, context: AppContext): String {
+        return "Cached" + source.getID(tile, context)
     }
 
     override val minimumZoomLevel: Int
