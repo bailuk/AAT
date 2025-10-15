@@ -20,6 +20,10 @@ class SolidPoiDatabase(private val directories: SolidMapsForgeDirectoryHint, fac
         return list
     }
 
+    override fun getPatterns(): Array<String> {
+        return arrayOf("*${EXTENSION}", ALL_PATTERN)
+    }
+
     companion object {
         const val KEY = "SolidPoiDatabase"
         private const val EXTENSION = ".poi"

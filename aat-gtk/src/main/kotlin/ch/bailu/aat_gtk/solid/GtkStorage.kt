@@ -86,7 +86,7 @@ class GtkStorage : StorageInterface {
     private fun propagate(key: String) {
         try {
             node.sync()
-            // Dettach immutable list to safely loop trough it
+            // Detach immutable list to safely loop trough it
             val observers = observers
             observers.forEach { it.onPreferencesChanged(this, key) }
         } catch (e: BackingStoreException) {

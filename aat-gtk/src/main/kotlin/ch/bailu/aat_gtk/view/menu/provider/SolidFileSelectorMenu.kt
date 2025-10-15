@@ -30,7 +30,7 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
         return arrayOf(
             CustomWidget(
                 ListBox().apply {
-                    solid.buildSelection(ArrayList()).apply {
+                    solid.buildSelection().apply {
                         onRowActivated {
                             solid.setValue(this[it.index])
                         }
@@ -48,14 +48,22 @@ class SolidFileSelectorMenu(private val solid: SolidFile, private val window: Wi
 
     override fun createActions(app: Application) {
         MenuHelper.setAction(app, "get${solid.getKey()}") {
-            FileDialogBuilder()
+            val builder =  FileDialogBuilder()
                 .path(solid.getValueAsFile())
                 .title(solid.getLabel())
-                .selectFolder(window) {
+
+            if (solid.isDirectory()) {
+                builder.selectFolder(window) {
                     solid.setValueFromString(it.path)
                 }
-
+            } else {
+                builder.addPatters(solid.getPatterns())
+                builder.open(window) {
+                    solid.setValueFromString(it.path)
+                }
+            }
         }
+
         MenuHelper.setAction(app, "open${solid.getKey()}") {
             val pathString = solid.getValueAsFile().toPathString()
             if (pathString.isNotEmpty()) {

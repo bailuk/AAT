@@ -14,7 +14,7 @@ import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Window
 
-class SolidDirectorySelectorView(private val solid: SolidFile, app: Application, window: Window) : OnPreferencesChanged {
+class SolidFileSelectorView(private val solid: SolidFile, app: Application, window: Window) : OnPreferencesChanged {
     val layout = ActionRow()
 
     init {

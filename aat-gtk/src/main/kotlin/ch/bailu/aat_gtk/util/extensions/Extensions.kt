@@ -15,7 +15,7 @@ fun Foc.toPathString(): String {
     if (this.isFile) {
         val parent = this.parent()
         if (parent is Foc) {
-            return this.path
+            return parent.path
         }
     } else if (this.isDir) {
         return this.path

@@ -20,7 +20,7 @@ class GeneralPreferencesPage(app: Application, window: Window, appContext: AppCo
             add(SolidIndexComboRowView(SolidUnit(appContext.storage)).layout)
             add(SolidEntryView(SolidWeight(appContext.storage)).layout)
             add(SolidIndexComboRowView(SolidStatusMessages(appContext.storage)).layout)
-            add(SolidDirectorySelectorView(appContext.dataDirectory , app, window).layout)
+            add(SolidFileSelectorView(appContext.dataDirectory , app, window).layout)
         })
 
         page.add(PreferencesGroup().apply {

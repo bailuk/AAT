@@ -29,12 +29,24 @@ open class SolidString(private val storage: StorageInterface, private val key: S
      * List of possible values to select a value from
      * This is used by selection lists in the settings dialog
      */
-    open fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+    open fun buildSelection(list: ArrayList<String> = ArrayList(5)): ArrayList<String> {
         return list
     }
 
     fun getValueAsStringNonDef(): String {
         val s = getValueAsString()
         return if (storage.isDefaultString(s)) "" else s
+    }
+
+    fun getDefaultValueFromSelection(fallBack: String = getStorage().getDefaultString()): String {
+        val list = buildSelection()
+        list.add(fallBack)
+        return list[0]
+    }
+
+    fun setDefaultValue(): String {
+        val r = getDefaultValueFromSelection()
+        setValue(r)
+        return r
     }
 }

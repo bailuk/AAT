@@ -20,16 +20,10 @@ class SolidMapsForgeDirectoryHint(storage: StorageInterface, factory: FocFactory
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
-            r = getDefaultValue()
+            r = getDefaultValueFromSelection("")
             setValue(r)
         }
         return r
-    }
-
-    private fun getDefaultValue(): String {
-        var list = ArrayList<String>(5)
-        list = buildSelection(list)
-        return list.getFirstOrDefault("")
     }
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {

@@ -4,13 +4,17 @@ import ch.bailu.aat_gtk.util.extensions.toPathString
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFile
 import ch.bailu.gtk.gio.File
+import ch.bailu.gtk.gio.ListStore
 import ch.bailu.gtk.gtk.FileDialog
+import ch.bailu.gtk.gtk.FileFilter
 import ch.bailu.gtk.gtk.Window
 import ch.bailu.gtk.type.Str
 
 class FileDialogBuilder {
     private var title = ""
     private var initialFolder = ""
+
+    private val model = ListStore(FileFilter.getTypeID())
 
     fun title(title: String): FileDialogBuilder {
         this.title = title
@@ -27,8 +31,17 @@ class FileDialogBuilder {
         return this
     }
 
+    fun addPatter(pattern: String) {
+        model.append(FileFilter().apply { addPattern(pattern) })
+    }
+
+    fun addPatters(patterns: Array<String>) {
+        patterns.forEach { addPatter(it) }
+    }
+
     fun open(window: Window, response: (Foc)->Unit) {
         val dialog = createDialog()
+        dialog.filters = model.asListModel()
         dialog.open(window, null, { self, _, res, _ ->
             returnFile(dialog.openFinish(res), response)
             self.unregister()

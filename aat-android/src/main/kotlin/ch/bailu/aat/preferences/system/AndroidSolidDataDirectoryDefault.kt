@@ -10,26 +10,6 @@ import ch.bailu.foc_android.FocAndroidFactory
 
 class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(Storage(context), FocAndroidFactory(context)) {
 
-    override fun getValueAsString(): String {
-        val r = super.getValueAsString()
-        return if (getStorage().isDefaultString(r)) setDefaultValue() else r
-    }
-
-    override fun setDefaultValue(): String {
-        val r = defaultValue
-        setValue(r)
-        return r
-    }
-
-    // failsave
-    private val defaultValue: String
-        get() {
-            var list = ArrayList<String>(5)
-            list = buildSelection(list)
-            list.add(getStorage().getDefaultString()) // failsave
-            return list[0]
-        }
-
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
         val volumes = AndroidVolumes(context)
 

@@ -4,9 +4,9 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.util.extensions.margin
-import ch.bailu.aat_gtk.view.solid.SolidDirectorySelectorView
-import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
+import ch.bailu.aat_gtk.view.solid.SolidFileSelectorView
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.Application
@@ -55,7 +55,7 @@ class PoiView(private val controller: UiControllerInterface, app: Application, w
 
         margin(Layout.MARGIN)
 
-        append(SolidDirectorySelectorView(sdatabase, app, window).layout)
+        append(SolidFileSelectorView(sdatabase, app, window).layout)
         append(Separator(Orientation.HORIZONTAL).apply {
             marginBottom = Layout.MARGIN*2
             marginTop = Layout.MARGIN*2

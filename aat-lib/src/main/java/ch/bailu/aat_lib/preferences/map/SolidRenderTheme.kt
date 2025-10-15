@@ -29,16 +29,10 @@ class SolidRenderTheme(private val directories: SolidMapsForgeDirectoryHint, fac
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
-            r = getDefaultValue()
+            r = getDefaultValueFromSelection("")
             setValue(r)
         }
         return r
-    }
-
-    private fun getDefaultValue(): String {
-        var list = ArrayList<String>()
-        list = buildSelection(list)
-        return list.getFirstOrDefault("")
     }
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
@@ -52,6 +46,10 @@ class SolidRenderTheme(private val directories: SolidMapsForgeDirectoryHint, fac
         }
 
         return list
+    }
+
+    override fun getPatterns(): Array<String> {
+        return arrayOf("*$EXTENSION", ALL_PATTERN)
     }
 
     companion object {

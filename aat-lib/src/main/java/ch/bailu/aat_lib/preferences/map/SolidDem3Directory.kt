@@ -15,24 +15,14 @@ abstract class SolidDem3Directory(storage: StorageInterface, focFactory: FocFact
         return Res.str().p_dem_location()
     }
 
-
     override fun getValueAsString(): String {
         var r = super.getValueAsString()
         if (getStorage().isDefaultString(r)) {
-            r = defaultValue
+            r = getDefaultValueFromSelection("")
             setValue(r)
         }
         return r
     }
-
-    private val defaultValue: String
-        get() {
-            var list = ArrayList<String>(5)
-            list = buildSelection(list)
-            return if (list.size > 0) {
-                list[0]
-            } else ""
-        }
 
     /**
      *

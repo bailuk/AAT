@@ -22,23 +22,23 @@ class MapPreferencesPage(appContext: AppContext, app: Application, window: Windo
     init {
         page.add(PreferencesGroup().apply {
             setTitle(Res.str().p_map())
-            add(SolidDirectorySelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
+            add(SolidFileSelectorView(GtkSolidTileCacheDirectory(appContext.storage, appContext) , app, window).layout)
             add(SolidIndexComboRowView(SolidLayerType(appContext.storage)).layout)
         })
 
         page.add(PreferencesGroup().apply {
             val solidMapDirectory = SolidMapsForgeDirectoryHint(appContext.storage, appContext, GtkMapDirectories(appContext.storage, appContext))
             setTitle(Res.str().p_offline_map())
-            add(SolidDirectorySelectorView(solidMapDirectory, app, window).layout)
-            add(SolidDirectorySelectorView(SolidMapsForgeMapFile(solidMapDirectory, appContext), app, window).layout)
-            add(SolidDirectorySelectorView(SolidRenderTheme(solidMapDirectory, appContext), app, window).layout)
+            add(SolidFileSelectorView(solidMapDirectory, app, window).layout)
+            add(SolidFileSelectorView(SolidMapsForgeMapFile(solidMapDirectory, appContext), app, window).layout)
+            add(SolidFileSelectorView(SolidRenderTheme(solidMapDirectory, appContext), app, window).layout)
             add(SolidIndexComboRowView(SolidScaleFactor(appContext.storage)).layout)
             add(SolidBooleanSwitchView(SolidEnableTileCache.MapsForge(appContext.storage)).layout)
         })
 
         page.add(PreferencesGroup().apply {
             setTitle(Res.str().p_dem())
-            add(SolidDirectorySelectorView(GtkSolidDem3Directory(appContext.storage, appContext), app, window).layout)
+            add(SolidFileSelectorView(GtkSolidDem3Directory(appContext.storage, appContext), app, window).layout)
             add(SolidBooleanSwitchView(SolidDem3EnableDownload(appContext.storage)).layout)
         })
 

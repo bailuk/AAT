@@ -21,6 +21,9 @@ class SolidMapsForgeMapFile(private val directories: SolidMapsForgeDirectoryHint
         return list
     }
 
+    override fun getPatterns(): Array<String> {
+        return arrayOf("*$EXTENSION", ALL_PATTERN)
+    }
     companion object {
         const val KEY = "SolidMapsForgeDirectory" // legacy key
         const val EXTENSION = ".map"

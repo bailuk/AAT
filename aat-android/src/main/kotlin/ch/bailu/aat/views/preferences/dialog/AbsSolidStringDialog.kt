@@ -13,7 +13,7 @@ abstract class AbsSolidStringDialog(context: Context, private val solid: SolidSt
     private val baseSelectionSize: Int
 
     init {
-        val selectionList = solid.buildSelection(ArrayList(10))
+        val selectionList = solid.buildSelection()
         baseSelectionSize = selectionList.size
         buildExtraSelection(context, selectionList)
         selection = selectionList.toTypedArray()

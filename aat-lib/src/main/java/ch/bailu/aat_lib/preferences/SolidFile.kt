@@ -10,7 +10,6 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
         return focFactory.toFoc(getValueAsString())
     }
 
-
     override fun toString(): String {
         return getValueAsFile().pathName
     }
@@ -21,6 +20,14 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
 
     override fun getToolTip(): String {
         return getPermissionText(getValueAsFile())
+    }
+
+    open fun getPatterns(): Array<String> {
+        return arrayOf(DIRECTORY)
+    }
+
+    fun isDirectory(): Boolean {
+        return getPatterns().size == 1 && getPatterns()[0] == DIRECTORY
     }
 
     companion object {
@@ -60,5 +67,8 @@ abstract class SolidFile(storage: StorageInterface, key: String, private val foc
             }
             return list
         }
+
+        private const val DIRECTORY = "directory"
+        const val ALL_PATTERN = "*"
     }
 }
