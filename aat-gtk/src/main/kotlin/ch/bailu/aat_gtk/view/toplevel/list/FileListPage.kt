@@ -10,7 +10,7 @@ import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileContextMenu
-import ch.bailu.aat_gtk.view.solid.SolidDirectoryDropDownView
+import ch.bailu.aat_gtk.view.preferences.SolidDirectoryDropDownView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescription
 import ch.bailu.aat_lib.description.DateDescription

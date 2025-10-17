@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.solid.GtkMapDirectories
+import ch.bailu.aat_gtk.preferences.GtkMapDirectories
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.map.MapContext

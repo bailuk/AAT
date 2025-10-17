@@ -5,7 +5,7 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
-import ch.bailu.aat_gtk.solid.GtkStorage
+import ch.bailu.aat_gtk.preferences.GtkStorage
 import ch.bailu.aat_gtk.view.toplevel.MainWindow
 import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppConfig

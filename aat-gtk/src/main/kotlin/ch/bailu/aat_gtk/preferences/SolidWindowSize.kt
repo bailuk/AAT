@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.solid
+package ch.bailu.aat_gtk.preferences
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_lib.preferences.StorageInterface

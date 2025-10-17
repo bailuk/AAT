@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.view.solid
+package ch.bailu.aat_gtk.view.preferences
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged

@@ -1,4 +1,4 @@
-package ch.bailu.aat_gtk.solid
+package ch.bailu.aat_gtk.preferences
 
 import ch.bailu.aat_gtk.service.location.GeoClue2LocationProvider
 import ch.bailu.aat_gtk.service.location.ThreadedMockLocation

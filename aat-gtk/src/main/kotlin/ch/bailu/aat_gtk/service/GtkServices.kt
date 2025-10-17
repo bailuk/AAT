@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.service
 
-import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
+import ch.bailu.aat_gtk.preferences.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.information.GpxInformation

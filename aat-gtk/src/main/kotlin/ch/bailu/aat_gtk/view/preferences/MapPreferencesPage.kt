@@ -1,17 +1,11 @@
-package ch.bailu.aat_gtk.view.solid
+package ch.bailu.aat_gtk.view.preferences
 
-import ch.bailu.aat_gtk.solid.GtkMapDirectories
-import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
-import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
+import ch.bailu.aat_gtk.preferences.GtkMapDirectories
+import ch.bailu.aat_gtk.preferences.GtkSolidDem3Directory
+import ch.bailu.aat_gtk.preferences.GtkSolidTileCacheDirectory
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.map.tile.source.ElevationSource
-import ch.bailu.aat_lib.preferences.map.SolidDem3EnableDownload
-import ch.bailu.aat_lib.preferences.map.SolidEnableTileCache
-import ch.bailu.aat_lib.preferences.map.SolidLayerType
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectoryHint
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeMapFile
-import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
-import ch.bailu.aat_lib.preferences.map.SolidScaleFactor
+import ch.bailu.aat_lib.preferences.map.*
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.PreferencesGroup
 import ch.bailu.gtk.gtk.Application

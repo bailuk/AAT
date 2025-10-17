@@ -1,6 +1,6 @@
-package ch.bailu.aat_gtk.view.solid
+package ch.bailu.aat_gtk.view.preferences
 
-import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
+import ch.bailu.aat_gtk.preferences.GtkSolidLocationProvider
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.preferences.general.SolidWeight

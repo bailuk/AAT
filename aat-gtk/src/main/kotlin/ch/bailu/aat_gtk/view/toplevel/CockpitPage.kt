@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.view.solid.SolidPresetComboView
+import ch.bailu.aat_gtk.view.preferences.SolidPresetComboView
 import ch.bailu.aat_gtk.view.tracker.TrackerControllerView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.Dispatcher
