@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import ch.bailu.aat.app.ActivitySwitcher
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
@@ -133,7 +133,7 @@ class MainActivity : ActivityContext() {
     }
 
     private inner class PresetDirectoryLabel(s: ActivitySwitcher.Entry) : ActivityLabel(s), OnPreferencesChanged {
-        private val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        private val sdirectory = AndroidSolidDataDirectory(context)
         private val spreset: SolidPreset = SolidPreset(appContext.storage)
 
         init {
@@ -164,7 +164,7 @@ class MainActivity : ActivityContext() {
 
     private inner class InternalDirectoryLabel(s: ActivitySwitcher.Entry, private val directory: String) :
         ActivityLabel(s), OnPreferencesChanged {
-        private val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        private val sdirectory = AndroidSolidDataDirectory(context)
 
         fun setText() {
             setText(AppDirectory.getDataDirectory(sdirectory, directory).pathName)

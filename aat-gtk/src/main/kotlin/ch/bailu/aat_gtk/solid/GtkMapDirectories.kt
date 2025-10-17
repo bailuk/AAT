@@ -17,7 +17,7 @@ class GtkMapDirectories(private val storageInterface: StorageInterface, private 
     }
 
     override fun getWellKnownMapDirs(): ArrayList<Foc> {
-        val solidGtkDefaultDirectory = SolidGtkDefaultDirectory(storageInterface, focFactory)
+        val solidGtkDefaultDirectory = GtkSolidDataDirectory(storageInterface, focFactory)
         val result = ArrayList<Foc>()
 
         solidGtkDefaultDirectory.buildSubDirectorySelection(ArrayList(), MAP_CHILD).forEach {
@@ -27,7 +27,7 @@ class GtkMapDirectories(private val storageInterface: StorageInterface, private 
     }
 
     override fun getDefault(): Foc {
-        return SolidGtkDefaultDirectory(storageInterface, focFactory).getValueAsFile().child(MAP_CHILD)
+        return GtkSolidDataDirectory(storageInterface, focFactory).getValueAsFile().child(MAP_CHILD)
     }
 
     override fun createSolidDirectory(): SolidMapsForgeDirectoryHint {

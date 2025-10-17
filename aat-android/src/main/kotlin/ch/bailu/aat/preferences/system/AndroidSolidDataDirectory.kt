@@ -4,15 +4,14 @@ import android.content.Context
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.util.fs.AndroidVolumes
 import ch.bailu.aat_lib.preferences.SelectionList
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectoryDefault
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc_android.FocAndroidFactory
 
-class AndroidSolidDataDirectoryDefault(val context: Context) : SolidDataDirectoryDefault(Storage(context), FocAndroidFactory(context)) {
+class AndroidSolidDataDirectory(val context: Context) : SolidDataDirectory(Storage(context), FocAndroidFactory(context)) {
 
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
         val volumes = AndroidVolumes(context)
-
 
         // volume/aat_data (exists and is writeable)
         for (vol in volumes.volumes) {

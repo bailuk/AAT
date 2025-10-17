@@ -51,7 +51,7 @@ class MockAppContext : AppContext {
     override val downloadConfig: DownloadConfig
         get() = TODO("Not yet implemented")
     override val dataDirectory: SolidDataDirectory
-        get() = SolidDataDirectory(MockSolidDataDirectory(MockStorage(), this), this)
+        get() = MockSolidDataDirectory(MockStorage(), this)
     override val assets: FocFactory
         get() = TODO("Not yet implemented")
     override val mapDirectories: MapDirectories

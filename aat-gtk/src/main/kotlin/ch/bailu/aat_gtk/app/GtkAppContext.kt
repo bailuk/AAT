@@ -9,7 +9,7 @@ import ch.bailu.aat_gtk.solid.GtkMapDirectories
 import ch.bailu.aat_gtk.solid.GtkSolidDem3Directory
 import ch.bailu.aat_gtk.solid.GtkSolidTileCacheDirectory
 import ch.bailu.aat_gtk.solid.GtkStorage
-import ch.bailu.aat_gtk.solid.SolidGtkDefaultDirectory
+import ch.bailu.aat_gtk.solid.GtkSolidDataDirectory
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.util.sql.H2DbConnection
 import ch.bailu.aat_gtk.view.map.preview.MapsForgePreview
@@ -32,7 +32,7 @@ object GtkAppContext: AppContext {
     private val focFactory          by lazy { FocFactory { string: String -> FocFile(string) } }
     override val storage            by lazy { GtkStorage() }
     override val broadcaster        by lazy { GtkBroadcaster() }
-    override val dataDirectory      by lazy { SolidDataDirectory(SolidGtkDefaultDirectory(storage, focFactory), focFactory) }
+    override val dataDirectory      by lazy { GtkSolidDataDirectory(storage, focFactory) }
     override val summaryConfig      by lazy { GtkSummaryConfig() }
     override val dem3Directory      by lazy { GtkSolidDem3Directory(storage, focFactory) }
     override val services           by lazy { GtkServices(this) }

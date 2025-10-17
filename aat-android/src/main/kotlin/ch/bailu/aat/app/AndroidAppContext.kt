@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.services.directory.AndroidSummaryConfig
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
@@ -63,7 +63,7 @@ class AndroidAppContext(private val context: Context, override val services: Ser
 
 
     override val dataDirectory: SolidDataDirectory
-        get() =  SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        get() =  AndroidSolidDataDirectory(context)
 
     override val mapDirectories     by lazy { AndroidMapDirectories(context) }
 

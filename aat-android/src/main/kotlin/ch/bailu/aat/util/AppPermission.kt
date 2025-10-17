@@ -11,7 +11,7 @@ import android.os.Build
 import android.provider.Settings
 import ch.bailu.aat.BuildConfig
 import ch.bailu.aat.broadcaster.AndroidBroadcaster
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 
 object AppPermission {
@@ -56,7 +56,7 @@ object AppPermission {
     fun onRequestPermissionsResult(context: Context?, requestCode: Int) {
         if (context is Context) {
             if (requestCode == APP_PERMISSION_23 || requestCode == APP_PERMISSION_30) {
-                AndroidSolidDataDirectoryDefault(context).setDefaultValue()
+                AndroidSolidDataDirectory(context).setDefaultValue()
             }
             AndroidBroadcaster(context).broadcast(AppBroadcaster.PERMISSION_UPDATED)
         }

@@ -8,9 +8,8 @@ import java.util.ArrayList
 class GtkSolidTileCacheDirectory(storage: StorageInterface,
                                  private val focFactory: FocFactory
 ) : SolidTileCacheDirectory(storage, focFactory) {
-
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
-        list.add("${SolidGtkDefaultDirectory(getStorage(), focFactory).getValueAsString()}/tile_cache")
-        return list
+        val solidGtkDefaultDirectory = GtkSolidDataDirectory(getStorage(), focFactory)
+        return solidGtkDefaultDirectory.buildSubDirectorySelection(list, "tile_cache")
     }
 }

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.Menu
 import ch.bailu.aat.R
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
 import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
 import ch.bailu.aat_lib.app.AppContext
@@ -45,7 +45,7 @@ class EditorMenu(
 
     override fun prepare(menu: Menu) {}
     private fun saveCopy() {
-        val sdirectory = SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        val sdirectory = AndroidSolidDataDirectory(context)
         if (file == AppDirectory.getEditorDraft(sdirectory)) {
             editor.saveTo(
                 AppDirectory.getDataDirectory(
