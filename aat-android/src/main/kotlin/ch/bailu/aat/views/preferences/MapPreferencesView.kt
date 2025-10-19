@@ -43,8 +43,8 @@ class MapPreferencesView(acontext: Activity, scontext: ServiceContext, theme: Ui
         add(SolidCheckBox(acontext, SolidVolumeKeys(storage), theme))
         add(SolidIndexListView(acontext, SolidLayerType(storage), theme))
         add(TitleView(context, MapsForgeSource.NAME, theme))
-        add(SolidStringView(context, solidMapFile, theme))
         add(SolidStringView(context, solidMapDirectory, theme))
+        add(SolidStringView(context, solidMapFile, theme))
         add(
             SolidStringView(
                 context,

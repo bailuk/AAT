@@ -23,6 +23,10 @@ object AppPermission {
         if (Build.VERSION.SDK_INT >= 30) {
             requestFromUserSdk30(activity)
         }
+
+        if (Build.VERSION.SDK_INT >= 31) {
+            requestFromUserSdk31(activity)
+        }
     }
 
     private const val APP_PERMISSION_23 = 923
@@ -51,6 +55,19 @@ object AppPermission {
         val permission = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 
         activity.startActivityForResult(Intent(permission, uri), APP_PERMISSION_30)
+    }
+
+
+    private const val APP_PERMISSION_31 = 931
+
+    @TargetApi(31)
+    private fun requestFromUserSdk31(activity: Activity) {
+        activity.requestPermissions(arrayOf(
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_SCAN
+        ),
+            APP_PERMISSION_31
+        )
     }
 
     fun onRequestPermissionsResult(context: Context?, requestCode: Int) {
@@ -93,5 +110,15 @@ object AppPermission {
     @TargetApi(33)
     fun checkNotificationSdk33(context: Context): Boolean {
         return checkSdk23(context, Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    fun checkBluetoothPermission(activityContext: Activity): Boolean {
+        return Build.VERSION.SDK_INT < 32 || checkBluetoothPermissionSdk31(activityContext)
+    }
+
+    @TargetApi(31)
+    private fun checkBluetoothPermissionSdk31(context: Activity): Boolean {
+        return checkSdk23(context, Manifest.permission.BLUETOOTH_CONNECT) &&
+                checkSdk23(context, Manifest.permission.BLUETOOTH_SCAN)
     }
 }

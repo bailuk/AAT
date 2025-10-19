@@ -43,10 +43,16 @@ class CheckPermissionsView(private val appContext: AppContext,
         var result = ""
 
         if (!AppPermission.checkNotification(activityContext)) {
-            result = addPermissionText(result,noNotificationPermissionText)
+            result = addPermissionText(result, noNotificationPermissionText)
         }
+
+        if (!AppPermission.checkBluetoothPermission(activityContext)) {
+            result = addPermissionText(result, noBluetoothPermission)
+        }
+
         return addPermissionText(result, getPermissionText())
     }
+
 
     private fun addPermissionText(result: String, add: String): String {
         if (result.isNotEmpty() && add.isNotEmpty()) {
@@ -67,7 +73,6 @@ class CheckPermissionsView(private val appContext: AppContext,
         return permissionOk
     }
 
-
     companion object {
         private val noNotificationPermissionText = ToDo.translate(
             "No permission to display notifications\nUse Android app-specific settings to enable this permission"
@@ -79,5 +84,7 @@ class CheckPermissionsView(private val appContext: AppContext,
             "No permission to access location"
         )
         private val permissionOk = ToDo.translate("Access location OK")
+
+        private val noBluetoothPermission = ToDo.translate("Missing Bluetooth permission (Check 'Nearby Device' in Android app-specific settings")
     }
 }
