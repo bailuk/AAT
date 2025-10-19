@@ -43,14 +43,6 @@ dependencies {
      */
     implementation("net.sf.kxml:kxml2:2.3.0")
 
-    /**
-     *  https://mvnrepository.com/artifact/org.apache.commons/commons-text
-     *  To escape html
-     *  FIXME: Do not update as newer versions are not compatible with old Android versions
-     *         Consider replacing XML and HTML escaping with own function
-     */
-    implementation("org.apache.commons:commons-text:1.9")
-
     val jupiterVersion: String by project
 
     /**

@@ -1,51 +1,43 @@
-package ch.bailu.aat_lib.file.xml.writer;
+package ch.bailu.aat_lib.file.xml.writer
 
-import java.io.IOException;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
+import ch.bailu.foc.Foc
+import java.io.IOException
 
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.foc.Foc;
-
-public class RouteWriter extends GpxWriter {
-
-    public RouteWriter(Foc file) throws IOException {
-        super(file);
+class RouteWriter(file: Foc) : GpxWriter(file) {
+    @Throws(IOException::class)
+    override fun writeHeader(timestamp: Long) {
+        super.writeHeader(timestamp)
+        writeBeginElement(GpxConstants.QNAME_ROUTE)
     }
 
-    @Override
-    public void writeHeader(long timestamp) throws IOException {
-        super.writeHeader(timestamp);
-        writeBeginElement(GpxConstants.QNAME_ROUTE);
+    @Throws(IOException::class)
+    override fun writeFooter() {
+        writeEndElement(GpxConstants.QNAME_ROUTE)
+        writeEndElement(GpxConstants.QNAME_GPX)
     }
 
-    @Override
-    public void writeFooter() throws IOException {
-        writeEndElement(GpxConstants.QNAME_ROUTE);
-        writeEndElement(GpxConstants.QNAME_GPX);
-    }
+    override fun writeSegment() {}
 
-    @Override
-    public void writeSegment() {}
+    override fun writeFirstSegment() {}
 
-    @Override
-    public void writeFirstSegment() {}
-
-    @Override
-    public void writeTrackPoint(GpxPointInterface tp) throws IOException {
-        writeString("\t");
-        writeBeginElementStart(GpxConstants.QNAME_ROUTE_POINT);
-        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()));
-        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()));
-        writeBeginElementEnd();
+    @Throws(IOException::class)
+    override fun writeTrackPoint(tp: GpxPointInterface) {
+        writeString("\t")
+        writeBeginElementStart(GpxConstants.QNAME_ROUTE_POINT)
+        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()))
+        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()))
+        writeBeginElementEnd()
 
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
-            writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-            writeString(f.decimal1.format(tp.getAltitude()));
-            writeEndElement(GpxConstants.QNAME_ALTITUDE);
+            writeBeginElement(GpxConstants.QNAME_ALTITUDE)
+            writeString(f.decimal1.format(tp.getAltitude().toDouble()))
+            writeEndElement(GpxConstants.QNAME_ALTITUDE)
         }
 
-        writeEndElement(GpxConstants.QNAME_ROUTE_POINT);
-        writeString("\n");
+        writeEndElement(GpxConstants.QNAME_ROUTE_POINT)
+        writeString("\n")
     }
 }

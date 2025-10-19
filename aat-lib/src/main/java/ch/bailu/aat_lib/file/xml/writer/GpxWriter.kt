@@ -1,129 +1,146 @@
-package ch.bailu.aat_lib.file.xml.writer;
+package ch.bailu.aat_lib.file.xml.writer
 
-import org.apache.commons.text.StringEscapeUtils;
+import ch.bailu.aat_lib.app.AppConfig.Companion.getInstance
+import ch.bailu.aat_lib.description.FormatWrite
+import ch.bailu.aat_lib.description.FormatWrite.Companion.f
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.lib.xml.XmlEscaper
+import ch.bailu.foc.Foc
+import java.io.BufferedWriter
+import java.io.IOException
+import java.io.OutputStreamWriter
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+abstract class GpxWriter(file: Foc) {
+    private val output =
+        BufferedWriter(OutputStreamWriter(file.openW()), 8 * 1024)
 
-import ch.bailu.aat_lib.description.FormatWrite;
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.app.AppConfig;
-import ch.bailu.foc.Foc;
+    private val xmlEscaper = XmlEscaper()
 
-public abstract class GpxWriter {
+    @JvmField
+    protected val f: FormatWrite = f()
 
-    private final BufferedWriter output;
+    @Throws(IOException::class)
+    abstract fun writeFooter()
 
-    protected final FormatWrite f = FormatWrite.f();
+    @Throws(IOException::class)
+    abstract fun writeSegment()
 
+    @Throws(IOException::class)
+    abstract fun writeFirstSegment()
 
-    public GpxWriter(Foc file) throws IOException, SecurityException {
-        output = new BufferedWriter(new OutputStreamWriter(file.openW()),8*1024);
+    @Throws(IOException::class)
+    abstract fun writeTrackPoint(tp: GpxPointInterface)
 
+    @Throws(IOException::class)
+    fun close() {
+        output.close()
     }
 
-    public static GpxWriter factory(Foc file, GpxType type) throws IOException, SecurityException{
-        if (type == GpxType.TRACK) {
-            return new TrackWriter(file);
-        } else if (type == GpxType.ROUTE) {
-            return new RouteWriter(file);
-        }
-        return new WayWriter(file);
+    @Throws(IOException::class)
+    open fun writeHeader(timestamp: Long) {
+        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n")
+        writeString("<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"\n")
+        writeString("    creator=\"${getInstance().appName} ${getInstance().appLongName} ${getInstance().appVersionName}\" version=\"1.1\"\n")
+        writeString("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n")
+        writeString("    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\n")
+        writeString("<metadata>")
+        writeTimeStamp(timestamp)
+        writeString("</metadata>\n")
     }
 
-    public abstract void writeFooter() throws IOException;
-    public abstract void writeSegment() throws IOException;
-    public abstract void writeFirstSegment() throws IOException;
-    public abstract void writeTrackPoint(GpxPointInterface tp) throws IOException;
-
-    public void close() throws IOException {
-        output.close();
+    @Throws(IOException::class)
+    protected fun writeString(string: String) {
+        output.write(string, 0, string.length)
     }
 
-    public void writeHeader(long timestamp) throws IOException {
-        writeString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" +
-                "\n<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"" +
-                "\n    creator=\"");
-        writeString(AppConfig.getInstance().getAppName());
-        writeString(" ");
-        writeString(AppConfig.getInstance().getAppLongName());
-        writeString(" ");
-        writeString(AppConfig.getInstance().getAppVersionName());
-        writeString("\" version=\"1.1\"" +
-                "\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-                "\n    xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">" +
-
-                "\n<metadata>");
-        writeTimeStamp(timestamp);
-        writeString("</metadata>\n");
-
-    }
-
-    protected void writeString(String string) throws IOException {
-        output.write(string,0,string.length());
-    }
-
-    protected void writeTimeStamp(long time) throws IOException {
+    @Throws(IOException::class)
+    protected fun writeTimeStamp(time: Long) {
         writeString(
-                "<" + GpxConstants.QNAME_TIME + ">"
-                        + f.dateFormat.format(time) +
-                        "</" + GpxConstants.QNAME_TIME + ">");
+            ("<" + GpxConstants.QNAME_TIME + ">"
+                    + f.dateFormat.format(time) +
+                    "</" + GpxConstants.QNAME_TIME + ">")
+        )
     }
 
-    protected void writeEndElement(String e) throws IOException {
-        writeString("</"); writeString(e); writeString(">");
+    @Throws(IOException::class)
+    protected fun writeEndElement(e: String) {
+        writeString("</")
+        writeString(e)
+        writeString(">")
     }
 
-    protected void writeElementEnd() throws IOException{
-        writeString("/>");
+    @Throws(IOException::class)
+    protected fun writeElementEnd() {
+        writeString("/>")
     }
 
-    protected void writeBeginElementStart(String e) throws IOException {
-        writeString("<"); writeString(e);
+    @Throws(IOException::class)
+    protected fun writeBeginElementStart(e: String) {
+        writeString("<")
+        writeString(e)
     }
 
-    protected void writeBeginElementEnd() throws IOException{
-        writeString(">");
+    @Throws(IOException::class)
+    protected fun writeBeginElementEnd() {
+        writeString(">")
     }
 
-    protected void writeBeginElement(String e) throws IOException {
-        writeBeginElementStart(e); writeBeginElementEnd();
+    @Throws(IOException::class)
+    protected fun writeBeginElement(e: String) {
+        writeBeginElementStart(e)
+        writeBeginElementEnd()
     }
 
-    protected void writeParameter(String pname, String pvalue) throws IOException {
-        writeString(" ");
-        writeString(pname);
-        writeString("=\"");
-        // TODO replace this with own function (XmlEscaper)
-        writeString(StringEscapeUtils.escapeXml10(pvalue));
-        writeString("\"");
+    @Throws(IOException::class)
+    protected fun writeParameter(parameterName: String, parameterValue: String) {
+        writeString(" ")
+        writeString(parameterName)
+        writeString("=\"")
+        writeString(xmlEscaper.escape(parameterValue))
+        writeString("\"")
     }
 
-    protected void writeAttributesGpxStyle(GpxPointInterface tp) throws IOException {
+    @Throws(IOException::class)
+    protected fun writeAttributesGpxStyle(tp: GpxPointInterface) {
         if (tp.getAttributes().size() > 0) {
-            writeBeginElement(GpxConstants.QNAME_EXTENSIONS);
+            writeBeginElement(GpxConstants.QNAME_EXTENSIONS)
 
-            for(int i=0; i< tp.getAttributes().size(); i++) {
-                writeString("\n\t\t");
-                writeAttributeGpxStyle(toTag(tp.getAttributes().getSKeyAt(i)),
-                        tp.getAttributes().getAt(i));
+            for (i in 0 until tp.getAttributes().size()) {
+                writeString("\n\t\t")
+                writeAttributeGpxStyle(
+                    toTag(tp.getAttributes().getSKeyAt(i)),
+                    tp.getAttributes().getAt(i)
+                )
             }
 
-            writeString("\n\t");
-            writeEndElement(GpxConstants.QNAME_EXTENSIONS);
+            writeString("\n\t")
+            writeEndElement(GpxConstants.QNAME_EXTENSIONS)
         }
     }
 
-    private String toTag(String key) {
-        return key.replace(':', '_');
+    private fun toTag(key: String): String {
+        return key.replace(':', '_')
     }
 
-    protected void writeAttributeGpxStyle(String key, String val) throws IOException {
-        writeBeginElement(key);
-        writeString(val);
-        writeEndElement(key);
+    @Throws(IOException::class)
+    protected fun writeAttributeGpxStyle(key: String, value: String) {
+        writeBeginElement(key)
+        writeString(value)
+        writeEndElement(key)
+    }
+
+    companion object {
+        @JvmStatic
+        @Throws(IOException::class, SecurityException::class)
+        fun factory(file: Foc, type: GpxType): GpxWriter {
+            if (type == GpxType.TRACK) {
+                return TrackWriter(file)
+            } else if (type == GpxType.ROUTE) {
+                return RouteWriter(file)
+            }
+            return WayWriter(file)
+        }
     }
 }

@@ -1,44 +1,40 @@
-package ch.bailu.aat_lib.file.xml.writer;
+package ch.bailu.aat_lib.file.xml.writer
 
-import java.io.Closeable;
-import java.io.IOException;
+import ch.bailu.aat_lib.file.xml.writer.GpxWriter.Companion.factory
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListIterator
+import ch.bailu.foc.Foc
+import java.io.Closeable
+import java.io.IOException
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListIterator;
-import ch.bailu.foc.Foc;
-
-public class GpxListWriter implements Closeable {
-
-
-    private final GpxListIterator iterator;
-    private final GpxWriter writer;
+class GpxListWriter(track: GpxList, file: Foc) : Closeable {
+    private val iterator = GpxListIterator(track)
+    private val writer = factory(file, track.getDelta().getType())
 
 
-    public GpxListWriter(GpxList track, Foc file) throws IOException, SecurityException  {
-        writer = GpxWriter.factory(file, track.getDelta().getType());
-        iterator = new GpxListIterator(track);
-
-        writer.writeHeader(System.currentTimeMillis());
+    init {
+        writer.writeHeader(System.currentTimeMillis())
     }
 
-    @Override
-    public void close() throws IOException {
-        flushOutput();
-        writer.writeFooter();
-        writer.close();
+    @Throws(IOException::class)
+    override fun close() {
+        flushOutput()
+        writer.writeFooter()
+        writer.close()
     }
 
 
-    public void flushOutput() throws IOException {
+    @Throws(IOException::class)
+    fun flushOutput() {
         while (iterator.nextPoint()) {
-            if (iterator.isFirstInSegment()) {
-                if (iterator.isFirstInTrack()) {
-                    writer.writeFirstSegment();
+            if (iterator.isFirstInSegment) {
+                if (iterator.isFirstInTrack) {
+                    writer.writeFirstSegment()
                 } else {
-                    writer.writeSegment();
+                    writer.writeSegment()
                 }
             }
-            writer.writeTrackPoint(iterator.getPoint());
+            writer.writeTrackPoint(iterator.point)
         }
     }
 }

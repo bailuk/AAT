@@ -1,56 +1,50 @@
-package ch.bailu.aat_lib.file.xml.writer;
+package ch.bailu.aat_lib.file.xml.writer
 
-import java.io.IOException;
+import ch.bailu.aat_lib.gpx.GpxConstants
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.service.elevation.ElevationProvider
+import ch.bailu.foc.Foc
+import java.io.IOException
 
-import ch.bailu.aat_lib.gpx.GpxConstants;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.service.elevation.ElevationProvider;
-import ch.bailu.foc.Foc;
-
-public class WayWriter extends GpxWriter {
-
-    public WayWriter(Foc file) throws IOException {
-        super(file);
+open class WayWriter(file: Foc) : GpxWriter(file) {
+    @Throws(IOException::class)
+    override fun writeFooter() {
+        writeEndElement(GpxConstants.QNAME_GPX)
     }
 
-    @Override
-    public void writeFooter() throws IOException {
-        writeEndElement(GpxConstants.QNAME_GPX);
+    override fun writeSegment() {
     }
 
-    @Override
-    public void writeSegment() {
+    override fun writeFirstSegment() {
     }
 
-    @Override
-    public void writeFirstSegment() {
+    @Throws(IOException::class)
+    override fun writeTrackPoint(tp: GpxPointInterface) {
+        writeString("\t")
+        writeBeginElementStart(GpxConstants.QNAME_WAY_POINT)
+        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()))
+        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()))
+
+        writeBeginElementEnd()
+
+        writeAltitude(tp)
+        writeAttributes(tp)
+
+        writeEndElement(GpxConstants.QNAME_WAY_POINT)
+        writeString("\n")
     }
 
-    @Override
-    public void writeTrackPoint(GpxPointInterface tp) throws IOException {
-        writeString("\t");
-        writeBeginElementStart(GpxConstants.QNAME_WAY_POINT);
-        writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()));
-        writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()));
-
-        writeBeginElementEnd();
-
-        writeAltitude(tp);
-        writeAttributes(tp);
-
-        writeEndElement(GpxConstants.QNAME_WAY_POINT);
-        writeString("\n");
+    @Throws(IOException::class)
+    open fun writeAttributes(tp: GpxPointInterface) {
+        writeAttributesGpxStyle(tp)
     }
 
-    public void writeAttributes(GpxPointInterface tp) throws IOException {
-        writeAttributesGpxStyle(tp);
-    }
-
-    private void writeAltitude(GpxPointInterface tp) throws IOException {
+    @Throws(IOException::class)
+    private fun writeAltitude(tp: GpxPointInterface) {
         if (tp.getAltitude() != ElevationProvider.NULL_ALTITUDE) {
-            writeBeginElement(GpxConstants.QNAME_ALTITUDE);
-            writeString(f.decimal1.format(tp.getAltitude()));
-            writeEndElement(GpxConstants.QNAME_ALTITUDE);
+            writeBeginElement(GpxConstants.QNAME_ALTITUDE)
+            writeString(f.decimal1.format(tp.getAltitude().toDouble()))
+            writeEndElement(GpxConstants.QNAME_ALTITUDE)
         }
     }
 }
