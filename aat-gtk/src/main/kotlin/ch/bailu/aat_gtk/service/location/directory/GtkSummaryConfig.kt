@@ -9,7 +9,7 @@ class GtkSummaryConfig : SummaryConfig() {
         return dir.child(AppDirectory.DIR_CACHE)
     }
 
-    override fun getDBPath(dir: Foc): String {
+    override fun getDatabasePath(dir: Foc): String {
         return getSummaryDir(dir)
                 .child(AppDirectory.FILE_CACHE_MVDB)
                 .toString()

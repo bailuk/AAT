@@ -28,7 +28,7 @@ class NodeInfo {
     }
 
     val box = Box(Orientation.VERTICAL,0).apply {
-        addCssClass(Strings.mapControl)
+        addCssClass(Strings.CSS_MAP_CONTROL)
         append(scrolled)
         valign = Align.START
         halign = Align.CENTER

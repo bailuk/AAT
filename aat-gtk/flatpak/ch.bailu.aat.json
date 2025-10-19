@@ -14,9 +14,7 @@
     "--socket=fallback-x11",
     "--device=dri",
     "--system-talk-name=org.freedesktop.GeoClue2",
-    "--env=GIO_EXTRA_MODULES=/app/lib/gio/modules",
     "--env=JAVA_HOME=/app/jre",
-    "--env=LIBO_FLATPAK=1",
     "--env=PATH=/app/jre/bin:/app/bin:/usr/bin"
   ],
   "modules": [
@@ -34,7 +32,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "commit": "70796c8435506f9eb71cab9fe3eb2bae0acda3ea"
+          "commit": "affde4e1c2b2a035cebe14a834139c8ca0f3c8ef"
         },
         "gradle-sources.json"
       ],

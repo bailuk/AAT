@@ -42,7 +42,7 @@ open class Bar(private val pos: Position): EdgeViewInterface {
 
     val box = createBox(pos).apply {
         visible = false
-        addCssClass(Strings.mapControl)
+        addCssClass(Strings.CSS_MAP_CONTROL)
     }
 
     fun add(iconName: Str): Button {

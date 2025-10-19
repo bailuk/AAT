@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.preferences.map
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.SolidFile
 import ch.bailu.aat_lib.resources.Res
+import ch.bailu.aat_lib.util.extensions.getFirstOrDefault
 import ch.bailu.foc.FocFactory
 import org.mapsforge.map.rendertheme.ExternalRenderTheme
 import org.mapsforge.map.rendertheme.XmlRenderTheme
@@ -11,8 +12,8 @@ import java.io.File
 import java.io.FileNotFoundException
 
 
-class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, focFactory: FocFactory)
-    : SolidFile(mapsForgeDirectory.getStorage(), SolidRenderTheme::class.java.simpleName, focFactory) {
+class SolidRenderTheme(private val directories: SolidMapsForgeDirectoryHint, factory: FocFactory)
+    : SolidFile(directories.getStorage(), KEY, factory) {
 
     override fun getLabel(): String {
         return Res.str().p_mapsforge_theme()
@@ -25,40 +26,53 @@ class SolidRenderTheme(private val mapsForgeDirectory: SolidMapsForgeDirectory, 
     val valueAsThemeName: String
         get() = toThemeName(valueAsThemeID)
 
+    override fun getValueAsString(): String {
+        var r = super.getValueAsString()
+        if (getStorage().isDefaultString(r)) {
+            r = getDefaultValueFromSelection("")
+            setValue(r)
+        }
+        return r
+    }
+
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
         MapsforgeThemes.entries.forEach {
             list.add(it.name)
         }
 
-        val maps = mapsForgeDirectory.getValueAsFile()
-        addByExtension(list, maps, EXTENSION)
-        addByExtensionIncludeSubdirectories(list, maps, EXTENSION)
-        val dirs = mapsForgeDirectory.wellKnownMapDirs
-        for (dir in dirs) {
+        for (dir in directories.getKnownMapDirs()) {
             addByExtension(list, dir, EXTENSION)
             addByExtensionIncludeSubdirectories(list, dir, EXTENSION)
         }
+
         return list
     }
 
+    override fun getPatterns(): Array<String> {
+        return arrayOf("*$EXTENSION", ALL_PATTERN)
+    }
+
     companion object {
+        private const val KEY = "SolidRenderTheme"
         private const val EXTENSION = ".xml"
-        @JvmStatic
+
         fun toThemeName(themeFile: String): String {
             return File(themeFile).name.replace(EXTENSION, "")
         }
 
         private fun toThemeID(name: String): String {
-            MapsforgeThemes.entries.forEach {
-                if (name == it.name) {
-                    return name
+            if (name.trim().isNotEmpty()) {
+                MapsforgeThemes.entries.forEach {
+                    if (name == it.name) {
+                        return name
+                    }
                 }
-            }
-            try {
-                ExternalRenderTheme(File(name))
-                return name
-            } catch (e: FileNotFoundException) {
-                AppLog.w(this, e)
+                try {
+                    ExternalRenderTheme(File(name))
+                    return name
+                } catch (e: FileNotFoundException) {
+                    AppLog.d(SolidRenderTheme::class.java.simpleName, e.message)
+                }
             }
             return MapsforgeThemes.DEFAULT.toString()
         }

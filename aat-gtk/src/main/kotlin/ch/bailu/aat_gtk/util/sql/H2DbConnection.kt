@@ -1,7 +1,7 @@
 package ch.bailu.aat_gtk.util.sql
 
 import ch.bailu.aat_lib.service.directory.database.GpxDbConfiguration
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.aat_lib.util.sql.SaveDbResultSet
@@ -11,16 +11,15 @@ import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE
 
-class H2DbConnection : DbConnection {
+class H2DbConnection : DbConnectionInterface {
     private var connection: Connection? = null
-    private val dbSuffix = ".mv.db"
 
     override fun open(name: String, version: Int) {
         close()
         try {
             var dbName = name
-            if (name.endsWith(dbSuffix)) {
-                dbName = name.substring(0, name.length-dbSuffix.length)
+            if (name.endsWith(DB_SUFFIX)) {
+                dbName = name.substring(0, name.length - DB_SUFFIX.length)
             }
             connection = DriverManager.getConnection("jdbc:h2:${dbName}")
 
@@ -39,7 +38,7 @@ class H2DbConnection : DbConnection {
         execSQL(
             Sql.getCreateTableExpression(
                 GpxDbConfiguration.TABLE,
-                GpxDbConfiguration.KEY_LIST,
+                GpxDbConfiguration.ATTR_LIST,
                 GpxDbConfiguration.TYPE_LIST_H2
             )
         )
@@ -65,17 +64,17 @@ class H2DbConnection : DbConnection {
 
     override fun execSQL(sql: String, vararg params: Any) {
         try {
-            val stmt = getPreparedStatement(sql, params)
+            val stmt = getPreparedStatement(sql, *params)
             stmt.execute()
             stmt.close()
         } catch (e: Exception) {
-             throw DbException(e)
+            throw DbException(e)
         }
     }
 
     override fun query(sqlStatement: String, vararg params: Any): DbResultSet {
         try {
-            val stmt = getPreparedStatement(sqlStatement, params)
+            val stmt = getPreparedStatement(sqlStatement, *params)
             val res = stmt.executeQuery()
 
             return SaveDbResultSet(ScrollInsensitiveResultSet(res))
@@ -89,11 +88,14 @@ class H2DbConnection : DbConnection {
         connection = null
     }
 
-     private fun getPreparedStatement(sqlStatement: String, params: Array<out Any?>) : PreparedStatement {
+    private fun getPreparedStatement(sqlStatement: String, vararg params: Any): PreparedStatement {
         val connection = connection
-
         if (connection != null) {
-            val stmt = connection.prepareStatement(sqlStatement, TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY)
+            val stmt = connection.prepareStatement(
+                sqlStatement,
+                TYPE_SCROLL_INSENSITIVE,
+                java.sql.ResultSet.CONCUR_READ_ONLY
+            )
 
             for ((i, p) in params.withIndex()) {
                 val index = i + 1
@@ -110,5 +112,9 @@ class H2DbConnection : DbConnection {
             return stmt
         }
         throw DbException("No connection")
+    }
+
+    companion object {
+        private const val DB_SUFFIX = ".mv.db"
     }
 }

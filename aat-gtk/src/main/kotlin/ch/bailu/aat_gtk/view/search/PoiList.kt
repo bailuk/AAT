@@ -4,7 +4,7 @@ import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.preferences.SolidPoiDatabase
+import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.search.poi.PoiListItem
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.gtk.ListItem

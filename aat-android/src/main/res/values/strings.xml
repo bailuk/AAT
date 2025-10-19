@@ -400,9 +400,8 @@
     <string name ="tt_p_missing_trigger">Set tracker to auto-pause if the GPS signal is lost for a certain period.</string>
 
     <!-- Errors -->
-    <string name="error_integer">Wrong input, only integers are allowed.\n\"%s\"</string>
+    <string name ="error_integer">Only integers are allowed.</string>
     <string name ="error_integer_positive">Weight must be between 1 and 999.</string>
-    <string name="error_long">Wrong input, only numbers are allowed.\n\"%s\"</string>
     <string name ="error_no_map_file">No map files found at </string>
     <string name ="error_met">First Number must be between 0.0 to 20.0, followed by a space.</string>
 </resources>

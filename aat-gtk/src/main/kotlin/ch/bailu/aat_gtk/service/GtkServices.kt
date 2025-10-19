@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.service
 
-import ch.bailu.aat_gtk.solid.GtkSolidLocationProvider
+import ch.bailu.aat_gtk.preferences.GtkSolidLocationProvider
 import ch.bailu.aat_gtk.view.GtkStatusIcon
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.information.GpxInformation
@@ -45,7 +45,7 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
     private val lazyCacheService by lazy { CacheService(appContext) }
     private val lazyBackgroundService by lazy { BackgroundService(appContext, appContext.broadcaster, 5) }
     private val lazyDirectoryService by lazy { DirectoryService(appContext) }
-    private val lazyRenderService by lazy { RenderService(appContext, appContext.mapDirectory) }
+    private val lazyRenderService by lazy { RenderService(appContext, appContext.mapDirectories) }
 
     private val lazyElevationService by lazy { ElevationService(appContext) }
     private val lazyIconMapService by lazy { IconMapService(appContext.services, appContext.assets) }

@@ -328,11 +328,9 @@ class Strings_nl : Strings() {
 
     override fun tt_p_missing_trigger(): String = "Zet tracker op autopauze indien het GPS signaal voor een bepaalde periode onderbroken is."
 
-    override fun error_integer(): String = "Verkeerde input, enkel gehele getallen zijn toegestaan.\n\"%s\""
+    override fun error_integer(): String = "Verkeerde input, enkel gehele getallen zijn toegestaan."
 
     override fun error_integer_positive(): String = "Gewicht moet tussen 1 en 999 zijn."
-
-    override fun error_long(): String = "Verkeerde input, enkel getallen zijn toegestaan.\n\"%s\""
 
     override fun error_met(): String = "Eerste Getal moet tussen 0.0 en 20.0 zijn, gevolgd door een spatie."
 

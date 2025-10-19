@@ -7,7 +7,7 @@ import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.ListBox
 
-class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
+class SolidIndexMenu(private val solid: SolidIndexList) : MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -45,4 +45,5 @@ class SolidIndexMenu(private val solid: SolidIndexList) : MenuProvider {
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 }

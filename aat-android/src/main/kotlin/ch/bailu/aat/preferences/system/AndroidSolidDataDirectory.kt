@@ -1,0 +1,49 @@
+package ch.bailu.aat.preferences.system
+
+import android.content.Context
+import ch.bailu.aat.preferences.Storage
+import ch.bailu.aat.util.fs.AndroidVolumes
+import ch.bailu.aat_lib.preferences.SelectionList
+import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.foc_android.FocAndroidFactory
+
+class AndroidSolidDataDirectory(val context: Context) : SolidDataDirectory(Storage(context), FocAndroidFactory(context)) {
+
+    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+        val volumes = AndroidVolumes(context)
+
+        // volume/aat_data (exists and is writeable)
+        for (vol in volumes.volumes) {
+            val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
+            SelectionList.addW(list, aatData)
+        }
+
+        // volume/aat_data (does not exist but can be created)
+        for (vol in volumes.volumes) {
+            val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
+            if (!aatData.exists()) SelectionList.addW(list, vol, aatData)
+        }
+
+        // app_private/files (writeable and on external medium)
+        val files = volumes.files
+        for (i in 1 until files.size) {
+            SelectionList.addW(list, files[i])
+        }
+
+        // app_private/files (read only and on external medium)
+        for (i in 1 until files.size) {
+            SelectionList.addRo(list, files[i])
+        }
+
+        // volume/aat_data (read only)
+        for (vol in volumes.volumes) {
+            val aatData = vol.child(AppDirectory.DIR_AAT_DATA)
+            SelectionList.addRo(list, vol, aatData)
+        }
+
+        // app_private/files (readable and internal)
+        if (files.isNotEmpty()) SelectionList.addR(list, files[0])
+        return list
+    }
+}

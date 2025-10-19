@@ -17,7 +17,6 @@ import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
-import ch.bailu.gtk.gtk.Editable
 import ch.bailu.gtk.gtk.Entry
 import ch.bailu.gtk.gtk.MenuButton
 import ch.bailu.gtk.gtk.Orientation
@@ -31,7 +30,7 @@ class MainBar(private val app: Application, uiController: UiControllerInterface,
     private val searchController = SearchController(searchModel)
     private val trackerControllerView = TrackerControllerView(services, dispatcher, uiController)
     private val leftNavigationButton = Button().apply {
-        addCssClass(Strings.mapControl)
+        addCssClass(Strings.CSS_MAP_CONTROL)
         iconName = Icons.goPreviousSymbolic
         onClicked {
             uiController.hideMap()
@@ -87,19 +86,20 @@ class MainBar(private val app: Application, uiController: UiControllerInterface,
 
     private fun createNominatimWidget(): Widget {
         return Box(Orientation.HORIZONTAL, 0).apply {
-            addCssClass(Strings.linked)
+            addCssClass(Strings.CSS_LINKED)
 
             val entry = Entry()
             append(entry.apply {
                 onActivate {
-                    searchController.search(Editable(cast()).text.toString())
+                    // When 'enter' was pressed
+                    searchController.search(asEditable().text.toString())
                 }
             })
 
             append(Button().apply {
                 iconName = Icons.editFindSymbolic
                 onClicked {
-                    searchController.search(Editable(entry.cast()).text.toString())
+                    searchController.search(entry.asEditable().text.toString())
                 }
             })
 

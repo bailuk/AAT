@@ -76,3 +76,7 @@
     font-weight: bold;
     padding: 5px 20px 5px 20px;
 }
+
+.highlighted {
+    border-bottom: 2px solid #FF6600;
+}

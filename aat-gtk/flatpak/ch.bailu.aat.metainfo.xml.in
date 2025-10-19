@@ -2,7 +2,7 @@
 <component type="desktop-application">
     <id>ch.bailu.aat</id>
 
-    <name>AAT Activity Tracker</name>
+    <name>AAT</name>
     <summary>Track your outdoor activities</summary>
 
     <developer id="ch.bailu">
@@ -40,10 +40,40 @@
       <display_length compare="ge">360</display_length>
     </requires>
 
+    <branding>
+        <color type="primary" scheme_preference="light">#cdab8f</color>
+        <color type="primary" scheme_preference="dark">#444563</color>
+    </branding>
+
     <screenshots>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/bailuk/AAT/258f466a53b6c4f184f86f9e348ac8a352d5c105/doc/screenshot-gtk.png</image>
-            <caption>Map view and track list side by side</caption>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen1.png</image>
+            <caption>Desktop: map view and track list side by side</caption>
+        </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen2.png</image>
+            <caption>Desktop: map view and track details side by side</caption>
+        </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen3.png</image>
+            <caption>Mobile: map view with tracker control</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen4.png</image>
+            <caption>Mobile: track list</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen5.png</image>
+            <caption>Mobile: cockpit</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen6.png</image>
+            <caption>Mobile: map view with current track</caption>
          </screenshot>
     </screenshots>
 

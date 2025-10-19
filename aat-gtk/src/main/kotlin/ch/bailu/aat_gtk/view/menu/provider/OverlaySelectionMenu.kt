@@ -12,7 +12,7 @@ import ch.bailu.gtk.gtk.Button
 import ch.bailu.gtk.gtk.CheckButton
 import ch.bailu.gtk.gtk.Orientation
 
-class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProvider {
+class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface>) : MenuProviderInterface {
 
     override fun createMenu(): Menu {
         return Menu().apply {
@@ -28,7 +28,7 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
                 Box(Orientation.VERTICAL, Layout.MARGIN).apply {
                     overlays.forEach { controller ->
                         append(Box(Orientation.HORIZONTAL, 0).apply {
-                            addCssClass(Strings.linked)
+                            addCssClass(Strings.CSS_LINKED)
 
                             val checkButton = CheckButton().apply {
                                 setLabel(controller.getName())
@@ -74,6 +74,7 @@ class OverlaySelectionMenu(private val overlays: List<OverlayControllerInterface
     }
 
     override fun createActions(app: Application) {}
+    override fun updateActionValues(app: Application) {}
 
     companion object {
         private const val ID = "overlay"

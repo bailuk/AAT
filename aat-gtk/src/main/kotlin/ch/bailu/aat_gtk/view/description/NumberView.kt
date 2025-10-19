@@ -23,8 +23,8 @@ class NumberView(private val description: ContentDescription) : TargetInterface 
         addView(number, 0, 0)
         addView(unit, 0, margin)
 
-        number.addCssClass(Strings.numberView)
-        val cssWidth = "${Strings.numberViewWidth}${description.getValue().length}"
+        number.addCssClass(Strings.CSS_NUMBER_VIEW)
+        val cssWidth = "${Strings.CSS_NUMBER_VIEW_WIDTH}${description.getValue().length}"
         number.addCssClass(cssWidth)
         updateAllText()
     }

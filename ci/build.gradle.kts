@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     application
     id("org.jetbrains.kotlin.jvm")
@@ -5,13 +7,14 @@ plugins {
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
-task<JavaExec>("property2config") {
+tasks.register<JavaExec>("property2config") {
     dependsOn(tasks.named("build"))
     description = "Generate configuration class from gradle property"
     classpath = sourceSets["main"].runtimeClasspath
@@ -19,14 +22,14 @@ task<JavaExec>("property2config") {
     workingDir(project.rootDir)
 }
 
-task<JavaExec>("generateStrings") {
+tasks.register<JavaExec>("generateStrings") {
     description = "Generate Kotlin string resource classes from Android string resources"
     classpath = sourceSets["main"].runtimeClasspath
     mainClass.set("generate_strings.MainKt")
     workingDir(project.rootDir)
 }
 
-task<JavaExec>("generateImageMapping") {
+tasks.register<JavaExec>("generateImageMapping") {
     dependsOn(":aat-android:processReleaseResources")
     description = "Generate image mapping from R.txt"
     classpath = sourceSets["main"].runtimeClasspath

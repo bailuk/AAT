@@ -6,41 +6,21 @@ import ch.bailu.aat_lib.util.fs.AppDirectory.getTileFile
 import org.mapsforge.core.model.Tile
 import java.util.Random
 
-open class DownloadSource(private val name: String, private val apiKey: String,  private val minZoom: Int, private val maxZoom: Int, a: Int, vararg u: String) : Source() {
+open class DownloadSource(override val name: String, private val apiKey: String, override val minimumZoomLevel: Int,
+                          override val maximumZoomLevel: Int, override val alpha: Int, vararg u: String) : Source() {
     private val urls: Array<out String> = u
-    private val alpha: Int = a
-    private val transparent: Boolean = (a != OPAQUE)
+    override val isTransparent = (alpha != OPAQUE)
 
     constructor(n: String, a: Int, vararg url: String) : this(n, "", MIN_ZOOM, MAX_ZOOM, a, *url)
     constructor(n: String, k: String, a: Int, vararg url: String) : this(n, k, MIN_ZOOM, MAX_ZOOM, a, *url)
     constructor(n: String, minZ: Int, maxZ: Int, a: Int, vararg url: String) : this(n, "", minZ, maxZ, a, *url)
 
-    override fun getName(): String {
-        return name
-    }
-
     override fun getID(tile: Tile, context: AppContext): String {
         return getTileFile(genRelativeFilePath(tile, name), context.tileCacheDirectory).path
     }
 
-    override fun getMinimumZoomLevel(): Int {
-        return minZoom
-    }
-
-    override fun getMaximumZoomLevel(): Int {
-        return maxZoom
-    }
-
-    override fun isTransparent(): Boolean {
-        return transparent
-    }
-
-    override fun getAlpha(): Int {
-        return alpha
-    }
-
-    override fun getFactory(t: Tile): Obj.Factory {
-        return ObjTileDownloadable.Factory(t, this)
+    override fun getFactory(tile: Tile): Obj.Factory {
+        return ObjTileDownloadable.Factory(tile, this)
     }
 
     fun getTileURLString(tile: Tile): String {

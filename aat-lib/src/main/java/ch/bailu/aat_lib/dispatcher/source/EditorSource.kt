@@ -41,7 +41,7 @@ class EditorSource(private val appContext: AppContext, usageTracker: UsageTracke
     }
 
     override fun requestUpdate() {
-        sendUpdate(edit.infoID, edit.info)
+        sendUpdate(edit.infoID, edit.getInfo())
     }
 
     override fun onPauseWithService() {
@@ -65,7 +65,7 @@ class EditorSource(private val appContext: AppContext, usageTracker: UsageTracke
     }
 
     override fun getInfo(): GpxInformation {
-        return edit.info
+        return edit.getInfo()
     }
 
     override val file: Foc

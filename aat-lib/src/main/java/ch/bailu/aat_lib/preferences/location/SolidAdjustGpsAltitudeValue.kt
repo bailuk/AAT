@@ -9,7 +9,7 @@ class SolidAdjustGpsAltitudeValue : SolidAltitude {
     constructor(storage: StorageInterface) : super(storage, KEY, SolidUnit.SI)
     constructor(storage: StorageInterface, unit: Int) : super(storage, KEY, unit)
 
-    
+
     override fun getLabel(): String {
         return Res.str().p_adjust_altitude_by()
     }

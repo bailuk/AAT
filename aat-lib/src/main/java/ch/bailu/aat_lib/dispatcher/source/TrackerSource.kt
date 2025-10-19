@@ -32,7 +32,7 @@ class TrackerSource(
     private val onTrackChanged = BroadcastReceiver { requestUpdate() }
 
     override fun requestUpdate() {
-        target.onContentUpdated(InfoID.TRACKER, services.getTrackerService().info)
+        target.onContentUpdated(InfoID.TRACKER, services.getTrackerService().getInfo())
     }
 
     override fun onPauseWithService() {
@@ -50,6 +50,6 @@ class TrackerSource(
     }
 
     override fun getInfo(): GpxInformation {
-        return services.getTrackerService().info
+        return services.getTrackerService().getInfo()
     }
 }

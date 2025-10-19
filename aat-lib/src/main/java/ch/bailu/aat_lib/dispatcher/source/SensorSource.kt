@@ -21,7 +21,7 @@ class SensorSource(private val services: ServicesInterface, private val broadcas
     }
 
     override fun requestUpdate() {
-        target.onContentUpdated(getIID(), info)
+        target.onContentUpdated(getIID(), getInfo())
     }
 
     override fun onPauseWithService() {

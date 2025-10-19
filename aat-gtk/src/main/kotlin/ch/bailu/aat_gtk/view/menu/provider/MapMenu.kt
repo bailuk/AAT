@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.solid.GtkMapDirectories
+import ch.bailu.aat_gtk.preferences.GtkMapDirectories
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.map.MapContext
@@ -16,7 +16,7 @@ class MapMenu(
     mapDirectories: GtkMapDirectories,
     window: Window
 
-) : MenuProvider {
+) : MenuProviderInterface {
 
     private val srender = mapDirectories.createSolidRenderTheme()
     private val renderMenu = SolidFileSelectorMenu(srender, window)
@@ -50,4 +50,6 @@ class MapMenu(
         tilesMenu.createActions(app)
         offlineMenu.createActions(app)
     }
+
+    override fun updateActionValues(app: Application) {}
 }

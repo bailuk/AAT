@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.preferences
 
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.general.SolidWeight
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
@@ -21,7 +21,7 @@ class PreferenceLoadDefaults(context: AppContext) {
     }
 
     private fun setDefaults(context: AppContext) {
-        val solidRenderTheme = SolidRenderTheme(context.mapDirectory, context)
+        val solidRenderTheme = SolidRenderTheme(context.mapDirectories.createSolidDirectory(), context)
         SolidMapTileStack(solidRenderTheme).setDefaults()
         SolidWeight(context.storage).setDefaults()
         SolidPositionLock(context.storage, GtkCustomMapView.DEFAULT_KEY).setDefaults()

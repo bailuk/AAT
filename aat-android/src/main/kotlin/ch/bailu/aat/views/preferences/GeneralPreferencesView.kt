@@ -5,7 +5,7 @@ import ch.bailu.aat.activities.ActivityContext
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider
 import ch.bailu.aat.preferences.location.SolidGpsTimeFix
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.preferences.system.SolidExternalDirectory
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.list.SensorListView
@@ -96,7 +96,7 @@ class GeneralPreferencesView(acontext: ActivityContext, theme: UiTheme) :
         add(RequestPermissionsView(acontext, theme))
 
         add(TitleView(acontext, R.string.files, theme))
-        add(SolidDirectoryViewSAF(acontext, SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context)), theme))
+        add(SolidDirectoryViewSAF(acontext, AndroidSolidDataDirectory(context), theme))
         add(SolidDirectoryViewSAF(acontext, SolidExternalDirectory(acontext), theme))
         add(SolidIndexListView(acontext, SolidCacheSize(storage), theme))
     }

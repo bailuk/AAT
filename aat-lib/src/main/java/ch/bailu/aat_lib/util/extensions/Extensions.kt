@@ -16,3 +16,16 @@ fun String.ellipsizeStart(max: Int): String {
 fun String.escapeUnderscore(): String {
     return replace("_", "__")
 }
+
+fun <E>ArrayList<E>.addUnique(e: E) {
+    if (!this.contains(e)) {
+        this.add(e)
+    }
+}
+
+fun <E>ArrayList<E>.getFirstOrDefault(e: E): E {
+    if (this.isNotEmpty()) {
+        return this[0]
+    }
+    return e
+}

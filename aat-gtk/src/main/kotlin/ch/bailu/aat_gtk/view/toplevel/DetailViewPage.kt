@@ -32,7 +32,7 @@ class DetailViewPage(
             margin(Layout.MARGIN)
 
             append(Box(Orientation.HORIZONTAL, 0).apply {
-                addCssClass(Strings.linked)
+                addCssClass(Strings.CSS_LINKED)
 
                 append(Button().apply {
                     iconName = Icons.zoomFitBestSymbolic

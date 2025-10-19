@@ -19,7 +19,7 @@ abstract class MapsForgeTileLayerStackConfigured(
 ) : MapsForgeTileLayerStack(
     scontext.services
 ) {
-    private val stheme: SolidRenderTheme = SolidRenderTheme(scontext.mapDirectory, scontext)
+    private val stheme: SolidRenderTheme = SolidRenderTheme(scontext.mapDirectories.createSolidDirectory(), scontext)
     private val stiles = SolidMapTileStack(stheme)
     private val scacheHS = SolidEnableTileCache.HillShade(scontext.storage)
     private val scacheMF = SolidEnableTileCache.MapsForge(scontext.storage)

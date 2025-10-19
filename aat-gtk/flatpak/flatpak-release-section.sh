@@ -4,6 +4,10 @@ description=$(grep \^v ${1})
 date=$(git log -1 --format=%ad --date=format:%Y-%m-%d -- ${1})
 version=$(echo ${description} | grep -oP '(?<=^v)\d+(\.\d+)*' ${1})
 
+if [ -z "$date" ]; then
+  date=$(date -I)
+fi
+
 # Start release section
 echo "        <release version=\"$version\" date=\"$date\">"
 

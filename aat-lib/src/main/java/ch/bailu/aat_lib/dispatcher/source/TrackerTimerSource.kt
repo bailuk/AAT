@@ -18,7 +18,7 @@ class TrackerTimerSource(private val scontext: ServicesInterface, private val ti
     override fun requestUpdate() {
         target.onContentUpdated(
             InfoID.TRACKER_TIMER,
-            scontext.getTrackerService().info
+            scontext.getTrackerService().getInfo()
         )
         timer.kick(INTERVAL.toLong()) { requestUpdate() }
     }
@@ -38,7 +38,7 @@ class TrackerTimerSource(private val scontext: ServicesInterface, private val ti
     }
 
     override fun getInfo(): GpxInformation {
-        return scontext.getTrackerService().info
+        return scontext.getTrackerService().getInfo()
     }
 
     companion object {

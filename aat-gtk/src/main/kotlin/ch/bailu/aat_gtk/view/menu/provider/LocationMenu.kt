@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.ClipboardController
 import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
@@ -12,11 +13,11 @@ import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 
-class LocationMenu : MenuProvider {
+class LocationMenu : MenuProviderInterface {
     override fun createMenu(): Menu {
         return Menu().apply {
-            append(Res.str().clipboard_copy(), "app.locationCopy")
-            append(Res.str().clipboard_paste(), "app.locationPaste")
+            append(Res.str().clipboard_copy(), MenuHelper.toAppAction(Strings.ACTION_LOCATION_COPY))
+            append(Res.str().clipboard_paste(), MenuHelper.toAppAction(Strings.ACTION_LOCATION_PASTE))
             //append(Res.str().p_goto_location(), "app.locationGoto")
         }
     }
@@ -29,19 +30,20 @@ class LocationMenu : MenuProvider {
     override fun createActions(app: Application) {
     }
 
+    override fun updateActionValues(app: Application) {}
 
     companion object {
         fun createActions(storageInterface: StorageInterface, app: Application, display: Display, uiController: UiControllerInterface) {
             val clipboard = ClipboardController(display)
 
-            MenuHelper.setAction(app, "app.locationPaste") {
+            MenuHelper.setAction(app, Strings.ACTION_LOCATION_PASTE) {
                 clipboard.getLatLong {
                     AppLog.i(this, it.toString())
                     uiController.centerInMap(it)
                 }
             }
 
-            MenuHelper.setAction(app, "app.locationCopy") {
+            MenuHelper.setAction(app, Strings.ACTION_LOCATION_COPY) {
                 val sgrid = SolidMapGrid(storageInterface, GtkCustomMapView.DEFAULT_KEY)
                 val text = sgrid.getCode(uiController.getMapBounding().center.toLatLong()).toString()
 

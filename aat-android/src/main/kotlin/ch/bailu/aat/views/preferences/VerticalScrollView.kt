@@ -11,7 +11,7 @@ import ch.bailu.aat.views.description.DescriptionLabelTextView
 import ch.bailu.aat_lib.description.ContentDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.map.MapContext
-import ch.bailu.aat_lib.preferences.SolidDirectoryQuery
+import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.foc_android.FocAndroidFactory
 
 open class VerticalScrollView(context: Context) : ScrollView(context) {
@@ -59,7 +59,7 @@ open class VerticalScrollView(context: Context) : ScrollView(context) {
 
         val to = LinearLayout(context)
         to.addView(SolidCheckBox(context, sdirectory.useDateEnd, theme))
-        to.addView(SolidDateView(context, sdirectory.dateTo, theme))
+        to.addView(SolidDateView(context, sdirectory.dateEnd, theme))
         layout.addView(to)
     }
 }

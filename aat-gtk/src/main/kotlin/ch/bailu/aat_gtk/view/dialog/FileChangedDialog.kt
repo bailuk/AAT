@@ -2,7 +2,7 @@ package ch.bailu.aat_gtk.view.dialog
 
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.gtk.adw.MessageDialog
+import ch.bailu.gtk.adw.AlertDialog
 import ch.bailu.gtk.adw.ResponseAppearance
 import ch.bailu.gtk.gtk.Window
 
@@ -10,7 +10,7 @@ import ch.bailu.gtk.gtk.Window
 class FileChangedDialog(window: Window, fileName: String, onResponse: (response: String) -> Unit) {
 
     init {
-        MessageDialog(window, fileName, Res.str().dialog_modified()).apply {
+        AlertDialog(fileName, Res.str().dialog_modified()).apply {
             addResponse(Strings.ID_DISCARD, Res.str().dialog_discard())
             setResponseAppearance(Strings.ID_DISCARD, ResponseAppearance.DESTRUCTIVE)
 
@@ -22,8 +22,6 @@ class FileChangedDialog(window: Window, fileName: String, onResponse: (response:
             setResponseAppearance(Strings.ID_SAVE, ResponseAppearance.SUGGESTED)
 
             onResponse { response -> onResponse(response.toString()) }
-
-            modal = true
-        }.present()
+        }.present(window)
     }
 }

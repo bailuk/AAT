@@ -50,7 +50,11 @@ class TestGpxList {
         val tp = GpxPoint(latLong, 450f, time)
         gpxList.appendToCurrentSegment(tp, GpxListAttributes.factoryTrackList())
         val info = GpxInformation()
-        info.setVisibleTrackPoint(gpxList.pointList.last as GpxPointNode?)
+
+        val node = gpxList.pointList.last
+        if (node is GpxPointNode) {
+            info.setVisibleTrackPoint(node)
+        }
         Assertions.assertEquals(latLong.latitude, info.getLatitude())
         Assertions.assertEquals(latLong.longitude, info.getLongitude())
         Assertions.assertEquals(450f, info.getAltitude())

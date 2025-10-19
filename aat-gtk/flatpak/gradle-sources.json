@@ -1422,13 +1422,6 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/commons-io/commons-io/2.13.0/commons-io-2.13.0.jar",
-    "sha256": "671eaa39688dac2ffaa4645b3c9980ae2d0ea2471e4ae6a5da199cd15ae23666",
-    "dest": "maven-local/commons-io/commons-io/2.13.0",
-    "dest-filename": "commons-io-2.13.0.jar"
-  },
-  {
-    "type": "file",
     "url": "https://plugins.gradle.org/m2/commons-io/commons-io/2.13.0/commons-io-2.13.0.pom",
     "sha256": "db3fed64c2e1774ebfd6b1a749037732b149b9111dd7e6b985f08dda55470439",
     "dest": "maven-local/commons-io/commons-io/2.13.0",
@@ -2710,20 +2703,6 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar",
-    "sha256": "1345f11ba606d15603d6740551a8c21947c0215640770ec67271fe78bea97cf5",
-    "dest": "maven-local/org/jdom/jdom2/2.0.6",
-    "dest-filename": "jdom2-2.0.6.jar"
-  },
-  {
-    "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/jdom/jdom2/2.0.6/jdom2-2.0.6.pom",
-    "sha256": "47b23a79fe336b741b82434c6e049d68165256e405e75c10921fd72fa8a65d8d",
-    "dest": "maven-local/org/jdom/jdom2/2.0.6",
-    "dest-filename": "jdom2-2.0.6.pom"
-  },
-  {
-    "type": "file",
     "url": "https://plugins.gradle.org/m2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
     "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
     "dest": "maven-local/org/jetbrains/annotations/13.0",
@@ -3627,13 +3606,6 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm/9.7/asm-9.7.jar",
-    "sha256": "adf46d5e34940bdf148ecdd26a9ee8eea94496a72034ff7141066b3eea5c4e9d",
-    "dest": "maven-local/org/ow2/asm/asm/9.7",
-    "dest-filename": "asm-9.7.jar"
-  },
-  {
-    "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm/9.7/asm-9.7.pom",
     "sha256": "de00115f1d84f3a0b2ee3a4b6f6192d066f86d185d67b9d1522f2c80feac5f00",
     "dest": "maven-local/org/ow2/asm/asm/9.7",
@@ -3669,13 +3641,6 @@
   },
   {
     "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.jar",
-    "sha256": "389bc247958e049fc9a0408d398c92c6d370c18035120395d4cba1d9d9304b7a",
-    "dest": "maven-local/org/ow2/asm/asm-commons/9.7",
-    "dest-filename": "asm-commons-9.7.jar"
-  },
-  {
-    "type": "file",
     "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.pom",
     "sha256": "5acee3ee7252ed90b8074c755d022787499a95fafff98ac4a685107c4da409b4",
     "dest": "maven-local/org/ow2/asm/asm-commons/9.7",
@@ -3694,13 +3659,6 @@
     "sha256": "13b905f65e7fd43ca7674f40cdaa37679ba4858c6c9d9fb8f17a7afd9baabc9e",
     "dest": "maven-local/org/ow2/asm/asm-tree/9.7.1",
     "dest-filename": "asm-tree-9.7.1.pom"
-  },
-  {
-    "type": "file",
-    "url": "https://plugins.gradle.org/m2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar",
-    "sha256": "62f4b3bc436045c1acb5c3ba2d8ec556ec3369093d7f5d06c747eb04b56d52b1",
-    "dest": "maven-local/org/ow2/asm/asm-tree/9.7",
-    "dest-filename": "asm-tree-9.7.jar"
   },
   {
     "type": "file",

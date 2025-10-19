@@ -1,34 +1,21 @@
 package ch.bailu.aat_gtk.view.dialog
 
-import ch.bailu.aat_gtk.config.Layout
-import ch.bailu.aat_gtk.view.solid.ActivityPreferencesPage
-import ch.bailu.aat_gtk.view.solid.GeneralPreferencesPage
-import ch.bailu.aat_gtk.view.solid.MapPreferencesPage
+import ch.bailu.aat_gtk.view.preferences.ActivityPreferencesPage
+import ch.bailu.aat_gtk.view.preferences.GeneralPreferencesPage
+import ch.bailu.aat_gtk.view.preferences.MapPreferencesPage
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.general.SolidPresetCount
-import ch.bailu.gtk.adw.PreferencesWindow
+import ch.bailu.gtk.adw.PreferencesDialog
 import ch.bailu.gtk.gtk.Application
 
 object PreferencesDialog {
-    private var window: PreferencesWindow? = null
+    private var window: PreferencesDialog? = null
 
     fun show(app: Application, appContext: AppContext) {
         if (window == null) {
-            window = PreferencesWindow().apply {
-                application = app // This enables actions in app.* scope
-                canNavigateBack = true
-                modal = false
-
-                add(GeneralPreferencesPage(app, this, appContext).page)
-                add(MapPreferencesPage(appContext, app, this).page)
-
-                val presetCount = SolidPresetCount(appContext.storage)
-
-                for(i in 0 until  presetCount.value) {
-                    add(ActivityPreferencesPage(appContext.storage, i).page)
-                }
-
-                setDefaultSize(Layout.WINDOW_WIDTH, Layout.WINDOW_HEIGHT)
+            window = PreferencesDialog().apply {
+                add(GeneralPreferencesPage(app, app.activeWindow, appContext).page)
+                add(MapPreferencesPage(appContext, app, app.activeWindow).page)
+                add(ActivityPreferencesPage(appContext.storage).page)
 
                 onDestroy {
                     window?.disconnectSignals()
@@ -36,14 +23,11 @@ object PreferencesDialog {
                 }
             }
         }
-        window?.present()
+        window?.present(app.activeWindow)
     }
 
     fun showMap(app: Application, appContext: AppContext) {
         show(app, appContext)
-        val window = this.window
-        if (window is PreferencesWindow) {
-            window.setVisiblePageName("map")
-        }
+        window?.setVisiblePageName("map")
     }
 }

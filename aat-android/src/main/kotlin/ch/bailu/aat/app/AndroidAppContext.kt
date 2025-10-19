@@ -8,7 +8,7 @@ import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.map.AndroidMapDirectories
 import ch.bailu.aat.preferences.map.AndroidSolidDem3Directory
 import ch.bailu.aat.preferences.map.AndroidSolidTileCacheDirectory
-import ch.bailu.aat.preferences.system.AndroidSolidDataDirectoryDefault
+import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.services.directory.AndroidSummaryConfig
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.graphic.AndroidSyncTileBitmap
@@ -19,7 +19,6 @@ import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -27,7 +26,7 @@ import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Timer
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
 import ch.bailu.foc_android.FocAssetFactory
@@ -38,14 +37,13 @@ class AndroidAppContext(private val context: Context, override val services: Ser
     override val broadcaster = AndroidBroadcaster(context)
     override val assets = FocAssetFactory(context)
 
-
     override val storage: StorageInterface
         get() = Storage(context)
 
     override val summaryConfig: SummaryConfig
         get() =  AndroidSummaryConfig(context)
 
-    override fun createDataBase(): DbConnection {
+    override fun createDataBase(): DbConnectionInterface {
         return AndroidDbConnection(context)
     }
 
@@ -65,12 +63,9 @@ class AndroidAppContext(private val context: Context, override val services: Ser
 
 
     override val dataDirectory: SolidDataDirectory
-        get() =  SolidDataDirectory(AndroidSolidDataDirectoryDefault(context), FocAndroidFactory(context))
+        get() =  AndroidSolidDataDirectory(context)
 
-
-    override val mapDirectory: SolidMapsForgeDirectory
-        get() =  AndroidMapDirectories(context).createSolidDirectory()
-
+    override val mapDirectories     by lazy { AndroidMapDirectories(context) }
 
     override val tileCacheDirectory: SolidTileCacheDirectory
         get() =  AndroidSolidTileCacheDirectory(context)
@@ -81,7 +76,6 @@ class AndroidAppContext(private val context: Context, override val services: Ser
 
     override val tilePainter: TilePainter
         get() = AndroidTilePainter()
-
 
     override fun getPoiPersistenceManager(poiDatabase: String): PoiPersistenceManager {
         return AndroidPoiPersistenceManagerFactory.getPoiPersistenceManager(poiDatabase)

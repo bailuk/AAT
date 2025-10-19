@@ -7,7 +7,7 @@ import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.TrackerOverlayOnOffController
 import ch.bailu.aat_gtk.controller.UiControllerInterface
-import ch.bailu.aat_gtk.solid.SolidWindowSize
+import ch.bailu.aat_gtk.preferences.SolidWindowSize
 import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
@@ -16,6 +16,7 @@ import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
+import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -24,6 +25,7 @@ import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
+import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
@@ -33,6 +35,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.adw.ApplicationWindow
@@ -49,6 +52,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
     private val usageTrackers = UsageTrackers()
     private val editorSource = EditorSource(appContext, usageTrackers)
     private val customFileSource = FileViewSource(appContext, usageTrackers)
+    private val summarySource = IteratorSource.Summary(appContext, usageTrackers)
     private val metaInfoCollector = MetaInfoCollector()
 
     private val overlay = Overlay()
@@ -82,9 +86,9 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             append(navigationView.navigationSplitViewL1)
         }
 
-        navigationView.setLeftSidebar(mainPage.layout, "")
-        navigationView.setContent(mapView.overlay, "")
-        navigationView.setRightSidebar(poiView.layout, "")
+        navigationView.setLeftSidebar(mainPage.layout, Configuration.appName)
+        navigationView.setContent(mapView.overlay, Res.str().p_map())
+        navigationView.setRightSidebar(poiView.layout, Res.str().p_mapsforge_poi())
 
         navigationView.observe(mainPage)
         navigationView.observe(poiView)
@@ -247,6 +251,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))
         dispatcher.addSource(customFileSource)
+        dispatcher.addSource(summarySource)
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))

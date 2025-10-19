@@ -2,7 +2,7 @@
 <component type="desktop-application">
     <id>ch.bailu.aat</id>
 
-    <name>AAT Activity Tracker</name>
+    <name>AAT</name>
     <summary>Track your outdoor activities</summary>
 
     <developer id="ch.bailu">
@@ -40,16 +40,63 @@
       <display_length compare="ge">360</display_length>
     </requires>
 
+    <branding>
+        <color type="primary" scheme_preference="light">#cdab8f</color>
+        <color type="primary" scheme_preference="dark">#444563</color>
+    </branding>
+
     <screenshots>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/bailuk/AAT/258f466a53b6c4f184f86f9e348ac8a352d5c105/doc/screenshot-gtk.png</image>
-            <caption>Map view and track list side by side</caption>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen1.png</image>
+            <caption>Desktop: map view and track list side by side</caption>
+        </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen2.png</image>
+            <caption>Desktop: map view and track details side by side</caption>
+        </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen3.png</image>
+            <caption>Mobile: map view with tracker control</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen4.png</image>
+            <caption>Mobile: track list</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen5.png</image>
+            <caption>Mobile: cockpit</caption>
+         </screenshot>
+
+        <screenshot>
+            <image>https://raw.githubusercontent.com/bailuk/AAT/48e50bafc96fc484516fd88a11f32da979677509/doc/screenshots-gtk/screen6.png</image>
+            <caption>Mobile: map view with current track</caption>
          </screenshot>
     </screenshots>
 
     <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
     <releases>
+        <release version="1.29" date="2025-10-19">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.29</url>
+            <description>
+                <p>v1.29 (43)</p>
+                <ul>
+                    <li>Android + GTK: Make file list sortable and searchable</li>
+                    <li>Android + GTK: Make SolidMapDirectory less confusing</li>
+                    <li>Android: Check for Bluetooth permissions</li>
+                    <li>GTK: List summary in detail view and as map overlay</li>
+                    <li>GTK: Responsive about dialog</li>
+                    <li>GTK: Responsive file operation dialogs</li>
+                    <li>GTK: Responsive preferences dialog</li>
+                    <li>GTK: Improve preferences dialog</li>
+                    <li>GTK: Responsive file dialog</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.28" date="2025-08-04">
             <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.28</url>
             <description>

@@ -6,8 +6,8 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.TilePainter
 import ch.bailu.aat_lib.map.tile.MapTileInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.MapDirectories
 import ch.bailu.aat_lib.preferences.map.SolidDem3Directory
-import ch.bailu.aat_lib.preferences.map.SolidMapsForgeDirectory
 import ch.bailu.aat_lib.preferences.map.SolidTileCacheDirectory
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
@@ -15,7 +15,7 @@ import ch.bailu.aat_lib.service.background.DownloadConfig
 import ch.bailu.aat_lib.service.directory.MapPreviewInterface
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Timer
-import ch.bailu.aat_lib.util.sql.DbConnection
+import ch.bailu.aat_lib.util.sql.DbConnectionInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 import ch.bailu.foc.FocName
@@ -31,7 +31,7 @@ class MockAppContext : AppContext {
     override val summaryConfig: SummaryConfig
         get() = TODO("Not yet implemented")
 
-    override fun createDataBase(): DbConnection {
+    override fun createDataBase(): DbConnectionInterface {
         TODO("Not yet implemented")
     }
 
@@ -51,10 +51,10 @@ class MockAppContext : AppContext {
     override val downloadConfig: DownloadConfig
         get() = TODO("Not yet implemented")
     override val dataDirectory: SolidDataDirectory
-        get() = SolidDataDirectory(MockSolidDataDirectory(MockStorage(), this), this)
+        get() = MockSolidDataDirectory(MockStorage(), this)
     override val assets: FocFactory
         get() = TODO("Not yet implemented")
-    override val mapDirectory: SolidMapsForgeDirectory
+    override val mapDirectories: MapDirectories
         get() = TODO("Not yet implemented")
     override val tileCacheDirectory: SolidTileCacheDirectory
         get() = TODO("Not yet implemented")
