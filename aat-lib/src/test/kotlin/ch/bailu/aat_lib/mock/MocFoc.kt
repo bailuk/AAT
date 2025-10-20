@@ -25,12 +25,4 @@ class MockFoc(file: String) : FocFile(file) {
     fun getLines(): List<String> {
         return getContent().lines()
     }
-
-    fun getLineCount(): Int {
-        return getLines().size
-    }
-
-    fun getLine(index: Int): String {
-        return getLines()[index]
-    }
 }

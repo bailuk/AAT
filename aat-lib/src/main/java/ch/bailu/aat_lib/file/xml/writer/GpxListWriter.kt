@@ -23,7 +23,6 @@ class GpxListWriter(track: GpxList, file: Foc) : Closeable {
         writer.close()
     }
 
-
     @Throws(IOException::class)
     fun flushOutput() {
         while (iterator.nextPoint()) {
