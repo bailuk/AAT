@@ -5,6 +5,7 @@ See [metadata/en-US/changelogs](metadata/en-US/changelogs) for all changelogs.
 
 ## Next
 
+CI: Update GNOME Runtime to 49
 CI: Update Java compatibility from 11 to 17
 CI: Update H2 Database Engine to 2.4.240
 CI: Update android gradle plugin to 8.13.0
