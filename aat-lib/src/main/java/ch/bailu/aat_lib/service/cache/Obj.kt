@@ -4,14 +4,12 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.logger.AppLog.w
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocName
-import javax.annotation.Nonnull
 
 abstract class Obj(private val id: String) : ObjBroadcastReceiver {
     private var accessTime = System.currentTimeMillis()
     private var lock = 0
     private var exception: Exception? = null
 
-    @Nonnull
     override fun toString(): String {
         return id
     }

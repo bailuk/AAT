@@ -5,19 +5,23 @@ import org.junit.jupiter.api.Test
 
 class XmlEscaperTest {
 
+    private fun assertEscaped(expected: String, input: String) {
+        assertEquals(expected, XmlEscaper().escape(input))
+    }
+
     @Test
     fun testBasicEscape() {
-        assertEquals(
+        assertEscaped(
             "5 &lt; 6 &amp; 7 &gt; 3",
-            XmlEscaper().escape("5 < 6 & 7 > 3")
+            "5 < 6 & 7 > 3"
         )
     }
 
     @Test
     fun testQuoteEscape() {
-        assertEquals(
+        assertEscaped(
             "&quot;Hello&quot; &apos;World&apos;",
-            XmlEscaper().escape("\"Hello\" 'World'")
+            "\"Hello\" 'World'"
         )
     }
 
@@ -25,18 +29,18 @@ class XmlEscaperTest {
     fun testInvalidCharacters() {
         val input = "Valid\u0001Text\u0008With\u001FInvalid"
         val expected = "ValidTextWithInvalid" // invalid characters removed
-        assertEquals(expected, XmlEscaper().escape(input))
+        assertEscaped(expected, input)
     }
 
     @Test
     fun testEmptyInput() {
-        assertEquals("", XmlEscaper().escape(""))
+        assertEscaped("", "")
     }
 
     @Test
     fun testValidUnicode() {
         val input = "Emoji 😊 and Chinese 字"
-        assertEquals(input, XmlEscaper().escape(input))
+        assertEscaped(input, input)
     }
 
     @Test
@@ -46,9 +50,14 @@ class XmlEscaperTest {
         val input2 = "Test containing >"
         val output2 = "Test containing &gt;"
 
-        val escaper = XmlEscaper()
+        assertEscaped(output1, input1)
+        assertEscaped(output2, input2)
+    }
 
-        assertEquals(output1, escaper.escape(input1))
-        assertEquals(output2, escaper.escape(input2))
+
+    @Test
+    fun testNewLineAndTab() {
+        val input = "Tab\tand new\nline\n\rshould disappear"
+        assertEscaped("Taband newlineshould disappear", input)
     }
 }

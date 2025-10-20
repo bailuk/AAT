@@ -22,12 +22,8 @@ dependencies {
     implementation("com.github.bailuk.foc:foc:$focVersion")
     implementation("com.github.bailuk.foc:foc-extended:$focVersion")
 
-    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    // same version as in mapsforge-poi-awt
-    //implementation("org.xerial:sqlite-jdbc:3.28.0")
-
     // https://mvnrepository.com/artifact/com.h2database/h2
-    implementation("com.h2database:h2:2.2.224")
+    implementation("com.h2database:h2:2.4.240")
 
     /**
      *    https://github.com/mapsforge/mapsforge/blob/master/docs/Integration.md

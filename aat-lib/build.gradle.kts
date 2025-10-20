@@ -31,9 +31,9 @@ dependencies {
     api ("org.mapsforge:mapsforge-poi:$mapsForgeVersion")
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.12.1")
+    implementation("com.google.code.gson:gson:2.13.2")
 
-    // Notnull annotation
+    // Notnull annotation (still used in some Java classes)
     // https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations
     api("com.github.spotbugs:spotbugs-annotations:4.9.3")
 
@@ -61,7 +61,7 @@ dependencies {
      *  https://mvnrepository.com/artifact/com.google.guava/guava
      *  For HtmlEscapers
      */
-    implementation("com.google.guava:guava:33.4.5-jre")
+    implementation("com.google.guava:guava:33.5.0-jre")
 }
 
 testing {

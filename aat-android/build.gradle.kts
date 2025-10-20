@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "ch.bailu.aat"
-    compileSdk = 33
+    compileSdk = 36
 
     buildFeatures.buildConfig = true
 
@@ -89,7 +89,7 @@ dependencies {
 
     // Android support only Junit 4
     // https://mvnrepository.com/artifact/junit/junit
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13.2")
 
     // MapsForge Android
     implementation("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")
