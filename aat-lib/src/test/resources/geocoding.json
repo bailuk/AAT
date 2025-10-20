@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "geocoding": {
+    "version": "0.1.0",
+    "attribution": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "licence": "ODbL",
+    "query": ""
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "geocoding": {
+          "place_id": 65194446,
+          "osm_type": "relation",
+          "osm_id": 1694269,
+          "osm_key": "boundary",
+          "osm_value": "administrative",
+          "type": "locality",
+          "accuracy": 0,
+          "label": "Langstrasse, Kreis 4, Zurich, District Zurich, Zurich, 8004, Switzerland",
+          "name": "Langstrasse",
+          "postcode": "8004",
+          "district": "Kreis 4",
+          "city": "Zurich",
+          "county": "District Zurich",
+          "state": "Zurich",
+          "country": "Switzerland",
+          "country_code": "ch",
+          "admin": {
+            "level10": "Langstrasse",
+            "level9": "Kreis 4",
+            "level8": "Zurich",
+            "level6": "District Zurich",
+            "level4": "Zurich"
+          }
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.5264148,
+          47.3772734
+        ]
+      }
+    }
+  ]
+}

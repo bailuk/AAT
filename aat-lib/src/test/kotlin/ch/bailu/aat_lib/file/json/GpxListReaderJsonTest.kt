@@ -15,6 +15,22 @@ import java.time.format.DateTimeFormatter
 class GpxListReaderJsonTest {
 
     @Test
+    fun testGeocoding() {
+        val points = arrayOf(
+            47.377273,  8.526414,
+        )
+
+        val jsonFile = FocResource("geocoding.json")
+        val gpxList = testJson(jsonFile, points, GpxType.WAY)
+
+        val point = gpxList.pointList.first as GpxPointNode
+        assertEquals(18, point.getAttributes().size())
+        assertEquals("Kreis 4", point.getAttributes().get(Keys.toIndex("district")))
+        assertEquals("Zurich", point.getAttributes().get(Keys.toIndex("city")))
+        assertEquals("Langstrasse", point.getAttributes().get(Keys.toIndex("admin.level10")))
+    }
+
+    @Test
     fun testCM() {
         val points = arrayOf(
             45.037998,  8.764053,

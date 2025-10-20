@@ -32,11 +32,11 @@ class GpxListReaderJson(inputFile: Foc) {
                 parseValhalla(jsonMap, time)
                 parseGraphHopper(jsonMap, time)
                 parseOSRM(jsonMap, time)
+                parseGeocoding(jsonMap, time)
 
                 if (gpxList.pointList.size() == 0) {
-                    gpxList.setType(GpxType.WAY)
                     val jsonRootMap = Json.parse("{ \"root\": $jsonContent }")
-                    parseCM(jsonRootMap, time)
+                    parseCM(jsonRootMap)
                 }
             }
         } catch (e: Exception) {
@@ -96,7 +96,7 @@ class GpxListReaderJson(inputFile: Foc) {
         }
     }
 
-    private fun parseCM(jsonMap: JsonMap, time: Long) {
+    private fun parseCM(jsonMap: JsonMap) {
         val keyIndex = Keys.toIndex("device")
 
         jsonMap.map("root") {
@@ -126,9 +126,48 @@ class GpxListReaderJson(inputFile: Foc) {
 
             if (countAttributes == 4) {
                 append(LatLongE6(latitude, longitude), timestamp, attributes)
+                gpxList.setType(GpxType.WAY)
             }
         }
     }
+
+    /**
+     * https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=47.375006&lon=8.530892&zoom=15
+     * https://nominatim.org/release-docs/develop/api/Reverse/#output-format
+     */
+    private fun parseGeocoding(jsonMap: JsonMap, timestamp: Long) {
+        jsonMap.map("features") {
+            var latitude = 0.0
+            var longitude = 0.0
+            val attributes = GpxAttributesStatic()
+            var countAttributes = 0
+
+            it.map("properties") {
+                it.string("geocoding") { k, v ->
+                    attributes.put(Keys.toIndex(k), v)
+                }
+                it.map("geocoding") {
+                    it. string("admin") { k, v ->
+                        attributes.put(Keys.toIndex("admin.$k"), v)
+                    }
+                }
+            }
+            it.map("geometry") {
+                it.number("coordinates") {
+                    if (countAttributes++ == 0) longitude = it
+                    else latitude = it
+                }
+            }
+
+            if (countAttributes == 2) {
+                append(LatLongE6(latitude, longitude), timestamp, attributes)
+                gpxList.setType(GpxType.WAY)
+            }
+        }
+
+    }
+
+
     private fun append(latLong: LatLongInterface, time: Long, gpxAttributes: GpxAttributes = GpxAttributesNull()) {
         append(GpxPoint(latLong, 0f, time), gpxAttributes)
     }

@@ -14,6 +14,21 @@ class JsonMap(private val map: Map<*,*> ) {
         }
     }
 
+    fun string(key: String, call: (key: String, value: String) -> Unit) {
+        val o = map[key]
+        if (o is String) {
+            call(key, o)
+        } else if (o is Map<*,*>) {
+            o.iterator().forEach {
+                val k = it.key
+                val v = it.value
+                if (k is String && v is String) {
+                    call(k, v)
+                }
+            }
+        }
+    }
+
     fun string(key: String, call: (String) -> Unit) {
         val o = map[key]
         if (o is String) {
