@@ -22,14 +22,14 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.ApiConfiguration
 
 abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private var download: ImageButtonViewGroup? = null
     private var downloadBusy: BusyViewControl? = null
     private var fileMenu: View? = null
     private var list: NodeListView? = null
-    protected var configuration: OsmApiConfiguration? = null
+    protected var configuration: ApiConfiguration? = null
         private set
     private var boundingBox: BoundingBoxE6 = BoundingBoxE6()
 
@@ -49,7 +49,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         val configuration = configuration
         val list = list
 
-        if (configuration is OsmApiConfiguration && list is NodeListView) {
+        if (configuration is ApiConfiguration && list is NodeListView) {
             dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply {
                 setFile(configuration.resultFile)
             })
@@ -126,7 +126,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         return bar
     }
 
-    protected abstract fun createApiConfiguration(): OsmApiConfiguration
+    protected abstract fun createApiConfiguration(): ApiConfiguration
     protected abstract fun addCustomButtons(bar: MainControlBar)
     override fun onClick(view: View) {
         if (view === download) {
@@ -158,10 +158,10 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private val targetFilePrefix: String
         get() = try {
             val query = TextBackup.read(configuration!!.queryFile)
-            OsmApiConfiguration.getFilePrefix(query)
+            ApiConfiguration.getFilePrefix(query)
 
         } catch (e: Exception) {
-            OsmApiConfiguration.getFilePrefix("")
+            ApiConfiguration.getFilePrefix("")
         }
 
     protected fun insertLine(line: String) {

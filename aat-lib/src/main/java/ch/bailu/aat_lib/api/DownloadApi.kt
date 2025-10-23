@@ -10,15 +10,13 @@ import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
-abstract class DownloadApi : OsmApiConfiguration() {
-    private var task = BackgroundTask.Companion.NULL
-
+abstract class DownloadApi : ApiConfiguration() {
     private class ApiQueryTask(c: AppContext, source: String, target: Foc, private val queryString: String, private val queryFile: Foc) : DownloadTask(source, target, c.downloadConfig) {
 
         override fun bgOnProcess(appContext: AppContext): Long {
             return try {
                 val size = bgDownload()
-                TextBackup.Companion.write(queryFile, queryString)
+                TextBackup.write(queryFile, queryString)
                 appContext.broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
                 )
@@ -36,7 +34,7 @@ abstract class DownloadApi : OsmApiConfiguration() {
                 val background = appContext.services.getBackgroundService()
                 val query: String = queryString
                 val url = getUrl(query, boundingBoxE6)
-                task = ApiQueryTask(
+                val task = ApiQueryTask(
                     appContext,
                     url,
                     resultFile,
