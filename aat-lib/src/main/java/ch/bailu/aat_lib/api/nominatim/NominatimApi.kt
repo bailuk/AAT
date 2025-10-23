@@ -1,10 +1,12 @@
-package ch.bailu.aat_lib.util
+package ch.bailu.aat_lib.api.nominatim
 
+import ch.bailu.aat_lib.api.DownloadApi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.preferences.map.SolidNominatimOverlay
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
+import java.lang.Double
 import java.net.URLEncoder
 
 abstract class NominatimApi(context: AppContext) : DownloadApi() {
@@ -59,7 +61,7 @@ abstract class NominatimApi(context: AppContext) : DownloadApi() {
 
         private fun toS(i: Int): String {
             val d = i.toDouble()
-            return java.lang.Double.valueOf(d / 1E6).toString()
+            return Double.valueOf(d / 1E6).toString()
         }
     }
 }

@@ -22,7 +22,7 @@ import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
+import ch.bailu.aat_lib.api.OsmApiConfiguration
 
 abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private var download: ImageButtonViewGroup? = null

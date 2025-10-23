@@ -2,7 +2,7 @@ package ch.bailu.aat.activities
 
 import android.view.View
 import android.widget.LinearLayout
-import ch.bailu.aat_lib.util.OverpassApi
+import ch.bailu.aat_lib.api.overpass.OverpassApi
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
@@ -11,7 +11,7 @@ import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat.views.osm.features.OsmFeaturesView
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
+import ch.bailu.aat_lib.api.OsmApiConfiguration
 
 class OverpassActivity : AbsOsmApiActivity() {
     private var osmFeatures: OsmFeaturesView? = null

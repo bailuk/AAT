@@ -1,5 +1,6 @@
-package ch.bailu.aat_lib.search.poi
+package ch.bailu.aat_lib.api.poi
 
+import ch.bailu.aat_lib.api.OsmApiConfiguration
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6

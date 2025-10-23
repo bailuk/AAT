@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.search.poi
+package ch.bailu.aat_lib.api.poi
 
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesStatic
