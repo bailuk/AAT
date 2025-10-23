@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.SolidString
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.aat_lib.api.poi.PoiListItem
 import ch.bailu.foc.Foc
 import org.mapsforge.poi.storage.PoiCategory
 

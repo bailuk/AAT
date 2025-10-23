@@ -1,10 +1,9 @@
-package ch.bailu.aat_lib.util
+package ch.bailu.aat_lib.api
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.background.DownloadTask
 import ch.bailu.aat_lib.util.fs.TextBackup
@@ -12,14 +11,14 @@ import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
 abstract class DownloadApi : OsmApiConfiguration() {
-    private var task = BackgroundTask.NULL
+    private var task = BackgroundTask.Companion.NULL
 
     private class ApiQueryTask(c: AppContext, source: String, target: Foc, private val queryString: String, private val queryFile: Foc) : DownloadTask(source, target, c.downloadConfig) {
 
         override fun bgOnProcess(appContext: AppContext): Long {
             return try {
                 val size = bgDownload()
-                TextBackup.write(queryFile, queryString)
+                TextBackup.Companion.write(queryFile, queryString)
                 appContext.broadcaster.broadcast(
                     AppBroadcaster.FILE_CHANGED_ONDISK, getFile().toString(), source.toString()
                 )

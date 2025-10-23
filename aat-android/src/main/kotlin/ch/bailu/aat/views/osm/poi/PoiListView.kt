@@ -11,7 +11,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat_lib.lib.filter_list.FilterList
-import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.aat_lib.api.poi.PoiListItem
 
 class PoiListView(context: Context, private val list: FilterList, private val theme: UiTheme) :
     ListView(context) {

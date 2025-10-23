@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.util
 
+import ch.bailu.aat_lib.api.nominatim.NominatimApi
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.mock.MockAppContext
 import org.junit.jupiter.api.Assertions.assertEquals

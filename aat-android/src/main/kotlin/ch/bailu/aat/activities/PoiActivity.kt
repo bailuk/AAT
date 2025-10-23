@@ -9,8 +9,8 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.poi.PoiView
 import ch.bailu.aat.views.preferences.TitleView
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
-import ch.bailu.aat_lib.search.poi.PoiApi
+import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import org.mapsforge.poi.storage.PoiCategory
 

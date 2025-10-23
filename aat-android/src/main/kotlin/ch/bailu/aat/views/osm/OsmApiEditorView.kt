@@ -11,7 +11,7 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
+import ch.bailu.aat_lib.api.OsmApiConfiguration
 
 class OsmApiEditorView(context: Context, private val bounding: BoundingBoxE6, osmApi: OsmApiConfiguration, theme: UiTheme) :
     LinearLayout(context) {

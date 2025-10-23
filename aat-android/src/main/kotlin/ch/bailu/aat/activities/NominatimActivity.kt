@@ -1,8 +1,8 @@
 package ch.bailu.aat.activities
 
-import ch.bailu.aat_lib.util.NominatimApi
+import ch.bailu.aat_lib.api.nominatim.NominatimApi
 import ch.bailu.aat.views.bar.MainControlBar
-import ch.bailu.aat_lib.search.poi.OsmApiConfiguration
+import ch.bailu.aat_lib.api.OsmApiConfiguration
 
 class NominatimActivity : AbsOsmApiActivity() {
 

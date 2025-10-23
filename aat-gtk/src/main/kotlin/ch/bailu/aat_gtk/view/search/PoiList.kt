@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.lib.filter_list.FilterList
 import ch.bailu.aat_lib.lib.filter_list.FilterListUtil
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
-import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.aat_lib.api.poi.PoiListItem
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.gtk.ListItem
 import ch.bailu.gtk.gtk.ListView

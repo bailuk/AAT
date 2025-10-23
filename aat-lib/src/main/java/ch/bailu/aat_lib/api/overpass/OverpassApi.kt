@@ -1,5 +1,6 @@
-package ch.bailu.aat_lib.util
+package ch.bailu.aat_lib.api.overpass
 
+import ch.bailu.aat_lib.api.DownloadApi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.preferences.map.SolidOverpassOverlay
@@ -29,7 +30,7 @@ abstract class OverpassApi(context: AppContext) : DownloadApi() {
     /**
      * See: http://overpass-api.de/command_line.html
      * Create an encoded URL for Overpass query
-     * @throws UnsupportedEncodingException if UTF-8 is not supported by the URLEncoder
+     * @throws java.io.UnsupportedEncodingException if UTF-8 is not supported by the URLEncoder
      */
     @Throws(UnsupportedEncodingException::class)
     override fun getUrl(query: String, bounding: BoundingBoxE6): String {
@@ -109,7 +110,7 @@ abstract class OverpassApi(context: AppContext) : DownloadApi() {
             val la1 = bounding.latSouthE6 / 1E6
             val lo2 = bounding.lonEastE6 / 1E6
             val la2 = bounding.latNorthE6 / 1E6
-            return String.format(
+            return String.Companion.format(
                 Locale.ROOT, "(%.2f,%.2f,%.2f,%.2f);",
                 Math.min(la1, la2),
                 Math.min(lo1, lo2),
