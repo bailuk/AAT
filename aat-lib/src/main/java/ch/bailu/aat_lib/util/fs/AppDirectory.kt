@@ -29,13 +29,14 @@ object AppDirectory {
     const val DIR_OVERLAY = "overlay"
     const val DIR_IMPORT = "import"
 
-    const val DIR_NOMINATIM = "query/nominatim"
+    const val DIR_QUERY = "query"
+    const val DIR_NOMINATIM = "${DIR_QUERY}/nominatim"
     const val FILE_NOMINATIM = "nominatim.xml"
 
-    const val DIR_OVERPASS = "query/overpass"
+    const val DIR_OVERPASS = "${DIR_QUERY}/overpass"
     const val FILE_OVERPASS = "overpass.xml" // Extension .osm is not compatible with Android SAF
 
-    const val DIR_POI = "query/poi"
+    const val DIR_POI = "${DIR_QUERY}/poi"
     const val FILE_POI = "poi.gpx"
 
     const val DIR_CACHE = "cache"

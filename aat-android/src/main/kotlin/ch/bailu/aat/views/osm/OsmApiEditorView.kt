@@ -11,9 +11,9 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.ApiConfiguration
 
-class OsmApiEditorView(context: Context, private val bounding: BoundingBoxE6, osmApi: OsmApiConfiguration, theme: UiTheme) :
+class OsmApiEditorView(context: Context, private val bounding: BoundingBoxE6, osmApi: ApiConfiguration, theme: UiTheme) :
     LinearLayout(context) {
     private val editor: EditTextTool
     private val preview: TextView
@@ -40,7 +40,7 @@ class OsmApiEditorView(context: Context, private val bounding: BoundingBoxE6, os
         addView(inputMultiView)
     }
 
-    private fun createTitle(osmApi: OsmApiConfiguration, theme: UiTheme): View {
+    private fun createTitle(osmApi: ApiConfiguration, theme: UiTheme): View {
         val layout = LinearLayout(context)
         layout.orientation = HORIZONTAL
         val strings = osmApi.urlStart.split(osmApi.apiName.lowercase().toRegex())

@@ -1,6 +1,6 @@
 package ch.bailu.aat_lib.api.poi
 
-import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.ApiConfiguration
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
@@ -21,7 +21,7 @@ import org.mapsforge.poi.storage.PoiPersistenceManager
 import org.mapsforge.poi.storage.PointOfInterest
 import java.io.IOException
 
-abstract class PoiApi(context: AppContext) : OsmApiConfiguration() {
+abstract class PoiApi(context: AppContext) : ApiConfiguration() {
     private val overlay = SolidPoiOverlay(context.dataDirectory)
     private var task = BackgroundTask.NULL
 

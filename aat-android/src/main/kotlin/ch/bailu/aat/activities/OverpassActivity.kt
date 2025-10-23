@@ -11,7 +11,7 @@ import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.features.OnSelected
 import ch.bailu.aat.views.osm.features.OsmFeaturesView
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
-import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.ApiConfiguration
 
 class OverpassActivity : AbsOsmApiActivity() {
     private var osmFeatures: OsmFeaturesView? = null
@@ -59,7 +59,7 @@ class OverpassActivity : AbsOsmApiActivity() {
         super.onPause()
     }
 
-    public override fun createApiConfiguration(): OsmApiConfiguration {
+    public override fun createApiConfiguration(): ApiConfiguration {
         return object : OverpassApi(appContext) {
             override val queryString: String
                 get() = editorView.toString()

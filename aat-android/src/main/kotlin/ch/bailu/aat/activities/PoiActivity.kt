@@ -9,7 +9,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.osm.poi.PoiView
 import ch.bailu.aat.views.preferences.TitleView
-import ch.bailu.aat_lib.api.OsmApiConfiguration
+import ch.bailu.aat_lib.api.ApiConfiguration
 import ch.bailu.aat_lib.api.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import org.mapsforge.poi.storage.PoiCategory
@@ -22,7 +22,7 @@ class PoiActivity : AbsOsmApiActivity() {
         private val KEY = PoiActivity::class.java.simpleName
     }
 
-    public override fun createApiConfiguration(): OsmApiConfiguration {
+    public override fun createApiConfiguration(): ApiConfiguration {
         return object : PoiApi(appContext) {
             override val selectedCategories: ArrayList<PoiCategory>
                 get() {
@@ -69,7 +69,7 @@ class PoiActivity : AbsOsmApiActivity() {
     private fun createPoiListView(): View {
         val configuration = configuration
 
-        if (configuration is OsmApiConfiguration) {
+        if (configuration is ApiConfiguration) {
             val poiView = PoiView(this, appContext, configuration.baseDirectory.child(AppDirectory.FILE_SELECTION), theme)
             this.poiView = poiView
             theme.background(poiView)
