@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidOverlayFile
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 
 class OverlaySource (context: AppContext, infoID: Int, usageTracker: UsageTrackerInterface)
     : FileSource(context, infoID, usageTracker) {

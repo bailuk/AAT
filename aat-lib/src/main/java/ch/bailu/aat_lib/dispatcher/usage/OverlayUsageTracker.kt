@@ -1,7 +1,7 @@
 package ch.bailu.aat_lib.dispatcher.usage
 
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 
 class OverlayUsageTracker(storage: StorageInterface, vararg infoIDs: Int): UsageTrackerInterface {
     private val solids = ArrayList<SolidOverlayFileEnabled>()

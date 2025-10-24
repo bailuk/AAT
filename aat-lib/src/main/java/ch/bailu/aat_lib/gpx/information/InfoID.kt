@@ -21,4 +21,7 @@ object InfoID {
     const val POI = 80
     const val OVERPASS = 81
     const val NOMINATIM = 82
+    const val NOMINATIM_REVERSE = 83
+    const val BROUTER = 84
+    const val CRITICAL_MAP = 85
 }

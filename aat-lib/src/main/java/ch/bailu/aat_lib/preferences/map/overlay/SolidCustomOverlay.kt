@@ -1,8 +1,10 @@
-package ch.bailu.aat_lib.preferences.map
+package ch.bailu.aat_lib.preferences.map.overlay
 
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidOverlayFile
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.foc.Foc
 import ch.bailu.foc.FocFactory
 

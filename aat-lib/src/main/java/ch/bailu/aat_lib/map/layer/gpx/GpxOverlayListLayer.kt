@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 

@@ -12,7 +12,7 @@ import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
 import ch.bailu.aat.views.preferences.dialog.SolidStringDialog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.preferences.map.SolidMapTileStack
 import ch.bailu.aat_lib.preferences.map.SolidRenderTheme
 import ch.bailu.foc.FocFactory

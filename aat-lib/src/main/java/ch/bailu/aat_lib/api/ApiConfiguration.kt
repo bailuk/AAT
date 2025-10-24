@@ -2,24 +2,31 @@ package ch.bailu.aat_lib.api
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
-abstract class ApiConfiguration : Api() {
+abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
 
     @Throws(UnsupportedEncodingException::class)
     abstract fun getUrl(query: String, bounding: BoundingBoxE6): String
 
     abstract val urlStart: String
-    abstract val baseDirectory: Foc
+
     abstract val fileExtension: String
     abstract fun getUrlPreview(query: String, bounding: BoundingBoxE6): String
 
     abstract fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6)
 
     val queryFile: Foc
-        get() = baseDirectory.child("query.txt")
+        get() {
+            val directory = resultFile.parent()
+            if (directory is Foc) {
+                return directory.child("query.txt")
+            }
+            return Foc.FOC_NULL
+        }
 
     companion object {
         private const val NAME_MAX = 15

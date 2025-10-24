@@ -6,7 +6,7 @@ import ch.bailu.aat_gtk.view.dialog.FileDeleteDialog
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_lib.util.fs.AFile

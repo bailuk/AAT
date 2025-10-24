@@ -25,7 +25,7 @@ import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay
 import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Point

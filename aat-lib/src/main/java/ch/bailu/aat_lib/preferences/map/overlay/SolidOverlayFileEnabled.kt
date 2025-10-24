@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.preferences.map
+package ch.bailu.aat_lib.preferences.map.overlay
 
 import ch.bailu.aat_lib.preferences.SolidBoolean
 import ch.bailu.aat_lib.preferences.StorageInterface

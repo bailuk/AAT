@@ -10,14 +10,12 @@ import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
 import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.cache.gpx.ObjGpx
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
-import ch.bailu.foc_android.FocAndroidFactory
 
 class EditorMenu(
     private val appContext: AppContext,
