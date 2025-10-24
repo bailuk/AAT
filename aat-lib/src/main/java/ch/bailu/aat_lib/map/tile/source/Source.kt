@@ -32,8 +32,8 @@ abstract class Source {
             return genID(tile, name) + EXT
         }
 
-        fun genID(t: Tile, name: String): String {
-            return name + "/" + t.zoomLevel + "/" + t.tileX + "/" + t.tileY
+        fun genID(tile: Tile, name: String): String {
+            return name + "/" + tile.zoomLevel + "/" + tile.tileX + "/" + tile.tileY
         }
     }
 }

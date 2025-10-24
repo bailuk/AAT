@@ -6,7 +6,6 @@ import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.GpxListIterator
 import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.aat_lib.service.background.DownloadTask
-import ch.bailu.aat_lib.util.Limit
 
 /**
  * curl 'https://brouter.de/brouter?lonlats=2.179306,48.994597|2.054366,48.851715&profile=trekking&alternativeidx=0&format=gpx' -o brouter.gpx
@@ -27,7 +26,7 @@ class BrouterApi(overlay: SolidOverlayInterface) : Api(overlay) {
     }
 
     private fun validateLimit(gpxList: GpxList): Boolean {
-        return Limit.isInRange(gpxList.pointList.size(), 2, 15)
+        return gpxList.pointList.size() in 2..15
     }
 
     private fun getCoordinateParameter(gpxList: GpxList): String {
