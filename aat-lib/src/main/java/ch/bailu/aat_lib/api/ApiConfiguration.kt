@@ -21,9 +21,14 @@ abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
 
     val queryFile: Foc
         get() {
-            val directory = resultFile.parent()
-            if (directory is Foc) {
-                return directory.child("query.txt")
+            return baseDirectory.child("query.txt")
+        }
+
+    val baseDirectory: Foc
+        get() {
+            val parent = resultFile.parent()
+            if (parent is Foc) {
+                return parent
             }
             return Foc.FOC_NULL
         }
