@@ -4,13 +4,13 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.service.background.BackgroundTask
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.aat_lib.service.background.DownloadTask
 import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
-abstract class DownloadApi : ApiConfiguration() {
+abstract class DownloadApi(overlay: SolidOverlayInterface) : ApiConfiguration(overlay) {
     private class ApiQueryTask(c: AppContext, source: String, target: Foc, private val queryString: String, private val queryFile: Foc) : DownloadTask(source, target, c.downloadConfig) {
 
         override fun bgOnProcess(appContext: AppContext): Long {

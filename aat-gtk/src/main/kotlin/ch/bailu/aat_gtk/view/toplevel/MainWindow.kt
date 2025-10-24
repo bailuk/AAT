@@ -33,7 +33,7 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc

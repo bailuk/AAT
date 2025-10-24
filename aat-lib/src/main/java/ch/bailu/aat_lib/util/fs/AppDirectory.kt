@@ -7,7 +7,7 @@ import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import java.io.IOException
-import java.util.Locale
+import java.util.*
 
 object AppDirectory {
     //////////////////////////////////////////////////////////////////////////////////////
@@ -32,12 +32,16 @@ object AppDirectory {
     const val DIR_QUERY = "query"
     const val DIR_NOMINATIM = "${DIR_QUERY}/nominatim"
     const val FILE_NOMINATIM = "nominatim.xml"
+    const val FILE_NOMINATIM_REVERSE = "reverse.json"
 
     const val DIR_OVERPASS = "${DIR_QUERY}/overpass"
     const val FILE_OVERPASS = "overpass.xml" // Extension .osm is not compatible with Android SAF
 
     const val DIR_POI = "${DIR_QUERY}/poi"
     const val FILE_POI = "poi.gpx"
+
+    const val FILE_CRITICAL_MAP = "cm.json"
+    const val FILE_BROUTER = "brouter.gpx"
 
     const val DIR_CACHE = "cache"
     const val FILE_CACHE_DB = "summary.db"

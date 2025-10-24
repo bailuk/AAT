@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.preferences.map
+package ch.bailu.aat_lib.preferences.map.overlay
 
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -11,7 +11,7 @@ import ch.bailu.foc.Foc
  * Base class for overly files with fixed file path
  *  example: POI and Draft
  */
-abstract class SolidFixedOverlay(
+abstract class SolidFixedOverlay (
     private val baseDirectory: SolidDataDirectory,
     private val iid: Int,
     private val subDir: String,
