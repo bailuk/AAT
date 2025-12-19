@@ -23,6 +23,11 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     companion object {
         @JvmField
         val SOLID_KEY: String = PreferencesActivity::class.java.simpleName
+
+        /**
+         * The number of pages not counting the "preset" pages.
+         */
+        private const val N_BASE_PAGES = 2
     }
 
     private val theme = AppTheme.preferences
@@ -63,6 +68,9 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
             mapTilePreferences,
             getString(R.string.p_tiles)
         )
+
+        assert(multiView.pageCount() == N_BASE_PAGES);
+
         addPresetPreferences(multiView, theme)
         return multiView
     }
@@ -94,7 +102,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     }
 
     private fun addPresetPreferences(multiView: MultiView, theme: UiTheme) {
-        while (multiView.pageCount() > 2) multiView.remove(multiView.pageCount() - 1)
+        while (multiView.pageCount() > N_BASE_PAGES) multiView.remove(multiView.pageCount() - 1)
 
         for (i in 0 until getPresetCount()) {
             multiView.add(
