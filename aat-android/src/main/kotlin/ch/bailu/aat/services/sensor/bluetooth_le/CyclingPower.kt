@@ -70,8 +70,8 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
         if (CYCLING_POWER_SERVICE == c.service.uuid) {
             if (CYCLING_POWER_FEATURE == c.uuid) {
                 val flags = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0)
-                isSpeedSensor = flags != null && isFlagSet(flags, FEATURE_BIT_WHEEL_REVOLUTIONS)
-                isCadenceSensor = flags != null && isFlagSet(flags, FEATURE_BIT_CRANK_REVOLUTIONS)
+                isSpeedSensor = flags != null && isBitSet(flags, FEATURE_BIT_WHEEL_REVOLUTIONS)
+                isCadenceSensor = flags != null && isBitSet(flags, FEATURE_BIT_CRANK_REVOLUTIONS)
             } else if (SENSOR_LOCATION == c.uuid) {
                 val i = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
                 if (i != null && i < CadenceSpeedAttributes.SENSOR_LOCATION.size) location =
@@ -114,15 +114,15 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
             offset += 2
             broadcastPower(instantaneousPower)
 
-            if (isFlagSet(flags, BIT_PEDAL_POWER_BALANCE)) {
+            if (isBitSet(flags, BIT_PEDAL_POWER_BALANCE)) {
                 ++offset
             }
 
-            if (isFlagSet(flags, BIT_ACCUMULATED_TORQUE)) {
+            if (isBitSet(flags, BIT_ACCUMULATED_TORQUE)) {
                 offset += 2
             }
 
-            if (isFlagSet(flags, BIT_WHEEL_REVOLUTION_DATA)) {
+            if (isBitSet(flags, BIT_WHEEL_REVOLUTION_DATA)) {
                 val revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, offset)
                 offset += 4
                 val time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
@@ -133,7 +133,7 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
                 }
             }
 
-            if (isFlagSet(flags, BIT_CRANK_REVOLUTION_DATA)) {
+            if (isBitSet(flags, BIT_CRANK_REVOLUTION_DATA)) {
                 val revolutions = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
                 offset += 2
                 val time = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset)
@@ -184,12 +184,6 @@ class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
 
         override fun getSpeed(): Float {
             return attributes.speedSI
-        }
-    }
-
-    companion object {
-        private fun isFlagSet(flags: Int, bit: Int): Boolean {
-            return flags and (1 shl bit) != 0
         }
     }
 }
