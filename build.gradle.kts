@@ -4,7 +4,7 @@ plugins {
 
     id("org.jetbrains.kotlin.android") version "2.1.20" apply(false)
 
-    // https://imperceptiblethoughts.com/shadow/getting-started
+    // https://gradleup.com/shadow/getting-started/
     id("com.gradleup.shadow") version "8.3.6" apply(false)
 
     // https://kotlinlang.org/docs/gradle-configure-project.html

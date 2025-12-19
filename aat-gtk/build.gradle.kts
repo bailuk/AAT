@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     application
 
-    // https://imperceptiblethoughts.com/shadow/getting-started
+    // https://gradleup.com/shadow/getting-started/
     id("com.gradleup.shadow")
     id("org.jetbrains.kotlin.jvm")
 }
