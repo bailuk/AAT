@@ -28,5 +28,4 @@ abstract class Api(private val overlay: SolidOverlayInterface) {
             task?.stopProcessing()
         }
     }
-
 }

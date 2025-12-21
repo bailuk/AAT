@@ -8,7 +8,6 @@ import ch.bailu.aat_lib.service.background.DownloadTask
 import ch.bailu.aat_lib.util.Limit
 
 class NominatimReverseApi(overlay: SolidOverlayInterface) : Api(overlay) {
-    //override val apiName: String = "Nominatim Reverse"
 
     fun startTask(appContext: AppContext, latLong: LatLongInterface, zoom: Int) {
         appContext.services.insideContext {
@@ -22,5 +21,4 @@ class NominatimReverseApi(overlay: SolidOverlayInterface) : Api(overlay) {
         }
     }
 
-//        return dir.child("reverse.json")
 }
