@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.dispatcher.source.usage
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.mock.MockStorage
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue

@@ -62,8 +62,10 @@ class Storage (private val context: Context): StorageInterface {
     override fun register(onPreferencesChanged: OnPreferencesChanged) {
         if (!observers.containsKey(onPreferencesChanged)) {
             val newListener =
-                OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String ->
-                    onPreferencesChanged.onPreferencesChanged(this@Storage, key)
+                OnSharedPreferenceChangeListener { _: SharedPreferences, key: String? ->
+                    if (key is String) {
+                        onPreferencesChanged.onPreferencesChanged(this@Storage, key)
+                    }
                 }
             preferences.registerOnSharedPreferenceChangeListener(newListener)
             observers[onPreferencesChanged] = newListener

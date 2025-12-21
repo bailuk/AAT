@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -12,6 +13,7 @@ import ch.bailu.aat.services.sensor.list.SensorList
 import ch.bailu.aat.services.sensor.list.SensorListItem
 import ch.bailu.aat.util.AndroidTimer
 
+@SuppressLint("MissingPermission")
 class BleSensors(private val scontext: ServiceContext, private val sensorList: SensorList) : Sensors() {
 
     val adapter: BluetoothAdapter = getAdapter(scontext.getContext())

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "ch.bailu.aat"
-    compileSdk = 33
+    compileSdk = 36
 
     buildFeatures.buildConfig = true
 
@@ -54,18 +54,18 @@ android {
 
 
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_11)
-        targetCompatibility(JavaVersion.VERSION_11)
+        sourceCompatibility(JavaVersion.VERSION_17)
+        targetCompatibility(JavaVersion.VERSION_17)
     }
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
-java.targetCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -89,7 +89,7 @@ dependencies {
 
     // Android support only Junit 4
     // https://mvnrepository.com/artifact/junit/junit
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:4.13.2")
 
     // MapsForge Android
     implementation("org.mapsforge:mapsforge-map-android:$mapsForgeVersion")

@@ -11,8 +11,8 @@ object ElevationSource {
     val ELEVATION_HILLSHADE: Source = object : Source() {
         override val name: String = "Hillshade"
 
-        override fun getID(t: Tile, x: AppContext): String {
-            return genID(t, name)
+        override fun getID(tile: Tile, context: AppContext): String {
+            return genID(tile, name)
         }
 
         override val minimumZoomLevel: Int
@@ -28,8 +28,8 @@ object ElevationSource {
         override val alpha: Int
             get() = OPAQUE
 
-        override fun getFactory(mt: Tile): Obj.Factory {
-            return ObjTileHillShade.Factory(mt)
+        override fun getFactory(tile: Tile): Obj.Factory {
+            return ObjTileHillShade.Factory(tile)
         }
     }
 
@@ -37,8 +37,8 @@ object ElevationSource {
         override val name: String
             get() = "ElevationColor"
 
-        override fun getID(t: Tile, x: AppContext): String {
-            return genID(t, ObjTileElevationColor::class.java.simpleName)
+        override fun getID(tile: Tile, context: AppContext): String {
+            return genID(tile, ObjTileElevationColor::class.java.simpleName)
         }
 
         override val minimumZoomLevel: Int
@@ -54,8 +54,8 @@ object ElevationSource {
             get() = 50
 
 
-        override fun getFactory(mt: Tile): Obj.Factory {
-            return ObjTileElevationColor.Factory(mt)
+        override fun getFactory(tile: Tile): Obj.Factory {
+            return ObjTileElevationColor.Factory(tile)
         }
     }
 }

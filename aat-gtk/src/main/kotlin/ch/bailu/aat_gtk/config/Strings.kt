@@ -32,6 +32,8 @@ object Strings {
     const val ACTION_DUMP_RESOURCES = "dumpResources"
     const val ACTION_LOCATION_COPY  = "locationCopy"
     const val ACTION_LOCATION_PASTE = "locationPaste"
+    const val ACTION_LOCATION_REVERSE = "locationReverse"
+    const val ACTION_LOCATION_CM    = "locationCM"
 
     // Custom widgets
     const val CUSTOM_TRACKER_BUTTON = "trackerButton"

@@ -7,7 +7,6 @@ import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.service.elevation.Dem3Lock
 import ch.bailu.aat_lib.service.elevation.Dem3Status
 import ch.bailu.aat_lib.service.elevation.ElevationProvider
-import javax.annotation.Nonnull
 
 class Dem3Tile : ElevationProvider, DemProvider {
     /**
@@ -53,7 +52,6 @@ class Dem3Tile : ElevationProvider, DemProvider {
 
     private var loader = BackgroundTask.NULL
 
-    @Nonnull
     override fun toString(): String {
         return coordinates.toString()
     }

@@ -26,7 +26,7 @@ class HillShadeColorTableTest {
     companion object {
         fun multiCell(dzx: Int, dzy: Int): MultiCell {
             return object : MultiCell() {
-                override fun set(e: Int) {}
+                override fun set(x: Int) {}
                 override fun deltaZX(): Int {
                     return dzx
                 }

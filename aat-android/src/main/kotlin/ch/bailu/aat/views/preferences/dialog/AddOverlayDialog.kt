@@ -3,7 +3,7 @@ package ch.bailu.aat.views.preferences.dialog
 import android.content.Context
 import android.content.DialogInterface
 import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
 

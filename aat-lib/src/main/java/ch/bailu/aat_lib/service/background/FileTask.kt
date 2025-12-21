@@ -1,13 +1,10 @@
 package ch.bailu.aat_lib.service.background
 
 import ch.bailu.foc.Foc
-import javax.annotation.Nonnull
 
 abstract class FileTask(private val file: Foc) : BackgroundTask() {
     private var tasks: Tasks? = null
 
-
-    @Nonnull
     override fun toString(): String {
         return file.toString()
     }

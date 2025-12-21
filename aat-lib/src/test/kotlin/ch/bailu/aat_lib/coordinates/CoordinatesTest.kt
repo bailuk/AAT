@@ -1,11 +1,10 @@
 package ch.bailu.aat_lib.coordinates
 
-import ch.bailu.aat_lib.app.AppConfig
+import ch.bailu.aat_lib.mock.MockAppConfig
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import javax.annotation.Nonnull
 
 class CoordinatesTest {
 
@@ -298,29 +297,11 @@ class CoordinatesTest {
     }
 
     companion object {
-        private var initialized = false
 
         @JvmStatic
         @BeforeAll
         fun init() {
-            if (!initialized) {
-                AppConfig.setInstance(object : AppConfig() {
-                    @get:Nonnull
-                    override val appId: String
-                        get() = ""
-
-                    @get:Nonnull
-                    override val appVersionName: String
-                        get() = ""
-
-                    override val appVersionCode: Int
-                        get() = 0
-
-                    override val isRelease: Boolean
-                        get() = false
-                })
-                initialized = true
-            }
+            MockAppConfig.init()
         }
     }
 }

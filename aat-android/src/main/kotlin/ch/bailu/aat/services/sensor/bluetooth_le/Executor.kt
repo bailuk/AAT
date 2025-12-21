@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
@@ -7,6 +8,7 @@ import java.util.LinkedList
 import java.util.Queue
 import java.util.UUID
 
+@SuppressLint("MissingPermission")
 class Executor {
     companion object {
         private val ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")

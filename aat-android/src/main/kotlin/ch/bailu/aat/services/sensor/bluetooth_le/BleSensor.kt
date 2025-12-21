@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
@@ -17,6 +18,7 @@ import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.logger.AppLog
 
+@SuppressLint("MissingPermission")
 class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorListItem) :
     BluetoothGattCallback(), SensorInterface {
 
