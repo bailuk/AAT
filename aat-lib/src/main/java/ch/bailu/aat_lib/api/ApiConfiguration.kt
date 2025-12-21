@@ -1,47 +1,37 @@
-package ch.bailu.aat_lib.search.poi
+package ch.bailu.aat_lib.api
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.service.ServicesInterface
-import ch.bailu.aat_lib.service.background.FileTask
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
-abstract class OsmApiConfiguration {
-    abstract val apiName: String
+abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
 
     @Throws(UnsupportedEncodingException::class)
     abstract fun getUrl(query: String, bounding: BoundingBoxE6): String
 
     abstract val urlStart: String
-    abstract val baseDirectory: Foc
+
     abstract val fileExtension: String
     abstract fun getUrlPreview(query: String, bounding: BoundingBoxE6): String
 
     abstract fun startTask(appContext: AppContext, boundingBoxE6: BoundingBoxE6)
 
-    abstract val resultFile: Foc
-
     val queryFile: Foc
-        get() = baseDirectory.child("query.txt")
-
-    fun isTaskRunning(scontext: ServicesInterface): Boolean {
-        var running = false
-        scontext.insideContext {
-            val background = scontext.getBackgroundService()
-            running = background.findTask(resultFile) != null
+        get() {
+            return baseDirectory.child("query.txt")
         }
-        return running
-    }
 
-    fun stopTask(scontext: ServicesInterface) {
-        scontext.insideContext {
-            val background = scontext.getBackgroundService()
-            val task: FileTask? = background.findTask(resultFile)
-            task?.stopProcessing()
+    val baseDirectory: Foc
+        get() {
+            val parent = resultFile.parent()
+            if (parent is Foc) {
+                return parent
+            }
+            return Foc.FOC_NULL
         }
-    }
 
     companion object {
         private const val NAME_MAX = 15

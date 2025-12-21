@@ -7,7 +7,7 @@ import ch.bailu.aat_gtk.util.extensions.margin
 import ch.bailu.aat_gtk.view.preferences.SolidFileSelectorView
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
-import ch.bailu.aat_lib.search.poi.PoiApi
+import ch.bailu.aat_lib.api.poi.PoiApi
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box

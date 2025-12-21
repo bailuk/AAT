@@ -1,4 +1,4 @@
-package ch.bailu.aat_lib.search.poi
+package ch.bailu.aat_lib.api.poi
 
 import ch.bailu.aat_lib.lib.filter_list.AbsListItem
 import ch.bailu.aat_lib.lib.filter_list.KeyList

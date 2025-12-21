@@ -1,26 +1,21 @@
-package ch.bailu.aat_lib.util
+package ch.bailu.aat_lib.api.nominatim
 
+import ch.bailu.aat_lib.api.DownloadApi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.preferences.map.SolidNominatimOverlay
-import ch.bailu.foc.Foc
+import ch.bailu.aat_lib.preferences.map.overlay.SolidNominatimOverlay
 import java.io.UnsupportedEncodingException
+import java.lang.Double
 import java.net.URLEncoder
+import kotlin.Int
+import kotlin.String
+import kotlin.Throws
 
-abstract class NominatimApi(context: AppContext) : DownloadApi() {
-    private val overlay = SolidNominatimOverlay(context.dataDirectory)
+abstract class NominatimApi(context: AppContext) : DownloadApi(SolidNominatimOverlay(context.dataDirectory)) {
 
     override val urlStart = "https://nominatim.openstreetmap.org/search?q="
     override val fileExtension = ".xml"
 
-    final override val apiName: String
-        get() = overlay.getLabel()
-
-    override val resultFile: Foc
-        get() = overlay.getValueAsFile()
-
-    override val baseDirectory: Foc
-        get() = overlay.directory
 
     override fun getUrlPreview(query: String, bounding: BoundingBoxE6): String {
         val url = StringBuilder()
@@ -59,7 +54,7 @@ abstract class NominatimApi(context: AppContext) : DownloadApi() {
 
         private fun toS(i: Int): String {
             val d = i.toDouble()
-            return java.lang.Double.valueOf(d / 1E6).toString()
+            return Double.valueOf(d / 1E6).toString()
         }
     }
 }
