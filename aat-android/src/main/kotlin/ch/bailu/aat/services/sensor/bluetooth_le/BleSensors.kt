@@ -108,6 +108,6 @@ class BleSensors(private val scontext: ServiceContext, private val sensorList: S
     }
 
     companion object {
-        const val SCAN_DURATION = (10 * 1000).toLong()
+        const val SCAN_DURATION = (120 * 1000).toLong()
     }
 }
