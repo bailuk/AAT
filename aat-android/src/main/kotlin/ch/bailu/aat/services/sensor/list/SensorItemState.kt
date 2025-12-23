@@ -26,7 +26,7 @@ open class SensorItemState(var state: Int) {
         } else if (state == CONNECTED) {
             return nextState == ENABLED || nextState == SUPPORTED
         } else if (state == UNSUPPORTED) {
-            return false
+            return nextState == SCANNING
         }
         return false
     }
@@ -42,7 +42,7 @@ open class SensorItemState(var state: Int) {
     val isOpen: Boolean
         get() = state == CONNECTING || state == SCANNING
     val shouldScan: Boolean
-        get() = state == UNSCANNED || state == SCANNING
+        get() = state == UNSCANNED || state == UNSUPPORTED
     val isScanning: Boolean
         get() = state == SCANNING
 
