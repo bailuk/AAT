@@ -41,7 +41,7 @@ open class SensorItemState(var state: Int) {
         get() = state == CONNECTING
     val isOpen: Boolean
         get() = state == CONNECTING || state == SCANNING
-    val isUnscannedOrScanning: Boolean
+    val shouldScan: Boolean
         get() = state == UNSCANNED || state == SCANNING
     val isScanning: Boolean
         get() = state == SCANNING
