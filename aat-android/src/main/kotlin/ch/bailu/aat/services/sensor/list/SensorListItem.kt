@@ -8,10 +8,8 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 class SensorListItem(
     private val context: Context,
     val address: String,
-    override var name: String,
-    initialState: Int
-
-) : SensorItemState(initialState), SensorInterface {
+    override var name: String
+) : SensorItemState(), SensorInterface {
     private var sensor: SensorInterface? = null
 
     val isBluetoothDevice: Boolean

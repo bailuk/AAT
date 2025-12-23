@@ -3,7 +3,9 @@ package ch.bailu.aat.services.sensor.list
 import android.content.Context
 import ch.bailu.aat.R
 
-open class SensorItemState(var state: Int) {
+open class SensorItemState {
+    var state: Int = UNSCANNED
+
     fun setState(nextState: Int): Boolean {
         if (isNextStateValid(nextState)) {
             state = nextState
