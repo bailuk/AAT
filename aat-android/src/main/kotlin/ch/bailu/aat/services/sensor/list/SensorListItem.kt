@@ -69,9 +69,7 @@ class SensorListItem(
         if (enabled) {
             setState(ENABLED)
         } else {
-            if (isLocked) {
-                sensor!!.close()
-            }
+            sensor?.close()
             setState(SUPPORTED)
         }
     }
