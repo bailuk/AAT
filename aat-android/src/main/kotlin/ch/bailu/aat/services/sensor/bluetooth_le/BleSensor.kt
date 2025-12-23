@@ -33,6 +33,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     private var gatt: BluetoothGatt?
     private var closed = false
     private var closeState = 0
+    private var discovered = false
     private val scanningTimeout = AndroidTimer()
 
     init {
@@ -47,7 +48,6 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
         if (gatt == null) {
             close()
         } else {
-            execute.next(gatt)
             scanningTimeout.kick(BleSensors.SCAN_DURATION) { if (item.isScanning) close() }
             item.setState(SensorItemState.CONNECTING)
             item.setState(SensorItemState.SCANNING)
@@ -75,7 +75,14 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     }
 
     @Synchronized
+    override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, state: Int) {
         if (isConnected(status, state)) {
+            if (!discovered) {
+                if (!gatt.discoverServices())
+                    close()
+                return
+            }
+
             execute.next(gatt)
         } else if (!isConnecting(status, state)) {
             close()
@@ -105,6 +112,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
 
     @Synchronized
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+        discovered = true
         if (discover(gatt)) {
             executeNextAndSetState(gatt)
         } else {
