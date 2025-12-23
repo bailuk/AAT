@@ -43,7 +43,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
             BatteryService()
         )
         closeState = item.state
-        val gatt = connect()
+        gatt = connect()
         if (gatt == null) {
             close()
         } else {
@@ -52,7 +52,6 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
             item.setState(SensorItemState.CONNECTING)
             item.setState(SensorItemState.SCANNING)
         }
-        this.gatt = gatt
     }
 
     private fun connect(): BluetoothGatt? {
@@ -76,10 +75,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     }
 
     @Synchronized
-    override fun onConnectionStateChange(g: BluetoothGatt, status: Int, state: Int) {
-        val gatt = gatt
-
-        if (gatt != null && isConnected(status, state)) {
+        if (isConnected(status, state)) {
             execute.next(gatt)
         } else if (!isConnecting(status, state)) {
             close()
