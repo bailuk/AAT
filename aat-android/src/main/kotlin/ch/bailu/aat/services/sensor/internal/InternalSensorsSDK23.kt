@@ -29,12 +29,11 @@ class InternalSensorsSDK23(private val context: Context, private val sensorList:
         if (sensors != null) {
             for (sensor in sensors) {
                 val item = sensorList.add(toAddress(sensor), toName(sensor))
-                if (item.state == SensorItemState.UNSCANNED) {
-                    item.state = SensorItemState.SCANNING
+                if (item.supportedState == SensorItemState.SupportedState.UNKNOWN) {
                     if (isSupported(sensor)) {
-                        item.state = SensorItemState.SUPPORTED
+                        item.supportedState = SensorItemState.SupportedState.YES
                     } else {
-                        item.state = SensorItemState.UNSUPPORTED
+                        item.supportedState = SensorItemState.SupportedState.NO
                     }
                 }
             }

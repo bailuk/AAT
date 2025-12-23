@@ -32,7 +32,6 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
 
     private var gatt: BluetoothGatt?
     private var closed = false
-    private var closeState = 0
     private var discovered = false
     private val scanningTimeout = AndroidTimer()
 
@@ -43,14 +42,14 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
             HeartRateService(context),
             BatteryService()
         )
-        closeState = item.state
+        item.connectionState = SensorItemState.ConnectionState.IN_PROGRESS
+        if (item.shouldScan)
+            item.supportedState = SensorItemState.SupportedState.SCANNING
         gatt = connect()
         if (gatt == null) {
             close()
         } else {
             scanningTimeout.kick(BleSensors.SCAN_DURATION) { if (item.isScanning) close() }
-            item.setState(SensorItemState.CONNECTING)
-            item.setState(SensorItemState.SCANNING)
         }
     }
 
@@ -77,6 +76,9 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
     @Synchronized
     override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, state: Int) {
         if (isConnected(status, state)) {
+            item.connectionState = SensorItemState.ConnectionState.YES
+            sensorList.broadcast()
+
             if (!discovered) {
                 if (!gatt.discoverServices())
                     close()
@@ -89,34 +91,22 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
         }
     }
 
-    private fun executeNextAndSetState(gatt: BluetoothGatt) {
-        if (execute.haveToRead()) {
-            execute.next(gatt)
-        } else {
-            setNextState()
-            if (item.isConnected) {
-                execute.next(gatt)
-            }
-        }
-    }
-
-    private fun setNextState() {
-        if (item.isScanning) {
-            close(SensorItemState.SUPPORTED)
-        } else if (item.isConnecting) {
-            item.state = SensorItemState.CONNECTED
-            updateListItemName()
-            sensorList.broadcast()
-        }
-    }
-
     @Synchronized
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         discovered = true
         if (discover(gatt)) {
-            executeNextAndSetState(gatt)
+            item.supportedState = SensorItemState.SupportedState.YES
+
+            if (item.isEnabled) {
+                updateListItemName()
+                sensorList.broadcast()
+
+                execute.next(gatt)
+            } else
+                close()
         } else {
-            close(SensorItemState.UNSUPPORTED)
+            item.supportedState = SensorItemState.SupportedState.NO
+            close()
         }
     }
 
@@ -137,7 +127,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
 
     @Synchronized
     override fun onDescriptorWrite(gatt: BluetoothGatt, d: BluetoothGattDescriptor, s: Int) {
-        executeNextAndSetState(gatt)
+        execute.next(gatt)
     }
 
     @Deprecated("Deprecated in Java")
@@ -156,7 +146,7 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
         status: Int
     ) {
         for (s in services) s.read(c)
-        executeNextAndSetState(gatt)
+        execute.next(gatt)
     }
 
     override fun toString(): String {
@@ -188,11 +178,6 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
         return null
     }
 
-    private fun close(state: Int) {
-        closeState = state
-        close()
-    }
-
     @Synchronized
     override fun close() {
         if (!closed) {
@@ -208,7 +193,9 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
             }
 
             if (item.unlock(this)) {
-                item.state = closeState
+                item.connectionState = SensorItemState.ConnectionState.NO
+                if (item.isScanning)
+                    item.supportedState = SensorItemState.SupportedState.UNKNOWN
                 sensorList.broadcast()
             }
         }

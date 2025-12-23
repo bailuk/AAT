@@ -23,7 +23,8 @@ class SensorList(private val context: Context) :  Closeable {
 
     fun addEnabled(address: String, name: String): SensorListItem {
         val item = add(address, name)
-        item.state = SensorItemState.ENABLED
+        item.supportedState = SensorItemState.SupportedState.YES
+        item.enabledState = true
         return item
     }
 

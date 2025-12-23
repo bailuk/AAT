@@ -64,11 +64,9 @@ class SensorListItem(
     }
 
     fun setEnabled(enabled: Boolean) {
-        if (enabled) {
-            setState(ENABLED)
-        } else {
+        enabledState = enabled
+        if (!enabled) {
             sensor?.close()
-            setState(SUPPORTED)
         }
     }
 
