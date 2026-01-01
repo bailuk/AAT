@@ -18,3 +18,6 @@ CI: Update guava to 33.5.0
 CI: Update acra to 5.13.1
 CI: Update jupiter to 5.14.0
 Lib: Fix issue with failed tile downloads
+Lib: Use two decimal precision for average speed
+Android: Fix sensor scanning state handling for internal and Ble sensors.
+Android: Fix handling of unpaired power meters
