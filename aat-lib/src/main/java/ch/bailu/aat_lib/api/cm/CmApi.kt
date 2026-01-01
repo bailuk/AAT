@@ -16,4 +16,7 @@ class CmApi(baseDirectory: SolidDataDirectory) : Api(SolidCriticalMapOverlay(bas
             background.process(task)
         }
     }
+    companion object {
+        const val ENABLED = false // TODO handle as experimental feature and enable via env variable
+    }
 }
