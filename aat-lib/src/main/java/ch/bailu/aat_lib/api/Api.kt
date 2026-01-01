@@ -5,6 +5,10 @@ import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.background.FileTask
 import ch.bailu.foc.Foc
 
+/**
+ * Abstract base class for all APIs
+ * startTask uses individual implementations
+ */
 abstract class Api(private val overlay: SolidOverlayInterface) {
     val apiName: String
         get() = overlay.getLabel()

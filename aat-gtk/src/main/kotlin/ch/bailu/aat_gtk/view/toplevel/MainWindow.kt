@@ -12,7 +12,6 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
@@ -33,8 +32,8 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
-import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
@@ -116,8 +115,6 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         window.onDestroy {
             exit(dispatcher, 0)
         }
-
-        LocationMenu.createActions(appContext.storage, app, window.display, this)
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {
@@ -255,6 +252,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createCmSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }

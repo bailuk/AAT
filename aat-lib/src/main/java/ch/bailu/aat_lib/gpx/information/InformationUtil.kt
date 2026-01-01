@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.information
 
+import ch.bailu.aat_lib.api.cm.CmApi
 import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
@@ -7,7 +8,6 @@ import ch.bailu.aat_lib.resources.ToDo
 object InformationUtil {
 
     fun defaultName(iid: Int): String {
-        // TODO: use enum for this
         when(iid) {
             InfoID.POI -> return Res.str().p_mapsforge_poi()
             InfoID.EDITOR_DRAFT -> return ToDo.translate("Draft")
@@ -45,6 +45,10 @@ object InformationUtil {
             add(InfoID.EDITOR_OVERLAY)
             add(InfoID.TRACKER)
             add(InfoID.LIST_SUMMARY)
+            add(InfoID.NOMINATIM_REVERSE)
+            if (CmApi.ENABLED) {
+                add(InfoID.CRITICAL_MAP)
+            }
         }
     }
 

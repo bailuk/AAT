@@ -2,12 +2,15 @@ package ch.bailu.aat_lib.dispatcher.source
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
-import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCriticalMapOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidDraftOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidFixedOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidNominatimReverseOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidPoiOverlay
 
-class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterface, private val directory: String, private val file: String, iid: Int):
-    FileSource(context, iid, usageTracker) {
+class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterface, private val overlay: SolidFixedOverlay):
+    FileSource(context, overlay.getIID(), usageTracker) {
 
     private val dataDirectory = context.dataDirectory
 
@@ -18,7 +21,7 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
     }
 
     private fun onPreferencesChanged() {
-        setFile(dataDirectory.getValueAsFile().descendant(directory).child(file))
+        setFile(overlay.getValueAsFile())
     }
 
     override fun onResumeWithService() {
@@ -34,11 +37,23 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
 
     companion object {
         fun createPoiSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
-            return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_POI, AppDirectory.FILE_POI, InfoID.POI)
+            val overlay = SolidPoiOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
         }
 
         fun createDraftSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
-            return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_EDIT, AppDirectory.FILE_DRAFT, InfoID.EDITOR_DRAFT)
+            val overlay = SolidDraftOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
+        }
+
+        fun createNominatimReverseSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            val overlay = SolidNominatimReverseOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
+        }
+
+        fun createCmSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            val overlay = SolidCriticalMapOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
         }
     }
 }

@@ -4,8 +4,8 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
 
-class SolidBrouterOverlay(baseDirectory: SolidDataDirectory) :
+class SolidDraftOverlay(baseDirectory: SolidDataDirectory) :
     SolidFixedOverlay(baseDirectory,
-        InfoID.BROUTER,
-        AppDirectory.DIR_QUERY,
-        AppDirectory.FILE_BROUTER)
+        InfoID.EDITOR_DRAFT,
+        AppDirectory.DIR_EDIT,
+        AppDirectory.FILE_DRAFT)
