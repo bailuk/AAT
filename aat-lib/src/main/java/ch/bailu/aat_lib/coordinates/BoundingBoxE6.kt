@@ -7,6 +7,7 @@ import org.mapsforge.core.model.BoundingBox
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
 import java.io.IOException
+import kotlin.math.abs
 
 
 class BoundingBoxE6 {
@@ -124,7 +125,7 @@ class BoundingBoxE6 {
     }
 
     fun hasBounding(): Boolean {
-        return latNorthE6 > latSouthE6 && lonEastE6 > lonWestE6
+        return latNorthE6 >= latSouthE6 && lonEastE6 >= lonWestE6
     }
 
     override fun toString(): String {
@@ -136,9 +137,9 @@ class BoundingBoxE6 {
     }
 
     val latitudeSpanE6: Int
-        get() = Math.abs(latNorthE6 - latSouthE6)
+        get() = abs(latNorthE6 - latSouthE6)
     val longitudeSpanE6: Int
-        get() = Math.abs(lonWestE6 - lonEastE6)
+        get() = abs(lonWestE6 - lonEastE6)
     val center: LatLongE6
         get() = LatLongE6(latSouthE6 + latitudeSpanE6 / 2, lonWestE6 + longitudeSpanE6 / 2)
 
