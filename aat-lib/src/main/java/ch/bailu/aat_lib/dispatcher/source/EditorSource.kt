@@ -19,7 +19,7 @@ class EditorSource(private val appContext: AppContext, usageTracker: UsageTracke
     EditorSourceInterface {
 
     private var target = TargetInterface.NULL
-    private val edit: EditorHelper = EditorHelper(appContext)
+    private val edit = EditorHelper(appContext)
     private val onFileEdited = BroadcastReceiver { args ->
         if (BroadcastData.has(args, edit.vID)) {
             requestUpdate()

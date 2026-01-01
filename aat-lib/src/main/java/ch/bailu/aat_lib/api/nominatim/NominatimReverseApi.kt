@@ -21,4 +21,7 @@ class NominatimReverseApi(overlay: SolidOverlayInterface) : Api(overlay) {
         }
     }
 
+    companion object {
+        const val NAME = "Reverse"
+    }
 }
