@@ -12,6 +12,7 @@ import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.MainBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
+import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
@@ -147,6 +148,8 @@ class MapMainView(
         overlay.addOverlay(statusLabel.box)
 
         showMainBar()
+
+        LocationMenu.createActions(appContext.storage, app, window.display, map, dispatcher, uiController)
     }
 
     private fun addBar(bar: Bar) {

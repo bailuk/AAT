@@ -40,5 +40,13 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
         fun createDraftSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
             return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_EDIT, AppDirectory.FILE_DRAFT, InfoID.EDITOR_DRAFT)
         }
+
+        fun createReverseNominatimSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_NOMINATIM, AppDirectory.FILE_NOMINATIM_REVERSE, InfoID.NOMINATIM_REVERSE)
+        }
+
+        fun createCmSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            return FixedOverlaySource(context, usageTracker, AppDirectory.DIR_QUERY, AppDirectory.FILE_CRITICAL_MAP, InfoID.CRITICAL_MAP)
+        }
     }
 }

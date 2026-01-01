@@ -33,6 +33,7 @@ object Strings {
     const val ACTION_LOCATION_COPY  = "locationCopy"
     const val ACTION_LOCATION_PASTE = "locationPaste"
     const val ACTION_LOCATION_REVERSE = "locationReverse"
+    const val ACTION_LOCATION_REVERSE_CENTER = "locationReverseCenter"
     const val ACTION_LOCATION_CM    = "locationCM"
 
     // Custom widgets
