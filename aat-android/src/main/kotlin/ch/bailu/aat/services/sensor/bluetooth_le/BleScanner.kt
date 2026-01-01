@@ -27,7 +27,10 @@ class BleScanner internal constructor(sensors: BleSensors) : AbsBleScanner(senso
     private val cscFilter = ScanFilter.Builder()
         .setServiceUuid(ParcelUuid.fromString("00001816-0000-1000-8000-00805f9b34fb"))
         .build()
-    private val filters = ArrayList(listOf(hrFilter, cscFilter))
+    private val powerFilter = ScanFilter.Builder()
+        .setServiceUuid(ParcelUuid.fromString("00001818-0000-1000-8000-00805f9b34fb"))
+        .build()
+    private val filters = ArrayList(listOf(hrFilter, cscFilter, powerFilter))
 
     override fun start() {
         val scanner = adapter.bluetoothLeScanner
