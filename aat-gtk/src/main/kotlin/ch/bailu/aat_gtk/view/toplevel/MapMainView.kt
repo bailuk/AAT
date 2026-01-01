@@ -149,7 +149,7 @@ class MapMainView(
 
         showMainBar()
 
-        LocationMenu.createActions(appContext.storage, app, window.display, map, dispatcher, uiController)
+        LocationMenu.createActions(app, appContext, window.display, map, dispatcher, uiController)
     }
 
     private fun addBar(bar: Bar) {

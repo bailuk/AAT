@@ -8,7 +8,6 @@ import ch.bailu.aat_lib.resources.ToDo
 object InformationUtil {
 
     fun defaultName(iid: Int): String {
-        // TODO: use enum for this
         when(iid) {
             InfoID.POI -> return Res.str().p_mapsforge_poi()
             InfoID.EDITOR_DRAFT -> return ToDo.translate("Draft")

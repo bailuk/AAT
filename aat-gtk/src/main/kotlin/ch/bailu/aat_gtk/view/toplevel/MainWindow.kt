@@ -253,7 +253,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createCmSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createReverseNominatimSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }

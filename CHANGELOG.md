@@ -21,3 +21,4 @@ Lib: Fix issue with failed tile downloads
 Lib: Use two decimal precision for average speed
 Android: Fix sensor scanning state handling for internal and Ble sensors.
 Android: Fix handling of unpaired power meters
+GTK: Add support for Nominatim reverse
