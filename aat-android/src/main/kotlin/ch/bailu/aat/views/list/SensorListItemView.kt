@@ -13,6 +13,11 @@ class SensorListItemView(private val scontext: ServiceContext, private var item:
 
     private val checkBox: CheckBox
 
+    /**
+     * Inhibit any updates to the #SensorListItem in UI callbacks?
+     */
+    private var inhibitItemUpdates = false
+
     init {
         orientation = VERTICAL
         checkBox = CheckBox(context)
@@ -20,6 +25,8 @@ class SensorListItemView(private val scontext: ServiceContext, private var item:
         addView(checkBox)
         setItem(item)
         checkBox.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            if (inhibitItemUpdates)
+                return@setOnCheckedChangeListener
             this.item.setEnabled(isChecked)
             scontext.insideContext { scontext.getSensorService().updateConnections() }
         }
@@ -27,9 +34,11 @@ class SensorListItemView(private val scontext: ServiceContext, private var item:
     }
 
     fun setItem(item: SensorListItem) {
+        inhibitItemUpdates = true
         this.item = item
         checkBox.isEnabled = this.item.isSupported
         checkBox.isChecked = this.item.isEnabled
         checkBox.text = this.item.toString()
+        inhibitItemUpdates = false
     }
 }
