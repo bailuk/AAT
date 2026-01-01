@@ -17,3 +17,4 @@ CI: Update gson to 2.13.2
 CI: Update guava to 33.5.0
 CI: Update acra to 5.13.1
 CI: Update jupiter to 5.14.0
+Lib: Fix issue with failed tile downloads
