@@ -1,6 +1,9 @@
 package ch.bailu.aat_lib.gpx.information
 
+import ch.bailu.aat_lib.api.brouter.BrouterApi
 import ch.bailu.aat_lib.api.cm.CmApi
+import ch.bailu.aat_lib.api.nominatim.NominatimApi
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseApi
 import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
@@ -12,14 +15,14 @@ object InformationUtil {
             InfoID.POI -> return Res.str().p_mapsforge_poi()
             InfoID.EDITOR_DRAFT -> return ToDo.translate("Draft")
             InfoID.TRACKER -> return Res.str().tracker()
-            InfoID.NOMINATIM -> return "Nominatim"
+            InfoID.NOMINATIM -> return NominatimApi.NAME
             InfoID.OVERPASS -> return Res.str().query_overpass()
             InfoID.EDITOR_OVERLAY -> return ToDo.translate("Editor")
             InfoID.FILE_VIEW -> return ToDo.translate("Selected File")
             InfoID.LIST_SUMMARY -> return ToDo.translate("List Summary")
-            InfoID.CRITICAL_MAP -> return "Critical Map"
-            InfoID.NOMINATIM_REVERSE -> return "Reverse"
-            InfoID.BROUTER -> return "Brouter"
+            InfoID.CRITICAL_MAP -> return CmApi.NAME
+            InfoID.NOMINATIM_REVERSE -> return NominatimReverseApi.NAME
+            InfoID.BROUTER -> return BrouterApi.NAME
         }
         if (isOverlay(iid)) {
             return "${ToDo.translate("Overlay")} ${getOverlayIndex(iid)}"
@@ -46,6 +49,7 @@ object InformationUtil {
             add(InfoID.TRACKER)
             add(InfoID.LIST_SUMMARY)
             add(InfoID.NOMINATIM_REVERSE)
+            add(InfoID.BROUTER)
             if (CmApi.ENABLED) {
                 add(InfoID.CRITICAL_MAP)
             }

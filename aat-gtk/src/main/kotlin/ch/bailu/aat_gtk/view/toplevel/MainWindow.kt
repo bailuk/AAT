@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.api.BrouterController
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.exit
@@ -115,6 +116,8 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         window.onDestroy {
             exit(dispatcher, 0)
         }
+
+        BrouterController(app, appContext, editorSource, this)
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {
@@ -252,6 +255,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createCmSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
         dispatcher.addSource(editorSource)

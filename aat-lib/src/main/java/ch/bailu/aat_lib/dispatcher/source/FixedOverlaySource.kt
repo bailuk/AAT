@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.dispatcher.source
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.map.overlay.SolidBrouterOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidCriticalMapOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidDraftOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidFixedOverlay
@@ -48,6 +49,11 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
 
         fun createNominatimReverseSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
             val overlay = SolidNominatimReverseOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
+        }
+
+        fun createBrouterSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            val overlay = SolidBrouterOverlay(context.dataDirectory)
             return FixedOverlaySource(context, usageTracker, overlay)
         }
 

@@ -39,4 +39,8 @@ class BrouterApi(overlay: SolidOverlayInterface) : Api(overlay) {
         }
         return builder.toString()
     }
+
+    companion object {
+        const val NAME = "Brouter"
+    }
 }

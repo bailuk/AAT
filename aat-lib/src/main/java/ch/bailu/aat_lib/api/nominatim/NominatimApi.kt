@@ -39,7 +39,9 @@ abstract class NominatimApi(context: AppContext) : DownloadApi(SolidNominatimOve
     }
 
     companion object {
-         const val POST = "&format=xml"
+        const val POST = "&format=xml"
+        const val NAME = "Nominatim"
+
         private fun toString(b: BoundingBoxE6): String {
             return if (b.latitudeSpanE6 > 0 && b.longitudeSpanE6 > 0) {
                 "&bounded=1&viewbox=" +

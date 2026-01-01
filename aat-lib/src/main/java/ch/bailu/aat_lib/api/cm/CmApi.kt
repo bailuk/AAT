@@ -18,5 +18,6 @@ class CmApi(baseDirectory: SolidDataDirectory) : Api(SolidCriticalMapOverlay(bas
     }
     companion object {
         const val ENABLED = false // TODO handle as experimental feature and enable via env variable
+        const val NAME = "Critical Map"
     }
 }

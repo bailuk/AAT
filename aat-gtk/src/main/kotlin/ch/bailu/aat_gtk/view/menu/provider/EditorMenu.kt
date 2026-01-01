@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
+import ch.bailu.aat_lib.api.brouter.BrouterApi
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.resources.Res
@@ -13,6 +14,7 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProviderInterface
             append(Res.str().edit_save(), "app.editSave")
             append(Res.str().edit_save_copy(), "app.editCopy")
             append(Res.str().edit_save_copy_to(), "app.editCopyTo")
+            append(BrouterApi.NAME, "app.brouter")
             append(Res.str().edit_inverse(), "app.editInverse")
             appendSubmenu(Res.str().edit_change_type(), Menu().apply {
                 append("Track", "app.editTypeTrack")
