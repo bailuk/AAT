@@ -49,8 +49,8 @@ class BleSensor(c: ServiceContext, d: BluetoothDevice, l: SensorList, i: SensorL
         } else {
             execute.next(gatt)
             scanningTimeout.kick(BleSensors.SCAN_DURATION) { if (item.isScanning) close() }
-            item.state = SensorItemState.CONNECTING
-            item.state = SensorItemState.SCANNING
+            item.setState(SensorItemState.CONNECTING)
+            item.setState(SensorItemState.SCANNING)
         }
         this.gatt = gatt
     }
