@@ -65,6 +65,6 @@ class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) 
     }
 
     companion object {
-        const val MAX_OVERLAYS = 4
+        const val MAX_OVERLAYS = 3
     }
 }
