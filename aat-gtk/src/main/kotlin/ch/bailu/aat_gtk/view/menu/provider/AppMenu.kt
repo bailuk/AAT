@@ -26,12 +26,6 @@ class AppMenu(private val window: Window,
 
     override fun createMenu(): Menu {
         return Menu().apply {
-
-            append(Res.str().intro_map(), MenuHelper.toAppAction(Strings.ACTION_SHOW_MAP))
-            append(Res.str().intro_cockpit(), MenuHelper.toAppAction(Strings.ACTION_SHOW_COCKPIT))
-            append(Res.str().label_list(), MenuHelper.toAppAction(Strings.ACTION_SHOW_TRACKS))
-            append(Res.str().label_detail(), MenuHelper.toAppAction(Strings.ACTION_TRACK_INFO))
-
             appendSection(Res.str().tracker(), Menu().apply {
                 appendItem(MenuHelper.createCustomItem(Strings.CUSTOM_TRACKER_BUTTON))
             })
@@ -49,10 +43,6 @@ class AppMenu(private val window: Window,
     }
 
     override fun createActions(app: Application) {
-        MenuHelper.setAction(app, Strings.ACTION_TRACK_INFO) { uiController.showDetail() }
-        MenuHelper.setAction(app, Strings.ACTION_SHOW_MAP) { uiController.showMap() }
-        MenuHelper.setAction(app, Strings.ACTION_SHOW_COCKPIT) { uiController.showCockpit() }
-        MenuHelper.setAction(app, Strings.ACTION_SHOW_TRACKS) { uiController.showFileList() }
         MenuHelper.setAction(app, Strings.ACTION_SHOW_SETTINGS) { uiController.showPreferences() }
         MenuHelper.setAction(app, Strings.ACTION_SHOW_ABOUT) { About.show(window) }
         MenuHelper.setAction(app, Strings.ACTION_DUMP_RESOURCES) {
