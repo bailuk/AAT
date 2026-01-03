@@ -3,7 +3,7 @@ package ch.bailu.aat_lib.api
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
-import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.util.fs.FileUtil
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
@@ -45,7 +45,7 @@ abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
                 i++
             }
             if (name.length < NAME_MIN) {
-                name.append(AppDirectory.generateDatePrefix())
+                name.append(FileUtil.generateDatePrefix())
             }
             return name.toString()
         }

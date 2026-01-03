@@ -10,8 +10,7 @@ import ch.bailu.gtk.type.Str
 open class PopupMenuButton(private val menuProvider: MenuProviderInterface): MenuButtonInterface {
     val menuButton = MenuButton().apply {
         menuModel = menuProvider.createMenu()
-
-        Companion.setPopover(popover, menuProvider)
+        setPopover(popover, menuProvider)
     }
 
     override fun createActions(app: Application) {

@@ -34,7 +34,7 @@ class MainPage(appContext: AppContext,
         }
     }
 
-    private val detailViewPage = DetailViewPage(controller, dispatcher, usageTrackers.createSelectableUsageTracker())
+    private val detailViewPage = DetailViewPage(app, window.display, appContext, controller, dispatcher, usageTrackers.createSelectableUsageTracker())
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.appName, GtkAppConfig.appLongName)
@@ -48,7 +48,7 @@ class MainPage(appContext: AppContext,
 
     val stackView = StackView(SOLID_KEY).apply {
         addView(CockpitPage(appContext,controller, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        addView(FileListPage(app, appContext, controller).vbox, pageIdFileList, Res.str().label_list())
+        addView(FileListPage(app, window.display, appContext, controller).vbox, pageIdFileList, Res.str().label_list())
         addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
         restore(appContext.storage)
     }

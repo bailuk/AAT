@@ -14,6 +14,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.util.fs.FileUtil
 import ch.bailu.foc.Foc
 import java.io.IOException
 
@@ -86,9 +87,9 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         @JvmStatic
         @Throws(IOException::class)
         fun generateTargetFile(sdirectory: SolidDataDirectory, preset: Int): Foc {
-            return AppDirectory.generateUniqueFilePath(
+            return FileUtil.generateUniqueFilePath(
                 AppDirectory.getTrackListDirectory(sdirectory, preset),
-                AppDirectory.generateDatePrefix(),
+                FileUtil.generateDatePrefix(),
                 AppDirectory.GPX_EXTENSION
             )
         }

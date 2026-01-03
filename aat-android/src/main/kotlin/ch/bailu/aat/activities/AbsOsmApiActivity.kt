@@ -150,8 +150,7 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         val targetPrefix = targetFilePrefix
 
         configuration?.apply {
-            val targetExtension = fileExtension
-            ResultFileMenu(this@AbsOsmApiActivity, resultFile, targetPrefix, targetExtension).showAsPopup(this@AbsOsmApiActivity, parent)
+            ResultFileMenu(this@AbsOsmApiActivity, resultFile, targetPrefix, fileExtension).showAsPopup(this@AbsOsmApiActivity, parent)
         }
     }
 

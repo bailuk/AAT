@@ -228,7 +228,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
                 editorSource.editor.unload()
                 editorSource.edit(file)
                 mapView.showEditor()
-                frameInMap(boundingBoxE6)
+                //frameInMap(boundingBoxE6)
                 SolidOverlayFileEnabled(appContext.storage, InfoID.EDITOR_OVERLAY).value = true
             }
         }
