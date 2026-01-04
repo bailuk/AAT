@@ -21,18 +21,17 @@ class SensorList(private val context: Context) :  Closeable {
         restore()
     }
 
-    fun add(address: String, name: String): SensorListItem {
-        return add(address, name, SensorItemState.UNSCANNED)
-    }
-
     fun addEnabled(address: String, name: String): SensorListItem {
-        return add(address, name, SensorItemState.ENABLED)
+        val item = add(address, name)
+        item.supportedState = SensorItemState.SupportedState.YES
+        item.enabledState = true
+        return item
     }
 
-    private fun add(address: String, name: String, initialState: Int): SensorListItem {
+    fun add(address: String, name: String): SensorListItem {
         var item = find(address)
         if (item == null) {
-            item = SensorListItem(context, address, name, initialState)
+            item = SensorListItem(context, address, name)
             list.add(item)
         }
         return item

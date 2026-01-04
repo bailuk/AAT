@@ -15,7 +15,6 @@ class Executor {
     }
     private val toReadQ: Queue<BluetoothGattCharacteristic> = LinkedList()
     private val toNotifyQ: Queue<BluetoothGattCharacteristic> = LinkedList()
-    private var discovered = false
 
     @Synchronized
     fun notify(characteristic: BluetoothGattCharacteristic) {
@@ -25,10 +24,6 @@ class Executor {
     @Synchronized
     fun read(characteristic: BluetoothGattCharacteristic) {
         toReadQ.add(characteristic)
-    }
-
-    private fun needToDiscover(): Boolean {
-        return !discovered
     }
 
     @Synchronized
@@ -42,9 +37,7 @@ class Executor {
 
     @Synchronized
     fun next(gatt: BluetoothGatt) {
-        if (needToDiscover()) {
-            discovered = gatt.discoverServices()
-        } else if (haveToRead()) {
+        if (haveToRead()) {
             gatt.readCharacteristic(toReadQ.poll())
         } else if (haveToNotify()) {
             val head = toNotifyQ.poll()
