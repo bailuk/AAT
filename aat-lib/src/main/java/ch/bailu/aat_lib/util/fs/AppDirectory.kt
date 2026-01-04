@@ -6,8 +6,6 @@ import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
-import java.io.IOException
-import java.util.*
 
 object AppDirectory {
     //////////////////////////////////////////////////////////////////////////////////////
@@ -76,53 +74,9 @@ object AppDirectory {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    private const val MAX_TRY = 99
     const val GPX_EXTENSION = ".gpx"
     const val OSM_EXTENSION = ".xml" // Extension .osm is not compatible with Android SAF
 
-    @Throws(IOException::class)
-    fun generateUniqueFilePath(directory: Foc, prefix: String, extension: String): Foc {
-        var file = directory.child(generateFileName(prefix, extension))
-        var x = 1
-        while (file.exists() && x < MAX_TRY) {
-            file = directory.child(generateFileName(prefix, x, extension))
-            x++
-        }
-        if (file.exists()) throw IOException()
-        return file
-    }
-
-    fun generateDatePrefix(): String {
-        val time = System.currentTimeMillis()
-        return String.format(
-            Locale.ROOT,
-            "%tY_%tm_%td_%tH_%tM", time, time, time, time, time
-        )
-    }
-
-    private fun generateFileName(prefix: String, extension: String): String {
-        return prefix + extension
-    }
-
-    private fun generateFileName(prefix: String, i: Int, extension: String): String {
-        return String.format(
-            Locale.ROOT,
-            "%s_%d%s", prefix, i, extension
-        )
-    }
-
-    fun parsePrefix(file: Foc): String {
-        val name = StringBuilder(file.name)
-        var length = name.length
-        for (i in length - 1 downTo 1) {
-            if (name[i] == '.') {
-                length = i
-                break
-            }
-        }
-        name.setLength(length)
-        return name.toString()
-    }
 
     /**
      * List of gpx directories as name / directory pair

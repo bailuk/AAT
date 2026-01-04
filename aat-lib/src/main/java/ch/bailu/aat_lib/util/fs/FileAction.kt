@@ -5,11 +5,14 @@ import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.util.fs.AFile.logErrorExists
-import ch.bailu.aat_lib.util.fs.AFile.logErrorNoAccess
+import ch.bailu.aat_lib.util.fs.FileAccess.logErrorExists
+import ch.bailu.aat_lib.util.fs.FileAccess.logErrorNoAccess
 import ch.bailu.foc.Foc
 import java.io.IOException
 
+/**
+ * High level file actions for UI (Menu) file operations
+ */
 object FileAction {
     fun rescanDirectory(context: AppContext, file: Foc) {
         if (isParentActive(context, file)) {
@@ -35,14 +38,26 @@ object FileAction {
         )
     }
 
+    /**
+     * Copy source to destination.
+     * If destination already exists, try creating a new file name
+     */
+    fun copyToDir(context: AppContext, src: Foc, destDir: Foc) {
+        val splitter = FileNameSplitter(src)
+        copyToDir(context, src, destDir, splitter.prefix, splitter.extension)
+    }
+
+    /**
+     * Copy source to destination.
+     * Try creating a unique file name using prefix and extension
+     */
     fun copyToDir(context: AppContext, src: Foc, destDir: Foc, prefix: String, extension: String) {
         try {
-            copyToDest(
-                context,
-                src,
-                AppDirectory.generateUniqueFilePath(destDir, prefix, extension)
-            )
+            val file = FileUtil.generateUniqueFilePath(destDir, prefix, extension)
+            copyToDest(context, src, file)
+            AppLog.i(this, file.pathName)
         } catch (e: IOException) {
+            // Android SAF backend can throw any exception (like IllegalArgumentException)
             AppLog.e(context, e)
         }
     }
@@ -58,15 +73,6 @@ object FileAction {
                 dest.path,
                 src.path
             )
-        }
-    }
-
-    fun copyToDir(context: AppContext, src: Foc, destDir: Foc) {
-        try {
-            copyToDest(context, src, destDir.child(src.name))
-        } catch (e: Exception) {
-            // Android SAF backend can throw any exception (like IllegalArgumentException)
-            AppLog.e(context, e)
         }
     }
 

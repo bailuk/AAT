@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.service.directory.database.GpxDbInterface
 import ch.bailu.aat_lib.service.directory.database.GpxDatabase
-import ch.bailu.aat_lib.util.fs.AFile.logErrorNoAccess
+import ch.bailu.aat_lib.util.fs.FileAccess.logErrorNoAccess
 import ch.bailu.aat_lib.util.sql.DbException
 import ch.bailu.aat_lib.util.sql.DbResultSet
 import ch.bailu.foc.Foc

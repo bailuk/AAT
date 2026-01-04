@@ -14,7 +14,7 @@ import ch.bailu.aat.views.preferences.dialog.AddOverlayDialog
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.util.fs.AFile
+import ch.bailu.aat_lib.util.fs.FileAccess
 import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 
@@ -37,7 +37,7 @@ object AndroidFileAction {
                 file.pathName
             )
         } else {
-            AFile.logErrorReadOnly(file)
+            FileAccess.logErrorReadOnly(file)
         }
     }
 
@@ -99,7 +99,7 @@ object AndroidFileAction {
             }.displayTextDialog(activity, title, edit)
 
         } else {
-            AFile.logErrorReadOnly(file)
+            FileAccess.logErrorReadOnly(file)
         }
     }
 }

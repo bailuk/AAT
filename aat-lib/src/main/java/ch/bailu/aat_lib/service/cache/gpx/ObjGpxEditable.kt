@@ -14,7 +14,8 @@ import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.editor.EditorInterface
 import ch.bailu.aat_lib.service.editor.GpxEditor
-import ch.bailu.aat_lib.util.fs.AppDirectory
+import ch.bailu.aat_lib.util.fs.FileNameSplitter
+import ch.bailu.aat_lib.util.fs.FileUtil
 import ch.bailu.foc.Foc
 
 class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjGpx(_id) {
@@ -174,12 +175,12 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         }
 
         override fun saveTo(path: Foc) {
-            val prefix = AppDirectory.parsePrefix(getFile())
+            val splitter = FileNameSplitter(path)
             try {
-                val file = AppDirectory.generateUniqueFilePath(
+                val file = FileUtil.generateUniqueFilePath(
                     path,
-                    prefix,
-                    AppDirectory.GPX_EXTENSION
+                    splitter.prefix,
+                    splitter.extension
                 )
                 GpxListWriter(editor.list, file)
                     .close()

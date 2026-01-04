@@ -77,4 +77,8 @@ object InformationUtil {
                 (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS)
     }
 
+    fun supportsFileOperations(iid: Int): Boolean {
+        return iid in listOf(InfoID.EDITOR_DRAFT, InfoID.CRITICAL_MAP, InfoID.NOMINATIM_REVERSE,
+            InfoID.BROUTER, InfoID.FILE_VIEW, InfoID.POI)
+    }
 }

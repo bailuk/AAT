@@ -4,7 +4,10 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 
-object AFile {
+/**
+ * Inform user about missing permissions
+ */
+object FileAccess {
     @JvmStatic
     fun logErrorExists(file: Foc) {
         AppLog.e(this, file.pathName + ": " + Res.str().file_exists())
