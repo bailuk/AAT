@@ -7,8 +7,13 @@ open class ID {
         const val MINUTE = 60 * 1024
 
         @JvmStatic
+        fun isBitSet(i: Int, bit: Int): Boolean {
+            return i and (1 shl bit) != 0
+        }
+
+        @JvmStatic
         fun isBitSet(b: Byte, bit: Int): Boolean {
-            return b.toInt() and (1 shl bit) != 0
+            return isBitSet(b.toInt(), bit)
         }
 
         private fun toIDString(id: Int): String {
