@@ -23,3 +23,4 @@ Android: Fix sensor scanning state handling for internal and Ble sensors.
 Android: Fix handling of unpaired power meters
 GTK: Add support for Nominatim reverse
 GTK: Add support for brouter API
+GTK: Add file menu for detail view
