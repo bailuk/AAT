@@ -55,7 +55,6 @@ class SolidCustomOverlayList(storage: StorageInterface, focFactory: FocFactory) 
         return false
     }
 
-
     override fun getLabel(): String {
         return Res.str().file_overlay()
     }
