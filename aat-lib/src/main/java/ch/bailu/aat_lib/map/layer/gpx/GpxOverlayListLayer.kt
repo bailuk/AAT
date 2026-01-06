@@ -5,7 +5,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay.Companion.MAX_OVERLAYS
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 
@@ -15,8 +15,8 @@ class GpxOverlayListLayer(
     services: ServicesInterface,
     d: DispatcherInterface
 ) : MapLayerInterface {
-    private val overlays = ArrayList<GpxDynLayer>(SolidCustomOverlayList.MAX_OVERLAYS).apply {
-        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+    private val overlays = ArrayList<GpxDynLayer>(MAX_OVERLAYS).apply {
+        for (i in 0 until MAX_OVERLAYS) {
             add(GpxDynLayer(storage, mcontext, services, d, InfoID.OVERLAY + i))
         }
     }

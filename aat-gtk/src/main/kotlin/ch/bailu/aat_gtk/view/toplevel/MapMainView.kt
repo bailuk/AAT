@@ -188,7 +188,6 @@ private class OverlayContainer(
 
     init {
         dispatcher.addTarget(ToggleFilter(gpxLayer, iid, usageTracker))
-
     }
 
     override fun setEnabled(enabled: Boolean) {

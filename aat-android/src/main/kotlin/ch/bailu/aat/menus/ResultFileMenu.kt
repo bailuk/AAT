@@ -8,20 +8,18 @@ import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 
 class ResultFileMenu(
-    private val context: ActivityContext,
+    private val aContext: ActivityContext,
     file: Foc,
     private val targetPrefix: String,
     private val targetExtension: String
-) : FileMenu(
-    context, file
-) {
+) : FileMenu(aContext, file) {
 
     override fun inflateCopyTo(menu: Menu) {
         add(menu, Res.str().edit_save_copy()) {
             FileAction.copyToDir(
-                context.appContext, file,
+                aContext.appContext, file,
                 AppDirectory.getDataDirectory(
-                    context.appContext.dataDirectory,
+                    aContext.appContext.dataDirectory,
                     AppDirectory.DIR_OVERLAY
                 ),
                 targetPrefix, targetExtension

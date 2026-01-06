@@ -16,8 +16,8 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
@@ -121,7 +121,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         if (v === previousFile || v === nextFile) {
             changeFileAsk(v)
         } else if (v === fileOperation) {
-            currentFile?.apply { FileMenu(this@AbsFileContentActivity, getInfo().getFile()).showAsPopup(this@AbsFileContentActivity, v) }
+            currentFile?.apply { FileMenu( this@AbsFileContentActivity, getInfo().getFile()).showAsPopup(this@AbsFileContentActivity, v) }
         }
     }
 

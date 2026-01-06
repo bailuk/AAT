@@ -44,7 +44,7 @@ class GpxListActivityContentView(private val acontext: AbsGpxListActivity, sdire
     val listView = GpxListView(acontext, acontext.gpxListItemData).apply {
         onItemClickListener = acontext
     }
-    val fileControlBar = FileControlBarLayer(acontext.appContext, map.getMContext(), acontext, acontext.appContext.summaryConfig).apply {
+    val fileControlBar = FileControlBarLayer(map.getMContext(), acontext, acontext.appContext.summaryConfig).apply {
         map.add(this)
     }
 

@@ -49,8 +49,8 @@ object AndroidFileAction {
         if (label != null && content != null) Clipboard(context).setText(label, content)
     }
 
-    fun useAsOverlay(context: Context, file: Foc) {
-        AddOverlayDialog(context, file)
+    fun useAsOverlay(appContext: AppContext, context: Context, file: Foc) {
+        AddOverlayDialog(appContext, context, file)
     }
 
     fun view(context: Context, uri: Uri) {

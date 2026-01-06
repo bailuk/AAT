@@ -7,47 +7,47 @@ import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat_lib.util.fs.FileAction
 import ch.bailu.foc.Foc
 
-open class FileMenu(private val activity: ActivityContext, protected val file: Foc) : AbsMenu() {
+open class FileMenu(private val aContext: ActivityContext, protected val file: Foc) : AbsMenu() {
 
     override val title: String
         get() = file.name
 
     override fun inflate(menu: Menu) {
-        add(menu, R.string.file_overlay) { AndroidFileAction.useAsOverlay(activity, file) }
+        add(menu, R.string.file_overlay) { AndroidFileAction.useAsOverlay(aContext.appContext, aContext, file) }
         inflateCopyTo(menu)
-        add(menu, R.string.clipboard_copy) { AndroidFileAction.copyToClipboard(activity, file) }
-        add(menu, R.string.file_send) { AndroidFileAction.sendTo(activity, file) }
+        add(menu, R.string.clipboard_copy) { AndroidFileAction.copyToClipboard(aContext, file) }
+        add(menu, R.string.file_send) { AndroidFileAction.sendTo(aContext, file) }
         inflateManipulate(menu)
     }
 
     protected open fun inflateCopyTo(menu: Menu) {
         add(menu, R.string.file_copy) {
             AndroidFileAction.copyToDir(
-                activity,
-                activity.appContext,
+                aContext,
+                aContext.appContext,
                 file
             )
         }
     }
 
     protected open fun inflateManipulate(menu: Menu) {
-        add(menu, R.string.file_view) { AndroidFileAction.view(activity, file) }
+        add(menu, R.string.file_view) { AndroidFileAction.view(aContext, file) }
         add(menu, R.string.file_rename) {
             AndroidFileAction.rename(
-                activity.appContext,
-                activity,
+                aContext.appContext,
+                aContext,
                 file
             )
         }
         add(menu, R.string.file_delete) {
             AndroidFileAction.delete(
-                activity.appContext,
-                activity,
+                aContext.appContext,
+                aContext,
                 file
             )
         }
-        add(menu, R.string.file_reload) { FileAction.reloadPreview(activity.appContext, file) }
-        add(menu, R.string.file_mock) { FileAction.useForMockLocation(activity.appContext, file) }
+        add(menu, R.string.file_reload) { FileAction.reloadPreview(aContext.appContext, file) }
+        add(menu, R.string.file_mock) { FileAction.useForMockLocation(aContext.appContext, file) }
     }
 
     override fun prepare(menu: Menu) {}

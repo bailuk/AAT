@@ -18,7 +18,7 @@ import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
 import ch.bailu.aat_lib.resources.Res
 
 class InformationBarLayer(
@@ -61,7 +61,7 @@ class InformationBarLayer(
         } else if (v === location) {
             LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location)
         } else if (v === overlays) {
-            SolidCheckListDialog(context, SolidCustomOverlayList(appContext.storage, appContext))
+            SolidCheckListDialog(context, SolidOverlayList.createMapOverlayList(appContext))
         }
     }
 

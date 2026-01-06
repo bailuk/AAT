@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.SolidOverlayFile
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay.Companion.MAX_OVERLAYS
 
 class OverlaySource (context: AppContext, infoID: Int, usageTracker: UsageTrackerInterface)
     : FileSource(context, infoID, usageTracker) {
@@ -38,7 +38,7 @@ class OverlaySource (context: AppContext, infoID: Int, usageTracker: UsageTracke
 }
 
 fun DispatcherInterface.addOverlaySources(appContext: AppContext, usageTracker: UsageTrackerInterface) {
-    for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+    for (i in 0 until MAX_OVERLAYS) {
         addSource(OverlaySource(appContext, InfoID.OVERLAY + i, usageTracker))
     }
 }
