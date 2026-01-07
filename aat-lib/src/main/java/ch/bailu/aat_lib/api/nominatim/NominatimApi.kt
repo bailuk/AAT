@@ -14,8 +14,6 @@ import kotlin.Throws
 abstract class NominatimApi(context: AppContext) : DownloadApi(SolidNominatimOverlay(context.dataDirectory)) {
 
     override val urlStart = "https://nominatim.openstreetmap.org/search?q="
-    override val fileExtension = ".xml"
-
 
     override fun getUrlPreview(query: String, bounding: BoundingBoxE6): String {
         val url = StringBuilder()

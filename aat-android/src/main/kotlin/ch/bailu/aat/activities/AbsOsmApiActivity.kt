@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import ch.bailu.aat.R
 import ch.bailu.aat.menus.ResultFileMenu
 import ch.bailu.aat.util.AppIntent
-import ch.bailu.aat_lib.util.fs.TextBackup
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
@@ -16,13 +15,13 @@ import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.list.NodeListView
 import ch.bailu.aat.views.osm.OsmApiEditorView
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.api.ApiConfiguration
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.api.ApiConfiguration
 
 abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     private var download: ImageButtonViewGroup? = null
@@ -84,10 +83,10 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     }
 
     private fun setDownloadStatus() {
-        if (configuration!!.isTaskRunning(serviceContext)) {
-            downloadBusy!!.startWaiting()
+        if (configuration?.isTaskRunning(serviceContext) == true) {
+            downloadBusy?.startWaiting()
         } else {
-            downloadBusy!!.stopWaiting()
+            downloadBusy?.stopWaiting()
         }
     }
 
@@ -147,21 +146,10 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
     }
 
     private fun showFileMenu(parent: View) {
-        val targetPrefix = targetFilePrefix
-
         configuration?.apply {
-            ResultFileMenu(this@AbsOsmApiActivity, resultFile, targetPrefix, fileExtension).showAsPopup(this@AbsOsmApiActivity, parent)
+            ResultFileMenu(this@AbsOsmApiActivity, resultFile).showAsPopup(this@AbsOsmApiActivity, parent)
         }
     }
-
-    private val targetFilePrefix: String
-        get() = try {
-            val query = TextBackup.read(configuration!!.queryFile)
-            ApiConfiguration.getFilePrefix(query)
-
-        } catch (e: Exception) {
-            ApiConfiguration.getFilePrefix("")
-        }
 
     protected fun insertLine(line: String) {
         editorView?.insertLine(line)

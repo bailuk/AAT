@@ -51,7 +51,7 @@ object FileAction {
      * Copy source to destination.
      * Try creating a unique file name using prefix and extension
      */
-    fun copyToDir(context: AppContext, src: Foc, destDir: Foc, prefix: String, extension: String) {
+    private fun copyToDir(context: AppContext, src: Foc, destDir: Foc, prefix: String, extension: String) {
         try {
             val file = FileUtil.generateUniqueFilePath(destDir, prefix, extension)
             copyToDest(context, src, file)
