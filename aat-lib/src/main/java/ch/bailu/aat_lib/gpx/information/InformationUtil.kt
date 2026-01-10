@@ -39,7 +39,7 @@ object InformationUtil {
     }
 
 
-    fun getMapOverlayInfoIdList(): List<Int> {
+    fun getMapOverlayInfoIdListGtk(): List<Int> {
         return ArrayList<Int>().apply {
             addAll(getOverlayInfoIdList())
             add(InfoID.POI)
@@ -53,6 +53,18 @@ object InformationUtil {
             if (CmApi.ENABLED) {
                 add(InfoID.CRITICAL_MAP)
             }
+        }
+    }
+
+    fun getMapOverlayInfoIdListAndroid(): List<Int> {
+        return ArrayList<Int>().apply {
+            addAll(getOverlayInfoIdList())
+            add(InfoID.POI)
+            add(InfoID.EDITOR_DRAFT)
+            add(InfoID.TRACKER)
+            add(InfoID.NOMINATIM)
+            add(InfoID.NOMINATIM_REVERSE)
+            add(InfoID.OVERPASS)
         }
     }
 

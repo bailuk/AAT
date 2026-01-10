@@ -39,11 +39,11 @@ class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInte
     init {
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
         graphView.height = 100
-        dispatcher.addTarget(SelectFilter(graphView, usageTracker), *InformationUtil.getMapOverlayInfoIdList().toIntArray())
+        dispatcher.addTarget(SelectFilter(graphView, usageTracker), *InformationUtil.getMapOverlayInfoIdListGtk().toIntArray())
 
         graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(dispatcher, getSummaryData(storage), usageTracker, *InformationUtil.getMapOverlayInfoIdList().toIntArray())
+        addAllContent(dispatcher, getSummaryData(storage), usageTracker, *InformationUtil.getMapOverlayInfoIdListGtk().toIntArray())
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {

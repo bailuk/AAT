@@ -45,7 +45,7 @@ class OverlayController(private val storage: StorageInterface, private val uiCon
             storage: StorageInterface,
             uiController: UiControllerInterface
         ): List<OverlayControllerInterface> {
-            return createOverlayControllers(storage, uiController, InformationUtil.getMapOverlayInfoIdList())
+            return createOverlayControllers(storage, uiController, InformationUtil.getMapOverlayInfoIdListGtk())
         }
 
         fun createEditableOverlayControllers(

@@ -7,7 +7,9 @@ import ch.bailu.aat_lib.preferences.map.overlay.SolidBrouterOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidCriticalMapOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidDraftOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidFixedOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidNominatimOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidNominatimReverseOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverpassOverlay
 import ch.bailu.aat_lib.preferences.map.overlay.SolidPoiOverlay
 
 class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterface, private val overlay: SolidFixedOverlay):
@@ -47,6 +49,11 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
             return FixedOverlaySource(context, usageTracker, overlay)
         }
 
+        fun createNominatimSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            val overlay = SolidNominatimOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
+        }
+
         fun createNominatimReverseSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
             val overlay = SolidNominatimReverseOverlay(context.dataDirectory)
             return FixedOverlaySource(context, usageTracker, overlay)
@@ -59,6 +66,11 @@ class FixedOverlaySource(context: AppContext, usageTracker: UsageTrackerInterfac
 
         fun createCmSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
             val overlay = SolidCriticalMapOverlay(context.dataDirectory)
+            return FixedOverlaySource(context, usageTracker, overlay)
+        }
+
+        fun createOverpassSource(context: AppContext, usageTracker: UsageTrackerInterface): FileSource {
+            val overlay = SolidOverpassOverlay(context.dataDirectory)
             return FixedOverlaySource(context, usageTracker, overlay)
         }
     }

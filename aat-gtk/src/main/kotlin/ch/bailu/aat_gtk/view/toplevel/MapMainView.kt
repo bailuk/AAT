@@ -54,7 +54,7 @@ class MapMainView(
     val box = Box(Orientation.VERTICAL, 0)
     val overlay = Overlay()
 
-    private val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
+    private val infoIDs = InformationUtil.getMapOverlayInfoIdListGtk().toIntArray()
     private val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
     private val overlayList = ArrayList<OverlayContainer>().apply {

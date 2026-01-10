@@ -18,11 +18,12 @@ import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
+import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
-import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
@@ -53,17 +54,21 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val usageTrackers = UsageTrackers()
+        val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage,
+            *InformationUtil.getMapOverlayInfoIdListAndroid().toIntArray())
+
         val currentFile = FollowFile(appContext)
         this.currentFile = currentFile
         editorSourcePrivate = EditorOrBackupSource(appContext, currentFile)
-        createViews()
-        createDispatcher()
+        createViews(overlayUsageTracker)
+        createDispatcher(usageTrackers)
     }
 
-    private fun createViews() {
+    private fun createViews(usageTracker: UsageTrackerInterface) {
         val contentView = ContentView(this, THEME)
         val bar = MainControlBar(this, button = 5)
-        val layout = createLayout(bar, contentView)
+        val layout = createLayout(bar, contentView, usageTracker)
 
         contentView.add(bar)
          busyControl = BusyViewControlIID(contentView).apply {
@@ -94,12 +99,21 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         bar.addOnClickListener(this)
     }
 
-    protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
+    protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): ViewGroup
 
-    private fun createDispatcher() {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
+    private fun createDispatcher(usageTrackers: UsageTrackers) {
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+
+        dispatcher.addOverlaySources(appContext, usageTrackers)
+        dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createOverpassSource(appContext, usageTrackers))
+
+
         dispatcher.addSource(editorSource)
 
         busyControl?.apply {

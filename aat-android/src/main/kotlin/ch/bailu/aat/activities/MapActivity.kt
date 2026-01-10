@@ -8,15 +8,17 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
-import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorSource
+import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.logger.AppLog
@@ -30,13 +32,18 @@ class MapActivity : AbsKeepScreenOnActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val usageTrackers = UsageTrackers()
+        val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage,
+            *InformationUtil.getMapOverlayInfoIdListAndroid().toIntArray())
+
         val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView =
             ContentView(this, AppTheme.cockpit)
-        val map = createMap(edit)
+        val map = createMap(edit, overlayUsageTracker)
         contentView.add(To.view(map)!!)
         setContentView(contentView)
-        createDispatcher(edit)
+        createDispatcher(edit, usageTrackers)
         contentView.showTip(getString(R.string.tt_map_edges))
         handleIntent(map)
     }
@@ -58,16 +65,23 @@ class MapActivity : AbsKeepScreenOnActivity() {
         }
     }
 
-    private fun createMap(edit: EditorSource): MapViewInterface {
-        return MapFactory.createDefaultMapView(this, SOLID_KEY).map(edit, createButtonBar())
+    private fun createMap(edit: EditorSource, usageTracker: UsageTrackerInterface): MapViewInterface {
+        return MapFactory.createDefaultMapView(this, SOLID_KEY).map(edit, createButtonBar(), usageTracker)
     }
 
-    private fun createDispatcher(edit: EditorSource) {
+    private fun createDispatcher(edit: EditorSource, usageTrackers: UsageTrackers) {
         dispatcher.addSource(edit)
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
-    }
+
+        dispatcher.addOverlaySources(appContext, usageTrackers)
+        dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createOverpassSource(appContext, usageTrackers))    }
 
     private fun createButtonBar(): ControlBar {
         val bar = MainControlBar(this)

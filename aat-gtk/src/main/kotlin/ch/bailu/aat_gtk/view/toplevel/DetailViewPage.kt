@@ -42,7 +42,7 @@ class DetailViewPage(
     init {
         dispatcher.addTarget(
             SelectFilter(this, usageTracker),
-            *InformationUtil.getMapOverlayInfoIdList().toIntArray()
+            *InformationUtil.getMapOverlayInfoIdListGtk().toIntArray()
         )
     }
 
