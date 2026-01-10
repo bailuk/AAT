@@ -13,8 +13,9 @@ import ch.bailu.aat.views.busy.BusyViewControlDbSync
 import ch.bailu.aat.views.list.GpxListActivityContentView
 import ch.bailu.aat.views.list.GpxListFilterView
 import ch.bailu.aat.views.list.GpxListView
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
@@ -63,17 +64,18 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         listFilterView = contentView.listFilterView
 
         setContentView(contentView.contentView)
-        createDispatcher(contentView.busyControl)
+        createDispatcher(dispatcher, appContext, contentView.busyControl)
 
         // Disable keyboard
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
-    private fun createDispatcher(busyControl: TargetInterface) {
+    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, busyControl: BusyViewControlDbSync) {
+        val overlayIDs = InformationUtil.overlayInfoIdList.toIntArray()
         dispatcher.addSource(IteratorSource.Summary(appContext, UsageTrackerAlwaysEnabled()))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
-        dispatcher.addTarget(busyControl, *InformationUtil.getOverlayInfoIdList().toIntArray())
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *overlayIDs))
+        dispatcher.addTarget(busyControl, *overlayIDs)
     }
 
     override fun onResumeWithService() {

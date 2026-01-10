@@ -38,50 +38,16 @@ object InformationUtil {
         return iid - InfoID.OVERLAY + 1
     }
 
-
-    fun getMapOverlayInfoIdListGtk(): List<Int> {
-        return ArrayList<Int>().apply {
-            addAll(getOverlayInfoIdList())
-            add(InfoID.POI)
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.FILE_VIEW)
-            add(InfoID.EDITOR_OVERLAY)
-            add(InfoID.TRACKER)
-            add(InfoID.LIST_SUMMARY)
-            add(InfoID.NOMINATIM_REVERSE)
-            add(InfoID.BROUTER)
-            if (CmApi.ENABLED) {
-                add(InfoID.CRITICAL_MAP)
-            }
+    val overlayInfoIdList: List<Int> = ArrayList<Int>().apply {
+        for (i in 0 until MAX_OVERLAYS) {
+            add(InfoID.OVERLAY + i)
         }
     }
 
-    fun getMapOverlayInfoIdListAndroid(): List<Int> {
-        return ArrayList<Int>().apply {
-            addAll(getOverlayInfoIdList())
-            add(InfoID.POI)
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.TRACKER)
-            add(InfoID.NOMINATIM)
-            add(InfoID.NOMINATIM_REVERSE)
-            add(InfoID.OVERPASS)
-        }
-    }
-
-    fun getEditableOverlayInfoIdList(): List<Int> {
-        return ArrayList<Int>().apply {
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.FILE_VIEW)
-            addAll(getOverlayInfoIdList())
-        }
-    }
-
-    fun getOverlayInfoIdList(): List<Int> {
-        return ArrayList<Int>().apply {
-            for (i in 0 until MAX_OVERLAYS) {
-                add(InfoID.OVERLAY + i)
-            }
-        }
+    val editableOverlayInfoIdList: List<Int> = ArrayList<Int>().apply {
+        add(InfoID.EDITOR_DRAFT)
+        add(InfoID.FILE_VIEW)
+        addAll(overlayInfoIdList)
     }
 
     fun isEditable(iid: Int): Boolean {
@@ -90,7 +56,9 @@ object InformationUtil {
     }
 
     fun supportsFileOperations(iid: Int): Boolean {
-        return iid in listOf(InfoID.EDITOR_DRAFT, InfoID.CRITICAL_MAP, InfoID.NOMINATIM_REVERSE,
-            InfoID.BROUTER, InfoID.FILE_VIEW, InfoID.POI)
+        return iid in listOf(
+            InfoID.EDITOR_DRAFT, InfoID.CRITICAL_MAP, InfoID.NOMINATIM_REVERSE,
+            InfoID.BROUTER, InfoID.FILE_VIEW, InfoID.POI
+        )
     }
 }

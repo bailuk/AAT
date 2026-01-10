@@ -22,6 +22,8 @@ import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.SVGAssetView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -56,7 +58,8 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, TargetInterf
         contentView.add(createButtonBar())
         contentView.add(createSeekBar())
         contentView.add(createVerticalView())
-        createDispatcher()
+        createDispatcher(dispatcher, appContext, file)
+
         setContentView(contentView)
     }
 
@@ -99,10 +102,11 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, TargetInterf
         return seekBar
     }
 
-    private fun createDispatcher() {
-        dispatcher.addTarget(this, InfoID.FILE_VIEW)
+    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, file: Foc) {
+        val serviceContext = appContext.services
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
+        dispatcher.addTarget(this, InfoID.FILE_VIEW)
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

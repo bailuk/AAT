@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import ch.bailu.aat.R
+import ch.bailu.aat.app.AndroidInformationUtil
+import ch.bailu.aat.broadcaster.addMapOverlaySources
 import ch.bailu.aat.menus.FileMenu
 import ch.bailu.aat.util.ui.AppDialog
 import ch.bailu.aat.util.ui.theme.AppTheme
@@ -18,11 +20,9 @@ import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
-import ch.bailu.aat_lib.dispatcher.source.FixedOverlaySource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -56,7 +56,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         super.onCreate(savedInstanceState)
         val usageTrackers = UsageTrackers()
         val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage,
-            *InformationUtil.getMapOverlayInfoIdListAndroid().toIntArray())
+            *AndroidInformationUtil.mapOverlayInfoIdList.toIntArray())
 
         val currentFile = FollowFile(appContext)
         this.currentFile = currentFile
@@ -102,22 +102,15 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): ViewGroup
 
     private fun createDispatcher(usageTrackers: UsageTrackers) {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
-        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-
-        dispatcher.addOverlaySources(appContext, usageTrackers)
-        dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createNominatimSource(appContext, usageTrackers))
-        dispatcher.addSource(FixedOverlaySource.createOverpassSource(appContext, usageTrackers))
-
+        val serviceContext = appContext.services
 
         dispatcher.addSource(editorSource)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addMapOverlaySources(appContext, usageTrackers)
 
         busyControl?.apply {
-            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.getOverlayInfoIdList().toIntArray())
+            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.overlayInfoIdList.toIntArray())
         }
         fileOperation?.apply { dispatcher.addTarget(this, InfoID.FILE_VIEW) }
 

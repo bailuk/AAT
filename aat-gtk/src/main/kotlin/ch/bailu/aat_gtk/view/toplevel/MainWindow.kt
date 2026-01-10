@@ -93,7 +93,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         navigationView.observe(mainPage)
         navigationView.observe(poiView)
 
-        setupDispatcher(dispatcher)
+        createDispatcher(dispatcher)
         TrackerOverlayOnOffController(appContext.storage, dispatcher)
 
         navigationView.showLeftSidebar()
@@ -246,7 +246,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         SolidOverlayFileEnabled(appContext.storage, iid).value = enabled
     }
 
-    private fun setupDispatcher(dispatcher: Dispatcher) {
+    private fun createDispatcher(dispatcher: Dispatcher) {
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))

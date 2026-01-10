@@ -13,16 +13,18 @@ import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
-import ch.bailu.aat.views.busy.BusyViewControlIID
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.image.ImageButtonViewGroup
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.busy.BusyViewControlIID
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.preferences.VerticalScrollView
-import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.Dispatcher
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
@@ -68,7 +70,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
                 contentView.add(view)
                 busyControl = BusyViewControlIID(contentView)
                 setContentView(contentView)
-                createDispatcher()
+                createDispatcher(dispatcher, appContext, file)
             } catch (e: Exception) {
                 AppLog.e(this, e)
             }
@@ -121,21 +123,18 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
         bar.addOnClickListener(this)
     }
 
-    private fun createDispatcher() {
+    fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, file: Foc) {
+        val overlayIIDs = InformationUtil.overlayInfoIdList.toIntArray()
+        val serviceContext = appContext.services
+
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *overlayIIDs))
         dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
         dispatcher.addTarget(this, InfoID.FILE_VIEW)
 
         busyControl?.apply {
-            dispatcher.addTarget(
-                this, InfoID.FILE_VIEW,
-                InfoID.OVERLAY,
-                InfoID.OVERLAY + 1,
-                InfoID.OVERLAY + 2,
-                InfoID.OVERLAY + 3
-            )
+            dispatcher.addTarget(this, InfoID.FILE_VIEW, *overlayIIDs)
         }
     }
 

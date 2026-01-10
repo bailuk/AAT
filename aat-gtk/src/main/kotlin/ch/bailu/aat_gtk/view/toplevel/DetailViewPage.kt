@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -42,7 +43,7 @@ class DetailViewPage(
     init {
         dispatcher.addTarget(
             SelectFilter(this, usageTracker),
-            *InformationUtil.getMapOverlayInfoIdListGtk().toIntArray()
+            *GtkInformationUtil.mapOverlayInfoIdList.toIntArray()
         )
     }
 

@@ -2,6 +2,7 @@ package ch.bailu.aat.map
 
 import android.content.Context
 import ch.bailu.aat.activities.ActivityContext
+import ch.bailu.aat.app.AndroidInformationUtil
 import ch.bailu.aat.map.layer.CustomBarLayer
 import ch.bailu.aat.map.layer.EditorBarLayer
 import ch.bailu.aat.map.layer.InformationBarLayer
@@ -16,7 +17,6 @@ import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.filter.ToggleFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
 import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
@@ -59,7 +59,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
     private fun tracker(e: EditorSourceInterface, iid: Int, usageTracker: UsageTrackerInterface): MapsForgeViewBase {
         base()
 
-        InformationUtil.getMapOverlayInfoIdListAndroid().forEach { infoID ->
+        AndroidInformationUtil.mapOverlayInfoIdList.forEach { infoID ->
             val layer = GpxDynLayer(appContext.storage, m.getMContext(), appContext.services)
             d.addTarget(ToggleFilter(layer, infoID, usageTracker))
             m.add(layer)
