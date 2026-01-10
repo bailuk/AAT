@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayInterface
 import ch.bailu.foc.Foc
 import java.io.UnsupportedEncodingException
 
-abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
+abstract class ApiConfiguration(private val overlay: SolidOverlayInterface) : Api(overlay) {
 
     @Throws(UnsupportedEncodingException::class)
     abstract fun getUrl(query: String, bounding: BoundingBoxE6): String
@@ -28,4 +28,8 @@ abstract class ApiConfiguration(overlay: SolidOverlayInterface) : Api(overlay) {
             }
             return Foc.FOC_NULL
         }
+
+    fun enableOverlay() {
+        overlay.setEnabled(true)
+    }
 }

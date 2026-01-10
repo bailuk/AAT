@@ -48,9 +48,6 @@ abstract class PoiApi(context: AppContext) : ApiConfiguration(SolidPoiOverlay(co
             )
             appContext.services.getBackgroundService().process(task)
         }
-
-        // TODO: does this belong here
-        // overlay.setEnabled(true)
     }
 
     protected abstract val selectedCategories: ArrayList<PoiCategory>
