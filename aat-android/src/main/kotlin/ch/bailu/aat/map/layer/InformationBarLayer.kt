@@ -3,6 +3,7 @@ package ch.bailu.aat.map.layer
 import android.content.Context
 import android.view.View
 import ch.bailu.aat.R
+import ch.bailu.aat.api.NominatimReverseController
 import ch.bailu.aat.menus.LocationMenu
 import ch.bailu.aat.menus.MapMenu
 import ch.bailu.aat.menus.MapQueryMenu
@@ -36,6 +37,7 @@ class InformationBarLayer(
     private val location = bar.addImageButton(R.drawable.find_location)
     private val overlays = bar.addImageButton(R.drawable.view_paged)
     private val selector = NodeViewLayer(appContext, context, mcontext)
+    private val reverseController = NominatimReverseController(appContext, mcontext)
 
     init {
         val storage: StorageInterface = appContext.storage
@@ -50,6 +52,7 @@ class InformationBarLayer(
         ToolTip.set(overlays, Res.str().p_overlay())
 
         dispatcher.addTarget(selector, InfoID.ALL)
+        reverseController.addToDispatcher(dispatcher)
     }
 
     override fun onClick(v: View) {
@@ -59,7 +62,7 @@ class InformationBarLayer(
         } else if (v === search) {
             MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v)
         } else if (v === location) {
-            LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location)
+            LocationMenu(context, mcontext.getMapView(), reverseController).showAsPopup(v.getContext(), location)
         } else if (v === overlays) {
             SolidCheckListDialog(context, SolidOverlayList.createMapOverlayList(appContext))
         }
