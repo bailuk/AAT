@@ -11,6 +11,7 @@ object AndroidInformationUtil {
         add(InfoID.TRACKER)
         add(InfoID.NOMINATIM)
         add(InfoID.NOMINATIM_REVERSE)
+        add(InfoID.BROUTER)
         add(InfoID.OVERPASS)
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.Menu
 import ch.bailu.aat.preferences.system.AndroidSolidDataDirectory
 import ch.bailu.aat.util.ui.AppSelectDirectoryDialog
+import ch.bailu.aat_lib.api.ApiController
 import ch.bailu.aat_lib.api.brouter.BrouterApi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.resources.Res
@@ -15,7 +16,8 @@ class EditorFileMenu(
     private val appContext: AppContext,
     private val context: Context,
     private val editor: EditorInterface,
-    private val file: Foc
+    private val file: Foc,
+    private val brouterController: ApiController
 ) : AbsMenu() {
 
     override val title: String
@@ -27,7 +29,7 @@ class EditorFileMenu(
         add(menu, Res.str().edit_save()) { editor.save() }
         add(menu, Res.str().edit_save_copy()) { saveCopy() }
         add(menu, Res.str().edit_save_copy_to()) { saveCopyTo() }
-        add(menu, BrouterApi.NAME) { brouter() }
+        add(menu, "\u21d2 ${BrouterApi.NAME}") { brouter() }
     }
 
     private fun saveCopy() {
@@ -51,6 +53,6 @@ class EditorFileMenu(
     }
 
     private fun brouter() {
-
+        brouterController.onAction()
     }
 }

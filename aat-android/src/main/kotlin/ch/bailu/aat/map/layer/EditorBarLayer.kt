@@ -8,6 +8,7 @@ import ch.bailu.aat.menus.EditorMenu
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.api.brouter.BrouterController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
@@ -36,6 +37,7 @@ class EditorBarLayer(
     private val content: GpxDynLayer = GpxDynLayer(appContext.storage, mcontext, appContext.services)
     private val selector = EditorNodeViewLayer(appContext, context, mcontext, edit)
     private val file: View = bar.addImageButton(R.drawable.edit_select_all_inverse)
+    private val brouterController = BrouterController(appContext, edit)
 
     init {
         ToolTip.set(add, Res.str().tt_edit_add())
@@ -79,7 +81,7 @@ class EditorBarLayer(
             up -> editor.up()
             down -> editor.down()
             menu -> EditorMenu(appContext, v.context, editor).showAsPopup(v.context, v)
-            file -> EditorFileMenu(appContext, v.context, editor, edit.file).showAsPopup(v.context, v)
+            file -> EditorFileMenu(appContext, v.context, editor, edit.file, brouterController).showAsPopup(v.context, v)
         }
     }
 
