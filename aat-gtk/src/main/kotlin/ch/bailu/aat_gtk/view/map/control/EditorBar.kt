@@ -6,9 +6,9 @@ import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.EditSelectionMenu
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.selector.OnNodeSelectedInterface
@@ -51,14 +51,6 @@ class EditorBar(app: Application,
 
         add(Icons.goDownSymbolic).onClicked {
             edit.editor.down()
-        }
-
-        add(Icons.editUndoSymbolic).onClicked {
-            edit.editor.undo()
-        }
-
-        add(Icons.editRedoSymbolic).onClicked {
-            edit.editor.redo()
         }
     }
 

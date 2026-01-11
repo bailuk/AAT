@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
-import ch.bailu.aat_gtk.api.BrouterController
+import ch.bailu.aat_gtk.api.setActions
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.exit
@@ -17,6 +17,7 @@ import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.Configuration
+import ch.bailu.aat_lib.api.brouter.BrouterController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.Dispatcher
@@ -117,7 +118,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             exit(dispatcher, 0)
         }
 
-        BrouterController(app, appContext, editorSource, this)
+        BrouterController(appContext, editorSource).setActions(app)
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {

@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.view.menu.provider
 
-import ch.bailu.aat_gtk.api.NominatimReverseController
+import ch.bailu.aat_gtk.api.setActions
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.controller.ClipboardController
@@ -8,9 +8,11 @@ import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_lib.api.cm.CmApi
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.logger.AppLog
+import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
@@ -20,7 +22,6 @@ import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.type.Str
-import org.mapsforge.map.view.MapView
 
 class LocationMenu : MenuProviderInterface {
     override fun createMenu(): Menu {
@@ -70,15 +71,17 @@ class LocationMenu : MenuProviderInterface {
             app: Application,
             appContext: AppContext,
             display: Display,
-            mapView: MapView,
+            mapView: MapViewInterface,
             dispatcher: DispatcherInterface,
             uiController: UiControllerInterface
         ) {
-
             createActionsClipboard(app, appContext.storage, display, uiController)
-            NominatimReverseController(app, appContext, mapView, uiController).addToDispatcher(
-                dispatcher
-            )
+
+            NominatimReverseController(appContext, mapView).apply {
+                addToDispatcher(dispatcher)
+                setActions(app)
+            }
+
             createActionsCm(app, appContext.dataDirectory)
 
         }

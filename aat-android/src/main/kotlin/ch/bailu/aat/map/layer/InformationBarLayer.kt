@@ -3,7 +3,6 @@ package ch.bailu.aat.map.layer
 import android.content.Context
 import android.view.View
 import ch.bailu.aat.R
-import ch.bailu.aat.api.NominatimReverseController
 import ch.bailu.aat.menus.LocationMenu
 import ch.bailu.aat.menus.MapMenu
 import ch.bailu.aat.menus.MapQueryMenu
@@ -11,6 +10,7 @@ import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
 import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -37,7 +37,7 @@ class InformationBarLayer(
     private val location = bar.addImageButton(R.drawable.find_location)
     private val overlays = bar.addImageButton(R.drawable.view_paged)
     private val selector = NodeViewLayer(appContext, context, mcontext)
-    private val reverseController = NominatimReverseController(appContext, mcontext)
+    private val reverseController = NominatimReverseController(appContext, mcontext.getMapView())
 
     init {
         val storage: StorageInterface = appContext.storage
