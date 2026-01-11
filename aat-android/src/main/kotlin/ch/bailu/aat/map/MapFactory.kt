@@ -19,7 +19,6 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.layer.gpx.GpxDynLayer
-import ch.bailu.aat_lib.map.layer.gpx.GpxOverlayListLayer
 import ch.bailu.aat_lib.map.layer.grid.Crosshair
 import ch.bailu.aat_lib.map.layer.grid.GridDynLayer
 import ch.bailu.aat_lib.preferences.StorageInterface
@@ -43,9 +42,9 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         m.add(NavigationBarLayer(c, mc, d, 4))
     }
 
-    fun split(): MapsForgeViewBase {
+    fun split(usageTracker: UsageTrackerInterface): MapsForgeViewBase {
         m.add(CurrentLocationLayer(mc, d))
-        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        addMapOverlays(usageTracker)
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.EDITOR_DRAFT))
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
         m.add(Crosshair())
@@ -59,11 +58,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
     private fun tracker(e: EditorSourceInterface, iid: Int, usageTracker: UsageTrackerInterface): MapsForgeViewBase {
         base()
 
-        AndroidInformationUtil.mapOverlayInfoIdList.forEach { infoID ->
-            val layer = GpxDynLayer(appContext.storage, m.getMContext(), appContext.services)
-            d.addTarget(ToggleFilter(layer, infoID, usageTracker))
-            m.add(layer)
-        }
+        addMapOverlays(usageTracker)
 
         m.add(EditorBarLayer(appContext, c, mc, d, iid, e))
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
@@ -74,15 +69,23 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         return m
     }
 
+    private fun addMapOverlays(usageTracker: UsageTrackerInterface) {
+        AndroidInformationUtil.mapOverlayInfoIdList.forEach { infoID ->
+            val layer = GpxDynLayer(appContext.storage, m.getMContext(), appContext.services)
+            d.addTarget(ToggleFilter(layer, infoID, usageTracker))
+            m.add(layer)
+        }
+    }
+
     fun map(e: EditorSourceInterface, b: ControlBar, usageTracker: UsageTrackerInterface): MapsForgeViewBase {
         tracker(e, usageTracker)
         m.add(CustomBarLayer(mc, b, AppTheme.bar))
         return m
     }
 
-    fun list(): MapsForgeViewBase {
+    fun list(usageTracker: UsageTrackerInterface): MapsForgeViewBase {
         base()
-        m.add(GpxOverlayListLayer(s, mc, ser, d))
+        addMapOverlays(usageTracker)
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.LIST_SUMMARY))
         m.add(GridDynLayer(ser, s, mc))
         m.add(InformationBarLayer(appContext, c, mc, d))
@@ -105,8 +108,8 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         return m
     }
 
-    fun externalContent(): MapsForgeViewBase {
-        m.add(GpxOverlayListLayer(s, mc, ser, d))
+    fun externalContent(usageTracker: UsageTrackerInterface): MapsForgeViewBase {
+        addMapOverlays(usageTracker)
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(CurrentLocationLayer(mc, d))
         m.add(GridDynLayer(ser, s, mc))

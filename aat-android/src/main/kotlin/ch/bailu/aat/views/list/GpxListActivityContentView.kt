@@ -19,20 +19,21 @@ import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.TitleView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.description.PathDescription
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 
-class GpxListActivityContentView(private val acontext: AbsGpxListActivity, sdirectory: SolidDirectoryQuery, theme: UiTheme, filterTheme: UiTheme) {
+class GpxListActivityContentView(private val acontext: AbsGpxListActivity, sdirectory: SolidDirectoryQuery, usageTracker: UsageTrackerInterface, theme: UiTheme, filterTheme: UiTheme) {
     private val summaryLabel = Res.str().label_summary()
     private val filterLabel = Res.str().label_filter()
     private val mapLabel = Res.str().intro_map()
     private val listLabel = Res.str().label_list()
     private val solidKey = "${AbsGpxListActivity::class.java.simpleName}_${sdirectory.getValueAsString()}"
 
-    private val map: MapViewInterface = MapFactory.createDefaultMapView(acontext, solidKey).list()
+    private val map: MapViewInterface = MapFactory.createDefaultMapView(acontext, solidKey).list(usageTracker)
     private val listLayout = LinearLayout(acontext).apply {
         orientation = LinearLayout.VERTICAL
         theme.background(this)

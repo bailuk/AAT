@@ -14,7 +14,10 @@ class SolidOverlayList<T: SolidOverlayInterface>(private val list: ArrayList<T>)
             val list = ArrayList<SolidOverlayInterface>()
 
             for (i in 0 until MAX_OVERLAYS) {
-                list.add(SolidCustomOverlay(appContext.storage, appContext, InfoID.OVERLAY + i))
+                val solidOverlay = SolidCustomOverlay(appContext.storage, appContext, InfoID.OVERLAY + i)
+                if (solidOverlay.getValueAsFile().exists()) {
+                    list.add(solidOverlay)
+                }
             }
             list.add(SolidPoiOverlay(appContext.dataDirectory))
             list.add(SolidOverpassOverlay(appContext.dataDirectory))

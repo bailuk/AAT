@@ -58,7 +58,7 @@ class CockpitTabletActivity : AbsKeepScreenOnActivity() {
 
     private fun createContentView(edit: EditorSourceInterface, usageTracker: UsageTrackerInterface): View {
         val result = ContentView(this, theme)
-        val smallMap = MapFactory.createDefaultMapView(this, SOLID_KEY).split()
+        val smallMap = MapFactory.createDefaultMapView(this, SOLID_KEY).split(usageTracker)
         val bigMap = MapFactory.createDefaultMapView(this, SOLID_MAP_KEY).map(edit, createButtonBar(), usageTracker)
         MapViewLinker(bigMap, smallMap)
 

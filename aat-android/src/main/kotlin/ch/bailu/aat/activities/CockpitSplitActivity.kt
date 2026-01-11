@@ -64,7 +64,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
     }
 
     private fun createContentView(edit: EditorSource, usageTracker: UsageTrackerInterface): View {
-        val mapSlave = MapFactory.createDefaultMapView(this, SOLID_KEY).split()
+        val mapSlave = MapFactory.createDefaultMapView(this, SOLID_KEY).split(usageTracker)
         val cockpitA = CockpitView(this, THEME)
         val cockpitB = CockpitView(this, THEME)
         val cockpitC = CockpitView(this, THEME)
