@@ -10,6 +10,7 @@ import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.AppLog.e
 import ch.bailu.aat_lib.service.cache.Obj
 import ch.bailu.aat_lib.service.editor.EditorInterface
@@ -29,11 +30,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
     override fun onInsert(appContext: AppContext) {
         val handle = appContext.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
-        currentHandle = if (handle is ObjGpx) {
-            handle
-        } else {
-            NULL
-        }
+        currentHandle = handle as? ObjGpx ?: NULL
         editor.loadIntoEditor(currentHandle.getGpxList())
     }
 
@@ -175,19 +172,12 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         }
 
         override fun saveTo(path: Foc) {
-            val splitter = FileNameSplitter(path)
+            val splitter = FileNameSplitter(getFile())
             try {
-                val file = FileUtil.generateUniqueFilePath(
-                    path,
-                    splitter.prefix,
-                    splitter.extension
-                )
-                GpxListWriter(editor.list, file)
-                    .close()
-                broadcaster.broadcast(
-                    AppBroadcaster.FILE_CHANGED_ONDISK,
-                    file.path, getID()
-                )
+                val file = FileUtil.generateUniqueFilePath(path, splitter.prefix, splitter.extension)
+                GpxListWriter(editor.list, file).close()
+                broadcaster.broadcast(AppBroadcaster.FILE_CHANGED_ONDISK, file.path, getID())
+                AppLog.i(this, file.pathName)
             } catch (e: Exception) {
                 e(this, e)
             }

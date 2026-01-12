@@ -4,7 +4,6 @@ import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.controller.FileMenuController
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
@@ -28,11 +27,7 @@ class FileMenu(private val appContext: AppContext, private val display: Display)
         }
     }
 
-    private var fileMenuController: FileMenuController? = null
-
-    fun setFile(file: Foc) {
-        fileMenuController?.file = file
-    }
+    var file: Foc = Foc.FOC_NULL
 
     override fun createMenu(): Menu {
         val directories = AppDirectory.getGpxDirectories(appContext)
@@ -50,13 +45,11 @@ class FileMenu(private val appContext: AppContext, private val display: Display)
         return arrayOf()
     }
 
-
     override fun createActions(app: Application) {
-        fileMenuController = FileMenuController(PREFIX, app, display, appContext)
+        FileMenuController(PREFIX, app, display, appContext).createFileActions{ file }
     }
 
     override fun updateActionValues(app: Application) {
 
     }
-
 }

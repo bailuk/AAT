@@ -84,10 +84,11 @@ class MapMainView(
     )
     private val editorBar = EditorBar(
         app,
+        window.display,
         nodeInfo,
         statusLabel,
         map.getMContext(),
-        appContext.services,
+        appContext,
         editor,
         editableOverlayList
     )

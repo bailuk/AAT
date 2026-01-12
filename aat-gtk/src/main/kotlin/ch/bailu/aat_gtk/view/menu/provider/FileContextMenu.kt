@@ -24,11 +24,9 @@ import ch.bailu.gtk.type.Str
 
 class FileContextMenu(private val appContext: AppContext, private val display: Display): MenuProviderInterface {
     private val solidCustomOverlayList = SolidOverlayList.createCustomOverlayList(appContext)
-    private var fileMenuController: FileMenuController? = null
     private var fileContextMenuController: FileContextMenuController? = null
     var file: Foc = FocName.FOC_NULL
         set(value) {
-            this.fileMenuController?.file = value
             this.fileContextMenuController?.file = value
             removedFromList = value
             field = value
@@ -61,15 +59,12 @@ class FileContextMenu(private val appContext: AppContext, private val display: D
     }
 
     override fun createActions(app: Application) {
-        fileMenuController = FileMenuController("", app, display, appContext)
+        FileMenuController("", app, display, appContext).createFileActions { file }
         fileContextMenuController = FileContextMenuController(app, appContext)
-        this.fileMenuController?.file = file
         this.fileContextMenuController?.file = file
     }
 
     override fun updateActionValues(app: Application) {}
-
-
 
      override fun createCustomWidgets(): Array<CustomWidget> {
          val labels: ArrayList<Label> = ArrayList()

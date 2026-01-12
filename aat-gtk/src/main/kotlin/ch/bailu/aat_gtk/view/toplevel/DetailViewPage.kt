@@ -96,7 +96,7 @@ class DetailViewPage(
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val file = info.getFile()
-        fileMenu.setFile(file)
+        fileMenu.file = file
         fileMenuButton.sensitive = file.name.isNotEmpty() && InformationUtil.supportsFileOperations(iid)
     }
 }
