@@ -12,10 +12,15 @@ class BrouterController(private val appContext: AppContext, private val gpxInfor
 
 
     override fun onAction() {
+        onAction(BrouterApi.profiles[0])
+    }
+
+    fun onAction(profile: String) {
         val list = gpxInformation.getInfo().getGpxList()
         if (validateList(list) && !api.isTaskRunning(appContext.services)) {
             api.enableOverlay()
-            api.startTask(appContext, list)
+            api.startTask(appContext, list, profile)
+
         }
     }
 

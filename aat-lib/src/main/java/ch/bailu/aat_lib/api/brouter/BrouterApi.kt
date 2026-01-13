@@ -12,13 +12,13 @@ import ch.bailu.aat_lib.service.background.DownloadTask
  *
  */
 class BrouterApi(overlay: SolidOverlayInterface) : Api(overlay) {
-    fun startTask(appContext: AppContext, gpxList: GpxList) {
+    fun startTask(appContext: AppContext, gpxList: GpxList, profile: String = profiles[0]) {
         if (validateLimit(gpxList)) {
             appContext.services.insideContext {
                 val background = appContext.services.getBackgroundService()
 
                 val url =
-                    "https://brouter.de/brouter?lonlats=${getCoordinateParameter(gpxList)}&profile=trekking&alternativeidx=0&format=gpx"
+                    "https://brouter.de/brouter?lonlats=${getCoordinateParameter(gpxList)}&profile=${profile}&alternativeidx=0&format=gpx"
                 val task = DownloadTask(url, resultFile, appContext.downloadConfig)
                 background.process(task)
             }
@@ -42,5 +42,6 @@ class BrouterApi(overlay: SolidOverlayInterface) : Api(overlay) {
 
     companion object {
         const val NAME = "Brouter"
+        val profiles = listOf("trekking", "fastbike", "hiking-mountain", "shortest", "rail")
     }
 }

@@ -15,6 +15,7 @@ import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gio.Menu
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.lib.handler.action.ActionHandler
+import ch.bailu.gtk.type.Str
 
 class EditorFileMenu(private val appContext: AppContext, private val display: Display, private val edit: EditorSourceInterface): MenuProviderInterface {
     companion object {
@@ -31,11 +32,22 @@ class EditorFileMenu(private val appContext: AppContext, private val display: Di
                 appendSubmenu(Res.str().edit_save_copy_to(), createSelectActivityFolderMenu(PREFIX_EDITOR, directories))
             })
             appendSection(BrouterApi.NAME, Menu().apply {
-                append(ToDo.translate("Load"), "app.brouter")
-                append(Res.str().clipboard_copy(), MenuHelper.toAppAction(PREFIX_BROUTER + Strings.ACTION_FILE_TO_CLIPBOARD))
-                appendSubmenu(Res.str().file_copy(), createSelectActivityFolderMenu(PREFIX_BROUTER, directories))
+                BrouterApi.profiles.forEach { profile ->
+                    append(profile, "app.brouter-${profile}")
+                }
 
             })
+            appendSection(Str.NULL, Menu().apply {
+                append(
+                    Res.str().clipboard_copy(),
+                    MenuHelper.toAppAction(PREFIX_BROUTER + Strings.ACTION_FILE_TO_CLIPBOARD)
+                )
+                appendSubmenu(
+                    Res.str().file_copy(),
+                    createSelectActivityFolderMenu(PREFIX_BROUTER, directories)
+                )
+            })
+
         }
     }
 
