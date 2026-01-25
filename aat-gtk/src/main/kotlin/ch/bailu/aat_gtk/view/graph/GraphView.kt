@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.graph
 
+import ch.bailu.aat_gtk.util.UiThread
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.information.GpxInformation
@@ -85,13 +86,12 @@ class GraphView(private val plotter: Plotter) : TargetInterface {
          * This callback will then call queueDraw() from within the main (UI) thread.
          */
         redrawNeeded = true
-        Glib.idleAdd({_, _ ->
+        UiThread.toUi {
             if (redrawNeeded) {
                 redrawNeeded = false
                 drawingArea.queueDraw()
             }
-            false
-        }, null)
+        }
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
