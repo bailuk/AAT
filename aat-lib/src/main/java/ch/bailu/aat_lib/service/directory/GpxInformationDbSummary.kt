@@ -66,4 +66,8 @@ class GpxInformationDbSummary(private val directory: Foc, cursor: DbResultSet) :
     override fun getAttributes(): GpxAttributes {
         return maxSpeed
     }
+
+    override fun getType(): GpxType {
+        return GpxType.WAY
+    }
 }
