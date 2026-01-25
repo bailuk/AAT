@@ -51,7 +51,6 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     val editorSource: EditorOrBackupSource
         get() = editorSourcePrivate!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val usageTrackers = UsageTrackers()
@@ -101,7 +100,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
 
     protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): ViewGroup
 
-    private fun createDispatcher(usageTrackers: UsageTrackers) {
+    private fun createDispatcher(usageTrackers: UsageTrackerInterface) {
         val serviceContext = appContext.services
 
         dispatcher.addSource(editorSource)

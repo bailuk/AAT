@@ -20,7 +20,7 @@ import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.api.brouter.BrouterController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
@@ -47,7 +47,7 @@ import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 import org.mapsforge.core.model.LatLong
 
-class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
+class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: DispatcherInterface) :
     UiControllerInterface {
 
     private val usageTrackers = UsageTrackers()
@@ -247,7 +247,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         SolidOverlayFileEnabled(appContext.storage, iid).value = enabled
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher) {
+    private fun createDispatcher(dispatcher: DispatcherInterface) {
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))

@@ -22,7 +22,7 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -129,7 +129,7 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
         bar.addOnClickListener(this)
     }
 
-    fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, usageTracker: UsageTrackerInterface, file: Foc) {
+    fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, usageTracker: UsageTrackerInterface, file: Foc) {
         val serviceContext = appContext.services
 
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))

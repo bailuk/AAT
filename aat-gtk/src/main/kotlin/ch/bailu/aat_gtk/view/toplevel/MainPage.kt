@@ -9,7 +9,7 @@ import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Application
@@ -24,7 +24,7 @@ import ch.bailu.gtk.gtk.Orientation
 class MainPage(appContext: AppContext,
                controller: UiControllerInterface,
                app: Application, window: ApplicationWindow,
-               dispatcher: Dispatcher,
+               dispatcher: DispatcherInterface,
                usageTrackers: UsageTrackers) : NavigationViewChanged {
 
     private val showMapButton = Button().apply {

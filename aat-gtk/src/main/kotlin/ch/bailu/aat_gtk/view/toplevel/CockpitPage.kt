@@ -5,14 +5,14 @@ import ch.bailu.aat_gtk.controller.UiControllerInterface
 import ch.bailu.aat_gtk.view.preferences.SolidPresetComboView
 import ch.bailu.aat_gtk.view.tracker.TrackerControllerView
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.gtk.adw.Clamp
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.gtk.Separator
 
-class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, dispatcher: Dispatcher) {
+class CockpitPage(appContext: AppContext, uiController: UiControllerInterface, dispatcher: DispatcherInterface) {
     private val cockpitView = CockpitView(appContext).apply {addDefaults((dispatcher))}.scrolledWindow
 
     private val clamp = Clamp().apply {

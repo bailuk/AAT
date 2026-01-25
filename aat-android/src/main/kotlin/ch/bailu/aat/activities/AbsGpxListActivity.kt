@@ -15,7 +15,7 @@ import ch.bailu.aat.views.list.GpxListFilterView
 import ch.bailu.aat.views.list.GpxListView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
@@ -77,7 +77,7 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, usageTrackers: UsageTrackerInterface, busyControl: BusyViewControlDbSync) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, usageTrackers: UsageTrackerInterface, busyControl: BusyViewControlDbSync) {
         dispatcher.addSource(IteratorSource.Summary(appContext, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
         dispatcher.addOverlaySources(appContext, usageTrackers)

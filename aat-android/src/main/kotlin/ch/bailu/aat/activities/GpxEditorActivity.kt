@@ -8,11 +8,11 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.NameDescription

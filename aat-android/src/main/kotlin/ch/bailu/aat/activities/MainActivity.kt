@@ -16,7 +16,7 @@ import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
@@ -59,7 +59,7 @@ class MainActivity : ActivityContext() {
         return list
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext) {
         val serviceContext = appContext.services
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))

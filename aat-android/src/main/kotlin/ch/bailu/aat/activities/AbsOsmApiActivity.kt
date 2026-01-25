@@ -68,7 +68,6 @@ abstract class AbsOsmApiActivity : ActivityContext(), View.OnClickListener {
         return contentView
     }
 
-
     private fun addDownloadButton(bar: MainControlBar) {
         download = bar.addImageButton(R.drawable.go_bottom_inverse).apply {
             downloadBusy = BusyViewControl(this)

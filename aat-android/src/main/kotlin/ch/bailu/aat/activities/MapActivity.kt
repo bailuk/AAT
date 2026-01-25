@@ -15,7 +15,8 @@ import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
@@ -66,17 +67,16 @@ class MapActivity : AbsKeepScreenOnActivity() {
         }
     }
 
-    private fun createMap(edit: EditorSource, usageTracker: UsageTrackerInterface): MapViewInterface {
+    private fun createMap(edit: EditorSourceInterface, usageTracker: UsageTrackerInterface): MapViewInterface {
         return MapFactory.createDefaultMapView(this, SOLID_KEY).map(edit, createButtonBar(), usageTracker)
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackers) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackerInterface) {
         val serviceContext = appContext.services
 
         dispatcher.addSource(edit)
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-
         dispatcher.addMapOverlaySources(appContext, usageTrackers)
     }
 

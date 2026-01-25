@@ -21,7 +21,7 @@ import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
@@ -100,7 +100,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         return bar
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackers) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackers) {
         val serviceContext = appContext.services
 
         dispatcher.addSource(edit)

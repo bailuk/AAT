@@ -32,7 +32,7 @@ import ch.bailu.aat_lib.description.PredictiveTimeDescription
 import ch.bailu.aat_lib.description.SlopeDescription
 import ch.bailu.aat_lib.description.StepRateDescription
 import ch.bailu.aat_lib.description.TotalStepsDescription
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
@@ -142,7 +142,7 @@ class CockpitSplitActivity : AbsKeepScreenOnActivity() {
         return bar
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackers) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackerInterface) {
         val serviceContext = appContext.services
 
         dispatcher.addSource(edit)

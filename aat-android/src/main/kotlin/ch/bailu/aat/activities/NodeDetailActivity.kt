@@ -23,7 +23,7 @@ import ch.bailu.aat.views.image.SVGAssetView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -102,7 +102,7 @@ class NodeDetailActivity : ActivityContext(), View.OnClickListener, TargetInterf
         return seekBar
     }
 
-    private fun createDispatcher(dispatcher: Dispatcher, appContext: AppContext, file: Foc) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, file: Foc) {
         val serviceContext = appContext.services
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
