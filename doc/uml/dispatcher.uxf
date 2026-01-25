@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>440</x>
-      <y>312</y>
+      <x>384</x>
+      <y>344</y>
       <w>304</w>
       <h>80</h>
     </coordinates>
@@ -14,14 +14,15 @@ SourceInterface
 --
 + setTarget(target: TargetInterface)
 + getIID(): Int
-</panel_attributes>
+
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>440</x>
-      <y>600</y>
+      <x>384</x>
+      <y>632</y>
       <w>304</w>
       <h>96</h>
     </coordinates>
@@ -29,40 +30,42 @@ SourceInterface
 DispatcherInterface
 --
 + addSource(source: SourceInterface)
-+ addTarget(target: TargetInterface, vararg iid: Int)</panel_attributes>
++ addTarget(target: TargetInterface, vararg iid: Int)
+bg=#a5e0e3</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>448</x>
-      <y>1032</y>
+      <x>392</x>
+      <y>1064</y>
       <w>296</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 TargetInterface
 --
-+ onContentUpdated(iid: Int, info: GpxInformation)</panel_attributes>
++ onContentUpdated(iid: Int, info: GpxInformation)
+bg=#f0bab1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>928</x>
-      <y>608</y>
+      <x>872</x>
+      <y>640</y>
       <w>104</w>
       <h>24</h>
     </coordinates>
     <panel_attributes>Dispatcher
-</panel_attributes>
+bg=#a5e0e3</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>736</x>
-      <y>608</y>
+      <x>680</x>
+      <y>640</y>
       <w>208</w>
       <h>24</h>
     </coordinates>
@@ -72,19 +75,20 @@ TargetInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>912</x>
-      <y>1056</y>
+      <x>856</x>
+      <y>1088</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
-    <panel_attributes>MapOverlay</panel_attributes>
+    <panel_attributes>MapOverlay
+bg=#f0bab1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>736</x>
-      <y>1056</y>
+      <x>680</x>
+      <y>1088</y>
       <w>192</w>
       <h>24</h>
     </coordinates>
@@ -94,8 +98,8 @@ TargetInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>688</y>
+      <x>544</x>
+      <y>720</y>
       <w>24</w>
       <h>360</h>
     </coordinates>
@@ -105,8 +109,8 @@ TargetInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>704</x>
-      <y>776</y>
+      <x>648</x>
+      <y>808</y>
       <w>56</w>
       <h>272</h>
     </coordinates>
@@ -116,20 +120,20 @@ TargetInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>360</y>
+      <x>880</x>
+      <y>392</y>
       <w>96</w>
       <h>24</h>
     </coordinates>
     <panel_attributes>FileSource
-</panel_attributes>
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1144</x>
-      <y>552</y>
+      <x>1088</x>
+      <y>584</y>
       <w>224</w>
       <h>88</h>
     </coordinates>
@@ -137,25 +141,26 @@ TargetInterface
 UsageTrackerInterface
 -
 + observe(onChanged: ()-&gt;Unit)
-+ isEnabled(infoID: Int): Boolean</panel_attributes>
++ isEnabled(infoID: Int): Boolean
+bg=#b5f0b1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>864</x>
-      <y>632</y>
-      <w>336</w>
+      <x>816</x>
+      <y>664</y>
+      <w>328</w>
       <h>224</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>400.0;10.0;400.0;260.0;10.0;260.0</additional_attributes>
+    <additional_attributes>390.0;10.0;390.0;260.0;10.0;260.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>736</x>
-      <y>360</y>
+      <x>680</x>
+      <y>392</y>
       <w>216</w>
       <h>24</h>
     </coordinates>
@@ -165,8 +170,8 @@ UsageTrackerInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>440</x>
-      <y>448</y>
+      <x>384</x>
+      <y>480</y>
       <w>304</w>
       <h>88</h>
     </coordinates>
@@ -180,8 +185,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>384</y>
+      <x>544</x>
+      <y>416</y>
       <w>24</w>
       <h>80</h>
     </coordinates>
@@ -191,8 +196,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>528</y>
+      <x>544</x>
+      <y>560</y>
       <w>24</w>
       <h>88</h>
     </coordinates>
@@ -202,8 +207,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>304</x>
-      <y>344</y>
+      <x>248</x>
+      <y>376</y>
       <w>160</w>
       <h>744</h>
     </coordinates>
@@ -213,8 +218,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>568</x>
-      <y>688</y>
+      <x>512</x>
+      <y>720</y>
       <w>24</w>
       <h>360</h>
     </coordinates>
@@ -224,8 +229,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1528</x>
-      <y>792</y>
+      <x>1432</x>
+      <y>704</y>
       <w>216</w>
       <h>112</h>
     </coordinates>
@@ -241,9 +246,9 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1552</x>
-      <y>640</y>
-      <w>200</w>
+      <x>1432</x>
+      <y>576</y>
+      <w>216</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>DetailController
@@ -256,8 +261,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>744</y>
+      <x>704</x>
+      <y>776</y>
       <w>80</w>
       <h>64</h>
     </coordinates>
@@ -268,8 +273,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>208</y>
+      <x>880</x>
+      <y>240</y>
       <w>104</w>
       <h>24</h>
     </coordinates>
@@ -280,8 +285,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>976</x>
-      <y>224</y>
+      <x>920</x>
+      <y>256</y>
       <w>24</w>
       <h>64</h>
     </coordinates>
@@ -291,21 +296,22 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>408</y>
+      <x>880</x>
+      <y>440</y>
       <w>96</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>EditorSource
 -
-+ edit(file: Foc)</panel_attributes>
++ edit(file: Foc)
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>152</y>
+      <x>424</x>
+      <y>184</y>
       <w>120</w>
       <h>24</h>
     </coordinates>
@@ -315,8 +321,8 @@ EmiterInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>712</x>
-      <y>384</y>
+      <x>656</x>
+      <y>416</y>
       <w>240</w>
       <h>48</h>
     </coordinates>
@@ -326,22 +332,22 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>528</y>
+      <x>880</x>
+      <y>560</y>
       <w>144</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>EditorSourceController
 -
 + edit(InfoID: id)
-</panel_attributes>
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>968</x>
-      <y>472</y>
+      <x>912</x>
+      <y>504</y>
       <w>24</w>
       <h>72</h>
     </coordinates>
@@ -351,19 +357,20 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>456</x>
-      <y>136</y>
+      <x>400</x>
+      <y>168</y>
       <w>280</w>
       <h>120</h>
     </coordinates>
-    <panel_attributes/>
+    <panel_attributes>bg=#c2c0f5
+layer=-1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>592</x>
-      <y>248</y>
+      <x>536</x>
+      <y>280</y>
       <w>24</w>
       <h>80</h>
     </coordinates>
@@ -373,8 +380,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>184</y>
+      <x>424</x>
+      <y>216</y>
       <w>120</w>
       <h>24</h>
     </coordinates>
@@ -384,8 +391,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>216</y>
+      <x>424</x>
+      <y>248</y>
       <w>144</w>
       <h>24</h>
     </coordinates>
@@ -395,8 +402,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>608</x>
-      <y>184</y>
+      <x>552</x>
+      <y>216</y>
       <w>120</w>
       <h>24</h>
     </coordinates>
@@ -406,8 +413,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>608</x>
-      <y>152</y>
+      <x>552</x>
+      <y>184</y>
       <w>120</w>
       <h>24</h>
     </coordinates>
@@ -417,19 +424,20 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1048</x>
-      <y>272</y>
+      <x>992</x>
+      <y>304</y>
       <w>104</w>
       <h>24</h>
     </coordinates>
-    <panel_attributes>FileViewSource</panel_attributes>
+    <panel_attributes>FileViewSource
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>976</x>
-      <y>288</y>
+      <x>920</x>
+      <y>320</y>
       <w>24</w>
       <h>88</h>
     </coordinates>
@@ -439,19 +447,20 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>272</y>
+      <x>880</x>
+      <y>304</y>
       <w>104</w>
       <h>24</h>
     </coordinates>
-    <panel_attributes>OverlaySource</panel_attributes>
+    <panel_attributes>OverlaySource
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1008</x>
-      <y>288</y>
+      <x>952</x>
+      <y>320</y>
       <w>104</w>
       <h>88</h>
     </coordinates>
@@ -461,8 +470,8 @@ EmiterInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>56</x>
-      <y>456</y>
+      <x>0</x>
+      <y>488</y>
       <w>192</w>
       <h>88</h>
     </coordinates>
@@ -478,8 +487,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
-      <y>488</y>
+      <x>184</x>
+      <y>520</y>
       <w>216</w>
       <h>24</h>
     </coordinates>
@@ -489,8 +498,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-      <y>864</y>
+      <x>664</x>
+      <y>896</y>
       <w>40</w>
       <h>184</h>
     </coordinates>
@@ -500,8 +509,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1024</x>
-      <y>368</y>
+      <x>968</x>
+      <y>400</y>
       <w>176</w>
       <h>200</h>
     </coordinates>
@@ -511,8 +520,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1224</x>
-      <y>632</y>
+      <x>1168</x>
+      <y>664</y>
       <w>24</w>
       <h>256</h>
     </coordinates>
@@ -522,8 +531,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1344</x>
-      <y>632</y>
+      <x>1288</x>
+      <y>664</y>
       <w>24</w>
       <h>256</h>
     </coordinates>
@@ -533,33 +542,34 @@ LifeCylceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>872</y>
+      <x>1064</x>
+      <y>904</y>
       <w>152</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>OverlayUsageTracker
-</panel_attributes>
+bg=#b5f0b1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1288</x>
-      <y>872</y>
+      <x>1232</x>
+      <y>904</y>
       <w>152</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>SelectableUsageTracker
 -
-+ select(infoID: Int)</panel_attributes>
++ select(infoID: Int)
+bg=#b5f0b1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>960</y>
+      <x>1064</x>
+      <y>992</y>
       <w>152</w>
       <h>24</h>
     </coordinates>
@@ -570,8 +580,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1224</x>
-      <y>912</y>
+      <x>1168</x>
+      <y>944</y>
       <w>24</w>
       <h>64</h>
     </coordinates>
@@ -581,8 +591,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1312</x>
-      <y>408</y>
+      <x>1256</x>
+      <y>440</y>
       <w>24</w>
       <h>160</h>
     </coordinates>
@@ -592,20 +602,20 @@ LifeCylceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1264</x>
-      <y>376</y>
+      <x>1208</x>
+      <y>408</y>
       <w>152</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>UsageTrackers
-</panel_attributes>
+bg=#b5f0b1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1296</x>
-      <y>632</y>
+      <x>1240</x>
+      <y>664</y>
       <w>24</w>
       <h>112</h>
     </coordinates>
@@ -615,20 +625,20 @@ LifeCylceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1240</x>
-      <y>728</y>
+      <x>1184</x>
+      <y>760</y>
       <w>104</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>UsageTracker
-</panel_attributes>
+bg=#b5f0b1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1296</x>
-      <y>768</y>
+      <x>1240</x>
+      <y>800</y>
       <w>24</w>
       <h>120</h>
     </coordinates>
@@ -638,8 +648,8 @@ LifeCylceInterface
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1336</x>
-      <y>408</y>
+      <x>1280</x>
+      <y>440</y>
       <w>24</w>
       <h>160</h>
     </coordinates>
@@ -649,8 +659,8 @@ LifeCylceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>824</y>
+      <x>704</x>
+      <y>856</y>
       <w>80</w>
       <h>64</h>
     </coordinates>
@@ -661,34 +671,166 @@ LifeCylceInterface
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>744</x>
-      <y>728</y>
-      <w>128</w>
+      <x>688</x>
+      <y>760</y>
+      <w>136</w>
       <h>168</h>
     </coordinates>
-    <panel_attributes/>
+    <panel_attributes>fg=red
+lw=4</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>792</x>
-      <y>272</y>
+      <x>736</x>
+      <y>304</y>
       <w>128</w>
       <h>24</h>
     </coordinates>
-    <panel_attributes>FixedOverlaySource</panel_attributes>
+    <panel_attributes>FixedOverlaySource
+bg=#c2c0f5</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>288</y>
+      <x>792</x>
+      <y>320</y>
       <w>120</w>
       <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>130.0;90.0;130.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1112</x>
+      <y>168</y>
+      <w>72</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Source
+bg=#c2c0f5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1312</x>
+      <y>168</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Dispatcher
+bg=#a5e0e3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1504</x>
+      <y>168</y>
+      <w>72</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Target
+bg=#f0bab1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1176</x>
+      <y>176</y>
+      <w>152</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1400</x>
+      <y>176</y>
+      <w>120</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1312</x>
+      <y>96</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>UsageTrackers
+bg=#b5f0b1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1208</x>
+      <y>104</y>
+      <w>120</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1400</x>
+      <y>104</y>
+      <w>80</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>80.0;60.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSyncBarVertical</id>
+    <coordinates>
+      <x>1208</x>
+      <y>152</y>
+      <w>16</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>template=txt
+title=titletext
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSyncBarVertical</id>
+    <coordinates>
+      <x>1456</x>
+      <y>152</y>
+      <w>16</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>template=txt
+title=titletext
+bg=red
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1072</x>
+      <y>80</y>
+      <w>536</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=..</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

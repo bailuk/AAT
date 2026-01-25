@@ -1,6 +1,6 @@
 package ch.bailu.aat_gtk.controller
 
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -9,7 +9,7 @@ import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 
-class TrackerOverlayOnOffController(storageInterface: StorageInterface, private val dispatcher: Dispatcher): TargetInterface, OnPreferencesChanged {
+class TrackerOverlayOnOffController(storageInterface: StorageInterface, private val dispatcher: DispatcherInterface): TargetInterface, OnPreferencesChanged {
 
     private val solidOverlayFileEnabled = SolidOverlayFileEnabled(storageInterface, InfoID.TRACKER)
     private var state = StateID.OFF

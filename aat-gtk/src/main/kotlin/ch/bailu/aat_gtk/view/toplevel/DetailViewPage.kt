@@ -1,6 +1,7 @@
 package ch.bailu.aat_gtk.view.toplevel
 
 import ch.bailu.aat_gtk.app.GtkAppContext
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.config.Strings
@@ -11,7 +12,7 @@ import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.FileMenu
 import ch.bailu.aat_gtk.view.menu.provider.OverlaySelectionMenu
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.filter.SelectFilter
 import ch.bailu.aat_lib.dispatcher.usage.SelectableUsageTracker
@@ -30,7 +31,7 @@ class DetailViewPage(
     display: Display,
     appContext: AppContext,
     uiController: UiControllerInterface,
-    dispatcher: Dispatcher,
+    dispatcher: DispatcherInterface,
     private val usageTracker: SelectableUsageTracker
 ): TargetInterface {
 
@@ -42,7 +43,7 @@ class DetailViewPage(
     init {
         dispatcher.addTarget(
             SelectFilter(this, usageTracker),
-            *InformationUtil.getMapOverlayInfoIdList().toIntArray()
+            *GtkInformationUtil.mapOverlayInfoIdList.toIntArray()
         )
     }
 
@@ -95,7 +96,7 @@ class DetailViewPage(
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val file = info.getFile()
-        fileMenu.setFile(file)
+        fileMenu.file = file
         fileMenuButton.sensitive = file.name.isNotEmpty() && InformationUtil.supportsFileOperations(iid)
     }
 }

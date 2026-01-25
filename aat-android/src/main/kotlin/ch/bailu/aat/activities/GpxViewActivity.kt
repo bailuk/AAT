@@ -13,20 +13,23 @@ import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
-import ch.bailu.aat.views.busy.BusyViewControlIID
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.image.ImageButtonViewGroup
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
+import ch.bailu.aat.views.busy.BusyViewControlIID
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.image.ImageButtonViewGroup
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.preferences.VerticalScrollView
-import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -43,9 +46,14 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
     private var map: MapViewInterface? = null
     private var file: Foc = Foc.FOC_NULL
     private val theme = AppTheme.trackContent
+    private val overlayIIDs = InformationUtil.overlayInfoIdList.toIntArray()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val usageTrackers = UsageTrackers()
+        val overlayTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *overlayIIDs)
+
         val intent = intent
         var uri = intent.data
         if (uri == null) {
@@ -63,20 +71,20 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
                     ContentView(this, theme)
                 val bar = MainControlBar(this)
                 contentView.add(bar)
-                val view = createLayout(bar, contentView)
+                val view = createLayout(bar, contentView, overlayTracker)
                 initButtonBar(bar)
                 contentView.add(view)
                 busyControl = BusyViewControlIID(contentView)
                 setContentView(contentView)
-                createDispatcher()
+                createDispatcher(dispatcher, appContext, usageTrackers, file)
             } catch (e: Exception) {
                 AppLog.e(this, e)
             }
         }
     }
 
-    private fun createLayout(bar: MainControlBar, contentView: ContentView): View {
-        map = MapFactory.createDefaultMapView(this, SOLID_KEY).externalContent()
+    private fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): View {
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).externalContent(usageTracker)
         val summary = VerticalScrollView(this)
         summary.addAllContent(dispatcher, FileContentActivity.getSummaryData(this), theme, InfoID.FILE_VIEW)
         val graph: View = GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.FILE_VIEW)
@@ -121,21 +129,17 @@ class GpxViewActivity : ActivityContext(), View.OnClickListener, TargetInterface
         bar.addOnClickListener(this)
     }
 
-    private fun createDispatcher() {
+    fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, usageTracker: UsageTrackerInterface, file: Foc) {
+        val serviceContext = appContext.services
+
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+        dispatcher.addOverlaySources(appContext, usageTracker)
         dispatcher.addSource(FileViewSource(appContext, UsageTrackerAlwaysEnabled()).apply { setFile(file) })
         dispatcher.addTarget(this, InfoID.FILE_VIEW)
 
         busyControl?.apply {
-            dispatcher.addTarget(
-                this, InfoID.FILE_VIEW,
-                InfoID.OVERLAY,
-                InfoID.OVERLAY + 1,
-                InfoID.OVERLAY + 2,
-                InfoID.OVERLAY + 3
-            )
+            dispatcher.addTarget(this, InfoID.FILE_VIEW, *overlayIIDs)
         }
     }
 

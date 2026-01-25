@@ -2,14 +2,14 @@ package ch.bailu.aat.views.preferences.dialog
 
 import android.content.Context
 import android.content.DialogInterface
-import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
 import ch.bailu.foc.Foc
-import ch.bailu.foc_android.FocAndroidFactory
 
 class AddOverlayDialog(
     context: Context,
-    private val slist: SolidCustomOverlayList,
+    private val slist: SolidOverlayList<SolidCustomOverlay>,
     private val file: Foc
 ) : AbsSolidDialog(), DialogInterface.OnClickListener {
     init {
@@ -19,10 +19,8 @@ class AddOverlayDialog(
         dialog.show()
     }
 
-    constructor(context: Context, file: Foc) : this (
-        context, SolidCustomOverlayList(
-            Storage(context), FocAndroidFactory(context)
-        ), file
+    constructor(appContext: AppContext, context: Context, file: Foc) : this (
+        context, SolidOverlayList.createCustomOverlayList(appContext), file
     )
 
     override fun onClick(dialog: DialogInterface, index: Int) {

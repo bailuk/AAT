@@ -57,10 +57,7 @@ class GpxListEntryView(
         preview = PreviewView(acontext.serviceContext, acontext.appContext.summaryConfig)
         addView(preview, previewSize, previewSize)
         preview.setOnClickListener {
-            FileMenu(
-                acontext,
-                file
-            ).showAsDialog(acontext)
+            FileMenu(acontext, file).showAsDialog(acontext)
         }
     }
 

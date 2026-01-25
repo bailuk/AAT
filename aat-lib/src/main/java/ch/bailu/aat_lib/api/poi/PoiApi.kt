@@ -10,10 +10,13 @@ import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.map.SolidPoiDatabase
 import ch.bailu.aat_lib.preferences.map.overlay.SolidPoiOverlay
 import ch.bailu.aat_lib.service.background.FileTask
-import ch.bailu.aat_lib.util.fs.AppDirectory
 import ch.bailu.foc.Foc
 import org.mapsforge.core.model.BoundingBox
-import org.mapsforge.poi.storage.*
+import org.mapsforge.poi.storage.ExactMatchPoiCategoryFilter
+import org.mapsforge.poi.storage.PoiCategory
+import org.mapsforge.poi.storage.PoiCategoryFilter
+import org.mapsforge.poi.storage.PoiPersistenceManager
+import org.mapsforge.poi.storage.PointOfInterest
 import java.io.IOException
 
 abstract class PoiApi(context: AppContext) : ApiConfiguration(SolidPoiOverlay(context.dataDirectory)) {
@@ -21,8 +24,6 @@ abstract class PoiApi(context: AppContext) : ApiConfiguration(SolidPoiOverlay(co
     companion object {
         private const val LIMIT = 10000
     }
-
-    override val fileExtension = AppDirectory.GPX_EXTENSION
 
     override fun getUrl(query: String, bounding: BoundingBoxE6): String {
         return ""
@@ -47,9 +48,6 @@ abstract class PoiApi(context: AppContext) : ApiConfiguration(SolidPoiOverlay(co
             )
             appContext.services.getBackgroundService().process(task)
         }
-
-        // TODO: does this belong here
-        // overlay.setEnabled(true)
     }
 
     protected abstract val selectedCategories: ArrayList<PoiCategory>

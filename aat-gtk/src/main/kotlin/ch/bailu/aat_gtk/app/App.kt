@@ -4,13 +4,14 @@ import ch.bailu.aat_gtk.config.Environment
 import ch.bailu.aat_gtk.config.Strings
 import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
-import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.preferences.GtkStorage
+import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
 import ch.bailu.aat_gtk.view.toplevel.MainWindow
 import ch.bailu.aat_lib.Configuration
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.app.AppGraphicFactory
 import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.lifecycle.LifeCycleInterface
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
 import ch.bailu.aat_lib.logger.PrintLnLoggerFactory
@@ -49,7 +50,7 @@ private fun setup() {
     PreferenceLoadDefaults(GtkAppContext)
 }
 
-fun exit(dispatcher: Dispatcher, exitCode: Int) {
+fun exit(dispatcher: LifeCycleInterface, exitCode: Int) {
     dispatcher.onPauseWithService()
     dispatcher.onDestroy()
 

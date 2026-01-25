@@ -3,10 +3,12 @@ package ch.bailu.aat.map.layer
 import android.content.Context
 import android.view.View
 import ch.bailu.aat.R
+import ch.bailu.aat.menus.EditorFileMenu
 import ch.bailu.aat.menus.EditorMenu
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat_lib.api.brouter.BrouterController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
@@ -32,18 +34,16 @@ class EditorBarLayer(
     private val remove: View = bar.addImageButton(R.drawable.list_remove)
     private val up: View = bar.addImageButton(R.drawable.go_up)
     private val down: View = bar.addImageButton(R.drawable.go_down)
-    private val undo: View = bar.addImageButton(R.drawable.edit_redo)
-    private val redo: View = bar.addImageButton(R.drawable.edit_redo)
     private val content: GpxDynLayer = GpxDynLayer(appContext.storage, mcontext, appContext.services)
     private val selector = EditorNodeViewLayer(appContext, context, mcontext, edit)
+    private val file: View = bar.addImageButton(R.drawable.edit_select_all_inverse)
+    private val brouterController = BrouterController(appContext, edit)
 
     init {
         ToolTip.set(add, Res.str().tt_edit_add())
         ToolTip.set(remove, Res.str().tt_edit_remove())
         ToolTip.set(up, Res.str().tt_edit_up())
         ToolTip.set(down, Res.str().tt_edit_down())
-        ToolTip.set(redo, Res.str().tt_edit_redo())
-        ToolTip.set(undo, Res.str().tt_edit_undo())
         dispatcher.addTarget(selector, iid)
         dispatcher.addTarget(content, iid)
     }
@@ -80,9 +80,8 @@ class EditorBarLayer(
             remove -> editor.remove()
             up -> editor.up()
             down -> editor.down()
-            undo -> editor.undo()
-            redo -> editor.redo()
-            menu -> EditorMenu(appContext, v.context, editor, edit.file).showAsPopup(v.context, v)
+            menu -> EditorMenu(appContext, v.context, editor).showAsPopup(v.context, v)
+            file -> EditorFileMenu(appContext, v.context, editor, edit.file, brouterController).showAsPopup(v.context, v)
         }
     }
 

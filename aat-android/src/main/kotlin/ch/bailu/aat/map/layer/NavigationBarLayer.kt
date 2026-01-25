@@ -16,11 +16,10 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
+import ch.bailu.aat_lib.map.layer.BoundingCycler
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
-import ch.bailu.aat_lib.util.IndexedMap
 
 class NavigationBarLayer @JvmOverloads constructor(context: Context, private val mcontext: MapContext, d: DispatcherInterface, i: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) : ControlBarLayer(
     mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
@@ -29,8 +28,9 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
     private val buttonPlus: View = bar.addImageButton(R.drawable.zoom_in)
     private val buttonMinus: View = bar.addImageButton(R.drawable.zoom_out)
     private val buttonFrame: View
-    private val infoCache = IndexedMap<Int, GpxInformation>()
-    private var boundingCycle = 0
+
+    private val boundingCycler = BoundingCycler()
+
 
     init {
         val lock = bar.addSolidIndexButton(
@@ -44,7 +44,7 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
         d.addTarget(this, InfoID.ALL)
         val volumeView = VolumeView(context)
         volumeView.visibility = View.INVISIBLE
-        To.view(mcontext.getMapView())!!.addView(volumeView)
+        To.view(mcontext.getMapView())?.addView(volumeView)
     }
 
     override fun onClick(v: View) {
@@ -53,41 +53,13 @@ class NavigationBarLayer @JvmOverloads constructor(context: Context, private val
             mcontext.getMapView().zoomIn()
         } else if (v === buttonMinus) {
             mcontext.getMapView().zoomOut()
-        } else if (v === buttonFrame && infoCache.size() > 0) {
-            if (nextInBoundingCycle()) {
-                val info = infoCache.getValueAt(boundingCycle)
-
-                if (info is GpxInformation) {
-                    mcontext.getMapView().frameBounding(info.getBoundingBox())
-                    AppLog.i(v.context, info.getFile().name)
-                }
-            }
+        } else if (v === buttonFrame) {
+            boundingCycler.onAction(mcontext)
         }
-    }
-
-    private fun nextInBoundingCycle(): Boolean {
-        var c = infoCache.size()
-        while (c > 0) {
-            c--
-            boundingCycle++
-            if (boundingCycle >= infoCache.size()) boundingCycle = 0
-
-            val info = infoCache.getValueAt(boundingCycle)
-            if (info is GpxInformation) {
-                if (info.getBoundingBox().hasBounding()
-                    || info.getGpxList().pointList.size() > 0
-                ) return true
-            }
-        }
-        return false
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.getLoaded()) {
-            infoCache.put(iid, info)
-        } else {
-            infoCache.remove(iid)
-        }
+        boundingCycler.onContentUpdated(iid, info)
     }
 
     override fun drawInside(mcontext: MapContext) {}

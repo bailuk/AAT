@@ -19,8 +19,6 @@ import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
-import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.directory.IteratorSimple
 import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gtk.Application

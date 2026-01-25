@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_gtk.view.VerticalScrollView
 import ch.bailu.aat_gtk.view.graph.GraphView
 import ch.bailu.aat_lib.description.AscendDescription
@@ -37,13 +38,14 @@ import ch.bailu.aat_lib.view.graph.DistanceAltitudePlotter
 class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInterface, storage: StorageInterface) : VerticalScrollView() {
 
     init {
+        val overlayIDs = GtkInformationUtil.mapOverlayInfoIdList.toIntArray()
         val graphView = GraphView(DistanceAltitudePlotter(SolidUnit(storage)))
         graphView.height = 100
-        dispatcher.addTarget(SelectFilter(graphView, usageTracker), *InformationUtil.getMapOverlayInfoIdList().toIntArray())
+        dispatcher.addTarget(SelectFilter(graphView, usageTracker), *overlayIDs)
 
         graphView.overlay.addCssClass("graph-view")
         add(graphView.overlay)
-        addAllContent(dispatcher, getSummaryData(storage), usageTracker, *InformationUtil.getMapOverlayInfoIdList().toIntArray())
+        addAllContent(dispatcher, getSummaryData(storage), usageTracker, *overlayIDs)
     }
 
     private fun getSummaryData(storage: StorageInterface): Array<ContentDescription> {

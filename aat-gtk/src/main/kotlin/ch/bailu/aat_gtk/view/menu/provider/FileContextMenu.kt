@@ -5,8 +5,8 @@ import ch.bailu.aat_gtk.view.menu.MenuHelper
 import ch.bailu.aat_gtk.view.menu.controller.FileContextMenuController
 import ch.bailu.aat_gtk.view.menu.controller.FileMenuController
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
-import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay.Companion.MAX_OVERLAYS
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.extensions.ellipsizeStart
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -23,12 +23,10 @@ import ch.bailu.gtk.gtk.Orientation
 import ch.bailu.gtk.type.Str
 
 class FileContextMenu(private val appContext: AppContext, private val display: Display): MenuProviderInterface {
-    private val solidCustomOverlayList = SolidCustomOverlayList(appContext.storage, appContext)
-    private var fileMenuController: FileMenuController? = null
+    private val solidCustomOverlayList = SolidOverlayList.createCustomOverlayList(appContext)
     private var fileContextMenuController: FileContextMenuController? = null
     var file: Foc = FocName.FOC_NULL
         set(value) {
-            this.fileMenuController?.file = value
             this.fileContextMenuController?.file = value
             removedFromList = value
             field = value
@@ -61,15 +59,12 @@ class FileContextMenu(private val appContext: AppContext, private val display: D
     }
 
     override fun createActions(app: Application) {
-        fileMenuController = FileMenuController("", app, display, appContext)
+        FileMenuController("", app, display, appContext).createFileActions { file }
         fileContextMenuController = FileContextMenuController(app, appContext)
-        this.fileMenuController?.file = file
         this.fileContextMenuController?.file = file
     }
 
     override fun updateActionValues(app: Application) {}
-
-
 
      override fun createCustomWidgets(): Array<CustomWidget> {
          val labels: ArrayList<Label> = ArrayList()
@@ -123,7 +118,7 @@ class FileContextMenu(private val appContext: AppContext, private val display: D
     }
 
     private fun indexOf(file: Foc): Int {
-        for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
+        for (i in 0 until MAX_OVERLAYS) {
             if (solidCustomOverlayList[i].getValueAsFile() == file) {
                 return i
             }

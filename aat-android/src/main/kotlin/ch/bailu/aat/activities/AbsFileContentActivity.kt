@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import ch.bailu.aat.R
+import ch.bailu.aat.app.AndroidInformationUtil
+import ch.bailu.aat.broadcaster.addMapOverlaySources
 import ch.bailu.aat.menus.FileMenu
 import ch.bailu.aat.util.ui.AppDialog
 import ch.bailu.aat.util.ui.theme.AppTheme
@@ -16,13 +18,12 @@ import ch.bailu.aat.views.html.AttributesView
 import ch.bailu.aat.views.image.ImageButtonViewGroup
 import ch.bailu.aat.views.image.PreviewView
 import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
+import ch.bailu.aat_lib.dispatcher.source.EditorOrBackupSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource.FollowFile
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
-import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
-import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
@@ -50,20 +51,23 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
     val editorSource: EditorOrBackupSource
         get() = editorSourcePrivate!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val usageTrackers = UsageTrackers()
+        val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage,
+            *AndroidInformationUtil.mapOverlayInfoIdList.toIntArray())
+
         val currentFile = FollowFile(appContext)
         this.currentFile = currentFile
         editorSourcePrivate = EditorOrBackupSource(appContext, currentFile)
-        createViews()
-        createDispatcher()
+        createViews(overlayUsageTracker)
+        createDispatcher(usageTrackers)
     }
 
-    private fun createViews() {
+    private fun createViews(usageTracker: UsageTrackerInterface) {
         val contentView = ContentView(this, THEME)
         val bar = MainControlBar(this, button = 5)
-        val layout = createLayout(bar, contentView)
+        val layout = createLayout(bar, contentView, usageTracker)
 
         contentView.add(bar)
          busyControl = BusyViewControlIID(contentView).apply {
@@ -94,16 +98,18 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         bar.addOnClickListener(this)
     }
 
-    protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup
+    protected abstract fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): ViewGroup
 
-    private fun createDispatcher() {
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
-        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+    private fun createDispatcher(usageTrackers: UsageTrackerInterface) {
+        val serviceContext = appContext.services
+
         dispatcher.addSource(editorSource)
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
+        dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
+        dispatcher.addMapOverlaySources(appContext, usageTrackers)
 
         busyControl?.apply {
-            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.getOverlayInfoIdList().toIntArray())
+            dispatcher.addTarget(this,InfoID.FILE_VIEW,*InformationUtil.overlayInfoIdList.toIntArray())
         }
         fileOperation?.apply { dispatcher.addTarget(this, InfoID.FILE_VIEW) }
 
@@ -121,7 +127,7 @@ abstract class AbsFileContentActivity : ActivityContext(), View.OnClickListener 
         if (v === previousFile || v === nextFile) {
             changeFileAsk(v)
         } else if (v === fileOperation) {
-            currentFile?.apply { FileMenu(this@AbsFileContentActivity, getInfo().getFile()).showAsPopup(this@AbsFileContentActivity, v) }
+            currentFile?.apply { FileMenu( this@AbsFileContentActivity, getInfo().getFile()).showAsPopup(this@AbsFileContentActivity, v) }
         }
     }
 

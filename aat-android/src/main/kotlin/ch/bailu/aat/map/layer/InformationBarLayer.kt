@@ -9,6 +9,8 @@ import ch.bailu.aat.menus.MapQueryMenu
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -17,10 +19,11 @@ import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
 import ch.bailu.aat_lib.resources.Res
 
 class InformationBarLayer(
-    appContext: AppContext,
+    private val appContext: AppContext,
     private val context: Context,
     private val mcontext: MapContext,
     dispatcher: DispatcherInterface
@@ -32,7 +35,9 @@ class InformationBarLayer(
     private val map = bar.addImageButton(R.drawable.open_menu)
     private val search = bar.addImageButton(R.drawable.edit_find)
     private val location = bar.addImageButton(R.drawable.find_location)
+    private val overlays = bar.addImageButton(R.drawable.view_paged)
     private val selector = NodeViewLayer(appContext, context, mcontext)
+    private val reverseController = NominatimReverseController(appContext, mcontext.getMapView())
 
     init {
         val storage: StorageInterface = appContext.storage
@@ -44,8 +49,10 @@ class InformationBarLayer(
         ToolTip.set(grid, Res.str().tt_info_grid())
         ToolTip.set(legend, Res.str().tt_info_legend())
         ToolTip.set(location, Res.str().tt_info_location())
+        ToolTip.set(overlays, Res.str().p_overlay())
 
         dispatcher.addTarget(selector, InfoID.ALL)
+        reverseController.addToDispatcher(dispatcher)
     }
 
     override fun onClick(v: View) {
@@ -55,7 +62,9 @@ class InformationBarLayer(
         } else if (v === search) {
             MapQueryMenu(context, mcontext).showAsPopup(v.getContext(), v)
         } else if (v === location) {
-            LocationMenu(context, mcontext.getMapView()).showAsPopup(v.getContext(), location)
+            LocationMenu(context, mcontext.getMapView(), reverseController).showAsPopup(v.getContext(), location)
+        } else if (v === overlays) {
+            SolidCheckListDialog(context, SolidOverlayList.createMapOverlayList(appContext))
         }
     }
 

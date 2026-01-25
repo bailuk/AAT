@@ -13,12 +13,14 @@ import ch.bailu.aat.views.busy.BusyViewControlDbSync
 import ch.bailu.aat.views.list.GpxListActivityContentView
 import ch.bailu.aat.views.list.GpxListFilterView
 import ch.bailu.aat.views.list.GpxListView
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.ContentDescription
-import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -40,6 +42,8 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
     private var busyControl: BusyViewControlDbSync? = null
     private var listFilterView: GpxListFilterView? = null
 
+    private val overlayIIDs = InformationUtil.overlayInfoIdList.toIntArray()
+
     abstract fun displayFile()
 
     abstract val label: String
@@ -56,24 +60,28 @@ abstract class AbsGpxListActivity : ActivityContext(), OnItemClickListener, OnPr
         }
         this.sdirectory = sdirectory
 
-        val contentView = GpxListActivityContentView(this, sdirectory, theme, filterTheme)
+
+        val usageTrackers = UsageTrackers()
+        val overlayTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *overlayIIDs)
+
+        val contentView = GpxListActivityContentView(this, sdirectory, overlayTracker, theme, filterTheme)
         busyControl = contentView.busyControl
         listView = contentView.listView
         fileControlBar = contentView.fileControlBar
         listFilterView = contentView.listFilterView
 
         setContentView(contentView.contentView)
-        createDispatcher(contentView.busyControl)
+        createDispatcher(dispatcher, appContext, usageTrackers, contentView.busyControl)
 
         // Disable keyboard
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 
-    private fun createDispatcher(busyControl: TargetInterface) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, usageTrackers: UsageTrackerInterface, busyControl: BusyViewControlDbSync) {
         dispatcher.addSource(IteratorSource.Summary(appContext, UsageTrackerAlwaysEnabled()))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
         dispatcher.addSource(CurrentLocationSource(appContext.services, appContext.broadcaster))
-        dispatcher.addTarget(busyControl, *InformationUtil.getOverlayInfoIdList().toIntArray())
+        dispatcher.addOverlaySources(appContext, usageTrackers)
+        dispatcher.addTarget(busyControl, *overlayIIDs)
     }
 
     override fun onResumeWithService() {

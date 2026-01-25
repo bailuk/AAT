@@ -4,16 +4,13 @@ import ch.bailu.aat_lib.api.DownloadApi
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.preferences.map.overlay.SolidOverpassOverlay
-import ch.bailu.aat_lib.util.fs.AppDirectory
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 
 abstract class OverpassApi(context: AppContext) : DownloadApi(SolidOverpassOverlay(context.dataDirectory)) {
     override val urlStart: String
         get() = "$URL…"
-
-    override val fileExtension = AppDirectory.OSM_EXTENSION
 
     /**
      * See: http://overpass-api.de/command_line.html

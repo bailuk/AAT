@@ -2,12 +2,13 @@ package ch.bailu.aat.views.preferences.dialog
 
 import android.content.Context
 import android.content.DialogInterface
-import ch.bailu.aat.preferences.Storage
-import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlayList
+import ch.bailu.aat_lib.app.AppContext
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
 import ch.bailu.foc.Foc
-import ch.bailu.foc_android.FocAndroidFactory
 
-abstract class AbsSelectOverlayDialog(context: Context, private val slist: SolidCustomOverlayList = SolidCustomOverlayList(Storage(context), FocAndroidFactory(context))): AbsSolidDialog(), DialogInterface.OnClickListener {
+abstract class AbsSelectOverlayDialog(appContext: AppContext, context: Context, private val slist: SolidOverlayList<SolidCustomOverlay> = SolidOverlayList.createCustomOverlayList(appContext)
+): AbsSolidDialog(), DialogInterface.OnClickListener {
     init {
 
         val dialog = createDefaultDialog(context, slist)
@@ -22,5 +23,5 @@ abstract class AbsSelectOverlayDialog(context: Context, private val slist: Solid
         dialog.dismiss()
     }
 
-    protected abstract fun onFileSelected(slist: SolidCustomOverlayList, index: Int, file: Foc)
+    protected abstract fun onFileSelected(slist: SolidOverlayList<SolidCustomOverlay>, index: Int, file: Foc)
 }

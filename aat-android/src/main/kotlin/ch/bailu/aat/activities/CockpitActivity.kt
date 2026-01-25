@@ -2,6 +2,8 @@ package ch.bailu.aat.activities
 
 import android.os.Bundle
 import android.view.View
+import ch.bailu.aat.app.AndroidInformationUtil
+import ch.bailu.aat.broadcaster.addMapOverlaySources
 import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.util.AndroidTimer
 import ch.bailu.aat.util.ui.AppLayout
@@ -13,21 +15,23 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.PercentageLayout
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
 import ch.bailu.aat_lib.description.CurrentSpeedDescription
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.MaximumSpeedDescription
 import ch.bailu.aat_lib.description.PredictiveTimeDescription
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
+import ch.bailu.aat_lib.dispatcher.SourceInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
-import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.gpx.information.InformationUtil
 
 class CockpitActivity : AbsKeepScreenOnActivity() {
     companion object {
@@ -39,20 +43,24 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val usageTrackers = UsageTrackers()
+        val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage,
+            *AndroidInformationUtil.mapOverlayInfoIdList.toIntArray())
+
         val edit = EditorSource(appContext, UsageTrackerAlwaysEnabled())
         val contentView = ContentView(this, theme)
-        val multiView = createMultiView(edit)
+        val multiView = createMultiView(edit, overlayUsageTracker)
         contentView.addMvIndicator(multiView)
         contentView.add(createButtonBar(multiView))
         contentView.add(multiView)
         setContentView(contentView)
-        createDispatcher(edit)
+        createDispatcher(dispatcher, appContext, edit, usageTrackers)
     }
 
-    private fun createMultiView(edit: EditorSource): MultiView {
+    private fun createMultiView(edit: EditorSource, usageTracker: UsageTrackerInterface): MultiView {
         val multiView = MultiView(this, SOLID_KEY)
         multiView.add(createCockpit())
-        multiView.add(MapFactory.createDefaultMapView(this, SOLID_KEY).tracker(edit).toView())
+        multiView.add(MapFactory.createDefaultMapView(this, SOLID_KEY).tracker(edit, usageTracker).toView())
         multiView.add(GraphViewFactory.all(appContext, this, dispatcher, theme, InfoID.TRACKER))
         return multiView
     }
@@ -92,12 +100,16 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
         return bar
     }
 
-    private fun createDispatcher(edit: EditorSource) {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext, edit: SourceInterface, usageTrackers: UsageTrackers) {
+        val serviceContext = appContext.services
+
         dispatcher.addSource(edit)
-        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
+        dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, usageTrackers))
         dispatcher.addSource(TrackerTimerSource(serviceContext, AndroidTimer()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
-        dispatcher.addOverlaySources(appContext, UsageTrackers().createOverlayUsageTracker(appContext.storage, *InformationUtil.getOverlayInfoIdList().toIntArray()))
+
+        dispatcher.addMapOverlaySources(appContext, usageTrackers)
+
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.HEART_RATE_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.POWER_SENSOR))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.CADENCE_SENSOR))

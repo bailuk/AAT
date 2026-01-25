@@ -18,10 +18,13 @@ class TrackerSource(
     SourceInterface
 {
     private var target = TargetInterface.NULL
+    private var on = false
 
     init {
         usageTracker.observe {
-            requestUpdate()
+            if (on) {
+                requestUpdate()
+            }
         }
     }
 
@@ -36,12 +39,14 @@ class TrackerSource(
     }
 
     override fun onPauseWithService() {
+        on = false
         broadcaster.unregister(onTrackChanged)
     }
 
     override fun onDestroy() {}
 
     override fun onResumeWithService() {
+        on = true
         broadcaster.register(AppBroadcaster.TRACKER, onTrackChanged)
     }
 

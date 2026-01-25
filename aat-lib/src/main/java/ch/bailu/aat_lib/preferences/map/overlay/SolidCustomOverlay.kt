@@ -74,4 +74,8 @@ class SolidCustomOverlay(storage: StorageInterface, focFactory: FocFactory, priv
     override fun getToolTip(): String? {
         return null
     }
+
+    companion object {
+        const val MAX_OVERLAYS = 3
+    }
 }

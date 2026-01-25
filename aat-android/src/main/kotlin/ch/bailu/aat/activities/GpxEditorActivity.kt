@@ -8,16 +8,17 @@ import ch.bailu.aat.map.MapFactory
 import ch.bailu.aat.map.To
 import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
-import ch.bailu.aat.views.layout.ContentView
-import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.bar.MainControlBar
 import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.graph.GraphViewFactory
+import ch.bailu.aat.views.layout.ContentView
+import ch.bailu.aat.views.layout.PercentageLayout
 import ch.bailu.aat.views.preferences.VerticalScrollView
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.description.NameDescription
 import ch.bailu.aat_lib.description.PathDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 
 class GpxEditorActivity : AbsFileContentActivity() {
@@ -25,8 +26,8 @@ class GpxEditorActivity : AbsFileContentActivity() {
         private const val SOLID_KEY = "gpx_editor"
     }
 
-    override fun createLayout(bar: MainControlBar, contentView: ContentView): ViewGroup {
-        map = MapFactory.createDefaultMapView(this, SOLID_KEY).editor(editorSource)
+    override fun createLayout(bar: MainControlBar, contentView: ContentView, usageTracker: UsageTrackerInterface): ViewGroup {
+        map = MapFactory.createDefaultMapView(this, SOLID_KEY).editor(editorSource, usageTracker)
         val summaryData = arrayOf(
             NameDescription(),
             PathDescription(),

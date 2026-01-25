@@ -14,7 +14,9 @@ import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.layout.LabelTextView
 import ch.bailu.aat.views.preferences.SolidIndexListView
 import ch.bailu.aat.views.preferences.VerticalScrollView
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
@@ -23,9 +25,7 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidPreset
-import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.util.fs.AppDirectory
-import ch.bailu.foc_android.FocAndroidFactory
 
 
 class MainActivity : ActivityContext() {
@@ -34,7 +34,7 @@ class MainActivity : ActivityContext() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createViews()
-        createDispatcher()
+        createDispatcher(dispatcher, appContext)
     }
 
     override fun onResumeWithService() {
@@ -59,7 +59,8 @@ class MainActivity : ActivityContext() {
         return list
     }
 
-    private fun createDispatcher() {
+    private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext) {
+        val serviceContext = appContext.services
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
@@ -112,12 +113,12 @@ class MainActivity : ActivityContext() {
             setText(sdirectory.toString())
         }
 
-        public override fun onAttachedToWindow() {
+        override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             sdirectory.register(this)
         }
 
-        public override fun onDetachedFromWindow() {
+        override fun onDetachedFromWindow() {
             super.onDetachedFromWindow()
             sdirectory.unregister(this)
         }
@@ -144,12 +145,12 @@ class MainActivity : ActivityContext() {
             setText(SolidPreset(appContext.storage).getDirectory(sdirectory).pathName)
         }
 
-        public override fun onAttachedToWindow() {
+        override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             spreset.register(this)
         }
 
-        public override fun onDetachedFromWindow() {
+        override fun onDetachedFromWindow() {
             super.onDetachedFromWindow()
             spreset.unregister(this)
         }
@@ -170,13 +171,13 @@ class MainActivity : ActivityContext() {
             setText(AppDirectory.getDataDirectory(sdirectory, directory).pathName)
         }
 
-        public override fun onAttachedToWindow() {
+        override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             setText()
             sdirectory.register(this)
         }
 
-        public override fun onDetachedFromWindow() {
+        override fun onDetachedFromWindow() {
             super.onDetachedFromWindow()
             sdirectory.unregister(this)
         }

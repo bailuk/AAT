@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
@@ -22,7 +23,6 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position
@@ -54,7 +54,7 @@ class MapMainView(
     val box = Box(Orientation.VERTICAL, 0)
     val overlay = Overlay()
 
-    private val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
+    private val infoIDs = GtkInformationUtil.mapOverlayInfoIdList.toIntArray()
     private val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
     private val overlayList = ArrayList<OverlayContainer>().apply {
@@ -84,10 +84,11 @@ class MapMainView(
     )
     private val editorBar = EditorBar(
         app,
+        window.display,
         nodeInfo,
         statusLabel,
         map.getMContext(),
-        appContext.services,
+        appContext,
         editor,
         editableOverlayList
     )
@@ -188,7 +189,6 @@ private class OverlayContainer(
 
     init {
         dispatcher.addTarget(ToggleFilter(gpxLayer, iid, usageTracker))
-
     }
 
     override fun setEnabled(enabled: Boolean) {

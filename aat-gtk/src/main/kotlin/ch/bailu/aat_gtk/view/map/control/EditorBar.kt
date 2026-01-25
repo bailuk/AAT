@@ -4,22 +4,25 @@ import ch.bailu.aat_gtk.config.Icons
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
 import ch.bailu.aat_gtk.view.menu.PopupMenuButton
 import ch.bailu.aat_gtk.view.menu.provider.EditSelectionMenu
+import ch.bailu.aat_gtk.view.menu.provider.EditorFileMenu
 import ch.bailu.aat_gtk.view.menu.provider.EditorMenu
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.EditorSourceInterface
-import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.selector.OnNodeSelectedInterface
-import ch.bailu.aat_lib.service.ServicesInterface
+import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gtk.Application
 
 class EditorBar(app: Application,
+                display: Display,
                 private val nodeInfo: NodeInfo,
                 private val statusLabel: EditorStatusLabel,
                 mcontext: MapContext,
-                services: ServicesInterface,
+                appContext: AppContext,
                 private val edit: EditorSourceInterface,
                 overlays: List<OverlayControllerInterface>
 ) : Bar(Position.LEFT), OnNodeSelectedInterface {
@@ -37,7 +40,7 @@ class EditorBar(app: Application,
         add(Icons.listAddSymbolic).onClicked {
                 val editor = edit.editor
                 val point = mcontext.getMapView().getMapViewPosition().center
-                val altitude = services.getElevationService().getElevation(point.latitudeE6, point.longitudeE6).toFloat()
+                val altitude = appContext.services.getElevationService().getElevation(point.latitudeE6, point.longitudeE6).toFloat()
                 editor.add(GpxPoint(point, altitude, 0))
         }
 
@@ -52,14 +55,9 @@ class EditorBar(app: Application,
         add(Icons.goDownSymbolic).onClicked {
             edit.editor.down()
         }
-
-        add(Icons.editUndoSymbolic).onClicked {
-            edit.editor.undo()
-        }
-
-        add(Icons.editRedoSymbolic).onClicked {
-            edit.editor.redo()
-        }
+        add(PopupMenuButton(EditorFileMenu(appContext, display, edit)).apply {
+            createActions(app)
+        }.menuButton)
     }
 
     override fun hide() {
