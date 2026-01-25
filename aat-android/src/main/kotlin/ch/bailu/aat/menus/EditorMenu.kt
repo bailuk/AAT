@@ -2,7 +2,6 @@ package ch.bailu.aat.menus
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.view.Menu
 import ch.bailu.aat.R
 import ch.bailu.aat.views.preferences.dialog.AbsSelectOverlayDialog
@@ -64,9 +63,9 @@ class EditorMenu(
     private fun changeType() {
         val dialog = AlertDialog.Builder(context)
         dialog.setTitle(R.string.edit_change_type)
-        dialog.setItems(GpxType.toStrings()) { _: DialogInterface?, i: Int ->
+        dialog.setItems(GpxType.toStrings().toTypedArray()) { _, index: Int ->
             editor.setType(
-                GpxType.fromInteger(i)
+                GpxType.fromInteger(index)
             )
         }
         dialog.show()

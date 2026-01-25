@@ -14,10 +14,9 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProviderInterface
             append(Res.str().edit_clear(), "app.editClear")
             append(Res.str().edit_inverse(), "app.editInverse")
             appendSubmenu(Res.str().edit_change_type(), Menu().apply {
-                append("Track", "app.editTypeTrack")
-                append("Route", "app.editTypeRoute")
-                append("Way", "app.editTypeWay")
-
+                GpxType.toStrings().forEach { string ->
+                    append(string, "app.editType${string}")
+                }
             })
             append(Res.str().edit_simplify(), "app.editSimplify")
             append(Res.str().edit_attach(), "app.editAttach")
@@ -42,9 +41,9 @@ class EditorMenu(private val edit: EditorSourceInterface): MenuProviderInterface
     override fun createActions(app: Application) {
         setAction(app, "editClear") { edit.editor.clear() }
         setAction(app, "editInverse")  { edit.editor.inverse() }
-        setAction(app, "editTypeTrack")  { edit.editor.setType(GpxType.TRACK) }
-        setAction(app, "editTypeRoute") { edit.editor.setType(GpxType.ROUTE) }
-        setAction(app, "editTypeWay")  { edit.editor.setType(GpxType.WAY) }
+        GpxType.toStrings().forEachIndexed { index, string ->
+            setAction(app, "editType${string}")  { edit.editor.setType(GpxType.fromInteger(index)) }
+        }
         setAction(app, "editSimplify") { edit.editor.simplify() }
         setAction(app, "editAttach", this::attach)
         setAction(app, "editFix") { edit.editor.fix() }
