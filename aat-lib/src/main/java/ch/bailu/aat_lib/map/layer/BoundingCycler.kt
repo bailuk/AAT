@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.map.layer
 
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.util.IndexedMap
@@ -31,7 +32,9 @@ class BoundingCycler: TargetInterface {
         while (c > 0) {
             c--
             boundingCycle++
-            if (boundingCycle >= infoCache.size()) boundingCycle = 0
+            if (boundingCycle >= infoCache.size()) {
+                boundingCycle = 0
+            }
 
             val info = infoCache.getValueAt(boundingCycle)
             if (info is GpxInformation) {
@@ -44,10 +47,12 @@ class BoundingCycler: TargetInterface {
     }
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
-        if (info.getLoaded()) {
-            infoCache.put(iid, info)
-        } else {
-            infoCache.remove(iid)
+        if (InfoID.TRACKER_TIMER != iid) {
+            if (info.getLoaded()) {
+                infoCache.put(iid, info)
+            } else {
+                infoCache.remove(iid)
+            }
         }
     }
 }
