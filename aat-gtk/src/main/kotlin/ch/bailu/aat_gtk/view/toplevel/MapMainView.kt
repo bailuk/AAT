@@ -72,7 +72,7 @@ class MapMainView(
     }
 
     private val mainBar = MainBar(app, uiController, appContext.services, dispatcher)
-    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
+    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList, overlayUsageTracker)
     private val infoBar = InfoBar(
         app,
         nodeInfo,
@@ -105,7 +105,7 @@ class MapMainView(
             }
             propagationPhase = PropagationPhase.BUBBLE
         })
-        dispatcher.addTarget(navigationBar, InfoID.ALL)
+        dispatcher.addTarget(navigationBar, *infoIDs)
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
         map.add(GridDynLayer(appContext.services, appContext.storage, map.getMContext()))
