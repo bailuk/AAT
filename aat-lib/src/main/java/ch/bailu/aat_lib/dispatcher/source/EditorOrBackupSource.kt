@@ -55,7 +55,6 @@ class EditorOrBackupSource(appContext: AppContext, source: SourceInterface) :
         }
     }
 
-
     override val editor: EditorInterface
         get() =  editorSource.editor
 

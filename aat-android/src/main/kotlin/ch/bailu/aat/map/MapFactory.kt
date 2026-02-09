@@ -61,6 +61,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         addMapOverlays(usageTracker)
 
         m.add(EditorBarLayer(appContext, c, mc, d, iid, e))
+        m.add(GpxDynLayer(s, mc, ser, d, iid))
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.TRACKER))
 
