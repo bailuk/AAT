@@ -9,7 +9,6 @@ public final class GpxEditor {
 
     private final EditorRing ring;
 
-
     public GpxEditor(GpxList list) {
         if (list.getPointList().size() > 0) {
             ring = new EditorRing((new NodeEditor((GpxPointNode) list.getPointList().getFirst(),
@@ -19,28 +18,21 @@ public final class GpxEditor {
         }
     }
 
-
     public void select(GpxPointNode point, GpxList list) {
         ring.set(new NodeEditor(point, list));
     }
-
 
     public void clear() {
         ring.add(new NodeEditor());
     }
 
-
     public void unlinkSelectedNode() {
         ring.add(ring.get().unlink());
-
     }
-
 
     public void insertNode(GpxPointInterface point) {
         ring.add(ring.get().insert(point));
-
     }
-
 
     public void moveSelectedUp() {
         GpxPointInterface point = ring.get().getPoint();
@@ -48,9 +40,7 @@ public final class GpxEditor {
         ring.add(ring.get().unlink());
         ring.set(ring.get().previous());
         ring.set(ring.get().insert(point));
-
     }
-
 
     public void moveSelectedDown() {
         GpxPointInterface point = ring.get().getPoint();
@@ -61,31 +51,25 @@ public final class GpxEditor {
 
     }
 
-
     public GpxList getList() {
         return ring.get().getList();
     }
-
 
     public GpxPointNode getSelectedPoint() {
         return ring.get().getPoint();
     }
 
-
     public void setType(GpxType type) {
         ring.get().getList().setType(type);
     }
-
 
     public boolean undo() {
         return ring.undo();
     }
 
-
     public boolean redo() {
         return ring.redo();
     }
-
 
     public void simplify() {
         ring.add(ring.get().simplify());

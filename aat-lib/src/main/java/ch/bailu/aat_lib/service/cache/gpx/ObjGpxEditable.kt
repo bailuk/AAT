@@ -19,17 +19,16 @@ import ch.bailu.aat_lib.util.fs.FileNameSplitter
 import ch.bailu.aat_lib.util.fs.FileUtil
 import ch.bailu.foc.Foc
 
-class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjGpx(_id) {
+class ObjGpxEditable(id: String, private val file: Foc, sc: AppContext) : ObjGpx(id) {
     private var currentHandle = NULL
-    val editor: GpxListEditor
+    val editor: GpxListEditor = GpxListEditor(sc.broadcaster)
 
     init {
-        editor = GpxListEditor(sc.broadcaster)
         sc.services.getCacheService().addToBroadcaster(this)
     }
 
     override fun onInsert(appContext: AppContext) {
-        val handle = appContext.services.getCacheService().getObject(_file.path, ObjGpxStatic.Factory())
+        val handle = appContext.services.getCacheService().getObject(file.path, ObjGpxStatic.Factory())
         currentHandle = handle as? ObjGpx ?: NULL
         editor.loadIntoEditor(currentHandle.getGpxList())
     }
@@ -49,7 +48,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
 
     override fun onDownloaded(id: String, url: String, appContext: AppContext) {}
     override fun onChanged(id: String, appContext: AppContext) {
-        if (id == _file.path) {
+        if (id == file.path) {
             editor.loadIntoEditor(currentHandle.getGpxList())
         }
     }
@@ -192,7 +191,7 @@ class ObjGpxEditable(_id: String, private val _file: Foc, sc: AppContext) : ObjG
         }
 
         override fun getFile(): Foc {
-            return _file
+            return file
         }
 
         override fun getLoaded(): Boolean {

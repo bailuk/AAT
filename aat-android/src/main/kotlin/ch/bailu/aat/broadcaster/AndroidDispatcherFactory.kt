@@ -8,7 +8,6 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 
 fun DispatcherInterface.addMapOverlaySources(appContext: AppContext, usageTrackers: UsageTrackerInterface) {
     this.addOverlaySources(appContext, usageTrackers)
-    this.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
     this.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
     this.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
     this.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
