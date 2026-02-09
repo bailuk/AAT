@@ -12,6 +12,8 @@ import ch.bailu.aat.util.ui.AppLayout
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.tooltip.ToolTip
 import ch.bailu.aat.views.bar.ControlBar
+import ch.bailu.aat.views.preferences.dialog.SolidCheckListDialog
+import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
@@ -21,29 +23,33 @@ import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.map.layer.BoundingCycler
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayList
+import ch.bailu.aat_lib.resources.Res
 
-class NavigationBarLayer(context: Context,
+class NavigationBarLayer(private val appContext: AppContext,
+                         private val context: Context,
                          private val mcontext: MapContext,
-                         d: DispatcherInterface,
-                         i: Int = AppLayout.DEFAULT_VISIBLE_BUTTON_COUNT) : ControlBarLayer(
-    mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, i), Position.BOTTOM
+                         d: DispatcherInterface) : ControlBarLayer(
+    mcontext, ControlBar(context, getOrientation(Position.BOTTOM), AppTheme.bar, 5), Position.BOTTOM
 ), TargetInterface {
 
     private val buttonPlus: View = bar.addImageButton(R.drawable.zoom_in)
     private val buttonMinus: View = bar.addImageButton(R.drawable.zoom_out)
-    private val buttonFrame: View
+    private val lock = bar.addSolidIndexButton(
+        SolidPositionLock(Storage(context), mcontext.getSolidKey())
+    )
+    private val buttonFrame: View = bar.addImageButton(R.drawable.zoom_fit_best)
+    private val overlays = bar.addImageButton(R.drawable.view_paged)
 
     private val boundingCycler = BoundingCycler(UsageTrackerAlwaysEnabled())
 
     init {
-        val lock = bar.addSolidIndexButton(
-            SolidPositionLock(Storage(context), mcontext.getSolidKey())
-        )
-        buttonFrame = bar.addImageButton(R.drawable.zoom_fit_best)
         ToolTip.set(buttonPlus, R.string.tt_map_zoomin)
         ToolTip.set(buttonMinus, R.string.tt_map_zoomout)
         ToolTip.set(buttonFrame, R.string.tt_map_frame)
         ToolTip.set(lock, R.string.tt_map_home)
+        ToolTip.set(overlays, Res.str().p_overlay())
+
         d.addTarget(this, InfoID.ALL)
         val volumeView = VolumeView(context)
         volumeView.visibility = View.INVISIBLE
@@ -58,6 +64,8 @@ class NavigationBarLayer(context: Context,
             mcontext.getMapView().zoomOut()
         } else if (v === buttonFrame) {
             boundingCycler.onAction(mcontext)
+        }else if (v === overlays) {
+            SolidCheckListDialog(context, SolidOverlayList.createMapOverlayList(appContext))
         }
     }
 
@@ -77,7 +85,8 @@ class NavigationBarLayer(context: Context,
         override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 
         override fun onHardwareButtonPressed(code: Int, type: AbsHardwareButtons.EventType): Boolean {
-            if (To.view(mcontext.getMapView())!!.visibility == VISIBLE) {
+            val view = To.view(mcontext.getMapView())
+            if (view is View && view.visibility == VISIBLE) {
                 if (code == KeyEvent.KEYCODE_VOLUME_UP) {
                     if (type === AbsHardwareButtons.EventType.DOWN) mcontext.getMapView().zoomIn()
                     return true

@@ -39,7 +39,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
 
     private fun base() {
         m.add(CurrentLocationLayer(mc, d))
-        m.add(NavigationBarLayer(c, mc, d, 4))
+        m.add(NavigationBarLayer(appContext, c, mc, d))
     }
 
     fun split(usageTracker: UsageTrackerInterface): MapsForgeViewBase {
@@ -113,7 +113,7 @@ class MapFactory(private val m: MapsForgeViewBase, activityContext: ActivityCont
         m.add(GpxDynLayer(s, mc, ser, d, InfoID.FILE_VIEW))
         m.add(CurrentLocationLayer(mc, d))
         m.add(GridDynLayer(ser, s, mc))
-        m.add(NavigationBarLayer(c, mc, d))
+        m.add(NavigationBarLayer(appContext, c, mc, d))
         m.add(InformationBarLayer(appContext, c, mc, d))
         return m
     }
