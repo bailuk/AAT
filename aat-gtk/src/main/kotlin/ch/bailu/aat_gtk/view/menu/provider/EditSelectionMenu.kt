@@ -56,7 +56,6 @@ class EditSelectionMenu(private val overlays: List<OverlayControllerInterface>) 
                             append(Button().apply {
                                 iconName = Icons.editSelectAllSymbolic
                                 onClicked {
-                                    checkButton.active = true
                                     controller.edit()
                                 }
                             })
