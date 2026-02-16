@@ -17,7 +17,6 @@ import ch.bailu.aat_lib.service.VirtualService
 import ch.bailu.aat_lib.service.background.BackgroundTask
 import ch.bailu.aat_lib.util.WithStatusText
 import java.io.IOException
-import java.net.InetSocketAddress
 import java.net.SocketException
 
 /**
@@ -31,7 +30,11 @@ class BeaconService(
     private var client: BeaconClient? = null
     private var location: GpxInformation = GpxInformation.NULL
 
-    private val onLocation = BroadcastReceiver { submit() }
+    private val onLocation = BroadcastReceiver {
+        client?.let { beaconClient ->
+            submit(beaconClient)
+        }
+    }
 
     init {
         broadcaster.register(AppBroadcaster.LOCATION_CHANGED, onLocation)
@@ -60,14 +63,14 @@ class BeaconService(
         val server = SolidBeaconServer(storage).getValue()
         val key = SolidBeaconKey(storage).getValue()
 
-        if (server == null || key.toLong() == 0L) {
+        if (server == null || key == 0L) {
             AppLog.w(this, "Beacon configuration incomplete")
             return
         }
 
         try {
-            client = BeaconClient(server, key.toLong())
-            AppLog.i(this, "Beacon initialized, submitting to " + server)
+            client = BeaconClient(server, key)
+            AppLog.i(this, "Beacon initialized, submitting to $server")
         } catch (e: SocketException) {
             AppLog.e(this, e, "Beacon initialization failed")
         }
@@ -80,18 +83,16 @@ class BeaconService(
         }
     }
 
-    private fun submit(gpxLocation: GpxInformation) {
-        client?.let { beaconClient ->
-            services.getBackgroundService().process(BeaconSubmitTask(beaconClient, gpxLocation))
-        }
+    private fun submit(client: BeaconClient, gpxLocation: GpxInformation) {
+        services.getBackgroundService().process(BeaconSubmitTask(client, gpxLocation))
     }
 
-    private fun submit() {
+    private fun submit(beaconClient: BeaconClient) {
         val locationService = services.getLocationService()
         val newLocation = locationService.getLoggableLocationOrNull(location)
         if (newLocation != null) {
             location = newLocation
-            submit(location)
+            submit(beaconClient, location)
         }
     }
 
