@@ -22,6 +22,7 @@ import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.BeaconSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -30,6 +31,7 @@ import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
@@ -259,6 +261,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createCmSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
+        dispatcher.addSource(BeaconSource(GtkAppContext.services, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }
