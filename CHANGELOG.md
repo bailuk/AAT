@@ -21,7 +21,8 @@ Lib: Fix issue with failed tile downloads
 Lib: Use two decimal precision for average speed
 Android: Fix sensor scanning state handling for internal and Ble sensors.
 Android: Fix handling of unpaired power meters
-Android: Change GPX Overlay UI
+Android: New overlay menu in navigation (bottom) bar
 GTK: Add file menu for detail view
 GTK & Android: Add support for brouter API
 GTK & Android: Add support for Nominatim reverse
+GTK & Android: Add beacon client for sharing live GPS locations (https://github.com/MaxKellermann/beacon)
