@@ -15,4 +15,10 @@ class BoundingE6Test {
         assertEquals(boundingBoxE6.toBoundingBox(), boundingBox)
         assertEquals(boundingBoxE6.toBoundingBox().centerPoint, boundingBox.centerPoint)
     }
+
+    @Test
+    fun nullBounding() {
+        val boundingBoxE6 = BoundingBoxE6.NULL_BOX
+        assertEquals(false, boundingBoxE6.hasBounding())
+    }
 }

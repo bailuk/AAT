@@ -178,7 +178,7 @@ class BoundingBoxE6 {
         private val MAX_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MAX)
         private val MIN_LO = LatLongE6.toE6(LatLongUtils.LONGITUDE_MIN)
         @JvmField
-        val NULL_BOX = BoundingBoxE6(0, 0)
+        val NULL_BOX = BoundingBoxE6()
         @JvmStatic
         fun doOverlap(b1: BoundingBoxE6, b2: BoundingBoxE6): Boolean {
             return (b1.containsLatitude(b2) || b2.containsLatitude(b1)) &&
