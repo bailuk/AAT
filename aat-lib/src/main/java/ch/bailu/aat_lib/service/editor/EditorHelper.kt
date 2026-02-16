@@ -52,8 +52,9 @@ class EditorHelper(private val appContext: AppContext) :
     }
 
     override fun getInfo(): GpxInformation {
+        val handle = handle
         return if (handle is ObjGpxEditable) {
-            (handle as ObjGpxEditable).editor
+            handle.editor
         } else GpxInformation.NULL
     }
 
