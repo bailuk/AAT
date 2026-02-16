@@ -32,7 +32,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "commit": "b683b5fa1ab9d592386f882aa620ed1d3cb37d44"
+          "commit": "759d9987162ea9faa820bbaabcde7bdd5c954e33"
         },
         "gradle-sources.json"
       ],
