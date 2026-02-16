@@ -20,6 +20,7 @@ import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.SensorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
+import ch.bailu.aat_lib.dispatcher.source.BeaconSource
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -62,6 +63,7 @@ class MainActivity : ActivityContext() {
     private fun createDispatcher(dispatcher: DispatcherInterface, appContext: AppContext) {
         val serviceContext = appContext.services
         dispatcher.addSource(TrackerSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
+        dispatcher.addSource(BeaconSource(serviceContext, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(CurrentLocationSource(serviceContext, appContext.broadcaster))
         dispatcher.addSource(SensorSource(serviceContext, appContext.broadcaster, InfoID.SENSORS))
     }

@@ -23,6 +23,7 @@ object AppBroadcaster {
     const val FILE_BACKGROUND_TASK_CHANGED = NAME_SPACE + "BACKGROUND_TASK"
     const val LOCATION_CHANGED = NAME_SPACE + "LOCATION"
     const val TRACKER = NAME_SPACE + "TRACKER"
+    const val BEACON = NAME_SPACE + "BEACON"
 
     /**
      * Info level namespace for message broadcaster

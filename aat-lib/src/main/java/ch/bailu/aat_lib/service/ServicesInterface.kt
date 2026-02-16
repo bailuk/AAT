@@ -9,11 +9,13 @@ import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tileremover.TileRemoverService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.aat_lib.service.beacon.BeaconServiceInterface
 
 interface ServicesInterface {
     fun getLocationService(): LocationServiceInterface
     fun getSensorService(): SensorServiceInterface
     fun getTrackerService(): TrackerServiceInterface
+    fun getBeaconService(): BeaconServiceInterface
     fun getIconMapService(): IconMapServiceInterface
     fun getBackgroundService(): BackgroundServiceInterface
     fun getCacheService(): CacheServiceInterface
