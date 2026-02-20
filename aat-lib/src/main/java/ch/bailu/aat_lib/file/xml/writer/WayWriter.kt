@@ -10,6 +10,7 @@ open class WayWriter(file: Foc) : GpxWriter(file) {
     @Throws(IOException::class)
     override fun writeFooter() {
         writeEndElement(GpxConstants.QNAME_GPX)
+        writeRawChar('\n')
     }
 
     override fun writeSegment() {
