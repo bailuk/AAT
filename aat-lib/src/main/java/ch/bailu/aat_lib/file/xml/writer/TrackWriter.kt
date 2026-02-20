@@ -21,7 +21,7 @@ class TrackWriter(file: Foc) : GpxWriter(file) {
 
     @Throws(IOException::class)
     override fun writeTrackPoint(tp: GpxPointInterface) {
-        writeString("\t")
+        writeRawChar('\t')
         writeBeginElementStart(GpxConstants.QNAME_TRACK_POINT)
         writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()))
         writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()))
@@ -36,13 +36,13 @@ class TrackWriter(file: Foc) : GpxWriter(file) {
         writeAttributesGpxStyle(tp)
 
         writeEndElement(GpxConstants.QNAME_TRACK_POINT)
-        writeString("\n")
+        writeRawChar('\n')
     }
 
     @Throws(IOException::class)
     override fun writeFirstSegment() {
         writeBeginElement(GpxConstants.QNAME_TRACK_SEGMENT)
-        writeString("\n")
+        writeRawChar('\n')
     }
 
 
@@ -50,6 +50,6 @@ class TrackWriter(file: Foc) : GpxWriter(file) {
     override fun writeSegment() {
         writeEndElement(GpxConstants.QNAME_TRACK_SEGMENT)
         writeBeginElement(GpxConstants.QNAME_TRACK_SEGMENT)
-        writeString("\n")
+        writeRawChar('\n')
     }
 }
