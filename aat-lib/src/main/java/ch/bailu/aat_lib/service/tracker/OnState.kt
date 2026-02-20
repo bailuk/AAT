@@ -33,7 +33,7 @@ class OnState(tracker: TrackerInternals) : State(tracker) {
                 if (newLocation != null) {
                     location = newLocation
                     val attr = attributes.collect(internal.services.getSensorService())
-                    internal.logger.log(location, attr)
+                    internal.logger.log(newLocation, attr)
                 }
             } catch (e: IOException) {
                 internal.emergencyOff(e)
