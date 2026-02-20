@@ -25,7 +25,7 @@ class RouteWriter(file: Foc) : GpxWriter(file) {
 
     @Throws(IOException::class)
     override fun writeTrackPoint(tp: GpxPointInterface) {
-        writeString("\t")
+        writeRawChar('\t')
         writeBeginElementStart(GpxConstants.QNAME_ROUTE_POINT)
         writeParameter(GpxConstants.QNAME_LATITUDE, f.decimal6.format(tp.getLatitude()))
         writeParameter(GpxConstants.QNAME_LONGITUDE, f.decimal6.format(tp.getLongitude()))
@@ -38,6 +38,6 @@ class RouteWriter(file: Foc) : GpxWriter(file) {
         }
 
         writeEndElement(GpxConstants.QNAME_ROUTE_POINT)
-        writeString("\n")
+        writeRawChar('\n')
     }
 }
