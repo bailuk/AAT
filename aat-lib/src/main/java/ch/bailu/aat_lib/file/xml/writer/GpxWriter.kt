@@ -33,6 +33,14 @@ abstract class GpxWriter(file: Foc) {
     @Throws(IOException::class)
     abstract fun writeTrackPoint(tp: GpxPointInterface)
 
+    /**
+     * Flush internal buffers to the output file.
+     */
+    @Throws(IOException::class)
+    fun flush() {
+        output.flush()
+    }
+
     @Throws(IOException::class)
     fun close() {
         output.close()

@@ -64,6 +64,14 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         writer.writeNewPoints()
     }
 
+    /**
+     * Flush internal buffers to the output file.
+     */
+    @Throws(IOException::class)
+    override fun flush() {
+        writer.flush()
+    }
+
     override fun close() {
         try {
             writer.close()
