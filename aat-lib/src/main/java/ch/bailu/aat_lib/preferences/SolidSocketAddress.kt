@@ -1,9 +1,9 @@
 package ch.bailu.aat_lib.preferences
 
 import ch.bailu.aat_lib.exception.ValidationException
+import com.google.common.net.InetAddresses
 import java.net.InetSocketAddress
 import java.net.SocketAddress
-import com.google.common.net.InetAddresses
 
 open class SolidSocketAddress(
     storage: StorageInterface,
@@ -20,7 +20,7 @@ open class SolidSocketAddress(
     }
 
     fun setValue(address: SocketAddress) {
-        val addressString = formatAddress(address)
+        val addressString = formatAddress(address, defaultPort)
         setValue(addressString)
     }
 
@@ -29,7 +29,7 @@ open class SolidSocketAddress(
         return if (address == null) {
             ""
         } else {
-            formatAddress(address)
+            formatAddress(address, defaultPort)
         }
     }
 
@@ -63,7 +63,7 @@ open class SolidSocketAddress(
      */
     override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
         getDefaultValue()?.let { defaultAddress ->
-            list.add(formatAddress(defaultAddress))
+            list.add(formatAddress(defaultAddress, defaultPort))
         }
         return list
     }
@@ -133,23 +133,26 @@ open class SolidSocketAddress(
      * Format SocketAddress as string, handling both IPv4 and IPv6.
      * Omits port if it matches the default port.
      */
-    private fun formatAddress(address: SocketAddress): String {
-        return when (address) {
-            is InetSocketAddress -> {
-                val host = InetAddresses.toAddrString(address.address)
-                val port = address.port
+    companion object {
+        fun formatAddress(address: SocketAddress, defaultPort: Int): String {
+            return when (address) {
+                is InetSocketAddress -> {
+                    val host = InetAddresses.toAddrString(address.address)
+                    val port = address.port
 
-                if (port == defaultPort) {
-                    /* omit the port if it's the default port */
-                    host
-                } else if (host.contains(':')) {
-                    /* add brackets for IPv6 addresses if they contain colons */
-                    "[$host]:$port"
-                } else {
-                    "$host:$port"
+                    if (port == defaultPort) {
+                        /* omit the port if it's the default port */
+                        host
+                    } else if (host.contains(':')) {
+                        /* add brackets for IPv6 addresses if they contain colons */
+                        "[$host]:$port"
+                    } else {
+                        "$host:$port"
+                    }
                 }
+
+                else -> address.toString()
             }
-            else -> address.toString()
         }
     }
 }

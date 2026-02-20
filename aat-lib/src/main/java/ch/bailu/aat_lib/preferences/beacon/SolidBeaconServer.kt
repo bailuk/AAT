@@ -11,7 +11,15 @@ class SolidBeaconServer(storage: StorageInterface) : SolidSocketAddress(storage,
     }
 
     override fun getDefaultValue(): SocketAddress? {
-        return InetSocketAddress("138.201.185.127", DEFAULT_PORT)
+        return InetSocketAddress("127.0.0.1", DEFAULT_PORT)
+    }
+
+    override fun buildSelection(list: ArrayList<String>): ArrayList<String> {
+        getDefaultValue()?.let { defaultAddress ->
+            list.add(formatAddress(defaultAddress, DEFAULT_PORT))
+            list.add(formatAddress(InetSocketAddress("138.201.185.127", DEFAULT_PORT), DEFAULT_PORT))
+        }
+        return list
     }
 
     companion object {
