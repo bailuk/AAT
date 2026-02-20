@@ -3,7 +3,9 @@ package ch.bailu.aat_lib.service.tracker
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
 import ch.bailu.aat_lib.broadcaster.BroadcastReceiver
 import ch.bailu.aat_lib.broadcaster.Broadcaster
+import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.information.GpxInformation
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.preferences.system.SolidDataDirectory
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.service.VirtualService
@@ -49,6 +51,15 @@ class TrackerService(
     override fun close() {
         internal.close()
         broadcaster.unregister(onLocation)
+    }
+
+    @Synchronized
+    override fun resumeLogger(old: GpxList) {
+        if (internal.logger.getState() != StateID.OFF)
+            throw IllegalStateException("Logger is already on")
+
+        onStartStop()
+        internal.logger.logAllFrom(old)
     }
 
     @Synchronized
