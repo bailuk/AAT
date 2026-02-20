@@ -52,7 +52,7 @@ abstract class GpxWriter(file: Foc) {
 
     @Throws(IOException::class)
     protected fun writeString(string: String) {
-        output.write(string, 0, string.length)
+        output.write(string)
     }
 
     @Throws(IOException::class)
