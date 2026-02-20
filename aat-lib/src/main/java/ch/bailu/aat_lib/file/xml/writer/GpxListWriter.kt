@@ -16,6 +16,14 @@ class GpxListWriter(track: GpxList, file: Foc) : Closeable {
         writer.writeHeader(System.currentTimeMillis())
     }
 
+    /**
+     * Flush internal buffers to the output file.
+     */
+    @Throws(IOException::class)
+    fun flush() {
+        writer.flush()
+    }
+
     @Throws(IOException::class)
     override fun close() {
         writeNewPoints()
