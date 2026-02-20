@@ -2,6 +2,7 @@ package ch.bailu.aat.services
 
 import android.content.Context
 import ch.bailu.aat.app.AndroidAppContext
+import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.location.AndroidSolidLocationProvider
 import ch.bailu.aat.services.sensor.SensorService
 import ch.bailu.aat_lib.service.tileremover.TileRemoverService
@@ -24,11 +25,14 @@ import ch.bailu.aat_lib.service.render.RenderServiceInterface
 import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.aat_lib.service.beacon.BeaconService
+import ch.bailu.aat_lib.service.beacon.BeaconServiceInterface
 import ch.bailu.aat_lib.util.WithStatusText
 
 class OneService : AbsService() {
     private var location: LocationService? = null
     private var tracker: TrackerService? = null
+    private var beacon: BeaconService? = null
     private var background: BackgroundServiceInterface? = null
     private var iconMap: IconMapService? = null
     private var cache: CacheServiceInterface? = null
@@ -45,6 +49,9 @@ class OneService : AbsService() {
     @Synchronized
     override fun onDestroy() {
         onDestroyCalled()
+
+        beacon?.close()
+        beacon = null
 
         tracker?.close()
         tracker = null
@@ -155,6 +162,12 @@ class OneService : AbsService() {
     override fun getTrackerService(): TrackerServiceInterface {
         if (tracker == null) tracker = TrackerService(appContext.dataDirectory, StatusIcon(this), appContext.broadcaster,this)
         return tracker!!
+    }
+
+    @Synchronized
+    override fun getBeaconService(): BeaconServiceInterface {
+        if (beacon == null) beacon = BeaconService(this, appContext.broadcaster, Storage(this))
+        return beacon!!
     }
 
     @Synchronized

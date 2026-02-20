@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_gtk.config.Layout
 import ch.bailu.aat_gtk.controller.OverlayController
 import ch.bailu.aat_gtk.controller.OverlayControllerInterface
@@ -12,6 +13,7 @@ import ch.bailu.aat_gtk.view.map.control.InfoBar
 import ch.bailu.aat_gtk.view.map.control.MainBar
 import ch.bailu.aat_gtk.view.map.control.NavigationBar
 import ch.bailu.aat_gtk.view.map.control.NodeInfo
+import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
@@ -21,7 +23,6 @@ import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.InfoID
-import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.map.Attachable
 import ch.bailu.aat_lib.map.edge.EdgeControlLayer
 import ch.bailu.aat_lib.map.edge.Position
@@ -53,7 +54,7 @@ class MapMainView(
     val box = Box(Orientation.VERTICAL, 0)
     val overlay = Overlay()
 
-    private val infoIDs = InformationUtil.getMapOverlayInfoIdList().toIntArray()
+    private val infoIDs = GtkInformationUtil.mapOverlayInfoIdList.toIntArray()
     private val overlayUsageTracker = usageTrackers.createOverlayUsageTracker(appContext.storage, *infoIDs)
 
     private val overlayList = ArrayList<OverlayContainer>().apply {
@@ -71,7 +72,7 @@ class MapMainView(
     }
 
     private val mainBar = MainBar(app, uiController, appContext.services, dispatcher)
-    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList)
+    private val navigationBar = NavigationBar(map.getMContext(), appContext.storage, overlayList, overlayUsageTracker)
     private val infoBar = InfoBar(
         app,
         nodeInfo,
@@ -83,10 +84,11 @@ class MapMainView(
     )
     private val editorBar = EditorBar(
         app,
+        window.display,
         nodeInfo,
         statusLabel,
         map.getMContext(),
-        appContext.services,
+        appContext,
         editor,
         editableOverlayList
     )
@@ -103,7 +105,7 @@ class MapMainView(
             }
             propagationPhase = PropagationPhase.BUBBLE
         })
-        dispatcher.addTarget(navigationBar, InfoID.ALL)
+        dispatcher.addTarget(navigationBar, *infoIDs)
 
         map.add(CurrentLocationLayer(map.getMContext(), dispatcher))
         map.add(GridDynLayer(appContext.services, appContext.storage, map.getMContext()))
@@ -147,6 +149,8 @@ class MapMainView(
         overlay.addOverlay(statusLabel.box)
 
         showMainBar()
+
+        LocationMenu.createActions(app, appContext, window.display, map, dispatcher, uiController)
     }
 
     private fun addBar(bar: Bar) {
@@ -185,7 +189,6 @@ private class OverlayContainer(
 
     init {
         dispatcher.addTarget(ToggleFilter(gpxLayer, iid, usageTracker))
-
     }
 
     override fun setEnabled(enabled: Boolean) {

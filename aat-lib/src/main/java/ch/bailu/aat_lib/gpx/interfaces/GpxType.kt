@@ -1,8 +1,7 @@
 package ch.bailu.aat_lib.gpx.interfaces
 
 enum class GpxType {
-    WAY, ROUTE, TRACK, NONE;
-
+    WAY, ROUTE, TRACK;
 
     override fun toString(): String {
         return name
@@ -13,13 +12,10 @@ enum class GpxType {
     }
 
     companion object {
-        fun toStrings(): Array<String> {
-            val result = ArrayList<String>()
-            entries.forEach { result.add(it.toString()) }
-            return result.toTypedArray()
+        fun toStrings(): List<String> {
+            return entries.map { it.toString() }
         }
 
-        @JvmStatic
         fun fromInteger(id: Int): GpxType {
             var checkedId = id
             if (checkedId < 0 || checkedId >= entries.size) checkedId = entries.size - 1

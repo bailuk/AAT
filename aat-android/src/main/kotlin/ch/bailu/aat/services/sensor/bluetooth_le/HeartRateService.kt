@@ -41,11 +41,10 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
         return disc
     }
 
-    @Suppress("DEPRECATION")
     override fun read(c: BluetoothGattCharacteristic) {
         if (HEART_RATE_SERVICE == c.service.uuid) {
             if (BODY_SENSOR_LOCATION == c.uuid) {
-                readBodySensorLocation(c.value)
+                readBodySensorLocation(c)
                 connector.connect(isValid)
                 information = SensorInformation(HeartRateAttributes(location))
                 broadcaster.broadcast()
@@ -53,27 +52,27 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
         }
     }
 
-    @Suppress("DEPRECATION")
-
     override fun changed(c: BluetoothGattCharacteristic) {
         if (HEART_RATE_SERVICE == c.service.uuid) {
             if (HEART_RATE_MEASUREMENT == c.uuid) {
-                readHeartRateMeasurement(c, c.value)
+                readHeartRateMeasurement(c)
             }
         }
     }
 
-    private fun readHeartRateMeasurement(c: BluetoothGattCharacteristic, value: ByteArray) {
-        information = SensorInformation(Attributes(c, value))
+    private fun readHeartRateMeasurement(c: BluetoothGattCharacteristic) {
+        information = SensorInformation(Attributes(c))
     }
 
     override fun toString(): String {
         return name
     }
 
-    private fun readBodySensorLocation(value: ByteArray) {
-        if (value[0] < HeartRateAttributes.BODY_SENSOR_LOCATIONS.size) {
-            location = HeartRateAttributes.BODY_SENSOR_LOCATIONS[value[0].toInt()]
+    @Suppress("DEPRECATION")
+    private fun readBodySensorLocation(c: BluetoothGattCharacteristic) {
+        val rawLocation = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
+        if (rawLocation != null && rawLocation < HeartRateAttributes.BODY_SENSOR_LOCATIONS.size) {
+            location = HeartRateAttributes.BODY_SENSOR_LOCATIONS[rawLocation]
         }
     }
 
@@ -83,7 +82,7 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
     }
 
     @Suppress("DEPRECATION")
-    private inner class Attributes(c: BluetoothGattCharacteristic, v: ByteArray) :
+    private inner class Attributes(c: BluetoothGattCharacteristic) :
         HeartRateAttributes(
             location
         ) {
@@ -91,7 +90,7 @@ class HeartRateService(c: Context) : HeartRateServiceID(), ServiceInterface {
 
         init {
             var offset = 0
-            val flags = v[offset]
+            val flags = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)
             val bpmUint16 = isBitSet(flags, 0)
             val haveSensorContactStatus = isBitSet(flags, 1)
             haveSensorContact = isBitSet(flags, 2)

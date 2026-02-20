@@ -1,75 +1,64 @@
 package ch.bailu.aat_lib.gpx.information
 
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
+import ch.bailu.aat_lib.api.brouter.BrouterApi
+import ch.bailu.aat_lib.api.cm.CmApi
+import ch.bailu.aat_lib.api.nominatim.NominatimApi
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseApi
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay.Companion.MAX_OVERLAYS
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.resources.ToDo
 
 object InformationUtil {
 
     fun defaultName(iid: Int): String {
-        return if (iid == InfoID.POI) {
-            Res.str().p_mapsforge_poi()
-        } else if (iid == InfoID.EDITOR_DRAFT) {
-            ToDo.translate("Draft")
-        } else if (iid == InfoID.TRACKER) {
-            Res.str().tracker()
-        } else if (isOverlay(iid)) {
-            "${ToDo.translate("Overlay")} ${getOverlayIndex(iid)}"
-        } else if (iid == InfoID.NOMINATIM) {
-            "Nominatim"
-        } else if (iid == InfoID.OVERPASS) {
-            Res.str().query_overpass()
-        } else if (iid == InfoID.EDITOR_OVERLAY) {
-            ToDo.translate("Editor")
-        } else if (iid == InfoID.FILE_VIEW) {
-            ToDo.translate("Selected File")
-        } else if (iid == InfoID.LIST_SUMMARY) {
-            ToDo.translate("List Summary")
-        } else {
-            ""
+        when(iid) {
+            InfoID.POI -> return Res.str().p_mapsforge_poi()
+            InfoID.EDITOR_DRAFT -> return ToDo.translate("Draft")
+            InfoID.TRACKER -> return Res.str().tracker()
+            InfoID.NOMINATIM -> return NominatimApi.NAME
+            InfoID.OVERPASS -> return Res.str().query_overpass()
+            InfoID.EDITOR_OVERLAY -> return ToDo.translate("Editor")
+            InfoID.FILE_VIEW -> return ToDo.translate("Selected File")
+            InfoID.LIST_SUMMARY -> return ToDo.translate("List Summary")
+            InfoID.CRITICAL_MAP -> return CmApi.NAME
+            InfoID.NOMINATIM_REVERSE -> return NominatimReverseApi.NAME
+            InfoID.BROUTER -> return BrouterApi.NAME
         }
+        if (isOverlay(iid)) {
+            return "${ToDo.translate("Overlay")} ${getOverlayIndex(iid)}"
+        }
+        return ""
     }
 
     private fun isOverlay(iid: Int): Boolean {
-        return iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS
+        return iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + MAX_OVERLAYS
     }
 
     private fun getOverlayIndex(iid: Int): Int {
         return iid - InfoID.OVERLAY + 1
     }
 
-
-    fun getMapOverlayInfoIdList(): List<Int> {
-        return ArrayList<Int>().apply {
-            addAll(getOverlayInfoIdList())
-            add(InfoID.POI)
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.FILE_VIEW)
-            add(InfoID.EDITOR_OVERLAY)
-            add(InfoID.TRACKER)
-            add(InfoID.LIST_SUMMARY)
+    val overlayInfoIdList: List<Int> = ArrayList<Int>().apply {
+        for (i in 0 until MAX_OVERLAYS) {
+            add(InfoID.OVERLAY + i)
         }
     }
 
-    fun getEditableOverlayInfoIdList(): List<Int> {
-        return ArrayList<Int>().apply {
-            add(InfoID.EDITOR_DRAFT)
-            add(InfoID.FILE_VIEW)
-            addAll(getOverlayInfoIdList())
-        }
-    }
-
-    fun getOverlayInfoIdList(): List<Int> {
-        return ArrayList<Int>().apply {
-            for (i in 0 until SolidCustomOverlayList.MAX_OVERLAYS) {
-                add(InfoID.OVERLAY + i)
-            }
-        }
+    val editableOverlayInfoIdList: List<Int> = ArrayList<Int>().apply {
+        add(InfoID.EDITOR_DRAFT)
+        add(InfoID.FILE_VIEW)
+        addAll(overlayInfoIdList)
     }
 
     fun isEditable(iid: Int): Boolean {
         return iid == InfoID.FILE_VIEW || iid == InfoID.EDITOR_DRAFT ||
-                (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + SolidCustomOverlayList.MAX_OVERLAYS)
+                (iid >= InfoID.OVERLAY && iid < InfoID.OVERLAY + MAX_OVERLAYS)
     }
 
+    fun supportsFileOperations(iid: Int): Boolean {
+        return iid in listOf(
+            InfoID.EDITOR_DRAFT, InfoID.CRITICAL_MAP, InfoID.NOMINATIM_REVERSE,
+            InfoID.BROUTER, InfoID.FILE_VIEW, InfoID.POI
+        )
+    }
 }

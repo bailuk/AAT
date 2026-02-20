@@ -13,6 +13,7 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.layout.ContentView
 import ch.bailu.aat.views.preferences.GeneralPreferencesView
 import ch.bailu.aat.views.preferences.MapPreferencesView
+import ch.bailu.aat.views.preferences.NetworkPreferencesView
 import ch.bailu.aat.views.preferences.PresetPreferencesView
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.OnPreferencesChanged
@@ -23,6 +24,11 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     companion object {
         @JvmField
         val SOLID_KEY: String = PreferencesActivity::class.java.simpleName
+
+        /**
+         * The number of pages not counting the "preset" pages.
+         */
+        private const val N_BASE_PAGES = 3
     }
 
     private val theme = AppTheme.preferences
@@ -63,6 +69,13 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
             mapTilePreferences,
             getString(R.string.p_tiles)
         )
+        multiView.add(
+            NetworkPreferencesView(this, theme),
+            "Network"
+        )
+
+        assert(multiView.pageCount() == N_BASE_PAGES);
+
         addPresetPreferences(multiView, theme)
         return multiView
     }
@@ -94,7 +107,7 @@ class PreferencesActivity : ActivityContext(), OnPreferencesChanged {
     }
 
     private fun addPresetPreferences(multiView: MultiView, theme: UiTheme) {
-        while (multiView.pageCount() > 2) multiView.remove(multiView.pageCount() - 1)
+        while (multiView.pageCount() > N_BASE_PAGES) multiView.remove(multiView.pageCount() - 1)
 
         for (i in 0 until getPresetCount()) {
             multiView.add(

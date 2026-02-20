@@ -1,33 +1,18 @@
 package ch.bailu.aat_gtk.util
 
-import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.gtk.glib.Glib
 
 
 object UiThread {
 
+    /**
+     * Functions from the gtk namespace do not support calls from outside the main (UI) thread.
+     * Glib.idleAdd will add a callback to the main (UI) threads event system.
+     */
     fun toUi(function: () -> (Unit)) {
-        if (isUi()) {
+        Glib.idleAdd({ self, _ ->
             function()
-        } else {
-            AppLog.d(this, "not ui")
-            idleAdd { function() }
-        }
-    }
-
-    fun ifUi(function: () -> (Unit)) {
-        if (isUi()) {
-            function()
-        }
-    }
-
-    private fun isUi(): Boolean {
-        return "main" == Thread.currentThread().name
-    }
-
-    private fun idleAdd(function: () -> Unit) {
-        Glib.idleAdd({ _, _ ->
-            function()
+            self.unregister()
             false
         }, null)
     }

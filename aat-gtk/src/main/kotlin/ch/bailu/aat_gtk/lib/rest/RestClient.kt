@@ -1,8 +1,12 @@
 package ch.bailu.aat_gtk.lib.rest
 
+import ch.bailu.aat_gtk.util.UiThread
 import ch.bailu.aat_lib.lib.json.parser.Json
-import ch.bailu.gtk.glib.Glib
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import java.io.File
 import java.io.IOException
 
@@ -53,11 +57,9 @@ class RestClient(val file: File,
     }
 
     private fun callBack(observer: (RestClient)->Unit) {
-        Glib.idleAdd({ _, _ ->
+        UiThread.toUi {
             observer(this@RestClient)
-            false
-        }, null)
-
+        }
     }
 
     private fun getCall(url: String) : Call {

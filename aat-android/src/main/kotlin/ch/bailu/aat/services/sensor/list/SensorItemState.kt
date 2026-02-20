@@ -3,73 +3,54 @@ package ch.bailu.aat.services.sensor.list
 import android.content.Context
 import ch.bailu.aat.R
 
-open class SensorItemState(var state: Int) {
-    fun setState(nextState: Int): Boolean {
-        if (isNextStateValid(nextState)) {
-            state = nextState
-            return true
-        }
-        return false
-    }
+open class SensorItemState {
+    var enabledState = false
 
-    private fun isNextStateValid(nextState: Int): Boolean {
-        if (state == UNSCANNED) {
-            return nextState == SCANNING
-        } else if (state == SCANNING) {
-            return nextState == SUPPORTED || nextState == UNSUPPORTED
-        } else if (state == SUPPORTED) {
-            return nextState == ENABLED
-        } else if (state == ENABLED) {
-            return nextState == SUPPORTED || nextState == CONNECTING
-        } else if (state == CONNECTING) {
-            return nextState == CONNECTED || nextState == ENABLED || nextState == SUPPORTED
-        } else if (state == CONNECTED) {
-            return nextState == ENABLED || nextState == SUPPORTED
-        } else if (state == UNSUPPORTED) {
-            return false
-        }
-        return false
-    }
+    enum class SupportedState { UNKNOWN, SCANNING, YES, NO }
+    var supportedState = SupportedState.UNKNOWN
+
+    enum class ConnectionState { NO, IN_PROGRESS, YES }
+    var connectionState = ConnectionState.NO
 
     val isSupported: Boolean
-        get() = state == SUPPORTED || isEnabled
+        get() = supportedState == SupportedState.YES
     val isEnabled: Boolean
-        get() = state == ENABLED || state == CONNECTING || state == CONNECTED
+        get() = enabledState
     val isConnected: Boolean
-        get() = state == CONNECTED
+        get() = connectionState == ConnectionState.YES
     val isConnecting: Boolean
-        get() = state == CONNECTING
+        get() = connectionState == ConnectionState.IN_PROGRESS
     val isOpen: Boolean
-        get() = state == CONNECTING || state == SCANNING
-    val isUnscannedOrScanning: Boolean
-        get() = state == UNSCANNED || state == SCANNING
+        get() = connectionState != ConnectionState.NO
+    val shouldScan: Boolean
+        get() = supportedState == SupportedState.UNKNOWN || supportedState == SupportedState.NO
     val isScanning: Boolean
-        get() = state == SCANNING
+        get() = supportedState == SupportedState.SCANNING
 
-    fun getSensorStateDescription(c: Context): String {
-        return c.getString(STATE_DESCRIPTION[state])
+    private fun getSensorStateDescriptionId(): Int {
+        return when (connectionState) {
+            ConnectionState.YES -> when (supportedState) {
+                                       SupportedState.SCANNING -> R.string.sensor_state_scanning
+                                       SupportedState.UNKNOWN -> R.string.sensor_state_connected
+                                       SupportedState.YES -> R.string.sensor_state_connected
+                                       SupportedState.NO -> R.string.sensor_state_connected
+                                   }
+            ConnectionState.IN_PROGRESS -> when (supportedState) {
+                                               SupportedState.SCANNING -> R.string.sensor_state_scanning
+                                               SupportedState.UNKNOWN -> R.string.sensor_state_connecting
+                                               SupportedState.YES -> R.string.sensor_state_connecting
+                                               SupportedState.NO -> R.string.sensor_state_connecting
+                                           }
+            ConnectionState.NO -> when (supportedState) {
+                                      SupportedState.SCANNING -> R.string.sensor_state_scanning
+                                      SupportedState.UNKNOWN -> R.string.sensor_state_unscanned
+                                      SupportedState.YES -> R.string.sensor_state_not_connected
+                                      SupportedState.NO -> R.string.sensor_state_not_supported
+                                  }
+        }
     }
 
-    companion object {
-        const val UNSCANNED = 0
-        const val SCANNING = 1
-        const val SUPPORTED = 2
-        const val ENABLED = 3
-        const val CONNECTING = 4
-        const val CONNECTED = 5
-        const val UNSUPPORTED = 6
-
-        // in future decouple
-        // configuration, discovery: unscanned, supported, enabled, unsupported
-        // from real time status : scanning, connecting, connected, disconnected trying to reconnect?
-        private val STATE_DESCRIPTION = intArrayOf(
-            R.string.sensor_state_unscanned,
-            R.string.sensor_state_scanning,
-            R.string.sensor_state_supported,
-            R.string.sensor_state_not_connected,
-            R.string.sensor_state_connecting,
-            R.string.sensor_state_connected,
-            R.string.sensor_state_not_supported
-        )
+    fun getSensorStateDescription(c: Context): String {
+        return c.getString(getSensorStateDescriptionId())
     }
 }

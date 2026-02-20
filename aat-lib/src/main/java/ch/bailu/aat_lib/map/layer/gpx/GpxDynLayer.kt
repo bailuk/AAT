@@ -10,8 +10,8 @@ import ch.bailu.aat_lib.map.layer.MapLayerInterface
 import ch.bailu.aat_lib.map.layer.gpx.legend.GpxLegendLayer
 import ch.bailu.aat_lib.map.layer.gpx.legend.NullLegendWalker
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.preferences.map.SolidLayerType
+import ch.bailu.aat_lib.preferences.map.SolidLegend
 import ch.bailu.aat_lib.service.ServicesInterface
 import ch.bailu.aat_lib.util.Point
 
@@ -26,6 +26,7 @@ class GpxDynLayer(
     private val slegend: SolidLegend = SolidLegend(storage, mcontext.getSolidKey())
     private val solidLayerType = SolidLayerType(storage)
     private var forceReconfigure = true
+    private var type = GpxType.TRACK
 
     constructor(
         storage: StorageInterface, mc: MapContext, services: ServicesInterface,
@@ -38,24 +39,17 @@ class GpxDynLayer(
         gpxOverlay.drawInside(mcontext)
         legendOverlay.drawInside(mcontext)
     }
-
     override fun drawForeground(mcontext: MapContext) {}
+
     override fun onTap(tapPos: Point): Boolean {
         return false
     }
 
-    private var type = GpxType.NONE
-
-    init {
-        createLegendOverlay()
-        createGpxOverlay(0)
-    }
-
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         infoCache.set(iid, info)
-        if (forceReconfigure || type !== toType(info)) {
+        if (forceReconfigure || type !== info.getType()) {
             forceReconfigure = false
-            type = toType(info)
+            type = info.getType()
             createGpxOverlay(iid)
             createLegendOverlay()
         }
@@ -72,22 +66,21 @@ class GpxDynLayer(
     }
 
     private fun createGpxOverlay(iid: Int) {
-        val type = toType(infoCache.info)
+        val type = infoCache.info.getType()
         gpxOverlay = Factory[type].layer(mcontext, services, solidLayerType, iid)
     }
 
     private fun createLegendOverlay() {
-        val type = toType(infoCache.info)
+        val type = infoCache.info.getType()
         legendOverlay = Factory[type].legend(slegend)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
-    override fun onAttached() {}
-    override fun onDetached() {}
-
-    companion object {
-        private fun toType(i: GpxInformation): GpxType {
-            return i.getGpxList().getDelta().getType()
-        }
+    override fun onAttached() {
+        // If coming back from the preferences dialog
+        forceReconfigure = true
+        infoCache.letUpdate(this)
     }
+
+    override fun onDetached() {}
 }

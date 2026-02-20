@@ -2,13 +2,12 @@ package ch.bailu.aat_lib.service.location
 
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidMissingTrigger
-import javax.annotation.Nonnull
 
 class MissingTrigger(next: LocationStackItem) : LocationStackChainedItem(next) {
     private var triggerMillis = 15000
     private var stamp = System.currentTimeMillis()
 
-    override fun passLocation(@Nonnull location: LocationInformation) {
+    override fun passLocation(location: LocationInformation) {
         stamp = location.getTimeStamp()
         super.passLocation(location)
     }

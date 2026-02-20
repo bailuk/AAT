@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanFilter
@@ -7,6 +8,7 @@ import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.os.ParcelUuid
 
+@SuppressLint("MissingPermission")
 class BleScanner internal constructor(sensors: BleSensors) : AbsBleScanner(sensors) {
     private val adapter: BluetoothAdapter = sensors.adapter
 
@@ -25,7 +27,10 @@ class BleScanner internal constructor(sensors: BleSensors) : AbsBleScanner(senso
     private val cscFilter = ScanFilter.Builder()
         .setServiceUuid(ParcelUuid.fromString("00001816-0000-1000-8000-00805f9b34fb"))
         .build()
-    private val filters = ArrayList(listOf(hrFilter, cscFilter))
+    private val powerFilter = ScanFilter.Builder()
+        .setServiceUuid(ParcelUuid.fromString("00001818-0000-1000-8000-00805f9b34fb"))
+        .build()
+    private val filters = ArrayList(listOf(hrFilter, cscFilter, powerFilter))
 
     override fun start() {
         val scanner = adapter.bluetoothLeScanner

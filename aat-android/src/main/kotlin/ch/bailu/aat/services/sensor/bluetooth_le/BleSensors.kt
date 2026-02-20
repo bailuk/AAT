@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -12,6 +13,7 @@ import ch.bailu.aat.services.sensor.list.SensorList
 import ch.bailu.aat.services.sensor.list.SensorListItem
 import ch.bailu.aat.util.AndroidTimer
 
+@SuppressLint("MissingPermission")
 class BleSensors(private val scontext: ServiceContext, private val sensorList: SensorList) : Sensors() {
 
     val adapter: BluetoothAdapter = getAdapter(scontext.getContext())
@@ -62,7 +64,7 @@ class BleSensors(private val scontext: ServiceContext, private val sensorList: S
     fun foundDevice(device: BluetoothDevice) {
         val displayName = device.name ?: device.address
         val item = sensorList.add(device.address, displayName)
-        if (item.isUnscannedOrScanning) {
+        if (item.shouldScan) {
             BleSensor(scontext, device, sensorList, item)
         }
     }
@@ -106,6 +108,6 @@ class BleSensors(private val scontext: ServiceContext, private val sensorList: S
     }
 
     companion object {
-        const val SCAN_DURATION = (10 * 1000).toLong()
+        const val SCAN_DURATION = (120 * 1000).toLong()
     }
 }

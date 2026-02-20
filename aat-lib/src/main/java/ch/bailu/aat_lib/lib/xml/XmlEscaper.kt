@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.lib.xml
 
 
 class XmlEscaper {
-    // TODO use this to replace org.apache.commons.text.StringEscapeUtils in GpxWriter
     private val sb = StringBuilder()
 
     fun escape(input: String): String {

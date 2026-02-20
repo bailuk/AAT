@@ -23,6 +23,8 @@ import ch.bailu.aat_lib.service.sensor.SensorServiceInterface
 import ch.bailu.aat_lib.service.tileremover.TileRemoverService
 import ch.bailu.aat_lib.service.tracker.TrackerService
 import ch.bailu.aat_lib.service.tracker.TrackerServiceInterface
+import ch.bailu.aat_lib.service.beacon.BeaconService
+import ch.bailu.aat_lib.service.beacon.BeaconServiceInterface
 
 class GtkServices (appContext: AppContext) : ServicesInterface {
     private val lazyLocationService by lazy { LocationService(
@@ -36,6 +38,12 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
             GtkStatusIcon(),
             appContext.broadcaster,
             this
+    ) }
+
+    private val lazyBeaconService by lazy { BeaconService(
+            this,
+            appContext.broadcaster,
+            appContext.storage
     ) }
 
     private val lazyTileRemoverService by lazy {
@@ -90,6 +98,10 @@ class GtkServices (appContext: AppContext) : ServicesInterface {
 
     override fun getTrackerService(): TrackerServiceInterface {
         return lazyTrackerService
+    }
+
+    override fun getBeaconService(): BeaconServiceInterface {
+        return lazyBeaconService
     }
 
     override fun getIconMapService(): IconMapServiceInterface {

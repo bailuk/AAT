@@ -25,8 +25,7 @@ abstract class InternalSensorSDK23(
 
     init {
         if (item.lock(this)) {
-            item.state = SensorItemState.CONNECTING
-            item.state = SensorItemState.CONNECTED
+            item.connectionState = SensorItemState.ConnectionState.YES
             connector.connect()
             requestUpdates(this, sensor)
         }
@@ -47,7 +46,7 @@ abstract class InternalSensorSDK23(
         if (item.unlock(this)) {
             connector.close()
             cancelUpdates(this)
-            item.state = SensorItemState.ENABLED
+            item.connectionState = SensorItemState.ConnectionState.NO
         }
     }
 

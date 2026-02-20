@@ -9,6 +9,7 @@ object InfoID {
     const val EDITOR_OVERLAY = 40 // TODO rename to EDITOR
     const val EDITOR_DRAFT = 41   // TODO rename to DRAFT
     const val LIST_SUMMARY = 5
+    const val BEACON = 50
     const val OVERLAY = 60
     const val UNSPECIFIED = -1
     const val SENSORS = 70
@@ -21,4 +22,7 @@ object InfoID {
     const val POI = 80
     const val OVERPASS = 81
     const val NOMINATIM = 82
+    const val NOMINATIM_REVERSE = 83
+    const val BROUTER = 84
+    const val CRITICAL_MAP = 85
 }

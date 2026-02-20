@@ -1,8 +1,9 @@
 package ch.bailu.aat_gtk.controller
 
+import ch.bailu.aat_gtk.app.GtkInformationUtil
 import ch.bailu.aat_lib.gpx.information.InformationUtil
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 
 class OverlayController(private val storage: StorageInterface, private val uiController: UiControllerInterface, private val iid: Int): OverlayControllerInterface {
     override fun setEnabled(enabled: Boolean) {
@@ -45,14 +46,14 @@ class OverlayController(private val storage: StorageInterface, private val uiCon
             storage: StorageInterface,
             uiController: UiControllerInterface
         ): List<OverlayControllerInterface> {
-            return createOverlayControllers(storage, uiController, InformationUtil.getMapOverlayInfoIdList())
+            return createOverlayControllers(storage, uiController, GtkInformationUtil.mapOverlayInfoIdList)
         }
 
         fun createEditableOverlayControllers(
             storage: StorageInterface,
             uiController: UiControllerInterface
         ): List<OverlayControllerInterface> {
-            return createOverlayControllers(storage, uiController, InformationUtil.getEditableOverlayInfoIdList())
+            return createOverlayControllers(storage, uiController, InformationUtil.editableOverlayInfoIdList)
         }
 
         private fun createOverlayControllers (

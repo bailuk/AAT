@@ -19,9 +19,8 @@ import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
-import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlayList
 import ch.bailu.aat_lib.service.directory.IteratorSimple
+import ch.bailu.gtk.gdk.Display
 import ch.bailu.gtk.gtk.Application
 import ch.bailu.gtk.gtk.Box
 import ch.bailu.gtk.gtk.Button
@@ -39,6 +38,7 @@ import ch.bailu.gtk.pango.EllipsizeMode
 import ch.bailu.gtk.type.Str
 
 class FileListPage(app: Application,
+                   display: Display,
                    appContext: AppContext,
                    private val uiController: UiControllerInterface
 ) {
@@ -107,13 +107,7 @@ class FileListPage(app: Application,
     private var indexOfSelected = -1
 
     private val items = HashMap<ListItem, FileListItem>()
-    private val fileContextMenu = FileContextMenu(
-        appContext,
-        SolidCustomOverlayList(
-            appContext.storage,
-            appContext
-        ), SolidMockLocationFile(appContext.storage))
-
+    private val fileContextMenu = FileContextMenu(appContext, display)
     private val logItems = SizeLog("FileListItem")
     private val fileContextMenuButton = PopupMenuButton(fileContextMenu).apply { createActions(app) }.menuButton
 
@@ -257,7 +251,7 @@ class FileListPage(app: Application,
 
         if (isIndexValid(indexOfSelected)) {
             iteratorSimple.moveToPosition(indexOfSelected)
-            fileContextMenu.setFile(iteratorSimple.getInfo().getFile())
+            fileContextMenu.file = iteratorSimple.getInfo().getFile()
             fileNameLabel.setLabel(iteratorSimple.getInfo().getFile().name)
             fileNameLabel.setTooltipText(iteratorSimple.getInfo().getFile().toString())
             fileContextMenuButton.sensitive = true

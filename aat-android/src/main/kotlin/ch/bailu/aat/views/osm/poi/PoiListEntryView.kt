@@ -8,7 +8,7 @@ import android.widget.TextView
 import ch.bailu.aat.util.ui.theme.AppTheme
 import ch.bailu.aat.util.ui.theme.UiTheme
 import ch.bailu.aat.views.osm.features.OnSelected
-import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.aat_lib.api.poi.PoiListItem
 
 class PoiListEntryView(context: Context, onSelected: OnSelected, theme: UiTheme) :
     LinearLayout(context) {

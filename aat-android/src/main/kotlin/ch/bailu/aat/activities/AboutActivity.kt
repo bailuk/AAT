@@ -12,7 +12,7 @@ import ch.bailu.aat.views.description.mview.MultiView
 import ch.bailu.aat.views.html.HtmlScrollTextView
 import ch.bailu.aat_lib.app.AppConfig
 import ch.bailu.aat_lib.resources.Res
-import ch.bailu.aat_lib.util.fs.FocUtil
+import ch.bailu.aat_lib.util.fs.FileUtil
 import ch.bailu.foc_android.FocAsset
 
 class AboutActivity : ActivityContext() {
@@ -67,7 +67,7 @@ class AboutActivity : ActivityContext() {
         }
 
     private fun assetToStr(asset: String): String {
-        return FocUtil.toStr(FocAsset(assets, asset))
+        return FileUtil.readIntoString(FocAsset(assets, asset))
     }
 
     override fun onResumeWithService() {

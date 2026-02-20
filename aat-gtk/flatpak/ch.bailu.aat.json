@@ -1,7 +1,7 @@
 {
   "app-id": "ch.bailu.aat",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "48",
+  "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.openjdk17"
@@ -32,7 +32,7 @@
         {
           "type": "git",
           "url": "https://github.com/bailuk/AAT.git",
-          "commit": "affde4e1c2b2a035cebe14a834139c8ca0f3c8ef"
+          "commit": "42f12ab62c1ba9dc305461c1ef252b382d35c9ae"
         },
         "gradle-sources.json"
       ],
@@ -40,6 +40,10 @@
         "sed -i /android/d settings.gradle.kts",
         "sed -i /android/d build.gradle.kts",
         "sed -i /android/d aat-lib/build.gradle.kts",
+        "sed -i 's|google()|maven { url = uri(\"maven-local\") }|g' settings.gradle.kts",
+        "sed -i '/jitpack/d' settings.gradle.kts",
+        "sed -i '/mavenCentral()/d' settings.gradle.kts",
+        "sed -i '/gradlePluginPortal()/d' settings.gradle.kts",
         "sed -i s/distributionUrl.*/distributionUrl=gradle-bin.zip/ gradle/wrapper/gradle-wrapper.properties",
         "source /usr/lib/sdk/openjdk17/enable.sh && ./gradlew aat-gtk:build",
         "install -Dm755 aat-gtk/flatpak/ch.bailu.aat.sh /app/bin/aat.sh",

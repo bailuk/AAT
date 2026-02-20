@@ -35,11 +35,10 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
     private val nameSpeed: String = c.getContext().getString(R.string.sensor_speed)
     private val nameCadence: String = c.getContext().getString(R.string.sensor_cadence)
 
-    @Suppress("DEPRECATION")
     override fun changed(c: BluetoothGattCharacteristic) {
         if (CSC_SERVICE == c.service.uuid) {
             if (CSC_MEASUREMENT == c.uuid) {
-                readCscMeasurement(c, c.value)
+                readCscMeasurement(c)
             }
         }
     }
@@ -60,32 +59,35 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
         return disc
     }
 
-    @Suppress("DEPRECATION")
     override fun read(c: BluetoothGattCharacteristic) {
         if (CSC_SERVICE == c.service.uuid) {
             if (CSC_FEATURE == c.uuid) {
-                readCscFeature(c.value)
+                readCscFeature(c)
             } else if (CSC_SENSOR_LOCATION == c.uuid) {
-                readCscSensorLocation(c.value)
+                readCscSensorLocation(c)
             }
         }
     }
 
-    private fun readCscSensorLocation(v: ByteArray) {
-        if (v.isNotEmpty() && v[0] < CadenceSpeedAttributes.SENSOR_LOCATION.size) {
-            location = CadenceSpeedAttributes.SENSOR_LOCATION[v[0].toInt()]
+    @Suppress("DEPRECATION")
+    private fun readCscSensorLocation(c: BluetoothGattCharacteristic) {
+        val rawLocation = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
+        if (rawLocation != null && rawLocation < CadenceSpeedAttributes.SENSOR_LOCATION.size) {
+            location = CadenceSpeedAttributes.SENSOR_LOCATION[rawLocation]
         }
     }
 
-    private fun readCscMeasurement(c: BluetoothGattCharacteristic, value: ByteArray) {
-        information = Information(Attributes(this, c, value))
+    private fun readCscMeasurement(c: BluetoothGattCharacteristic) {
+        information = Information(Attributes(this, c))
         connectorSpeed.connect(isSpeedSensor)
         connectorCadence.connect(isCadenceSensor)
     }
 
-    private fun readCscFeature(v: ByteArray) {
-        if (v.isNotEmpty()) {
-            val b = v[0]
+    @Suppress("DEPRECATION")
+    private fun readCscFeature(c: BluetoothGattCharacteristic) {
+        val flags = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0)
+        if (flags != null) {
+            val b: Int = flags
             isCadenceSensor = isBitSet(b, BIT_CADENCE)
             isSpeedSensor = isBitSet(b, BIT_SPEED)
         }
@@ -113,14 +115,14 @@ class CscService(c: ServiceContext) : CscServiceID(), ServiceInterface {
 
 
     @Suppress("DEPRECATION")
-    private class Attributes(parent: CscService, c: BluetoothGattCharacteristic, v: ByteArray) :
+    private class Attributes(parent: CscService, c: BluetoothGattCharacteristic) :
         CadenceSpeedAttributes(parent.location, parent.isCadenceSensor, parent.isSpeedSensor) {
         var speedSI = 0f
             private set
 
         init {
             var offset = 0
-            val data = v[offset]
+            val data = c.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, offset)
             offset += 1
             val haveCadence = isBitSet(data, BIT_CADENCE)
             val haveSpeed = isBitSet(data, BIT_SPEED)

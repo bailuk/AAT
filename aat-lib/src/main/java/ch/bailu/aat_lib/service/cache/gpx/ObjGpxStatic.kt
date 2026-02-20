@@ -191,7 +191,10 @@ class ObjGpxStatic(id: String, appContext: AppContext) : ObjGpx(id), ElevationUp
                     return loadJSON(handle)
                 } else if (fileType.isXML) {
                     return loadXML(appContext, handle)
+                } else {
+                    handle.setException(Exception("Unknown file type"))
                 }
+
             } catch (e: Exception) {
                 handle.setException(e)
             }

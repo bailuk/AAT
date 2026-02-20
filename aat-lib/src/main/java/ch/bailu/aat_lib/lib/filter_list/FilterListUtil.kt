@@ -2,7 +2,7 @@ package ch.bailu.aat_lib.lib.filter_list
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.logger.AppLog
-import ch.bailu.aat_lib.search.poi.PoiListItem
+import ch.bailu.aat_lib.api.poi.PoiListItem
 import ch.bailu.foc.Foc
 import org.mapsforge.poi.storage.PoiCategoryManager
 import org.mapsforge.poi.storage.PoiPersistenceManager

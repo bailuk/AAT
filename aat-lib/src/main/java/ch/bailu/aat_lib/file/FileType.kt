@@ -12,7 +12,7 @@ class FileType(file: Foc)  {
             val stream = Stream(it)
             stream.read()
             stream.skipWhitespace()
-            isJSON = stream.haveA('{'.code)
+            isJSON = stream.haveA('{'.code) || stream.haveA('['.code)
             isXML = stream.haveA('<'.code)
         }
     }

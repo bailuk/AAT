@@ -9,7 +9,7 @@ import ch.bailu.aat_gtk.view.toplevel.list.FileListPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationViewChanged
 import ch.bailu.aat_lib.app.AppContext
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.gtk.adw.Application
@@ -24,7 +24,7 @@ import ch.bailu.gtk.gtk.Orientation
 class MainPage(appContext: AppContext,
                controller: UiControllerInterface,
                app: Application, window: ApplicationWindow,
-               dispatcher: Dispatcher,
+               dispatcher: DispatcherInterface,
                usageTrackers: UsageTrackers) : NavigationViewChanged {
 
     private val showMapButton = Button().apply {
@@ -34,7 +34,7 @@ class MainPage(appContext: AppContext,
         }
     }
 
-    private val detailViewPage = DetailViewPage(controller, dispatcher, usageTrackers.createSelectableUsageTracker())
+    private val detailViewPage = DetailViewPage(app, window.display, appContext, controller, dispatcher, usageTrackers.createSelectableUsageTracker())
 
     private val headerBar = HeaderBar().apply {
         titleWidget = WindowTitle(GtkAppConfig.appName, GtkAppConfig.appLongName)
@@ -48,7 +48,7 @@ class MainPage(appContext: AppContext,
 
     val stackView = StackView(SOLID_KEY).apply {
         addView(CockpitPage(appContext,controller, dispatcher).box, pageIdCockpit, Res.str().intro_cockpit())
-        addView(FileListPage(app, appContext, controller).vbox, pageIdFileList, Res.str().label_list())
+        addView(FileListPage(app, window.display, appContext, controller).vbox, pageIdFileList, Res.str().label_list())
         addView(detailViewPage.box, pageIdDetail, Res.str().label_detail())
         restore(appContext.storage)
     }

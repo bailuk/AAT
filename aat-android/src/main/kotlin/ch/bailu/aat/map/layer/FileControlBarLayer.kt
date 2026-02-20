@@ -25,7 +25,7 @@ import ch.bailu.aat_lib.map.MapContext
 import ch.bailu.aat_lib.map.edge.Position
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.StorageInterface
-import ch.bailu.aat_lib.preferences.map.SolidCustomOverlay
+import ch.bailu.aat_lib.preferences.map.overlay.SolidCustomOverlay
 import ch.bailu.aat_lib.service.directory.Iterator
 import ch.bailu.aat_lib.service.directory.SummaryConfig
 import ch.bailu.aat_lib.util.Point
@@ -34,7 +34,6 @@ import ch.bailu.foc.Foc
 import ch.bailu.foc_android.FocAndroidFactory
 
 class FileControlBarLayer(
-    appContext: AppContext,
     mc: MapContext,
     private val acontext: AbsGpxListActivity,
     config: SummaryConfig
@@ -46,7 +45,7 @@ class FileControlBarLayer(
 ) {
     private val preview =
         PreviewView(acontext.serviceContext, config)
-    private val selector = FileViewLayer(appContext, acontext, mc)
+    private val selector = FileViewLayer(acontext.appContext, acontext, mc)
     private val overlay: View = bar.addImageButton(R.drawable.view_paged)
     private val reloadPreview: View = bar.addImageButton(R.drawable.view_refresh)
     private val delete: View = bar.addImageButton(R.drawable.user_trash)
@@ -99,7 +98,7 @@ class FileControlBarLayer(
                 if (v === preview) {
                     FileMenu(acontext, file).showAsPopup(acontext, v)
                 } else if (v === overlay) {
-                    AndroidFileAction.useAsOverlay(acontext, file)
+                    AndroidFileAction.useAsOverlay(acontext.appContext, acontext, file)
                 } else if (v === reloadPreview) {
                     FileAction.reloadPreview(acontext.appContext, file)
                 } else if (v === delete) {

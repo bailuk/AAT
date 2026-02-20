@@ -1,10 +1,9 @@
 package ch.bailu.aat_lib.html
 
 import com.google.common.html.HtmlEscapers
-import javax.annotation.Nonnull
 
 
-open class MarkupBuilder(@JvmField protected val config: MarkupConfig) {
+open class MarkupBuilder(protected val config: MarkupConfig) {
     private val stringBuilder = StringBuilder()
     private val htmlEscaper = HtmlEscapers.htmlEscaper()
 
@@ -57,7 +56,6 @@ open class MarkupBuilder(@JvmField protected val config: MarkupConfig) {
         stringBuilder.append(htmlEscaper.escape(s))
     }
 
-    @Nonnull
     override fun toString(): String {
         return stringBuilder.toString()
     }

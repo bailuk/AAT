@@ -1,5 +1,6 @@
 package ch.bailu.aat.services.sensor.bluetooth_le
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
@@ -7,13 +8,13 @@ import java.util.LinkedList
 import java.util.Queue
 import java.util.UUID
 
+@SuppressLint("MissingPermission")
 class Executor {
     companion object {
         private val ENABLE_NOTIFICATION = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
     }
     private val toReadQ: Queue<BluetoothGattCharacteristic> = LinkedList()
     private val toNotifyQ: Queue<BluetoothGattCharacteristic> = LinkedList()
-    private var discovered = false
 
     @Synchronized
     fun notify(characteristic: BluetoothGattCharacteristic) {
@@ -23,10 +24,6 @@ class Executor {
     @Synchronized
     fun read(characteristic: BluetoothGattCharacteristic) {
         toReadQ.add(characteristic)
-    }
-
-    private fun needToDiscover(): Boolean {
-        return !discovered
     }
 
     @Synchronized
@@ -40,9 +37,7 @@ class Executor {
 
     @Synchronized
     fun next(gatt: BluetoothGatt) {
-        if (needToDiscover()) {
-            discovered = gatt.discoverServices()
-        } else if (haveToRead()) {
+        if (haveToRead()) {
             gatt.readCharacteristic(toReadQ.poll())
         } else if (haveToNotify()) {
             val head = toNotifyQ.poll()

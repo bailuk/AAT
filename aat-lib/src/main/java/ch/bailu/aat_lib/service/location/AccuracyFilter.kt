@@ -2,7 +2,6 @@ package ch.bailu.aat_lib.service.location
 
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.presets.SolidAccuracyFilter
-import javax.annotation.Nonnull
 
 /**
  * Only pass location if accuracy is more precise than min accuracy.
@@ -13,7 +12,7 @@ class AccuracyFilter(n: LocationStackItem) : LocationStackChainedItem(n) {
 
     override fun close() {}
 
-    override fun passLocation(@Nonnull location: LocationInformation) {
+    override fun passLocation(location: LocationInformation) {
         if (location.getAccuracy() < minAccuracy) {
             super.passLocation(location)
         }

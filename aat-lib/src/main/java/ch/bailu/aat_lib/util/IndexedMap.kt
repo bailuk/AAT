@@ -16,11 +16,19 @@ class IndexedMap<K, V> {
     }
 
     fun getValueAt(index: Int) : V? {
-        return map[keys[index]]
+        return if (index > -1 && index < keys.size) {
+            map[keys[index]]
+        } else {
+            null
+        }
     }
 
     fun getKeyAt(index: Int) : K? {
-        return keys[index]
+        return if (index > -1 && index < keys.size) {
+            keys[index]
+        } else {
+            null
+        }
     }
 
     fun size(): Int {

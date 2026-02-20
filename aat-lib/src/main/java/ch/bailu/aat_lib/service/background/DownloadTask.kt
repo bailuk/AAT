@@ -65,7 +65,7 @@ open class DownloadTask(
         val buffer = downloadConnection.createBuffer()
 
         try {
-            output = file.openW()
+            output = fixmeOpenTwice(file)
             connection = downloadConnection.openConnection(url)
             input = downloadConnection.openInput(connection)
             while (input.read(buffer).also { count = it } != -1) {
@@ -75,11 +75,24 @@ open class DownloadTask(
 
         } catch (e: Exception) {
             AppLog.e(this, e, ToDo.translate("GET '${url.toString().ellipsize(50)}': failed" ))
-
         } finally {
             Foc.close(output)
             Foc.close(input)
         }
         return total
+    }
+
+    /**
+     * This is a workaround for a bug in FocFile.openW()
+     * If two threads call this function for a file in the same directory this function can fail.
+     * FocFile.openW() throws IOException because File.mkdir() returns false
+     * because the directory was unexpectedly created by the other thread.
+     */
+    private fun fixmeOpenTwice(file: Foc): OutputStream {
+        return try {
+            file.openW()
+        } catch (e: IOException) {
+            file.openW()
+        }
     }
 }

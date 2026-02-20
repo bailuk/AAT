@@ -9,13 +9,15 @@ import ch.bailu.aat.R
 import ch.bailu.aat.preferences.Storage
 import ch.bailu.aat.preferences.location.SolidGoToLocation
 import ch.bailu.aat.util.Clipboard
+import ch.bailu.aat_lib.api.nominatim.NominatimReverseController
 import ch.bailu.aat_lib.coordinates.OlcCoordinates
 import ch.bailu.aat_lib.coordinates.WGS84Coordinates
 import ch.bailu.aat_lib.map.MapViewInterface
 import ch.bailu.aat_lib.preferences.map.SolidMapGrid
+import ch.bailu.aat_lib.resources.ToDo
 import org.mapsforge.core.model.LatLong
 
-class LocationMenu(private val context: Context, private val map: MapViewInterface) : AbsMenu() {
+class LocationMenu(private val context: Context, private val map: MapViewInterface, private val reverseController: NominatimReverseController) : AbsMenu() {
     private val clipboard: Clipboard = Clipboard(context)
     private var paste: MenuItem? = null
 
@@ -27,6 +29,9 @@ class LocationMenu(private val context: Context, private val map: MapViewInterfa
         paste = add(menu, R.string.clipboard_paste) { paste() }
 
         add(menu, SolidGoToLocation(context).getLabel()) { SolidGoToLocation(context).goToLocationFromUser(map) }
+
+        add(menu, ToDo.translate("Reverse Lookup")) { reverseController.onAction() }
+        add(menu, ToDo.translate("Reverse Center")) { reverseController.center() }
     }
 
     override val title: String

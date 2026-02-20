@@ -15,7 +15,7 @@ public class GpxBigDelta implements GpxBigDeltaInterface {
     private long endTime=0;
     private long pause=0;
 
-    private GpxType type;
+    private GpxType type = GpxType.TRACK;
 
     private BoundingBoxE6 boundingBox = null;
 

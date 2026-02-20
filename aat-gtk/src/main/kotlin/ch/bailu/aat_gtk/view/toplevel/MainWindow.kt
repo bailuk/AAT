@@ -1,5 +1,6 @@
 package ch.bailu.aat_gtk.view.toplevel
 
+import ch.bailu.aat_gtk.api.setActions
 import ch.bailu.aat_gtk.app.GtkAppConfig
 import ch.bailu.aat_gtk.app.GtkAppContext
 import ch.bailu.aat_gtk.app.exit
@@ -12,15 +13,16 @@ import ch.bailu.aat_gtk.util.GtkTimer
 import ch.bailu.aat_gtk.view.dialog.FileChangedDialog
 import ch.bailu.aat_gtk.view.dialog.PreferencesDialog
 import ch.bailu.aat_gtk.view.map.GtkCustomMapView
-import ch.bailu.aat_gtk.view.menu.provider.LocationMenu
 import ch.bailu.aat_gtk.view.messages.MessageOverlay
 import ch.bailu.aat_gtk.view.search.PoiPage
 import ch.bailu.aat_gtk.view.toplevel.navigation.NavigationView
 import ch.bailu.aat_lib.Configuration
+import ch.bailu.aat_lib.api.brouter.BrouterController
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
-import ch.bailu.aat_lib.dispatcher.Dispatcher
+import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.TargetInterface
+import ch.bailu.aat_lib.dispatcher.source.BeaconSource
 import ch.bailu.aat_lib.dispatcher.source.CurrentLocationSource
 import ch.bailu.aat_lib.dispatcher.source.EditorSource
 import ch.bailu.aat_lib.dispatcher.source.FileViewSource
@@ -29,12 +31,13 @@ import ch.bailu.aat_lib.dispatcher.source.IteratorSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerSource
 import ch.bailu.aat_lib.dispatcher.source.TrackerTimerSource
 import ch.bailu.aat_lib.dispatcher.source.addOverlaySources
+import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerAlwaysEnabled
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackers
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.gpx.information.InformationUtil
-import ch.bailu.aat_lib.preferences.map.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.preferences.map.SolidPositionLock
+import ch.bailu.aat_lib.preferences.map.overlay.SolidOverlayFileEnabled
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.foc.Foc
 import ch.bailu.gtk.adw.Application
@@ -46,7 +49,7 @@ import ch.bailu.gtk.gtk.Overlay
 import ch.bailu.gtk.lib.bridge.CSS
 import org.mapsforge.core.model.LatLong
 
-class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: Dispatcher) :
+class MainWindow(private val app: Application, private val appContext: AppContext, dispatcher: DispatcherInterface) :
     UiControllerInterface {
 
     private val usageTrackers = UsageTrackers()
@@ -93,7 +96,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         navigationView.observe(mainPage)
         navigationView.observe(poiView)
 
-        setupDispatcher(dispatcher)
+        createDispatcher(dispatcher)
         TrackerOverlayOnOffController(appContext.storage, dispatcher)
 
         navigationView.showLeftSidebar()
@@ -117,7 +120,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
             exit(dispatcher, 0)
         }
 
-        LocationMenu.createActions(appContext.storage, app, window.display, this)
+        BrouterController(appContext, editorSource).setActions(app)
     }
 
     private fun clearEditor(onCleared: ()->Unit)  {
@@ -228,7 +231,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
                 editorSource.editor.unload()
                 editorSource.edit(file)
                 mapView.showEditor()
-                frameInMap(boundingBoxE6)
+                //frameInMap(boundingBoxE6)
                 SolidOverlayFileEnabled(appContext.storage, InfoID.EDITOR_OVERLAY).value = true
             }
         }
@@ -246,7 +249,7 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         SolidOverlayFileEnabled(appContext.storage, iid).value = enabled
     }
 
-    private fun setupDispatcher(dispatcher: Dispatcher) {
+    private fun createDispatcher(dispatcher: DispatcherInterface) {
         dispatcher.addSource(TrackerTimerSource(GtkAppContext.services, GtkTimer()))
         dispatcher.addSource(CurrentLocationSource(GtkAppContext.services, GtkAppContext.broadcaster))
         dispatcher.addSource(TrackerSource(GtkAppContext.services, GtkAppContext.broadcaster, usageTrackers))
@@ -255,6 +258,10 @@ class MainWindow(private val app: Application, private val appContext: AppContex
         dispatcher.addOverlaySources(appContext, usageTrackers)
         dispatcher.addSource(FixedOverlaySource.createDraftSource(appContext, usageTrackers))
         dispatcher.addSource(FixedOverlaySource.createPoiSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createBrouterSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createCmSource(appContext, usageTrackers))
+        dispatcher.addSource(FixedOverlaySource.createNominatimReverseSource(appContext, usageTrackers))
+        dispatcher.addSource(BeaconSource(GtkAppContext.services, appContext.broadcaster, UsageTrackerAlwaysEnabled()))
         dispatcher.addSource(editorSource)
         dispatcher.addTarget(metaInfoCollector, InfoID.ALL)
     }
