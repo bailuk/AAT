@@ -17,6 +17,7 @@ class RouteWriter(file: Foc) : GpxWriter(file) {
     override fun writeFooter() {
         writeEndElement(GpxConstants.QNAME_ROUTE)
         writeEndElement(GpxConstants.QNAME_GPX)
+        writeRawChar('\n')
     }
 
     override fun writeSegment() {}

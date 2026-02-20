@@ -17,6 +17,7 @@ class TrackWriter(file: Foc) : GpxWriter(file) {
         writeEndElement(GpxConstants.QNAME_TRACK_SEGMENT)
         writeEndElement(GpxConstants.QNAME_TRACK)
         writeEndElement(GpxConstants.QNAME_GPX)
+        writeRawChar('\n')
     }
 
     @Throws(IOException::class)
