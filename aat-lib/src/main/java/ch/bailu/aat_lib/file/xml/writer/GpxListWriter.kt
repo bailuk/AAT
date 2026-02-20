@@ -18,13 +18,17 @@ class GpxListWriter(track: GpxList, file: Foc) : Closeable {
 
     @Throws(IOException::class)
     override fun close() {
-        flushOutput()
+        writeNewPoints()
         writer.writeFooter()
         writer.close()
     }
 
+    /**
+     * Write points that have been added to the #GpxList since the
+     * last call to the #GpxWriter.
+     */
     @Throws(IOException::class)
-    fun flushOutput() {
+    fun writeNewPoints() {
         while (iterator.nextPoint()) {
             if (iterator.isFirstInSegment) {
                 if (iterator.isFirstInTrack) {

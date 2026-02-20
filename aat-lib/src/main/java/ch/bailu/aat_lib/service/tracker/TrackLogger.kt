@@ -61,7 +61,7 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         if (node is GpxPointNode) {
             setVisibleTrackPoint(node)
         }
-        writer.flushOutput()
+        writer.writeNewPoints()
     }
 
     override fun close() {
