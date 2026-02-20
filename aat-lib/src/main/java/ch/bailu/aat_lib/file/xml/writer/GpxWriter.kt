@@ -62,11 +62,9 @@ abstract class GpxWriter(file: Foc) {
 
     @Throws(IOException::class)
     protected fun writeTimeStamp(time: Long) {
-        writeString(
-            ("<" + GpxConstants.QNAME_TIME + ">"
-                    + f.dateFormat.format(time) +
-                    "</" + GpxConstants.QNAME_TIME + ">")
-        )
+        writeBeginElement(GpxConstants.QNAME_TIME);
+        writeString(f.dateFormat.format(time));
+        writeEndElement(GpxConstants.QNAME_TIME);
     }
 
     @Throws(IOException::class)
