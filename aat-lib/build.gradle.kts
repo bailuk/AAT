@@ -64,6 +64,7 @@ dependencies {
     implementation("com.google.guava:guava:33.5.0-jre")
 
     implementation("com.github.MaxKellermann:beacon:v0.1")
+    testImplementation(kotlin("test"))
 }
 
 testing {
