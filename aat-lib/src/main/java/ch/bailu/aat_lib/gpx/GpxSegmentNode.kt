@@ -1,89 +1,63 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
-import ch.bailu.aat_lib.gpx.linked_list.Node;
-import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.gpx.linked_list.Node
+import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
-public class GpxSegmentNode extends SegmentNode implements GpxBigDeltaInterface {
+open class GpxSegmentNode : SegmentNode, GpxBigDeltaInterface {
+    private val delta = GpxBigDelta(GpxListAttributes.NULL)
 
-    private final GpxBigDelta delta=new GpxBigDelta(GpxListAttributes.NULL);
+    constructor(node: GpxPointNode) : super(node)
+    constructor(node: GpxPointNode, marker: GpxSegmentNode) : super(node, marker)
 
+    override fun update(node: Node) {
+        val node = node as GpxPointNode
 
-    public GpxSegmentNode(GpxPointNode n) {
-        super(n);
+        super.update(node)
+        delta.update(node)
     }
 
-
-    public GpxSegmentNode(GpxPointNode n, GpxSegmentNode m) {
-        super(n, m);
+    override fun getAcceleration(): Float {
+        return delta.getAcceleration()
     }
 
-
-
-
-    @Override
-    public void update(Node n) {
-        GpxPointNode node=(GpxPointNode)n;
-
-        super.update(node);
-        delta.update(node);
+    override fun getSpeed(): Float {
+        return delta.getSpeed()
     }
 
-
-    public float getAcceleration() {
-        return delta.getAcceleration();
+    override fun getDistance(): Float {
+        return delta.getDistance()
     }
 
-
-    public float getSpeed() {
-        return delta.getSpeed();
+    override fun getPause(): Long {
+        return delta.getPause()
     }
 
-
-    public float getDistance() {
-        return delta.getDistance();
+    override fun getStartTime(): Long {
+        return delta.getStartTime()
     }
 
-
-
-    public long getPause() {
-        return delta.getPause();
+    override fun getTimeDelta(): Long {
+        return delta.getTimeDelta()
     }
 
-    public long getStartTime() {
-        return delta.getStartTime();
+    override fun getBoundingBox(): BoundingBoxE6 {
+        return delta.getBoundingBox()
     }
 
-
-    public long getTimeDelta() {
-        return delta.getTimeDelta();
+    override fun getEndTime(): Long {
+        return delta.getEndTime()
     }
 
-
-    public BoundingBoxE6 getBoundingBox() {
-        return delta.getBoundingBox();
+    override fun getType(): GpxType {
+        return delta.getType()
     }
 
-
-    @Override
-    public long getEndTime() {
-        return delta.getEndTime();
+    override fun getAttributes(): GpxAttributes {
+        return delta.getAttributes()
     }
-
-
-
-    @Override
-    public GpxType getType() {
-        return delta.getType();
-    }
-
-    @Override
-    public GpxAttributes getAttributes() {
-        return delta.getAttributes();
-    }
-
 }

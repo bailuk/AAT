@@ -1,51 +1,53 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import org.mapsforge.core.model.LatLong;
-import org.mapsforge.core.util.LatLongUtils;
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import org.mapsforge.core.model.LatLong
+import org.mapsforge.core.util.LatLongUtils
 
-import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-
-public class GpxDeltaHelper  {
-    public static float getDistance(GpxPointInterface a, GpxPointInterface b) {
-
+object GpxDeltaHelper {
+    @JvmStatic
+    fun getDistance(a: GpxPointInterface, b: GpxPointInterface): Float {
         return getDistance(
-                new LatLong(a.getLatitude(), a.getLongitude()),
-                new LatLong(b.getLatitude(), b.getLongitude()));
-
-
+            LatLong(a.getLatitude(), a.getLongitude()),
+            LatLong(b.getLatitude(), b.getLongitude())
+        )
     }
 
-    public static float getDistance(LatLong a, LatLong b) {
-        return (float) LatLongUtils.sphericalDistance(a, b);
+    fun getDistance(a: LatLong, b: LatLong): Float {
+        return LatLongUtils.sphericalDistance(a, b).toFloat()
     }
 
-    public static float getAcceleration(GpxDeltaPointInterface a, GpxDeltaPointInterface b) {
-        float deltaSpeed=b.getSpeed()-a.getSpeed();
-        float deltaTime=getTimeDeltaSI(a,b);
-        return getAcceleration(deltaSpeed, deltaTime);
+    @JvmStatic
+    fun getAcceleration(a: GpxDeltaPointInterface, b: GpxDeltaPointInterface): Float {
+        val deltaSpeed = b.getSpeed() - a.getSpeed()
+        val deltaTime = getTimeDeltaSI(a, b)
+        return getAcceleration(deltaSpeed, deltaTime)
     }
 
-    private static float getAcceleration(float deltaSpeed, float deltaTime) {
-        if (deltaTime != 0f) return deltaSpeed / deltaTime;
-        else return 0f;
+    private fun getAcceleration(deltaSpeed: Float, deltaTime: Float): Float {
+        return if (deltaTime != 0f) deltaSpeed / deltaTime
+        else 0f
     }
 
-    public static float getSpeed(GpxPointInterface a, GpxPointInterface b) {
-        return getSpeed(getDistance(a,b),getTimeDeltaSI(a,b));
+    fun getSpeed(a: GpxPointInterface, b: GpxPointInterface): Float {
+        return getSpeed(getDistance(a, b), getTimeDeltaSI(a, b))
     }
 
-    public static float getSpeed(float distance, float time) {
-        if (time > 0f) return (distance / time);
-        else return 0f;
+    @JvmStatic
+    fun getSpeed(distance: Float, time: Float): Float {
+        return if (time > 0f) (distance / time)
+        else 0f
     }
 
-    public static long getTimeDeltaMilli(GpxPointInterface a, GpxPointInterface b) {
-        return b.getTimeStamp() - a.getTimeStamp();
+    @JvmStatic
+    fun getTimeDeltaMilli(a: GpxPointInterface, b: GpxPointInterface): Long {
+        return b.getTimeStamp() - a.getTimeStamp()
     }
 
-    public static float getTimeDeltaSI(GpxPointInterface a, GpxPointInterface b) {
-        float deltaT = getTimeDeltaMilli(a,b);
-        return deltaT / 1000f;
+    @JvmStatic
+    fun getTimeDeltaSI(a: GpxPointInterface, b: GpxPointInterface): Float {
+        val deltaT = getTimeDeltaMilli(a, b).toFloat()
+        return deltaT / 1000f
     }
 }

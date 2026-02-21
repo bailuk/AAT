@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.gpx.GpxPointFirstNode
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.GpxSegmentNode
 import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 
 class SimplifierDistance : GpxListWalker() {
     var newList: GpxList? = null
@@ -43,7 +44,11 @@ class SimplifierDistance : GpxListWalker() {
     }
 
     private fun hasDistance(point: GpxPointNode): Boolean {
-        return GpxDeltaHelper.getDistance(lastPoint, point) >= MIN_DISTANCE
+        val lastPoint = lastPoint
+        if (lastPoint is GpxPointInterface) {
+            return GpxDeltaHelper.getDistance(lastPoint, point) >= MIN_DISTANCE
+        }
+        return false
     }
 
     private fun isLastInSegment(point: GpxPointNode): Boolean {

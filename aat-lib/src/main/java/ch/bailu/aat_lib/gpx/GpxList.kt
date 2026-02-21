@@ -52,9 +52,7 @@ class GpxList(type: GpxType, attr: GpxListAttributes) {
         return delta
     }
 
-    fun setType(type: GpxType?) {
+    fun setType(type: GpxType) {
         delta.setType(type)
     }
-
-
 }

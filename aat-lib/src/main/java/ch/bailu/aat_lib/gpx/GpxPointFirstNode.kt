@@ -1,35 +1,21 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 
-public class GpxPointFirstNode extends GpxPointNode {
-
-    public GpxPointFirstNode(GpxPoint tp, GpxAttributes at) {
-        super(tp, at);
+open class GpxPointFirstNode(point: GpxPoint, attributes: GpxAttributes) : GpxPointNode(point, attributes) {
+    override fun getSpeed(): Float {
+        return 0f
     }
 
-
-    @Override
-    public float getSpeed() {
-        return 0f;
+    override fun getAcceleration(): Float {
+        return 0f
     }
 
-
-    @Override
-    public float getAcceleration() {
-        return 0f;
+    override fun getDistance(): Float {
+        return 0f
     }
 
-
-    @Override
-    public float getDistance() {
-        return 0f;
+    override fun getTimeDelta(): Long {
+        return 0
     }
-
-
-    @Override
-    public long getTimeDelta() {
-        return 0;
-    }
-
 }

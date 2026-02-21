@@ -1,75 +1,66 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.gpx.linked_list.Node;
-import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode;
+import ch.bailu.aat_lib.gpx.linked_list.Node
+import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
+abstract class GpxListWalker {
+    private var increment = 0
+    private var count = 0
 
-public abstract class GpxListWalker {
-    private int increment=0;
-    private int count=0;
+    fun walkTrack(track: GpxList, inc: Int) {
+        increment = inc - 1
 
-
-    public void walkTrack(GpxList track, int inc) {
-        increment = inc-1;
-
-        walkTrack(track);
+        walkTrack(track)
     }
 
-
-    public void walkTrack(GpxList track) {
-        increment=0;
+    fun walkTrack(track: GpxList) {
+        increment = 0
         if (doList(track)) {
-
-            Node segment = track.getSegmentList().getFirst();
+            var segment = track.segmentList.first
 
             while (segment != null) {
-                walkSegment((GpxSegmentNode)segment);
-                segment = segment.getNext();
+                walkSegment(segment as GpxSegmentNode)
+                segment = segment.next
             }
         }
     }
 
-
-    private void walkSegment(GpxSegmentNode segment) {
+    private fun walkSegment(segment: GpxSegmentNode) {
         if (doSegment(segment)) {
-            int count = segment.getSegmentSize();
-            Node marker = segment.getMarker();
+            var count = segment.segmentSize
+            var marker: Node? = segment.marker
 
-            while( count > 0 ) {
-                walkMarker((GpxSegmentNode) marker);
+            while (count > 0) {
+                walkMarker((marker as GpxSegmentNode?)!!)
 
-                count -= ((SegmentNode)marker).getSegmentSize();
-                marker=marker.getNext();
+                count -= (marker as SegmentNode).segmentSize
+                marker = marker.next
             }
         }
     }
 
-
-    private void walkMarker(GpxSegmentNode marker) {
+    private fun walkMarker(marker: GpxSegmentNode) {
         if (doMarker(marker)) {
-            int count = marker.getSegmentSize();
-
-            Node node = marker.getFirstNode();
-
-            while ( count > 0 ) {
-
+            var count = marker.segmentSize
+            var node: Node? = marker.firstNode
+            while (count > 0) {
                 if (this.count == 0) {
-                    this.count=increment;
-                    doPoint((GpxPointNode)node);
+                    this.count = increment
+                    if (node is GpxPointNode) {
+                        doPoint(node)
+                    }
                 } else {
-                    this.count--;
+                    this.count--
                 }
 
-                count --;
-                node = node.getNext();
-
+                count--
+                node = node?.next
             }
         }
     }
 
-
-    public abstract boolean doList(GpxList track);
-    public abstract boolean doSegment(GpxSegmentNode segment);
-    public abstract boolean doMarker(GpxSegmentNode marker);
-    public abstract void doPoint(GpxPointNode point);
+    abstract fun doList(track: GpxList): Boolean
+    abstract fun doSegment(segment: GpxSegmentNode): Boolean
+    abstract fun doMarker(marker: GpxSegmentNode): Boolean
+    abstract fun doPoint(point: GpxPointNode)
 }
