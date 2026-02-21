@@ -1,97 +1,93 @@
-package ch.bailu.aat_lib.service.editor;
+package ch.bailu.aat_lib.service.editor
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
 
-public final class GpxEditor {
-
-    private final EditorRing ring;
-
-    public GpxEditor(GpxList list) {
-        if (list.getPointList().size() > 0) {
-            ring = new EditorRing((new NodeEditor((GpxPointNode) list.getPointList().getFirst(),
-                    list)));
-        } else {
-            ring = new EditorRing(new NodeEditor());
-        }
+class GpxEditor(list: GpxList) {
+    private val ring: EditorRing = if (list.pointList.size() > 0) {
+        EditorRing(
+            (NodeEditor(
+                (list.pointList.first as GpxPointNode?)!!,
+                list
+            ))
+        )
+    } else {
+        EditorRing(NodeEditor())
     }
 
-    public void select(GpxPointNode point, GpxList list) {
-        ring.set(new NodeEditor(point, list));
+    fun select(point: GpxPointNode, list: GpxList) {
+        ring.set(NodeEditor(point, list))
     }
 
-    public void clear() {
-        ring.add(new NodeEditor());
+    fun clear() {
+        ring.add(NodeEditor())
     }
 
-    public void unlinkSelectedNode() {
-        ring.add(ring.get().unlink());
+    fun unlinkSelectedNode() {
+        ring.add(ring.get().unlink())
     }
 
-    public void insertNode(GpxPointInterface point) {
-        ring.add(ring.get().insert(point));
+    fun insertNode(point: GpxPointInterface) {
+        ring.add(ring.get().insert(point))
     }
 
-    public void moveSelectedUp() {
-        GpxPointInterface point = ring.get().getPoint();
+    fun moveSelectedUp() {
+        val point: GpxPointInterface = ring.get().point
 
-        ring.add(ring.get().unlink());
-        ring.set(ring.get().previous());
-        ring.set(ring.get().insert(point));
+        ring.add(ring.get().unlink())
+        ring.set(ring.get().previous())
+        ring.set(ring.get().insert(point))
     }
 
-    public void moveSelectedDown() {
-        GpxPointInterface point = ring.get().getPoint();
+    fun moveSelectedDown() {
+        val point: GpxPointInterface = ring.get().point
 
-        ring.add(ring.get().unlink());
-        ring.set(ring.get().next());
-        ring.set(ring.get().insert(point));
-
+        ring.add(ring.get().unlink())
+        ring.set(ring.get().next())
+        ring.set(ring.get().insert(point))
     }
 
-    public GpxList getList() {
-        return ring.get().getList();
+    val list: GpxList
+        get() = ring.get().list
+
+    val selectedPoint: GpxPointNode
+        get() = ring.get().point
+
+    fun setType(type: GpxType) {
+        ring.get().list.setType(type)
     }
 
-    public GpxPointNode getSelectedPoint() {
-        return ring.get().getPoint();
+    fun undo(): Boolean {
+        return ring.undo()
     }
 
-    public void setType(GpxType type) {
-        ring.get().getList().setType(type);
+    fun redo(): Boolean {
+        return ring.redo()
     }
 
-    public boolean undo() {
-        return ring.undo();
+    fun simplify() {
+        ring.add(ring.get().simplify())
     }
 
-    public boolean redo() {
-        return ring.redo();
+    fun fix() {
+        ring.add(ring.get().fix())
     }
 
-    public void simplify() {
-        ring.add(ring.get().simplify());
+    fun inverse() {
+        ring.add(ring.get().inverse())
     }
 
-    public void fix() {
-        ring.add(ring.get().fix());
+    fun attach(toAttach: GpxList) {
+        ring.add(ring.get().attach(toAttach))
     }
 
-    public void inverse() {
-        ring.add(ring.get().inverse());
+    fun cutPreceding() {
+        ring.add(ring.get().cutPreceding())
     }
 
-    public void attach(GpxList toAttach) {
-        ring.add(ring.get().attach(toAttach));
-    }
-
-    public void cutPreceding() {
-        ring.add(ring.get().cutPreciding());
-    }
-
-    public void cutRemaining() {
-        ring.add(ring.get().cutRemaining());
+    fun cutRemaining() {
+        ring.add(ring.get().cutRemaining())
     }
 }

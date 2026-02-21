@@ -57,7 +57,7 @@ class ObjGpxEditable(id: String, private val file: Foc, sc: AppContext) : ObjGpx
         EditorInterface {
         private var editor = GpxEditor(GpxList.NULL_ROUTE)
         private var modified = false
-        fun loadIntoEditor(list: GpxList?) {
+        fun loadIntoEditor(list: GpxList) {
             editor = GpxEditor(list)
             modified = false
             modified(false)
