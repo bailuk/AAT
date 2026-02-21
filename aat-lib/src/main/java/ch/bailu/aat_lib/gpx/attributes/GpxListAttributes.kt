@@ -88,6 +88,7 @@ class GpxListAttributes(vararg attr: GpxSubAttributes) :
                 LastAverage(),
                 SampleRate.Cadence(),
                 SampleRate.HeartRate(),
+                SampleRate.Power(),
                 StepsRate(),
                 Steps()
             )
