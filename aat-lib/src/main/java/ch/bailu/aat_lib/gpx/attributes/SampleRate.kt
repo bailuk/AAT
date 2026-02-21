@@ -87,6 +87,28 @@ open class SampleRate private constructor(keys: Keys, private vararg val KEY: In
         }
     }
 
+    class Power : SampleRate(KEYS, *GPX_KEYS) {
+        override fun getAsInteger(keyIndex: Int): Int {
+            if (keyIndex == INDEX_AVERAGE_POWER) {
+                return averageSpm
+            } else if (keyIndex == INDEX_MAX_POWER) {
+                return maxSpm
+            }
+            return super.getAsInteger(keyIndex)
+        }
+
+        companion object {
+            @JvmField
+            val GPX_KEYS = intArrayOf(
+                PowerAttributes.KEY_INDEX_POWER,
+            )
+            private val KEYS = Keys()
+            val INDEX_AVERAGE_POWER = KEYS.add("AveragePower")
+            @JvmField
+            val INDEX_MAX_POWER = KEYS.add("MaxPower")
+        }
+    }
+
     override fun update(point: GpxPointNode, autoPause: Boolean): Boolean {
         if (!autoPause) {
             val attr = point.getAttributes()
