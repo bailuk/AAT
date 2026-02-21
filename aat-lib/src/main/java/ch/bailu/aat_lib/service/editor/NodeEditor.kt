@@ -1,371 +1,346 @@
-package ch.bailu.aat_lib.service.editor;
+package ch.bailu.aat_lib.service.editor
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.tools.Attacher;
-import ch.bailu.aat_lib.gpx.tools.Copier;
-import ch.bailu.aat_lib.gpx.tools.Inverser;
-import ch.bailu.aat_lib.gpx.tools.SimplifierBearing;
-import ch.bailu.aat_lib.gpx.tools.SimplifierDistance;
-import ch.bailu.aat_lib.gpx.tools.TimeStampFixer;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPoint;
-import ch.bailu.aat_lib.gpx.GpxPointFirstNode;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPoint
+import ch.bailu.aat_lib.gpx.GpxPointFirstNode
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
+import ch.bailu.aat_lib.gpx.tools.Attacher
+import ch.bailu.aat_lib.gpx.tools.Copier
+import ch.bailu.aat_lib.gpx.tools.Inverser
+import ch.bailu.aat_lib.gpx.tools.SimplifierBearing
+import ch.bailu.aat_lib.gpx.tools.SimplifierDistance
+import ch.bailu.aat_lib.gpx.tools.TimeStampFixer
 
-public final class NodeEditor {
-    private final GpxList gpxList;
-    private final GpxPointNode node;
+class NodeEditor {
+    val list: GpxList
+    val point: GpxPointNode
 
 
-    public NodeEditor() {
-        this(GpxType.ROUTE);
+    @JvmOverloads
+    constructor(type: GpxType = GpxType.ROUTE) {
+        this.list = GpxList(type, GpxListAttributes.NULL)
+        this.point = GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL)
     }
 
-    public NodeEditor(GpxType t) {
-        gpxList = new GpxList(t, GpxListAttributes.NULL);
-        node = new GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL);
+    constructor(node: GpxPointNode, list: GpxList) {
+        this.point = node
+        this.list = list
     }
 
-    public NodeEditor(GpxPointNode n, GpxList l) {
-        node = n;
-        gpxList = l;
-    }
+    fun simplify(): NodeEditor {
+        val distance = SimplifierDistance()
+        distance.walkTrack(this.list)
 
-
-    public GpxPointNode getPoint() {
-        return node;
-    }
-
-
-    public GpxList getList() {
-        return gpxList;
-    }
-
-    public NodeEditor simplify() {
-        SimplifierDistance distance = new SimplifierDistance();
-        distance.walkTrack(gpxList);
-
-        SimplifierBearing bearing = new SimplifierBearing();
-        bearing.walkTrack(distance.getNewList());
-
-        return toEditor(bearing.getNewList());
-    }
-
-
-
-    public NodeEditor fix() {
-        TimeStampFixer fixer = new TimeStampFixer();
-        fixer.walkTrack(gpxList);
-
-        return toEditor(fixer.getNewList());
-    }
-
-
-    public NodeEditor inverse() {
-        Inverser inverser = new Inverser(gpxList);
-
-        return toEditor(inverser.getNewList());
-    }
-
-    public NodeEditor attach(GpxList toAttach) {
-        Copier copier = new Copier();
-        copier.walkTrack(gpxList);
-
-        Attacher attacher = new Attacher(copier.getNewList());
-        attacher.walkTrack(toAttach);
-
-        return toEditor(attacher.getNewList());
-    }
-
-
-    private static NodeEditor toEditor(GpxList list) {
-        if (list.getPointList().size()>0) {
-            return new NodeEditor(
-                    (GpxPointNode)list.getPointList().getFirst(), list);
-        } else {
-            return new NodeEditor(list.getDelta().getType());
+        val bearing = SimplifierBearing()
+        val distanceList = distance.newList
+        if (distanceList is GpxList) {
+            bearing.walkTrack(distanceList)
+            val bearingList = bearing.newList
+            if (bearingList is GpxList) {
+                return toEditor(bearingList)
+            }
         }
+        return this
     }
 
-    public NodeEditor unlink() {
-        Unlinker unlinker = new Unlinker();
-        unlinker.walkTrack(gpxList);
-
-        return unlinker.getNewNode();
-    }
-
-
-    public NodeEditor insert(GpxPointInterface point) {
-        Inserter inserter = new Inserter(point);
-        inserter.walkTrack(gpxList);
-
-        return inserter.getNewNode();
+    fun fix(): NodeEditor {
+        val fixer = TimeStampFixer()
+        fixer.walkTrack(this.list)
+        val list = fixer.newList
+        if (list is GpxList) {
+            return toEditor(list)
+        }
+        return this
     }
 
 
-    public NodeEditor previous() {
-        GpxPointNode newNode = (GpxPointNode)node.getPrevious();
-
-        if (newNode == null) return this;
-        return new NodeEditor(newNode, gpxList);
+    fun inverse(): NodeEditor {
+        val inverser = Inverser(this.list)
+        return toEditor(inverser.newList)
     }
 
+    fun attach(toAttach: GpxList): NodeEditor {
+        val copier = Copier()
+        copier.walkTrack(this.list)
 
-    public NodeEditor next() {
-        GpxPointNode newNode = (GpxPointNode)node.getNext();
+        val attacher = Attacher(copier.newList!!)
+        attacher.walkTrack(toAttach)
 
-        if (newNode == null) return this;
-        return new NodeEditor(newNode, gpxList);
+        return toEditor(attacher.newList)
     }
 
-    public NodeEditor cutPreciding() {
-        PrecedingCutter cutter = new PrecedingCutter();
-        cutter.walkTrack(gpxList);
+    fun unlink(): NodeEditor {
+        val unlinker = Unlinker()
+        unlinker.walkTrack(this.list)
 
-        return saveReturn(cutter.getNewNode());
+        return unlinker.getNewNode()
     }
 
+    fun insert(point: GpxPointInterface): NodeEditor {
+        val inserter = Inserter(point)
+        inserter.walkTrack(this.list)
 
-    private NodeEditor saveReturn(NodeEditor n) {
-        if (n == null) return this;
-        return n;
+        return inserter.getNewNode()
     }
 
+    fun previous(): NodeEditor {
+        val newNode = point.previous as GpxPointNode?
 
-    public NodeEditor cutRemaining() {
-        RemainingCutter cutter = new RemainingCutter();
-        cutter.walkTrack(gpxList);
-
-        return saveReturn(cutter.getNewNode());
+        if (newNode == null) return this
+        return NodeEditor(newNode, this.list)
     }
 
+    fun next(): NodeEditor {
+        val newNode = point.next as GpxPointNode?
 
-    private class Unlinker extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
+        if (newNode == null) return this
+        return NodeEditor(newNode, this.list)
+    }
 
-        private boolean startSegment=false;
-        private NodeEditor newNode = null;
+    fun cutPreceding(): NodeEditor {
+        val cutter = PrecedingCutter()
+        cutter.walkTrack(this.list)
 
-        @Override
-        public boolean doList(GpxList track) {
-            return true;
+        return saveReturn(cutter.newNode)
+    }
+
+    private fun saveReturn(node: NodeEditor?): NodeEditor {
+        if (node == null) return this
+        return node
+    }
+
+    fun cutRemaining(): NodeEditor {
+        val cutter = RemainingCutter()
+        cutter.walkTrack(this.list)
+
+        return saveReturn(cutter.newNode)
+    }
+
+    private inner class Unlinker : GpxListWalker() {
+        private val newList = GpxList(list.getDelta().getType(), GpxListAttributes.NULL)
+
+        private var startSegment = false
+        private var newNode: NodeEditor? = null
+
+        override fun doList(track: GpxList): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            startSegment=true;
-            return true;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            startSegment = true
+            return true
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public void doPoint(GpxPointNode pointNode) {
-            if (pointNode == node) {
-                if (newList.getPointList().size()>0) {
-                    newNode = new NodeEditor(
-                            (GpxPointNode)newList.getPointList().getLast(), newList);
+        override fun doPoint(pointNode: GpxPointNode) {
+            if (pointNode === this@NodeEditor.point) {
+                if (newList.pointList.size() > 0) {
+                    newNode = NodeEditor(
+                        (newList.pointList.last as GpxPointNode?)!!, newList
+                    )
                 }
             } else {
                 if (startSegment) {
-                    newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
-                    startSegment=false;
+                    newList.appendToNewSegment(pointNode.point, pointNode.getAttributes())
+                    startSegment = false
                 } else {
-                    newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
+                    newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes())
                 }
             }
         }
 
-        public NodeEditor getNewNode() {
+        fun getNewNode(): NodeEditor {
             if (newNode == null) {
-                if (newList.getPointList().size()>0) {
-                    newNode = new NodeEditor(
-                            (GpxPointNode)newList.getPointList().getFirst(), newList);
+                if (newList.pointList.size() > 0) {
+                    newNode = NodeEditor(
+                        (newList.pointList.first as GpxPointNode?)!!, newList
+                    )
                 } else {
-                    newNode = new NodeEditor(newList.getDelta().getType());
+                    newNode = NodeEditor(newList.getDelta().getType())
                 }
             }
-            return newNode;
+            return newNode!!
         }
     }
 
 
-    private class Inserter extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(),
-                GpxListAttributes.NULL);
+    private inner class Inserter(private val newPoint: GpxPointInterface) : GpxListWalker() {
+        private val newList = GpxList(
+            list.getDelta().getType(),
+            GpxListAttributes.NULL
+        )
 
-        private NodeEditor newNode = new NodeEditor(gpxList.getDelta().getType());
-        private boolean startSegment=false;
-        private final GpxPointInterface newPoint;
+        private var newNode = NodeEditor(list.getDelta().getType())
+        private var startSegment = false
 
 
-        public Inserter(GpxPointInterface point) {
-            newPoint = point;
+        override fun doList(track: GpxList): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doList(GpxList track) {
-            return true;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            startSegment = true
+            return true
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            startSegment=true;
-            return true;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
-        }
-
-        @Override
-        public void doPoint(GpxPointNode point) {
+        override fun doPoint(point: GpxPointNode) {
             if (startSegment) {
-                newList.appendToNewSegment(point.point, point.getAttributes());
-                startSegment=false;
+                newList.appendToNewSegment(point.point, point.getAttributes())
+                startSegment = false
             } else {
-                newList.appendToCurrentSegment(point.point, point.getAttributes());
+                newList.appendToCurrentSegment(point.point, point.getAttributes())
             }
 
-            if (point == node) {
-                newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesNull.NULL);
-                newNode = insertNewPoint();
+            if (point === this@NodeEditor.point) {
+                newList.appendToCurrentSegment(
+                    GpxPoint(newPoint),
+                    GpxAttributesNull.NULL
+                )
+                newNode = insertNewPoint()
             }
         }
 
-        public NodeEditor getNewNode() {
-            if (newList.getPointList().size() == 0) {
-                newList.appendToCurrentSegment(new GpxPoint(newPoint),
-                        GpxAttributesNull.NULL);
-                newNode = insertNewPoint();
+        fun getNewNode(): NodeEditor {
+            if (newList.pointList.size() == 0) {
+                newList.appendToCurrentSegment(
+                    GpxPoint(newPoint),
+                    GpxAttributesNull.NULL
+                )
+                newNode = insertNewPoint()
             }
-            return newNode;
+            return newNode
         }
 
-        private NodeEditor insertNewPoint() {
-            return new NodeEditor(
-                    (GpxPointNode) newList.getPointList().getLast(), newList);
+        fun insertNewPoint(): NodeEditor {
+            return NodeEditor(
+                (newList.pointList.last as GpxPointNode?)!!, newList
+            )
         }
     }
 
 
+    private inner class RemainingCutter : GpxListWalker() {
+        private val newList = GpxList(list.getDelta().getType(), GpxListAttributes.NULL)
 
+        private var startSegment = false
 
+        private var goOn = true
 
-
-    private class RemainingCutter extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
-
-        private boolean startSegment=false;
-
-        private boolean goOn=true;
-
-        @Override
-        public boolean doList(GpxList track) {
-            return goOn;
+        override fun doList(track: GpxList): Boolean {
+            return goOn
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            startSegment=true;
-            return goOn;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            startSegment = true
+            return goOn
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return goOn;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return goOn
         }
 
-        @Override
-        public void doPoint(GpxPointNode pointNode) {
+        override fun doPoint(pointNode: GpxPointNode) {
             if (goOn) {
-                copyNode(pointNode);
-                if (pointNode == node) {
-                    goOn = false;
+                copyNode(pointNode)
+                if (pointNode === this@NodeEditor.point) {
+                    goOn = false
                 }
             }
         }
 
-        public void copyNode(GpxPointNode pointNode) {
+        fun copyNode(pointNode: GpxPointNode) {
             if (startSegment) {
-                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
-                startSegment=false;
+                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes())
+                startSegment = false
             } else {
-                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
+                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes())
             }
         }
 
 
-        public NodeEditor getNewNode() {
-            if (newList.getPointList().size()>0) {
-                return new NodeEditor(
-                        (GpxPointNode)newList.getPointList().getLast(), newList);
+        val newNode: NodeEditor?
+            get() {
+                if (newList.pointList.size() > 0) {
+                    return NodeEditor(
+                        (newList.pointList.last as GpxPointNode?)!!, newList
+                    )
+                }
+                return null
             }
-            return null;
-        }
     }
 
 
-    private class PrecedingCutter extends GpxListWalker {
-        private final GpxList newList = new GpxList(gpxList.getDelta().getType(), GpxListAttributes.NULL);
+    private inner class PrecedingCutter : GpxListWalker() {
+        private val newList = GpxList(list.getDelta().getType(), GpxListAttributes.NULL)
 
-        private boolean startSegment=false;
-        private boolean start=false;
+        private var startSegment = false
+        private var start = false
 
-        @Override
-        public boolean doList(GpxList track) {
-            return true;
+        override fun doList(track: GpxList): Boolean {
+            return true
         }
 
-        @Override
-        public boolean doSegment(GpxSegmentNode segment) {
-            startSegment=true;
-            return true;
+        override fun doSegment(segment: GpxSegmentNode): Boolean {
+            startSegment = true
+            return true
         }
 
-        @Override
-        public boolean doMarker(GpxSegmentNode marker) {
-            return true;
+        override fun doMarker(marker: GpxSegmentNode): Boolean {
+            return true
         }
 
-        @Override
-        public void doPoint(GpxPointNode pointNode) {
-
-            if (pointNode == node) {
-                start = true;
-
+        override fun doPoint(pointNode: GpxPointNode) {
+            if (pointNode === this@NodeEditor.point) {
+                start = true
             }
 
             if (start) {
-                copyNode(pointNode);
+                copyNode(pointNode)
             }
         }
 
-        public void copyNode(GpxPointNode pointNode) {
+        fun copyNode(pointNode: GpxPointNode) {
             if (startSegment) {
-                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
-                startSegment=false;
+                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes())
+                startSegment = false
             } else {
-                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
+                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes())
             }
         }
 
-        public NodeEditor getNewNode() {
-            if (newList.getPointList().size()>0) {
-                return new NodeEditor(
-                        (GpxPointNode)newList.getPointList().getFirst(), newList);
+        val newNode: NodeEditor?
+            get() {
+                if (newList.pointList.size() > 0) {
+                    return NodeEditor(
+                        (newList.pointList.first as GpxPointNode?)!!, newList
+                    )
+                }
+                return null
             }
-            return null;
+    }
+
+    companion object {
+        private fun toEditor(list: GpxList): NodeEditor {
+            if (list.pointList.size() > 0) {
+                return NodeEditor(
+                    (list.pointList.first as GpxPointNode?)!!, list
+                )
+            } else {
+                return NodeEditor(list.getDelta().getType())
+            }
         }
     }
 }
