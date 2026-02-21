@@ -1,169 +1,150 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes;
-import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface;
-import ch.bailu.aat_lib.gpx.interfaces.GpxType;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
 
-public class GpxBigDelta implements GpxBigDeltaInterface {
-    public final static GpxBigDelta NULL= new GpxBigDelta(GpxListAttributes.NULL);
+class GpxBigDelta(private val attributes: GpxListAttributes) : GpxBigDeltaInterface {
+    private var distance = 0f
 
-    private float distance=0;
+    private var startTime: Long = 0
+    private var endTime: Long = 0
+    private var pause: Long = 0
 
-    private long startTime=0;
-    private long endTime=0;
-    private long pause=0;
+    private var type = GpxType.TRACK
 
-    private GpxType type = GpxType.TRACK;
+    private var boundingBox: BoundingBoxE6? = null
 
-    private BoundingBoxE6 boundingBox = null;
-
-    private final GpxListAttributes attributes;
-
-    public GpxBigDelta(GpxListAttributes attr) {
-        attributes = attr;
+    fun update(p: GpxPointNode) {
+        doUpdate(p)
+        attributes.update(p)
     }
 
-
-
-    public void update(GpxPointNode p) {
-        _update(p);
-
-        attributes.update(p);
-    }
-
-
-    public void updateWithPause(GpxPointNode p) {
-        if (getEndTime()!=0) {
-            long pause = p.getTimeStamp()-getEndTime();
-            if (pause > 0) incPause(pause);
+    fun updateWithPause(p: GpxPointNode) {
+        if (getEndTime() != 0L) {
+            val pause = p.getTimeStamp() - getEndTime()
+            if (pause > 0) incPause(pause)
         }
-        _update(p);
+        doUpdate(p)
     }
 
-    private void _update(GpxPointNode p) {
-        setStartTime(p.getTimeStamp());
-        setEndTime(p.getTimeStamp());
+    private fun doUpdate(p: GpxPointNode) {
+        setStartTime(p.getTimeStamp())
+        setEndTime(p.getTimeStamp())
 
-        incDistance(p.getDistance());
-
-        addBounding(p.getLatitudeE6(), p.getLongitudeE6());
+        incDistance(p.getDistance())
+        addBounding(p.getLatitudeE6(), p.getLongitudeE6())
     }
 
-    public void updateWithPause(GpxBigDeltaInterface delta) {
-        setStartTime(delta.getStartTime());
+    fun updateWithPause(delta: GpxBigDeltaInterface) {
+        setStartTime(delta.getStartTime())
 
-        incPause(delta.getPause());
-        incEndTime(delta.getTimeDelta()+delta.getPause());
-        incDistance(delta.getDistance());
+        incPause(delta.getPause())
+        incEndTime(delta.getTimeDelta() + delta.getPause())
+        incDistance(delta.getDistance())
 
-        addBounding(delta.getBoundingBox());
+        addBounding(delta.getBoundingBox())
     }
 
-
-    private void setStartTime(long timestamp) {
-        if (startTime==0) {
-            startTime = timestamp;
-            endTime = timestamp;
+    private fun setStartTime(timestamp: Long) {
+        if (startTime == 0L) {
+            startTime = timestamp
+            endTime = timestamp
         }
     }
 
-    private void incEndTime(long t) {
-        endTime += t;
+    private fun incEndTime(t: Long) {
+        endTime += t
     }
 
-    private void setEndTime(long timestamp) {
-        endTime = timestamp;
+    private fun setEndTime(timestamp: Long) {
+        endTime = timestamp
     }
 
 
-    private void incPause(long p) {
-        pause += p;
+    private fun incPause(p: Long) {
+        pause += p
     }
 
-    private void incDistance(float d) {
-        distance += d;
+    private fun incDistance(d: Float) {
+        distance += d
     }
 
-    private void addBounding(BoundingBoxE6 b) {
+    private fun addBounding(b: BoundingBoxE6) {
+        val boundingBox = boundingBox
         if (boundingBox == null) {
-            boundingBox = new BoundingBoxE6(b);
+            this.boundingBox = BoundingBoxE6(b)
         } else {
-            boundingBox.add(b);
+            boundingBox.add(b)
         }
     }
 
-    private void addBounding(int la, int lo) {
+    private fun addBounding(la: Int, lo: Int) {
+        val boundingBox = boundingBox
         if (boundingBox == null) {
-            boundingBox = new BoundingBoxE6(la,lo);
+            this.boundingBox = BoundingBoxE6(la, lo)
         } else {
-            boundingBox.add(la,lo);
+            boundingBox.add(la, lo)
         }
     }
 
-
-    public BoundingBoxE6 getBoundingBox() {
-        if (boundingBox==null) return BoundingBoxE6.NULL_BOX;
-        return boundingBox;
+    override fun getBoundingBox(): BoundingBoxE6 {
+        val boundingBox = boundingBox
+        if (boundingBox == null) {
+            return BoundingBoxE6.NULL_BOX
+        }
+        return boundingBox
     }
 
+    override fun getSpeed(): Float {
+        val average: Float
+        val sitime = (getTimeDelta().toFloat()) / 1000f
 
-    public float getSpeed() {
-        float average;
-        float sitime = ((float)getTimeDelta()) / 1000f;
+        if (sitime > 0f) average = distance / sitime
+        else average = 0f
 
-        if (sitime > 0f) average = distance / sitime;
-        else average=0f;
-
-        return average;
+        return average
     }
 
-
-
-    public float getDistance() {
-        return distance;
+    override fun getDistance(): Float {
+        return distance
     }
 
-    public long getTimeDelta() {
-        return (endTime-startTime)-pause;
+    override fun getTimeDelta(): Long {
+        return (endTime - startTime) - pause
     }
 
-
-    public long getPause() {
-        return pause;
+    override fun getPause(): Long {
+        return pause
     }
 
-
-
-    public long getStartTime() {
-        return startTime;
+    override fun getStartTime(): Long {
+        return startTime
     }
 
-
-    public float getAcceleration() {
-        return 0;
+    override fun getAcceleration(): Float {
+        return 0f
     }
 
-    @Override
-    public long getEndTime() {
-        return endTime;
+    override fun getEndTime(): Long {
+        return endTime
     }
 
-
-    public void setType(GpxType t) {
-        type = t;
+    fun setType(t: GpxType) {
+        type = t
     }
 
-
-    @Override
-    public GpxType getType() {
-        return type;
+    override fun getType(): GpxType {
+        return type
     }
 
+    override fun getAttributes(): GpxAttributes {
+        return attributes
+    }
 
-    @Override
-    public GpxAttributes getAttributes() {
-        return attributes;
+    companion object {
+        val NULL: GpxBigDelta = GpxBigDelta(GpxListAttributes.NULL)
     }
 }

@@ -176,10 +176,10 @@ public final class NodeEditor {
                 }
             } else {
                 if (startSegment) {
-                    newList.appendToNewSegment(pointNode.getPoint(), pointNode.getAttributes());
+                    newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
                     startSegment=false;
                 } else {
-                    newList.appendToCurrentSegment(pointNode.getPoint(), pointNode.getAttributes());
+                    newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
                 }
             }
         }
@@ -230,10 +230,10 @@ public final class NodeEditor {
         @Override
         public void doPoint(GpxPointNode point) {
             if (startSegment) {
-                newList.appendToNewSegment(point.getPoint(), point.getAttributes());
+                newList.appendToNewSegment(point.point, point.getAttributes());
                 startSegment=false;
             } else {
-                newList.appendToCurrentSegment(point.getPoint(), point.getAttributes());
+                newList.appendToCurrentSegment(point.point, point.getAttributes());
             }
 
             if (point == node) {
@@ -298,10 +298,10 @@ public final class NodeEditor {
 
         public void copyNode(GpxPointNode pointNode) {
             if (startSegment) {
-                newList.appendToNewSegment(pointNode.getPoint(), pointNode.getAttributes());
+                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
                 startSegment=false;
             } else {
-                newList.appendToCurrentSegment(pointNode.getPoint(), pointNode.getAttributes());
+                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
             }
         }
 
@@ -353,10 +353,10 @@ public final class NodeEditor {
 
         public void copyNode(GpxPointNode pointNode) {
             if (startSegment) {
-                newList.appendToNewSegment(pointNode.getPoint(), pointNode.getAttributes());
+                newList.appendToNewSegment(pointNode.point, pointNode.getAttributes());
                 startSegment=false;
             } else {
-                newList.appendToCurrentSegment(pointNode.getPoint(), pointNode.getAttributes());
+                newList.appendToCurrentSegment(pointNode.point, pointNode.getAttributes());
             }
         }
 

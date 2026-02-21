@@ -45,7 +45,7 @@ class GpxListWriter(track: GpxList, file: Foc) : Closeable {
                     writer.writeSegment()
                 }
             }
-            writer.writeTrackPoint(iterator.point)
+            writer.writeTrackPoint(iterator.getPoint())
         }
     }
 }

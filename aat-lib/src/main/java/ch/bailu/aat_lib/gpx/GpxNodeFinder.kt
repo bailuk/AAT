@@ -1,63 +1,44 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6.Companion.doOverlap
 
-public class GpxNodeFinder extends GpxListWalker {
+class GpxNodeFinder(private val bounding: BoundingBoxE6) : GpxListWalker() {
+    var node: GpxPointNode? = null
+        private set
+    var nodeIndex: Int = 0
+        private set
 
-    private final BoundingBoxE6 bounding;
-    private GpxPointNode node;
-    private int index=0;
-
-    public GpxNodeFinder(BoundingBoxE6 b) {
-        bounding = b;
+    override fun doList(list: GpxList): Boolean {
+        return doOverlap(list.getDelta().getBoundingBox(), bounding)
     }
 
-
-    @Override
-    public boolean doList(GpxList s) {
-        return BoundingBoxE6.doOverlap(s.getDelta().getBoundingBox(), bounding);
-    }
-
-    @Override
-    public boolean doSegment(GpxSegmentNode s) {
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
         if (haveNode()) {
-            return false;
-
-        } else if (BoundingBoxE6.doOverlap(s.getBoundingBox(), bounding)) {
-            return true;
-
+            return false
+        } else if (doOverlap(segment.getBoundingBox(), bounding)) {
+            return true
         } else {
-            index = index + s.getSegmentSize();
-            return false;
+            this.nodeIndex = this.nodeIndex + segment.segmentSize
+            return false
         }
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode s) {
-        return doSegment(s);
+    override fun doMarker(segment: GpxSegmentNode): Boolean {
+        return doSegment(segment)
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (!haveNode()) {
             if (bounding.contains(point)) {
-                node = point;
+                node = point
             } else {
-                index++;
+                this.nodeIndex++
             }
         }
     }
 
-    public boolean haveNode() {
-        return node != null;
-    }
-
-
-    public GpxPointNode getNode() {
-        return node;
-    }
-
-    public int getNodeIndex() {
-        return index;
+    fun haveNode(): Boolean {
+        return node != null
     }
 }

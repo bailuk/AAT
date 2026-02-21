@@ -1,72 +1,62 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import javax.annotation.Nonnull;
+import ch.bailu.aat_lib.coordinates.BoundingBoxE6
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface
+import javax.annotation.Nonnull
 
-import ch.bailu.aat_lib.coordinates.BoundingBoxE6;
-import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface;
+abstract class GpxWindow(private var first: GpxPointNode?) : GpxDeltaInterface {
+    private var last: GpxPointNode?
 
-public abstract class GpxWindow implements GpxDeltaInterface {
+    private var distance = 0f
+    private var timeDeltaMillis: Long = 0
 
-    private GpxPointNode first;
-    private GpxPointNode last;
-
-    private float distance;
-    private long timeDeltaMillis;
-
-    public GpxWindow(GpxPointNode node) {
-        first = node;
-        last = node;
+    init {
+        last = first
     }
 
-    public void forward(GpxPointNode n) {
-        last = n;
+    fun forward(node: GpxPointNode) {
+        last = node
 
-        distance += n.getDistance();
-        timeDeltaMillis += n.getTimeDelta();
+        distance += node.getDistance()
+        timeDeltaMillis += node.getTimeDelta()
 
-        trim();
+        trim()
     }
 
-    private void trim() {
-        while (overLimit() && first != last && first.getNext() instanceof GpxPointNode) {
-            timeDeltaMillis -= first.getTimeDelta();
-            distance -= first.getDistance();
+    private fun trim() {
+        while (overLimit() && first !== last && first!!.next is GpxPointNode) {
+            timeDeltaMillis -= first!!.getTimeDelta()
+            distance -= first!!.getDistance()
 
-            first = (GpxPointNode) first.getNext();
+            first = first!!.next as GpxPointNode?
         }
     }
 
-    protected abstract boolean overLimit();
+    protected abstract fun overLimit(): Boolean
 
-    @Override
-    public float getDistance() {
-        return distance;
+    override fun getDistance(): Float {
+        return distance
     }
 
 
-    @Override
-    public float getSpeed() {
+    override fun getSpeed(): Float {
         if (timeDeltaMillis > 0) {
-            return (distance * 1000f) / timeDeltaMillis;
+            return (distance * 1000f) / timeDeltaMillis
         } else {
-            return 0;
+            return 0f
         }
     }
 
-    @Override
-    public float getAcceleration() {
-        return 0;
+    override fun getAcceleration(): Float {
+        return 0f
     }
 
-    @Override
-    public long getTimeDelta() {
-        return timeDeltaMillis;
+    override fun getTimeDelta(): Long {
+        return timeDeltaMillis
     }
 
     @Nonnull
-    @Override
-    public BoundingBoxE6 getBoundingBox() {
-        return BoundingBoxE6.NULL_BOX;
+    override fun getBoundingBox(): BoundingBoxE6 {
+        return BoundingBoxE6.NULL_BOX
     }
-
 }

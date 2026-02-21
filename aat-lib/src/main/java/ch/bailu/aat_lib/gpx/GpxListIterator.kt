@@ -1,93 +1,67 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull;
-import ch.bailu.aat_lib.gpx.linked_list.Node;
-import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode;
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
+import ch.bailu.aat_lib.gpx.linked_list.Node
+import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
-public class GpxListIterator {
+class GpxListIterator(private val track: GpxList) {
+    private inner class PointPrimerNode : GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL) {
+        override var next = track.pointList.first
+    }
 
-    private class PointPrimerNode extends GpxPointFirstNode {
-        public PointPrimerNode() {
-            super(GpxPoint.NULL, GpxAttributesNull.NULL);
+    private inner class SegmentPrimerNode : GpxSegmentNode(PointPrimerNode()) {
+        override var next = track.segmentList.first
+    }
+
+    private var point: GpxPointNode = PointPrimerNode()
+    private var segment: GpxSegmentNode = SegmentPrimerNode()
+
+    private var inSegmentIndex = -1
+    private var inTrackIndex = -1
+
+
+    fun nextPoint(): Boolean {
+        if (setPoint(point.next)) {
+            inSegmentIndex++
+            inTrackIndex++
+
+            if (inSegmentIndex == (segment as SegmentNode).segmentSize) return nextSegment()
+            return true
         }
+        return false
+    }
 
-        @Override
-        public Node getNext() {
-            return track.getPointList().getFirst();
+    private fun setPoint(node: Node?): Boolean {
+        if (node is GpxPointNode) {
+            point = node
+            return true
         }
+        return false
     }
 
-
-    private class SegmentPrimerNode extends GpxSegmentNode {
-        public SegmentPrimerNode() {
-            super(new PointPrimerNode());
+    private fun nextSegment(): Boolean {
+        if (setSegment(segment.next)) {
+            inSegmentIndex = 0
+            return true
         }
+        return false
+    }
 
-        @Override
-        public Node getNext() {
-            return track.getSegmentList().getFirst();
+    private fun setSegment(node: Node?): Boolean {
+        if (node is GpxSegmentNode) {
+            segment = node
+            return true
         }
+        return false
     }
 
-    private final GpxList track;
-
-    private Node point = new PointPrimerNode();
-    private Node segment = new SegmentPrimerNode();
-
-    private int inSegmentIndex=-1;
-    private int inTrackIndex=-1;
-
-    public GpxListIterator(GpxList t) {
-        track=t;
+    fun getPoint(): GpxPointNode {
+        return point
     }
 
+    val isFirstInTrack: Boolean
+        get() = inTrackIndex == 0
 
-    public boolean nextPoint() {
-        if (setPoint(point.getNext())) {
-            inSegmentIndex++;
-            inTrackIndex++;
-
-            if (inSegmentIndex == ((SegmentNode)segment).getSegmentSize())
-                return nextSegment();
-
-            return true;
-        }
-        return false;
-    }
-
-
-    private boolean setPoint(Node n) {
-        if (n == null) return false;
-        point = n;
-        return true;
-    }
-
-
-    private boolean nextSegment() {
-        if (setSegment(segment.getNext())) {
-            inSegmentIndex=0;
-            return true;
-        }
-        return false;
-    }
-
-
-    private boolean setSegment(Node n) {
-        if (n == null) return false;
-        segment = n;
-        return true;
-    }
-
-    public GpxPointNode getPoint() {
-        return (GpxPointNode)point;
-    }
-
-
-    public boolean isFirstInTrack() {
-        return inTrackIndex==0;
-    }
-
-    public boolean isFirstInSegment() {
-        return inSegmentIndex==0;
-    }
+    val isFirstInSegment: Boolean
+        get() = inSegmentIndex == 0
 }

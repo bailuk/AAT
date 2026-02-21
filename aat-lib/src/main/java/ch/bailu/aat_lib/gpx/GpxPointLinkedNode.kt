@@ -1,43 +1,54 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-import ch.bailu.aat_lib.gpx.attributes.GpxAttributes;
-import ch.bailu.aat_lib.gpx.linked_list.Node;
+import ch.bailu.aat_lib.gpx.GpxDeltaHelper.getSpeed
+import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
+import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
+import ch.bailu.aat_lib.gpx.linked_list.Node
 
-public class GpxPointLinkedNode extends GpxPointNode {
-    public final static long SIZE_IN_BYTES=4;
+class GpxPointLinkedNode(tp: GpxPoint, at: GpxAttributes) : GpxPointNode(tp, at) {
+    private var distance = 0f //4byte
 
-    private float distance; //4byte
+    override var previous: Node? = null
+        set(node) {
+            field = node
+            if (node is GpxPointInterface) {
+                distance = GpxDeltaHelper.getDistance(node, this)
+            }
+        }
 
-    public GpxPointLinkedNode(GpxPoint tp, GpxAttributes at) {
-        super(tp, at);
+    override fun getAcceleration(): Float {
+        val node = previous
+        if (node is GpxDeltaPointInterface) {
+            return GpxDeltaHelper.getAcceleration(node, this)
+        }
+        return 0f
     }
 
-    @Override
-    public void setPrevious(Node node) {
-        super.setPrevious(node);
-        distance = GpxDeltaHelper.getDistance((GpxPointNode)node, this);
+    override fun getDistance(): Float {
+        return distance
     }
 
-    @Override
-    public float getAcceleration() {
-        return GpxDeltaHelper.getAcceleration((GpxPointNode)getPrevious(), this);
-    }
-
-    @Override
-    public float getDistance() {
-        return distance;
-    }
-
-    @Override
-    public float getSpeed() {
-        return GpxDeltaHelper.getSpeed(
+    override fun getSpeed(): Float {
+        val node = previous
+        if (node is GpxPointInterface) {
+            return getSpeed(
                 distance,
-                GpxDeltaHelper.getTimeDeltaSI(((GpxPointNode)getPrevious()), this));
+                GpxDeltaHelper.getTimeDeltaSI(node, this)
+            )
+        }
+        return 0f
     }
 
-    @Override
-    public long getTimeDelta() {
-        return GpxDeltaHelper.getTimeDeltaMilli((GpxPointNode)getPrevious(), this);
+    override fun getTimeDelta(): Long {
+        val node = previous
+        if (node is GpxPointInterface) {
+            return GpxDeltaHelper.getTimeDeltaMilli(node, this)
+        }
+        return 0
     }
 
+    companion object {
+        const val SIZE_IN_BYTES: Long = 4
+    }
 }

@@ -14,7 +14,7 @@ class List {
         if (first == null) {
             first = node
         } else {
-            last!!.next = node
+            last?.next = node
         }
         last = node
         count++

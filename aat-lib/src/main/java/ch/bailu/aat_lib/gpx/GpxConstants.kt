@@ -1,21 +1,21 @@
-package ch.bailu.aat_lib.gpx;
+package ch.bailu.aat_lib.gpx
 
-public class GpxConstants {
-    public static final String QNAME_GPX = "gpx";
-    public static final String QNAME_TRACK = "trk";
-    public static final String QNAME_TRACK_SEGMENT = "trkseg";
-    public static final String QNAME_TRACK_POINT = "trkpt";
+object GpxConstants {
+    const val QNAME_GPX: String = "gpx"
+    const val QNAME_TRACK: String = "trk"
+    const val QNAME_TRACK_SEGMENT: String = "trkseg"
+    const val QNAME_TRACK_POINT: String = "trkpt"
 
-    public static final String QNAME_WAY_POINT = "wpt";
-    public static final String QNAME_ROUTE = "rte";
-    public static final String QNAME_ROUTE_POINT = "rtept";
+    const val QNAME_WAY_POINT: String = "wpt"
+    const val QNAME_ROUTE: String = "rte"
+    const val QNAME_ROUTE_POINT: String = "rtept"
 
-    public static final String QNAME_LATITUDE = "lat";
-    public static final String QNAME_LONGITUDE = "lon";
+    const val QNAME_LATITUDE: String = "lat"
+    const val QNAME_LONGITUDE: String = "lon"
 
-    public static final String QNAME_TIME = "time";
-    public static final String QNAME_ALTITUDE = "ele";
-    public static final String QNAME_EXTENSIONS = "extensions";
+    const val QNAME_TIME: String = "time"
+    const val QNAME_ALTITUDE: String = "ele"
+    const val QNAME_EXTENSIONS: String = "extensions"
 
-    public static final String QNAME_GPXTPX_EXTENSION = "TrackPointExtension";
+    const val QNAME_GPXTPX_EXTENSION: String = "TrackPointExtension"
 }
