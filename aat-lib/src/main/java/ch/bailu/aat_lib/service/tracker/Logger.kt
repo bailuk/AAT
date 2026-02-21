@@ -15,6 +15,9 @@ abstract class Logger : GpxInformation(), Closeable {
     @Throws(IOException::class)
     abstract fun log(tp: GpxPointInterface, attr: GpxAttributes)
 
+    @Throws(IOException::class)
+    abstract fun flush()
+
     override fun close() {}
 
     fun setState(s: Int) {
@@ -28,6 +31,7 @@ abstract class Logger : GpxInformation(), Closeable {
     companion object {
         val NULL_LOGGER: Logger = object : Logger() {
             override fun log(tp: GpxPointInterface, attr: GpxAttributes) {}
+            override fun flush() {}
         }
     }
 }

@@ -33,6 +33,14 @@ abstract class GpxWriter(file: Foc) {
     @Throws(IOException::class)
     abstract fun writeTrackPoint(tp: GpxPointInterface)
 
+    /**
+     * Flush internal buffers to the output file.
+     */
+    @Throws(IOException::class)
+    fun flush() {
+        output.flush()
+    }
+
     @Throws(IOException::class)
     fun close() {
         output.close()
@@ -51,24 +59,27 @@ abstract class GpxWriter(file: Foc) {
     }
 
     @Throws(IOException::class)
+    protected fun writeRawChar(ch: Char) {
+        output.append(ch)
+    }
+
+    @Throws(IOException::class)
     protected fun writeString(string: String) {
-        output.write(string, 0, string.length)
+        output.write(string)
     }
 
     @Throws(IOException::class)
     protected fun writeTimeStamp(time: Long) {
-        writeString(
-            ("<" + GpxConstants.QNAME_TIME + ">"
-                    + f.dateFormat.format(time) +
-                    "</" + GpxConstants.QNAME_TIME + ">")
-        )
+        writeBeginElement(GpxConstants.QNAME_TIME);
+        writeString(f.dateFormat.format(time));
+        writeEndElement(GpxConstants.QNAME_TIME);
     }
 
     @Throws(IOException::class)
     protected fun writeEndElement(e: String) {
         writeString("</")
         writeString(e)
-        writeString(">")
+        writeRawChar('>')
     }
 
     @Throws(IOException::class)
@@ -78,13 +89,13 @@ abstract class GpxWriter(file: Foc) {
 
     @Throws(IOException::class)
     protected fun writeBeginElementStart(e: String) {
-        writeString("<")
+        writeRawChar('<')
         writeString(e)
     }
 
     @Throws(IOException::class)
     protected fun writeBeginElementEnd() {
-        writeString(">")
+        writeRawChar('>')
     }
 
     @Throws(IOException::class)
@@ -95,11 +106,11 @@ abstract class GpxWriter(file: Foc) {
 
     @Throws(IOException::class)
     protected fun writeParameter(parameterName: String, parameterValue: String) {
-        writeString(" ")
+        writeRawChar(' ')
         writeString(parameterName)
         writeString("=\"")
         writeString(xmlEscaper.escape(parameterValue))
-        writeString("\"")
+        writeRawChar('"')
     }
 
     @Throws(IOException::class)

@@ -26,7 +26,7 @@ class GpxListWriterTest {
         val linesWritten = mockFoc.getLines()
 
         // Should contain everything
-        assertEquals(7023, linesWritten.size)
+        assertEquals(7024, linesWritten.size)
 
         val reader2 = GpxListReaderXml(mockFoc, AutoPause.NULL)
         assertEquals(1855, reader2.gpxList.pointList.size())

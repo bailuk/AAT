@@ -61,7 +61,15 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         if (node is GpxPointNode) {
             setVisibleTrackPoint(node)
         }
-        writer.flushOutput()
+        writer.writeNewPoints()
+    }
+
+    /**
+     * Flush internal buffers to the output file.
+     */
+    @Throws(IOException::class)
+    override fun flush() {
+        writer.flush()
     }
 
     override fun close() {
