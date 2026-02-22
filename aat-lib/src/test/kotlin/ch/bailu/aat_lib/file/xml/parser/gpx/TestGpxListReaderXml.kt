@@ -16,7 +16,7 @@ class TestGpxListReaderXml {
         Assertions.assertEquals(1855, reader.gpxList.pointList.size())
 
         val attributes = reader.gpxList.getDelta().getAttributes()
-        Assertions.assertEquals(17, attributes.size())
+        Assertions.assertEquals(19, attributes.size())
 
         Assertions.assertEquals(false, attributes.hasKey(Keys.toIndex("SomeRandomKey")))
 
