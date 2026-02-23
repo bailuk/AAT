@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import javax.annotation.Nonnull
 
+/** A linked-list node holding a {@link GpxPoint} and its associated {@link GpxAttributes}. */
 abstract class GpxPointNode(@JvmField val point: GpxPoint, private val attributes: GpxAttributes) : Node(),
     GpxDeltaPointInterface {
     override fun getAltitude(): Float {

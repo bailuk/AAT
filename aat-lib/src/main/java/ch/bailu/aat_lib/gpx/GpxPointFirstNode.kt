@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx
 
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 
+/** The first point in a segment; returns zero for distance, speed, acceleration, and time delta. */
 open class GpxPointFirstNode(point: GpxPoint, attributes: GpxAttributes) : GpxPointNode(point, attributes) {
     override fun getSpeed(): Float {
         return 0f
