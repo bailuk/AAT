@@ -34,7 +34,7 @@ class BrouterApi(overlay: SolidOverlayInterface) : Api(overlay) {
         val builder = StringBuilder()
         var del = ""
         while (iterator.nextPoint()) {
-            builder.append("$del${iterator.point.getLongitude()},${iterator.point.getLatitude()}")
+            builder.append("$del${iterator.getPoint().getLongitude()},${iterator.getPoint().getLatitude()}")
             del = "|"
         }
         return builder.toString()

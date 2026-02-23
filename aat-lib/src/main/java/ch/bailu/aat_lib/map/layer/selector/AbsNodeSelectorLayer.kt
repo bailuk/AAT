@@ -103,9 +103,10 @@ abstract class AbsNodeSelectorLayer(
                 val finder = GpxNodeFinder(centerBounding)
                 finder.walkTrack(info.getGpxList())
 
-                if (finder.haveNode()) {
-                    selectedNode = finder.node
-                    setSelectedNode(infoID, info, finder.node, finder.nodeIndex)
+                val node = finder.node
+                if (node is GpxPointNode) {
+                    selectedNode = node
+                    setSelectedNode(infoID, info, node, finder.nodeIndex)
                     break
                 }
             }

@@ -1,0 +1,12 @@
+# Map OSM key-value pairs to filenames from the SJJB icon set.
+# Original icon set is available from http://www.sjjb.co.uk/mapicons/introduction.
+#
+#
+# prefix of png-file                osm key         osm value
+
+accommodation/alpinehut             tourism         alpine_hut
+accommodation/bed_and_breakfast2
+accommodation/bed_and_breakfast     guest_house     bed_and_breakfast
+accommodation/camping               tourism         camp_site
+accommodation/caravan_park          tourism         caravan_site
+accommodation/chalet2

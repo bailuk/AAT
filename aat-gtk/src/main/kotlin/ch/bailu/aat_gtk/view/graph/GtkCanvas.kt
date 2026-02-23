@@ -33,7 +33,7 @@ class GtkCanvas (private val context: Context) : GraphCanvas {
         context.restore()
     }
 
-    override fun drawBitmap(pa: Point?, color: Int) {
+    override fun drawBitmap(pa: Point, color: Int) {
     }
 
     override fun getTextSize(): Int {

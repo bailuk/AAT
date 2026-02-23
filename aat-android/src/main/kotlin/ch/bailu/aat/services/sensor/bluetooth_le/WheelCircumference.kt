@@ -29,6 +29,7 @@ class WheelCircumference(private val scontext: ServiceContext, private val revol
             if (newLocation != null) {
                 currentLocation = newLocation
                 if (currentLocation.getAccuracy() <= MIN_ACCURACY && revolution.isInitialized) {
+                    val previousLocation = previousLocation
                     if (previousLocation == null) {
                         reset(currentLocation)
                     } else {

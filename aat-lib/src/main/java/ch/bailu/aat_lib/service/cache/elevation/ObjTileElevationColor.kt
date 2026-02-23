@@ -32,8 +32,7 @@ class ObjTileElevationColor(id: String, b: MapTileInterface, t: Tile, split: Int
 
                     if (newOffset != offset) {
                         offset = newOffset
-                        color = AltitudeColorTable.instance()
-                            .getColor(demtile.getElevation(line + offset).toInt())
+                        color = AltitudeColorTable.getColor(demtile.getElevation(line + offset).toInt())
                     }
 
                     bitmap[c] = color

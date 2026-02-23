@@ -297,7 +297,6 @@ class CoordinatesTest {
     }
 
     companion object {
-
         @JvmStatic
         @BeforeAll
         fun init() {

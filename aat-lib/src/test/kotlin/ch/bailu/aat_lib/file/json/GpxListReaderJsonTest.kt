@@ -105,8 +105,8 @@ class GpxListReaderJsonTest {
         var index = 0
         val iterator = GpxListIterator(result)
         while (iterator.nextPoint()) {
-            assertEquals(expected[index++], iterator.point.getLatitude())
-            assertEquals(expected[index++], iterator.point.getLongitude())
+            assertEquals(expected[index++], iterator.getPoint().getLatitude())
+            assertEquals(expected[index++], iterator.getPoint().getLongitude())
         }
         assertEquals(expected.size, index)
         assertEquals(expectedType, result.getDelta().getType())
