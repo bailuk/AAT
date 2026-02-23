@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Displays current speed, preferring a BLE speed sensor when connected, falling back to GPS. */
 class CurrentSpeedDescription(storage: StorageInterface) : SpeedDescription(storage) {
     private var currentIID = -1
     private var label: String = ""

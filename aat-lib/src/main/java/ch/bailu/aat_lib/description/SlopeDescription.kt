@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.attributes.AltitudeDelta
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays current slope as a percentage from track attributes. */
 class SlopeDescription : ContentDescription() {
     private var slope = "0"
     override fun onContentUpdated(iid: Int, info: GpxInformation) {

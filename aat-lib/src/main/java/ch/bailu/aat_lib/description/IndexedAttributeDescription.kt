@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.gpx.attributes.SampleRate
 import ch.bailu.aat_lib.gpx.attributes.TimeWindowAttributes
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays a single track attribute value looked up by key index. */
 open class IndexedAttributeDescription(
     private val label: String,
     private val unit: String,

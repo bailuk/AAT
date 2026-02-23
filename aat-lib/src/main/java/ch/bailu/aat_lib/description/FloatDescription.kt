@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.description
 
+/** [ContentDescription] that caches a single float value. */
 abstract class FloatDescription : ContentDescription() {
     protected var cache = 0f
         private set

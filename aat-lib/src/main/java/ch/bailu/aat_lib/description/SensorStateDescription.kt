@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.attributes.SensorStateAttributes
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays sensor connection state and an overview of connected sensors. */
 class SensorStateDescription : StateDescription() {
     private var unit = ""
     override fun getLabel(): String {

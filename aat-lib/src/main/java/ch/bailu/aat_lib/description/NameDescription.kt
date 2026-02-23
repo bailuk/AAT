@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.description
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays the file name of the track. */
 open class NameDescription : ContentDescription() {
     private var name = ""
     override fun getLabel(): String {
