@@ -18,12 +18,10 @@ open class BusyViewControl(parent: ViewGroup) {
         busy.visibility = View.GONE
     }
 
-    @JvmOverloads
     fun startWaiting(id: Int = DEFAULT_ID) {
         changeWaiting(id, true)
     }
 
-    @JvmOverloads
     fun stopWaiting(id: Int = DEFAULT_ID) {
         changeWaiting(id, false)
     }

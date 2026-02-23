@@ -12,7 +12,6 @@ import ch.bailu.aat.util.ui.theme.UiThemeLight
 import org.xml.sax.XMLReader
 
 object AppHtml {
-    @JvmOverloads
     @JvmStatic
     @Suppress("DEPRECATION")
     fun fromHtml(source: String, imageGetter: ImageGetter? = null): Spanned {

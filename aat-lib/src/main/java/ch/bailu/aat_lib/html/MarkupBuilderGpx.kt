@@ -12,7 +12,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.preferences.StorageInterface
 
 
-class MarkupBuilderGpx @JvmOverloads constructor(
+class MarkupBuilderGpx constructor(
     storage: StorageInterface,
     config: MarkupConfig = MarkupConfig.HTML
 ) : MarkupBuilder(
