@@ -1,5 +1,5 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-public class Config {
-    public final static int SAMPLE_WIDTH_PIXEL=5;
+object Config {
+    const val SAMPLE_WIDTH_PIXEL = 5
 }

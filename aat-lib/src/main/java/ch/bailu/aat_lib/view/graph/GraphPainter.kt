@@ -1,64 +1,49 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.lib.color.AltitudeColorTable;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.lib.color.AltitudeColorTable
 
-public class GraphPainter extends GpxListWalker {
-    private final GraphPlotter plotter;
+open class GraphPainter(private val plotter: GraphPlotter, md: Int) : GpxListWalker() {
+    private var distance = 0f
+    private var summaryDistance = 0f
+    private val minDistance: Float = (md * Config.SAMPLE_WIDTH_PIXEL).toFloat()
 
-    private float distance=0;
-    private float summaryDistance=0;
-    private final float minDistance;
-
-
-    public GraphPainter(GraphPlotter p, int md) {
-        plotter=p;
-        minDistance=md * Config.SAMPLE_WIDTH_PIXEL;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return true
     }
 
-
-
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return true;
+    override fun doPoint(point: GpxPointNode) {
+        incrementSummaryDistance(point.getDistance())
+        plotIfDistance(point)
     }
 
-
-    @Override
-    public void doPoint(GpxPointNode point) {
-        incrementSummaryDistance(point.getDistance());
-        plotIfDistance(point);
+    fun incrementSummaryDistance(distance: Float) {
+        summaryDistance += distance
     }
 
-
-    public void incrementSummaryDistance(float distance) {
-        summaryDistance += distance;
-    }
-
-    public void plotIfDistance(GpxPointNode point) {
+    fun plotIfDistance(point: GpxPointNode) {
         if (summaryDistance >= minDistance) {
-            int altitude = (int)point.getAltitude();
+            val altitude = point.getAltitude().toInt()
 
-            distance+=summaryDistance;
-            summaryDistance=0;
+            distance += summaryDistance
+            summaryDistance = 0f
 
-            plotter.plotData(distance, altitude, AltitudeColorTable.instance().getColor(altitude));
+            plotter.plotData(
+                distance,
+                altitude.toFloat(),
+                AltitudeColorTable.instance().getColor(altitude)
+            )
         }
     }
 
-
-
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        return true
     }
 
-    @Override
-    public boolean doList(GpxList track) {
-        return true;
+    override fun doList(track: GpxList): Boolean {
+        return true
     }
-
 }

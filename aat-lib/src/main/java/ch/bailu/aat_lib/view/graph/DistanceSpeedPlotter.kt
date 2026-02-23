@@ -1,88 +1,90 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.app.AppColor;
-import ch.bailu.aat_lib.description.AverageSpeedDescription;
-import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP;
-import ch.bailu.aat_lib.gpx.GpxDistanceWindow;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.attributes.AutoPause;
-import ch.bailu.aat_lib.gpx.attributes.MaxSpeed;
-import ch.bailu.aat_lib.preferences.SolidAutopause;
-import ch.bailu.aat_lib.preferences.StorageInterface;
-import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.preferences.presets.SolidPreset;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.lib.color.ColorInterface;
+import ch.bailu.aat_lib.app.AppColor
+import ch.bailu.aat_lib.description.AverageSpeedDescription
+import ch.bailu.aat_lib.description.AverageSpeedDescriptionAP
+import ch.bailu.aat_lib.gpx.GpxDistanceWindow
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.attributes.MaxSpeed
+import ch.bailu.aat_lib.lib.color.ColorInterface
+import ch.bailu.aat_lib.preferences.SolidAutopause
+import ch.bailu.aat_lib.preferences.StorageInterface
+import ch.bailu.aat_lib.preferences.general.SolidPostprocessedAutopause
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.preferences.presets.SolidPreset
+import ch.bailu.aat_lib.resources.Res.str
+import kotlin.math.max
 
-public class DistanceSpeedPlotter extends Plotter{
+class DistanceSpeedPlotter(private val sunit: SolidUnit) : Plotter() {
+    private val storage: StorageInterface = sunit.getStorage()
 
-    private final StorageInterface storage;
-    private final SolidUnit sunit;
 
-    public DistanceSpeedPlotter(SolidUnit sunit) {
-        this.storage = sunit.getStorage();
-        this.sunit = sunit;
+    override fun plot(canvas: GraphCanvas, config: PlotterConfig) {
+        val plotter = initPlotter(canvas, config.getWidth(), config.getHeight(), config.getList())
+        val window = GpxDistanceWindow(config.getList())
+
+        config.getLabels().setText(AppColor.HL_ORANGE, window.getLimitAsString(storage))
+
+        DistanceSpeedPainter(plotter, this.autoPause, getMinDistance(config.getList(), config.getWidth()), window)
+            .walkTrack(config.getList())
+
+        plotter[0].drawXScale(5, sunit.distanceFactor, config.isXLabelVisible())
+        plotter[0].drawYScale(5, sunit.speedFactor, false)
     }
 
-
-    @Override
-    public void plot(GraphCanvas canvas, PlotterConfig config) {
-        GraphPlotter[] plotter = initPlotter(canvas, config.getWidth(), config.getHeight(), config.getList());
-        GpxDistanceWindow window = new GpxDistanceWindow(config.getList());
-
-        config.getLabels().setText(AppColor.HL_ORANGE, window.getLimitAsString(storage));
-
-        new DistanceSpeedPainter(plotter, getAutoPause(), getMinDistance(config.getList(), config.getWidth()), window)
-                .walkTrack(config.getList());
-
-        plotter[0].drawXScale(5, sunit.getDistanceFactor(), config.isXLabelVisible());
-        plotter[0].drawYScale(5, sunit.getSpeedFactor(), false);
+    override fun initLabels(labels: LabelInterface) {
+        labels.setText(ColorInterface.WHITE, str().speed(), sunit.speedUnit)
+        labels.setText(AppColor.HL_BLUE, AverageSpeedDescriptionAP(sunit.getStorage()).getLabel())
+        labels.setText(AppColor.HL_GREEN, AverageSpeedDescription(sunit.getStorage()).getLabel())
     }
 
-    @Override
-    public void initLabels(LabelInterface labels) {
-        labels.setText(ColorInterface.WHITE, Res.str().speed(), sunit.getSpeedUnit());
-        labels.setText(AppColor.HL_BLUE, new AverageSpeedDescriptionAP(sunit.getStorage()).getLabel());
-        labels.setText(AppColor.HL_GREEN, new AverageSpeedDescription(sunit.getStorage()).getLabel());
+    override fun setLimit(firstPoint: Int, lastPoint: Int) {}
+
+    private fun getMinDistance(list: GpxList, width: Int): Float {
+        val distForOnePixel = list.getDelta().getDistance() / max(width, 1)
+        return distForOnePixel * Config.SAMPLE_WIDTH_PIXEL
     }
 
-    @Override
-    public void setLimit(int firstPoint, int lastPoint) {
-
-    }
-
-
-    private float getMinDistance(GpxList list, int width) {
-        float distForOnePixel = list.getDelta().getDistance() / Math.max(width, 1);
-        return distForOnePixel * Config.SAMPLE_WIDTH_PIXEL;
-    }
-
-
-    private AutoPause getAutoPause() {
-        int preset = new SolidPreset(storage).getIndex();
-        final SolidAutopause spause = new SolidPostprocessedAutopause(storage, preset);
-        return new AutoPause.Time(
-                spause.getTriggerSpeed(),
-                spause.getTriggerLevelMillis());
-    }
-
-    private GraphPlotter[] initPlotter(GraphCanvas canvas, int widht, int height, GpxList list) {
-        int km_factor = (int) (list.getDelta().getDistance()/1000) + 1;
-        int xscale = km_factor * 1000;
-
-        float maxSpeed = list.getDelta().getAttributes().getAsFloat((MaxSpeed.INDEX_MAX_SPEED));
-        return  initPlotter(canvas, xscale, widht, height, maxSpeed);
-    }
-
-
-    private GraphPlotter[] initPlotter(GraphCanvas canvas, int xscale, int width, int height, float maxSpeed) {
-        GraphPlotter[] result = new GraphPlotter[3];
-        for (int i=0; i<result.length; i++) {
-            result[i] = new GraphPlotter(canvas, width, height, xscale);
-            result[i].inlcudeInYScale(0f);
-            result[i].inlcudeInYScale(maxSpeed);
+    private val autoPause: AutoPause
+        get() {
+            val preset = SolidPreset(storage).index
+            val spause: SolidAutopause = SolidPostprocessedAutopause(storage, preset)
+            return AutoPause.Time(
+                spause.triggerSpeed,
+                spause.triggerLevelMillis
+            )
         }
-        return result;
+
+    private fun initPlotter(
+        canvas: GraphCanvas,
+        width: Int,
+        height: Int,
+        list: GpxList
+    ): List<GraphPlotter> {
+        val kmFactor = (list.getDelta().getDistance() / 1000).toInt() + 1
+        val xscale = kmFactor * 1000
+        val maxSpeed = list.getDelta().getAttributes().getAsFloat((MaxSpeed.INDEX_MAX_SPEED))
+        return initPlotter(canvas, xscale, width, height, maxSpeed)
+    }
+    private fun initPlotter(
+        canvas: GraphCanvas,
+        xscale: Int,
+        width: Int,
+        height: Int,
+        maxSpeed: Float
+    ): List<GraphPlotter> {
+        val result = ArrayList<GraphPlotter>(PLOT_COUNT)
+        repeat(PLOT_COUNT) {
+            val plotter = GraphPlotter(canvas, width, height, xscale.toFloat())
+            plotter.includeInYScale(0f)
+            plotter.includeInYScale(maxSpeed)
+            result.add(plotter)
+        }
+        return result
+    }
+
+    companion object {
+        const val PLOT_COUNT = 3
     }
 }

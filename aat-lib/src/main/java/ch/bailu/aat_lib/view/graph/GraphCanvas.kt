@@ -1,11 +1,11 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Point
 
-public interface GraphCanvas {
-    void drawLine(int x1, int y1, int x2, int y2);
-    void drawLine(Point pa, Point pb, int color);
-    void drawText(String text, int x, int y);
-    void drawBitmap(Point pa, int color);
-    int getTextSize();
+interface GraphCanvas {
+    fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int)
+    fun drawLine(pa: Point, pb: Point, color: Int)
+    fun drawText(text: String, x: Int, y: Int)
+    fun drawBitmap(pa: Point, color: Int)
+    fun getTextSize(): Int
 }

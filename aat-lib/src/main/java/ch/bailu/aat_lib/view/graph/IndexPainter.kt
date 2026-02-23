@@ -1,66 +1,56 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
-import ch.bailu.aat_lib.map.MapColor;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
+import ch.bailu.aat_lib.map.MapColor
 
-public class IndexPainter extends GpxListWalker {
+class IndexPainter(
+    private val plotter: GraphPlotter,
+    private val nodeIndex: Int,
+    private val offset: Float
+) : GpxListWalker() {
+    private var distance = 0f
+    private var index = 0
 
-    private float distance = 0f;
-    private final float offset;
-    private int index = 0;
-
-    private final int nodeIndex;
-    private final GraphPlotter plotter;
-
-    public IndexPainter(GraphPlotter p, int n, float offset) {
-        nodeIndex = n;
-        plotter = p;
-        this.offset = offset;
+    override fun doList(track: GpxList): Boolean {
+        return true
     }
 
-    @Override
-    public boolean doList(GpxList track) {
-        return true;
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        return doDelta(segment)
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        return doDelta(segment);
-    }
-
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return doDelta(marker);
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return doDelta(marker)
     }
 
 
-    private boolean doDelta(GpxSegmentNode segment) {
-        if (index + segment.getSegmentSize() <= nodeIndex) {
-            index += segment.getSegmentSize();
-            distance += segment.getDistance();
-            return false;
+    private fun doDelta(segment: GpxSegmentNode): Boolean {
+        if (index + segment.segmentSize <= nodeIndex) {
+            index += segment.segmentSize
+            distance += segment.getDistance()
+            return false
         }
-        return true;
+        return true
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (index == nodeIndex) {
-            distance += point.getDistance();
-            plotPoint(point, distance - offset);
-            index++;
-
+            distance += point.getDistance()
+            plotPoint(point, distance - offset)
+            index++
         } else if (index < nodeIndex) {
-            distance += point.getDistance();
-            index++;
+            distance += point.getDistance()
+            index++
         }
     }
 
-    private void plotPoint(GpxPointNode point, float distance) {
-        plotter.plotPoint(distance, (float) point.getAltitude(),
-                MapColor.NODE_SELECTED);
+    private fun plotPoint(point: GpxPointNode, distance: Float) {
+        plotter.plotPoint(
+            distance, point.getAltitude(),
+            MapColor.NODE_SELECTED
+        )
     }
 }

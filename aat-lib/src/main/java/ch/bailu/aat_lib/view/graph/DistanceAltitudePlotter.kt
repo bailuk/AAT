@@ -1,71 +1,70 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.preferences.general.SolidUnit;
-import ch.bailu.aat_lib.resources.Res;
-import ch.bailu.aat_lib.lib.color.ColorInterface;
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.lib.color.ColorInterface
+import ch.bailu.aat_lib.preferences.general.SolidUnit
+import ch.bailu.aat_lib.resources.Res.str
+import kotlin.math.max
 
-public class DistanceAltitudePlotter extends Plotter {
+class DistanceAltitudePlotter(private val sunit: SolidUnit) : Plotter() {
+    private val segment = Segment()
 
-    private final SolidUnit sunit;
-    private final Segment segment = new Segment();
+    override fun plot(canvas: GraphCanvas, config: PlotterConfig) {
+        val markerMode =
+            config.getList().markerList.size() > config.getWidth() / Config.SAMPLE_WIDTH_PIXEL
 
-    public DistanceAltitudePlotter(SolidUnit sunit) {
-        this.sunit = sunit;
-    }
+        val distances = DistanceWalker(segment)
+        distances.walkTrack(config.getList())
 
-    @Override
-    public void plot(GraphCanvas canvas, PlotterConfig config) {
+        val kmFactor = (distances.distanceDelta / 1000).toInt() + 1
 
-        boolean markerMode = config.getList().getMarkerList().size() > config.getWidth() / Config.SAMPLE_WIDTH_PIXEL;
+        val plotter = GraphPlotter(
+            canvas,
+            config.getWidth(),
+            config.getHeight(),
+            (1000 * kmFactor).toFloat()
+        )
 
-        DistanceWalker distances = new DistanceWalker(segment);
-        distances.walkTrack(config.getList());
+        val painter: GpxListWalker?
+        val scaleGenerator: GpxListWalker?
 
-        int km_factor = (int) (distances.getDistanceDelta()/1000) + 1;
-
-        GraphPlotter plotter = new GraphPlotter(canvas, config.getWidth(), config.getHeight(), 1000 * km_factor);
-
-        GpxListWalker painter, scaleGenerator;
-
-        int minDistance = (int)distances.getDistanceDelta() / Math.max(config.getWidth(), 1);
+        val minDistance = distances.distanceDelta.toInt() / max(config.getWidth(), 1)
         if (segment.isValid()) {
-            painter = new GraphPainterLimit(plotter, segment, minDistance);
-            scaleGenerator = new ScaleGeneratorSegmented(plotter, segment);
-
+            painter = GraphPainterLimit(plotter, segment, minDistance)
+            scaleGenerator = ScaleGeneratorSegmented(plotter, segment)
         } else if (markerMode) {
-            painter = new GraphPainterMarkerMode(plotter, minDistance);
-            scaleGenerator = new ScaleGeneratorMarkerMode(plotter);
+            painter = GraphPainterMarkerMode(plotter, minDistance)
+            scaleGenerator = ScaleGeneratorMarkerMode(plotter)
         } else {
-            painter = new GraphPainter(plotter, minDistance);
-            scaleGenerator = new ScaleGenerator(plotter);
-
+            painter = GraphPainter(plotter, minDistance)
+            scaleGenerator = ScaleGenerator(plotter)
         }
 
-        scaleGenerator.walkTrack(config.getList());
-        plotter.roundYScale(50);
+        scaleGenerator.walkTrack(config.getList())
+        plotter.roundYScale(50)
 
 
-        painter.walkTrack(config.getList());
+        painter.walkTrack(config.getList())
 
 
-        new SegmentNodePainter(plotter, distances.getDistanceOffset()).walkTrack(config.getList());
+        SegmentNodePainter(plotter, distances.distanceOffset).walkTrack(config.getList())
         if (config.getIndex() > -1) {
-            new IndexPainter(plotter, config.getIndex(), distances.getDistanceOffset()).walkTrack(config.getList());
+            IndexPainter(
+                plotter,
+                config.getIndex(),
+                distances.distanceOffset
+            ).walkTrack(config.getList())
         }
 
-        plotter.drawXScale(5, sunit.getDistanceFactor(), config.isXLabelVisible());
-        plotter.drawYScale(5, sunit.getAltitudeFactor(), true);
-
+        plotter.drawXScale(5, sunit.distanceFactor, config.isXLabelVisible())
+        plotter.drawYScale(5, sunit.altitudeFactor, true)
     }
 
-    @Override
-    public void initLabels(LabelInterface labels) {
-        labels.setText(ColorInterface.WHITE, Res.str().altitude(), sunit.getAltitudeUnit());
+    override fun initLabels(labels: LabelInterface) {
+        labels.setText(ColorInterface.WHITE, str().altitude(), sunit.altitudeUnit)
     }
 
-    @Override
-    public void setLimit(int firstPoint, int lastPoint) {
-        segment.setLimit(firstPoint, lastPoint);
+    override fun setLimit(firstPoint: Int, lastPoint: Int) {
+        segment.setLimit(firstPoint, lastPoint)
     }
 }
