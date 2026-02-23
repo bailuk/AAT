@@ -10,6 +10,7 @@ import java.io.IOException
 import kotlin.math.abs
 
 
+/** Axis-aligned bounding box in microdegree (E6) coordinates, growable via [add]. */
 class BoundingBoxE6 {
     var latNorthE6 = MIN_LA
         private set
