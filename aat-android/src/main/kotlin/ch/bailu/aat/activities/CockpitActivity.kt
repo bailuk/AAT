@@ -90,8 +90,7 @@ class CockpitActivity : AbsKeepScreenOnActivity() {
 
     private fun createButtonBar(mv: MultiView): ControlBar {
         val bar = MainControlBar(this)
-
-        bar.addActivityCycle(this)
+        bar.addMvPrevious(mv)
         bar.addMvNext(mv)
         if (AppLayout.haveExtraSpaceGps(this)) {
             bar.addGpsState(this)
