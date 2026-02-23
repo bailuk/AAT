@@ -134,6 +134,10 @@ class FileContentActivity : AbsFileContentActivity() {
                     IndexedAttributeDescription.Cadence(),
                     TotalCadence()
                 ),
+                ContentDescriptions(
+                    IndexedAttributeDescription.AveragePower(),
+                    IndexedAttributeDescription.MaxPower(),
+                ),
                 TrackSizeDescription()
             )
         }
