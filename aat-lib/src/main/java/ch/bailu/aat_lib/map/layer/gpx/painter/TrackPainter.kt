@@ -12,7 +12,7 @@ class TrackPainter(private val mcontext: MapContext, private val paint: Paint)  
 
     override fun drawNode(node: TwoNodes.PixelNode) {
         val altitude = node.point.getAltitude().toInt()
-        val color = AltitudeColorTable.instance().getColor(altitude)
+        val color = AltitudeColorTable.getColor(altitude)
         paint.color = color
     }
 }

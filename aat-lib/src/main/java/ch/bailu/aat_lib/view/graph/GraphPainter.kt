@@ -34,7 +34,7 @@ open class GraphPainter(private val plotter: GraphPlotter, md: Int) : GpxListWal
             plotter.plotData(
                 distance,
                 altitude.toFloat(),
-                AltitudeColorTable.instance().getColor(altitude)
+                AltitudeColorTable.getColor(altitude)
             )
         }
     }
