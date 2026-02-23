@@ -58,7 +58,7 @@ class MainControlBar(acontext: AbsDispatcher, orientation: Int = HORIZONTAL, but
         add(MultiViewNextButton(mv, theme), size)
     }
 
-    private fun addMvPrevious(mv: MultiView, size: Int) {
+    fun addMvPrevious(mv: MultiView, size: Int = controlSize) {
         addImageButton(
             R.drawable.go_previous_inverse,
             size
