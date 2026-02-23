@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Live attributes from a BLE cadence/speed sensor (location, RPM, wheel circumference, contact state). */
 open class CadenceSpeedAttributes(
     val location: String,
     private val isCadenceSensor: Boolean,

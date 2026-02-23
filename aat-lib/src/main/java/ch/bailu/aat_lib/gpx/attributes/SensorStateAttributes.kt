@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx.attributes
 
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Attributes exposing the connected sensor count and an overview string. */
 class SensorStateAttributes(private val sensors: Int) : GpxAttributes() {
     override fun get(keyIndex: Int): String {
         if (keyIndex == KEY_SENSOR_COUNT) {
