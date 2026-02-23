@@ -1,39 +1,50 @@
-package ch.bailu.aat_lib.util;
+package ch.bailu.aat_lib.util
 
-public class Limit {
+import kotlin.math.max
+import kotlin.math.min
 
-    public static int clamp(int val, int min, int max) {
-        val = Math.max(val, min);
-        val = Math.min(val, max);
-        return val;
+object Limit {
+    @JvmStatic
+    fun clamp(value: Int, min: Int, max: Int): Int {
+        var result = value
+        result = max(result, min)
+        result = min(result, max)
+        return result
     }
 
-    public static int smallest(Integer value, Integer ...values) {
-        for(Integer v : values) {
-            value = Math.min(value, v);
+    @JvmStatic
+    fun smallest(value: Int, vararg values: Int): Int {
+        var result = value
+        for (v in values) {
+            result = min(result, v)
         }
-        return value;
+        return result
     }
 
-    public static int biggest(Integer value, Integer ...values) {
-        for(Integer val : values) {
-            value = Math.max(value, val);
+    @JvmStatic
+    fun biggest(value: Int, vararg values: Int): Int {
+        var result = value
+        for (v in values) {
+            result = max(result, v)
         }
-        return value;
+        return result
     }
 
-    public static double smallest(Double value, Double ...values) {
-        for(Double v : values) {
-            value = Math.min(value, v);
+    @JvmStatic
+    fun smallest(value: Double, vararg values: Double): Double {
+        var value = value
+        for (v in values) {
+            value = min(value, v)
         }
-        return value;
+        return value
     }
 
-    public static double biggest(Double value, Double ...values) {
-        for(Double v : values) {
-            value = Math.max(value, v);
+    @JvmStatic
+    fun biggest(value: Double, vararg values: Double): Double {
+        var value = value
+        for (v in values) {
+            value = max(value, v)
         }
-        return value;
+        return value
     }
-
 }

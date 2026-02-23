@@ -1,67 +1,54 @@
-package ch.bailu.aat_lib.util;
+package ch.bailu.aat_lib.util
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat
+import kotlin.math.abs
+import kotlin.math.roundToLong
 
-public class MemSize {
-    public final static long KB=1024;
-    public final static long MB=1024*KB;
-    public final static long GB=1024*MB;
+object MemSize {
+    const val KB: Long = 1024
+    const val MB: Long = 1024 * KB
+    const val GB: Long = 1024 * MB
 
-    public final static DecimalFormat dec = new DecimalFormat("0.00");
+    val dec: DecimalFormat = DecimalFormat("0.00")
+    val ldivider: LongArray = longArrayOf(1, KB, MB, GB)
+    val ddivider: DoubleArray = doubleArrayOf(1.0, KB.toDouble(), MB.toDouble(), GB.toDouble())
+    val unit: Array<String?> = arrayOf("B", "K", "M", "G")
 
-    public final static long[] ldivider = {
-            1, KB, MB, GB
-    };
+    fun describe(out: StringBuilder, size: Double): StringBuilder {
+        var i = ddivider.size
 
-    public final static double[] ddivider = {
-            1, KB, MB, GB
-    };
-
-    public final static String[] unit = {
-            "B", "K", "M", "G",
-    };
-
-
-    public static StringBuilder describe(StringBuilder out, double size) {
-        int i = ddivider.length;
-
-        while (i>0) {
-            i--;
-            if (Math.abs(size) >= ddivider[i])
-                break;
+        while (i > 0) {
+            i--
+            if (abs(size) >= ddivider[i]) break
         }
-        out.append(dec.format(size / ddivider[i]));
-        out.append(unit[i]);
-        return out;
+        out.append(dec.format(size / ddivider[i]))
+        out.append(unit[i])
+        return out
     }
 
+    fun describe(out: StringBuilder, size: Long): String {
+        var i = ldivider.size
 
-
-    public static String describe(StringBuilder out, long size) {
-        int i = ldivider.length;
-
-        while (i>0) {
-            i--;
-            if (Math.abs(size) >= ldivider[i])
-                break;
+        while (i > 0) {
+            i--
+            if (abs(size) >= ldivider[i]) break
         }
 
-        out.append(size/ ldivider[i]);
-        out.append(unit[i]);
-        return out.toString();
+        out.append(size / ldivider[i])
+        out.append(unit[i])
+        return out.toString()
     }
 
+    fun round(size: Long): Long {
+        var size = size
+        var i = ldivider.size
 
-    public static long round(long size) {
-        int i = ldivider.length;
-
-        while (i>0) {
-            i--;
-            if (Math.abs(size) >= ldivider[i])
-                break;
+        while (i > 0) {
+            i--
+            if (abs(size) >= ldivider[i]) break
         }
 
-        size = Math.round(size / (double)ldivider[i]);
-        return size * ldivider[i];
+        size = (size / ldivider[i].toDouble()).roundToLong()
+        return size * ldivider[i]
     }
 }
