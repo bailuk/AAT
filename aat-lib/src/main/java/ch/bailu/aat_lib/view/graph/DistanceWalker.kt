@@ -1,76 +1,55 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxListWalker;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListWalker
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
 
-public class DistanceWalker extends GpxListWalker {
-    private int index = 0;
-    private float dstDelta = 0f;
-    private float dstOffset = 0f;
-    private final Segment segment;
+class DistanceWalker(private val segment: Segment) : GpxListWalker() {
+    private var index = 0
+    var distanceDelta: Float = 0f
+        private set
+    var distanceOffset: Float = 0f
+        private set
 
-    public DistanceWalker(Segment segment) {
-        this.segment = segment;
-    }
-
-    @Override
-    public boolean doList(GpxList track) {
+    override fun doList(track: GpxList): Boolean {
         if (segment.isValid()) {
-            return true;
+            return true
         } else {
-            dstDelta = track.getDelta().getDistance();
-            return false;
+            this.distanceDelta = track.getDelta().getDistance()
+            return false
         }
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        return doDelta(segment.getSegmentSize(), segment.getDistance());
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        return doDelta(segment.segmentSize, segment.getDistance())
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return doDelta(marker.getSegmentSize(), marker.getDistance());
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return doDelta(marker.segmentSize, marker.getDistance())
     }
 
-
-    private boolean doDelta(int size, float distance) {
-
+    private fun doDelta(size: Int, distance: Float): Boolean {
         if (segment.isAfter(index)) {
-            return false;
-
+            return false
         } else {
-            int nextIndex = index + size;
+            val nextIndex = index + size
 
             if (segment.isBefore(nextIndex)) {
-                index = nextIndex;
-                dstOffset += distance;
-                return false;
+                index = nextIndex
+                this.distanceOffset += distance
+                return false
             }
         }
-        return true;
+        return true
     }
 
-
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (segment.isBefore(index)) {
-            dstOffset += point.getDistance();
-
+            this.distanceOffset += point.getDistance()
         } else if (!segment.isAfter(index)) {
-            dstDelta += point.getDistance();
+            this.distanceDelta += point.getDistance()
         }
-        index++;
-    }
-
-
-    public float getDistanceDelta() {
-        return dstDelta;
-    }
-
-    public float getDistanceOffset() {
-        return dstOffset;
+        index++
     }
 }

@@ -1,47 +1,42 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
+
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
 
 
-public class InvertetOffsetScaler {
+class InvertedOffsetScaler(pixel: Int) {
+    private val scaler: Scaler = Scaler(pixel.toFloat())
 
-    private final Scaler scaler;
-    private float min=Float.MAX_VALUE,max=0;
-    public InvertetOffsetScaler(int pixel) {
-        scaler=new Scaler(pixel);
+    var realOffset: Float = Float.Companion.MAX_VALUE
+        private set
+    var realTop: Float = 0f
+        private set
+
+    fun addValue(v: Float) {
+        this.realOffset = min(this.realOffset, v)
+        this.realTop = max(this.realTop, v)
+        scaler.init(this.realTop - this.realOffset)
     }
 
-    public void addValue(float v) {
-        min = Math.min(min,v);
-        max = Math.max(max,v);
-        scaler.init(max-min);
+    fun scale(v: Float): Float {
+        return scaler.scale - (scaler.scale(v - this.realOffset))
     }
 
-    public float scale(float v) {
-        return scaler.getScale()-(scaler.scale(v-min));
+    fun getRealDistance(): Float {
+        return this.realTop - this.realOffset
     }
 
-    public float getRealDistance() {
-        return max-min;
+    fun round(roundTo: Int) {
+        var d = (this.realTop / roundTo).toDouble()
+        d = floor(d)
+        this.realTop = (d * roundTo).toFloat() + roundTo
+
+        d = (this.realOffset / roundTo).toDouble()
+        d = floor(d)
+        this.realOffset = d.toFloat() * roundTo
+
+        addValue(this.realTop)
+        addValue(this.realOffset)
     }
-    public float getRealOffset() {
-        return min;
-    }
-
-    public float getRealTop() {
-        return max;
-    }
-
-    public void round(int roundTo) {
-        double
-        d = max/roundTo;
-        d = Math.floor(d);
-        max = (float)(d*roundTo)+roundTo;
-
-        d = min/roundTo;
-        d = Math.floor(d);
-        min = (float)d*roundTo;
-
-        addValue(max);
-        addValue(min);
-    }
-
 }

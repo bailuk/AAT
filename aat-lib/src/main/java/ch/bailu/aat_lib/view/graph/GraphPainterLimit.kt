@@ -1,21 +1,15 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
 
-public class GraphPainterLimit extends GraphPainter {
-    private int index = 0;
-    private final Segment segment;
+class GraphPainterLimit(p: GraphPlotter, private val segment: Segment, md: Int) :
+    GraphPainter(p, md) {
+    private var index = 0
 
-    public GraphPainterLimit(GraphPlotter p, Segment segment, int md) {
-        super(p, md);
-        this.segment = segment;
-    }
-
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (segment.isInside(index)) {
-            super.doPoint(point);
+            super.doPoint(point)
         }
-        index++;
+        index++
     }
 }

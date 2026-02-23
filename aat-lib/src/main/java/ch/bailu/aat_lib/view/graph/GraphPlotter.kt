@@ -1,123 +1,123 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.util.Point;
+import ch.bailu.aat_lib.util.Point
+import kotlin.math.max
+import kotlin.math.min
 
-public class GraphPlotter {
-    private final int text_size;
+class GraphPlotter(
+    private val canvas: GraphCanvas,
+    private val width: Int,
+    private val height: Int,
+    xScale: Float
+) {
+    private val textSize: Int = canvas.getTextSize()
 
-    private final Scaler xscaler;
-    private final InvertetOffsetScaler yscaler;
+    private val xScaler: Scaler = Scaler(width.toFloat(), xScale)
+    private val yScaler: InvertedOffsetScaler = InvertedOffsetScaler(height)
 
-    private final GraphCanvas canvas;
+    private var pointA = Point(-5, -5)
+    private var pointB = Point(-5, -5)
 
-    private final int width;
-    private final int height;
-
-    private Point pointA=new Point(-5,-5), pointB = new Point(-5,-5);
-
-
-    public GraphPlotter(GraphCanvas c, int w, int h, float xScale) {
-        width=w;
-        height=h;
-        canvas = c;
-
-        text_size = canvas.getTextSize();
-        xscaler = new Scaler(width, xScale);
-        yscaler = new InvertetOffsetScaler(height);
-
+    fun roundYScale(roundTo: Int) {
+        yScaler.round(roundTo)
     }
 
-    public void roundYScale(int roundTo) {
-        yscaler.round(roundTo);
+    fun includeInYScale(value: Float) {
+        yScaler.addValue(value)
     }
 
-    public void inlcudeInYScale(float value) {
-        yscaler.addValue(value);
-    }
+    fun drawYScale(lines: Int, factor: Float, drawFirstValue: Boolean) {
+        var lines = lines
+        lines = min(height / (textSize * 2), lines)
+        lines = max(1, lines)
 
-    public void drawYScale(int lines, float factor, boolean drawFirstValue) {
-        lines = Math.min(height / (text_size*2), lines);
-        lines = Math.max(1, lines);
+        var space = yScaler.getRealDistance() / lines
+        space = max(1f, space)
 
-        float space = yscaler.getRealDistance() / lines;
-        space = Math.max(1, space);
-
-        for (float x=yscaler.getRealOffset(); x<= yscaler.getRealTop(); x+=space) {
-            drawHorizontalLine(x,factor, drawFirstValue);
+        var x = yScaler.realOffset
+        while (x <= yScaler.realTop) {
+            drawHorizontalLine(x, factor, drawFirstValue)
+            x += space
         }
     }
 
-    private void drawHorizontalLine(float value, float factor, boolean drawFirstValue) {
-        int pixel = (int)yscaler.scale(value);
+    private fun drawHorizontalLine(value: Float, factor: Float, drawFirstValue: Boolean) {
+        val pixel = yScaler.scale(value).toInt()
 
-        canvas.drawLine(0, pixel, width, pixel);
+        canvas.drawLine(0, pixel, width, pixel)
 
-        if (drawFirstValue || pixel < height-text_size)
-            drawScaleText(0,pixel, String.valueOf((int) (value*factor)) );
+        if (drawFirstValue || pixel < height - textSize) drawScaleText(
+            0,
+            pixel,
+            (value * factor).toInt().toString()
+        )
     }
 
-    private void drawScaleText(int x,int y, String value) {
-        int w = value.length()*text_size;
-        int h = text_size;
+    private fun drawScaleText(x: Int, y: Int, value: String) {
+        var x = x
+        var y = y
+        val w = value.length * textSize
+        val h = textSize
 
-        if ((x+w) > width) x = width - w;
-        if ((y-h) < 0) y=h;
+        if ((x + w) > width) x = width - w
+        if ((y - h) < 0) y = h
 
-        canvas.drawText(value, x, y);
+        canvas.drawText(value, x, y)
     }
 
-    public void drawXScale(int lines, float factor, boolean drawText) {
-        lines = Math.min(width / (text_size*4), lines);
-        lines = Math.max(1, lines);
+    fun drawXScale(lines: Int, factor: Float, drawText: Boolean) {
+        var lines = lines
+        lines = min(width / (textSize * 4), lines)
+        lines = max(1, lines)
 
-        float space=xscaler.getReal()/lines;
-        space = Math.max(1, space);
+        var space = xScaler.real / lines
+        space = max(1f, space)
 
-        for (float x=0; x <= xscaler.getReal(); x+=space) {
-            drawVerticalLine(x, factor, drawText);
-        }
-
-    }
-
-    private void drawVerticalLine(float value, float factor, boolean drawText) {
-        int pixel = (int)xscaler.scale(value);
-
-        canvas.drawLine(pixel, 0 , pixel, height);
-
-        if (drawText && pixel > text_size) {
-            String text = String.valueOf((int) (value * factor));
-            drawScaleText(pixel-text_size, height, text);
+        var x = 0f
+        while (x <= xScaler.real) {
+            drawVerticalLine(x, factor, drawText)
+            x += space
         }
     }
 
+    private fun drawVerticalLine(value: Float, factor: Float, drawText: Boolean) {
+        val pixel = xScaler.scale(value).toInt()
 
-    public int plotData(float xvalue, float yvalue, int color) {
-        int delta;
-        scaleToPixel(xvalue, yvalue);
+        canvas.drawLine(pixel, 0, pixel, height)
 
-        delta = Math.max(pointA.x - pointB.x, 0);
+        if (drawText && pixel > textSize) {
+            val text = (value * factor).toInt().toString()
+            drawScaleText(pixel - textSize, height, text)
+        }
+    }
+
+
+    fun plotData(xValue: Float, yValue: Float, color: Int): Int {
+        scaleToPixel(xValue, yValue)
+
+        val delta: Int = max(pointA.x - pointB.x, 0)
 
         if (delta > 1) {
-            if (pointB.x < 0) pointB.y=pointA.y;
-            canvas.drawLine(pointB, pointA, color);
-            switchPoints();
+            if (pointB.x < 0) pointB.y = pointA.y
+            canvas.drawLine(pointB, pointA, color)
+            switchPoints()
         }
-        return delta;
+        return delta
     }
 
-    private void scaleToPixel(float xvalue, float yvalue) {
-        pointA.x=(int)xscaler.scale(xvalue);
-        pointA.y=(int)yscaler.scale(yvalue);
+    private fun scaleToPixel(xvalue: Float, yvalue: Float) {
+        pointA.x = xScaler.scale(xvalue).toInt()
+        pointA.y = yScaler.scale(yvalue).toInt()
     }
 
-    private void switchPoints() {
-        Point t=pointB;
-        pointB=pointA;
-        pointA=t;
+    private fun switchPoints() {
+        val t = pointB
+        pointB = pointA
+        pointA = t
     }
 
-    public void plotPoint(float xvalue, float yvalue, int color) {
-        scaleToPixel(xvalue,yvalue);
-        canvas.drawBitmap(pointA, color);
+    fun plotPoint(xvalue: Float, yvalue: Float, color: Int) {
+        scaleToPixel(xvalue, yvalue)
+        canvas.drawBitmap(pointA, color)
     }
 }

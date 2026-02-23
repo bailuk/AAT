@@ -1,37 +1,35 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-public class Scaler {
-    private float scale=1;
-    private float real=1;
+class Scaler(scale: Float = 1f, real: Float = 1f) {
+    val scale: Float
+    var real: Float
+        private set
 
+    init {
+        if (scale != 0f) {
+            this.scale = scale
+        } else {
+            this.scale = 1f
+        }
 
-    public Scaler(float scale) {
-        if (scale != 0f) this.scale=scale;
+        if (real != 0f) {
+            this.real = real
+        } else {
+            this.real = 1f
+        }
     }
 
-
-    public Scaler(float scale, float real) {
-        this.scale=scale;
-        if (real !=0f) this.real=real;
+    fun init(real: Float) {
+        if (real != 0f) {
+            this.real = real
+        }
     }
 
-    public void init(float real) {
-        if (real !=0f) this.real=real;
+    fun scale(realValue: Float): Float {
+        return (scale / real) * realValue
     }
 
-    public float scale(float realValue) {
-        return (scale/real)*realValue;
-    }
-
-    public float backScale(float scaledValue) {
-        return scaledValue / (scale/real);
-    }
-
-    public float getScale() {
-        return scale;
-    }
-
-    public float getReal() {
-        return real;
+    fun backScale(scaledValue: Float): Float {
+        return scaledValue / (scale / real)
     }
 }

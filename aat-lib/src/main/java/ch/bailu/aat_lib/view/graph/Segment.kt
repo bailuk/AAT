@@ -1,28 +1,28 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
 
-public class Segment {
-    private int start = -1;
-    private int end = -1;
+class Segment {
+    private var start = -1
+    private var end = -1
 
-    public void setLimit(int start, int end) {
-        this.start = start;
-        this.end = end;
+    fun setLimit(start: Int, end: Int) {
+        this.start = start
+        this.end = end
     }
 
-    public boolean isValid() {
-        return start > -1 && end > start;
+    fun isValid(): Boolean {
+        return start > -1 && end > start
     }
 
-    public boolean isAfter(int index) {
-        return index > end;
+    fun isAfter(index: Int): Boolean {
+        return index > end
     }
 
-    public boolean isBefore(int index) {
-        return index < start;
+    fun isBefore(index: Int): Boolean {
+        return index < start
     }
 
-    public boolean isInside(int index) {
-        return index >= start && index <= end;
+    fun isInside(index: Int): Boolean {
+        return index >= start && index <= end
     }
 }

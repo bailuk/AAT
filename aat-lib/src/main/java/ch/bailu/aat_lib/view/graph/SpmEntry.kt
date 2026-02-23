@@ -1,71 +1,57 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.description.ContentDescription;
-import ch.bailu.aat_lib.gpx.GpxList;
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.attributes.SampleRate;
+import ch.bailu.aat_lib.description.ContentDescription
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.attributes.SampleRate.Companion.getValue
 
-public class SpmEntry {
-    private final int color;
-    private final String label;
-    private final String unit;
+class SpmEntry(
+    private val color: Int,
+    private val label: String,
+    private val unit: String,
+    private val maxKey: Int,
+    private vararg val keys: Int
+) {
+    private var plotter: GraphPlotter? = null
+    private var summaryDistance = 0f
 
-    private final int maxKey;
-    private final int[] keys;
+    constructor(color: Int, description: ContentDescription, maxKey: Int, vararg keys: Int) : this(
+        color,
+        description.getLabel(),
+        description.getUnit(),
+        maxKey,
+        *keys
+    )
 
-    private GraphPlotter plotter;
-
-    private float summaryDistance=0;
-
-
-    public SpmEntry(int color, ContentDescription description, int maxKey, int... keys) {
-        this(color, description.getLabel(), description.getUnit(), maxKey, keys);
+    fun setLabelText(labels: LabelInterface) {
+        labels.setText(color, label, unit)
     }
 
-    public SpmEntry(int color, String label, String unit, int maxKey, int... keys) {
-        this.color = color;
-        this.label = label;
-        this.unit = unit;
-        this.maxKey = maxKey;
-        this.keys = keys;
-
+    fun setPlotter(kmFactor: Int, canvas: GraphCanvas, width: Int, height: Int) {
+        plotter = GraphPlotter(canvas, width, height, (1000 * kmFactor).toFloat())
     }
 
-
-    public void setLabelText(LabelInterface labels) {
-        labels.setText(color, label, unit);
+    fun getPlotter(): GraphPlotter? {
+        return plotter
     }
 
-
-    public void setPlotter(int kmFactor, GraphCanvas canvas, int width, int height) {
-        plotter =  new GraphPlotter(canvas, width, height, 1000 * kmFactor);
+    fun getMax(list: GpxList): Int {
+        return list.getDelta().getAttributes().getAsInteger(maxKey)
     }
 
-    public GraphPlotter getPlotter() {
-        return plotter;
+    fun incrementSummaryDistance(distance: Float) {
+        summaryDistance += distance
     }
 
-    public int getMax(GpxList list) {
-        return list.getDelta().getAttributes().getAsInteger(maxKey);
-    }
-
-    public void incrementSummaryDistance(float distance) {
-        summaryDistance += distance;
-    }
-
-
-    public void plotIfDistance(GpxPointNode point, float minDistance, float distance) {
+    fun plotIfDistance(point: GpxPointNode, minDistance: Float, distance: Float) {
         if (summaryDistance >= minDistance) {
-
-            final int value = SampleRate.getValue(point.getAttributes(), keys);
+            val value = getValue(point.getAttributes(), *keys)
 
             if (value > 0) {
                 //distance += summaryDistance;
-                summaryDistance = 0;
-
-                plotter.plotData(distance, value, color);
+                summaryDistance = 0f
+                plotter?.plotData(distance, value.toFloat(), color)
             }
         }
-
     }
 }

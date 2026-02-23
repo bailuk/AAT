@@ -1,48 +1,37 @@
-package ch.bailu.aat_lib.view.graph;
+package ch.bailu.aat_lib.view.graph
 
-import ch.bailu.aat_lib.gpx.GpxPointNode;
-import ch.bailu.aat_lib.gpx.GpxSegmentNode;
+import ch.bailu.aat_lib.gpx.GpxPointNode
+import ch.bailu.aat_lib.gpx.GpxSegmentNode
 
-public class ScaleGeneratorSegmented extends ScaleGenerator {
-    private int index = 0;
-    private final Segment segment;
+class ScaleGeneratorSegmented(p: GraphPlotter, private val segment: Segment) : ScaleGenerator(p) {
+    private var index = 0
 
-    public ScaleGeneratorSegmented(GraphPlotter p, Segment segment) {
-        super(p);
-        this.segment = segment;
+    override fun doMarker(marker: GpxSegmentNode): Boolean {
+        return doDelta(marker.segmentSize)
     }
 
-    @Override
-    public boolean doMarker(GpxSegmentNode marker) {
-        return doDelta(marker.getSegmentSize());
+    override fun doSegment(segment: GpxSegmentNode): Boolean {
+        return doDelta(segment.segmentSize)
     }
 
-    @Override
-    public boolean doSegment(GpxSegmentNode segment) {
-        return doDelta(segment.getSegmentSize());
-    }
-
-    private boolean doDelta(int size) {
-
+    private fun doDelta(size: Int): Boolean {
         if (segment.isAfter(index)) {
-            return false;
-
+            return false
         } else {
-            int nextIndex = index + size;
+            val nextIndex = index + size
 
             if (segment.isBefore(nextIndex)) {
-                index = nextIndex;
-                return false;
+                index = nextIndex
+                return false
             }
         }
-        return true;
+        return true
     }
 
-    @Override
-    public void doPoint(GpxPointNode point) {
+    override fun doPoint(point: GpxPointNode) {
         if (segment.isInside(index)) {
-            super.doPoint(point);
+            super.doPoint(point)
         }
-        index++;
+        index++
     }
 }
