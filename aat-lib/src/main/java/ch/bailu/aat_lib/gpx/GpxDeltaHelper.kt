@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
 
+/** Static helpers to compute distance, speed, acceleration, and time deltas between two points. */
 object GpxDeltaHelper {
     @JvmStatic
     fun getDistance(a: GpxPointInterface, b: GpxPointInterface): Float {

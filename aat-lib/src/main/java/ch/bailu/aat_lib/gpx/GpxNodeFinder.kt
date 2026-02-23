@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.coordinates.BoundingBoxE6.Companion.doOverlap
 
+/** Walks a {@link GpxList} to find the first point that falls within a given bounding box. */
 class GpxNodeFinder(private val bounding: BoundingBoxE6) : GpxListWalker() {
     var node: GpxPointNode? = null
         private set

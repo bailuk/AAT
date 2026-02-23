@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
+/** A segment within a {@link GpxList}, delegating summary statistics to a {@link GpxBigDelta}. */
 open class GpxSegmentNode : SegmentNode, GpxBigDeltaInterface {
     private val delta = GpxBigDelta(GpxListAttributes.NULL)
 

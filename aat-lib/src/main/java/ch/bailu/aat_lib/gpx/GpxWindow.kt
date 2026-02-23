@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.coordinates.BoundingBoxE6
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface
 import javax.annotation.Nonnull
 
+/** Sliding window over a linked list of {@link GpxPointNode}s, trimming from the front when a subclass-defined limit is exceeded. */
 abstract class GpxWindow(private var first: GpxPointNode?) : GpxDeltaInterface {
     private var last: GpxPointNode?
 
