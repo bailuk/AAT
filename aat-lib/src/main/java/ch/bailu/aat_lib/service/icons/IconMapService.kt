@@ -34,7 +34,7 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
     }
 
     override fun toAssetPath(key: Int, value: String): String? {
-        val icon: IconMap.Icon? = map[key, value]
+        val icon: IconMap.Icon? = map.get(key, value)
         return icon?.svg
     }
 
@@ -45,8 +45,10 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
 
     private fun getIconEntry(attr: GpxAttributes): IconMap.Icon? {
         for (i in 0 until attr.size()) {
-            val icon = map[attr.getKeyAt(i), attr.getAt(i)]
-            if (icon != null) return icon
+            val icon = map.get(attr.getKeyAt(i), attr.getAt(i))
+            if (icon != null) {
+                return icon
+            }
         }
         return getIconEntryNominatimType(attr)
     }
@@ -55,7 +57,7 @@ class IconMapService(sc: ServicesInterface, focFactory: FocFactory) : VirtualSer
         if (attr.hasKey(N_KEY_KEY) && attr.hasKey(N_KEY_VALUE)) {
             val key = toIndex(attr[N_KEY_KEY])
             val value = attr[N_KEY_VALUE]
-            return map[key, value]
+            return map.get(key, value)
         }
         return null
     }
