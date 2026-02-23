@@ -1,45 +1,31 @@
-package ch.bailu.aat_lib.service.icons;
+package ch.bailu.aat_lib.service.icons
 
-import java.util.HashMap;
+import ch.bailu.aat_lib.util.WithStatusText
 
-import ch.bailu.aat_lib.util.WithStatusText;
+class IconMap : WithStatusText {
 
-public final class IconMap implements WithStatusText {
-    public static class Icon {
-        public final String svg;
+    class Icon(fileName: String) {
+        val svg = IconMapService.SVG_DIRECTORY + fileName + IconMapService.SVG_SUFFIX
+    }
 
-        public Icon(String file_name) {
-            svg = IconMapService.SVG_DIRECTORY + file_name + IconMapService.SVG_SUFFIX;
+    private val keyList = HashMap<Int, HashMap<String, Icon>>()
+
+    fun add(key: Int, value: String, fileName: String) {
+        val valueList = keyList.get(key) ?: HashMap()
+        valueList.put(value, Icon(fileName))
+        keyList.put(key, valueList)
+    }
+
+    fun get(keyIndex: Int, value: String): Icon? {
+        val valueList = keyList.get(keyIndex)
+
+        if (valueList == null) {
+            return null
         }
+        return valueList[value]
     }
 
-    private final HashMap<Integer, HashMap<String, Icon>> key_list =
-            new HashMap<>();
-
-
-    public void add(int key, String value, String file_name) {
-        HashMap<String,Icon>  value_list = key_list.get(key);
-
-        if (value_list == null) {
-            value_list = new HashMap<>();
-        }
-
-        value_list.put(value, new Icon(file_name));
-        key_list.put(key, value_list);
+    override fun appendStatusText(builder: StringBuilder) {
+        builder.append("IconMap (key_list) size: ").append(keyList.size).append("<br>")
     }
-
-    public Icon get(int keyIndex, String value) {
-        final HashMap<String, Icon> value_list=key_list.get(keyIndex);
-
-        if (value_list == null) {
-            return null;
-        }
-        return value_list.get(value);
-    }
-
-    @Override
-    public void appendStatusText(StringBuilder builder) {
-        builder.append("IconMap (key_list) size: ").append(key_list.size()).append("<br>");
-    }
-
 }
