@@ -2,7 +2,6 @@ package ch.bailu.aat_gtk.app
 
 import ch.bailu.aat_gtk.config.Environment
 import ch.bailu.aat_gtk.config.Strings
-import ch.bailu.aat_gtk.lib.GResource
 import ch.bailu.aat_gtk.lib.RuntimeInfo
 import ch.bailu.aat_gtk.preferences.GtkStorage
 import ch.bailu.aat_gtk.preferences.PreferenceLoadDefaults
@@ -17,6 +16,7 @@ import ch.bailu.aat_lib.logger.BroadcastLoggerFactory
 import ch.bailu.aat_lib.logger.PrintLnLoggerFactory
 import ch.bailu.gtk.adw.Application
 import ch.bailu.gtk.gio.ApplicationFlags
+import ch.bailu.gtk.lib.bridge.GResource
 import ch.bailu.gtk.type.Strs
 import org.mapsforge.map.gtk.graphics.GtkGraphicFactory
 import kotlin.system.exitProcess
