@@ -12,7 +12,7 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 
-open class WayParser @JvmOverloads constructor(tag: String = "way") : TagParser(tag) {
+open class WayParser constructor(tag: String = "way") : TagParser(tag) {
 
     private val tag: TagParser = OsmTagParser()
     private val member: TagParser = MemberParser()

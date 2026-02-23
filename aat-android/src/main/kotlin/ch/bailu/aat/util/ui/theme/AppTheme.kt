@@ -30,7 +30,6 @@ object AppTheme {
     val filter: UiTheme = UiThemeLightHeader(UiThemeLight.HL_BLUE)
 
     @JvmStatic
-    @JvmOverloads
     fun padding(view: View, p: Int = 15) {
         val padding = AndroidAppDensity(view.context).toPixelInt(p.toFloat())
         view.setPadding(padding, padding, padding, padding)

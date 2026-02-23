@@ -6,7 +6,7 @@ import ch.bailu.aat_lib.file.xml.parser.scanner.Scanner
 import org.xmlpull.v1.XmlPullParser
 import java.io.IOException
 
-open class MemberParser @JvmOverloads constructor(tag: String = "member") : TagParser(tag) {
+open class MemberParser constructor(tag: String = "member") : TagParser(tag) {
     @Throws(IOException::class)
     override fun parseText(parser: XmlPullParser, scanner: Scanner) {
     }

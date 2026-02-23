@@ -54,7 +54,6 @@ open class ControlBar(context: Context, private val _orientation: Int, val theme
         }
     }
 
-    @JvmOverloads
     fun addImageButton(res: Int, size: Int = controlSize): ImageButtonViewGroup {
         val button = ImageButtonViewGroup(context, res)
         button.setOnClickListener(onClickListener)

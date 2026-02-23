@@ -10,7 +10,7 @@ import ch.bailu.aat_lib.map.TwoNodes
 import ch.bailu.aat_lib.map.TwoNodes.PixelNode
 import ch.bailu.aat_lib.map.layer.gpx.DistanceCounter
 
-abstract class GpxListPainter @JvmOverloads constructor(
+abstract class GpxListPainter constructor(
     private val mcontext: MapContext,
     minPixelSpace: Int = MIN_PIXEL_SPACE
 ) : GpxListWalker() {

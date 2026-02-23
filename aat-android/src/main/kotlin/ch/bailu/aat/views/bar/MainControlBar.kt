@@ -53,7 +53,6 @@ class MainControlBar(acontext: AbsDispatcher, orientation: Int = HORIZONTAL, but
         addMvNext(mv, controlSize / 2)
     }
 
-    @JvmOverloads
     fun addMvNext(mv: MultiView, size: Int = controlSize) {
         add(MultiViewNextButton(mv, theme), size)
     }

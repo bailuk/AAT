@@ -108,7 +108,7 @@ class MenuArray(private val context: Context) : Menu {
     }
 
     override fun setQwertyMode(b: Boolean) {}
-    private class Item @JvmOverloads constructor(
+    private class Item constructor(
         private val context: Context,
         private var title: CharSequence?,
         private val id: Int = 0

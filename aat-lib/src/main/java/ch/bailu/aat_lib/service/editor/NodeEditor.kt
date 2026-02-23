@@ -21,8 +21,6 @@ class NodeEditor {
     val list: GpxList
     val point: GpxPointNode
 
-
-    @JvmOverloads
     constructor(type: GpxType = GpxType.ROUTE) {
         this.list = GpxList(type, GpxListAttributes.NULL)
         this.point = GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL)
