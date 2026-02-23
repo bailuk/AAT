@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Empty [GpxAttributes] that has no keys and returns [NULL_VALUE] for all lookups. */
 class GpxAttributesNull : GpxAttributes() {
     override fun get(keyIndex: Int): String {
         return NULL_VALUE

@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx.attributes
 
 import ch.bailu.aat_lib.util.Objects
 
+/** Key-value store for point or track attributes, keyed by integer indices from [Keys]. */
 abstract class GpxAttributes {
     abstract operator fun get(keyIndex: Int): String
     abstract fun hasKey(keyIndex: Int): Boolean

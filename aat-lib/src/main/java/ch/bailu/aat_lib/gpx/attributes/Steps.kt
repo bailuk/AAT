@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx.attributes
 
 import ch.bailu.aat_lib.gpx.GpxPointNode
 
+/** Accumulates total step count across sensor resets. */
 class Steps : GpxSubAttributes(
     Keys(
         StepCounterAttributes.KEY_INDEX_STEPS_RATE,

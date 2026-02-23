@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Live attributes from a BLE heart rate sensor (BPM, RR interval, contact state, body location). */
 open class HeartRateAttributes(val location: String = BODY_SENSOR_LOCATIONS[0]) :
     GpxAttributes() {
     private var bpm = 0
