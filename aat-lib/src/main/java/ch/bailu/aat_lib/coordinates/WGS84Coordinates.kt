@@ -8,6 +8,7 @@ import java.text.DecimalFormat
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
+/** WGS84 coordinates in sexagesimal (degrees/minutes/seconds) form, parseable from decimal strings. */
 class WGS84Coordinates : Coordinates {
     /**
      * WGS84 Sexagesimal and decimal operations
