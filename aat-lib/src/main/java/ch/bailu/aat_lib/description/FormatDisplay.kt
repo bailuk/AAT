@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.description
 import java.text.DateFormat
 import java.text.DecimalFormat
 
+/** Thread-local locale-aware number and date formatters for display purposes. */
 class FormatDisplay private constructor() {
     val localDateTime: DateFormat = DateFormat.getDateTimeInstance(
         DateFormat.LONG, DateFormat.LONG

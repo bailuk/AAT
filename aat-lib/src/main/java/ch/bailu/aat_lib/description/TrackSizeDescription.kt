@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.description
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays track point, marker, and segment counts. */
 class TrackSizeDescription : ContentDescription() {
     private var value = ""
     private var size = -1

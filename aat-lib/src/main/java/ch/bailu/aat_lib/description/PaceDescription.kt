@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import kotlin.math.roundToInt
 
+/** Base class for pace descriptions, formatting seconds-per-unit as mm:ss with unit conversion. */
 abstract class PaceDescription(s: StorageInterface) : FloatDescription() {
     private val sunit = SolidUnit(s)
     override fun getUnit(): String {

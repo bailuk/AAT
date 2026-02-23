@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.description
 
+/** [ContentDescription] that caches a single long value. */
 abstract class LongDescription : ContentDescription() {
     protected var cache: Long = 0
         private set

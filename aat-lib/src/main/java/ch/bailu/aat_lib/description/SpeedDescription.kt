@@ -4,6 +4,7 @@ import java.text.NumberFormat
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 
+/** Base class for speed descriptions with unit conversion via [SolidUnit]. */
 abstract class SpeedDescription(storage: StorageInterface, private val format: NumberFormat=FormatDisplay.f().decimal1) : FloatDescription() {
     private val sunit: SolidUnit = SolidUnit(storage)
 

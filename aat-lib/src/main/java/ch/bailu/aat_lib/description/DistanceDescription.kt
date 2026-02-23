@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
 import java.util.Objects
 
+/** Displays total distance with adaptive decimal precision and unit conversion. */
 open class DistanceDescription(storage: StorageInterface) : FloatDescription() {
     private val format = arrayOf(f().decimal3, f().decimal2, f().decimal1, f().decimal0)
     private val unit: SolidUnit
