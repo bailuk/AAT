@@ -38,11 +38,7 @@ class GpxInformationDbSummary(private val directory: Foc, cursor: DbResultSet) :
     }
 
     private fun addEntryToList(entry: GpxInformation) {
-        val point = GpxPoint(
-            entry.getBoundingBox().center,
-            0f, entry.getTimeStamp()
-        )
-
+        val point = GpxPoint(entry.getBoundingBox().center, 0f, entry.getTimeStamp())
         list.appendToCurrentSegment(point, GpxAttributesNull.NULL)
         maxSpeed.add(entry.getSpeed())
     }

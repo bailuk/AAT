@@ -141,7 +141,11 @@ class BoundingBoxE6 {
     val longitudeSpanE6: Int
         get() = abs(lonWestE6 - lonEastE6)
     val center: LatLongE6
-        get() = LatLongE6(latSouthE6 + latitudeSpanE6 / 2, lonWestE6 + longitudeSpanE6 / 2)
+        get() {
+            val la = validate(latSouthE6 + latitudeSpanE6 / 2, MIN_LA, MAX_LA)
+            val lo = validate(lonWestE6 + longitudeSpanE6 / 2, MIN_LO, MAX_LO)
+            return LatLongE6(la, lo)
+        }
 
     private fun validate() {
         latNorthE6 = validate(latNorthE6, MIN_LA, MAX_LA)
