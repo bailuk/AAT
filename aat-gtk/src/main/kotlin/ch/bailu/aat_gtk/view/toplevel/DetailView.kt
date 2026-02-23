@@ -88,6 +88,10 @@ class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInte
                 IndexedAttributeDescription.Cadence(),
                 TotalCadence()
             ),
+            ContentDescriptions(
+                IndexedAttributeDescription.AveragePower(),
+                IndexedAttributeDescription.MaxPower(),
+            ),
             TrackSizeDescription()
         )
     }

@@ -50,4 +50,16 @@ open class IndexedAttributeDescription(
         Res.str().sensor_cadence_total_unit(),
         SampleRate.HeartRate.INDEX_HEART_BEATS
     )
+
+    class AveragePower : IndexedAttributeDescription(
+        Res.str().sensor_power(),
+        PowerDescription.UNIT,
+        SampleRate.Power.INDEX_AVERAGE_POWER
+    )
+
+    class MaxPower : IndexedAttributeDescription(
+        "Max " + Res.str().sensor_power(),
+        PowerDescription.UNIT,
+        SampleRate.Power.INDEX_MAX_POWER
+    )
 }
