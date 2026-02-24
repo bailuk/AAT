@@ -69,4 +69,10 @@ open class IndexedAttributeDescription(
         PowerDescription.UNIT,
         TimeWindowAttributes.INDEX_WINDOW_POWER
     )
+
+    class _WindowPower : IndexedAttributeDescription(
+        "10'",
+        PowerDescription.UNIT,
+        TimeWindowAttributes.INDEX_WINDOW_POWER
+    )
 }
