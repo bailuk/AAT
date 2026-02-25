@@ -6,11 +6,15 @@ import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
 class GpxListIterator(private val track: GpxList) {
     private inner class PointPrimerNode : GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL) {
-        override var next = track.pointList.first
+        override var next: Node?
+            get() = track.pointList.first
+            set(_) {}
     }
 
     private inner class SegmentPrimerNode : GpxSegmentNode(PointPrimerNode()) {
-        override var next = track.segmentList.first
+        override var next: Node?
+            get() = track.segmentList.first
+            set(_) {}
     }
 
     private var point: GpxPointNode = PointPrimerNode()
