@@ -1,7 +1,11 @@
 package ch.bailu.aat_lib.file.xml.writer
 
 import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
+import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListIterator
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
+import ch.bailu.aat_lib.gpx.interfaces.GpxType
 import ch.bailu.aat_lib.mock.MockAppConfig
 import ch.bailu.aat_lib.mock.MockFoc
 import ch.bailu.foc_extended.FocResource
@@ -16,12 +20,27 @@ class GpxListWriterTest {
         MockAppConfig.init()
 
         val mockFoc = MockFoc("only-in-memory.gpx")
-
         val reader = GpxListReaderXml(FocResource("test.gpx"), AutoPause.NULL)
+
         assertEquals(1855, reader.gpxList.pointList.size())
 
+        val gpxList = GpxList(GpxType.TRACK, GpxListAttributes.NULL)
+
         // Write and then close file
-        GpxListWriter(reader.gpxList, mockFoc).use { }
+        GpxListWriter(gpxList, mockFoc).use {
+            val gpxListIterator = GpxListIterator(reader.gpxList)
+
+            while (gpxListIterator.nextPoint()) {
+                val point = gpxListIterator.getPoint()
+
+                if (gpxListIterator.isFirstInSegment) {
+                    gpxList.appendToNewSegment(point.point, point.getAttributes())
+                } else {
+                    gpxList.appendToCurrentSegment(point.point, point.getAttributes())
+                }
+                it.writeNewPoints()
+            }
+        }
 
         val linesWritten = mockFoc.getLines()
 
