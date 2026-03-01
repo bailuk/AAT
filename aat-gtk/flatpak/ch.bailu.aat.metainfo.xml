@@ -80,6 +80,15 @@
     <content_rating type="oars-1.1"/>
     <launchable type="desktop-id">ch.bailu.aat.desktop</launchable>
     <releases>
+        <release version="1.30.1" date="2026-03-01">
+            <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.30.1</url>
+            <description>
+                <p>v1.30.1 (45)</p>
+                <ul>
+                    <li>Fix gpx-list crash when there is an empty gpx file</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.30" date="2026-02-16">
             <url type="details">https://github.com/bailuk/AAT/releases/tag/v1.30</url>
             <description>

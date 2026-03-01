@@ -25,7 +25,7 @@ android {
         targetSdk = 33
 
         // Version Code can not be taken from from variable (f-droid version checker fail)
-        versionCode = 44
+        versionCode = 45
         versionName = appVersionName
         applicationId = appId
     }
