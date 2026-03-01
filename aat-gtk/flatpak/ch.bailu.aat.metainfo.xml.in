@@ -30,6 +30,7 @@
     </description>
 
     <url type="homepage">https://github.com/bailuk/AAT</url>
+    <url type="vcs-browser">https://github.com/bailuk/AAT</url>
 
     <recommends>
       <control>keyboard</control>
