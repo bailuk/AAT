@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.coordinates
 import ch.bailu.aat_lib.exception.IllegalCodeException
 import org.mapsforge.core.model.LatLong
 
+/** Parses a location string by trying OLC, CH1903, WGS84, and UTM formats in order. */
 object LocationParser {
 
     @Throws(IllegalArgumentException::class, IllegalStateException::class)

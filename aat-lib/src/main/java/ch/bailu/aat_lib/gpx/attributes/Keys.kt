@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Bidirectional mapping between string key names and integer key indices, with a global registry in the companion. */
 class Keys(vararg keyIndex: Int) {
     private val keys = ArrayList<Int>(10)
 

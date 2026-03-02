@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.preferences.general.SolidUnit
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays altitude with unit conversion via [SolidUnit]. */
 open class AltitudeDescription(storageInterface: StorageInterface) : FloatDescription() {
     private val unit = SolidUnit(storageInterface)
     override fun getLabel(): String {

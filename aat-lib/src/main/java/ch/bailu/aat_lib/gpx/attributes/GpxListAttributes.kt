@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.gpx.attributes.MaxSpeed.Samples
 import ch.bailu.aat_lib.gpx.attributes.SampleRate.StepsRate
 import ch.bailu.aat_lib.preferences.SolidAutopause
 
+/** Composite [GpxSubAttributes] that delegates to an ordered list of sub-attributes and updates them sequentially. */
 class GpxListAttributes(vararg attr: GpxSubAttributes) :
     GpxSubAttributes(keysFromSubAttributes(attr)) {
     private val attributes: Array<out GpxSubAttributes> = attr
@@ -90,7 +91,8 @@ class GpxListAttributes(vararg attr: GpxSubAttributes) :
                 SampleRate.HeartRate(),
                 SampleRate.Power(),
                 StepsRate(),
-                Steps()
+                Steps(),
+                TimeWindowAttributes(),
             )
         }
 

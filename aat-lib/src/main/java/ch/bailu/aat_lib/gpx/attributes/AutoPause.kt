@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx.attributes
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaInterface
 
+/** Detects pauses by monitoring speed, accumulating pause time and distance. */
 abstract class AutoPause : GpxSubAttributes(KEYS) {
     abstract fun getPauseTime(): Long
     abstract fun getPauseDistance(): Float

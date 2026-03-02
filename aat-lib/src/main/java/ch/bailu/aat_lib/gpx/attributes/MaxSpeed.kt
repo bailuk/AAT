@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx.attributes
 
 import ch.bailu.aat_lib.gpx.GpxPointNode
 
+/** Tracks maximum speed observed during a track. */
 abstract class MaxSpeed : GpxSubAttributes(KEYS) {
     abstract fun get(): Float
     abstract fun add(speed: Float)

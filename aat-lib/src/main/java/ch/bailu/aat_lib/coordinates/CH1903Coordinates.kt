@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.logger.AppLog
 import org.mapsforge.core.model.LatLong
 import kotlin.math.roundToInt
 
+/** Swiss CH1903 (LV03) projected coordinates, convertible to/from WGS84. */
 class CH1903Coordinates : MeterCoordinates {
     override var easting = 0
         private set

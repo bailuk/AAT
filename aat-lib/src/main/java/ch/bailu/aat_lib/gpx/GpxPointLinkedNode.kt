@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.gpx.linked_list.Node
 
+/** A non-first point in a segment; computes distance, speed, acceleration, and time delta relative to its predecessor. */
 class GpxPointLinkedNode(tp: GpxPoint, at: GpxAttributes) : GpxPointNode(tp, at) {
     private var distance = 0f //4byte
 

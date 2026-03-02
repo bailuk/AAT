@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Extends [CadenceSpeedAttributes] with a power reading (watts) from a BLE power meter. */
 open class PowerAttributes(location: String, cadence: Boolean, speed: Boolean) : CadenceSpeedAttributes(location, cadence, speed
 ) {
     var power = 0

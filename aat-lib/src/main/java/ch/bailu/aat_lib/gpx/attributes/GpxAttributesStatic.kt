@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Mutable [GpxAttributes] backed by a growable array of key-value [Tag]s. */
 class GpxAttributesStatic(private var tagList: Array<Tag> = arrayOf()) :
     GpxAttributes() {
     class Tag(val key: Int, val value: String) : Comparable<Tag> {

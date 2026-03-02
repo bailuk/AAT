@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.attributes.Keys.Companion.toIndex
 import kotlin.math.roundToInt
 
+/** Computes time-weighted average and maximum for a periodic sensor value (heart rate, cadence, power, steps). */
 open class SampleRate private constructor(keys: Keys, private vararg val KEY: Int) :
     GpxSubAttributes(keys) {
     private var sampleTimeMillis = 0L

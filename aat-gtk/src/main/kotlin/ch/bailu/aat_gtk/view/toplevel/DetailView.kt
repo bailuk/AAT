@@ -27,6 +27,7 @@ import ch.bailu.aat_lib.description.PauseDescription
 import ch.bailu.aat_lib.description.TimeApDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
+import ch.bailu.aat_lib.description.WindowSpeedDescription
 import ch.bailu.aat_lib.dispatcher.DispatcherInterface
 import ch.bailu.aat_lib.dispatcher.filter.SelectFilter
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
@@ -69,7 +70,8 @@ class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInte
             ContentDescriptions(
                 AverageSpeedDescription(storage),
                 AverageSpeedDescriptionAP(storage),
-                MaximumSpeedDescription(storage)
+                WindowSpeedDescription(storage),
+                MaximumSpeedDescription(storage),
             ),
             CaloriesDescription(storage),
             ContentDescriptions(
@@ -90,6 +92,7 @@ class DetailView(dispatcher: DispatcherInterface, usageTracker: UsageTrackerInte
             ),
             ContentDescriptions(
                 IndexedAttributeDescription.AveragePower(),
+                IndexedAttributeDescription.WindowPower(),
                 IndexedAttributeDescription.MaxPower(),
             ),
             TrackSizeDescription()

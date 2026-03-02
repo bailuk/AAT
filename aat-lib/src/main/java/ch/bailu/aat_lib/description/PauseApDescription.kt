@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays total pause time including auto-pause. */
 class PauseApDescription : PauseDescription() {
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val autoPause = info.getAttributes().getAsLong(AutoPause.INDEX_AUTO_PAUSE_TIME)

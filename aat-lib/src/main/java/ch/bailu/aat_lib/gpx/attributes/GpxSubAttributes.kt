@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.gpx.attributes
 
 import ch.bailu.aat_lib.gpx.GpxPointNode
 
+/** A [GpxAttributes] that participates in the per-point update pipeline via [update]. */
 abstract class GpxSubAttributes(private val keys: Keys) : GpxAttributes() {
     abstract fun update(point: GpxPointNode, autoPause: Boolean): Boolean
     override fun size(): Int {

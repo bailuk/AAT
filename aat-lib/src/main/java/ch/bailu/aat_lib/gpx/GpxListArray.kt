@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
 import ch.bailu.aat_lib.gpx.linked_list.Node
 
+/** Index-based random access over a [GpxList]'s linked list of points, caching the current position. */
 class GpxListArray(val list: GpxList) {
     var index = 0
         set(i) {

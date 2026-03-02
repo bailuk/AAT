@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
 
+/** Displays live cadence (RPM) from a connected BLE cadence sensor. */
 class CadenceDescription : ContentDescription() {
     private val labelDefault: String = Res.str().sensor_cadence()
     private val labelWait: String = "$labelDefault…"

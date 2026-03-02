@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays total step count from track attributes. */
 class TotalStepsDescription : ContentDescription() {
     private var value = VALUE_DISABLED
     private val unit: String = Res.str().sensor_step_total_unit()

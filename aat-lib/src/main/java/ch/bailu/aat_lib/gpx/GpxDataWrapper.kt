@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.gpx.interfaces.GpxDeltaPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 
+/** Combines a [GpxBigDeltaInterface] (track/segment summary) with a [GpxPointInterface] (single visible point) behind a unified interface. */
 open class GpxDataWrapper : GpxDeltaPointInterface, GpxBigDeltaInterface {
     private var summary: GpxBigDeltaInterface = GpxBigDelta.NULL
     private var point: GpxPointInterface = GpxPoint.NULL
