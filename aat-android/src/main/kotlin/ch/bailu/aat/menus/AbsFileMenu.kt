@@ -3,6 +3,8 @@ package ch.bailu.aat.menus
 import android.view.Menu
 import ch.bailu.aat.R
 import ch.bailu.aat.activities.ActivityContext
+import ch.bailu.aat.activities.CockpitSplitActivity
+import ch.bailu.aat.app.ActivitySwitcher
 import ch.bailu.aat.util.fs.AndroidFileAction
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.util.fs.AppDirectory
@@ -51,6 +53,10 @@ abstract class AbsFileMenu(private val aContext: ActivityContext, protected val 
         }
         add(menu, R.string.file_reload) { FileAction.reloadPreview(aContext.appContext, file) }
         add(menu, R.string.file_mock) { FileAction.useForMockLocation(aContext.appContext, file) }
+        add(menu, R.string.file_resume) {
+            FileAction.resumeTracker(aContext.appContext, file)
+            ActivitySwitcher.start(aContext, CockpitSplitActivity::class.java)
+        }
     }
 
     protected fun inflateOverlay(menu: Menu) {

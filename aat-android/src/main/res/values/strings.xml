@@ -282,6 +282,7 @@
     <string name="file_rename">Rename file</string>
     <string name="file_overlay">Use as overlay</string>
     <string name="file_mock">Use for mock location</string>
+    <string name="file_resume">Resume from file</string>
     <string name="file_delete_ask">Delete file?</string>
     <string name="file_send">Send…</string>
     <string name="file_view">View/Edit…</string>
