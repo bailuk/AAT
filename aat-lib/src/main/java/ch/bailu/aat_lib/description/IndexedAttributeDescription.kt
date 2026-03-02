@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.attributes.SampleRate
+import ch.bailu.aat_lib.gpx.attributes.TimeWindowAttributes
 import ch.bailu.aat_lib.resources.Res
 
 open class IndexedAttributeDescription(
@@ -61,5 +62,11 @@ open class IndexedAttributeDescription(
         "Max " + Res.str().sensor_power(),
         PowerDescription.UNIT,
         SampleRate.Power.INDEX_MAX_POWER
+    )
+
+    class WindowPower : IndexedAttributeDescription(
+        "10' " + Res.str().sensor_power(),
+        PowerDescription.UNIT,
+        TimeWindowAttributes.INDEX_WINDOW_POWER
     )
 }
