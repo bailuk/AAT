@@ -90,7 +90,8 @@ class GpxListAttributes(vararg attr: GpxSubAttributes) :
                 SampleRate.HeartRate(),
                 SampleRate.Power(),
                 StepsRate(),
-                Steps()
+                Steps(),
+                TimeWindowAttributes(),
             )
         }
 

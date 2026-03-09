@@ -38,6 +38,7 @@ import ch.bailu.aat_lib.description.PauseDescription
 import ch.bailu.aat_lib.description.TimeApDescription
 import ch.bailu.aat_lib.description.TimeDescription
 import ch.bailu.aat_lib.description.TrackSizeDescription
+import ch.bailu.aat_lib.description.WindowSpeedDescription
 import ch.bailu.aat_lib.dispatcher.usage.UsageTrackerInterface
 import ch.bailu.aat_lib.gpx.information.InfoID
 
@@ -115,7 +116,8 @@ class FileContentActivity : AbsFileContentActivity() {
                 ContentDescriptions(
                     AverageSpeedDescription(storage),
                     AverageSpeedDescriptionAP(storage),
-                    MaximumSpeedDescription(storage)
+                    WindowSpeedDescription(storage),
+                    MaximumSpeedDescription(storage),
                 ),
                 CaloriesDescription(storage),
                 ContentDescriptions(
@@ -136,6 +138,7 @@ class FileContentActivity : AbsFileContentActivity() {
                 ),
                 ContentDescriptions(
                     IndexedAttributeDescription.AveragePower(),
+                    IndexedAttributeDescription.WindowPower(),
                     IndexedAttributeDescription.MaxPower(),
                 ),
                 TrackSizeDescription()
