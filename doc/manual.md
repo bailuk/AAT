@@ -142,4 +142,4 @@ Open a pull request on GitHub to update or add translations.
 - You don't have to translate everything. Just remove an entry and English is used as a fall back.
 - You can modify existing strings.
 - You can add new suggestions for strings.
-- If a ° gets displayed somewhere inside the app it means the string is not yet in the resource file (only in java code). See [app/src/main/java/ch/bailu/aat/util/ToDo.java](https://github.com/bailuk/AAT/blob/stage/aat-lib/src/main/java/ch/bailu/aat_lib/resources/ToDo.java)
+- If a ° gets displayed somewhere inside the app it means the string is not yet in the resource file (only in java code). See [app/src/main/java/ch/bailu/aat/util/ToDo.kt](https://github.com/bailuk/AAT/blob/stage/aat-lib/src/main/java/ch/bailu/aat_lib/resources/ToDo.kt)
