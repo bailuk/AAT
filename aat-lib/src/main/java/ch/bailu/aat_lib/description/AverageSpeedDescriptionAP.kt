@@ -5,6 +5,7 @@ import ch.bailu.aat_lib.gpx.attributes.AutoPause
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 
+/** Average speed excluding auto-pause time and distance. */
 class AverageSpeedDescriptionAP(storage: StorageInterface) : AverageSpeedDescription(storage) {
     override fun getLabel(): String {
         return Res.str().average_ap()

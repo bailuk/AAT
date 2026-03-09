@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx
 import ch.bailu.aat_lib.description.DistanceDescription
 import ch.bailu.aat_lib.preferences.StorageInterface
 
+/** A {@link GpxWindow} that trims when accumulated distance exceeds a limit derived from total track length. */
 class GpxDistanceWindow(list: GpxList) : GpxWindow(list.pointList.first as GpxPointNode?) {
     private val distanceLimit: Float = getDistanceLimit(list.getDelta().getDistance()).toFloat()
 

@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.description
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.StateID
 
+/** Displays elapsed time, extrapolated to the current wall-clock time while tracking is active. */
 class PredictiveTimeDescription : TimeDescription() {
     private var time: Long = 0
     private var timePaused: Long = 0

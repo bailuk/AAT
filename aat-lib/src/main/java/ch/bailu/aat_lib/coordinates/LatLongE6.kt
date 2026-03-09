@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.coordinates
 import org.mapsforge.core.model.LatLong
 import org.mapsforge.core.util.LatLongUtils
 
+/** Latitude/longitude pair stored as microdegrees (E6 integers). */
 class LatLongE6 : LatLongInterface {
     private val latitudeE6: Int
     private val longitudeE6: Int

@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.gpx.attributes.HeartRateAttributes
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Displays live heart rate (BPM) from a connected BLE heart rate sensor. */
 class HeartRateDescription : ContentDescription() {
     private val labelDefault: String = Res.str().sensor_heart_rate()
     private var value = VALUE_DISABLED

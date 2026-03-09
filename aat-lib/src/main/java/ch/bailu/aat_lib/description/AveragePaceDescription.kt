@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.resources.Res
 
+/** Displays average pace (time per distance unit) derived from lifetime average speed. */
 open class AveragePaceDescription(s: StorageInterface) : PaceDescription(s) {
     override fun getLabel(): String {
         return Res.str().pace()

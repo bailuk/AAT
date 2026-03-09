@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx.attributes
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import kotlin.math.roundToInt
 
+/** Computes cumulative ascend, descend, and current slope from altitude samples. */
 abstract class AltitudeDelta : GpxSubAttributes(KEYS) {
     abstract fun add(alt: Float, dist: Float)
     abstract fun getDescend(): Short

@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Displays live power (watts) from a connected BLE power meter. */
 class PowerDescription : ContentDescription() {
     private val labelDefault: String = Res.str().sensor_power()
     private val labelWait: String = "$labelDefault…"

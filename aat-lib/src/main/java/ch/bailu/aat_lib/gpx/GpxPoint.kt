@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
 import ch.bailu.aat_lib.gpx.interfaces.GpxPointInterface
 import org.mapsforge.core.model.LatLong
 
+/** Immutable geographic point with latitude (E6), longitude (E6), altitude, and timestamp. */
 class GpxPoint : GpxPointInterface {
     private var altitude: Float
     private val longitude: Int

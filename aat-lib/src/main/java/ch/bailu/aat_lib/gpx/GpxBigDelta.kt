@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxListAttributes
 import ch.bailu.aat_lib.gpx.interfaces.GpxBigDeltaInterface
 import ch.bailu.aat_lib.gpx.interfaces.GpxType
 
+/** Accumulates lifetime totals (distance, time, pause, bounding box) for a track or segment. */
 class GpxBigDelta(private val attributes: GpxListAttributes) : GpxBigDeltaInterface {
     private var distance = 0f
 

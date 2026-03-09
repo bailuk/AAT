@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
+/** Thread-local ROOT-locale formatters for writing GPX files (ISO 8601 dates, dot-decimal numbers). */
 class FormatWrite private constructor() {
     @JvmField
     val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ROOT)

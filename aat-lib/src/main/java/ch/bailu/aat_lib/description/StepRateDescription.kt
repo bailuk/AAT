@@ -6,6 +6,7 @@ import ch.bailu.aat_lib.gpx.attributes.StepCounterAttributes
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Displays live step rate (steps per minute) from a connected step counter sensor. */
 class StepRateDescription : ContentDescription() {
     private var value = VALUE_DISABLED
     private var unit = UNIT

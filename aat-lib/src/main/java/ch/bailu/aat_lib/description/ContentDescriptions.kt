@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.description
 
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 
+/** Groups multiple [ContentDescription]s into a single row with comma-separated labels and values. */
 class ContentDescriptions(vararg d: ContentDescription) : ContentDescription() {
     private val descriptions = arrayOf(*d)
 

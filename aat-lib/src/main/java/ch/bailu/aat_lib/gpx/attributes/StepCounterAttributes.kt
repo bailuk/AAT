@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx.attributes
 
+/** Live attributes from a step counter sensor (steps per minute and total steps). */
 class StepCounterAttributes : GpxAttributes() {
     var stepsRate = 0
     var stepsTotal = 0

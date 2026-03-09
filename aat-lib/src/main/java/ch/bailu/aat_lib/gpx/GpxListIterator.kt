@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.attributes.GpxAttributesNull
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
+/** Forward iterator over a {@link GpxList}, tracking segment boundaries and point indices. */
 class GpxListIterator(private val track: GpxList) {
     private inner class PointPrimerNode : GpxPointFirstNode(GpxPoint.NULL, GpxAttributesNull.NULL) {
         override var next: Node?

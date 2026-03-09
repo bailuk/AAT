@@ -4,19 +4,13 @@ import com.google.openlocationcode.OpenLocationCode
 import org.mapsforge.core.model.LatLong
 
 
+/**
+ * The Open Location Code (OLC) is a geocode system for identifying
+ * an area anywhere on the Earth.  Location
+ * codes created by the OLC system are referred to as "plus codes".
+ * https://en.wikipedia.org/wiki/Open_Location_Code
+ */
 class OlcCoordinates : Coordinates {
-    /**
-     * The Open Location Code (OLC) is a geocode system for identifying
-     * an area anywhere on the Earth.[1] It was developed at Google's Zürich
-     * engineering office,[2] and released late October 2014.[3] Location
-     * codes created by the OLC system are referred to as "plus codes".
-     * https://en.wikipedia.org/wiki/Open_Location_Code
-     *
-     *
-     * This is a wrapper around
-     * com.google.openlocationcode.OpenLocationCode
-     *
-     */
     private val olc: OpenLocationCode
 
     constructor(code: String, reference: LatLong) : this(
