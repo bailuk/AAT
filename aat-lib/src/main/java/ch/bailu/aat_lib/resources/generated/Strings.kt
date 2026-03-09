@@ -306,6 +306,8 @@ open class Strings {
 
     open fun file_mock(): String = "Use for mock location"
 
+    open fun file_resume(): String = "Resume from file"
+
     open fun file_delete_ask(): String = "Delete file?"
 
     open fun file_send(): String = "Send…"

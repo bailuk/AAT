@@ -2,6 +2,7 @@ package ch.bailu.aat_lib.service.tracker
 
 import ch.bailu.aat_lib.file.xml.writer.GpxListWriter
 import ch.bailu.aat_lib.gpx.GpxList
+import ch.bailu.aat_lib.gpx.GpxListIterator
 import ch.bailu.aat_lib.gpx.GpxPoint
 import ch.bailu.aat_lib.gpx.GpxPointNode
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
@@ -49,19 +50,45 @@ class TrackLogger(val sdirectory: SolidDataDirectory, private val presetIndex: I
         }
     }
 
-    @Throws(IOException::class)
-    override fun log(tp: GpxPointInterface, attr: GpxAttributes) {
+    private fun append(tp: GpxPointInterface, attr: GpxAttributes) {
         if (requestSegment) {
             requestSegment = false
             track.appendToNewSegment(GpxPoint(tp), attr)
         } else {
             track.appendToCurrentSegment(GpxPoint(tp), attr)
         }
+    }
+
+    private fun postAppend() {
         val node = track.pointList.last
         if (node is GpxPointNode) {
             setVisibleTrackPoint(node)
         }
         writer.writeNewPoints()
+    }
+
+    @Throws(IOException::class)
+    override fun logAllFrom(src: GpxList) {
+        requestSegment = true
+
+        val i = GpxListIterator(src)
+        while (i.nextPoint()) {
+            if (i.isFirstInSegment)
+                requestSegment = true
+
+            val point = i.getPoint()
+            append(point, point.getAttributes())
+        }
+
+        requestSegment = true
+
+        postAppend()
+    }
+
+    @Throws(IOException::class)
+    override fun log(tp: GpxPointInterface, attr: GpxAttributes) {
+        append(tp, attr)
+        postAppend()
     }
 
     /**

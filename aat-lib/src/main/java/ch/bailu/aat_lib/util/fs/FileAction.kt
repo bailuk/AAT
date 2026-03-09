@@ -2,6 +2,9 @@ package ch.bailu.aat_lib.util.fs
 
 import ch.bailu.aat_lib.app.AppContext
 import ch.bailu.aat_lib.broadcaster.AppBroadcaster
+import ch.bailu.aat_lib.file.xml.parser.gpx.GpxListReaderXml
+import ch.bailu.aat_lib.gpx.attributes.AutoPause
+import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.logger.AppLog
 import ch.bailu.aat_lib.preferences.file_list.SolidDirectoryQuery
 import ch.bailu.aat_lib.preferences.location.SolidMockLocationFile
@@ -36,6 +39,18 @@ object FileAction {
         if (file.canRead()) SolidMockLocationFile(context.storage).setValue(file.path) else logErrorNoAccess(
             file
         )
+    }
+
+    fun resumeTracker(context: AppContext, file: Foc) {
+        val trackerService = context.services.getTrackerService()
+
+        try {
+            trackerService.resumeLogger(GpxListReaderXml(file, AutoPause.NULL).gpxList)
+        } catch (e: IOException) {
+            AppLog.e(this, e)
+        } catch (e: IllegalStateException) {
+            AppLog.e(this, e)
+        }
     }
 
     /**

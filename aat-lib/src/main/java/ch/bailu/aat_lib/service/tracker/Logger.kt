@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.service.tracker
 
+import ch.bailu.aat_lib.gpx.GpxList
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
@@ -11,6 +12,9 @@ abstract class Logger : GpxInformation(), Closeable {
     private var state = StateID.OFF
 
     open fun logPause() {}
+
+    @Throws(IOException::class)
+    abstract fun logAllFrom(list: GpxList)
 
     @Throws(IOException::class)
     abstract fun log(tp: GpxPointInterface, attr: GpxAttributes)
@@ -30,6 +34,7 @@ abstract class Logger : GpxInformation(), Closeable {
 
     companion object {
         val NULL_LOGGER: Logger = object : Logger() {
+            override fun logAllFrom(list: GpxList) {}
             override fun log(tp: GpxPointInterface, attr: GpxAttributes) {}
             override fun flush() {}
         }
