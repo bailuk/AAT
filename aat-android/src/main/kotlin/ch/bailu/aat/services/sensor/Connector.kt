@@ -7,6 +7,14 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.service.sensor.SensorState
 import java.io.Closeable
 
+/**
+ * Manages the connected/disconnected state of a single sensor [InfoID].
+ *
+ * On [connect], updates global [SensorState] and broadcasts
+ * [AppBroadcaster.SENSOR_CHANGED]. On [close], marks the sensor as
+ * disconnected and broadcasts [AppBroadcaster.SENSOR_DISCONNECTED] to
+ * trigger reconnection attempts.
+ */
 class Connector(private val context: Context, private val iid: Int) : Closeable {
     private var isConnected = false
 

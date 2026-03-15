@@ -10,6 +10,17 @@ import ch.bailu.aat_lib.gpx.attributes.CadenceSpeedAttributes
 import ch.bailu.aat_lib.gpx.attributes.GpxAttributes
 import ch.bailu.aat_lib.gpx.attributes.PowerAttributes
 
+/**
+ * BLE Cycling Power sensor.
+ *
+ * Parses Bluetooth GATT Cycling Power Measurement characteristics and extracts
+ * power (watts), wheel speed, and crank cadence. Each measurement type is
+ * broadcast independently through its own [Broadcaster]/[Connector] pair so
+ * that downstream [SensorSource] instances (one per [InfoID]) can pick up
+ * changes and forward them into the [Dispatcher] chain.
+ *
+ * Data flow: BLE characteristic -> [Attributes] -> [Information] -> [Broadcaster.broadcast]
+ */
 class CyclingPower(c: ServiceContext) : CyclingPowerID(), ServiceInterface {
     private var location = CadenceSpeedAttributes.SENSOR_LOCATION[0]
     private var isSpeedSensor = false

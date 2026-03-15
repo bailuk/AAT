@@ -3,6 +3,16 @@ package ch.bailu.aat_lib.dispatcher
 import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.InfoID
 
+/**
+ * Central hub that routes [GpxInformation] updates from sources to targets.
+ *
+ * Sources (e.g. [SensorSource]) call [onContentUpdated] when new data arrives.
+ * The dispatcher fans out each update to every [TargetInterface] registered for
+ * that [InfoID], plus all targets registered for [InfoID.ALL].
+ *
+ * Routing is paused/resumed via [onPauseWithService]/[onResumeWithService] so
+ * that background activities stop receiving updates.
+ */
 class Dispatcher : DispatcherInterface {
     private val targets: MutableMap<Int, TargetList> = HashMap(10)
     private val sources = ArrayList<SourceInterface>(5)

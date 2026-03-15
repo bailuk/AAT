@@ -15,6 +15,14 @@ import ch.bailu.aat_lib.gpx.information.InfoID
 import ch.bailu.aat_lib.preferences.StorageInterface
 import ch.bailu.aat_lib.view.cockpit.Layouter
 
+/**
+ * Grid of [NumberView] cells displaying live sensor and tracker data.
+ *
+ * Each [add]/[addPower]/[addCadence]/... call creates a [NumberView], wraps a
+ * [ContentDescription], and registers it with the [DispatcherInterface] for the
+ * appropriate [InfoID]. Layout is handled by [Layouter] which tiles cells based
+ * on the number of descriptions and available space.
+ */
 class CockpitView(context: Context, private val theme: UiTheme) : ViewGroup(context) {
     private val layouter: Layouter
     private val storage: StorageInterface = Storage(context)

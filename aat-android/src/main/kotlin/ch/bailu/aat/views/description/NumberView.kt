@@ -23,6 +23,14 @@ import ch.bailu.aat_lib.logger.AppLog
 
 import kotlin.math.roundToInt
 
+/**
+ * Single cockpit cell showing label, numeric value, and unit.
+ *
+ * Implements [TargetInterface]: when [onContentUpdated] is called by the
+ * [Dispatcher], it delegates to its [ContentDescription] to extract and
+ * format the value, then refreshes the three [TextView]s. Tapping the view
+ * can trigger a sensor-reconnect broadcast via [requestOnClickSensorReconnect].
+ */
 open class NumberView(context: Context, data: ContentDescription, private val theme: UiTheme) :
     ViewGroup(context), TargetInterface {
     private val label: TextView
