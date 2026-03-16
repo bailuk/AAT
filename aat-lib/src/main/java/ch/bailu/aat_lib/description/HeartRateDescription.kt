@@ -29,7 +29,7 @@ class HeartRateDescription : ContentDescription() {
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val haveSensor = SensorState.isConnected(InfoID.HEART_RATE_SENSOR)
-        if (iid == InfoID.HEART_RATE_SENSOR && haveSensor) {
+        if (haveSensor) {
             val bpm = info.getAttributes()[HeartRateAttributes.KEY_INDEX_BPM]
             val contact = info.getAttributes()[HeartRateAttributes.KEY_INDEX_CONTACT]
             value = bpm
