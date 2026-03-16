@@ -19,10 +19,12 @@ class Dispatcher : DispatcherInterface {
     }
 
     private fun getTargetList(iid: Int): TargetList {
-        if (!targets.containsKey(iid)) {
-            targets[iid] = TargetList()
+        var list = targets[iid]
+        if (list == null) {
+            list = TargetList()
+            targets[iid] = list
         }
-        return targets[iid]!!
+        return list
     }
 
     override fun addSource(source: SourceInterface) {
