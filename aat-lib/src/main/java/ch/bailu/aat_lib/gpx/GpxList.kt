@@ -8,6 +8,7 @@ import ch.bailu.aat_lib.gpx.linked_list.List
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentNodeFactory.Companion.GPX_SEGMENT_FACTORY
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentedList
 
+/** A parsed GPX track or route: segmented linked list of points plus a [GpxBigDelta] summary. */
 class GpxList(type: GpxType, attr: GpxListAttributes) {
     companion object {
         @JvmField

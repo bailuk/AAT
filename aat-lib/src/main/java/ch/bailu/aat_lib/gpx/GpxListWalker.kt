@@ -3,6 +3,7 @@ package ch.bailu.aat_lib.gpx
 import ch.bailu.aat_lib.gpx.linked_list.Node
 import ch.bailu.aat_lib.gpx.segmented_list.SegmentNode
 
+/** Visitor that walks a {@link GpxList}'s hierarchy (list -> segments -> markers -> points) with optional point skipping. */
 abstract class GpxListWalker {
     private var increment = 0
     private var count = 0

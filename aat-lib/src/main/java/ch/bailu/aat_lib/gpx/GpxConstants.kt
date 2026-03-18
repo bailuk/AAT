@@ -1,5 +1,6 @@
 package ch.bailu.aat_lib.gpx
 
+/** GPX XML element and attribute names. */
 object GpxConstants {
     const val QNAME_GPX: String = "gpx"
     const val QNAME_TRACK: String = "trk"

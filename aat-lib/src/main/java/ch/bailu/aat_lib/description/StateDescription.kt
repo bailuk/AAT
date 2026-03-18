@@ -4,6 +4,7 @@ import ch.bailu.aat_lib.gpx.information.GpxInformation
 import ch.bailu.aat_lib.gpx.information.StateID
 import ch.bailu.aat_lib.resources.Res
 
+/** Base class that displays a service state (on, off, paused, etc.) as a localized string. */
 abstract class StateDescription : ContentDescription() {
     private var state = StateID.OFF
     override fun getLabel(): String {

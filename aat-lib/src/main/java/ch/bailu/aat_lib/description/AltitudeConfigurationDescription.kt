@@ -7,6 +7,7 @@ import ch.bailu.aat_lib.preferences.location.SolidAdjustGpsAltitude
 import ch.bailu.aat_lib.resources.Res
 import ch.bailu.aat_lib.service.sensor.SensorState
 
+/** Altitude description that appends the source (barometer, GPS, or GPS+-) to the label. */
 class AltitudeConfigurationDescription(storage: StorageInterface) : AltitudeDescription(
     storage
 ) {

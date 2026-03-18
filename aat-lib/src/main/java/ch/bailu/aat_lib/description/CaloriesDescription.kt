@@ -9,6 +9,7 @@ import ch.bailu.aat_lib.preferences.presets.SolidPreset
 import ch.bailu.aat_lib.resources.Res
 
 
+/** Estimates calories from power meter data if available, otherwise from MET value and body weight. */
 class CaloriesDescription(private val storage: StorageInterface) : LongDescription() {
     override fun getLabel(): String {
         return Res.str().calories()

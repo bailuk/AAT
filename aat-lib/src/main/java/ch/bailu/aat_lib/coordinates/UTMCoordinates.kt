@@ -12,6 +12,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
 
+/** Universal Transverse Mercator (UTM) projected coordinates, convertible to/from WGS84. */
 class UTMCoordinates : MeterCoordinates {
     private object EastingZones {
         private const val WIDTH_DEG = 6.0
