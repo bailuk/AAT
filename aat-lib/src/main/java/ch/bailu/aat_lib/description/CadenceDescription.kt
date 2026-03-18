@@ -32,7 +32,7 @@ class CadenceDescription : ContentDescription() {
 
     override fun onContentUpdated(iid: Int,  info: GpxInformation) {
         val haveSensor = SensorState.isConnected(InfoID.CADENCE_SENSOR)
-        if (iid == InfoID.CADENCE_SENSOR && haveSensor) {
+        if (haveSensor) {
             val hasContact = info.getAttributes().getAsBoolean(CadenceSpeedAttributes.KEY_INDEX_CONTACT)
             label = if (hasContact) {
                 labelDefault

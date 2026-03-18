@@ -26,7 +26,7 @@ class StepRateDescription : ContentDescription() {
 
     override fun onContentUpdated(iid: Int, info: GpxInformation) {
         val haveSensor = SensorState.isConnected(InfoID.STEP_COUNTER_SENSOR)
-        if (iid == InfoID.STEP_COUNTER_SENSOR && haveSensor) {
+        if (haveSensor) {
             value = info.getAttributes()[StepCounterAttributes.KEY_INDEX_STEPS_RATE]
             unit = UNIT + " (" + info.getAttributes()[StepCounterAttributes.KEY_INDEX_STEPS_TOTAL] + ")"
         } else {
